@@ -55,7 +55,8 @@ D:\LVTN\                          (git repo)
 │   ├── w11_proof\                proof certificate (why/2 → rule_src)
 │   ├── w12_integration\          Prototype v1: Parser → KB → Solver ba trị → Verbalizer + hậu kiểm
 │   ├── w13_parser\               semantic parser (regex; LLM mới là stub)
-│   └── w14_rag\                  corpus điều/khoản, BM25, grounding, rag_queries.json
+│   ├── w14_rag\                  corpus điều/khoản, BM25, grounding, rag_queries.json
+│   └── w15_ocr\                  OCR bảng điểm (Tesseract vie) → hồ sơ có confidence; _rieng/ _anh/ gitignore
 ├── ctu\                          PDF quy chế gốc (gitignore)
 ├── NiênLuan\                     niên luận cũ, có dữ liệu SV (gitignore)
 └── LVTN\                         repo riêng, chưa dùng (gitignore)
@@ -70,3 +71,8 @@ D:\LVTN\                          (git repo)
 - OCR QĐ3266: số khoản hay bị hỏng (`5,` · `2 Điểm` · `10.SV` · `+,`), trang 20 trắng (Điều 33–35) → dùng trích R-Formal làm nguồn dự phòng, ghi rõ `nguon=trich_r_formal`.
 - Nguồn của một kết luận lấy từ chứng minh (asp → passage), không lấy từ truy hồi: truy hồi chọn sai văn bản ở bẫy QD-09 (điểm chuyển đổi 4,0–4,9).
 - README/báo cáo từng ghi tính năng chưa có trong code (kiểm schema, `--strict`) → khi viết báo cáo, đối chiếu với code và chạy thật.
+- KB dùng giả định thế giới đóng: dữ kiện ngoài bị thiếu (vd. `xac_nhan_ky_luat_sach`) cho FALSE, không phải UNKNOWN. Muốn "chưa biết" thì phải mở nhánh (`{ p }.`).
+- `tot_nghiep` KHÔNG đơn điệu theo điểm: D đạt vẫn vào ĐTBCTL và kéo GPA xuống, còn F bị loại khỏi ĐTBCTL. Muốn xét "mọi khả năng" của một điểm thì phải gồm F, D và A.
+- Bảng điểm thật khác CTĐT: miễn ngoại ngữ in thành dòng CC004 (10 TC, M); GDTC là TC025–027, trong khi KB K49 chỉ có TC100.
+- OCR: OCR cả dòng dính số với chữ (`97A`), nên đọc theo dải cột có whitelist. Xoay ảnh dù rất nhỏ cũng làm hỏng chữ, nên chỉ dựng thẳng khi góc ≥ 0,15°.
+- Không đưa bảng điểm thật hay kết quả OCR của nó vào repo (`w15_ocr/_rieng/`).

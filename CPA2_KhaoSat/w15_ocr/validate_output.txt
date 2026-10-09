@@ -1,0 +1,85 @@
+A. CHUẨN HOÁ
+  [OK] sua_ma('CTI00') = 'CT100', mong 'CT100'
+  [OK] sua_ma('QP0IIE') = 'QP011E', mong 'QP011E'
+  [OK] sua_ma('KL00IE') = 'KL001E', mong 'KL001E'
+  [OK] sua_ma('TN010_') = 'TN010', mong 'TN010'
+  [OK] sua_ma('QP0I0E') = 'QP010E', mong 'QP010E'
+  [OK] sua_ma('CT550E') = 'CT550E', mong 'CT550E'
+  [OK] so_thang10('97') = 9.7, mong 9.7
+  [OK] so_thang10('9.7') = 9.7, mong 9.7
+  [OK] so_thang10('100') = 10.0, mong 10.0
+  [OK] so_thang10('10.0') = 10.0, mong 10.0
+  [OK] so_thang10('80') = 8.0, mong 8.0
+  [OK] so_thang10('4.5') = 4.5, mong 4.5
+  [OK] so_thang10('45') = 4.5, mong 4.5
+  [OK] so_thang10('9/7') = 9.7, mong 9.7
+  [OK] so_thang10('') = None, mong None
+  [OK] so_thang10('975') = None, mong None
+  [OK] chu_tu_diem(9.7) = 'A', mong 'A' (R-B02)
+  [OK] chu_tu_diem(9.0) = 'A', mong 'A' (R-B02)
+  [OK] chu_tu_diem(8.9) = 'B+', mong 'B+' (R-B02)
+  [OK] chu_tu_diem(8.0) = 'B+', mong 'B+' (R-B02)
+  [OK] chu_tu_diem(7.1) = 'B', mong 'B' (R-B02)
+  [OK] chu_tu_diem(6.5) = 'C+', mong 'C+' (R-B02)
+  [OK] chu_tu_diem(5.5) = 'C', mong 'C' (R-B02)
+  [OK] chu_tu_diem(5.0) = 'D+', mong 'D+' (R-B02)
+  [OK] chu_tu_diem(4.5) = 'D', mong 'D' (R-B02)
+  [OK] chu_tu_diem(4.0) = 'D', mong 'D' (R-B02)
+  [OK] chu_tu_diem(3.9) = 'F', mong 'F' (R-B02)
+  [OK] dòng nhất quán (9.2 ↔ A, CT100 2 TC) → hợp lệ
+  [OK] điểm chữ không khớp T.Hợp (9.2 ↔ B) → loại
+  [OK] TC không khớp CTĐT (CT100 3 TC) → loại
+  [OK] CC004 (10 TC, Miễn M) → miễn XH023–025, gắn cờ cần Phòng Đào tạo xác nhận
+  [OK] SHCVHT 0 TC → bỏ qua
+B. BẢNG ĐIỂM TỔNG HỢP
+  [OK] sv_lvtn/sach: hồ sơ OCR hợp lệ theo student_fact_schema ([])
+  [OK] sv_lvtn/sach: OCR → UNKNOWN, JSON → TRUE · fact nhận 45/51, loại 0, khác đáp án []
+  [OK] sv_lvtn/mo_jpeg: hồ sơ OCR hợp lệ theo student_fact_schema ([])
+  [OK] sv_lvtn/mo_jpeg: OCR → UNKNOWN, JSON → TRUE · fact nhận 46/51, loại 0, khác đáp án []
+  [OK] sv_lvtn/nghieng: hồ sơ OCR hợp lệ theo student_fact_schema ([])
+  [OK] sv_lvtn/nghieng: OCR → UNKNOWN, JSON → TRUE · fact nhận 38/51, loại 0, khác đáp án []
+  [OK] sv_tltn/sach: hồ sơ OCR hợp lệ theo student_fact_schema ([])
+  [OK] sv_tltn/sach: OCR → UNKNOWN, JSON → TRUE · fact nhận 49/54, loại 0, khác đáp án []
+  [OK] sv_tltn/mo_jpeg: hồ sơ OCR hợp lệ theo student_fact_schema ([])
+  [OK] sv_tltn/mo_jpeg: OCR → UNKNOWN, JSON → TRUE · fact nhận 48/54, loại 0, khác đáp án []
+  [OK] sv_tltn/nghieng: hồ sơ OCR hợp lệ theo student_fact_schema ([])
+  [OK] sv_tltn/nghieng: OCR → UNKNOWN, JSON → TRUE · fact nhận 42/54, loại 0, khác đáp án []
+  [OK] sv_5hp/sach: hồ sơ OCR hợp lệ theo student_fact_schema ([])
+  [OK] sv_5hp/sach: OCR → UNKNOWN, JSON → TRUE · fact nhận 50/55, loại 0, khác đáp án []
+  [OK] sv_5hp/mo_jpeg: hồ sơ OCR hợp lệ theo student_fact_schema ([])
+  [OK] sv_5hp/mo_jpeg: OCR → UNKNOWN, JSON → TRUE · fact nhận 50/55, loại 0, khác đáp án []
+  [OK] sv_5hp/nghieng: hồ sơ OCR hợp lệ theo student_fact_schema ([])
+  [OK] sv_5hp/nghieng: OCR → UNKNOWN, JSON → TRUE · fact nhận 41/55, loại 0, khác đáp án []
+  [OK] sv_tron_ngoai_ngu/sach: hồ sơ OCR hợp lệ theo student_fact_schema ([])
+  [OK] sv_tron_ngoai_ngu/sach: OCR → FALSE, JSON → FALSE · fact nhận 45/51, loại 0, khác đáp án []
+  [OK] sv_tron_ngoai_ngu/mo_jpeg: hồ sơ OCR hợp lệ theo student_fact_schema ([])
+  [OK] sv_tron_ngoai_ngu/mo_jpeg: OCR → UNKNOWN, JSON → FALSE · fact nhận 47/51, loại 0, khác đáp án []
+  [OK] sv_tron_ngoai_ngu/nghieng: hồ sơ OCR hợp lệ theo student_fact_schema ([])
+  [OK] sv_tron_ngoai_ngu/nghieng: OCR → UNKNOWN, JSON → FALSE · fact nhận 38/51, loại 0, khác đáp án []
+  [OK] sv_du_hp/sach: hồ sơ OCR hợp lệ theo student_fact_schema ([])
+  [OK] sv_du_hp/sach: OCR → UNKNOWN, JSON → FALSE · fact nhận 46/52, loại 0, khác đáp án []
+  [OK] sv_du_hp/mo_jpeg: hồ sơ OCR hợp lệ theo student_fact_schema ([])
+  [OK] sv_du_hp/mo_jpeg: OCR → UNKNOWN, JSON → FALSE · fact nhận 42/52, loại 0, khác đáp án []
+  [OK] sv_du_hp/nghieng: hồ sơ OCR hợp lệ theo student_fact_schema ([])
+  [OK] sv_du_hp/nghieng: OCR → UNKNOWN, JSON → FALSE · fact nhận 26/52, loại 0, khác đáp án []
+  [OK] sv_mien_ielts/sach: hồ sơ OCR hợp lệ theo student_fact_schema ([])
+  [OK] sv_mien_ielts/sach: OCR → UNKNOWN, JSON → TRUE · fact nhận 44/49, loại 0, khác đáp án []
+  [OK] sv_mien_ielts/mo_jpeg: hồ sơ OCR hợp lệ theo student_fact_schema ([])
+  [OK] sv_mien_ielts/mo_jpeg: OCR → UNKNOWN, JSON → TRUE · fact nhận 44/49, loại 0, khác đáp án []
+  [OK] sv_mien_ielts/nghieng: hồ sơ OCR hợp lệ theo student_fact_schema ([])
+  [OK] sv_mien_ielts/nghieng: OCR → UNKNOWN, JSON → TRUE · fact nhận 37/49, loại 1, khác đáp án ["CT179: OCR 73/B ≠ (75, 'B')"]
+  [OK] fact được chấp nhận đúng 783/784 = 0.999 (cổng ≥ 0,99)
+     độ phủ: 1/18 ca có kết luận TRUE/FALSE (còn lại UNKNOWN)
+C. TIÊM LỖI
+  [OK] QP010E đọc nhầm B+→F → không vào grades, thành dữ kiện không chắc
+  [OK] kết luận không thành FALSE sai
+  [OK] mất dòng QP011E → học kỳ 'HK1 23-24' lệch tổng TC
+  [OK] mất dòng → UNKNOWN (không phải FALSE vì 'thiếu môn')
+  [OK] thiếu xác nhận kỷ luật (R-F03, không có trên bảng điểm) → UNKNOWN
+E. TÍNH ĐÚNG CỦA LỰA CHỌN CHO HP KHÔNG CHẮC (hồi quy review)
+  [OK] sv_du_hp, CT478 không chắc → UNKNOWN (đáp án FALSE; TRUE là sai)
+  [OK] CT177 F rồi học lại đọc không chắc → không chắc (grades: None)
+D. BẢNG ĐIỂM THẬT (chỉ ở máy)
+  [OK] đọc 37 dòng HP, nhận 32, không chắc 2, loại 0, học kỳ lệch ['HK2 24-25'], cần xác nhận ["CC004 'Chứng chỉ trình độ Tiếng Anh' 10 TC Miễn M → giả định miễn trọn nhánh Anh văn của g_ngoai_ngu (XH023–025, 10 TC); chờ Phòng Đào tạo xác nhận"]
+
+KẾT LUẬN: ĐẠT — fact OCR có confidence, kiểm chéo chặn fact sai, không sinh kết luận sai

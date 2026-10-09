@@ -8,3 +8,6 @@ ctu/
 __pycache__/
 *.pyc
 ~$*.xlsx
+# Tuần 15: kết quả OCR bảng điểm thật (dữ liệu cá nhân) và ảnh tổng hợp sinh lại được
+CPA2_KhaoSat/w15_ocr/_rieng/
+CPA2_KhaoSat/w15_ocr/_anh/

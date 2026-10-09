@@ -117,7 +117,7 @@
             ],
             "minimum": 0,
             "maximum": 1,
-            "description": "Độ tin cậy OCR / nguồn. null = dữ kiện giả lập chắc chắn."
+            "description": "Độ tin cậy OCR / nguồn. null = dữ kiện giả lập chắc chắn. Tuần 15: min(mã, TC, điểm); điểm gộp 1−Π(1−cᵢ) các lần đọc khớp nhau."
           },
           "hk": {
             "type": [
@@ -128,6 +128,13 @@
           },
           "ghi_chu": {
             "type": "string"
+          },
+          "ocr_raw": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Tuần 15: dòng OCR gốc của bản ghi, để truy vết"
           }
         }
       }
