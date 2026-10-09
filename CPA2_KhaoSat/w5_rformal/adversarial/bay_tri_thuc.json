@@ -1,0 +1,116 @@
+{
+  "mau": {
+    "M1": "Trợ lý AI #1 — trả lời câu hỏi 'cách xác định số tín chỉ nợ đọng'",
+    "M2": "Trợ lý AI #2 — trả lời cùng câu hỏi, phiên bản khác"
+  },
+  "bay": [
+    {
+      "id": "B-01",
+      "mau": [
+        "M1",
+        "M2"
+      ],
+      "nhom": "nguong_dat",
+      "menh_de": "Học phần được xem là đạt khi có điểm từ **5,0** trở lên (thang 10).",
+      "chan_tri": "SAI (với học phần học tại ĐHCT)",
+      "dung": "Học phần tích lũy được từ **điểm D**, mà bảng quy đổi đặt **D = 4,0–4,9**. Ngưỡng 5,0 là của QĐ5339 và theo QD-09 chỉ áp cho ĐIỂM CHUYỂN ĐỔI từ cơ sở đào tạo khác.",
+      "nguon": "QĐ3266 Điều 22 khoản 3 và bảng ở khoản 2",
+      "hau_qua": "Sinh viên có điểm 4,0–4,9 bị báo nhầm là chưa đạt; kéo theo sai tổng tín chỉ tích lũy, sai xếp trình độ năm học, sai cả kết luận cảnh báo học vụ.",
+      "kiem": "ca C23c trong validate_rformal.py"
+    },
+    {
+      "id": "B-02",
+      "mau": [
+        "M1"
+      ],
+      "nhom": "nguong_dat",
+      "menh_de": "Học phần được xem là đạt khi có điểm chữ từ **C** trở lên.",
+      "chan_tri": "SAI",
+      "dung": "Ngưỡng là **D**, thấp hơn C ba bậc (D, D⁺, C). C tương ứng 5,5–6,4.",
+      "nguon": "QĐ3266 Điều 22 khoản 3",
+      "hau_qua": "Sai nặng hơn B-01: loại nhầm cả nhóm điểm 4,0–5,4.",
+      "kiem": "bảng band/4 trong qd3266_r_formal_v1.lp"
+    },
+    {
+      "id": "B-03",
+      "mau": [
+        "M1"
+      ],
+      "nhom": "con_so_bia",
+      "menh_de": "Tổng số tín chỉ nợ không được vượt quá **150 %** khối lượng CTĐT thì mới được xét tốt nghiệp.",
+      "chan_tri": "KHÔNG TỒN TẠI",
+      "dung": "Chuỗi '150' không xuất hiện trong QĐ3266; trong QĐ5339 chỉ xuất hiện ở dải điểm Cambridge KET. Con số thật là **24 TC**, và nó là ngưỡng **cảnh báo học tập**, không phải điều kiện xét tốt nghiệp.",
+      "nguon": "QĐ3266 Điều 18 khoản 2 điểm c (đã tìm toàn văn cả hai văn bản)",
+      "hau_qua": "Gán một điều kiện tốt nghiệp không tồn tại; đồng thời giấu mất ngưỡng cảnh báo thật.",
+      "kiem": "ca C30/C31 (biên 24/25 TC)"
+    },
+    {
+      "id": "B-04",
+      "mau": [
+        "M2"
+      ],
+      "nhom": "con_so_bia",
+      "menh_de": "Nợ quá nhiều tín chỉ (**trên 15–20 TC tùy quy định từng khoa**) thì bị **đình chỉ học tập**.",
+      "chan_tri": "SAI ba lần trong một câu",
+      "dung": "(1) Sai HỆ QUẢ: nợ tín chỉ dẫn tới **cảnh báo học tập**, không phải đình chỉ. Đình chỉ 1 HK chỉ xảy ra khi bị kỷ luật ở mức đó, hoặc ĐRL yếu/kém 2 HK liên tiếp. (2) Sai CON SỐ: ngưỡng là **24 TC**. (3) Sai THẨM QUYỀN: ngưỡng do quy chế cấp Trường đặt, không 'tùy từng khoa'.",
+      "nguon": "QĐ3266 Điều 18 khoản 2 điểm c (cảnh báo) và khoản 3 (đình chỉ)",
+      "hau_qua": "Doạ sinh viên bằng một hậu quả nặng hơn thực tế, dựa trên con số bịa.",
+      "kiem": "ca C31 và mục 10 của qd3266_r_formal_v1.lp"
+    },
+    {
+      "id": "B-05",
+      "mau": [
+        "M1",
+        "M2"
+      ],
+      "nhom": "ky_hieu",
+      "menh_de": "Học phần có **dấu (*)** là học phần **bắt buộc**.",
+      "chan_tri": "SAI — gần như ngược lại",
+      "dung": "Dấu (*) CÓ tồn tại trong CTĐT, nhưng chú thích cuối bảng ghi: *'(*) là học phần **điều kiện**, không tính điểm trung bình chung tích lũy. Sinh viên có thể hoàn thành bằng hình thức nộp chứng chỉ ... hoặc học tích lũy.'* Tức nó đánh dấu đúng nhóm học phần **không** vào ĐTBCTL và **có thể miễn bằng chứng chỉ**.",
+      "nguon": "CTĐT CNTT K49 (QĐ 2423/QĐ-ĐHCT 05/6/2023), chú thích cuối bảng trang 4; khớp với QĐ3266 Điều 7 khoản 6",
+      "hau_qua": "Hiểu ngược ý nghĩa ký hiệu; dẫn tới tính nhầm ĐTBCTL và bỏ lỡ quyền xin miễn bằng chứng chỉ.",
+      "kiem": "ctdt_cntt_k49.lp — danh_dau_sao_la(hoc_phan_dieu_kien)",
+      "tu_phe": "Ở lần đối chiếu đầu tác giả kết luận 'dấu (*) không xuất hiện ở cả hai văn bản' — đúng với hai QĐ nhưng SAI vì chưa tra CTĐT. Ghi lại để nhớ: phạm vi tìm kiếm hẹp cũng sinh ra kết luận âm tính sai."
+    },
+    {
+      "id": "B-06",
+      "mau": [
+        "M2"
+      ],
+      "nhom": "con_so_bia",
+      "menh_de": "Tổng số tín chỉ của ngành **thường từ 135–150 TC**.",
+      "chan_tri": "SAI với ngành đang xét",
+      "dung": "CTĐT CNTT K49: **161 TC** (bắt buộc 125, tự chọn 36) — nằm ngoài khoảng được nêu. Quy chế KHÔNG quy định con số này; nó thuộc từng CTĐT.",
+      "nguon": "CTĐT CNTT K49, bảng tổng trang 4: 'Tổng cộng: 161 TC (Bắt buộc: 125 TC; Tự chọn: 36 TC)'",
+      "hau_qua": "Sai tổng tín chỉ đích → sai mọi phép tính 'còn thiếu bao nhiêu tín chỉ'.",
+      "kiem": "ctdt_cntt_k49.lp — tc_toi_thieu_ctdt(161) và ràng buộc cộng ba khối"
+    },
+    {
+      "id": "B-07",
+      "mau": [
+        "M1",
+        "M2"
+      ],
+      "nhom": "mau_thuan_noi_bo",
+      "menh_de": "Hai mẫu đưa ra HAI công thức khác nhau cho cùng một đại lượng: M1 — *TC nợ = TC đã đăng ký − TC đã đạt*; M2 — *TC nợ = Tổng TC ngành − TC đã đạt*.",
+      "chan_tri": "MÂU THUẪN; công thức của M2 dẫn tới kết luận vô lý",
+      "dung": "Quy chế không định nghĩa thuật ngữ này (xem QD-03). Nhưng công thức của M2 bị bác bằng phản chứng: với CTĐT 161 TC và ngưỡng cảnh báo 24 TC, sinh viên phải tích lũy **≥ 137 TC** mới thoát cảnh báo. Nghĩa là **gần như toàn bộ sinh viên chưa tới năm cuối đều bị cảnh báo học tập** — một hệ quả không thể đúng. M2 còn tự mâu thuẫn: ngay sau công thức đó lại viết 'hoặc đơn giản hơn: cộng tổng TC các học phần bị trượt/chưa học', vốn là một đại lượng khác hẳn.",
+      "nguon": "Phản chứng dùng số thật của CTĐT CNTT K49 (161 TC) và QĐ3266 Điều 18 k.2 đ.c (24 TC)",
+      "hau_qua": "Nếu cài theo M2, hệ thống sẽ cảnh báo học vụ gần như mọi sinh viên.",
+      "kiem": "ca C27–C29 (định nghĩa đang dùng) và phản chứng trong BoBayTriThuc.md mục 3"
+    },
+    {
+      "id": "B-08",
+      "mau": [
+        "M2"
+      ],
+      "nhom": "dung",
+      "menh_de": "Một năm học tại ĐHCT có **3 học kỳ**.",
+      "chan_tri": "ĐÚNG",
+      "dung": "QĐ3266 Điều 6 khoản 1: 'Mỗi năm học được tổ chức thành 03 HK gọi là Học kỳ 1, Học kỳ 2 và Học kỳ 3.'",
+      "nguon": "QĐ3266 Điều 6 khoản 1",
+      "hau_qua": "—",
+      "kiem": "đưa vào bộ để bộ không toàn ca sai: một bộ đối kháng chỉ chứa mệnh đề sai sẽ thưởng cho hệ thống nào luôn trả lời 'sai'."
+    }
+  ]
+}

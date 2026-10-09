@@ -1,0 +1,17 @@
+==========================================================================
+T1+T2 — XET TOT NGHIEP BA TRI (TRUE / FALSE / UNKNOWN)
+==========================================================================
+Ho so    Z3               ms   clingo           ms    khop?
+SV-A     TRUE           17.4   TRUE            1.9       OK
+SV-B     UNKNOWN        18.8   UNKNOWN         6.7       OK
+SV-C     FALSE          15.3   FALSE           1.8       OK
+
+==========================================================================
+T3 — SO HOC KY TOI THIEU (truy van phan thuc, ho so SV-C)
+==========================================================================
+Z3 Optimize      k = 4       193.1 ms
+clingo (ASP)     k = 4         2.5 ms
+CP-SAT           k = 4        19.3 ms
+
+Doi chieu cheo ba solver: TRUNG KHOP  (k = 4)
+So hoc phan trong ke hoach: Z3=16, clingo=16, CP-SAT=16

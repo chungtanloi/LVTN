@@ -1,0 +1,1743 @@
+{
+ "meta": {
+  "ctdt": "cntt_k49",
+  "ten": "Kỹ sư Công nghệ thông tin — Khoá 49",
+  "nganh_ma": "7480201",
+  "van_ban": "qd2423_ctdt",
+  "van_ban_ten": "QĐ 2423/QĐ-ĐHCT ngày 05/6/2023 — CTĐT ngành Công nghệ thông tin",
+  "file_pdf": "LVTN/NiênLuan/ctdt/K49/69_7480201_CongNgheThongTin.pdf",
+  "thoi_gian_dao_tao_nam": 4.5,
+  "danh_hieu": "ky_su",
+  "khoi_khai_bao": {
+   "dai_cuong": {
+    "tong": 56,
+    "bat_buoc": 41,
+    "tu_chon": 15,
+    "trang": 3
+   },
+   "co_so_nganh": {
+    "tong": 46,
+    "bat_buoc": 46,
+    "tu_chon": 0,
+    "trang": 4
+   },
+   "chuyen_nganh": {
+    "tong": 59,
+    "bat_buoc": 38,
+    "tu_chon": 21,
+    "trang": 4
+   }
+  },
+  "tong_khai_bao": {
+   "tong": 161,
+   "bat_buoc": 125,
+   "tu_chon": 36
+  }
+ },
+ "nhom": {
+  "g_gdtc": {
+   "khoi": "dai_cuong",
+   "kieu": "tin_chi",
+   "min": 3,
+   "o_nguon": "dòng 5, cột Tự chọn ghi '3'; cột Số TC ghi '1+1+1'"
+  },
+  "g_ngoai_ngu": {
+   "khoi": "dai_cuong",
+   "kieu": "mot_nhanh",
+   "min": 10,
+   "nhanh": {
+    "av": [
+     "XH023",
+     "XH024",
+     "XH025",
+     "XH031",
+     "XH032",
+     "XH033"
+    ],
+    "pv": [
+     "FL001",
+     "FL002",
+     "FL003",
+     "FL007",
+     "FL008",
+     "FL009"
+    ]
+   },
+   "o_nguon": "dòng 6–17, ô gộp cột Tự chọn ghi '10 AV hoặc PV'"
+  },
+  "g_xa_hoi": {
+   "khoi": "dai_cuong",
+   "kieu": "tin_chi",
+   "min": 2,
+   "o_nguon": "dòng 24–30, ô gộp cột Tự chọn ghi '2'"
+  },
+  "g_chuyen_nganh": {
+   "khoi": "chuyen_nganh",
+   "kieu": "mot_nhanh",
+   "min": 6,
+   "nhanh": {
+    "cn1": [
+     "CT211",
+     "CT297"
+    ],
+    "cn2": [
+     "CT449",
+     "CT484"
+    ],
+    "cn3": [
+     "CT522",
+     "CT279"
+    ]
+   },
+   "o_nguon": "dòng 62–67, cột Bắt buộc ghi CN1/CN2/CN3, ô gộp Tự chọn ghi '6 CN1 hoặc CN2 hoặc CN3'"
+  },
+  "g_tot_nghiep": {
+   "khoi": "chuyen_nganh",
+   "kieu": "tin_chi",
+   "min": 15,
+   "o_nguon": "dòng 70–78, ô gộp cột Tự chọn ghi '15' — GỒM CẢ CT550E (LVTN) và CT501E (TLTN)"
+  }
+ },
+ "hoc_phan": [
+  {
+   "tt": 1,
+   "ma": "QP010E",
+   "ten": "Giáo dục quốc phòng và An ninh 1",
+   "tin_chi": 2,
+   "khoi": "dai_cuong",
+   "cot": "BB",
+   "lt": 37,
+   "th": 8,
+   "tien_quyet": [],
+   "tien_quyet_tc": null,
+   "song_hanh": [],
+   "hk": null,
+   "dieu_kien": "gdqp",
+   "trang": 3,
+   "nguon_trang": "lớp văn bản"
+  },
+  {
+   "tt": 2,
+   "ma": "QP011E",
+   "ten": "Giáo dục quốc phòng và An ninh 2",
+   "tin_chi": 2,
+   "khoi": "dai_cuong",
+   "cot": "BB",
+   "lt": 22,
+   "th": 8,
+   "tien_quyet": [],
+   "tien_quyet_tc": null,
+   "song_hanh": [],
+   "hk": null,
+   "dieu_kien": "gdqp",
+   "trang": 3,
+   "nguon_trang": "lớp văn bản"
+  },
+  {
+   "tt": 3,
+   "ma": "QP012",
+   "ten": "Giáo dục quốc phòng và An ninh 3",
+   "tin_chi": 2,
+   "khoi": "dai_cuong",
+   "cot": "BB",
+   "lt": 24,
+   "th": 21,
+   "tien_quyet": [],
+   "tien_quyet_tc": null,
+   "song_hanh": [],
+   "hk": null,
+   "dieu_kien": "gdqp",
+   "trang": 3,
+   "nguon_trang": "lớp văn bản"
+  },
+  {
+   "tt": 4,
+   "ma": "QP013",
+   "ten": "Giáo dục quốc phòng và An ninh 4",
+   "tin_chi": 2,
+   "khoi": "dai_cuong",
+   "cot": "BB",
+   "lt": 4,
+   "th": 56,
+   "tien_quyet": [],
+   "tien_quyet_tc": null,
+   "song_hanh": [],
+   "hk": null,
+   "dieu_kien": "gdqp",
+   "trang": 3,
+   "nguon_trang": "lớp văn bản"
+  },
+  {
+   "tt": 5,
+   "ma": "TC100",
+   "ten": "Giáo dục thể chất 1+2+3",
+   "tin_chi": 3,
+   "khoi": "dai_cuong",
+   "cot": "g_gdtc",
+   "lt": 0,
+   "th": 90,
+   "tien_quyet": [],
+   "tien_quyet_tc": null,
+   "song_hanh": [],
+   "hk": [
+    "I",
+    "II",
+    "III"
+   ],
+   "dieu_kien": "gdtc",
+   "trang": 3,
+   "nguon_trang": "lớp văn bản"
+  },
+  {
+   "tt": 6,
+   "ma": "XH023",
+   "ten": "Anh văn căn bản 1",
+   "tin_chi": 4,
+   "khoi": "dai_cuong",
+   "cot": "g_ngoai_ngu",
+   "lt": 60,
+   "th": 0,
+   "tien_quyet": [],
+   "tien_quyet_tc": null,
+   "song_hanh": [],
+   "hk": [
+    "I",
+    "II",
+    "III"
+   ],
+   "dieu_kien": "ngoai_ngu_cb",
+   "trang": 3,
+   "nguon_trang": "lớp văn bản"
+  },
+  {
+   "tt": 7,
+   "ma": "XH024",
+   "ten": "Anh văn căn bản 2",
+   "tin_chi": 3,
+   "khoi": "dai_cuong",
+   "cot": "g_ngoai_ngu",
+   "lt": 45,
+   "th": 0,
+   "tien_quyet": [],
+   "tien_quyet_tc": null,
+   "song_hanh": [
+    "XH023"
+   ],
+   "hk": [
+    "I",
+    "II",
+    "III"
+   ],
+   "dieu_kien": "ngoai_ngu_cb",
+   "trang": 3,
+   "nguon_trang": "lớp văn bản"
+  },
+  {
+   "tt": 8,
+   "ma": "XH025",
+   "ten": "Anh văn căn bản 3",
+   "tin_chi": 3,
+   "khoi": "dai_cuong",
+   "cot": "g_ngoai_ngu",
+   "lt": 45,
+   "th": 0,
+   "tien_quyet": [],
+   "tien_quyet_tc": null,
+   "song_hanh": [
+    "XH024"
+   ],
+   "hk": [
+    "I",
+    "II",
+    "III"
+   ],
+   "dieu_kien": "ngoai_ngu_cb",
+   "trang": 3,
+   "nguon_trang": "lớp văn bản"
+  },
+  {
+   "tt": 9,
+   "ma": "XH031",
+   "ten": "Anh văn tăng cường 1",
+   "tin_chi": 4,
+   "khoi": "dai_cuong",
+   "cot": "g_ngoai_ngu",
+   "lt": 60,
+   "th": 0,
+   "tien_quyet": [],
+   "tien_quyet_tc": null,
+   "song_hanh": [
+    "XH025"
+   ],
+   "hk": [
+    "I",
+    "II",
+    "III"
+   ],
+   "dieu_kien": "ngoai_ngu_cb",
+   "trang": 3,
+   "nguon_trang": "lớp văn bản"
+  },
+  {
+   "tt": 10,
+   "ma": "XH032",
+   "ten": "Anh văn tăng cường 2",
+   "tin_chi": 3,
+   "khoi": "dai_cuong",
+   "cot": "g_ngoai_ngu",
+   "lt": 45,
+   "th": 0,
+   "tien_quyet": [],
+   "tien_quyet_tc": null,
+   "song_hanh": [
+    "XH031"
+   ],
+   "hk": [
+    "I",
+    "II",
+    "III"
+   ],
+   "dieu_kien": "ngoai_ngu_cb",
+   "trang": 3,
+   "nguon_trang": "lớp văn bản"
+  },
+  {
+   "tt": 11,
+   "ma": "XH033",
+   "ten": "Anh văn tăng cường 3",
+   "tin_chi": 3,
+   "khoi": "dai_cuong",
+   "cot": "g_ngoai_ngu",
+   "lt": 45,
+   "th": 0,
+   "tien_quyet": [],
+   "tien_quyet_tc": null,
+   "song_hanh": [
+    "XH032"
+   ],
+   "hk": [
+    "I",
+    "II",
+    "III"
+   ],
+   "dieu_kien": "ngoai_ngu_cb",
+   "trang": 3,
+   "nguon_trang": "lớp văn bản"
+  },
+  {
+   "tt": 12,
+   "ma": "FL001",
+   "ten": "Pháp văn căn bản 1",
+   "tin_chi": 4,
+   "khoi": "dai_cuong",
+   "cot": "g_ngoai_ngu",
+   "lt": 60,
+   "th": 0,
+   "tien_quyet": [],
+   "tien_quyet_tc": null,
+   "song_hanh": [],
+   "hk": [
+    "I",
+    "II",
+    "III"
+   ],
+   "dieu_kien": "ngoai_ngu_cb",
+   "trang": 3,
+   "nguon_trang": "lớp văn bản"
+  },
+  {
+   "tt": 13,
+   "ma": "FL002",
+   "ten": "Pháp văn căn bản 2",
+   "tin_chi": 3,
+   "khoi": "dai_cuong",
+   "cot": "g_ngoai_ngu",
+   "lt": 45,
+   "th": 0,
+   "tien_quyet": [],
+   "tien_quyet_tc": null,
+   "song_hanh": [
+    "FL001"
+   ],
+   "hk": [
+    "I",
+    "II",
+    "III"
+   ],
+   "dieu_kien": "ngoai_ngu_cb",
+   "trang": 3,
+   "nguon_trang": "lớp văn bản"
+  },
+  {
+   "tt": 14,
+   "ma": "FL003",
+   "ten": "Pháp văn căn bản 3",
+   "tin_chi": 3,
+   "khoi": "dai_cuong",
+   "cot": "g_ngoai_ngu",
+   "lt": 45,
+   "th": 0,
+   "tien_quyet": [],
+   "tien_quyet_tc": null,
+   "song_hanh": [
+    "FL002"
+   ],
+   "hk": [
+    "I",
+    "II",
+    "III"
+   ],
+   "dieu_kien": "ngoai_ngu_cb",
+   "trang": 3,
+   "nguon_trang": "lớp văn bản"
+  },
+  {
+   "tt": 15,
+   "ma": "FL007",
+   "ten": "Pháp văn tăng cường 1",
+   "tin_chi": 4,
+   "khoi": "dai_cuong",
+   "cot": "g_ngoai_ngu",
+   "lt": 60,
+   "th": 0,
+   "tien_quyet": [],
+   "tien_quyet_tc": null,
+   "song_hanh": [
+    "FL003"
+   ],
+   "hk": [
+    "I",
+    "II",
+    "III"
+   ],
+   "dieu_kien": "ngoai_ngu_cb",
+   "trang": 3,
+   "nguon_trang": "lớp văn bản"
+  },
+  {
+   "tt": 16,
+   "ma": "FL008",
+   "ten": "Pháp văn tăng cường 2",
+   "tin_chi": 3,
+   "khoi": "dai_cuong",
+   "cot": "g_ngoai_ngu",
+   "lt": 45,
+   "th": 0,
+   "tien_quyet": [],
+   "tien_quyet_tc": null,
+   "song_hanh": [
+    "FL007"
+   ],
+   "hk": [
+    "I",
+    "II",
+    "III"
+   ],
+   "dieu_kien": "ngoai_ngu_cb",
+   "trang": 3,
+   "nguon_trang": "lớp văn bản"
+  },
+  {
+   "tt": 17,
+   "ma": "FL009",
+   "ten": "Pháp văn tăng cường 3",
+   "tin_chi": 3,
+   "khoi": "dai_cuong",
+   "cot": "g_ngoai_ngu",
+   "lt": 45,
+   "th": 0,
+   "tien_quyet": [],
+   "tien_quyet_tc": null,
+   "song_hanh": [
+    "FL008"
+   ],
+   "hk": [
+    "I",
+    "II",
+    "III"
+   ],
+   "dieu_kien": "ngoai_ngu_cb",
+   "trang": 3,
+   "nguon_trang": "lớp văn bản"
+  },
+  {
+   "tt": 18,
+   "ma": "ML014",
+   "ten": "Triết học Mác - Lênin",
+   "tin_chi": 3,
+   "khoi": "dai_cuong",
+   "cot": "BB",
+   "lt": 45,
+   "th": 0,
+   "tien_quyet": [],
+   "tien_quyet_tc": null,
+   "song_hanh": [],
+   "hk": [
+    "I",
+    "II",
+    "III"
+   ],
+   "dieu_kien": null,
+   "trang": 3,
+   "nguon_trang": "lớp văn bản"
+  },
+  {
+   "tt": 19,
+   "ma": "ML016",
+   "ten": "Kinh tế chính trị Mác - Lênin",
+   "tin_chi": 2,
+   "khoi": "dai_cuong",
+   "cot": "BB",
+   "lt": 30,
+   "th": 0,
+   "tien_quyet": [
+    "ML014"
+   ],
+   "tien_quyet_tc": null,
+   "song_hanh": [],
+   "hk": [
+    "I",
+    "II",
+    "III"
+   ],
+   "dieu_kien": null,
+   "trang": 3,
+   "nguon_trang": "lớp văn bản"
+  },
+  {
+   "tt": 20,
+   "ma": "ML018",
+   "ten": "Chủ nghĩa xã hội khoa học",
+   "tin_chi": 2,
+   "khoi": "dai_cuong",
+   "cot": "BB",
+   "lt": 30,
+   "th": 0,
+   "tien_quyet": [
+    "ML016"
+   ],
+   "tien_quyet_tc": null,
+   "song_hanh": [],
+   "hk": [
+    "I",
+    "II",
+    "III"
+   ],
+   "dieu_kien": null,
+   "trang": 3,
+   "nguon_trang": "lớp văn bản"
+  },
+  {
+   "tt": 21,
+   "ma": "ML019",
+   "ten": "Lịch sử Đảng Cộng sản Việt Nam",
+   "tin_chi": 2,
+   "khoi": "dai_cuong",
+   "cot": "BB",
+   "lt": 30,
+   "th": 0,
+   "tien_quyet": [
+    "ML018"
+   ],
+   "tien_quyet_tc": null,
+   "song_hanh": [],
+   "hk": [
+    "I",
+    "II",
+    "III"
+   ],
+   "dieu_kien": null,
+   "trang": 3,
+   "nguon_trang": "lớp văn bản"
+  },
+  {
+   "tt": 22,
+   "ma": "ML021",
+   "ten": "Tư tưởng Hồ Chí Minh",
+   "tin_chi": 2,
+   "khoi": "dai_cuong",
+   "cot": "BB",
+   "lt": 30,
+   "th": 0,
+   "tien_quyet": [
+    "ML019"
+   ],
+   "tien_quyet_tc": null,
+   "song_hanh": [],
+   "hk": [
+    "I",
+    "II",
+    "III"
+   ],
+   "dieu_kien": null,
+   "trang": 3,
+   "nguon_trang": "lớp văn bản"
+  },
+  {
+   "tt": 23,
+   "ma": "KL001E",
+   "ten": "Pháp luật đại cương",
+   "tin_chi": 2,
+   "khoi": "dai_cuong",
+   "cot": "BB",
+   "lt": 30,
+   "th": 0,
+   "tien_quyet": [],
+   "tien_quyet_tc": null,
+   "song_hanh": [],
+   "hk": [
+    "I",
+    "II",
+    "III"
+   ],
+   "dieu_kien": null,
+   "trang": 3,
+   "nguon_trang": "lớp văn bản"
+  },
+  {
+   "tt": 24,
+   "ma": "ML007",
+   "ten": "Logic học đại cương",
+   "tin_chi": 2,
+   "khoi": "dai_cuong",
+   "cot": "g_xa_hoi",
+   "lt": 30,
+   "th": 0,
+   "tien_quyet": [],
+   "tien_quyet_tc": null,
+   "song_hanh": [],
+   "hk": [
+    "I",
+    "II",
+    "III"
+   ],
+   "dieu_kien": null,
+   "trang": 3,
+   "nguon_trang": "lớp văn bản"
+  },
+  {
+   "tt": 25,
+   "ma": "XH028",
+   "ten": "Xã hội học đại cương",
+   "tin_chi": 2,
+   "khoi": "dai_cuong",
+   "cot": "g_xa_hoi",
+   "lt": 30,
+   "th": 0,
+   "tien_quyet": [],
+   "tien_quyet_tc": null,
+   "song_hanh": [],
+   "hk": [
+    "I",
+    "II",
+    "III"
+   ],
+   "dieu_kien": null,
+   "trang": 3,
+   "nguon_trang": "lớp văn bản"
+  },
+  {
+   "tt": 26,
+   "ma": "XH011",
+   "ten": "Cơ sở văn hóa Việt Nam",
+   "tin_chi": 2,
+   "khoi": "dai_cuong",
+   "cot": "g_xa_hoi",
+   "lt": 30,
+   "th": 0,
+   "tien_quyet": [],
+   "tien_quyet_tc": null,
+   "song_hanh": [],
+   "hk": [
+    "I",
+    "II",
+    "III"
+   ],
+   "dieu_kien": null,
+   "trang": 3,
+   "nguon_trang": "lớp văn bản"
+  },
+  {
+   "tt": 27,
+   "ma": "XH012",
+   "ten": "Tiếng Việt thực hành",
+   "tin_chi": 2,
+   "khoi": "dai_cuong",
+   "cot": "g_xa_hoi",
+   "lt": 30,
+   "th": 0,
+   "tien_quyet": [],
+   "tien_quyet_tc": null,
+   "song_hanh": [],
+   "hk": [
+    "I",
+    "II",
+    "III"
+   ],
+   "dieu_kien": null,
+   "trang": 3,
+   "nguon_trang": "lớp văn bản"
+  },
+  {
+   "tt": 28,
+   "ma": "XH014",
+   "ten": "Văn bản và lưu trữ học đại cương",
+   "tin_chi": 2,
+   "khoi": "dai_cuong",
+   "cot": "g_xa_hoi",
+   "lt": 30,
+   "th": 0,
+   "tien_quyet": [],
+   "tien_quyet_tc": null,
+   "song_hanh": [],
+   "hk": [
+    "I",
+    "II",
+    "III"
+   ],
+   "dieu_kien": null,
+   "trang": 3,
+   "nguon_trang": "lớp văn bản"
+  },
+  {
+   "tt": 29,
+   "ma": "KN001E",
+   "ten": "Kỹ năng mềm",
+   "tin_chi": 2,
+   "khoi": "dai_cuong",
+   "cot": "g_xa_hoi",
+   "lt": 20,
+   "th": 20,
+   "tien_quyet": [],
+   "tien_quyet_tc": null,
+   "song_hanh": [],
+   "hk": [
+    "I",
+    "II",
+    "III"
+   ],
+   "dieu_kien": null,
+   "trang": 3,
+   "nguon_trang": "lớp văn bản"
+  },
+  {
+   "tt": 30,
+   "ma": "KN002E",
+   "ten": "Đổi mới sáng tạo và khởi nghiệp",
+   "tin_chi": 2,
+   "khoi": "dai_cuong",
+   "cot": "g_xa_hoi",
+   "lt": 20,
+   "th": 20,
+   "tien_quyet": [],
+   "tien_quyet_tc": null,
+   "song_hanh": [],
+   "hk": [
+    "I",
+    "II",
+    "III"
+   ],
+   "dieu_kien": null,
+   "trang": 3,
+   "nguon_trang": "lớp văn bản"
+  },
+  {
+   "tt": 31,
+   "ma": "TN001",
+   "ten": "Vi - Tích phân A1",
+   "tin_chi": 3,
+   "khoi": "dai_cuong",
+   "cot": "BB",
+   "lt": 45,
+   "th": 0,
+   "tien_quyet": [],
+   "tien_quyet_tc": null,
+   "song_hanh": [],
+   "hk": [
+    "I",
+    "II",
+    "III"
+   ],
+   "dieu_kien": null,
+   "trang": 3,
+   "nguon_trang": "lớp văn bản"
+  },
+  {
+   "tt": 32,
+   "ma": "TN002",
+   "ten": "Vi - Tích phân A2",
+   "tin_chi": 4,
+   "khoi": "dai_cuong",
+   "cot": "BB",
+   "lt": 60,
+   "th": 0,
+   "tien_quyet": [
+    "TN001"
+   ],
+   "tien_quyet_tc": null,
+   "song_hanh": [],
+   "hk": [
+    "I",
+    "II",
+    "III"
+   ],
+   "dieu_kien": null,
+   "trang": 3,
+   "nguon_trang": "lớp văn bản"
+  },
+  {
+   "tt": 33,
+   "ma": "TN010",
+   "ten": "Xác suất thống kê",
+   "tin_chi": 3,
+   "khoi": "dai_cuong",
+   "cot": "BB",
+   "lt": 45,
+   "th": 0,
+   "tien_quyet": [],
+   "tien_quyet_tc": null,
+   "song_hanh": [],
+   "hk": [
+    "I",
+    "II",
+    "III"
+   ],
+   "dieu_kien": null,
+   "trang": 3,
+   "nguon_trang": "lớp văn bản"
+  },
+  {
+   "tt": 34,
+   "ma": "TN012",
+   "ten": "Đại số tuyến tính và Hình học",
+   "tin_chi": 4,
+   "khoi": "dai_cuong",
+   "cot": "BB",
+   "lt": 60,
+   "th": 0,
+   "tien_quyet": [],
+   "tien_quyet_tc": null,
+   "song_hanh": [],
+   "hk": [
+    "I",
+    "II",
+    "III"
+   ],
+   "dieu_kien": null,
+   "trang": 3,
+   "nguon_trang": "lớp văn bản"
+  },
+  {
+   "tt": 35,
+   "ma": "CT100",
+   "ten": "Kỹ năng học đại học",
+   "tin_chi": 2,
+   "khoi": "dai_cuong",
+   "cot": "BB",
+   "lt": 20,
+   "th": 20,
+   "tien_quyet": [],
+   "tien_quyet_tc": null,
+   "song_hanh": [],
+   "hk": [
+    "I",
+    "II",
+    "III"
+   ],
+   "dieu_kien": null,
+   "trang": 3,
+   "nguon_trang": "lớp văn bản"
+  },
+  {
+   "tt": 36,
+   "ma": "CT200",
+   "ten": "Nền tảng công nghệ thông tin",
+   "tin_chi": 4,
+   "khoi": "dai_cuong",
+   "cot": "BB",
+   "lt": 30,
+   "th": 60,
+   "tien_quyet": [],
+   "tien_quyet_tc": null,
+   "song_hanh": [],
+   "hk": [
+    "I",
+    "II",
+    "III"
+   ],
+   "dieu_kien": null,
+   "trang": 3,
+   "nguon_trang": "lớp văn bản"
+  },
+  {
+   "tt": 37,
+   "ma": "CT101",
+   "ten": "Lập trình căn bản A",
+   "tin_chi": 4,
+   "khoi": "co_so_nganh",
+   "cot": "BB",
+   "lt": 30,
+   "th": 60,
+   "tien_quyet": [],
+   "tien_quyet_tc": null,
+   "song_hanh": [],
+   "hk": [
+    "I",
+    "II"
+   ],
+   "dieu_kien": null,
+   "trang": 3,
+   "nguon_trang": "lớp văn bản"
+  },
+  {
+   "tt": 38,
+   "ma": "CT177",
+   "ten": "Cấu trúc dữ liệu",
+   "tin_chi": 3,
+   "khoi": "co_so_nganh",
+   "cot": "BB",
+   "lt": 30,
+   "th": 30,
+   "tien_quyet": [
+    "CT101"
+   ],
+   "tien_quyet_tc": null,
+   "song_hanh": [],
+   "hk": [
+    "I",
+    "II"
+   ],
+   "dieu_kien": null,
+   "trang": 3,
+   "nguon_trang": "lớp văn bản"
+  },
+  {
+   "tt": 39,
+   "ma": "CT174",
+   "ten": "Phân tích và thiết kế thuật toán",
+   "tin_chi": 3,
+   "khoi": "co_so_nganh",
+   "cot": "BB",
+   "lt": 30,
+   "th": 30,
+   "tien_quyet": [
+    "CT177"
+   ],
+   "tien_quyet_tc": null,
+   "song_hanh": [],
+   "hk": [
+    "I",
+    "II"
+   ],
+   "dieu_kien": null,
+   "trang": 3,
+   "nguon_trang": "lớp văn bản"
+  },
+  {
+   "tt": 40,
+   "ma": "CT172",
+   "ten": "Toán rời rạc",
+   "tin_chi": 4,
+   "khoi": "co_so_nganh",
+   "cot": "BB",
+   "lt": 60,
+   "th": 0,
+   "tien_quyet": [],
+   "tien_quyet_tc": null,
+   "song_hanh": [],
+   "hk": [
+    "I",
+    "II"
+   ],
+   "dieu_kien": null,
+   "trang": 3,
+   "nguon_trang": "lớp văn bản"
+  },
+  {
+   "tt": 41,
+   "ma": "CT175",
+   "ten": "Lý thuyết đồ thị",
+   "tin_chi": 3,
+   "khoi": "co_so_nganh",
+   "cot": "BB",
+   "lt": 30,
+   "th": 30,
+   "tien_quyet": [
+    "CT177"
+   ],
+   "tien_quyet_tc": null,
+   "song_hanh": [],
+   "hk": [
+    "I",
+    "II"
+   ],
+   "dieu_kien": null,
+   "trang": 3,
+   "nguon_trang": "lớp văn bản"
+  },
+  {
+   "tt": 42,
+   "ma": "CT190",
+   "ten": "Nhập môn trí tuệ nhân tạo",
+   "tin_chi": 2,
+   "khoi": "co_so_nganh",
+   "cot": "BB",
+   "lt": 20,
+   "th": 20,
+   "tien_quyet": [],
+   "tien_quyet_tc": null,
+   "song_hanh": [],
+   "hk": [
+    "I",
+    "II"
+   ],
+   "dieu_kien": null,
+   "trang": 4,
+   "nguon_trang": "ảnh quét — chép tay"
+  },
+  {
+   "tt": 43,
+   "ma": "CT180",
+   "ten": "Cơ sở dữ liệu",
+   "tin_chi": 3,
+   "khoi": "co_so_nganh",
+   "cot": "BB",
+   "lt": 30,
+   "th": 30,
+   "tien_quyet": [
+    "CT177"
+   ],
+   "tien_quyet_tc": null,
+   "song_hanh": [],
+   "hk": [
+    "I",
+    "II"
+   ],
+   "dieu_kien": null,
+   "trang": 4,
+   "nguon_trang": "ảnh quét — chép tay"
+  },
+  {
+   "tt": 44,
+   "ma": "CT182",
+   "ten": "Ngôn ngữ mô hình hóa",
+   "tin_chi": 3,
+   "khoi": "co_so_nganh",
+   "cot": "BB",
+   "lt": 30,
+   "th": 30,
+   "tien_quyet": [
+    "CT176"
+   ],
+   "tien_quyet_tc": null,
+   "song_hanh": [
+    "CT180"
+   ],
+   "hk": [
+    "I",
+    "II"
+   ],
+   "dieu_kien": null,
+   "trang": 4,
+   "nguon_trang": "ảnh quét — chép tay"
+  },
+  {
+   "tt": 45,
+   "ma": "CT296",
+   "ten": "Phân tích và thiết kế hệ thống thông tin",
+   "tin_chi": 3,
+   "khoi": "co_so_nganh",
+   "cot": "BB",
+   "lt": 30,
+   "th": 30,
+   "tien_quyet": [
+    "CT180"
+   ],
+   "tien_quyet_tc": null,
+   "song_hanh": [],
+   "hk": [
+    "I",
+    "II"
+   ],
+   "dieu_kien": null,
+   "trang": 4,
+   "nguon_trang": "ảnh quét — chép tay"
+  },
+  {
+   "tt": 46,
+   "ma": "CT173",
+   "ten": "Kiến trúc máy tính",
+   "tin_chi": 3,
+   "khoi": "co_so_nganh",
+   "cot": "BB",
+   "lt": 45,
+   "th": 0,
+   "tien_quyet": [],
+   "tien_quyet_tc": null,
+   "song_hanh": [],
+   "hk": [
+    "I",
+    "II"
+   ],
+   "dieu_kien": null,
+   "trang": 4,
+   "nguon_trang": "ảnh quét — chép tay"
+  },
+  {
+   "tt": 47,
+   "ma": "CT178",
+   "ten": "Nguyên lý hệ điều hành",
+   "tin_chi": 3,
+   "khoi": "co_so_nganh",
+   "cot": "BB",
+   "lt": 30,
+   "th": 30,
+   "tien_quyet": [
+    "CT173"
+   ],
+   "tien_quyet_tc": null,
+   "song_hanh": [],
+   "hk": [
+    "I",
+    "II"
+   ],
+   "dieu_kien": null,
+   "trang": 4,
+   "nguon_trang": "ảnh quét — chép tay"
+  },
+  {
+   "tt": 48,
+   "ma": "CT112",
+   "ten": "Mạng máy tính",
+   "tin_chi": 3,
+   "khoi": "co_so_nganh",
+   "cot": "BB",
+   "lt": 30,
+   "th": 30,
+   "tien_quyet": [
+    "CT178"
+   ],
+   "tien_quyet_tc": null,
+   "song_hanh": [],
+   "hk": [
+    "I",
+    "II"
+   ],
+   "dieu_kien": null,
+   "trang": 4,
+   "nguon_trang": "ảnh quét — chép tay"
+  },
+  {
+   "tt": 49,
+   "ma": "CT176",
+   "ten": "Lập trình hướng đối tượng",
+   "tin_chi": 3,
+   "khoi": "co_so_nganh",
+   "cot": "BB",
+   "lt": 30,
+   "th": 30,
+   "tien_quyet": [
+    "CT101"
+   ],
+   "tien_quyet_tc": null,
+   "song_hanh": [],
+   "hk": [
+    "I",
+    "II"
+   ],
+   "dieu_kien": null,
+   "trang": 4,
+   "nguon_trang": "ảnh quét — chép tay"
+  },
+  {
+   "tt": 50,
+   "ma": "CT179",
+   "ten": "Quản trị hệ thống",
+   "tin_chi": 3,
+   "khoi": "co_so_nganh",
+   "cot": "BB",
+   "lt": 30,
+   "th": 30,
+   "tien_quyet": [],
+   "tien_quyet_tc": null,
+   "song_hanh": [],
+   "hk": [
+    "I",
+    "II"
+   ],
+   "dieu_kien": null,
+   "trang": 4,
+   "nguon_trang": "ảnh quét — chép tay"
+  },
+  {
+   "tt": 51,
+   "ma": "CT188",
+   "ten": "Nhập môn lập trình web",
+   "tin_chi": 3,
+   "khoi": "co_so_nganh",
+   "cot": "BB",
+   "lt": 30,
+   "th": 30,
+   "tien_quyet": [],
+   "tien_quyet_tc": null,
+   "song_hanh": [],
+   "hk": [
+    "I",
+    "II"
+   ],
+   "dieu_kien": null,
+   "trang": 4,
+   "nguon_trang": "ảnh quét — chép tay"
+  },
+  {
+   "tt": 52,
+   "ma": "CT271E",
+   "ten": "Niên luận cơ sở - CNTT",
+   "tin_chi": 3,
+   "khoi": "chuyen_nganh",
+   "cot": "BB",
+   "lt": 0,
+   "th": 90,
+   "tien_quyet": [
+    "CT174",
+    "CT176"
+   ],
+   "tien_quyet_tc": null,
+   "song_hanh": [],
+   "hk": [
+    "I",
+    "II"
+   ],
+   "dieu_kien": null,
+   "trang": 4,
+   "nguon_trang": "ảnh quét — chép tay"
+  },
+  {
+   "tt": 53,
+   "ma": "CT273",
+   "ten": "Giao diện người - máy",
+   "tin_chi": 3,
+   "khoi": "chuyen_nganh",
+   "cot": "BB",
+   "lt": 30,
+   "th": 30,
+   "tien_quyet": [],
+   "tien_quyet_tc": null,
+   "song_hanh": [],
+   "hk": [
+    "I",
+    "II"
+   ],
+   "dieu_kien": null,
+   "trang": 4,
+   "nguon_trang": "ảnh quét — chép tay"
+  },
+  {
+   "tt": 54,
+   "ma": "CT294",
+   "ten": "Máy học ứng dụng",
+   "tin_chi": 3,
+   "khoi": "chuyen_nganh",
+   "cot": "BB",
+   "lt": 30,
+   "th": 30,
+   "tien_quyet": [],
+   "tien_quyet_tc": null,
+   "song_hanh": [],
+   "hk": [
+    "I",
+    "II"
+   ],
+   "dieu_kien": null,
+   "trang": 4,
+   "nguon_trang": "ảnh quét — chép tay"
+  },
+  {
+   "tt": 55,
+   "ma": "CT202",
+   "ten": "Nguyên lý máy học",
+   "tin_chi": 3,
+   "khoi": "chuyen_nganh",
+   "cot": "BB",
+   "lt": 30,
+   "th": 30,
+   "tien_quyet": [],
+   "tien_quyet_tc": null,
+   "song_hanh": [],
+   "hk": [
+    "I",
+    "II"
+   ],
+   "dieu_kien": null,
+   "trang": 4,
+   "nguon_trang": "ảnh quét — chép tay"
+  },
+  {
+   "tt": 56,
+   "ma": "CT467",
+   "ten": "Quản trị dữ liệu",
+   "tin_chi": 3,
+   "khoi": "chuyen_nganh",
+   "cot": "BB",
+   "lt": 30,
+   "th": 30,
+   "tien_quyet": [
+    "CT180"
+   ],
+   "tien_quyet_tc": null,
+   "song_hanh": [],
+   "hk": [
+    "I",
+    "II"
+   ],
+   "dieu_kien": null,
+   "trang": 4,
+   "nguon_trang": "ảnh quét — chép tay"
+  },
+  {
+   "tt": 57,
+   "ma": "CT293",
+   "ten": "Mạng và truyền thông dữ liệu",
+   "tin_chi": 3,
+   "khoi": "chuyen_nganh",
+   "cot": "BB",
+   "lt": 30,
+   "th": 30,
+   "tien_quyet": [
+    "CT112"
+   ],
+   "tien_quyet_tc": null,
+   "song_hanh": [],
+   "hk": [
+    "I",
+    "II"
+   ],
+   "dieu_kien": null,
+   "trang": 4,
+   "nguon_trang": "ảnh quét — chép tay"
+  },
+  {
+   "tt": 58,
+   "ma": "CT275",
+   "ten": "Công nghệ Web",
+   "tin_chi": 3,
+   "khoi": "chuyen_nganh",
+   "cot": "BB",
+   "lt": 30,
+   "th": 30,
+   "tien_quyet": [
+    "CT188"
+   ],
+   "tien_quyet_tc": null,
+   "song_hanh": [],
+   "hk": [
+    "I",
+    "II"
+   ],
+   "dieu_kien": null,
+   "trang": 4,
+   "nguon_trang": "ảnh quét — chép tay"
+  },
+  {
+   "tt": 59,
+   "ma": "CT300",
+   "ten": "Phát triển phần mềm",
+   "tin_chi": 3,
+   "khoi": "chuyen_nganh",
+   "cot": "BB",
+   "lt": 30,
+   "th": 30,
+   "tien_quyet": [
+    "CT176"
+   ],
+   "tien_quyet_tc": null,
+   "song_hanh": [],
+   "hk": [
+    "I",
+    "II"
+   ],
+   "dieu_kien": null,
+   "trang": 4,
+   "nguon_trang": "ảnh quét — chép tay"
+  },
+  {
+   "tt": 60,
+   "ma": "CT223",
+   "ten": "Quản lý dự án phần mềm",
+   "tin_chi": 3,
+   "khoi": "chuyen_nganh",
+   "cot": "BB",
+   "lt": 30,
+   "th": 30,
+   "tien_quyet": [],
+   "tien_quyet_tc": null,
+   "song_hanh": [],
+   "hk": [
+    "I",
+    "II"
+   ],
+   "dieu_kien": null,
+   "trang": 4,
+   "nguon_trang": "ảnh quét — chép tay"
+  },
+  {
+   "tt": 61,
+   "ma": "CT222",
+   "ten": "An toàn hệ thống",
+   "tin_chi": 3,
+   "khoi": "chuyen_nganh",
+   "cot": "BB",
+   "lt": 30,
+   "th": 30,
+   "tien_quyet": [],
+   "tien_quyet_tc": null,
+   "song_hanh": [],
+   "hk": [
+    "I",
+    "II"
+   ],
+   "dieu_kien": null,
+   "trang": 4,
+   "nguon_trang": "ảnh quét — chép tay"
+  },
+  {
+   "tt": 62,
+   "ma": "CT211",
+   "ten": "An ninh mạng",
+   "tin_chi": 3,
+   "khoi": "chuyen_nganh",
+   "cot": "g_chuyen_nganh",
+   "lt": 30,
+   "th": 30,
+   "tien_quyet": [],
+   "tien_quyet_tc": null,
+   "song_hanh": [],
+   "hk": [
+    "I",
+    "II"
+   ],
+   "dieu_kien": null,
+   "trang": 4,
+   "nguon_trang": "ảnh quét — chép tay"
+  },
+  {
+   "tt": 63,
+   "ma": "CT297",
+   "ten": "Pháp y máy tính",
+   "tin_chi": 3,
+   "khoi": "chuyen_nganh",
+   "cot": "g_chuyen_nganh",
+   "lt": 30,
+   "th": 30,
+   "tien_quyet": [],
+   "tien_quyet_tc": null,
+   "song_hanh": [],
+   "hk": [
+    "I",
+    "II"
+   ],
+   "dieu_kien": null,
+   "trang": 4,
+   "nguon_trang": "ảnh quét — chép tay"
+  },
+  {
+   "tt": 64,
+   "ma": "CT449",
+   "ten": "Phát triển ứng dụng Web",
+   "tin_chi": 3,
+   "khoi": "chuyen_nganh",
+   "cot": "g_chuyen_nganh",
+   "lt": 30,
+   "th": 30,
+   "tien_quyet": [],
+   "tien_quyet_tc": null,
+   "song_hanh": [],
+   "hk": [
+    "I",
+    "II"
+   ],
+   "dieu_kien": null,
+   "trang": 4,
+   "nguon_trang": "ảnh quét — chép tay"
+  },
+  {
+   "tt": 65,
+   "ma": "CT484",
+   "ten": "Phát triển ứng dụng di động",
+   "tin_chi": 3,
+   "khoi": "chuyen_nganh",
+   "cot": "g_chuyen_nganh",
+   "lt": 30,
+   "th": 30,
+   "tien_quyet": [],
+   "tien_quyet_tc": null,
+   "song_hanh": [],
+   "hk": [
+    "I",
+    "II"
+   ],
+   "dieu_kien": null,
+   "trang": 4,
+   "nguon_trang": "ảnh quét — chép tay"
+  },
+  {
+   "tt": 66,
+   "ma": "CT522",
+   "ten": "Nền tảng về internet vạn vật",
+   "tin_chi": 3,
+   "khoi": "chuyen_nganh",
+   "cot": "g_chuyen_nganh",
+   "lt": 30,
+   "th": 30,
+   "tien_quyet": [],
+   "tien_quyet_tc": null,
+   "song_hanh": [],
+   "hk": [
+    "I",
+    "II"
+   ],
+   "dieu_kien": null,
+   "trang": 4,
+   "nguon_trang": "ảnh quét — chép tay"
+  },
+  {
+   "tt": 67,
+   "ma": "CT279",
+   "ten": "Blockchain",
+   "tin_chi": 3,
+   "khoi": "chuyen_nganh",
+   "cot": "g_chuyen_nganh",
+   "lt": 30,
+   "th": 30,
+   "tien_quyet": [],
+   "tien_quyet_tc": null,
+   "song_hanh": [],
+   "hk": [
+    "I",
+    "II"
+   ],
+   "dieu_kien": null,
+   "trang": 4,
+   "nguon_trang": "ảnh quét — chép tay"
+  },
+  {
+   "tt": 68,
+   "ma": "CT466E",
+   "ten": "Niên luận - CNTT",
+   "tin_chi": 3,
+   "khoi": "chuyen_nganh",
+   "cot": "BB",
+   "lt": 0,
+   "th": 90,
+   "tien_quyet": [],
+   "tien_quyet_tc": 80,
+   "song_hanh": [],
+   "hk": [
+    "I",
+    "II"
+   ],
+   "dieu_kien": null,
+   "trang": 4,
+   "nguon_trang": "ảnh quét — chép tay"
+  },
+  {
+   "tt": 69,
+   "ma": "CT518E",
+   "ten": "Thực tập doanh nghiệp - CNTT",
+   "tin_chi": 5,
+   "khoi": "chuyen_nganh",
+   "cot": "BB",
+   "lt": 0,
+   "th": 150,
+   "tien_quyet": [],
+   "tien_quyet_tc": 125,
+   "song_hanh": [],
+   "hk": [
+    "III"
+   ],
+   "dieu_kien": null,
+   "trang": 4,
+   "nguon_trang": "ảnh quét — chép tay"
+  },
+  {
+   "tt": 70,
+   "ma": "CT550E",
+   "ten": "Luận văn tốt nghiệp - CNTT",
+   "tin_chi": 15,
+   "khoi": "chuyen_nganh",
+   "cot": "g_tot_nghiep",
+   "lt": 0,
+   "th": 450,
+   "tien_quyet": [],
+   "tien_quyet_tc": 120,
+   "song_hanh": [],
+   "hk": [
+    "I",
+    "II"
+   ],
+   "dieu_kien": null,
+   "trang": 4,
+   "nguon_trang": "ảnh quét — chép tay"
+  },
+  {
+   "tt": 71,
+   "ma": "CT501E",
+   "ten": "Tiểu luận tốt nghiệp - CNTT",
+   "tin_chi": 6,
+   "khoi": "chuyen_nganh",
+   "cot": "g_tot_nghiep",
+   "lt": 0,
+   "th": 180,
+   "tien_quyet": [],
+   "tien_quyet_tc": 120,
+   "song_hanh": [],
+   "hk": [
+    "I",
+    "II"
+   ],
+   "dieu_kien": null,
+   "trang": 4,
+   "nguon_trang": "ảnh quét — chép tay"
+  },
+  {
+   "tt": 72,
+   "ma": "CT478",
+   "ten": "Trung tâm dữ liệu",
+   "tin_chi": 3,
+   "khoi": "chuyen_nganh",
+   "cot": "g_tot_nghiep",
+   "lt": 30,
+   "th": 30,
+   "tien_quyet": [],
+   "tien_quyet_tc": null,
+   "song_hanh": [],
+   "hk": [
+    "I",
+    "II"
+   ],
+   "dieu_kien": null,
+   "trang": 4,
+   "nguon_trang": "ảnh quét — chép tay"
+  },
+  {
+   "tt": 73,
+   "ma": "CT283",
+   "ten": "Hệ thống chịu lỗi",
+   "tin_chi": 3,
+   "khoi": "chuyen_nganh",
+   "cot": "g_tot_nghiep",
+   "lt": 30,
+   "th": 30,
+   "tien_quyet": [],
+   "tien_quyet_tc": null,
+   "song_hanh": [],
+   "hk": [
+    "I",
+    "II"
+   ],
+   "dieu_kien": null,
+   "trang": 4,
+   "nguon_trang": "ảnh quét — chép tay"
+  },
+  {
+   "tt": 74,
+   "ma": "CT233",
+   "ten": "Điện toán đám mây",
+   "tin_chi": 3,
+   "khoi": "chuyen_nganh",
+   "cot": "g_tot_nghiep",
+   "lt": 30,
+   "th": 30,
+   "tien_quyet": [],
+   "tien_quyet_tc": null,
+   "song_hanh": [],
+   "hk": [
+    "I",
+    "II"
+   ],
+   "dieu_kien": null,
+   "trang": 4,
+   "nguon_trang": "ảnh quét — chép tay"
+  },
+  {
+   "tt": 75,
+   "ma": "CT482",
+   "ten": "Xử lý dữ liệu lớn",
+   "tin_chi": 3,
+   "khoi": "chuyen_nganh",
+   "cot": "g_tot_nghiep",
+   "lt": 30,
+   "th": 30,
+   "tien_quyet": [],
+   "tien_quyet_tc": null,
+   "song_hanh": [],
+   "hk": [
+    "I",
+    "II"
+   ],
+   "dieu_kien": null,
+   "trang": 4,
+   "nguon_trang": "ảnh quét — chép tay"
+  },
+  {
+   "tt": 76,
+   "ma": "CT210",
+   "ten": "Thị giác máy tính",
+   "tin_chi": 3,
+   "khoi": "chuyen_nganh",
+   "cot": "g_tot_nghiep",
+   "lt": 30,
+   "th": 30,
+   "tien_quyet": [],
+   "tien_quyet_tc": null,
+   "song_hanh": [],
+   "hk": [
+    "I",
+    "II"
+   ],
+   "dieu_kien": null,
+   "trang": 4,
+   "nguon_trang": "ảnh quét — chép tay"
+  },
+  {
+   "tt": 77,
+   "ma": "CT219",
+   "ten": "Xử lý ngôn ngữ tự nhiên",
+   "tin_chi": 3,
+   "khoi": "chuyen_nganh",
+   "cot": "g_tot_nghiep",
+   "lt": 30,
+   "th": 30,
+   "tien_quyet": [],
+   "tien_quyet_tc": null,
+   "song_hanh": [],
+   "hk": [
+    "I",
+    "II"
+   ],
+   "dieu_kien": null,
+   "trang": 4,
+   "nguon_trang": "ảnh quét — chép tay"
+  },
+  {
+   "tt": 78,
+   "ma": "CT312",
+   "ten": "Khai khoáng dữ liệu",
+   "tin_chi": 3,
+   "khoi": "chuyen_nganh",
+   "cot": "g_tot_nghiep",
+   "lt": 30,
+   "th": 30,
+   "tien_quyet": [],
+   "tien_quyet_tc": null,
+   "song_hanh": [],
+   "hk": [
+    "I",
+    "II"
+   ],
+   "dieu_kien": null,
+   "trang": 4,
+   "nguon_trang": "ảnh quét — chép tay"
+  }
+ ]
+}

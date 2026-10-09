@@ -1,0 +1,13 @@
+Đối chiếu bản chép với LVTN/NiênLuan/ctdt/K49/69_7480201_CongNgheThongTin.pdf
+  dòng 45 CT296   KHÔNG ĐỌC ĐƯỢC  OCR: None
+  dòng 48 CT112   KHÔNG ĐỌC ĐƯỢC  OCR: None
+  dòng 51 CT188   KHÔNG ĐỌC ĐƯỢC  OCR: None
+  dòng 61 CT222   KHÔNG ĐỌC ĐƯỢC  OCR: None
+  dòng 62 CT211   KHÔNG ĐỌC ĐƯỢC  OCR: None
+  dòng 63 CT297   KHÔNG ĐỌC ĐƯỢC  OCR: None
+  dòng 64 CT449   KHÔNG ĐỌC ĐƯỢC  OCR: None
+  dòng 65 CT484   KHÔNG ĐỌC ĐƯỢC  OCR: None
+  dòng 66 CT522   KHÔNG ĐỌC ĐƯỢC  OCR: None
+  dòng 67 CT279   KHÔNG ĐỌC ĐƯỢC  OCR: None
+  dòng 75 CT482   KHỚP (soát tay) OCR đọc CT452 — ảnh 200 dpi đọc rõ 'CT482 Xử lý dữ liệu lớn'; OCR nhầm 8→s ('cr4s2')
+  Tổng: KHÔNG ĐỌC ĐƯỢC 10, KHỚP 67, KHỚP (soát tay) 1

@@ -1,0 +1,10 @@
+# Niên luận cũ: 666 MB, có hồ sơ sinh viên (data/students) — không đưa vào repo này
+NiênLuan/
+# Repo riêng có sẵn
+LVTN/
+# PDF văn bản gốc (67 MB, nhị phân) — OCR đã nằm trong CPA2_KhaoSat/w5_rformal/source
+ctu/
+*.zip
+__pycache__/
+*.pyc
+~$*.xlsx

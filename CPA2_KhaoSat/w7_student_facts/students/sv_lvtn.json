@@ -1,0 +1,373 @@
+{
+  "student_id": "sv_lvtn",
+  "major": "cntt",
+  "cohort": "K49",
+  "ctdt": "cntt_k49",
+  "grades": {
+    "QP010E": {
+      "code": "QP010E",
+      "credits": 2,
+      "thang10": 80,
+      "letter": "B+",
+      "status": "passed"
+    },
+    "QP011E": {
+      "code": "QP011E",
+      "credits": 2,
+      "thang10": 75,
+      "letter": "B",
+      "status": "passed"
+    },
+    "QP012": {
+      "code": "QP012",
+      "credits": 2,
+      "thang10": 70,
+      "letter": "B",
+      "status": "passed"
+    },
+    "QP013": {
+      "code": "QP013",
+      "credits": 2,
+      "thang10": 70,
+      "letter": "B",
+      "status": "passed"
+    },
+    "TC100": {
+      "code": "TC100",
+      "credits": 3,
+      "thang10": 80,
+      "letter": "B+",
+      "status": "passed"
+    },
+    "XH023": {
+      "code": "XH023",
+      "credits": 4,
+      "thang10": 70,
+      "letter": "B",
+      "status": "passed"
+    },
+    "XH024": {
+      "code": "XH024",
+      "credits": 3,
+      "thang10": 75,
+      "letter": "B",
+      "status": "passed"
+    },
+    "XH025": {
+      "code": "XH025",
+      "credits": 3,
+      "thang10": 70,
+      "letter": "B",
+      "status": "passed"
+    },
+    "ML014": {
+      "code": "ML014",
+      "credits": 3,
+      "thang10": 80,
+      "letter": "B+",
+      "status": "passed"
+    },
+    "ML016": {
+      "code": "ML016",
+      "credits": 2,
+      "thang10": 75,
+      "letter": "B",
+      "status": "passed"
+    },
+    "ML018": {
+      "code": "ML018",
+      "credits": 2,
+      "thang10": 70,
+      "letter": "B",
+      "status": "passed"
+    },
+    "ML019": {
+      "code": "ML019",
+      "credits": 2,
+      "thang10": 80,
+      "letter": "B+",
+      "status": "passed"
+    },
+    "ML021": {
+      "code": "ML021",
+      "credits": 2,
+      "thang10": 75,
+      "letter": "B",
+      "status": "passed"
+    },
+    "KL001E": {
+      "code": "KL001E",
+      "credits": 2,
+      "thang10": 70,
+      "letter": "B",
+      "status": "passed"
+    },
+    "ML007": {
+      "code": "ML007",
+      "credits": 2,
+      "thang10": 80,
+      "letter": "B+",
+      "status": "passed"
+    },
+    "TN001": {
+      "code": "TN001",
+      "credits": 3,
+      "thang10": 80,
+      "letter": "B+",
+      "status": "passed"
+    },
+    "TN002": {
+      "code": "TN002",
+      "credits": 4,
+      "thang10": 75,
+      "letter": "B",
+      "status": "passed"
+    },
+    "TN010": {
+      "code": "TN010",
+      "credits": 3,
+      "thang10": 80,
+      "letter": "B+",
+      "status": "passed"
+    },
+    "TN012": {
+      "code": "TN012",
+      "credits": 4,
+      "thang10": 70,
+      "letter": "B",
+      "status": "passed"
+    },
+    "CT100": {
+      "code": "CT100",
+      "credits": 2,
+      "thang10": 75,
+      "letter": "B",
+      "status": "passed"
+    },
+    "CT200": {
+      "code": "CT200",
+      "credits": 4,
+      "thang10": 80,
+      "letter": "B+",
+      "status": "passed"
+    },
+    "CT101": {
+      "code": "CT101",
+      "credits": 4,
+      "thang10": 80,
+      "letter": "B+",
+      "status": "passed"
+    },
+    "CT177": {
+      "code": "CT177",
+      "credits": 3,
+      "thang10": 75,
+      "letter": "B",
+      "status": "passed"
+    },
+    "CT174": {
+      "code": "CT174",
+      "credits": 3,
+      "thang10": 70,
+      "letter": "B",
+      "status": "passed"
+    },
+    "CT172": {
+      "code": "CT172",
+      "credits": 4,
+      "thang10": 70,
+      "letter": "B",
+      "status": "passed"
+    },
+    "CT175": {
+      "code": "CT175",
+      "credits": 3,
+      "thang10": 70,
+      "letter": "B",
+      "status": "passed"
+    },
+    "CT190": {
+      "code": "CT190",
+      "credits": 2,
+      "thang10": 80,
+      "letter": "B+",
+      "status": "passed"
+    },
+    "CT180": {
+      "code": "CT180",
+      "credits": 3,
+      "thang10": 75,
+      "letter": "B",
+      "status": "passed"
+    },
+    "CT182": {
+      "code": "CT182",
+      "credits": 3,
+      "thang10": 70,
+      "letter": "B",
+      "status": "passed"
+    },
+    "CT296": {
+      "code": "CT296",
+      "credits": 3,
+      "thang10": 80,
+      "letter": "B+",
+      "status": "passed"
+    },
+    "CT173": {
+      "code": "CT173",
+      "credits": 3,
+      "thang10": 70,
+      "letter": "B",
+      "status": "passed"
+    },
+    "CT178": {
+      "code": "CT178",
+      "credits": 3,
+      "thang10": 75,
+      "letter": "B",
+      "status": "passed"
+    },
+    "CT112": {
+      "code": "CT112",
+      "credits": 3,
+      "thang10": 70,
+      "letter": "B",
+      "status": "passed"
+    },
+    "CT176": {
+      "code": "CT176",
+      "credits": 3,
+      "thang10": 80,
+      "letter": "B+",
+      "status": "passed"
+    },
+    "CT179": {
+      "code": "CT179",
+      "credits": 3,
+      "thang10": 75,
+      "letter": "B",
+      "status": "passed"
+    },
+    "CT188": {
+      "code": "CT188",
+      "credits": 3,
+      "thang10": 80,
+      "letter": "B+",
+      "status": "passed"
+    },
+    "CT271E": {
+      "code": "CT271E",
+      "credits": 3,
+      "thang10": 70,
+      "letter": "B",
+      "status": "passed"
+    },
+    "CT273": {
+      "code": "CT273",
+      "credits": 3,
+      "thang10": 75,
+      "letter": "B",
+      "status": "passed"
+    },
+    "CT294": {
+      "code": "CT294",
+      "credits": 3,
+      "thang10": 70,
+      "letter": "B",
+      "status": "passed"
+    },
+    "CT202": {
+      "code": "CT202",
+      "credits": 3,
+      "thang10": 80,
+      "letter": "B+",
+      "status": "passed"
+    },
+    "CT467": {
+      "code": "CT467",
+      "credits": 3,
+      "thang10": 70,
+      "letter": "B",
+      "status": "passed"
+    },
+    "CT293": {
+      "code": "CT293",
+      "credits": 3,
+      "thang10": 75,
+      "letter": "B",
+      "status": "passed"
+    },
+    "CT275": {
+      "code": "CT275",
+      "credits": 3,
+      "thang10": 70,
+      "letter": "B",
+      "status": "passed"
+    },
+    "CT300": {
+      "code": "CT300",
+      "credits": 3,
+      "thang10": 80,
+      "letter": "B+",
+      "status": "passed"
+    },
+    "CT223": {
+      "code": "CT223",
+      "credits": 3,
+      "thang10": 70,
+      "letter": "B",
+      "status": "passed"
+    },
+    "CT222": {
+      "code": "CT222",
+      "credits": 3,
+      "thang10": 75,
+      "letter": "B",
+      "status": "passed"
+    },
+    "CT449": {
+      "code": "CT449",
+      "credits": 3,
+      "thang10": 70,
+      "letter": "B",
+      "status": "passed"
+    },
+    "CT484": {
+      "code": "CT484",
+      "credits": 3,
+      "thang10": 75,
+      "letter": "B",
+      "status": "passed"
+    },
+    "CT466E": {
+      "code": "CT466E",
+      "credits": 3,
+      "thang10": 70,
+      "letter": "B",
+      "status": "passed"
+    },
+    "CT550E": {
+      "code": "CT550E",
+      "credits": 15,
+      "thang10": 75,
+      "letter": "B",
+      "status": "passed"
+    },
+    "CT518E": {
+      "code": "CT518E",
+      "credits": 5,
+      "thang10": 70,
+      "letter": "B",
+      "status": "passed"
+    }
+  },
+  "certificates": [],
+  "exemptions": [],
+  "khong_tinh_tich_luy": [],
+  "xac_nhan_ky_luat_sach": true,
+  "meta": {
+    "nguon": "gia_lap",
+    "ghi_chu": "I1 — đủ 161 TC hình thức LVTN, ngoại ngữ AV, chuyên ngành CN2, ĐTBCTL ~3.0, dự kiến tot_nghiep=TRUE"
+  }
+}

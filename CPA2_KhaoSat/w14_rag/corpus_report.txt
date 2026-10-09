@@ -1,0 +1,5 @@
+CORPUS TUẦN 14
+  passage quy chế: 138 (OCR 130, dựng từ trích R-Formal 8)
+  passage CTĐT   : 83
+  quy tắc R-Formal không có passage OCR (dùng trích): ['R-B09', 'R-B10', 'R-B11', 'R-F06', 'R-F09', 'R-F10', 'R-M12', 'R-X18']
+  điều theo văn bản: QĐ3266 [1, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 2, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 3, 30, 31, 32, 33, 34, 35, 36, 4, 5, 6, 7, 8, 9], QĐ5339 [1, 2, 3, 4, 'PL1']

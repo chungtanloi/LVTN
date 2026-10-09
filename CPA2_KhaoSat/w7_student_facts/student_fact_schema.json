@@ -1,0 +1,271 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "CPA2 Student Fact Model v1 — Tuần 7",
+  "description": "Schema hồ sơ sinh viên cho CPA2. Sinh vị từ ASP: g10/2, diem_m/1, chung_chi/2, duoc_mien/1, khong_tinh_tich_luy/1, xac_nhan_ky_luat_sach/0. Nguồn: QĐ3266 + QĐ5339 + Curriculum CNTT K49.",
+  "type": "object",
+  "required": [
+    "student_id",
+    "major",
+    "cohort",
+    "grades"
+  ],
+  "properties": {
+    "student_id": {
+      "type": "string",
+      "pattern": "^sv_[a-z0-9_]+$"
+    },
+    "major": {
+      "type": "string",
+      "enum": [
+        "cntt",
+        "khmt",
+        "ktpm",
+        "httt",
+        "mmt"
+      ]
+    },
+    "cohort": {
+      "type": "string",
+      "pattern": "^K[0-9]{2}$"
+    },
+    "ctdt": {
+      "type": "string",
+      "default": "cntt_k49",
+      "description": "Khoá CTĐT tham chiếu — mặc định cntt_k49"
+    },
+    "grades": {
+      "type": "object",
+      "description": "Map mã HP → bản ghi điểm. Mỗi HP exactly one status.",
+      "additionalProperties": {
+        "type": "object",
+        "required": [
+          "code"
+        ],
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "credits": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 1,
+            "maximum": 15
+          },
+          "thang10": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 0,
+            "maximum": 100,
+            "description": "Điểm thang 10 ×10 (7.5 → 75). null nếu chưa có điểm / điểm chữ."
+          },
+          "letter": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "enum": [
+              "A",
+              "B+",
+              "B",
+              "C+",
+              "C",
+              "D+",
+              "D",
+              "F",
+              "M",
+              "W",
+              "I",
+              null
+            ]
+          },
+          "diem": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "enum": [
+              "M",
+              "W",
+              "I",
+              null
+            ],
+            "description": "Điểm đặc biệt M/W/I — nếu có thì thang10 = null"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "passed",
+              "failed",
+              "exempted_M",
+              "recognized",
+              "in_progress",
+              "unknown"
+            ],
+            "description": "Trục C Tuần 2 (7 trạng thái). recognized = công nhận điểm có vào ĐTBCTL; exempted_M = điểm M không vào."
+          },
+          "confidence": {
+            "type": [
+              "number",
+              "null"
+            ],
+            "minimum": 0,
+            "maximum": 1,
+            "description": "Độ tin cậy OCR / nguồn. null = dữ kiện giả lập chắc chắn."
+          },
+          "hk": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Học kỳ học HP, vd 'HK1-2024'"
+          },
+          "ghi_chu": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "certificates": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "loai",
+          "diem"
+        ],
+        "properties": {
+          "loai": {
+            "type": "string",
+            "enum": [
+              "ielts",
+              "toeic",
+              "toefl_itp",
+              "toefl_ibt",
+              "toefl_cbt",
+              "ctu_abc",
+              "cambridge",
+              "cntt_coban",
+              "other"
+            ]
+          },
+          "diem": {
+            "type": "number",
+            "description": "Điểm thô của chứng chỉ (IELTS 0-9, TOEIC 0-990...). ctu_abc: 1=A, 2=B, 3=C (chứng chỉ tiếng Anh ĐHCT). Loader nhân 10 trước khi đưa vào nguong_cc."
+          },
+          "bac": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 1,
+            "maximum": 6,
+            "description": "Bậc 6-bậc VN, suy từ bảng Phụ lục 1 QĐ5339 nếu loai là ngoại ngữ"
+          },
+          "ngay_cap": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date"
+          }
+        }
+      }
+    },
+    "exemptions": {
+      "type": "array",
+      "description": "Quyết định miễn — tách du_dk_xin_mien (suy được) khỏi duoc_mien (dữ kiện ngoài). QD-11.",
+      "items": {
+        "type": "object",
+        "required": [
+          "ma_hp",
+          "quyet_dinh"
+        ],
+        "properties": {
+          "ma_hp": {
+            "type": "string"
+          },
+          "chung_chi_ref": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "description": "Index vào certificates[], null nếu miễn do chuyển điểm"
+          },
+          "quyet_dinh": {
+            "type": "boolean",
+            "description": "true = đã có QĐ phê duyệt (duoc_mien), false = chỉ đủ điều kiện (mien_treo)"
+          },
+          "ngay_qd": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date"
+          }
+        }
+      }
+    },
+    "khong_tinh_tich_luy": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Danh sách mã HP SV chọn KHÔNG tính vào tích lũy khi xét tốt nghiệp — CQ-06. Chỉ HP thuộc nhóm tự chọn."
+    },
+    "che_do_sv_chon_tich_luy": {
+      "type": "boolean",
+      "default": false,
+      "description": "true = SV chưa khai báo lựa chọn, hệ thống xét MỌI cách chọn (∀∃) — I20"
+    },
+    "xac_nhan_ky_luat_sach": {
+      "type": [
+        "boolean",
+        "null"
+      ],
+      "description": "null = thiếu dữ kiện → tot_nghiep = UNKNOWN (R-F03). true = có xác nhận."
+    },
+    "da_hoc_nam2": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "description": "Số nửa năm đã học — dùng cho trần thời gian Điều 5"
+    },
+    "tc_cong_nhan": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "description": "Số TC được công nhận/chuyển đổi — giảm trần Điều 5"
+    },
+    "meta": {
+      "type": "object",
+      "properties": {
+        "nguon": {
+          "type": "string",
+          "enum": [
+            "gia_lap",
+            "ocr",
+            "hs_thật_ẩn_danh"
+          ]
+        },
+        "confidence_overall": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "ghi_chu": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

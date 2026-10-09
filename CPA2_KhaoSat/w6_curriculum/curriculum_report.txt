@@ -1,0 +1,69 @@
+==============================================================================
+VALIDATE CURRICULUM KB v1 — CTĐT CNTT K49 (QĐ 2423/QĐ-ĐHCT ngày 05/6/2023 — CTĐT ngành Công nghệ thông tin)
+==============================================================================
+
+S. CẤU TRÚC KB
+  [OK]   S1 đủ 78 dòng học phần (có 78)
+  [OK]   S2 KB tự nhất quán: schema + dữ kiện có answer set
+          ↳ các ràng buộc nội tại (dòng Cộng = tổng các dòng; không HP nào vừa BB vừa tự chọn) đều thoả
+  [OK]   S3 đột biến CT177: 3→4 TC làm KB VÔ NGHIỆM (không im lặng cho số sai)
+  [OK]   S4 đột biến nhóm tốt nghiệp 15→12 TC làm KB VÔ NGHIỆM
+  [OK]   S5 con trỏ nguồn của schema (['r_a02']) đều có trong R-Formal
+          ↳ Curriculum KB không đẻ RuleId mới; con số/thành viên nhóm mang nguồn qua ctdt_src/3
+  [OK]   S6 mọi học phần có ctdt_src(mã, trang, dòng) (78/78)
+
+P. SOLVER ĐỌC ĐƯỢC CURRICULUM — đối chiếu chéo ba cài đặt độc lập
+  [OK]   P1 clingo: số TC tối thiểu hoàn thành CTĐT = 161 (CTĐT ghi 161)
+          ↳ con số được TÍNH từ 78 dòng + 5 nhóm + tiên quyết/song hành, không chép từ dòng Tổng cộng
+  [OK]   P2 CP-SAT (đọc JSON, không đọc .lp): tối thiểu = 161 [OPTIMAL]
+  [OK]   P3 liệt kê thuần Python: tối thiểu = 161
+  [OK]   P4 số kế hoạch tối thiểu khác nhau trùng khớp: {'clingo': 2394, 'python': 2394, 'cp-sat': 2394}
+          ↳ = 2 (ngoại ngữ: AV/PV, buộc từ căn bản 1 do chuỗi song hành) × 7 (nhóm xã hội) × 3 (CN1/CN2/CN3) × 57 (nhóm 15 TC: LVTN | TLTN+3 HP | 5 HP)
+
+I. TÍCH HỢP VỚI R-FORMAL (QĐ3266 + QĐ5339) TRÊN CTĐT THẬT
+  [OK]   I1 SV đủ: AV căn bản 1–3, CN2, LVTN 15 TC → tot_nghiep
+          ↳ HỒI QUY L1: R-Formal v1.4 cho FALSE vì đòi đạt cả 12 HP ngoại ngữ (40 TC)
+  [OK]   I2 SV đủ theo hình thức TLTN 6 TC + 3 HP tự chọn → tot_nghiep
+  [OK]   I3 SV không làm LVTN/TLTN, học 5 HP tự chọn 3 TC → tot_nghiep
+          ↳ QĐ3266 Đ.31 k.3 (R-F05) hiện hình đúng trong ô gộp '15' của CTĐT
+  [OK]   I4 Đủ 164 TC nhưng THIẾU nhóm 15 TC tốt nghiệp → KHÔNG tốt nghiệp
+          ↳ HỒI QUY L2 (dương tính giả): v1.4 bỏ qua mọi nhóm đếm tín chỉ → dk_tu_chon đúng rỗng
+  [OK]   I5 Trộn ngoại ngữ: AV 4 TC + PV 7 TC = 11 TC → nhóm ngoại ngữ CHƯA đạt
+          ↳ ô '10 AV hoặc PV' là nhóm MỘT NHÁNH: tín chỉ không cộng dồn qua hai ngoại ngữ (CQ-02)
+  [OK]   I6 Mới 30 TC → CT550E CHƯA được đăng ký, thiếu 90 TC
+          ↳ HỒI QUY L3: v1.4 kết luận du_dk_dang_ky("CT550E") vì chỉ xét tiên quyết học phần
+  [OK]   I7 Song hành: XH024 xếp HK1, XH023 xếp HK2 → vi phạm
+  [OK]   I8 CT182: tiên quyết CT176, SONG HÀNH CT180 → đạt CT176 là đủ để đăng ký
+          ↳ CT180 ở cột song hành, không phải tiên quyết — học cùng kỳ được
+  [OK]   I9 Hai HP chéo cặp (CT211 của CN1 + CT449 của CN2) → nhóm chuyên ngành CHƯA đạt
+  [OK]   I10a Quá hạn, chỉ thiếu nhóm điều kiện (ngoại ngữ), cách đọc CHẶT → KHÔNG được quay lại
+          ↳ PHÁT HIỆN (CQ-05): 161 TC gồm 21 TC điều kiện → thiếu HP điều kiện là thiếu luôn TC ở đ.a, nên Đ.33 k.2 không kích hoạt được trừ khi SV học dư tự chọn để bù đúng số TC điều kiện thiếu
+  [OK]   I10b Cùng hồ sơ, chính sách tc_khong_gom_dk → được quay lại trong 3 năm
+          ↳ CHỈ để phân tích độ nhạy: CQ-05 đã đóng theo cách đọc chặt (I10a); kết luận mang cờ dien_giai(cq05)
+  [OK]   I11 Học phần (*) không vào ĐTBCTL: AV điểm 4,0 không kéo ĐTBCTL xuống dưới 2,00
+  [OK]   I15 Học dư CT478 điểm D, tính tất cả → ĐTBCTL < 2,00, KHÔNG tốt nghiệp
+          ↳ cách tính của v1.4 (mọi HP đạt đều vào tích lũy) phạt SV vì học thêm
+  [OK]   I16 Cùng hồ sơ, SV chọn KHÔNG tính CT478 → ĐTBCTL = 2,00, tốt nghiệp
+          ↳ CQ-06: HP không chọn vẫn 'đã đạt' (thỏa tiên quyết) nhưng ra khỏi TC tích lũy, ĐTBCTL và nhóm
+  [OK]   I17 Loại CT550E — HP duy nhất phủ nhóm tốt nghiệp → thiếu nhóm, KHÔNG tốt nghiệp
+          ↳ quyền chọn không phải miễn phí: hệ thống vẫn xét lại mọi điều kiện trên tập đã chọn
+  [OK]   I18 Loại một HP BẮT BUỘC (CT177) khỏi tích lũy → VÔ NGHIỆM
+          ↳ chỉ HP thuộc nhóm tự chọn mới được SV chọn bỏ
+  [OK]   I19 Làm CẢ LVTN và TLTN → vẫn tốt nghiệp, kèm khuyến nghị (không phải vi phạm)
+          ↳ CQ-06: không có quy định cấm làm cả hai; 'không nên' là khuyến nghị cho nhánh Recommendation
+  [OK]   I20 Chưa rõ điểm HP dư CT478: tính-tất-cả = UNKNOWN; có quyền chọn (∀∃) = TRUE
+          ↳ đúng là TRUE: điểm nào thì SV cũng bỏ được CT478. Cautious ngây thơ trên toàn bộ answer set cho UNKNOWN — SAI lượng từ; phải nhóm theo thế giới dữ kiện rồi mới ∃ trên lựa chọn
+  [OK]   I12 Chưa có điểm LVTN → tot_nghiep = UNKNOWN (mong đợi UNKNOWN)
+          ↳ ba trị là HỆ QUẢ của mô hình (cautious/brave), không phải nhánh if do người viết
+  [OK]   I13 Đủ dữ kiện → tot_nghiep = TRUE
+  [OK]   I14 Thiếu xác nhận kỷ luật → tot_nghiep = FALSE
+          ↳ đúng thiết kế R-F03: trục kỷ luật là dữ kiện ngoài phạm vi, không bao giờ tự suy ra
+
+G. ĐỒ THỊ TIÊN QUYẾT (mô tả)
+  · 20 cạnh tiên quyết học phần (T4a), 11 cạnh song hành, 4 ngưỡng tín chỉ (T4b): [('CT466E', 80), ('CT518E', 125), ('CT550E', 120), ('CT501E', 120)]
+  · chuỗi tiên quyết (T4a) dài nhất: 5 học phần — kết thúc ở ['ML021']
+  · học phần gốc có kế thừa: ['CT101', 'CT173', 'CT188', 'ML014', 'TN001']
+  · chỉ mở HK III: ['CT518E']
+
+==============================================================================
+KẾT LUẬN: ĐẠT.

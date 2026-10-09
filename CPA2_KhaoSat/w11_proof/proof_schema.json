@@ -1,0 +1,70 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "CPA2 Proof Certificate Schema v1 — Tuần 11",
+  "description": "Claim → Proof → Rule → Fact → Source. Mỗi kết luận về SV phải có certificate kiểm được bằng máy.",
+  "type": "object",
+  "required": ["claim", "verdict", "proof", "missing_facts"],
+  "properties": {
+    "claim": {
+      "type": "string",
+      "description": "Mệnh đề được hỏi, dạng atom ASP: tot_nghiep, dk_tin_chi, thieu_nhom(g_ngoai_ngu,3)..."
+    },
+    "verdict": {
+      "type": "string",
+      "enum": ["TRUE","FALSE","UNKNOWN"],
+      "description": "Ngữ nghĩa ba trị (Tuần 4): TRUE trong mọi thế giới, FALSE trong không thế giới nào, UNKNOWN còn lại"
+    },
+    "proof": {
+      "type": "object",
+      "required": ["steps"],
+      "properties": {
+        "steps": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["atom","rule_id","source","facts"],
+            "properties": {
+              "atom": {"type": "string"},
+              "rule_id": {"type": "string", "description": "RuleId trong rule_src/5, vd r_a01, r_m06"},
+              "source": {
+                "type": "object",
+                "required": ["van_ban","dieu","khoan","diem","trich"],
+                "properties": {
+                  "van_ban": {"type": "string"},
+                  "dieu": {"type": ["integer","null"]},
+                  "khoan": {"type": ["string","null"]},
+                  "diem": {"type": ["string","null"]},
+                  "trich": {"type": "string"}
+                }
+              },
+              "facts": {
+                "type": "array",
+                "items": {"type": "string"},
+                "description": "Danh sách facts dùng để suy ra atom này: g10(...), tich_luy(...), duoc_mien(...)"
+              }
+            }
+          }
+        }
+      }
+    },
+    "missing_facts": {
+      "type": "array",
+      "items": {"type": "string"},
+      "description": "Khi verdict=UNKNOWN: danh sách dữ kiện còn thiếu (biến tự do gây ra UNKNOWN), suy từ brave \\ cautious"
+    },
+    "explanation_vi": {
+      "type": ["string","null"],
+      "description": "Câu tiếng Việt do Verbalizer (Tuần 4 tầng 4) diễn đạt lại certificate — không được thêm mệnh đề mới. Bất biến: mọi số/mã HP trong explanation_vi phải xuất hiện trong proof."
+    },
+    "meta": {
+      "type": "object",
+      "properties": {
+        "student_id": {"type": "string"},
+        "ctdt": {"type": "string"},
+        "generated_at": {"type": "string", "format": "date-time"},
+        "solver": {"type": "string", "enum": ["clingo"]},
+        "qd_dien_giai": {"type": "array", "items": {"type": "string"}, "description": "Danh sách QD diễn giải dùng trong proof, vd [qd03,qd09,cq05,cq06]"}
+      }
+    }
+  }
+}

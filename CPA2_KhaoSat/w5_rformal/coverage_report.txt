@@ -1,0 +1,174 @@
+==============================================================================
+KIỂM CHỨNG R-FORMAL v1.4 — CPA² Tuần 5
+Nguồn qd3266: Quyết định số 3266/QĐ-ĐHCT ngày 15/8/2024 của Hiệu trưởng Trường Đ...
+Nguồn qd5339: Quyết định số 5339/QĐ-ĐHCT ngày 05/11/2019 của Hiệu trưởng Trường ...
+==============================================================================
+
+==============================================================================
+A. BẤT BIẾN CON TRỎ NGUỒN
+==============================================================================
+  · rule_src khai báo trong .lp : 53
+  · RuleId dùng trong why/2     : 40
+  [OK]   A1. mọi RuleId trong why/2 đều có rule_src  (thiếu: [])
+  [OK]   A2. mọi rule_src đều có bản ghi JSON  (mồ côi: [])
+  [OK]   A3. con trỏ .lp khớp JSON, kể cả mã văn bản  (lệch: [])
+  [OK]   A7. mã văn bản trong .lp đều được khai báo ở meta  (lạ: [])
+  [OK]   A4. mọi 'asp' trong JSON đều có mặt trong .lp  (thiếu: [])
+  [OK]   A5. mọi bản ghi đều có trích nguyên văn  (rỗng: [])
+  [OK]   A6. mọi quy tắc trong miền đều trỏ tới một điều  (thiếu: [])
+
+==============================================================================
+B. ĐỘ PHỦ HÌNH THỨC HOÁ — số liệu cho RQ1
+==============================================================================
+  Văn bản qd3266  : 36 điều, 21 trang
+  Văn bản qd5339  :  4 điều, 19 trang
+  Số bản ghi trong danh mục                    : 93
+  – ngoài miền tư vấn học vụ (X)               : 22
+  – trong miền (F + P + N)                     : 71
+
+  F  Formalizable                              :  58  (81.7%)
+  P  Partially formalizable                    :   8  (11.3%)
+  N  Not formalizable                          :   5  (7.0%)
+
+  >>> Formalization Coverage  = F/(F+P+N)      = 81.7%
+  >>> Executable Coverage     = (F ∧ có dữ liệu)/n = 59.2%
+      (chênh 22.5 điểm phần trăm là các điều khoản hình
+       thức hoá được nhưng KHÔNG thi hành được vì thiếu dữ kiện)
+
+  Điều khoản buộc trả UNKNOWN vì thiếu dữ kiện : 21  (29.6%)
+
+  Lý do khiến điều khoản KHÔNG thi hành được trọn vẹn
+  (gồm cả lớp P/N lẫn lớp F nhưng thiếu dữ kiện):
+    – dữ kiện không tồn tại trong phạm vi CPA²         : 16
+    – thẩm quyền mở (Hiệu trưởng/đơn vị quyết định)    : 5
+    – con trỏ tới văn bản khác                         : 5
+    – tham số do người/đơn vị quy định                 : 1
+    – quy chế trao quyền chọn cho sinh viên            : 1
+    – thuật ngữ/ngôn ngữ không định nghĩa              : 1
+
+  Phân bố theo nhóm điều khoản ưu tiên (Tuần 1 mục 5.1):
+    – mien_thay_the        :  21  (F=15, P=4, N=2)
+    – tot_nghiep           :  12  (F=10, P=0, N=2)
+    – canh_bao             :  10  (F=8, P=2, N=0)
+    – diem                 :   9  (F=8, P=1, N=0)
+    – dang_ky              :   6  (F=5, P=0, N=1)
+    – xep_loai             :   5  (F=5, P=0, N=0)
+    – tran_san_tin_chi     :   3  (F=3, P=0, N=0)
+    – hai_chuong_trinh     :   3  (F=2, P=1, N=0)
+    – dinh_nghia           :   2  (F=2, P=0, N=0)
+
+  Phân bố theo loại ràng buộc T1–T8 (taxonomy Tuần 2):
+    – T1 : 7
+    – T2 : 2
+    – T3 : 2
+    – T4 : 4
+    – T5 : 16
+    – T6 : 9
+    – T7 : 21
+    – T8 : 10
+    – không thuộc T1–T8 : 10  ['R-B01', 'R-B02', 'R-B06', 'R-C03', 'R-C04', 'R-C05', 'R-C06', 'R-D05', 'R-D07', 'R-M02']
+
+  Quyết định diễn giải phải ghi công khai trong KB:
+    – R-B04 (Điều 22): QD-01 ĐÓNG LẠI Ở PHẠM VI HẸP HƠN (sửa ở v1.1): quy tắc 'tính TC, không tính ĐTBCTL' chỉ đúng cho học...
+    – R-B05 (Điều 22): QD-05 MỞ: thời hạn cụ thể 'do GV quy định' — KB chỉ chốt được cận trên 1 năm; khi chưa quá 1 năm, tr...
+    – R-B14 (Điều 17): QD-02 ĐÓNG MỘT PHẦN: quy chế trao QUYỀN CHỌN cho SV, nên ĐTBCTL không đơn trị. CPA² chốt: báo cáo ĐT...
+    – R-D03 (Điều 18): QD-03 ĐÓNG TẠM BẰNG ĐỊNH NGHĨA VẬN HÀNH, CHƯA XÁC NHẬN NGUỒN (v1.3): TC nợ đọng = tổng TC các học ph...
+    – R-D06 (Điều 18): QD-04 ĐÓNG THEO HƯỚNG THẬN TRỌNG: phần lõi (đã cảnh báo ∧ ĐTBCHK<1,00) hình thức hoá được, nhưng mện...
+    – R-E02 (Điều 5): QD-06 ĐÓNG (ở v1.1): quy tắc bậc thang (9 TC/6 TC → 1 HK) là F; điều kiện được công nhận nằm ở QĐ533...
+    – R-F05 (Điều 31): QD-07 ĐÓNG: quy chế xác nhận ca 'thay 1 học phần bằng nhiều học phần' của Tuần 2 (T6 ví dụ 1) — ràng...
+    – R-H02 (Điều 20): QD-08 ĐÓNG THEO HƯỚNG THẨM QUYỀN (sửa ở v1.1): QĐ5339 vẫn không cho tiêu chí định lượng cho 'tương đ...
+    – R-M02 (Điều 3): QD-09 ĐÃ ĐÓNG (xác nhận ngoài văn bản, v1.2): bảng quy đổi của QĐ5339 (2019) và QĐ3266 (2024) không ...
+    – R-M04 (Điều 3): QD-10 ĐÓNG: trả lời ca biên 'chênh lệch tín chỉ khi thay thế' của Tuần 2 (T6). Điểm đi theo công thứ...
+    – R-M15 (Điều 3): QD-01 SỬA: có HAI loại miễn khác nhau về hệ quả kế toán. (1) Miễn học phần điều kiện bằng chứng chỉ ...
+    – R-M16 (Điều 2): QD-11 ĐÓNG (mới ở v1.1): việc miễn KHÔNG tự động. Có chứng chỉ chỉ tạo ra trạng thái ĐỦ ĐIỀU KIỆN XI...
+
+==============================================================================
+C. KIỂM THỬ NGỮ NGHĨA (clingo)
+==============================================================================
+  [OK]   C1 ĐTBCHK 0,75 ở HK đầu → CẢNH BÁO (ngưỡng 0,80)
+          ↳ Điều 18 k.2 điểm a
+  [OK]   C2 ĐTBCHK 0,90 ở HK đầu → KHÔNG cảnh báo theo điểm a
+          ↳ REGRESSION Tuần 4: prototype dùng WARNING_TERM_GPA = 1,20 nên ca này bị báo cảnh báo SAI. Ngưỡng đúng của HK đầu là 0,80.
+  [OK]   C2b Cùng ĐTBCHK 0,90 nhưng ở HK KHÔNG phải đầu khóa → CÓ cảnh báo (ngưỡng 1,00)
+          ↳ cùng một điểm số cho hai kết luận trái ngược tuỳ vị trí học kỳ — ngưỡng kép 0,80/1,00 của Điều 18 k.2 điểm a
+  [OK]   C3 TC tích lũy = 70 → trình độ NĂM THỨ HAI
+          ↳ Điều 30, cột 'từ K.45 trở về sau'
+  [OK]   C4 TC tích lũy = 71 → trình độ NĂM THỨ BA
+          ↳ ca biên — lệch 1 TC đổi trình độ, kéo theo đổi ngưỡng cảnh báo ĐTBCTL
+  [OK]   C5 Điểm M tính vào TC tích lũy nhưng không vào ĐTBCTL
+          ↳ QD-01: nếu M vào ĐTBCTL thì tl_mau phải là 6 — kiểm tra trực tiếp mẫu số
+  [OK]   C6 ĐTB GDQP = 5,0 (thang 10) → ĐẠT điều kiện GDQP
+          ↳ Điều 32 k.1 điểm b — ngưỡng trên THANG 10, không phải thang 4
+  [OK]   C7 ĐTB GDQP = 4,9 → KHÔNG đạt
+          ↳ ca biên 4,9 / 5,0
+  [OK]   C8 Đủ điều kiện học vụ nhưng KHÔNG kết luận tốt nghiệp (thiếu dữ kiện kỷ luật)
+          ↳ Điều 32 k.1 điểm c — xác nhận thiết kế ba trị của Tuần 2 (cond_discipline)
+  [OK]   C9 Bổ sung dữ kiện kỷ luật sạch → kết luận tốt nghiệp
+          ↳ cùng hồ sơ C8, chỉ thêm một dữ kiện → chân trị đổi từ UNKNOWN sang TRUE
+  [OK]   C10 ĐTBCTL 3,7 (xuất sắc) + TC điểm F > 5% CTĐT → hạng cuối là GIỎI
+          ↳ 7/120 = 5,83% > 5%
+  [OK]   C11 Cùng hồ sơ nhưng TC điểm F = 6 (đúng 5%) → giữ hạng XUẤT SẮC
+          ↳ ca biên: 'vượt quá 5%' — đúng 5% thì KHÔNG giảm
+  [OK]   C12 Đăng ký 21 TC → vượt trần 20 TC/HK
+          ↳ Điều 14 k.1
+  [OK]   C13 Đăng ký 8 TC → KHÔNG vi phạm (quy chế không có sàn tín chỉ)
+          ↳ R-C03 phát hiện âm tính: mốc 12 TC chỉ dùng cho học bổng/xếp loại
+  [OK]   C14 Đã cảnh báo + HK kế tiếp ĐTBCHK < 1,00 → chỉ 'thuộc diện xem xét'
+          ↳ Điều 18 k.5 điểm b — mệnh đề 'trường hợp đặc biệt do Hiệu trưởng quyết định' hạ trần chân trị: hệ thống KHÔNG kết luận buộc thôi học
+  [OK]   C15 CTĐT 4 năm, không được công nhận TC → trần 8 năm (16 nửa năm)
+          ↳ Điều 5 bảng — OCR mất bảng này, phải đọc ảnh trang 4
+  [OK]   C16 Được công nhận 18 TC (K49) → trần giảm 2 HK còn 14 nửa năm; đã học 15 → quá hạn
+          ↳ Điều 5 đoạn 2 — mỗi 9 TC (K≤49) giảm 1 HK
+  [OK]   C17 IELTS 5.0, K49 → ĐỦ ĐIỀU KIỆN XIN MIỄN, nhưng CHƯA được miễn
+          ↳ QD-11 (QĐ5339 Điều 2 k.6): miễn KHÔNG tự động. Trả lời 'em đã được miễn' khi mới chỉ có chứng chỉ là NÓI SAI — ca đối kháng bắt buộc
+  [OK]   C18 Có thêm quyết định xét miễn → mới thành ĐƯỢC MIỄN, mang điểm M
+          ↳ cùng hồ sơ C17, thêm đúng một dữ kiện quyết định → chân trị đổi
+  [OK]   C19 IELTS 4.0, K49 → KHÔNG đủ điều kiện (ngưỡng là bậc 3 = IELTS 4.5)
+          ↳ QĐ5339 Điều 3 k.5 đ.a — K45 trở về sau cần bậc 3; K44 trở về trước chỉ cần bậc 2
+  [OK]   C20 Công nhận điểm học phần thường → CÓ vào ĐTBCTL (SỬA QD-01)
+          ↳ QĐ5339 Điều 3 k.11 — v1.0 kết luận SAI rằng mọi học phần được miễn đều nằm ngoài ĐTBCTL. So sánh trực tiếp với C5 (điểm M → tl_mau loại ra)
+  [OK]   C21 Miễn 1 học phần từ 2 học phần đã học → trung bình có trọng số
+          ↳ QĐ5339 Điều 3 k.3 (QD-10): (4,0×2 + 3,0×3)/5 = 3,4 — LƯU Ý kết quả 3,4 KHÔNG nằm trên thang 8 bậc của bảng quy đổi; quy tắc gộp sinh ra điểm ngoài lưới
+  [OK]   C22 GDQP đạt điểm D → tích lũy theo QĐ3266 nhưng KHÔNG đạt theo QĐ5339
+          ↳ QĐ5339 Điều 3 k.2 đặt ngưỡng D+ riêng cho GDQP&AN; QĐ3266 Điều 22 k.3 chỉ nói D. Hai vị từ cùng đúng trong một mô hình = xung đột lộ ra chứ không bị giấu
+  [OK]   C23 Điểm CHUYỂN ĐỔI 4,5/10 → KHÔNG tích lũy (QD-09 đã đóng)
+          ↳ QD-09 đã đóng: ngưỡng 5,0 của QĐ5339 áp cho điểm chuyển đổi. dien_giai(qd09) buộc chứng chỉ nêu rõ đây là quyết định diễn giải, không phải câu chữ quy chế
+  [OK]   C23b Điểm CHUYỂN ĐỔI đúng 5,0 → tích lũy được, quy đổi thành D+ (1,5)
+          ↳ ca biên 4,9 / 5,0 của ngưỡng tích lũy điểm chuyển đổi
+  [OK]   C23c BẤT ĐỐI XỨNG: cùng 4,5 điểm, học tại ĐHCT thì tích lũy được
+          ↳ cùng con số 4,5: tích lũy tại ĐHCT (C23c) nhưng KHÔNG tích lũy nếu chuyển từ trường khác (C23). Hệ quả trực tiếp của QD-09 — ca đối kháng Tuần 17
+  [OK]   C24 Olympic giải khuyến khích (8,9) nhưng điểm học thật 9,5 → lấy 9,5
+          ↳ QĐ5339 Điều 3 k.10 — cùng nguyên tắc max với QĐ3266 Điều 17 k.2 (học cải thiện)
+  [OK]   C25 Miễn thi 3 học phần trong một học kỳ → vượt hạn mức 2 học phần
+          ↳ QĐ5339 Điều 3 k.10 — trần 2 học phần/HK và 4 TC/học phần
+  [OK]   C26 ML010 → ML016 + ML018: một học phần đã học sinh hai học phần được miễn
+          ↳ QĐ5339 Điều 3 k.9 — bảng thay thế Lý luận chính trị, ca MỘT → NHIỀU: cả hai học phần được miễn đều nhận nguyên điểm của học phần đã học
+  [OK]   C27 Nợ đọng theo mặc định = môn rớt + môn đang học (không tính môn đã rút)
+          ↳ QD-03: 4 TC (m3 điểm F) + 3 TC (m4 đang học) = 7. m5 điểm W không tính
+  [OK]   C28 QD-03a tắt: không tính môn đang học → nợ đọng chỉ còn môn rớt
+          ↳ cùng một bảng điểm, hai chính sách cho 7 TC và 4 TC — chênh lệch đủ để đổi kết luận cảnh báo học vụ, nên đây không phải chi tiết vụn vặt
+  [OK]   C29 QD-03b bật: tính cả môn đã rút → nợ đọng tăng thêm 2 TC
+          ↳ phạt sinh viên vì đã dùng quyền rút học phần mà Điều 15 cho phép — nêu ra để thấy vì sao mặc định chọn ngược lại
+  [OK]   C30 Nợ đọng đúng 24 TC → KHÔNG cảnh báo ('vượt quá 24' nghĩa là > 24)
+          ↳ Điều 18 k.2 đ.c — ca biên của ngưỡng
+  [OK]   C31 Nợ đọng 25 TC → CÓ cảnh báo
+          ↳ Điều 18 k.2 đ.c
+  [OK]   C32 CTĐT CNTT K49: 4,5 năm thiết kế → trần 9 năm (18 nửa năm)
+          ↳ SỬA LỖI v1.0: tài liệu ghi nhầm K49 thiết kế 4 năm → trần 8 năm. CTĐT ghi rõ 'Thời gian đào tạo: 4.5 năm', nên theo QĐ3266 Điều 5 trần là 9 năm
+  [OK]   C33 Ba khối của CTĐT cộng đúng tổng 161 TC
+          ↳ ràng buộc nội tại trong ctdt_cntt_k49.lp: 56+46+59=161 và 41+46+38=125. Nếu gõ sai một số thì chương trình VÔ NGHIỆM, không im lặng cho kết quả sai
+  [OK]   C34 Tiên quyết theo NGƯỠNG TÍN CHỈ (loại T4b mới): 119 TC chưa đủ làm luận văn
+          ↳ CT550E Luận văn tốt nghiệp yêu cầu ≥120 TC — dạng tiên quyết mà taxonomy Tuần 2 chưa có: ngưỡng trên tiến độ tích lũy, không phải quan hệ giữa hai học phần
+  [OK]   C35 Đủ 120 TC → đủ điều kiện VỀ TÍN CHỈ để làm luận văn
+          ↳ trả lời được một phần câu hỏi mà QĐ3266 Điều 31 để ngỏ; các điều kiện khác của đơn vị đào tạo vẫn nằm ngoài nên kết luận dừng ở mức 'về tín chỉ'
+  [OK]   C36 Nhóm chuyên ngành là 'chọn một trong ba cặp', không phải '10 chọn 2'
+          ↳ cấu trúc thật của CTĐT: 6 TC từ ĐÚNG MỘT cặp CN1/CN2/CN3, khác hẳn giả định 'nhóm 10 chọn 2' dùng ở Tuần 2 và prototype Tuần 4
+
+  Kết quả: 39/39 ca kiểm thử đạt
+
+==============================================================================
+KẾT LUẬN: ĐẠT.
+  · Mọi quy tắc đều có con trỏ nguồn tới điều/khoản của QD3266 VÀ QD5339.
+  · Formalization Coverage = 81.7% (F=58, P=8, N=5 trên 71 đơn vị trong miền)
+  · 39/39 ca kiểm thử ngữ nghĩa đạt.
+==============================================================================

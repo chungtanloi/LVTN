@@ -1,0 +1,448 @@
+{
+ "meta": {
+  "mo_ta": "Bộ câu hỏi truy hồi Tuần 14. Đáp án (gold) gán TRƯỚC khi chạy retriever, theo danh sách passage của corpus.jsonl. 'dev' dùng để tinh chỉnh; 'test' chỉ chạy để báo cáo, KHÔNG dùng để chỉnh.",
+  "ngay": "2026-10-09",
+  "muc_tieu": {
+   "recall_at_1": 0.8,
+   "recall_at_5": 0.95
+  }
+ },
+ "queries": [
+  {
+   "id": "dev01",
+   "split": "dev",
+   "q": "Mỗi học kỳ được đăng ký tối đa bao nhiêu tín chỉ?",
+   "gold": [
+    "qd3266:D14:K1"
+   ],
+   "loai": "truc_tiep"
+  },
+  {
+   "id": "dev02",
+   "split": "dev",
+   "q": "Học kỳ đầu tiên em có phải tự đăng ký môn không?",
+   "gold": [
+    "qd3266:D14:K2"
+   ],
+   "loai": "dien_dat_khac"
+  },
+  {
+   "id": "dev03",
+   "split": "dev",
+   "q": "Môn bị điểm F thì có phải học lại không?",
+   "gold": [
+    "qd3266:D17:K1"
+   ],
+   "loai": "truc_tiep"
+  },
+  {
+   "id": "dev04",
+   "split": "dev",
+   "q": "Học cải thiện điểm thì lấy điểm lần nào?",
+   "gold": [
+    "qd3266:D17:K2"
+   ],
+   "loai": "dien_dat_khac"
+  },
+  {
+   "id": "dev05",
+   "split": "dev",
+   "q": "Khi nào sinh viên bị cảnh báo học tập?",
+   "gold": [
+    "qd3266:D18:K2"
+   ],
+   "loai": "truc_tiep"
+  },
+  {
+   "id": "dev06",
+   "split": "dev",
+   "q": "Trường hợp nào bị buộc thôi học?",
+   "gold": [
+    "qd3266:D18:K5"
+   ],
+   "loai": "truc_tiep"
+  },
+  {
+   "id": "dev07",
+   "split": "dev",
+   "q": "Thời gian học tối đa của chương trình 4,5 năm là bao lâu?",
+   "gold": [
+    "qd3266:D5:K0"
+   ],
+   "loai": "so_lieu"
+  },
+  {
+   "id": "dev08",
+   "split": "dev",
+   "q": "dieu kien xet tot nghiep gom nhung gi",
+   "gold": [
+    "qd3266:D32:K1"
+   ],
+   "loai": "khong_dau"
+  },
+  {
+   "id": "dev09",
+   "split": "dev",
+   "q": "Điểm M là gì, có tính vào điểm trung bình không?",
+   "gold": [
+    "qd3266:D22:K5"
+   ],
+   "loai": "truc_tiep"
+  },
+  {
+   "id": "dev10",
+   "split": "dev",
+   "q": "Xếp hạng tốt nghiệp loại giỏi cần GPA bao nhiêu?",
+   "gold": [
+    "qd3266:D34:K2"
+   ],
+   "loai": "so_lieu"
+  },
+  {
+   "id": "dev11",
+   "split": "dev",
+   "q": "Có chứng chỉ IELTS thì được miễn học Anh văn căn bản không?",
+   "gold": [
+    "qd5339:D3:K5"
+   ],
+   "loai": "nham_van_ban"
+  },
+  {
+   "id": "dev12",
+   "split": "dev",
+   "q": "Điểm chuyển từ trường khác quy đổi theo bảng nào?",
+   "gold": [
+    "qd5339:D3:K2"
+   ],
+   "loai": "nham_van_ban"
+  },
+  {
+   "id": "dev13",
+   "split": "dev",
+   "q": "Học phần tiên quyết là gì?",
+   "gold": [
+    "qd3266:D7:K4"
+   ],
+   "loai": "truc_tiep"
+  },
+  {
+   "id": "dev14",
+   "split": "dev",
+   "q": "CT550E Luận văn tốt nghiệp bao nhiêu tín chỉ?",
+   "gold": [
+    "ctdt_k49:CT550E"
+   ],
+   "loai": "ctdt"
+  },
+  {
+   "id": "dev15",
+   "split": "dev",
+   "q": "Nhóm ngoại ngữ trong chương trình CNTT K49 phải học bao nhiêu tín chỉ?",
+   "gold": [
+    "ctdt_k49:nhom:g_ngoai_ngu"
+   ],
+   "loai": "ctdt"
+  },
+  {
+   "id": "dev16",
+   "split": "dev",
+   "q": "Không làm luận văn thì tốt nghiệp bằng cách nào?",
+   "gold": [
+    "qd3266:D31:K3"
+   ],
+   "loai": "dien_dat_khac"
+  },
+  {
+   "id": "dev17",
+   "split": "dev",
+   "q": "Được học cùng lúc hai chương trình khi nào?",
+   "gold": [
+    "qd3266:D20:K1"
+   ],
+   "loai": "truc_tiep"
+  },
+  {
+   "id": "dev18",
+   "split": "dev",
+   "q": "Ngưỡng điểm trung bình tích lũy để bị cảnh báo đối với sinh viên năm thứ nhất",
+   "gold": [
+    "qd3266:D18:K2"
+   ],
+   "loai": "so_lieu"
+  },
+  {
+   "id": "dev19",
+   "split": "dev",
+   "q": "Miễn học phần Tin học căn bản cần chứng chỉ gì?",
+   "gold": [
+    "qd5339:D3:K6"
+   ],
+   "loai": "truc_tiep"
+  },
+  {
+   "id": "dev20",
+   "split": "dev",
+   "q": "rut hoc phan han chot tuan thu may",
+   "gold": [
+    "qd3266:D15:K0"
+   ],
+   "loai": "khong_dau"
+  },
+  {
+   "id": "dev21",
+   "split": "dev",
+   "q": "Xếp trình độ năm học dựa vào đâu?",
+   "gold": [
+    "qd3266:D30:K0"
+   ],
+   "loai": "truc_tiep"
+  },
+  {
+   "id": "dev22",
+   "split": "dev",
+   "q": "TOEIC bao nhiêu thì tương đương bậc 3?",
+   "gold": [
+    "qd5339:DPL1:K0",
+    "qd5339:DPL1:K1"
+   ],
+   "loai": "so_lieu"
+  },
+  {
+   "id": "dev23",
+   "split": "dev",
+   "q": "Điểm học phần dưới bao nhiêu thì không được tích lũy?",
+   "gold": [
+    "qd3266:D22:K3"
+   ],
+   "loai": "dien_dat_khac"
+  },
+  {
+   "id": "dev24",
+   "split": "dev",
+   "q": "Học phần điều kiện gồm những môn nào?",
+   "gold": [
+    "qd3266:D7:K6"
+   ],
+   "loai": "truc_tiep"
+  },
+  {
+   "id": "test01",
+   "split": "test",
+   "q": "Một học kỳ tôi có thể đăng ký 22 tín chỉ được không?",
+   "gold": [
+    "qd3266:D14:K1"
+   ],
+   "loai": "dien_dat_khac"
+  },
+  {
+   "id": "test02",
+   "split": "test",
+   "q": "Rớt môn bắt buộc thì phải làm sao?",
+   "gold": [
+    "qd3266:D17:K1"
+   ],
+   "loai": "dien_dat_khac"
+  },
+  {
+   "id": "test03",
+   "split": "test",
+   "q": "Học dư tín chỉ tự chọn thì khi xét tốt nghiệp tính thế nào?",
+   "gold": [
+    "qd3266:D17:K3"
+   ],
+   "loai": "dien_dat_khac"
+  },
+  {
+   "id": "test04",
+   "split": "test",
+   "q": "ĐTBCHK dưới 1,00 ở học kỳ thứ hai có bị cảnh báo không?",
+   "gold": [
+    "qd3266:D18:K2"
+   ],
+   "loai": "so_lieu"
+  },
+  {
+   "id": "test05",
+   "split": "test",
+   "q": "Bị đình chỉ học tập một học kỳ khi nào?",
+   "gold": [
+    "qd3266:D18:K3"
+   ],
+   "loai": "truc_tiep"
+  },
+  {
+   "id": "test06",
+   "split": "test",
+   "q": "Sinh viên được học tối đa mấy năm?",
+   "gold": [
+    "qd3266:D5:K0"
+   ],
+   "loai": "dien_dat_khac"
+  },
+  {
+   "id": "test07",
+   "split": "test",
+   "q": "Muốn được công nhận tốt nghiệp cần GPA tối thiểu bao nhiêu?",
+   "gold": [
+    "qd3266:D32:K1"
+   ],
+   "loai": "so_lieu"
+  },
+  {
+   "id": "test08",
+   "split": "test",
+   "q": "diem W la gi",
+   "gold": [
+    "qd3266:D22:K5"
+   ],
+   "loai": "khong_dau"
+  },
+  {
+   "id": "test09",
+   "split": "test",
+   "q": "Bằng tốt nghiệp loại xuất sắc bị hạ một bậc khi nào?",
+   "gold": [
+    "qd3266:D34:K2"
+   ],
+   "loai": "dien_dat_khac"
+  },
+  {
+   "id": "test10",
+   "split": "test",
+   "q": "Điểm 4,5 học ở trường khác chuyển về có được tích lũy không?",
+   "gold": [
+    "qd5339:D3:K2"
+   ],
+   "loai": "nham_van_ban"
+  },
+  {
+   "id": "test11",
+   "split": "test",
+   "q": "Thủ tục xin miễn học phần phải nộp đơn khi nào?",
+   "gold": [
+    "qd5339:D2:K6"
+   ],
+   "loai": "truc_tiep"
+  },
+  {
+   "id": "test12",
+   "split": "test",
+   "q": "Học phần song hành nghĩa là gì?",
+   "gold": [
+    "qd3266:D7:K5"
+   ],
+   "loai": "truc_tiep"
+  },
+  {
+   "id": "test13",
+   "split": "test",
+   "q": "Môn CT177 có tiên quyết là gì?",
+   "gold": [
+    "ctdt_k49:CT177"
+   ],
+   "loai": "ctdt"
+  },
+  {
+   "id": "test14",
+   "split": "test",
+   "q": "Chuyên ngành có mấy nhánh để chọn?",
+   "gold": [
+    "ctdt_k49:nhom:g_chuyen_nganh"
+   ],
+   "loai": "ctdt"
+  },
+  {
+   "id": "test15",
+   "split": "test",
+   "q": "Hết thời gian học tối đa mà chưa đủ điều kiện tốt nghiệp thì sao?",
+   "gold": [
+    "qd3266:D33:K1",
+    "qd3266:D33:K2"
+   ],
+   "loai": "dien_dat_khac"
+  },
+  {
+   "id": "test16",
+   "split": "test",
+   "q": "Có bằng sĩ quan dự bị thì được miễn quốc phòng không?",
+   "gold": [
+    "qd5339:D3:K7"
+   ],
+   "loai": "truc_tiep"
+  },
+  {
+   "id": "test17",
+   "split": "test",
+   "q": "Học phần Triết học cũ ML009 chuyển đổi sang môn nào?",
+   "gold": [
+    "qd5339:D3:K9"
+   ],
+   "loai": "truc_tiep"
+  },
+  {
+   "id": "test18",
+   "split": "test",
+   "q": "Điểm rèn luyện yếu hai học kỳ liên tiếp bị xử lý thế nào?",
+   "gold": [
+    "qd3266:D25:K5",
+    "qd3266:D18:K3"
+   ],
+   "loai": "truc_tiep"
+  },
+  {
+   "id": "test19",
+   "split": "test",
+   "q": "Tiểu luận tốt nghiệp có phải bảo vệ trước hội đồng không?",
+   "gold": [
+    "qd3266:D31:K2"
+   ],
+   "loai": "truc_tiep"
+  },
+  {
+   "id": "test20",
+   "split": "test",
+   "q": "IELTS 4.0 có đủ bậc 3 không?",
+   "gold": [
+    "qd5339:DPL1:K0",
+    "qd5339:DPL1:K1"
+   ],
+   "loai": "so_lieu"
+  },
+  {
+   "id": "test21",
+   "split": "test",
+   "q": "Sinh viên năm hai bị cảnh báo khi điểm tích lũy dưới bao nhiêu?",
+   "gold": [
+    "qd3266:D18:K2"
+   ],
+   "loai": "so_lieu"
+  },
+  {
+   "id": "test22",
+   "split": "test",
+   "q": "hoc phi tinh theo gi",
+   "gold": [
+    "qd3266:D10:K1"
+   ],
+   "loai": "khong_dau"
+  },
+  {
+   "id": "test23",
+   "split": "test",
+   "q": "Mỗi năm học có mấy học kỳ?",
+   "gold": [
+    "qd3266:D6:K1"
+   ],
+   "loai": "truc_tiep"
+  },
+  {
+   "id": "test24",
+   "split": "test",
+   "q": "Đạt giải Olympic có được miễn học phần không?",
+   "gold": [
+    "qd5339:D3:K10"
+   ],
+   "loai": "truc_tiep"
+  }
+ ]
+}

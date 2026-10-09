@@ -1,0 +1,252 @@
+# TUẦN 5 — PHỤ LỤC: R-FORMAL v1.1 (bổ sung QĐ5339)
+
+**Bối cảnh:** sau khi bản v1.0 kết luận rằng *"toàn bộ loại T5 nằm ngoài QĐ3266"* (phát hiện
+P-3), văn bản đích đã được bổ sung vào kho: **QĐ 5339/QĐ-ĐHCT ngày 05/11/2019** — *Quy định
+xét miễn và công nhận điểm học phần trong CTĐT trình độ đại học hệ chính quy* (19 trang,
+4 điều, cũng là bản quét không có lớp văn bản).
+
+**Kết quả:** T5 được mở khoá hoàn toàn, **và v1.1 sửa một kết luận sai của v1.0.**
+
+---
+
+## 0. Kết luận trước
+
+> Thêm 19 bản ghi từ QĐ5339 (16 trong miền). **Formalization Coverage gần như không đổi:
+> 79,6 % → 78,9 %.** Nhưng **Executable Coverage tụt từ 66,7 % xuống 56,3 %.**
+
+Đây là kết quả đáng chú ý và ngược trực giác: bổ sung một văn bản để *lấp một lỗ hổng* lại
+làm hệ thống *kết luận được ít hơn* theo tỷ lệ. Lý do là toàn bộ nhóm T5 phụ thuộc dữ kiện
+chứng chỉ — thứ không có trong bảng điểm. Nói cách khác, v1.0 không hề "tốt hơn"; nó chỉ
+**chưa nhìn thấy phần việc mà nó không làm được**.
+
+Đây chính là luận điểm nên đưa vào luận văn: coverage đo trên một kho văn bản chưa đầy đủ
+là **ước lượng chệch lên**, và độ chệch chỉ lộ ra khi kho được bổ sung.
+
+---
+
+## 1. Số liệu v1.0 → v1.1
+
+| Chỉ số | v1.0 (chỉ QĐ3266) | v1.1 (+ QĐ5339) |
+|---|:-:|:-:|
+| Bản ghi trong danh mục | 73 | **93** |
+| Đơn vị trong miền (F+P+N) | 54 | **71** |
+| F — Formalizable | 43 (79,6 %) | **56 (78,9 %)** |
+| P — Partially formalizable | 7 (13,0 %) | **10 (14,1 %)** |
+| N — Not formalizable | 4 (7,4 %) | **5 (7,0 %)** |
+| **Formalization Coverage** | **79,6 %** | **78,9 %** |
+| **Executable Coverage** | **66,7 %** | **56,3 %** |
+| Buộc trả UNKNOWN vì thiếu dữ kiện | 11 (20,4 %) | **21 (29,6 %)** |
+| Quy tắc ASP có con trỏ nguồn | 41 | **52** |
+| Ca kiểm thử ngữ nghĩa | 17/17 | **27/27** |
+
+Nhóm *"miễn & thay thế"* từ 7 đơn vị (F = 3) thành **21 đơn vị (F = 15)** — từ nhóm yếu nhất
+thành nhóm lớn nhất trong danh mục.
+
+---
+
+## 2. SỬA MỘT KẾT LUẬN SAI CỦA v1.0 — QD-01
+
+v1.0 đóng QD-01 như sau, dựa trên QĐ3266 Điều 22 khoản 5 điểm a:
+
+> *"Học phần được miễn TÍNH vào tổng TC tích lũy, KHÔNG tính vào ĐTBCTL."*
+
+**Phát biểu này quá rộng.** QĐ5339 Điều 3 khoản 11 nói:
+
+> *"Kết quả điểm xét miễn được ghi nhận trong bảng kết quả học tập toàn khóa của SV. **Trừ
+> các học phần điều kiện và học phần có điểm M**, kết quả điểm xét miễn học phần **được sử
+> dụng để tính điểm trung bình chung tích lũy**."*
+
+Nghĩa là có **hai loại miễn khác nhau về hệ quả kế toán**:
+
+| Loại | Cơ chế | Điểm | Vào TC tích lũy | Vào ĐTBCTL |
+|---|---|---|:-:|:-:|
+| `exempted_M` | miễn học phần **điều kiện** bằng chứng chỉ (ngoại ngữ, tin học, GDQP, GDTC) | điểm **M**, không có điểm số | ✅ | ❌ |
+| `recognized` | **công nhận điểm** học phần từ CTĐT đã học | mang **điểm số quy đổi** | ✅ | ✅ |
+
+v1.0 chỉ nhìn thấy loại thứ nhất vì QĐ3266 chỉ nói về điểm M.
+
+**Hệ quả cho taxonomy Tuần 2:** Trục C hiện có 6 trạng thái với một ô `exempted` duy nhất.
+Ô đó **phải tách đôi** — 6 trạng thái thành 7. Đây không phải chi tiết kế toán vụn vặt: hai
+trạng thái cho ra **hai giá trị ĐTBCTL khác nhau** trên cùng một bảng điểm, và ĐTBCTL quyết
+định cả điều kiện tốt nghiệp lẫn hạng tốt nghiệp.
+
+Ca C5 (điểm M bị loại khỏi mẫu số) và ca C20 (điểm công nhận nằm trong mẫu số) khoá cả hai
+nhánh, đặt cạnh nhau để so sánh trực tiếp.
+
+---
+
+## 3. Phát hiện mới quan trọng nhất: miễn KHÔNG tự động (QD-11)
+
+QĐ5339 Điều 2 khoản 6 quy định quy trình: SV **làm đơn** → **Tổ Xét miễn** của đơn vị đào tạo
+xét → Trưởng Khoa phê duyệt → Phòng Đào tạo kiểm tra → **Hội đồng Xét miễn cấp Trường** phê
+duyệt → nhập điểm.
+
+Vậy **có chứng chỉ không đồng nghĩa với được miễn.** Có hai vị từ khác nhau:
+
+```prolog
+du_dk_xin_mien(C)   % suy ra được từ chứng chỉ  — CPA² tính được
+duoc_mien(C)        % chỉ đến từ quyết định phê duyệt — dữ kiện ngoài
+```
+
+Và **không có luật nào suy `passed(C)` từ `du_dk_xin_mien(C)`**. KB phát thêm `mien_treo(C)`
+để nói *"đủ điều kiện nhưng chưa có quyết định"*.
+
+**Hệ quả trực tiếp cho bộ Q-Real.** Câu *"Chứng chỉ IELTS của em miễn được môn nào?"* trong
+ma trận độ phủ Tuần 2 phải được trả lời là:
+
+> *"Với IELTS 5.0, em **đủ điều kiện nộp đơn xin miễn** các học phần Anh văn căn bản (QĐ5339
+> Điều 3 khoản 5 điểm a — Khóa 45 trở về sau cần bậc 3, tương đương IELTS 4.5). Hệ thống
+> **không có** dữ liệu về quyết định xét miễn của em, nên chưa thể kết luận em đã được miễn."*
+
+chứ **không** phải *"IELTS của em miễn được Anh văn căn bản 1, 2, 3"*. Câu sau là **nói sai**,
+và là kiểu sai mà mọi baseline gần như chắc chắn sẽ mắc — vì nó là câu trả lời "hữu ích" nhất
+về mặt ngôn ngữ. Ca C17/C18 khoá hành vi này: cùng một hồ sơ, thêm đúng dữ kiện `duoc_mien`
+thì chân trị mới đổi.
+
+Đây là **ca đối kháng mạnh nhất tìm được cho tới nay** cho giả thuyết H2 (baseline tự tin một
+cách sai lầm), vì nó không đòi hỏi dữ liệu khuyết bất thường — nó là tình huống thường ngày.
+
+---
+
+## 4. XUNG ĐỘT GIỮA HAI VĂN BẢN CÙNG HIỆU LỰC (QD-09)
+
+Đây là phát hiện phương pháp luận của phụ lục này.
+
+Bảng quy đổi điểm của **hai văn bản không trùng nhau**:
+
+| Thang 10 | QĐ3266 (2024) | QĐ5339 (2019) |
+|---|---|---|
+| 5,0 – 5,4 | D+ = 1,5 | D+ = 1,5 |
+| **4,0 – 4,9** | **D = 1,0** | **không có ô** |
+| dưới 4,0 | F = 0,0 | **không có dòng F** |
+| Ngưỡng tích lũy (thang 10) | **4,0** | **5,0** |
+
+QĐ5339 Điều 3 khoản 2 nói rõ: *"Học phần chỉ được xem là tích lũy khi đạt từ điểm D trở lên
+theo thang điểm chữ **(trừ học phần Giáo dục quốc phòng và an ninh phải đạt từ điểm D+ trở
+lên)** hoặc **đạt từ điểm 5,0 trở lên theo thang điểm 10**."*
+
+Một sinh viên có điểm **4,5** là **ĐẠT** theo QĐ3266 và **KHÔNG ĐẠT** theo QĐ5339.
+
+**Vì sao đây không phải xung đột liên phiên bản.** Giả định số 3 mục 5.3 của Tuần 1 viết:
+*"Quy chế áp dụng theo phiên bản có hiệu lực tại thời điểm hỏi; không xử lý xung đột liên
+phiên bản."* Giả định đó **không bao được ca này**, vì QĐ5339 không phải phiên bản cũ của
+QĐ3266 — hai văn bản **cùng hiệu lực, khác phạm vi**, và QĐ3266 Điều 5 **chủ động trỏ sang**
+QĐ5339. Không thể bỏ một trong hai.
+
+**Cách CPA² chốt (QD-09):** phân giải theo **phạm vi áp dụng**, không theo thời điểm ban hành —
+điểm học tại ĐHCT dùng bảng QĐ3266; điểm quy đổi từ cơ sở đào tạo khác dùng bảng QĐ5339. Đây
+là cách đọc hợp lý nhất, **nhưng vẫn là suy đoán và phải xác nhận với Phòng Đào tạo.**
+
+Trong khi chờ, KB **không tự chọn một bên**: vị từ `xung_dot_nguong(C)` được phát ra cho mọi
+điểm chuyển đổi rơi vào khoảng 4,0–4,9 (ca C23), để hệ thống báo xung đột thay vì âm thầm
+quyết. Tương tự, ca C22 để `passed(qp)` và `khong_dat_gdqp(qp)` **cùng đúng** trong một mô
+hình — mâu thuẫn hiện ra chứ không bị che.
+
+**Hệ quả cho giả định của Tuần 1:** phải sửa giả định số 3 thành hai mệnh đề tách bạch:
+
+- *(giữ)* không xử lý xung đột **liên phiên bản** của cùng một văn bản;
+- *(mới)* xung đột **liên văn bản** giữa các quy định cùng hiệu lực **là có thật, được phát
+  hiện, và được phân giải bằng quy tắc phạm vi có ghi nhận công khai**.
+
+Bổ sung mã lý do mới vào trục B: **`xung_dot_van_ban`** — nguyên nhân thứ bảy khiến một điều
+khoản không thi hành được trọn vẹn, và là nguyên nhân duy nhất **không tồn tại khi chỉ đọc
+một văn bản**.
+
+---
+
+## 5. Lược đồ con trỏ nguồn phải mở rộng: `rule_src/4` → `rule_src/5`
+
+Lược đồ chốt ở v1.0 giả định ngầm rằng KB có **một** văn bản nguồn:
+
+```prolog
+rule_src(RuleId, Dieu, Khoan, Diem).
+```
+
+Với hai văn bản, `rule_src(r_b03, 22, 3, none)` và một quy tắc ở Điều 22 của QĐ5339 sẽ trỏ
+tới cùng một địa chỉ mà nghĩa khác hẳn. v1.1 thêm tham số văn bản:
+
+```prolog
+rule_src(RuleId, VanBan, Dieu, Khoan, Diem).
+rule_src(r_b03,  qd3266, 22, 3, none).
+rule_src(r_m15,  qd5339,  3, 11, none).
+```
+
+Bất biến A3 nay kiểm cả mã văn bản, và bất biến mới **A7** kiểm mọi mã văn bản dùng trong
+`.lp` đều được khai báo ở `meta.van_ban` của danh mục.
+
+Bài học đáng ghi vào luận văn: **địa chỉ của một quy tắc pháp lý không phải (điều, khoản) mà
+là (văn bản, điều, khoản)** — điều hiển nhiên khi nhìn lại, nhưng chỉ lộ ra khi có văn bản
+thứ hai. Chi phí sửa ở tuần 5 là một lệnh thay thế; nếu để tới tuần 12, khi chứng chỉ đã nối
+với proof engine, chi phí sẽ khác hẳn.
+
+---
+
+## 6. Các quyết định diễn giải sau v1.1
+
+| Mã | Nội dung | Trạng thái |
+|---|---|---|
+| QD-01 | Miễn ↔ TC ↔ ĐTBCTL | 🔄 **SỬA** — tách hai loại miễn (mục 2) |
+| QD-02 | TC tự chọn dư | 🟡 đóng một phần |
+| QD-03 | Định nghĩa *"TC nợ đọng"* | 🔴 mở — cần Phòng Đào tạo |
+| QD-04 | Ngoại lệ thẩm quyền hạ trần chân trị | ✅ đóng (thận trọng) |
+| QD-05 | Thời hạn điểm I | 🔴 mở |
+| QD-06 | Điều kiện công nhận TC | ✅ **đóng** — chính là QĐ5339 |
+| QD-07 | Thay thế luận văn theo TC | ✅ đóng |
+| QD-08 | Tiêu chí *"tương đương"* | 🔄 **sửa lý do** — thẩm quyền mở, không phải ngôn ngữ mơ hồ; người quyết định là Tổ Xét miễn |
+| **QD-09** | Xung đột bảng quy đổi giữa hai văn bản | 🔴 **mới, mở** — cần Phòng Đào tạo |
+| **QD-10** | Gộp điểm khi miễn nhiều↔một | ✅ **mới, đóng** — QĐ5339 Điều 3 k.3 |
+| **QD-11** | Miễn không tự động | ✅ **mới, đóng** — QĐ5339 Điều 2 k.6 |
+
+Đáng chú ý ở **QD-08**: v1.0 xếp lý do là *"ngôn ngữ mơ hồ"*, v1.1 sửa thành *"thẩm quyền
+mở"*. Bản thân câu chữ không đổi — cái đổi là **em đã đọc thêm một văn bản**. Nghĩa là
+**phân loại lý do phụ thuộc độ đầy đủ của kho văn bản**, và đây phải được nêu như một hạn
+chế phương pháp của RQ1, không được giấu.
+
+---
+
+## 7. Ba câu hỏi cũ nay đã có câu trả lời
+
+| Câu hỏi treo từ Tuần 2 | Trả lời từ QĐ5339 |
+|---|---|
+| *"Chứng chỉ nào miễn được học phần nào?"* | Phụ lục 1 — bảng quy đổi IELTS/TOEIC/TOEFL/Cambridge ↔ 6 bậc. K45+ cần **bậc 3** (IELTS 4.5 / TOEIC 450 / iBT 45) |
+| *"Chênh lệch tín chỉ khi thay thế thì tính sao?"* (T6 ca biên) | Điều 3 k.3 — điểm theo **trung bình có trọng số** của các học phần đã học; TC theo học phần **được miễn** |
+| *"Có bảng thay thế học phần thật nào không?"* | Điều 3 k.9 — bảng chuyển đổi Lý luận chính trị ML009→ML014, ML010→ML016+ML018, ML011→ML019, ML006→ML021 |
+
+Một chi tiết nhỏ nhưng đáng ghi (ca C21): quy tắc trung bình có trọng số **sinh ra điểm không
+nằm trên thang 8 bậc**. Miễn 1 học phần từ hai học phần 4,0 (2 TC) và 3,0 (3 TC) cho 3,4 —
+không phải A, B+, B hay bất kỳ bậc nào. Vậy `g4` **không đóng** trên tập giá trị của bảng quy
+đổi, và mọi mã giả định "điểm luôn thuộc 8 giá trị" sẽ sai. Đây là ràng buộc thiết kế cho
+Tuần 6.
+
+---
+
+## 8. Việc phải làm, cập nhật sau v1.1
+
+**Đã gỡ chặn:** T5 không còn thiếu nguồn. Tuần 6 chạy đúng kế hoạch.
+
+**Còn chặn:** điều kiện nhận đề tài LVTN/TLTN vẫn *"do đơn vị đào tạo quy định"* (QĐ3266
+Điều 31) — vẫn cần quy định của Trường CNTT&TT, hoặc rút câu hỏi *"em đủ điều kiện làm luận
+văn chưa?"* khỏi bộ Q-Real.
+
+**Ba câu hỏi mới cho GVHD / Phòng Đào tạo**, xếp theo mức độ ảnh hưởng:
+
+1. **QD-09** — điểm 4,0–4,9 quy đổi từ trường khác: đạt hay không đạt? Ảnh hưởng trực tiếp
+   tới `passed`, tức tới mọi kết luận phía sau.
+2. **QD-03** — *"TC nợ đọng"* tính thế nào? Ảnh hưởng tới cảnh báo học vụ.
+3. QĐ5339 ban hành 2019, QĐ3266 ban hành 2024 và chỉ tuyên bố thay thế QĐ 1813/2021.
+   **QĐ5339 có còn hiệu lực nguyên vẹn không, hay đã có văn bản thay thế?** Nếu đã có bản mới,
+   toàn bộ nhóm R-M phải làm lại — nên hỏi trước khi đầu tư thêm vào nhóm này.
+
+Câu số 3 đáng hỏi sớm nhất vì rẻ nhất và rủi ro cao nhất.
+
+---
+
+### Ghi chú kiểm chứng
+
+- [x] 27/27 ca kiểm thử đạt (17 cũ giữ nguyên xanh sau khi nạp thêm file quy tắc mới)
+- [x] 7/7 bất biến con trỏ nguồn đạt, gồm bất biến mới A7 về mã văn bản
+- [x] Mọi bảng của QĐ5339 (quy đổi điểm, thành tích Olympic, quy đổi chứng chỉ ngoại ngữ)
+      đã đối chiếu thủ công trên ảnh trang — OCR làm nát cả ba
+- [ ] QD-09 và QD-03 là suy đoán, **chưa xác nhận với người**
+- [ ] Chưa kiểm tra QĐ5339 còn hiệu lực hay đã bị thay thế
+- [ ] Trục C của Tuần 2 (6 trạng thái) **cần sửa thành 7** — chưa cập nhật vào file Tuần 2

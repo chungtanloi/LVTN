@@ -1,0 +1,38 @@
+CORPUS TUẦN 14
+  passage quy chế: 138 (OCR 130, dựng từ trích R-Formal 8)
+  passage CTĐT   : 83
+  quy tắc R-Formal không có passage OCR (dùng trích): ['R-B09', 'R-B10', 'R-B11', 'R-F06', 'R-F09', 'R-F10', 'R-M12', 'R-X18']
+  điều theo văn bản: QĐ3266 [1, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 2, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 3, 30, 31, 32, 33, 34, 35, 36, 4, 5, 6, 7, 8, 9], QĐ5339 [1, 2, 3, 4, 'PL1']
+
+A. CORPUS
+  [OK] mọi quy tắc R-Formal (93) có passage (thiếu: [])
+  [OK] mọi asp (53) có passage (thiếu: [])
+  [OK] passage của mỗi quy tắc cùng văn bản + điều với bản ghi R-Formal (lệch: [])
+     ghi nhận: 8 passage dựng từ trích R-Formal vì OCR hỏng/trắng: ['qd3266:D24:K3', 'qd3266:D24:K4', 'qd3266:D24:K5', 'qd3266:D33:K1', 'qd3266:D33:K2', 'qd3266:D34:K2', 'qd3266:D35:K0', 'qd5339:D3:K8']
+B. TRUY HỒI — tập test
+     Recall@1 = 16/24 = 0.67 · Recall@5 = 22/24 = 0.92 · MRR = 0.788 · top-1 sai văn bản = 2/24
+     Recall@1 theo loại: ctdt 1/2, dien_dat_khac 3/6, khong_dau 2/2, nham_van_ban 0/1, so_lieu 4/4, truc_tiep 6/9
+       · test01 [dien_dat_khac] hạng 2: Một học kỳ tôi có thể đăng ký 22 tín chỉ được không? → top1 qd3266:D17:K2
+       · test02 [dien_dat_khac] hạng 9: Rớt môn bắt buộc thì phải làm sao? → top1 qd3266:D27:K4
+       · test05 [truc_tiep] hạng 2: Bị đình chỉ học tập một học kỳ khi nào? → top1 qd3266:D28:K3
+       · test06 [dien_dat_khac] hạng 2: Sinh viên được học tối đa mấy năm? → top1 qd3266:D14:K1
+       · test10 [nham_van_ban] hạng 3: Điểm 4,5 học ở trường khác chuyển về có được tích lũy không? → top1 qd3266:D17:K1
+       · test11 [truc_tiep] hạng 3: Thủ tục xin miễn học phần phải nộp đơn khi nào? → top1 qd3266:D35:K0
+       · test13 [ctdt] hạng 7: Môn CT177 có tiên quyết là gì? → top1 ctdt_k49:CT188
+       · test18 [truc_tiep] hạng 2: Điểm rèn luyện yếu hai học kỳ liên tiếp bị xử lý thế nào? → top1 qd3266:D25:K6
+  [CHƯA ĐẠT] mục tiêu Recall@1 ≥ 0.8
+  [CHƯA ĐẠT] mục tiêu Recall@5 ≥ 0.95
+C. GROUNDING CERTIFICATE (Prototype v1)
+  [OK] sv_lvtn (TRUE): 20 bước, mọi bước có passage nguồn
+  [OK] sv_lvtn: passage của từng bước cùng văn bản + điều với quy tắc (lệch: [])
+  [OK] sv_tron_ngoai_ngu (FALSE): 20 bước, mọi bước có passage nguồn
+  [OK] sv_tron_ngoai_ngu: passage của từng bước cùng văn bản + điều với quy tắc (lệch: [])
+  [OK] sv_mien_ielts (TRUE): 20 bước, mọi bước có passage nguồn
+  [OK] sv_mien_ielts: passage của từng bước cùng văn bản + điều với quy tắc (lệch: [])
+D. HẬU KIỂM TRÍCH DẪN
+  [OK] trích từ nguồn certificate (3 passage) → cho qua
+  [OK] chèn passage truy hồi được nhưng ngoài chứng minh (qd3266:D14:K1) → chặn
+  [OK] passage không tồn tại → chặn
+
+KẾT LUẬN: ĐẠT — mọi kết luận có passage nguồn đúng điều/khoản, hậu kiểm chặn trích sai
+Truy hồi tự do: CHƯA đạt mục tiêu Recall (xem mục B)
