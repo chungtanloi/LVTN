@@ -111,8 +111,11 @@ def test_graduation_cases():
     m=solve_one('course("QP1",2). loai_hp("QP1",gdqp). g10("QP1",45).\n' + sv(CHUAN+["CT550E"], them=KY_LUAT))
     check("khong_dat_gdqp(\"QP1\")" in m, "B5 GDQP D → khong_dat_gdqp → dk_gdqp FALSE")
     # B6: Thiếu xác nhận kỷ luật → UNKNOWN (ba trị)
+    #     Tuần 16 (P15-2): trước đây kỳ vọng FALSE — đó là giả định thế giới đóng, trái schema w7
     v=tri("tot_nghiep", sv(CHUAN+["CT550E"]))
-    check(v=="FALSE", f"B6 Thiếu xac_nhan_ky_luat_sach → tot_nghiep={v} (FALSE, vì dk_ky_luat bắt buộc)")
+    check(v=="UNKNOWN", f"B6 Thiếu xac_nhan_ky_luat_sach → tot_nghiep={v} (UNKNOWN, dữ kiện ngoài chưa khai báo)")
+    v=tri("tot_nghiep", sv(CHUAN+["CT550E"], them="khai_bao(ky_luat).\n"))
+    check(v=="FALSE", f"B6b Đã khai báo KHÔNG có xác nhận kỷ luật → tot_nghiep={v} (FALSE)")
     # B7: Quá hạn
     m=solve_one(sv(CHUAN+["CT550E"], them="da_hoc_nam2(20).\n"))
     check("qua_thoi_gian_toi_da" in m and "thieu_dk(thoi_gian)" in m, "B7 Quá hạn 10 năm → thiếu thời gian")

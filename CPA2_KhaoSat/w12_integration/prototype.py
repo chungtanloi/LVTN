@@ -11,7 +11,7 @@ Tuần 12 chưa có LLM Verbalizer thật nên tầng 4 là template + hậu ki�
 Chạy:  python prototype.py --student ../w7_student_facts/students/sv_lvtn.json --question "em đủ điều kiện tốt nghiệp chưa?"
        python prototype.py --demo
 """
-import json, re, argparse
+import json, re, argparse, sys
 from pathlib import Path
 import clingo
 
@@ -22,6 +22,8 @@ W8 = HERE.parent / "w8_elective"
 W9 = HERE.parent / "w9_exemption"
 W10 = HERE.parent / "w10_graduation"
 W11 = HERE.parent / "w11_proof"
+sys.path.insert(0, str(HERE.parent / "w16_abstention"))
+import abstention  # Tuần 16: missing evidence
 
 RULES = [W5 / "qd3266_r_formal_v1.lp", W5 / "qd5339_r_formal_v1.lp"]
 SCHEMA = W6 / "curriculum_schema.lp"
@@ -64,13 +66,15 @@ def load_student(path):
         elif th is not None: lines.append(f'g10("{code}",{th}).')
     for c in j.get("khong_tinh_tich_luy",[]): lines.append(f'khong_tinh_tich_luy("{c}").')
     if j.get("xac_nhan_ky_luat_sach") is True: lines.append('xac_nhan_ky_luat_sach.')
+    elif j.get("xac_nhan_ky_luat_sach") is False: lines.append('khai_bao(ky_luat).')  # null/thiếu → mở nhánh (Tuần 16)
     for c in j.get("certificates",[]):
         loai=c["loai"]; diem=int(c["diem"]) if loai=="ctu_abc" else round(c["diem"]*10)  # nguong_cc lưu điểm ×10
         lines.append(f'chung_chi({loai},{diem}).')
     for ex in j.get("exemptions",[]):
         if ex["quyet_dinh"]: lines.append(f'duoc_mien("{ex["ma_hp"]}").')
     # tinh chỉ bổ sung cho CTĐT demo
-    if j.get("da_hoc_nam2") is not None: lines.append(f'da_hoc_nam2({j["da_hoc_nam2"]}).')
+    for k in ("da_hoc_nam2","tc_cong_nhan"):
+        if j.get(k) is not None: lines.append(f'{k}({j[k]}).')
     return "\n".join(lines), j.get("student_id","demo")
 
 def kb(extra):
@@ -113,10 +117,15 @@ def build_certificate(claim, verdict, models, cautious, brave):
         steps.append({"atom": atom, "rule_id": rid, "source": {"van_ban": rec["van_ban"], "dieu": rec["dieu"], "khoan": rec["khoan"], "trich": rec["trich"][:150]}})
         if rec.get("quyet_dinh"): qd_set.add(rec["quyet_dinh"].split()[0])
     missing=[]
+    can_bo_sung=[]
     if verdict=="UNKNOWN":
-        diff=brave - cautious
-        missing=sorted([a for a in diff if "g10" in a or "duoc_mien" in a or "tich_luy" in a])[:10]
-    return {"claim": claim, "verdict": verdict, "proof": {"steps": steps}, "missing_facts": missing, "meta": {"qd_dien_giai": sorted(qd_set)}}
+        # Tuần 16: chỉ dữ kiện mở QUYẾT ĐỊNH kết luận (thay lọc chuỗi brave \ cautious)
+        can_bo_sung=abstention.bang_chung_thieu(claim, [frozenset(m) for m in models])
+        missing=[b["bien"] for b in can_bo_sung]
+        if not missing:   # UNKNOWN do lựa chọn của SV (tích luỹ, tự chọn) — không phải dữ kiện thiếu
+            missing=sorted(a for a in brave - cautious if "tich_luy" in a)[:10]
+    return {"claim": claim, "verdict": verdict, "proof": {"steps": steps}, "missing_facts": missing,
+            "can_bo_sung": can_bo_sung, "meta": {"qd_dien_giai": sorted(qd_set)}}
 
 # ---------- Tầng 4: Verbalizer + Hậu kiểm ----------
 TEMPLATES = {
@@ -153,7 +162,7 @@ def answer(question, student_path):
     explanation, block = verbalize(cert, cautious)
     if block:
         return {"verdict": "BLOCKED", "certificate": cert, "explanation_vi": block, "missing_facts": cert["missing_facts"]}
-    return {"verdict": verdict, "certificate": cert, "explanation_vi": explanation, "missing_facts": cert["missing_facts"], "student_id": sid, "claim": claim}
+    return {"verdict": verdict, "certificate": cert, "explanation_vi": explanation, "missing_facts": cert["missing_facts"], "can_bo_sung": cert["can_bo_sung"], "student_id": sid, "claim": claim}
 
 def demo():
     cases=[
@@ -185,8 +194,8 @@ if __name__=="__main__":
     if args.demo:
         # demo with correct absolute paths
         for q, stu in [
-            ("em đủ điều kiện tốt nghiệp chưa?", "D:/LVTN/CPA2_KhaoSat/w7_student_facts/students/sv_lvtn.json"),
-            ("em đủ điều kiện tốt nghiệp chưa?", "D:/LVTN/CPA2_KhaoSat/w7_student_facts/students/sv_tron_ngoai_ngu.json"),
+            ("em đủ điều kiện tốt nghiệp chưa?", str(HERE.parent / "w7_student_facts" / "students" / "sv_lvtn.json")),
+            ("em đủ điều kiện tốt nghiệp chưa?", str(HERE.parent / "w7_student_facts" / "students" / "sv_tron_ngoai_ngu.json")),
         ]:
             res=answer(q, stu)
             print(f"\nQ: {q}")

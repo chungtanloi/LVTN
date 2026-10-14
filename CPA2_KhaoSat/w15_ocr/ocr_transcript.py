@@ -374,10 +374,9 @@ def sang_ho_so(doc, khai_bao=None, tau=None):
     for m in khong_chac:
         grades.pop(m, None)
     extra = lua_chon(khong_chac)
-    # Dữ kiện ngoài bảng điểm chưa khai báo → để mở cả hai nhánh. KB Tuần 10 dùng giả định thế giới
-    # đóng (thiếu xac_nhan_ky_luat_sach → FALSE, không phải UNKNOWN như chú thích của nó) — sửa ở Tuần 16.
-    bc["khai_bao_thieu"] = [k for k in ("xac_nhan_ky_luat_sach",) if k not in (khai_bao or {})]
-    extra += "".join(f"\n{{ {k} }}." for k in bc["khai_bao_thieu"])
+    # Dữ kiện ngoài bảng điểm chưa khai báo: từ Tuần 16 KB tự mở nhánh (graduation_solver.lp mục 0),
+    # ở đây chỉ ghi lại để báo cáo / hỏi sinh viên.
+    bc["khai_bao_thieu"] = [k for k in ("xac_nhan_ky_luat_sach", "da_hoc_nam2") if k not in (khai_bao or {})]
     hs = {"student_id": "sv_ocr", "major": "cntt", "cohort": "K49", "ctdt": "cntt_k49", "grades": grades,
           "exemptions": [{"ma_hp": m, "chung_chi_ref": None, "quyet_dinh": True} for m in mien],
           "meta": {"nguon": "ocr", "tau": tau}}
@@ -416,7 +415,8 @@ def ket_luan_tu_json(j, claim="tot_nghiep"):
 
 
 def khai_bao_tu_json(j):
-    return {k: j[k] for k in ("xac_nhan_ky_luat_sach", "khong_tinh_tich_luy", "che_do_sv_chon_tich_luy") if k in j}
+    return {k: j[k] for k in ("xac_nhan_ky_luat_sach", "khong_tinh_tich_luy", "che_do_sv_chon_tich_luy",
+                                    "da_hoc_nam2", "tc_cong_nhan") if k in j}
 
 
 def so_khop(hs, j):

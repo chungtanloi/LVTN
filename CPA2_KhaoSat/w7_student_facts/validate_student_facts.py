@@ -37,6 +37,11 @@ def load_facts(j):
         lines.append("che_do(sv_chon_tich_luy).")
     if j.get("xac_nhan_ky_luat_sach") is True:
         lines.append("xac_nhan_ky_luat_sach.")
+    elif j.get("xac_nhan_ky_luat_sach") is False:
+        lines.append("khai_bao(ky_luat).")   # đã khai báo "không" → FALSE; null/thiếu → mở nhánh (Tuần 16)
+    for k in ("da_hoc_nam2", "tc_cong_nhan"):
+        if j.get(k) is not None:
+            lines.append(f"{k}({j[k]}).")
     # certificates → chung_chi
     for cert in j.get("certificates", []):
         loai = cert["loai"]

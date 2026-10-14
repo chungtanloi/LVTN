@@ -1,0 +1,48 @@
+==============================================================================
+VALIDATE ABSTENTION ENGINE v1 — Tuần 16 (CPA2)
+Thiếu dữ kiện → UNKNOWN + danh sách dữ kiện quyết định; không đoán
+==============================================================================
+
+A. DỮ KIỆN NGOÀI THIẾU → UNKNOWN (P15-2)
+  [OK]   A1 sv_lvtn khai báo đủ → TRUE (got TRUE)
+  [OK]   A2 kỷ luật = null → UNKNOWN (got UNKNOWN)
+          ↳ HỒI QUY: luật Tuần 10 cho FALSE (thế giới đóng)
+  [OK]   A3 thiếu hẳn trường kỷ luật → UNKNOWN (got UNKNOWN)
+  [OK]   A4 kỷ luật = false (đã khai báo) → FALSE (got FALSE)
+  [OK]   A5 trộn AV/PV + kỷ luật null → vẫn FALSE (got FALSE)
+          ↳ dữ kiện mở không cứu được hồ sơ đã thiếu điều kiện học vụ
+  [OK]   A6 thiếu da_hoc_nam2 → thieu_dk(thoi_gian) UNKNOWN (got UNKNOWN)
+          ↳ HỒI QUY: luật Tuần 10 cho FALSE — coi như chưa quá hạn khi không biết đã học bao lâu
+  [OK]   A7 da_hoc_nam2 = 9 (trần 18) → thieu_dk(thoi_gian) FALSE (got FALSE)
+  [OK]   A8 da_hoc_nam2 = 20 (trần 18) → thieu_dk(thoi_gian) TRUE (got TRUE)
+  [OK]   A9 chưa đủ ĐK + thiếu da_hoc_nam2 → bi_xoa_ten UNKNOWN (got UNKNOWN)
+          ↳ HỒI QUY: luật cũ cho FALSE (R-F09/R-D08 — xoá tên khi quá hạn mà chưa đủ ĐK)
+
+B. MISSING EVIDENCE — chỉ nêu dữ kiện quyết định
+  [OK]   B1 kỷ luật null → hỏi xac_nhan_ky_luat_sach (quyết định)
+  [OK]   B2 true → TRUE, false → FALSE ({'false': 'FALSE', 'true': 'TRUE'})
+  [OK]   B3 câu hỏi có nội dung + nguồn R-F03
+  [OK]   B4 đã FALSE chắc chắn → không hỏi gì thêm ([])
+  [OK]   B5 chỉ hỏi CT550E, không hỏi CT478 (không quyết định) (UNKNOWN, ['g10("CT550E")'])
+  [OK]   B6 CT550E: 80 → TRUE, 30 → FALSE ({'30': 'FALSE', '80': 'TRUE'})
+  [OK]   B7 hai biến mở đều được hỏi (['g10("CT550E")', 'xac_nhan_ky_luat_sach'])
+  [OK]   B8 kỷ luật true → vẫn UNKNOWN (còn CT550E) ({'false': 'FALSE', 'true': 'UNKNOWN'})
+  [OK]   B9 F/D/A: liệt kê đủ 3 giá trị, F → FALSE ({'0': 'FALSE', '100': 'TRUE', '40': 'TRUE'})
+  [OK]   B10 QĐ miễn XH025 chưa rõ → hỏi duoc_mien("XH025") (UNKNOWN, {'false': 'FALSE', 'true': 'TRUE'})
+
+C. CHÍNH SÁCH TỪ CHỐI KẾT LUẬN
+  [OK]   C1 UNKNOWN → ket_luan = None (không kết luận)
+  [OK]   C2 giải thích hỏi bằng tiếng Việt, không lộ tên atom
+  [OK]   C3 đa số 3/4 thế giới TRUE → vẫn UNKNOWN, không kết luận (UNKNOWN)
+  [OK]   C4 KB mâu thuẫn (vô nghiệm) → MAU_THUAN, không kết luận (MAU_THUAN)
+  [OK]   C5 TRUE chắc chắn → ket_luan True, không hỏi thêm
+
+D. TÍCH HỢP PROTOTYPE (Tuần 12) + 6 HỒ SƠ
+  [OK]   D1 prototype: kỷ luật null → UNKNOWN (got UNKNOWN)
+  [OK]   D2 missing_facts = ['xac_nhan_ky_luat_sach']
+  [OK]   D3 6 hồ sơ giả lập giữ nguyên kết luận Tuần 12
+  [OK]   D4 6 hồ sơ đã khai báo da_hoc_nam2 → thời gian xác định ({'sv_5hp': 'FALSE', 'sv_du_hp': 'FALSE', 'sv_lvtn': 'FALSE', 'sv_mien_ielts': 'FALSE', 'sv_tltn': 'FALSE', 'sv_tron_ngoai_ngu': 'FALSE'})
+
+==============================================================================
+KẾT LUẬN: ĐẠT — Abstention engine không đoán khi thiếu dữ liệu
+==============================================================================

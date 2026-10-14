@@ -24,7 +24,7 @@ def check(cond, msg, note=""):
 
 def test_true():
     print("\nA. TRUE — sv_lvtn đủ 161 TC")
-    res=proto.answer("em đủ điều kiện tốt nghiệp chưa?", "D:/LVTN/CPA2_KhaoSat/w7_student_facts/students/sv_lvtn.json")
+    res=proto.answer("em đủ điều kiện tốt nghiệp chưa?", str(HERE.parent / "w7_student_facts" / "students" / "sv_lvtn.json"))
     check(res["verdict"]=="TRUE", f"A1 verdict TRUE (got {res['verdict']})")
     check(len(res["certificate"]["proof"]["steps"])>0, f"A2 certificate có {len(res['certificate']['proof']['steps'])} steps")
     check("tot_nghiep" in res["explanation_vi"], "A3 explanation chứa claim")
@@ -32,7 +32,7 @@ def test_true():
 
 def test_false():
     print("\nB. FALSE — sv_tron_ngoai_ngu trộn AV/PV")
-    res=proto.answer("em đủ điều kiện tốt nghiệp chưa?", "D:/LVTN/CPA2_KhaoSat/w7_student_facts/students/sv_tron_ngoai_ngu.json")
+    res=proto.answer("em đủ điều kiện tốt nghiệp chưa?", str(HERE.parent / "w7_student_facts" / "students" / "sv_tron_ngoai_ngu.json"))
     check(res["verdict"]=="FALSE", f"B1 verdict FALSE (got {res['verdict']})")
     check(len(res["certificate"]["proof"]["steps"])>0, "B2 certificate có steps (phản ví dụ)")
     # explanation phải đề cập thiếu
@@ -41,7 +41,7 @@ def test_false():
 def test_unknown():
     print("\nC. UNKNOWN — thiếu điểm LVTN (2 thế giới)")
     # tạo hồ sơ tạm thiếu CT550E
-    extra = proto.load_student("D:/LVTN/CPA2_KhaoSat/w7_student_facts/students/sv_lvtn.json")[0]
+    extra = proto.load_student(str(HERE.parent / "w7_student_facts" / "students" / "sv_lvtn.json"))[0]
     # bỏ CT550E ra, thêm choice
     extra = "\n".join([l for l in extra.split("\n") if "CT550E" not in l])
     extra += '\n{ g10("CT550E",80); g10("CT550E",30) } = 1.\n'
@@ -68,7 +68,7 @@ def test_postcheck():
     blocked = any(c not in cert_text for c in codes)
     check(blocked, "D1 hậu kiểm phát hiện CT999 không trong certificate → chặn")
     # test thật qua prototype: không có mã lạ nên không chặn
-    res=proto.answer("em đủ điều kiện tốt nghiệp chưa?", "D:/LVTN/CPA2_KhaoSat/w7_student_facts/students/sv_lvtn.json")
+    res=proto.answer("em đủ điều kiện tốt nghiệp chưa?", str(HERE.parent / "w7_student_facts" / "students" / "sv_lvtn.json"))
     check(res["verdict"]!="BLOCKED", "D2 case thật không bị chặn")
 
 def main():

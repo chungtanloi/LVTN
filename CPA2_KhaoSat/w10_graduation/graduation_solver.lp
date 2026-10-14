@@ -12,6 +12,24 @@
 %%=============================================================================
 
 %% ---------------------------------------------------------------------------
+%% 0. THẾ GIỚI MỞ CÓ KIỂM SOÁT CHO DỮ KIỆN NGOÀI (Tuần 16, sửa P15-2)
+%%    Quy tắc META về cách xử lý dữ kiện THIẾU — không phải nội dung quy chế.
+%%    Trước Tuần 16: thiếu dữ kiện = sai (thế giới đóng) → thiếu xác nhận kỷ luật
+%%    cho tot_nghiep FALSE; thiếu da_hoc_nam2 cho "chưa quá hạn". Nay: hồ sơ KHÔNG
+%%    khai báo → mở cả hai nhánh → ba trị cho UNKNOWN. Khai báo "không" thì loader
+%%    phát khai_bao(ky_luat). (không kèm xac_nhan_ky_luat_sach) → FALSE thật.
+%%    Biến chịu ảnh hưởng: xac_nhan_ky_luat_sach (R-F03, Đ32 k1 c);
+%%    qua_thoi_gian_toi_da (R-E01/R-E02, Đ5) — qua đó thieu_dk(thoi_gian), bi_xoa_ten.
+%%    khai_bao/1 chỉ được suy từ dữ kiện ĐẦU VÀO. KHÔNG viết
+%%    khai_bao(ky_luat) :- xac_nhan_ky_luat_sach. — nhánh chọn "true" sẽ tự triệt
+%%    tiêu điều kiện "not khai_bao" của chính nó (không ổn định) → thế giới đóng lại.
+%%    Khi hồ sơ có xac_nhan_ky_luat_sach. thì lựa chọn bên dưới thừa nhưng vô hại.
+%% ---------------------------------------------------------------------------
+khai_bao(thoi_gian) :- da_hoc_nam2(_).
+{ xac_nhan_ky_luat_sach } :- not khai_bao(ky_luat).
+{ qua_thoi_gian_toi_da }  :- not khai_bao(thoi_gian).
+
+%% ---------------------------------------------------------------------------
 %% 1. BẢY ĐIỀU KIỆN THÀNH PHẦN (Taxonomy Tuần 2, T7 — đã có ở R-Formal, ở đây chỉ alias)
 %% ---------------------------------------------------------------------------
 %% T1 + T2/T3: bat_buoc, dat_nhom
@@ -46,7 +64,7 @@ why(dk_dtbctl, r_f01a) :- dk_dtbctl.
 dk_gdqp :- not khong_dat_gdqp(_).
 why(dk_gdqp, r_f02a) :- dk_gdqp.
 
-%% dk_ky_luat: không đang bị kỷ luật — dữ kiện ngoài, luôn UNKNOWN nếu thiếu
+%% dk_ky_luat: không đang bị kỷ luật — dữ kiện ngoài, UNKNOWN nếu thiếu (mục 0)
 dk_ky_luat :- xac_nhan_ky_luat_sach.
 why(dk_ky_luat, r_f03) :- dk_ky_luat.
 truc_ky_luat_khong_co_du_lieu :- not xac_nhan_ky_luat_sach.

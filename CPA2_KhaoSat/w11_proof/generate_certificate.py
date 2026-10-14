@@ -41,6 +41,9 @@ def load_student(path):
         elif th is not None: lines.append(f'g10("{code}",{th}).')
     for c in j.get("khong_tinh_tich_luy",[]): lines.append(f'khong_tinh_tich_luy("{c}").')
     if j.get("xac_nhan_ky_luat_sach") is True: lines.append('xac_nhan_ky_luat_sach.')
+    elif j.get("xac_nhan_ky_luat_sach") is False: lines.append('khai_bao(ky_luat).')  # null/thiếu → mở nhánh (Tuần 16)
+    for k in ("da_hoc_nam2","tc_cong_nhan"):
+        if j.get(k) is not None: lines.append(f'{k}({j[k]}).')
     for c in j.get("certificates",[]):
         loai=c["loai"]; diem=int(c["diem"]) if loai=="ctu_abc" else round(c["diem"]*10)  # nguong_cc lưu điểm ×10
         lines.append(f'chung_chi({loai},{diem}).')

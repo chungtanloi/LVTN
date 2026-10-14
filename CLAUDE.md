@@ -56,7 +56,8 @@ D:\LVTN\                          (git repo)
 │   ├── w12_integration\          Prototype v1: Parser → KB → Solver ba trị → Verbalizer + hậu kiểm
 │   ├── w13_parser\               semantic parser (regex; LLM mới là stub)
 │   ├── w14_rag\                  corpus điều/khoản, BM25, grounding, rag_queries.json
-│   └── w15_ocr\                  OCR bảng điểm (Tesseract vie) → hồ sơ có confidence; _rieng/ _anh/ gitignore
+│   ├── w15_ocr\                  OCR bảng điểm (Tesseract vie) → hồ sơ có confidence; _rieng/ _anh/ gitignore
+│   └── w16_abstention\           ba trị + missing evidence + từ chối kết luận (abstention.py)
 ├── ctu\                          PDF quy chế gốc (gitignore)
 ├── NiênLuan\                     niên luận cũ, có dữ liệu SV (gitignore)
 └── LVTN\                         repo riêng, chưa dùng (gitignore)
@@ -76,3 +77,7 @@ D:\LVTN\                          (git repo)
 - Bảng điểm thật khác CTĐT: miễn ngoại ngữ in thành dòng CC004 (10 TC, M); GDTC là TC025–027, trong khi KB K49 chỉ có TC100.
 - OCR: OCR cả dòng dính số với chữ (`97A`), nên đọc theo dải cột có whitelist. Xoay ảnh dù rất nhỏ cũng làm hỏng chữ, nên chỉ dựng thẳng khi góc ≥ 0,15°.
 - Không đưa bảng điểm thật hay kết quả OCR của nó vào repo (`w15_ocr/_rieng/`).
+- Mở nhánh dữ kiện ngoài: `{ p } :- not khai_bao(x).` thì `khai_bao(x)` chỉ được suy từ dữ kiện ĐẦU VÀO. Viết `khai_bao(x) :- p.` làm nhánh p tự triệt tiêu → thế giới đóng lại im lặng (P16-1).
+- `tot_nghiep`/`du_dk_hoc_vu` định nghĩa ở CẢ R-Formal lẫn `graduation_solver.lp` (hợp lại) → thêm điều kiện ở một nơi không chặn được kết luận (P16-2).
+- Ba trị theo số thế giới: UNKNOWN là UNKNOWN dù đa số thế giới nghiêng một phía — số answer set không phải xác suất.
+- Chạy trên Linux/cloud: w15 cố định font `C:/Windows/Fonts` và Tesseract Windows (đặt `TESSERACT_EXE`); số liệu OCR đổi theo font/phiên bản Tesseract → chỉ so sánh trước/sau trên CÙNG môi trường. Chạy `validate_rag.py` sinh lại `corpus.jsonl` với LF → khôi phục, đừng commit.
