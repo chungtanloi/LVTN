@@ -1,0 +1,36 @@
+==============================================================================
+VALIDATE ADVERSARIAL SET v1 — Tuần 17 (CPA2)
+==============================================================================
+  [OK]   adversarial_set.json tồn tại (sinh bằng build_adversarial.py)
+
+A. SỐ LƯỢNG
+  [OK]   A1 ≥ 60 ca chấm điểm (80)
+  [OK]   A2 đủ 5 nhóm ({'thieu_du_lieu': 17, 'sat_nguong': 24, 'bay_quy_che': 15, 'ho_so_loi': 6, 'ocr_sai': 18})
+  [OK]   A3 gold có cả TRUE/FALSE/UNKNOWN ({'UNKNOWN': 26, 'FALSE': 26, 'TRUE': 28})
+
+B. TRƯỜNG BẮT BUỘC
+  [OK]   B1 id duy nhất
+  [OK]   B2 mọi ca có câu hỏi/claim/lý do/nguồn/đầu vào
+  [OK]   B3 gold ∈ {TRUE,FALSE,UNKNOWN}, nhóm hợp lệ
+  [OK]   B4 ca gold UNKNOWN (hồ sơ) nêu dữ kiện quyết định kỳ vọng (can_hoi)
+  [OK]   B5 su_that nhất quán với gold (trừ ca khong_phat_hien_duoc)
+
+C. TÁCH DEV/TEST
+  [OK]   C1 mọi ca chấm điểm có split dev/test
+  [OK]   C2 phân tầng: mỗi nhóm có ở cả dev và test, lệch ≤ 1 ({'ocr_sai': (9, 9), 'thieu_du_lieu': (9, 8), 'sat_nguong': (12, 12), 'ho_so_loi': (3, 3), 'bay_quy_che': (8, 7)})
+
+D. ĐẦU VÀO DỰNG ĐƯỢC
+  [OK]   D1 dựng được đầu vào của mọi ca
+  [OK]   D2 hồ sơ (ngoài nhóm hồ sơ lỗi) hợp lệ theo student_fact_schema
+  [OK]   D3 mọi ca hồ sơ có mô tả tiếng Việt (để chạy baseline LLM Tuần 21)
+
+E. ORACLE ĐỘC LẬP ↔ TIỀN ĐỀ CỦA GOLD
+  [OK]   E1 ≥ 15 ca có tiền đề số học kiểm bằng oracle (29)
+  [OK]   E2 oracle khớp mọi tiền đề
+
+F. CA KHÔNG CHẤM ĐIỂM
+  [OK]   F1 5 ca không chấm đều ghi lý do
+
+==============================================================================
+KẾT LUẬN: ĐẠT — Adversarial set đủ ≥ 60 ca, có gold + nguồn + dev/test, oracle khớp
+==============================================================================
