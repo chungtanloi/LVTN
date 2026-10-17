@@ -13,6 +13,8 @@ lấy gold từ kết quả của hệ thống. Tiền đề số học (ĐTBCTL
 
 Chia dev/test: phân tầng theo nhóm, xáo trộn với seed 17, xen kẽ. Chỉ tinh chỉnh trên dev.
 
+Số trang "tr." = trang của bản OCR (w5_rformal/source/*_ocr_raw.txt, dấu "===== TRANG NN").
+
 Chạy:  python build_adversarial.py
 """
 import json, random
@@ -33,16 +35,16 @@ Q = {
 }
 
 # nguồn hay dùng
-N_TN = "QĐ3266 Điều 32 khoản 1"
-N_KL = "QĐ3266 Điều 32 khoản 1 điểm c (R-F03)"
+N_TN = "QĐ3266 Điều 32 khoản 1, tr.19"
+N_KL = "QĐ3266 Điều 32 khoản 1 điểm c, tr.19 (R-F03)"
 N_TG = "QĐ3266 Điều 5, tr.4–5 (R-E01, R-E02)"
-N_DIEM = "QĐ3266 Điều 22 khoản 2–3, tr.14 (bảng quy đổi; tích lũy từ D)"
-N_TL = "QĐ3266 Điều 24 (ĐTBCTL không gồm F và HP điều kiện)"
-N_QP = "QĐ3266 Điều 32 khoản 1 điểm b (TB GDQP&AN ≥ 5,0)"
-N_CC = "QĐ5339 Điều 3 khoản 5 điểm a + Phụ lục 1 (K45 trở về sau: bậc 3 — IELTS 4.5 / TOEIC 450 / TOEFL iBT 45)"
-N_MIEN = "QĐ5339 Điều 2 khoản 6 (R-M16, QD-11: miễn phải có đơn và quyết định)"
-N_120 = "CTĐT CNTT K49 dòng 70 (CT550E: tiên quyết ≥ 120 TC tích lũy) + QĐ3266 Điều 24 k1"
-N_CTDT = "CTĐT CNTT K49 (QĐ2423) — khung 161 TC, các nhóm tự chọn"
+N_DIEM = "QĐ3266 Điều 22 khoản 2–3, tr.13–14 (bảng quy đổi; tích lũy từ D)"
+N_TL = "QĐ3266 Điều 24 khoản 4, tr.15 (ĐTBCTL không gồm F và HP điều kiện)"
+N_QP = "QĐ3266 Điều 32 khoản 1 điểm b, tr.19 (TB GDQP&AN ≥ 5,0)"
+N_CC = "QĐ5339 Điều 3 khoản 5 điểm a, tr.5–6 + Phụ lục 1, tr.11 (K45 trở về sau: bậc 3 — IELTS 4.5 / TOEIC 450 / TOEFL iBT 45)"
+N_MIEN = "QĐ5339 Điều 2 khoản 6, tr.4 (R-M16, QD-11: miễn phải có đơn và quyết định)"
+N_120 = "CTĐT CNTT K49 tr.4 dòng 70 (CT550E: tiên quyết ≥ 120 TC tích lũy) + QĐ3266 Điều 24 khoản 1, tr.15"
+N_CTDT = "CTĐT CNTT K49 (QĐ2423) tr.3–4 — khung 161 TC, các nhóm tự chọn"
 N_TK = "Nguyên tắc thiết kế CPA² (Tuần 1): không kết luận từ dữ kiện mâu thuẫn — KHÔNG phải nội dung quy chế"
 N_OCR = "Tuần 15 (OCR): không chắc ≠ sai — học phần/học kỳ đọc không chắc thì không được kết luận"
 
@@ -97,7 +99,7 @@ CASES = [
        oracle={"tc_tich_luy": 146}),
     ca("TD-10", "thieu_du_lieu", "tot_nghiep", hs("sv_lvtn", ["diem_dac_biet", "CT550E", "I"]), "FALSE",
        "LVTN đang mang điểm I (chưa thi kết thúc) → chưa tích lũy tại thời điểm hỏi. QD-05 chỉ mở về việc điểm I "
-       "sau này thành gì, không làm cho học phần đã đạt.", "QĐ3266 Điều 22 khoản 3 và khoản 5 điểm b"),
+       "sau này thành gì, không làm cho học phần đã đạt.", "QĐ3266 Điều 22 khoản 3 và khoản 5 điểm b, tr.14"),
     ca("TD-11", "thieu_du_lieu", "tot_nghiep", hs("sv_lvtn", ["khong_chac", "CT550E", [75, 30]]), "UNKNOWN",
        "Điểm LVTN chưa rõ là 7,5 hay 3,0: đạt → tốt nghiệp, F → không.", N_DIEM, can_hoi=['g10("CT550E")'],
        su_that="TRUE"),
@@ -192,23 +194,23 @@ CASES = [
        oracle={"dtbctl": 2, "gdqp_tb": 5}),
     ca("BQ-07", "bay_quy_che", "dk_tin_chi", hs("sv_mien_ielts"), "TRUE",
        "10 TC Anh văn mang điểm M (đã có QĐ miễn) VẪN tính vào tổng TC tích lũy → 151 + 10 = 161.",
-       "QĐ3266 Điều 22 khoản 5 điểm a", oracle={"tc_tich_luy": 161}),
+       "QĐ3266 Điều 22 khoản 5 điểm a, tr.14", oracle={"tc_tich_luy": 161}),
     ca("BQ-08", "bay_quy_che", "tot_nghiep", hs("sv_tron_ngoai_ngu"), "FALSE",
        "AV 4 TC + PV 7 TC = 11 TC nhưng nhóm '10 AV hoặc PV' là một nhánh, không cộng dồn.",
        N_CTDT + " (CQ-02)", oracle={"tc_tich_luy": 162}),
     ca("BQ-09", "bay_quy_che", "tot_nghiep", hs("sv_5hp"), "TRUE",
        "Không làm LVTN/TLTN, học 5 HP tự chọn 3 TC = 15 TC nhóm tốt nghiệp → vẫn tốt nghiệp (LVTN là tự chọn).",
-       N_CTDT + "; QĐ3266 Điều 31 khoản 3 (QD-07)"),
+       N_CTDT + "; QĐ3266 Điều 31 khoản 3, tr.19 (QD-07)"),
     ca("BQ-10", "bay_quy_che", "tot_nghiep", hs("sv_5hp", ["xoa_diem", "CT210"]), "FALSE",
        "Chỉ 4 HP = 12 TC < 15 TC nhóm tốt nghiệp.", N_CTDT, oracle={"tc_tich_luy": 158}),
     ca("BQ-11", "bay_quy_che", "tot_nghiep", hs("sv_tltn"), "TRUE",
        "TLTN 6 TC + 3 HP 3 TC = 15 TC.", N_CTDT),
     ca("BQ-12", "bay_quy_che", "tot_nghiep", hs("sv_lvtn", *[["diem", m, 30] for m in RUNG_F]), "TRUE",
        "Bẫy B-03 ('nợ quá 150%'/nợ TC chặn tốt nghiệp): 18 TC F ở HP tự chọn dư không chặn tốt nghiệp; 24 TC nợ là "
-       "ngưỡng CẢNH BÁO, không phải điều kiện tốt nghiệp.", "QĐ3266 Điều 17 khoản 1, Điều 18 khoản 2 điểm c; " + N_TN,
+       "ngưỡng CẢNH BÁO, không phải điều kiện tốt nghiệp.", "QĐ3266 Điều 17 khoản 1, tr.9; Điều 18 khoản 2 điểm c, tr.10; " + N_TN,
        oracle={"tc_tich_luy": 161, "dtbctl_ge_2": True}),
     ca("BQ-13", "bay_quy_che", 'du_dk_xin_mien("FL001")', hs("sv_lvtn", ["chung_chi", "ielts", 6.0]), "FALSE",
-       "Chứng chỉ tiếng Anh không cho xin miễn Pháp văn (điểm a ≠ điểm b).", "QĐ5339 Điều 3 khoản 5 điểm a, b"),
+       "Chứng chỉ tiếng Anh không cho xin miễn Pháp văn (điểm a ≠ điểm b).", "QĐ5339 Điều 3 khoản 5 điểm a, b, tr.5–6"),
     ca("BQ-14", "bay_quy_che", "tot_nghiep", hs("sv_lvtn", ["dat", "da_hoc_nam2", 17]), "TRUE",
        "8,5 năm: CTĐT 4,5 năm có trần 9 năm (không phải 8 năm như CTĐT 4 năm).", N_TG,
        oracle={"tran_nam2": 18, "qua_han": False}),
@@ -222,13 +224,13 @@ CASES = [
     ca("HL-02", "ho_so_loi", "tot_nghiep", hs("sv_lvtn", ["diem_tho", "CT177", {"credits": 3, "thang10": 30, "letter": "F", "status": "passed"}]),
        "UNKNOWN", "CT177: 3,0 (F) nhưng trạng thái passed.", N_TK + "; " + N_DIEM),
     ca("HL-03", "ho_so_loi", "tot_nghiep", hs("sv_lvtn", ["diem_tho", "CT177", {"credits": 3, "thang10": 150, "letter": "A", "status": "passed"}]),
-       "UNKNOWN", "Điểm 15,0 ngoài thang 0–10 (vi phạm schema).", N_TK + "; QĐ3266 Điều 22 khoản 1"),
+       "UNKNOWN", "Điểm 15,0 ngoài thang 0–10 (vi phạm schema).", N_TK + "; QĐ3266 Điều 22 khoản 1, tr.13"),
     ca("HL-04", "ho_so_loi", "tot_nghiep", hs("sv_lvtn", ["diem_tho", "CT177", {"credits": 4, "thang10": 75, "letter": "B", "status": "passed"}]),
        "UNKNOWN", "CT177 ghi 4 TC trong khi CTĐT là 3 TC — không rõ bản ghi hay mã sai.", N_TK + "; " + N_CTDT),
     ca("HL-05", "ho_so_loi", "tot_nghiep", hs("sv_lvtn", ["diem_tho", "CT177", {"credits": 3, "thang10": 80, "letter": "B", "status": "passed"}]),
        "UNKNOWN", "8,0 phải là B+, không phải B — điểm chữ và điểm số mâu thuẫn.", N_TK + "; " + N_DIEM),
     ca("HL-06", "ho_so_loi", "tot_nghiep", hs("sv_lvtn", ["dat", "da_hoc_nam2", 0]), "UNKNOWN",
-       "Đã học 0 nửa năm mà có 161 TC — không thể (trần 20 TC/HK, Điều 14 k1).", N_TK + "; QĐ3266 Điều 14 khoản 1"),
+       "Đã học 0 nửa năm mà có 161 TC — không thể (trần 20 TC/HK, Điều 14 k1).", N_TK + "; QĐ3266 Điều 14 khoản 1, tr.8"),
 
     # ======================= OCR SAI (mức tài liệu) =======================
     ca("OC-01", "ocr_sai", "tot_nghiep", ocr("sv_lvtn"), "TRUE",
@@ -265,10 +267,10 @@ CASES = [
     ca("OC-14", "ocr_sai", "tot_nghiep", ocr("sv_lvtn", ["doi_dtbchk", 4, 2.5]), "UNKNOWN",
        "ĐTBCHK đọc thành 2,50 (thật 3,08) → điểm cả học kỳ không chắc.", N_OCR, su_that="TRUE"),
     ca("OC-15", "ocr_sai", "tot_nghiep", ocr("sv_lvtn", ["hoc_lai", "CT177", 30, 7, True]), "TRUE",
-       "CT177 học lần đầu F, học lại đạt B, cả hai dòng đọc rõ → điểm là điểm cao nhất.", "QĐ3266 Điều 17 khoản 2",
+       "CT177 học lần đầu F, học lại đạt B, cả hai dòng đọc rõ → điểm là điểm cao nhất.", "QĐ3266 Điều 17 khoản 2, tr.9",
        su_that="TRUE"),
     ca("OC-16", "ocr_sai", "tot_nghiep", ocr("sv_lvtn", ["hoc_lai", "CT177", 30, 7, False]), "UNKNOWN",
-       "CT177 lần đầu F đọc rõ, lần học lại không đọc được điểm → điểm cao nhất chưa biết.", "QĐ3266 Điều 17 khoản 2; " + N_OCR,
+       "CT177 lần đầu F đọc rõ, lần học lại không đọc được điểm → điểm cao nhất chưa biết.", "QĐ3266 Điều 17 khoản 2, tr.9; " + N_OCR,
        su_that="TRUE"),
     ca("OC-17", "ocr_sai", "tot_nghiep", ocr("sv_lvtn", khai_bao_bo=["xac_nhan_ky_luat_sach"]), "UNKNOWN",
        "Bảng điểm không ghi tình trạng kỷ luật và sinh viên chưa khai báo.", N_KL, su_that="TRUE"),
@@ -280,11 +282,11 @@ CASES = [
 KHONG_CHAM = [
     ca("KX-01", "bay_quy_che", "tot_nghiep", hs("sv_du_hp"), "UNKNOWN",
        "Học dư CT478 điểm D; SV được chọn HP tự chọn tính vào tích lũy (Đ17 k3, CQ-06) nhưng CHƯA khai báo. "
-       "Đáp án phụ thuộc cách hiểu 'chưa chọn' (∀ hay ∃ cách chọn) — chưa chốt.", "QĐ3266 Điều 17 khoản 3 (CQ-06)",
+       "Đáp án phụ thuộc cách hiểu 'chưa chọn' (∀ hay ∃ cách chọn) — chưa chốt.", "QĐ3266 Điều 17 khoản 3, tr.9 (CQ-06)",
        cham_diem=False, ly_do_khong_cham="diễn giải chưa chốt: SV chưa khai báo lựa chọn tích lũy"),
     ca("KX-02", "sat_nguong", "tot_nghiep", hs("sv_lvtn", ["diem", "QP010E", 45], *[["diem", m, 80] for m in QP[1:]]),
        "UNKNOWN", "QP010E = 4,5 (D), TB GDQP 7,1 ≥ 5,0. QĐ5339 Đ3 k2 ghi 'GDQP&AN phải đạt từ D+' nhưng trong ngữ cảnh "
-       "miễn/công nhận điểm; áp cho điểm học tại ĐHCT hay không chưa chốt.", "QĐ5339 Điều 3 khoản 2; " + N_QP,
+       "miễn/công nhận điểm; áp cho điểm học tại ĐHCT hay không chưa chốt.", "QĐ5339 Điều 3 khoản 2, tr.5; " + N_QP,
        cham_diem=False, ly_do_khong_cham="phạm vi áp dụng ngưỡng D+ của QĐ5339 cho GDQP chưa chốt"),
     ca("KX-03", "ho_so_loi", "tot_nghiep",
        hs("sv_lvtn", ["xoa_diem", "TC100"], *[["diem_tho", m, {"credits": 1, "thang10": 80, "letter": "B+", "status": "passed"}]
@@ -309,14 +311,18 @@ def chia(cases, seed=17):
             c["split"] = "dev" if i % 2 == 0 else "test"
 
 
-def main():
+def tao():
     chia(CASES)
     for c in KHONG_CHAM:
         c["split"] = None
-    ds = {"meta": {"ten": "CPA² Adversarial set v1 (Tuần 17)", "seed": 17,
+    return {"meta": {"ten": "CPA² Adversarial set v1 (Tuần 17)", "seed": 17,
                    "ghi_chu": "Gold viết tay trong build_adversarial.py, commit TRƯỚC khi chạy CPA². "
                               "Chỉ tinh chỉnh trên dev; test chạy để báo cáo."},
           "cases": CASES + KHONG_CHAM}
+
+
+def main():
+    ds = tao()
     (HERE / "adversarial_set.json").write_text(json.dumps(ds, ensure_ascii=False, indent=1), encoding="utf-8")
     from collections import Counter
     print(f"{len(CASES)} ca chấm điểm + {len(KHONG_CHAM)} ca không chấm →", HERE / "adversarial_set.json")

@@ -16,7 +16,9 @@ Phép biến đổi hồ sơ:
 Phép biến đổi tài liệu OCR (sau khi dựng doc từ hồ sơ thật):
   ["doi_chu", ma, chu] · ["doi_diem", ma, t10] (đọc nhất quán: Thi, T.Hợp, chữ cùng sai) · ["mat_dong", ma]
   ["doi_ma", ma, ma_moi|None] · ["conf", ma, truong, gia_tri] · ["doi_tc", ma, tc]
-  ["doi_tong_dk", i_hk, v] · ["doi_dtbchk", i_hk, v|None] · ["hoc_lai", ma, t10_lan_dau, i_hk_lan_dau, doc_duoc]
+  ["doi_tong_dk", i_hk, v] · ["doi_dtbchk", i_hk, v|None] · ["hoc_lai", ma, t10, i_hk, doc_duoc]
+    (thêm MỘT LẦN HỌC KHÁC của ma, điểm t10, ở học kỳ i_hk; doc_duoc=False → dòng sẵn có của ma đọc không ra
+    điểm. Thứ tự lần học không ảnh hưởng gold vì điểm học phần là điểm cao nhất — QĐ3266 Đ17 k2)
 """
 import copy, json, sys
 from pathlib import Path
@@ -25,6 +27,7 @@ HERE = Path(__file__).parent
 ROOT = HERE.parent
 STUDENTS = ROOT / "w7_student_facts" / "students"
 sys.path.insert(0, str(HERE))
+sys.path.insert(0, str(ROOT / "w15_ocr"))
 import oracle
 
 CONF = {"ma": .99, "tc": .99, "thi": .99, "thop": .99, "chu": .99}
@@ -90,7 +93,6 @@ def _dong(ma, t10):
 
 
 def _O():
-    sys.path.insert(0, str(ROOT / "w15_ocr"))
     import ocr_transcript
     return ocr_transcript
 
@@ -104,7 +106,6 @@ def _tong(hk):
 
 def doc_tu_ho_so(j):
     """Hồ sơ → bảng điểm đọc HOÀN HẢO (định dạng doc_bang_diem). Chia học kỳ như render_transcript."""
-    sys.path.insert(0, str(ROOT / "w15_ocr"))
     import render_transcript as RT
     doc = {"hoc_ky": []}
     for i, ds in enumerate(RT.chia_hoc_ky(j, RT._ctdt())):
@@ -146,13 +147,13 @@ def _ap_doc(doc, ops):
             doc["hoc_ky"][op[1]]["tong_dk"] = op[2]
         elif k == "doi_dtbchk":
             doc["hoc_ky"][op[1]]["dtbchk"] = op[2]
-        elif k == "hoc_lai":          # lần học đầu ở học kỳ i (được in đầy đủ, tổng học kỳ nhất quán)
+        elif k == "hoc_lai":          # thêm một lần học ở học kỳ i (in đầy đủ, tổng học kỳ nhất quán)
             _, ma, t10, i, doc_duoc = op
             hk = doc["hoc_ky"][i]
             d = _dong(ma, t10)
             hk["dong"].insert(0, d)
             _tong(hk)
-            if not doc_duoc:          # lần học SAU (dòng hiện có) đọc không ra điểm
+            if not doc_duoc:          # dòng sẵn có của ma (lần học kia) đọc không ra điểm
                 _, sau = next((h, x) for h in doc["hoc_ky"] if h is not hk for x in h["dong"] if x["ma"] == ma)
                 sau.update(thi=None, thop=None, chu=None, conf={"ma": .99, "tc": .99})
         else:
@@ -184,17 +185,27 @@ def vat_lieu_hoa(ca):
     raise ValueError(dv["loai"])
 
 
+def dau_vao_baseline(ca):
+    """Đầu vào cho hệ thống KHÔNG phải CPA² (baseline Tuần 21): hồ sơ ĐÃ BỎ điểm chưa rõ (không lộ đáp án qua
+    hồ sơ gốc) hoặc tài liệu OCR, kèm khai báo và mô tả tiếng Việt các dữ kiện mở."""
+    v = vat_lieu_hoa(ca)
+    if ca["dau_vao"]["loai"] == "ho_so":
+        return {"ho_so": v["ho_so"], "mo_ta": mo_ta_cho_nguoi(ca)}
+    if ca["dau_vao"]["loai"] == "ocr_doc":
+        return {"bang_diem_ocr": v["doc"], "khai_bao": v["khai_bao"], "mo_ta": mo_ta_cho_nguoi(ca)}
+    return {"anh": v["anh"], "mo_ta": mo_ta_cho_nguoi(ca)}
+
+
 def mo_ta_cho_nguoi(ca):
-    """Mô tả tiếng Việt của đầu vào (cho baseline không đọc được ASP/JSON biến đổi)."""
+    """Mô tả tiếng Việt các dữ kiện mở. KHÔNG nêu tên hồ sơ gốc hay phép biến đổi (hồ sơ gốc còn giữ điểm thật
+    của HP 'chưa rõ' → lộ đáp án)."""
     dv = ca["dau_vao"]
     if dv["loai"] != "ho_so":
-        return f"Bảng điểm OCR của hồ sơ {dv['goc']} (xem tài liệu OCR đính kèm)."
+        return "Bảng điểm đọc bằng OCR (đính kèm) và các khai báo của sinh viên (đính kèm)."
     v = vat_lieu_hoa(ca)
-    s = [f"Hồ sơ {dv['goc']} (CTĐT CNTT K49) sau các thay đổi:"]
-    for op in dv.get("bien_doi", []):
-        s.append("  - " + json.dumps(op, ensure_ascii=False))
+    s = ["Hồ sơ sinh viên CTĐT CNTT K49 (JSON đính kèm)."]
     for m, vs in v["khong_chac"].items():
-        s.append(f"  - điểm {m} CHƯA RÕ, có thể là một trong: {', '.join(f'{x / 10:.1f}' for x in vs)}")
+        s.append(f"Điểm học phần {m} CHƯA RÕ, có thể là một trong: {', '.join(f'{x / 10:.1f}' for x in vs)}.")
     for m in v["mien_chua_ro"]:
-        s.append(f"  - CHƯA RÕ học phần {m} đã có quyết định miễn hay chưa")
-    return "\n".join(s)
+        s.append(f"CHƯA RÕ học phần {m} đã có quyết định miễn hay chưa (đã đủ điều kiện xin miễn).")
+    return " ".join(s)

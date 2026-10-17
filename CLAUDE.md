@@ -57,7 +57,8 @@ D:\LVTN\                          (git repo)
 │   ├── w13_parser\               semantic parser (regex; LLM mới là stub)
 │   ├── w14_rag\                  corpus điều/khoản, BM25, grounding, rag_queries.json
 │   ├── w15_ocr\                  OCR bảng điểm (Tesseract vie) → hồ sơ có confidence; _rieng/ _anh/ gitignore
-│   └── w16_abstention\           ba trị + missing evidence + từ chối kết luận (abstention.py)
+│   ├── w16_abstention\           ba trị + missing evidence + từ chối kết luận (abstention.py)
+│   └── w17_adversarial\          bộ đối kháng 80 ca, gold đóng băng (gold_dong_bang.json), oracle, run_adversarial.py
 ├── ctu\                          PDF quy chế gốc (gitignore)
 ├── NiênLuan\                     niên luận cũ, có dữ liệu SV (gitignore)
 └── LVTN\                         repo riêng, chưa dùng (gitignore)
@@ -82,3 +83,7 @@ D:\LVTN\                          (git repo)
 - Ba trị theo số thế giới: UNKNOWN là UNKNOWN dù đa số thế giới nghiêng một phía — số answer set không phải xác suất.
 - Chạy trên Linux/cloud: w15 cố định font `C:/Windows/Fonts` và Tesseract Windows (đặt `TESSERACT_EXE`); số liệu OCR đổi theo font/phiên bản Tesseract → chỉ so sánh trước/sau trên CÙNG môi trường. Chạy `validate_rag.py` sinh lại `corpus.jsonl` với LF → khôi phục, đừng commit.
 - Quy định không có trong QĐ3266/QĐ5339 (vd. học phí ×1,5 sau thời gian thiết kế — Đ10 chỉ ghi "do Hiệu trưởng quyết định") thì chưa hình thức hoá, xin văn bản nguồn trước.
+- Bộ đánh giá: gold viết tay + commit TRƯỚC lần chạy đầu (w17: 200b860, `gold_dong_bang.json`, validate G1/G2). Sai sót phát hiện sau → errata, KHÔNG sửa gold; sửa công thức chấm thì báo cả số cũ lẫn mới.
+- Oracle kiểm gold phải độc lập với KB: nếu chung giả định (vd. "1 HK = nửa năm") thì ghi rõ là không kiểm được điểm đó.
+- QĐ3266 Đ6 k1 (tr.5): một năm học có 03 HK × 15 tuần → "giảm 1 HK" (Đ5) = 1/3 năm, không phải nửa năm (P17-3, chưa sửa R-Formal).
+- Loader hồ sơ chỉ đọc `thang10`: điểm chữ/trạng thái/TC mâu thuẫn không bị phát hiện (P17-1).

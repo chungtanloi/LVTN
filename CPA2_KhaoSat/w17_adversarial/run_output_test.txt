@@ -1,0 +1,53 @@
+CPA² trên Adversarial set v1 — split test (39 ca)
+
+  TD-03  thieu_du_lieu  gold=FALSE   → FALSE     ✓
+  TD-05  thieu_du_lieu  gold=UNKNOWN → UNKNOWN   ✓   hỏi=['qua_thoi_gian_toi_da', 'xac_nhan_ky_luat_sach']
+  TD-06  thieu_du_lieu  gold=FALSE   → FALSE     ✓
+  TD-10  thieu_du_lieu  gold=FALSE   → FALSE     ✓
+  TD-12  thieu_du_lieu  gold=TRUE    → TRUE      ✓
+  TD-14  thieu_du_lieu  gold=UNKNOWN → UNKNOWN   ✓   hỏi=['duoc_mien("XH025")']
+  TD-15  thieu_du_lieu  gold=FALSE   → FALSE     ✓
+  TD-16  thieu_du_lieu  gold=TRUE    → TRUE      ✓
+  NG-01  sat_nguong     gold=TRUE    → TRUE      ✓
+  NG-02  sat_nguong     gold=TRUE    → TRUE      ✓
+  NG-03  sat_nguong     gold=TRUE    → TRUE      ✓
+  NG-05  sat_nguong     gold=TRUE    → TRUE      ✓
+  NG-06  sat_nguong     gold=FALSE   → FALSE     ✓
+  NG-12  sat_nguong     gold=FALSE   → FALSE     ✓
+  NG-13  sat_nguong     gold=TRUE    → TRUE      ✓
+  NG-17  sat_nguong     gold=FALSE   → FALSE     ✓
+  NG-18  sat_nguong     gold=TRUE    → TRUE      ✓
+  NG-21  sat_nguong     gold=TRUE    → TRUE      ✓
+  NG-23  sat_nguong     gold=TRUE    → TRUE      ✓
+  NG-24  sat_nguong     gold=FALSE   → FALSE     ✓
+  BQ-04  bay_quy_che    gold=TRUE    → TRUE      ✓
+  BQ-05  bay_quy_che    gold=TRUE    → TRUE      ✓
+  BQ-07  bay_quy_che    gold=TRUE    → TRUE      ✓
+  BQ-08  bay_quy_che    gold=FALSE   → FALSE     ✓
+  BQ-10  bay_quy_che    gold=FALSE   → FALSE     ✓
+  BQ-12  bay_quy_che    gold=TRUE    → TRUE      ✓
+  BQ-14  bay_quy_che    gold=TRUE    → TRUE      ✓
+  HL-02  ho_so_loi      gold=UNKNOWN → FALSE     ✗ UNSOUND
+  HL-03  ho_so_loi      gold=UNKNOWN → FALSE     ✗ UNSOUND
+  HL-06  ho_so_loi      gold=UNKNOWN → TRUE      ✗ UNSOUND
+  OC-01  ocr_sai        gold=TRUE    → TRUE      ✓
+  OC-03  ocr_sai        gold=UNKNOWN → UNKNOWN   ✓   hỏi=['CT101', 'CT172', 'CT174', 'CT175', 'CT177', 'CT190']
+  OC-05  ocr_sai        gold=UNKNOWN → UNKNOWN   ✓
+  OC-06  ocr_sai        gold=UNKNOWN → UNKNOWN   ✓   hỏi=['CT178', 'CT478']
+  OC-07  ocr_sai        gold=TRUE    → FALSE     ✗ UNSOUND
+  OC-11  ocr_sai        gold=FALSE   → TRUE      ✗ UNSOUND
+  OC-12  ocr_sai        gold=UNKNOWN → UNKNOWN   ✓   hỏi=['CT101', 'CT172', 'CT174', 'CT175', 'CT177', 'CT190']
+  OC-13  ocr_sai        gold=UNKNOWN → UNKNOWN   ✓
+  OC-18  ocr_sai        gold=UNKNOWN → UNKNOWN   ✓
+
+Số đo chính: 37 ca (bỏ 2 ca khong_phat_hien_duoc)
+
+nhóm              n   Sound   Cover  SelAcc  đúng  unsound  từ chối thừa  hỏi đúng
+tong             37   91.9%   78.4%   89.7%    34        3             0       2/2
+bay_quy_che       7  100.0%  100.0%  100.0%     7        0             0       0/0
+ho_so_loi         3    0.0%  100.0%    0.0%     0        3             0       0/0
+ocr_sai           7  100.0%   14.3%  100.0%     7        0             0       0/0
+sat_nguong       12  100.0%  100.0%  100.0%    12        0             0       0/0
+thieu_du_lieu     8  100.0%   75.0%  100.0%     8        0             0       2/2
+
+Rủi ro OCR ẩn (khong_phat_hien_duoc): 2/2 ca kết luận trái sự thật (OC-07→FALSE, OC-11→TRUE)

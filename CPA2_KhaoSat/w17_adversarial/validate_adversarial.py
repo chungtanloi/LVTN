@@ -9,6 +9,7 @@ Test này kiểm BỘ DỮ LIỆU, không chấm CPA² (chấm ở run_adversari
   D. Đầu vào dựng được: hồ sơ hợp lệ theo schema (trừ nhóm hồ sơ lỗi), tài liệu OCR dựng được
   E. Oracle độc lập (Python thuần, không clingo) khớp tiền đề số học của gold
   F. Ca phụ thuộc diễn giải chưa chốt → không chấm điểm (can_xac_nhan)
+  G. Gold đóng băng: file khớp build_adversarial.tao() và khớp gold_dong_bang.json (commit 200b860)
 
 Chạy:  python validate_adversarial.py
 """
@@ -104,10 +105,22 @@ def main():
                 lech.append(f"{c['id']}.{k}: gold ghi {v}, oracle tính {thuc[k]}")
     check(len(co) >= 15, f"E1 ≥ 15 ca có tiền đề số học kiểm bằng oracle ({len(co)})")
     check(not lech, "E2 oracle khớp mọi tiền đề", "; ".join(lech[:4]))
+    bq05 = next(c for c in ca if c["id"] == "BQ-05")
+    f = oracle.tinh(dau_vao.vat_lieu_hoa(bq05)["ho_so_that"])["dtbctl_tinh_ca_F"]
+    check(f < 2, f"E3 BQ-05 là bẫy thật: tính cả điểm F thì ĐTBCTL = {float(f):.3f} < 2 (đúng là 2,00)")
 
     print("\nF. CA KHÔNG CHẤM ĐIỂM")
     kc = [c for c in ca if not c["cham_diem"]]
     check(all(c.get("ly_do_khong_cham") for c in kc), f"F1 {len(kc)} ca không chấm đều ghi lý do")
+
+    print("\nG. GOLD ĐÓNG BĂNG")
+    import build_adversarial
+    check(build_adversarial.tao() == ds, "G1 adversarial_set.json khớp đúng đầu ra build_adversarial.py (không sửa tay)")
+    db = json.loads((HERE / "gold_dong_bang.json").read_text(encoding="utf-8"))
+    khac = [i for i, g in db["gold"].items()
+            if {k: next(c for c in ca if c["id"] == i).get(k) for k in g} != g] + [c["id"] for c in ca if c["id"] not in db["gold"]]
+    check(not khac, f"G2 gold/su_that/cham_diem/split/can_hoi khớp bản đóng băng commit {db['commit']}",
+          f"khác: {khac}" if khac else "")
     return ket_thuc()
 
 

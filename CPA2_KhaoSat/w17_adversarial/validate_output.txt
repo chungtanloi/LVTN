@@ -17,7 +17,7 @@ B. TRƯỜNG BẮT BUỘC
 
 C. TÁCH DEV/TEST
   [OK]   C1 mọi ca chấm điểm có split dev/test
-  [OK]   C2 phân tầng: mỗi nhóm có ở cả dev và test, lệch ≤ 1 ({'ocr_sai': (9, 9), 'thieu_du_lieu': (9, 8), 'sat_nguong': (12, 12), 'ho_so_loi': (3, 3), 'bay_quy_che': (8, 7)})
+  [OK]   C2 phân tầng: mỗi nhóm có ở cả dev và test, lệch ≤ 1 ({'thieu_du_lieu': (9, 8), 'ho_so_loi': (3, 3), 'bay_quy_che': (8, 7), 'sat_nguong': (12, 12), 'ocr_sai': (9, 9)})
 
 D. ĐẦU VÀO DỰNG ĐƯỢC
   [OK]   D1 dựng được đầu vào của mọi ca
@@ -27,9 +27,14 @@ D. ĐẦU VÀO DỰNG ĐƯỢC
 E. ORACLE ĐỘC LẬP ↔ TIỀN ĐỀ CỦA GOLD
   [OK]   E1 ≥ 15 ca có tiền đề số học kiểm bằng oracle (29)
   [OK]   E2 oracle khớp mọi tiền đề
+  [OK]   E3 BQ-05 là bẫy thật: tính cả điểm F thì ĐTBCTL = 1.958 < 2 (đúng là 2,00)
 
 F. CA KHÔNG CHẤM ĐIỂM
   [OK]   F1 5 ca không chấm đều ghi lý do
+
+G. GOLD ĐÓNG BĂNG
+  [OK]   G1 adversarial_set.json khớp đúng đầu ra build_adversarial.py (không sửa tay)
+  [OK]   G2 gold/su_that/cham_diem/split/can_hoi khớp bản đóng băng commit 200b860
 
 ==============================================================================
 KẾT LUẬN: ĐẠT — Adversarial set đủ ≥ 60 ca, có gold + nguồn + dev/test, oracle khớp
