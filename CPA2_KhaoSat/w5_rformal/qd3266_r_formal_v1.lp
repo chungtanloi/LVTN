@@ -1,5 +1,5 @@
 %%=============================================================================
-%% qd3266_r_formal_v1.lp — R-Formal v1 (v1.5: sửa 3 lỗi tích hợp phát hiện ở Tuần 6)
+%% qd3266_r_formal_v1.lp — R-Formal v1 (v1.7: thời gian tối đa là điều kiện tốt nghiệp — Tuần 16)
 %% Hình thức hoá các điều khoản lớp F của QĐ 3266/QĐ-ĐHCT (15/8/2024)
 %% Dự án: CPA² — Certified Personalized Academic Advising (Tuần 5/24)
 %%
@@ -359,9 +359,14 @@ why(truc_ky_luat_khong_co_du_lieu, r_f03) :- truc_ky_luat_khong_co_du_lieu.
 
 du_dk_hoc_vu :- dk_bat_buoc, dk_tu_chon, dk_tin_chi, dk_dtbctl,
                 dk_hp_dieu_kien, dk_gdqp.
-tot_nghiep   :- du_dk_hoc_vu, xac_nhan_ky_luat_sach.
+%% v1.7 (Tuần 16, P16-2): phải hoàn thành CTĐT trong thời gian tối đa — Điều 5
+%% ("thời gian học tập tối đa cho phép để SV hoàn thành CTĐT", tr.4; R-E01/R-E02).
+%% v1.6 bỏ điều kiện này → SV quá hạn vẫn tot_nghiep. Thiếu da_hoc_nam2: ở đây
+%% (thế giới đóng) coi như chưa quá hạn; graduation_solver.lp mục 0 mở nhánh → UNKNOWN.
+tot_nghiep   :- du_dk_hoc_vu, xac_nhan_ky_luat_sach, not qua_thoi_gian_toi_da.
 why(tot_nghiep, r_f01a) :- tot_nghiep.
 why(tot_nghiep, r_f03)  :- tot_nghiep.
+why(tot_nghiep, r_e01)  :- tot_nghiep.
 
 %% ---------------------------------------------------------------------------
 %% 13. HẠNG TỐT NGHIỆP — Điều 34 khoản 2 và điểm a (R-F06, R-F07)

@@ -17,6 +17,9 @@ A. DỮ KIỆN NGOÀI THIẾU → UNKNOWN (P15-2)
   [OK]   A8 da_hoc_nam2 = 20 (trần 18) → thieu_dk(thoi_gian) TRUE (got TRUE)
   [OK]   A9 chưa đủ ĐK + thiếu da_hoc_nam2 → bi_xoa_ten UNKNOWN (got UNKNOWN)
           ↳ HỒI QUY: luật cũ cho FALSE (R-F09/R-D08 — xoá tên khi quá hạn mà chưa đủ ĐK)
+  [OK]   A10 thiếu da_hoc_nam2 → tot_nghiep UNKNOWN (got UNKNOWN)
+          ↳ HỒI QUY P16-2: luật cũ cho TRUE — thời gian là điều kiện tốt nghiệp (Điều 5)
+  [OK]   A11 hỏi thời gian đã học: quá hạn → FALSE, chưa → TRUE ({'false': 'TRUE', 'true': 'FALSE'})
 
 B. MISSING EVIDENCE — chỉ nêu dữ kiện quyết định
   [OK]   B1 kỷ luật null → hỏi xac_nhan_ky_luat_sach (quyết định)

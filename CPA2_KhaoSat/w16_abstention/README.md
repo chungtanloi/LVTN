@@ -1,7 +1,7 @@
 # Tuần 16 — Three-valued logic / Abstention engine (CPA2)
 
 **Sản phẩm:** Abstention engine v1: ba trị TRUE/FALSE/UNKNOWN trên mọi answer set + missing evidence + chính sách từ chối kết luận
-**Tiêu chí hoàn thành:** Không đoán khi thiếu dữ liệu ✅. `validate_abstention.py` ĐẠT 28/28 kiểm tra (xem `../Tuan16_Abstention_Engine.md`)
+**Tiêu chí hoàn thành:** Không đoán khi thiếu dữ liệu ✅. `validate_abstention.py` ĐẠT 30/30 kiểm tra (xem `../Tuan16_Abstention_Engine.md`)
 
 ## Chạy
 

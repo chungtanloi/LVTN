@@ -3,10 +3,10 @@
 **Giai đoạn:** Uncertainty (Tuần 16/24) · **Mục tiêu:** Cài TRUE/FALSE/UNKNOWN + missing evidence
 **Sản phẩm:** Abstention engine v1 (`w16_abstention/`)
 **Tiêu chí hoàn thành:** Không đoán khi thiếu dữ liệu ✅
-- `validate_abstention.py` đạt **28/28** kiểm tra (A 9 · B 10 · C 5 · D 4), bộ test tự soạn
+- `validate_abstention.py` đạt **30/30** kiểm tra (A 11 · B 10 · C 5 · D 4), bộ test tự soạn
 - Đã viết test trước: bản đầu có 27 kiểm tra, **14** kiểm tra fail với KB/loader cũ, trong đó có ca hồi quy A2, A3, A6, A9 (luật cũ cho FALSE thay vì UNKNOWN)
 - Test của mọi tuần 5–16 đều ĐẠT, 6 hồ sơ giả lập giữ nguyên kết luận Tuần 12
-- ⚠️ Chưa sửa: `tot_nghiep` không phụ thuộc điều kiện thời gian (P16-2), vì cần diễn giải quy chế
+- P16-2 đã sửa (17/10/2026, sau khi chọn cách đọc (b)): quá thời gian tối đa thì không tốt nghiệp. R-Formal lên v1.7, có 5 ca hồi quy fail với luật cũ
 
 ---
 
@@ -69,7 +69,7 @@ Ví dụ B8 (thiếu kỷ luật, CT550E không chắc): `xac_nhan_ky_luat_sach`
 
 | Nhóm | Kiểm tra | Nội dung |
 |---|---|---|
-| A. Thế giới mở | 9 | kỷ luật true/false/null/thiếu; trộn AV/PV + null vẫn FALSE; `thieu_dk(thoi_gian)` thiếu/9/20; `bi_xoa_ten` |
+| A. Thế giới mở | 11 | kỷ luật true/false/null/thiếu; trộn AV/PV + null vẫn FALSE; `thieu_dk(thoi_gian)` thiếu/9/20; `bi_xoa_ten`; thiếu `da_hoc_nam2` → `tot_nghiep` UNKNOWN + câu hỏi thời gian |
 | B. Missing evidence | 10 | chỉ hỏi biến quyết định (B5: CT478 80/90 không hỏi); kết luận theo giá trị; F/D/A; QĐ miễn chưa rõ |
 | C. Chính sách | 5 | `ket_luan` None; câu hỏi tiếng Việt không lộ tên atom; đa số ≠ chắc; vô nghiệm |
 | D. Tích hợp | 4 | prototype null → UNKNOWN + `missing_facts`; 6 hồ sơ giữ kết luận; thời gian xác định khi có `da_hoc_nam2` |
@@ -89,7 +89,7 @@ Trên Linux, độ phủ w15 là **7/18**, khác con số 1/18 của báo cáo T
 ### P16-1 · Định nghĩa "đã khai báo" theo chính atom bị mở thì thế giới tự đóng lại
 Bản đầu viết `khai_bao(ky_luat) :- xac_nhan_ky_luat_sach.` Khi nhánh chọn "true", atom này làm `khai_bao(ky_luat)` đúng, từ đó triệt tiêu điều kiện `not khai_bao(ky_luat)` của chính lựa chọn. Mô hình đó không ổn định, nên chỉ còn 1 mô hình (FALSE). Test A2/A3 bắt được lỗi này. **Quy tắc:** `khai_bao/1` chỉ được suy từ dữ kiện đầu vào.
 
-### P16-2 · `tot_nghiep` bỏ qua điều kiện thời gian — CHƯA SỬA, cần quyết định
+### P16-2 · `tot_nghiep` bỏ qua điều kiện thời gian — ĐÃ SỬA theo cách đọc (b)
 - `graduation_solver.lp` đưa `dk_thoi_gian` vào `du_dk_hoc_vu`.
 - R-Formal (qd3266 dòng 360–362) **cũng** định nghĩa `du_dk_hoc_vu` và `tot_nghiep` theo Đ32 k1 a/b/c mà không có thời gian.
 - Hai định nghĩa hợp lại, nên sinh viên `da_hoc_nam2(20)` (trần 18) có cùng lúc `tot_nghiep` và `thieu_dk(thoi_gian)`. Lỗi này đã có từ trước Tuần 16.
@@ -98,7 +98,21 @@ Có hai cách đọc quy chế, và tôi **không tự chọn**:
 - (a) Đ32 k1 không nêu thời gian. Khi quá hạn mà chưa đủ điều kiện thì bị xoá tên (Đ33 k1 / R-F09, R-D08), tức là chỉ dẫn tới `bi_xoa_ten`.
 - (b) Đ5 "thời gian tối đa để hoàn thành CTĐT" là điều kiện ngầm của tốt nghiệp.
 
-Hệ quả hiện tại: thiếu `da_hoc_nam2` chỉ làm `thieu_dk(thoi_gian)` và `bi_xoa_ten` thành UNKNOWN, còn `tot_nghiep` không đổi.
+**Quyết định (17/10/2026): chọn (b).** Nguồn: QĐ3266 Đ5, tr.4: "thời gian học tập tối đa cho phép để SV hoàn thành CTĐT" (CTĐT 4,5 năm → tối đa 9 năm, R-E01; trần giảm theo TC công nhận, R-E02).
+
+Cách sửa: thêm điều kiện thời gian vào **cả hai** định nghĩa `tot_nghiep`. Nếu chỉ sửa một nơi thì định nghĩa còn lại vẫn suy ra `tot_nghiep`.
+- R-Formal v1.7: `tot_nghiep :- du_dk_hoc_vu, xac_nhan_ky_luat_sach, not qua_thoi_gian_toi_da.`
+- `graduation_solver.lp`: `tot_nghiep :- du_dk_hoc_vu, dk_ky_luat, dk_thoi_gian.`
+- Cả hai đều thêm `why(tot_nghiep, r_e01)`.
+
+Ca hồi quy, tất cả fail với luật cũ:
+- w5 C9b: quá hạn 19 > 18 → không `tot_nghiep`. Ca biên C9c: 18 = trần → vẫn tốt nghiệp.
+- w10 B7b: quá hạn → FALSE. B7d: thiếu `da_hoc_nam2` → UNKNOWN. Ca biên B7c: 18 → TRUE.
+- w16 A10/A11: thiếu `da_hoc_nam2` → UNKNOWN, kèm câu hỏi "đã học bao nhiêu nửa năm" (quá hạn → FALSE, chưa quá hạn → TRUE).
+
+Fixture `KY_LUAT` của w10/w11 thêm `da_hoc_nam2(9).` (hồ sơ khai báo đủ). Kết luận của 6 hồ sơ giả lập không đổi.
+
+Học phí ×1,5 sau thời gian thiết kế: **không có trong QĐ3266/QĐ5339**. Đ10 k1 chỉ ghi "mức học phí do Hiệu trưởng quyết định". Chưa hình thức hoá, cần văn bản quy định mức học phí làm nguồn.
 
 ### P16-3 · `tc_cong_nhan` vẫn dùng giả định thế giới đóng
 `giam_hk(0) :- not tc_cong_nhan(_)` (R-E02). Hồ sơ có `da_hoc_nam2` nhưng không ghi `tc_cong_nhan` sẽ được coi là không có tín chỉ công nhận. Tôi chưa mở nhánh này, vì đa số sinh viên không có tín chỉ chuyển đổi, và mở nhánh sẽ làm mọi kết luận thời gian thành UNKNOWN. Câu hỏi bổ sung về thời gian đã hỏi luôn cả tín chỉ công nhận.
@@ -122,7 +136,8 @@ Hệ quả hiện tại: thiếu `da_hoc_nam2` chỉ làm `thieu_dk(thoi_gian)` 
 
 ## 5. Việc còn lại → Tuần 17+
 
-- [ ] **Quyết định P16-2** (cách đọc a hay b), sau đó sửa `tot_nghiep` và thêm ca hồi quy
+- [x] Quyết định P16-2: chọn (b), đã sửa `tot_nghiep` và thêm ca hồi quy
+- [ ] Tìm văn bản quy định học phí (hệ số ×1,5 sau thời gian thiết kế) trước khi hình thức hoá
 - [ ] Đưa các ca dữ kiện thiếu / đa số ≠ chắc / QĐ miễn chưa rõ vào bộ Adversarial (Tuần 17)
 - [ ] Đo Coverage ↔ Selective Accuracy trên bộ đối kháng
 - [ ] Bỏ đường dẫn font Windows ở `render_transcript.py`; gộp loader
@@ -132,4 +147,4 @@ Hệ quả hiện tại: thiếu `da_hoc_nam2` chỉ làm `thieu_dk(thoi_gian)` 
 - [x] Thiếu dữ kiện ngoài → UNKNOWN (không FALSE/TRUE)
 - [x] UNKNOWN → `ket_luan = None` + câu hỏi cho dữ kiện quyết định, kèm nguồn
 - [x] Test của mọi tuần đều đạt; 6 hồ sơ giữ kết luận
-- [ ] `tot_nghiep` theo điều kiện thời gian (P16-2) chưa giải quyết
+- [x] `tot_nghiep` phụ thuộc điều kiện thời gian (P16-2)

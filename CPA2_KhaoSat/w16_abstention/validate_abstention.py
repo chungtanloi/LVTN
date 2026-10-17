@@ -73,6 +73,12 @@ def test_open_world():
     r = A.tra_loi("bi_xoa_ten", hs("sv_tron_ngoai_ngu", da_hoc_nam2=A.BO))
     check(r["verdict"] == "UNKNOWN", f"A9 chưa đủ ĐK + thiếu da_hoc_nam2 → bi_xoa_ten UNKNOWN (got {r['verdict']})",
           "HỒI QUY: luật cũ cho FALSE (R-F09/R-D08 — xoá tên khi quá hạn mà chưa đủ ĐK)")
+    r = A.tra_loi("tot_nghiep", hs("sv_lvtn", da_hoc_nam2=A.BO))
+    check(r["verdict"] == "UNKNOWN", f"A10 thiếu da_hoc_nam2 → tot_nghiep UNKNOWN (got {r['verdict']})",
+          "HỒI QUY P16-2: luật cũ cho TRUE — thời gian là điều kiện tốt nghiệp (Điều 5)")
+    b = bien(r, "qua_thoi_gian_toi_da")
+    check(b is not None and b["theo_gia_tri"] == {"true": "FALSE", "false": "TRUE"} and b["nguon"].startswith("R-E01"),
+          f"A11 hỏi thời gian đã học: quá hạn → FALSE, chưa → TRUE ({b and b['theo_gia_tri']})")
 
 
 def test_missing_evidence():

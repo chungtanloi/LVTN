@@ -61,7 +61,7 @@ def sv(chon, diem=80, them=""):
     ds=[c for c in BB if c not in []] + list(chon)
     return "\n".join(f'g10("{c}",{diem}).' for c in ds) + "\n" + them
 CHUAN=["TC100","XH023","XH024","XH025","ML007","CT449","CT484"]
-KY_LUAT="xac_nhan_ky_luat_sach.\n"
+KY_LUAT="xac_nhan_ky_luat_sach.\nda_hoc_nam2(9).\n"   # hồ sơ khai báo đủ (Tuần 16)
 
 def test_invariant():
     print("\nA. BẤT BIẾN CON TRỎ NGUỒN (mở rộng từ w5)")

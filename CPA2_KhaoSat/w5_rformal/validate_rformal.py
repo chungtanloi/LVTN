@@ -305,6 +305,15 @@ test("C9 Bổ sung dữ kiện kỷ luật sạch → kết luận tốt nghiệ
      expect_true=["tot_nghiep"],
      note="cùng hồ sơ C8, chỉ thêm một dữ kiện → chân trị đổi từ UNKNOWN sang TRUE")
 
+# --- C9b. Tốt nghiệp phải trong thời gian tối đa (Điều 5) — P16-2, Tuần 16 -----
+test("C9b Đủ học vụ + kỷ luật sạch nhưng đã học 19 nửa năm (trần 18) → KHÔNG tốt nghiệp",
+     FULL + "xac_nhan_ky_luat_sach. thiet_ke_nam2(9). da_hoc_nam2(19).",
+     expect_true=["qua_thoi_gian_toi_da"], expect_false=["tot_nghiep"],
+     note="HỒI QUY P16-2: v1.6 cho tot_nghiep TRUE. Điều 5: thời gian tối đa để SV HOÀN THÀNH CTĐT")
+test("C9c Biên: đã học đúng 18 nửa năm (= trần) → vẫn tốt nghiệp",
+     FULL + "xac_nhan_ky_luat_sach. thiet_ke_nam2(9). da_hoc_nam2(18).",
+     expect_true=["tot_nghiep"], expect_false=["qua_thoi_gian_toi_da"])
+
 # --- C10. Hạng tốt nghiệp bị giảm một mức do điểm F > 5% (Điều 34 k.2 đ.a) --
 test("C10 ĐTBCTL 3,7 (xuất sắc) + TC điểm F > 5% CTĐT → hạng cuối là GIỎI",
      ctdt([("a", 10, "bat_buoc")]) + """

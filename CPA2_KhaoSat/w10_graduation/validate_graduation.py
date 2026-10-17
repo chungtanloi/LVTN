@@ -61,7 +61,7 @@ def sv(chon, diem=80, bo=(), them=""):
     ds=[c for c in BB if c not in bo] + list(chon)
     return "\n".join(f'g10("{c}",{diem}).' for c in ds) + "\n" + them
 CHUAN = ["TC100","XH023","XH024","XH025","ML007","CT449","CT484"]
-KY_LUAT = "xac_nhan_ky_luat_sach.\n"
+KY_LUAT = "xac_nhan_ky_luat_sach.\nda_hoc_nam2(9).\n"   # hồ sơ khai báo đủ (Tuần 16)
 
 # =============================================================
 def test_prerequisite():
@@ -119,6 +119,14 @@ def test_graduation_cases():
     # B7: Quá hạn
     m=solve_one(sv(CHUAN+["CT550E"], them="da_hoc_nam2(20).\n"))
     check("qua_thoi_gian_toi_da" in m and "thieu_dk(thoi_gian)" in m, "B7 Quá hạn 10 năm → thiếu thời gian")
+    # B7b/c (Tuần 16, P16-2): thời gian là điều kiện tốt nghiệp (Điều 5, R-E01)
+    v=tri("tot_nghiep", sv(CHUAN+["CT550E"], them="xac_nhan_ky_luat_sach.\nda_hoc_nam2(20).\n"))
+    check(v=="FALSE", f"B7b Đủ học vụ + kỷ luật sạch nhưng quá hạn (20 > 18) → tot_nghiep={v} (FALSE)",
+          "HỒI QUY P16-2: luật cũ cho TRUE")
+    v=tri("tot_nghiep", sv(CHUAN+["CT550E"], them="xac_nhan_ky_luat_sach.\nda_hoc_nam2(18).\n"))
+    check(v=="TRUE", f"B7c Biên 18 = trần → tot_nghiep={v} (TRUE)")
+    v=tri("tot_nghiep", sv(CHUAN+["CT550E"], them="xac_nhan_ky_luat_sach.\n"))
+    check(v=="UNKNOWN", f"B7d Thiếu da_hoc_nam2 → tot_nghiep={v} (UNKNOWN)")
 
 def test_with_exemption():
     print("\nC. TÍCH HỢP MIỄN/THAY THẾ VÀO TỐT NGHIỆP")

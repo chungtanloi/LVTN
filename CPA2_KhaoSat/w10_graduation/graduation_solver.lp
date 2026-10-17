@@ -80,9 +80,12 @@ why(dk_thoi_gian, r_e01) :- dk_thoi_gian.
 du_dk_hoc_vu :- dk_tin_chi, dk_bat_buoc, dk_tu_chon, dk_hp_dieu_kien, dk_dtbctl, dk_gdqp, dk_thoi_gian.
 why(du_dk_hoc_vu, r_f01a) :- du_dk_hoc_vu.
 
-tot_nghiep :- du_dk_hoc_vu, dk_ky_luat.
+%% Tuần 16 (P16-2): dk_thoi_gian đặt ở đây, vì du_dk_hoc_vu còn được R-Formal định
+%% nghĩa KHÔNG có thời gian (hai định nghĩa hợp lại) → đặt trong du_dk_hoc_vu không chặn được.
+tot_nghiep :- du_dk_hoc_vu, dk_ky_luat, dk_thoi_gian.
 why(tot_nghiep, r_f01a) :- du_dk_hoc_vu.
 why(tot_nghiep, r_f03)  :- dk_ky_luat.
+why(tot_nghiep, r_e01)  :- dk_thoi_gian.
 
 %% Helper: liệt kê điều kiện nào còn thiếu (để Verbalizer diễn đạt)
 thieu_dk(tin_chi)      :- not dk_tin_chi.
