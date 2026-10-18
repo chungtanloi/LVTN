@@ -135,6 +135,63 @@ def test_dang_ky():
          "em có tốt nghiệp kịp không")}
     check(all(v_ == "tot_nghiep" for v_ in k.values()), f"E15 câu tốt nghiệp không dấu / 'có thể' / 'kịp' vẫn nhận ra ({k})")
     check(proto.parse_question("đăng kí ct180 được ko") == 'duoc_dang_ky("CT180")', "E16 'đăng kí … được ko' (kí/ko) nhận là đăng ký")
+    # P20-5 (Q-Noise, Tuần 20): loại trừ chỉ có dạng CÓ DẤU → câu không dấu về luận văn/ĐTBCTL/miễn/hồ sơ/xếp loại
+    # bị hiểu là tot_nghiep (trả lời câu khác kèm chứng chỉ). Câu kiểm thử mới, không chép từ Q-Noise.
+    k = {q: proto.parse_question(q) for q in ("em co du dieu kien lam luan van tot nghiep khong",
+         "dtbctl cua em dat 2,00 de xet tot nghiep chua", "em co duoc mien luan van tot nghiep khong",
+         "ho so xet tot nghiep nop o dau, co duoc nop tre khong", "em tot nghiep loai gioi duoc khong",
+         "em co du dieu kien lam tieu luan tot nghiep chua")}
+    check(not any(v_ == "tot_nghiep" for v_ in k.values()), f"E17 câu KHÔNG DẤU về luận văn/ĐTBCTL/miễn/hồ sơ/xếp loại không thành tot_nghiep ({k})")
+    sv_tltn = str(HERE.parent / "w7_student_facts" / "students" / "sv_tltn.json")
+    k = {q: proto.answer(q, sv_tltn).get("claim") for q in ("em du dieu kien lam tieu luan chua a",
+         "e du dk lam tieu luan tot nghiep chua")}
+    check(all(v_ == "du_dk(tltn)" for v_ in k.values()), f"E18 'tieu luan' không dấu xét TLTN, không xét nhầm LVTN ({k})")
+    # chuẩn hoá cách gõ của sinh viên: bỏ dấu + viết tắt (đk, đki, dky, đc, ko, k, tn, lv, hp, hk, kì, e)
+    k = {q: proto.parse_question(q) for q, _ in (
+        ("ki nay e dang ky hp ct180 duoc ko", 0), ("hk nay e dki ct180 dc k", 0), ("e dky mon ct180 đc chưa", 0),
+        ("cho e hoi e hoc ct180 dc chua", 0), ("e dk hp ct180 dc khong a", 0))}
+    check(all(v_ == 'duoc_dang_ky("CT180")' for v_ in k.values()), f"E19 câu đăng ký không dấu / viết tắt → duoc_dang_ky(\"CT180\") ({k})")
+    k = {q: proto.parse_question(q) for q in ("e du dk tn chua a", "e đủ đk xét tn chưa", "em ra truong dc chua")}
+    check(all(v_ == "tot_nghiep" for v_ in k.values()), f"E20 câu tốt nghiệp viết tắt / không dấu → tot_nghiep ({k})")
+    k = {q: proto.parse_question(q) for q in ("e du dk lam lv chua", "em đủ đk làm lvtn chưa ạ", "em đủ dk làm tltn chưa ạ!!", "e du dk lam lv chua??")}
+    check(all(v_ == "du_dk_tc" for v_ in k.values()), f"E21 câu luận văn viết tắt → du_dk_tc ({k})")
+    # chuẩn hoá KHÔNG được mở cửa cho kết luận nhầm: các chốt chặn cũ phải giữ ở dạng không dấu / viết tắt
+    k = {q: proto.parse_question(q) for q in ("neu e rot ct177 thi tre may ki", "hoc phi hk nay bao nhieu",
+         "dk xet tn la gi", "e bi canh bao hoc vu ko", "e muon chuyen nganh thi can dk gi")}
+    check(all(v_ in ("khong_ro", "counterfactual") for v_ in k.values()), f"E22 câu ngoài phạm vi (không dấu/viết tắt) vẫn từ chối ({k})")
+    k = {q: proto.parse_question(q) for q in ("e co nen dk ct180 ko", "e dk huy hp ct180 dc ko", "ielts 6.0 mien dc fl001 ko",
+         "e dk hp song hanh voi ct180 dc ko", "diem ct180 cua e dc bao nhieu")}
+    check(not any(v_.startswith("duoc_dang_ky") for v_ in k.values()), f"E23 nên/hủy/miễn/song hành/điểm (không dấu) không thành duoc_dang_ky ({k})")
+    check(proto.parse_question("kỳ này em đăng ký đề tài luận văn CT550E được không") == 'duoc_dang_ky("CT550E")',
+          "E24 'đề tài' (bỏ dấu = 'de') không bị nhầm với 'để' của khe xấu")
+    # review P20-5: bỏ dấu làm từ KHÁC trùng từ khoá (thế/thể, dự/dư/đủ, nền/nên, tn = tin nhắn/tình nguyện) →
+    # câu trước đây bị từ chối nay bị trả lời như câu khác. Phải giữ từ chối.
+    k = {q: proto.parse_question(q) for q in ("làm thế nào để tốt nghiệp", "em tốt nghiệp thế nào",
+         "em dự lễ tốt nghiệp ở đâu", "em dư tín chỉ tốt nghiệp không", "thẻ sinh viên khi tốt nghiệp được giữ không",
+         "em gửi tn cho thầy được chưa", "e di tn mua he xanh duoc cong diem ko", "em đủ đk tn chưa nhưng còn nợ học phí",
+         "lam the nao de tot nghiep", "em du le tot nghiep o dau duoc khong", "em đủ tín chỉ tốt nghiệp chưa",
+         # review lượt 2: tn = nhắn tin / tình nguyện sau "em/đã/được/sau"; lễ/thẻ/đồ án/thực tập/bằng giỏi có dấu
+         "em tn cho thầy được không ạ", "em đã tn cho thầy chưa", "em được tn mùa hè xanh không", "sau tn em duoc nghi khong",
+         "em dự lễ tốt nghiệp được không", "em làm đồ án tốt nghiệp được chưa", "em đi thực tập tốt nghiệp được chưa",
+         "em đủ điều kiện nhận bằng giỏi khi tốt nghiệp chưa")}
+    check(all(v_ != "tot_nghiep" for v_ in k.values()), f"E25 thế nào/dự/dư/thẻ/tin nhắn/học phí/tín chỉ không thành tot_nghiep ({k})")
+    k = {q: proto.parse_question(q) for q in ("đk ct180 là gì", "dk hp ct180 la gi", "ki nay e dk ct180 dc chua ma e rot ct177",
+         "đăng ký ct180 ở đâu được", "em học ct180 được mấy tín chỉ", "em học ct180 được 2 lần không",
+         "đăng ký ct180 cùng lúc với ct181 được không", "em đã đăng ký ct180 chưa", "em đăng ký ct180 không được vì sao",
+         "em đăng ký ct180 thì có bị trùng lịch không")}
+    check(not any(v_.startswith("duoc_dang_ky") or v_ == "du_dk_dang_ky" for v_ in k.values()),
+          f"E26 hỏi 'là gì/ở đâu' hoặc có rớt về HP không thành câu đăng ký (kể cả stub không đối số) ({k})")
+    k = {q: proto.parse_question(q) for q in ("ct180 có phải học phần nền tảng không", "học phần nền ct180 có bao nhiêu tín chỉ",
+         "hoc phan nen ct180 co bao nhieu tin chi", "e duoc lam tl nhom khong", "kien thuc nen hoc o dau",
+         "em được làm luận văn nhóm không", "em được làm tiểu luận thay luận văn không", "em du dk lam luan van chua neu rot ct177")}
+    check(all(v_ not in ("de_xuat", "du_dk_tc") for v_ in k.values()), f"E27 nền/nén, 'tl' (thảo luận) không thành đề xuất/tiểu luận ({k})")
+    sv = str(HERE.parent / "w7_student_facts" / "students" / "sv_lvtn.json")
+    k = {q: (proto.parse_question(q), proto.answer(q, sv)["explanation_vi"]) for q in (
+         "ky 2 e nen dang ky gi", "hoc ki 3 em nen hoc gi", "ky 2 em he clc nen dang ky gi", "hè này em nên đăng ký gì")}
+    check(all(p_ == "de_xuat" for p_, _ in k.values()) and "HK2" in k["ky 2 e nen dang ky gi"][1]
+          and "HK3" in k["hoc ki 3 em nen hoc gi"][1] and "HK2" in k["ky 2 em he clc nen dang ky gi"][1]
+          and "HK3" in k["hè này em nên đăng ký gì"][1],
+          f"E28 đề xuất: học kỳ đọc từ câu không dấu ('ky 2', 'hoc ki 3'), không lặng lẽ về HK1 (P19-3) ({k})")
     v = proto.parse_question("em có nên đăng ký ct180 không")
     check(not v.startswith("duoc_dang_ky"), f"E9 'có NÊN đăng ký' không trả lời bằng 'được đăng ký' ({v})")
     r = proto.answer("Nếu em rớt CT177 thì trễ mấy kỳ?", None)

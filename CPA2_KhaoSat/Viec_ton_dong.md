@@ -53,7 +53,7 @@ Gom mọi mục `- [ ]` còn mở trong báo cáo Tuần 1–17. Các mục đã
 | C10 | Parser Tuần 13 vẫn sinh `du_dk_dang_ky("<MÃ>")` (không xét song hành) — chuyển sang `duoc_dang_ky`; câu hỏi lẻ chưa xét `mo_hk`; câu phản thực tế trả UNKNOWN "chưa hỗ trợ" (B8) | sau Tuần 19 (P19-4) |
 | C11 | ~~P20-1, P20-2, P20-3~~ đã sửa (R-Formal v1.10, QD-14; parser không mặc định tot_nghiep). **Còn P20-4**: OCR mất ĐTBCHK → từ chối cả học kỳ (an toàn, coverage thấp) | Tuần 20 §5, §5b |
 | C12 | Parser chưa có ý định **xếp loại tốt nghiệp** (claim `hang_cuoi(...)`) — câu "em có đạt loại giỏi" trả UNKNOWN | Tuần 20 §5b |
-| C13 | **P20-5 (an toàn, chưa sửa):** câu không dấu "lam luan van tot nghiep" → parser hiểu `tot_nghiep` (loại trừ chỉ có dạng có dấu) → 4 unsound trên Q-Noise dev; `answer_eligibility` nhận TLTN chỉ khi có dấu. Kèm: parser chưa nhận câu không dấu/viết tắt (đk, đc, tn, lv, hp) → V2/V4 coverage 0% | Tuần 20 §5c |
+| C13 | ~~P20-5~~ đã sửa (parser chuẩn hoá: bỏ dấu từ khoá + viết tắt theo ngữ cảnh + chặn câu hỏi mở; E17–E28). **Còn:** từ gõ không dấu vốn mơ hồ ("the", "du", "thi") — chốt chặn chỉ giảm rủi ro; bảng viết tắt trùng bảng sinh Q-Noise → cần Q-Real để đo cách gõ thật | Tuần 20 §5c |
 | C8 | Độ phủ OCR thấp (Linux 7/18; Windows 1/18) | Tuần 15 |
 
 ## D. Thuộc phạm vi "không hình thức hoá được" (kết quả RQ1, không phải nợ)

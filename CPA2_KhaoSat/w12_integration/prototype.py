@@ -41,7 +41,6 @@ CATALOG = W5 / "r_formal_v1.json"
 PARSER_STUB = {
     "em còn thiếu môn gì": "thieu_bat_buoc",
     "em còn thiếu bao nhiêu tín chỉ": "thieu_nhom",
-    "kỳ này em đăng ký CT180 được chưa": "du_dk_dang_ky",
     "em đủ điều kiện làm luận văn chưa": "du_dk_tc",
     "em đủ điều kiện làm tiểu luận chưa": "du_dk_tc",   # Tuần 18: nhánh TLTN của Eligibility
     "chứng chỉ ielts của em miễn được môn nào": "du_dk_xin_mien",
@@ -50,41 +49,102 @@ PARSER_STUB = {
     "tot_nghiep": "tot_nghiep",
 }
 
-DE_XUAT = re.compile(r"nên\s+(?:đăng\s*ký|học)\b")   # Tuần 19: "kỳ này em (có) nên đăng ký gì" → Recommendation
+DE_XUAT = re.compile(r"\bnen\s+(?:dang ky|hoc)\b")   # Tuần 19: "kỳ này em (có) nên đăng ký gì" → Recommendation
+
+# P20-5 (Q-Noise, Tuần 20): mọi khớp mẫu chạy trên MỘT dạng chuẩn. Trước đây từ khoá/loại trừ chỉ có dạng có dấu →
+# "lam luan van tot nghiep" thành tot_nghiep; "đk/đc/tn/lv/hp" không nhận ra.
+# Review: bỏ dấu MỌI từ làm từ khác trùng từ khoá (thế→the, dự/dư→du, nền→nen) → câu trước đây bị từ chối nay bị
+# trả lời như câu khác. Nên chỉ bỏ dấu từ CÓ trong bộ từ khoá dưới đây; từ có dấu khác giữ nguyên (không khớp mẫu
+# ASCII). Từ gõ KHÔNG dấu vẫn mơ hồ ("the", "du") → chốt chặn câu hỏi mở + loại trừ ở từng ý định.
+TU_KHOA = set("""đăng ký kí được không chưa đủ điều kiện tốt nghiệp trường luận văn tiểu nên nếu thì học phần môn kỳ kì
+miễn lại điểm rớt hủy huỷ rút của với cùng thay gì nào để đề tài trước tiên quyết song hành làm nhận thể kịp đtbctl hồ sơ
+loại hạng phí bổng nộp xét này hè đã có còn thiếu bao nhiêu tín chỉ chứng mấy trễ niên xong là ở đâu giờ sao đk đki đky
+đc""".split())
+VIET_TAT = [   # (mẫu trên dạng đã chuẩn, dạng đầy đủ) — theo thứ tự; viết tắt mơ hồ chỉ mở khi có ngữ cảnh
+    (r"\b(?:dki|dky|dang ki)\b", "dang ky"),
+    (r"\bdk(?=\s+(?:hp|hoc phan|mon|huy|rut|[a-z]{2}\d{3}e?\b))", "dang ky"),   # đk + HP/mã/hủy/rút = đăng ký
+    (r"\bdk\b", "dieu kien"),
+    (r"\bdc\b", "duoc"),
+    (r"\b(?:ko|k|khg|hok)\b", "khong"),
+    (r"\blvtn\b", "luan van tot nghiep"), (r"\btltn\b", "tieu luan tot nghiep"), (r"\btl tn\b", "tieu luan tot nghiep"),
+    (r"\blv\b", "luan van"), (r"\bhp\b", "hoc phan"), (r"\bhk\b", "hoc ky"), (r"\bki\b", "ky"), (r"\be\b", "em"),
+    # "tn" cũng là tin nhắn / tình nguyện ("em tn cho thầy", "em được tn mùa hè xanh") → chỉ là tốt nghiệp sau
+    # xét / điều kiện / luận văn / tiểu luận (review lượt 2)
+    (r"\b(xet|kien|van|luan) tn\b", r"\1 tot nghiep"),
+]
+HOI_MO = re.compile(r"\bth(?:e|ế) nao\b|\bo dau\b|\bla gi\b|\bkhi nao\b|\bbao nhieu\b|\bbao gio\b|\blam sao\b|\bra sao\b"
+                    r"|\bmay\b|\b(?:vi|vì|tai|tại) sao\b")
+
+
+def bo_dau(s: str) -> str:
+    s = unicodedata.normalize("NFC", s).replace("đ", "d").replace("Đ", "D").replace("Ð", "D")
+    return "".join(ch for ch in unicodedata.normalize("NFD", s) if unicodedata.category(ch) != "Mn")
+
+
+def chuan_hoa(q: str) -> str:
+    """Câu hỏi → dạng chuẩn để khớp ý định: NFC, chữ thường, gộp khoảng trắng, bỏ dấu TỪ KHOÁ, mở viết tắt."""
+    s = re.sub(r"\s+", " ", unicodedata.normalize("NFC", q).lower()).strip()
+    s = re.sub(r"\w+", lambda m: bo_dau(m.group(0)) if m.group(0) in TU_KHOA else m.group(0), s)
+    for mau, day_du in VIET_TAT:
+        s = re.sub(mau, day_du, s)
+    return s
+
+
+def _la_tot_nghiep(ql):
+    """câu hỏi có/không về TỐT NGHIỆP — trừ câu về luận văn, ĐTBCTL, tín chỉ, miễn, hồ sơ, lễ/thẻ, xếp loại, học
+    phí/học bổng, việc "khi tốt nghiệp" (claim khác hoặc chưa hỗ trợ) và câu hỏi mở (thế nào, ở đâu …)."""
+    return bool(re.search(r"tot nghiep|ra truong", ql) and re.search(r"\b(?:du|duoc|chua|the|kip)\b", ql)
+                and not HOI_MO.search(ql)
+                and not re.search(r"luan van|tieu luan|\bmien\b|dtbctl|tin chi|\bho so\b|\bloai\b|\bhang\b"
+                                  r"|hoc phi|hoc bong|\bnop\b|\bkhi tot nghiep\b"
+                                  # từ ngoài TU_KHOA giữ dấu → loại trừ phải có cả dạng có dấu (review lượt 2)
+                                  r"|\bl(?:e|ễ)\b|\bth(?:e|ẻ) (?:sinh vien|sv)|thẻ|đồ án|do an|khóa luận|khoá luận|khoa luan"
+                                  r"|thực tập|thuc tap|giỏi|gioi|xuất sắc|xuat sac|hoãn|hoan", ql))   # "X khi tốt nghiệp" hỏi việc khác
+
+
+PARSER_STUB_CHUAN = {chuan_hoa(k): v for k, v in PARSER_STUB.items()}
+
 
 def parse_question(q: str) -> str:
-    ql = unicodedata.normalize("NFC", q).lower()   # Unicode tổ hợp (NFD) không khớp chuỗi gõ vào — Bài học
+    ql = chuan_hoa(q)   # Unicode tổ hợp (NFD), không dấu, viết tắt → cùng một dạng (Bài học, P20-5)
     # đề xuất chung — câu hỏi về MỘT học phần / luận văn / tiểu luận đi nhánh riêng
-    if DE_XUAT.search(ql) and not re.search(r"[a-z]{2}\d{3}|luận văn|tiểu luận", ql):
+    if DE_XUAT.search(ql) and not HOI_MO.search(ql) and not re.search(r"[a-z]{2}\d{3}|luan van|tieu luan", ql):
         return "de_xuat"
     # đăng ký MỘT học phần → claim có đối số (P18-1: claim không đối số luôn FALSE). Khoá stub chứa chữ hoa
     # (CT180) nên trước đây không bao giờ khớp câu đã lower() → rơi về tot_nghiep (sửa sau Tuần 19)
-    if re.search(r"\bnếu\b.*\bthì\b", ql):          # câu điều kiện / phản thực tế (RQ3 — chưa hỗ trợ)
+    if re.search(r"\bneu\b", ql):          # câu điều kiện / phản thực tế (RQ3 — chưa hỗ trợ); "nếu" thiếu "thì" cũng vậy
         return "counterfactual"
     ma = re.search(r"\b([a-z]{2}\d{3}e?)\b", ql)
-    if ma and re.search(r"\bnên\b", ql) and not re.search(r"được\s*(?:chưa|không)", ql):
+    if ma and DE_XUAT.search(ql) and not HOI_MO.search(ql) and not re.search(r"duoc\s*(?:chua|khong)", ql):
         # "có NÊN đăng ký X (không)" là xin tư vấn; "nên đăng ký X được chưa" vẫn là hỏi điều kiện
         return "de_xuat"
     c = ma.group(1) if ma else None
-    dk = re.search(rf"đăng\s*k[ýí]\s+(?P<khe>[^\d,.?!]{{0,40}}?\s)?{c}\b", ql) if c else None
+    dk = re.search(rf"dang ky\s+(?P<khe>[^\d,.?!]{{0,40}}?\s)?{c}\b", ql) if c else None
     # P20-3: cho phép TÊN học phần chen giữa ("đăng ký học phần niên luận CT466E"); review: khe không được nói về
-    # HP KHÁC (tiên quyết CỦA, song hành VỚI, thay thế), hủy/rút, hay hỏi "HP gì/nào để …"
+    # HP KHÁC (tiên quyết CỦA, song hành VỚI, thay thế), hủy/rút, hay hỏi "HP gì/nào để …". Bỏ dấu: "để" = "đề"
+    # (đề tài) → "de" chỉ xấu khi không theo sau bởi "tai"
     khe_xau = dk and dk.group("khe") and re.search(
-        r"\b(?:của|với|cùng|thay|hủy|huỷ|rút|gì|nào|để|trước|tiên quyết|song hành)\b", dk.group("khe"))
-    if c and not re.search(r"miễn|xong|\blại\b|điểm|rớt|\brot\b|\bhủy\b|\bhuỷ\b|\brút\b", ql) and (
+        r"\b(?:cua|voi|cung|thay|huy|rut|gi|nao|de(?! tai)|truoc|tien quyet|song hanh)\b", dk.group("khe"))
+    # câu có/không (được/chưa/không), không phải câu hỏi mở ("đk CT180 là gì", "đăng ký CT180 ở đâu")
+    # review lượt 2: một mã HP duy nhất (hai mã = cùng lúc/trước/thay thế HP khác); không hỏi trạng thái "đã đăng ký"
+    co_khong = re.search(r"\b(?:duoc|chua|khong)\b", ql) and not HOI_MO.search(ql)
+    mot_ma = len(set(re.findall(r"\b[a-z]{2}\d{3}e?\b", ql))) == 1
+    if c and re.search(rf"\b{c}\b.*\bthi\b", ql):   # "đăng ký X THÌ có bị trùng lịch…" hỏi hệ quả, không hỏi được đăng ký
+        co_khong = None
+    if c and co_khong and mot_ma and not re.search(r"\bmien\b|\bxong\b|\blai\b|\bdiem\b|\brot\b|\bhuy\b|\brut\b|\bda dang ky\b", ql) and (
             (dk and not khe_xau)
-            or re.search(rf"\bhọc\s+(?:(?:môn|học phần|hp)\s+)?{c}\s+(?:được|đc)", ql)):
+            or re.search(rf"\bhoc\s+(?:(?:mon|hoc phan)\s+)?{c}\s+duoc\s+(?:khong|chua)\b", ql)):
         return f'duoc_dang_ky("{c.upper()}")'
-    for k, v in PARSER_STUB.items():
-        if k.lower() in ql: return v
+    for k, v in PARSER_STUB_CHUAN.items():
+        if k in ql and (v != "tot_nghiep" or _la_tot_nghiep(ql) or ql == "tot_nghiep"):
+            return v
     # đủ điều kiện LÀM luận văn/tiểu luận (diễn đạt khác stub) → Eligibility (w18)
-    if re.search(r"(?:đủ điều kiện|được)\s+(?:làm|nhận đề tài)\s+(?:luận văn|tiểu luận)", ql):
+    # chỉ "làm luận văn/tiểu luận (tốt nghiệp) chưa/không" — không phải "làm luận văn NHÓM", "tiểu luận THAY luận văn"
+    if re.search(r"(?:du dieu kien|duoc)\s+(?:lam|nhan de tai)\s+(?:luan van|tieu luan)(?: tot nghiep)?\s*(?:khong|chua)?"
+                 r"\s*(?:a|ạ)?[\s?!.]*$", ql) and not HOI_MO.search(ql):
         return "du_dk_tc"
-    # câu tốt nghiệp diễn đạt khác stub ("em ra trường được chưa", không dấu) — trừ câu về luận văn, ĐTBCTL, miễn, hồ sơ,
-    # xếp loại, học phí/học bổng (claim khác hoặc chưa hỗ trợ → không được trả lời như câu tốt nghiệp)
-    if re.search(r"tốt nghiệp|ra trường|tot nghiep|ra truong", ql) \
-            and re.search(r"\b(?:đủ|du|được|duoc|chưa|chua|thể|kịp)\b", ql) \
-            and not re.search(r"luận văn|tiểu luận|miễn|đtbctl|\bhồ sơ\b|\bloại\b|\bhạng\b|học phí|học bổng|\bnộp\b", ql):
+    # câu tốt nghiệp diễn đạt khác stub ("em ra trường được chưa")
+    if _la_tot_nghiep(ql):
         return "tot_nghiep"
     # P20-2 (Tuần 20): KHÔNG mặc định tot_nghiep — câu không nhận ra ý định → UNKNOWN "chưa hỗ trợ" (họ lỗi P18-1/P19-4)
     return "khong_ro"
@@ -182,7 +242,7 @@ def answer_eligibility(question, student_path):
     """Tuần 18: "đủ điều kiện làm luận văn/tiểu luận" → Eligibility module (w18). Trước đây claim 'du_dk_tc' không
     đối số không bao giờ có trong answer set → prototype luôn trả FALSE."""
     import eligibility
-    dt = "tltn" if "tiểu luận" in question.lower() else "lvtn"
+    dt = "tltn" if "tieu luan" in chuan_hoa(question) else "lvtn"     # P20-5: cả "tieu luan"/"tltn" không dấu
     if not student_path:      # không có hồ sơ → không kết luận về sinh viên (thế giới đóng sẽ cho FALSE sai)
         cert = {"claim": f"du_dk({dt})", "verdict": "UNKNOWN", "proof": {"steps": []}, "missing_facts": ["ho_so"]}
         return {"verdict": "UNKNOWN", "certificate": cert, "explanation_vi": "Cần hồ sơ học tập để xét điều kiện.",
@@ -214,9 +274,11 @@ def answer_recommendation(question, student_path):
     if not student_path:
         return {"verdict": "UNKNOWN", "claim": "de_xuat", "explanation_vi": "Cần hồ sơ học tập để đề xuất đăng ký.",
                 "missing_facts": ["ho_so"], "certificate": {"claim": "de_xuat", "proof": {"steps": []}}}
-    ql = unicodedata.normalize("NFC", question).lower()
-    k = re.search(r"(?:\bk[ỳì]|\bhk)\s*(\d+|i{1,3})\b", ql)
-    hk = 3 if "hè" in ql else ({"i": 1, "ii": 2, "iii": 3}.get(k.group(1)) or int(k.group(1))) if k else 1
+    ql = chuan_hoa(question)       # P20-5 review: "ky 2", "hoc ki 3", "hk he" không dấu (P19-3: không lặng lẽ về HK1)
+    k = re.search(r"(?:\bky|\bhk)\s*(\d+|i{1,3})\b", ql)
+    # "kỳ N" trước; "he" không dấu cũng là "hệ" (hệ CLC) → chỉ là hè khi có dấu hoặc sau kỳ/học/mùa (review lượt 2)
+    he = "hè" in unicodedata.normalize("NFC", question).lower() or re.search(r"\b(?:ky|hk|hoc|mua) he\b", ql)
+    hk = 3 if he and not k else ({"i": 1, "ii": 2, "iii": 3}.get(k.group(1)) or int(k.group(1))) if k else 1
     if hk not in (1, 2, 3):   # QĐ3266 Đ6 k1: một năm học có 3 HK — không lặng lẽ đổi sang HK1
         return {"verdict": "UNKNOWN", "claim": "de_xuat", "missing_facts": ["hoc_ky"],
                 "explanation_vi": f"Không có học kỳ {hk} — một năm học có 3 học kỳ (QĐ3266 Điều 6 khoản 1). "

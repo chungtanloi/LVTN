@@ -10,7 +10,7 @@
 | OCR-Noise v1 | **đạt** — 40 ca (10 kịch bản × 4 mức nhiễu), đóng băng cùng commit |
 | Đầu vào baseline | **đạt** — `baseline_dev.jsonl` (78 ca), `baseline_test.jsonl` (77 ca), không lộ đáp án |
 | Q-Real | **chưa đạt (0/400)** — đã có pipeline nhập, ẩn danh, chia split và quy trình gán nhãn; chờ Loi cung cấp câu hỏi thật (phương án 1a) |
-| Q-Noise v1 (tổng hợp, **không** thay Q-Real) | **đạt** — 240 câu (48 câu gốc × 5 kiểu gõ), đóng băng `5d8601c` trước lần chạy đầu; dev phát hiện P20-5 (mục 5c) |
+| Q-Noise v1 (tổng hợp, **không** thay Q-Real) | **đạt** — 240 câu (48 câu gốc × 5 kiểu gõ), đóng băng `5d8601c` trước lần chạy đầu; dev phát hiện P20-5, đã sửa (mục 5c) |
 | `validate_benchmark.py` | ĐẠT (B1–B10); mọi tuần 5–20 ĐẠT |
 
 ---
@@ -199,7 +199,7 @@ V0 là câu dev **đã thấy** khi sửa P20-2/P20-3, nên 26/26 ở V0 không 
 
 ### Phát hiện
 
-- **P20-5 (an toàn — 4 unsound, chưa sửa).** Câu không dấu "Em co du dieu kien lam **luan van** tot nghiep khong?" (EL-01…04, V1) bị parser hiểu thành `tot_nghiep`. Nguyên nhân: nhánh tốt nghiệp không dấu có danh sách loại trừ (`luận văn`, `tiểu luận`, `đtbctl`, `loại`…) chỉ ở dạng **có dấu**. Hệ thống trả FALSE cho câu "đủ điều kiện tốt nghiệp", không phải câu đã hỏi.
+- **P20-5 (an toàn — 4 unsound; đã sửa, xem dưới).** Câu không dấu "Em co du dieu kien lam **luan van** tot nghiep khong?" (EL-01…04, V1) bị parser hiểu thành `tot_nghiep`. Nguyên nhân: nhánh tốt nghiệp không dấu có danh sách loại trừ (`luận văn`, `tiểu luận`, `đtbctl`, `loại`…) chỉ ở dạng **có dấu**. Hệ thống trả FALSE cho câu "đủ điều kiện tốt nghiệp", không phải câu đã hỏi.
   - Chấm theo gold thuần thì chỉ 2 ca sai (EL-02/04 tình cờ trùng gold FALSE). Chấm chặt cho 4 — đúng loại lỗi P18-1/P19-4/P20-2: trả lời một câu khác mà vẫn kèm chứng chỉ.
   - Thêm một lỗi tiềm ẩn cùng họ: `answer_eligibility` chọn TLTN bằng cách tìm chuỗi `"tiểu luận"` có dấu, nên câu "tieu luan" sẽ bị xét như LVTN.
 - **Parser không nhận câu không dấu và viết tắt (an toàn — chỉ từ chối thừa).**
@@ -208,7 +208,44 @@ V0 là câu dev **đã thấy** khi sửa P20-2/P20-3, nên 26/26 ở V0 không 
   - Hệ thống không kết luận sai ở đây, nhưng sinh viên gõ như thật thì hầu như không được trả lời.
 - **V3 (gõ vội) bền hơn** (20/26). Các ca hỏng là ca có đúng từ khoá bị mất dấu ("đăng ky", "dang ký", "nien luận").
 
-Theo quy tắc nhiễm dữ liệu (Bài học): đây là số **chính thức** của Q-Noise dev. Nếu sửa P20-5 hoặc chuẩn hoá viết tắt, số sau sửa ghi ra file riêng (`--hau-to`). Q-Noise test (110 câu) để chạy một lần ở Tuần 22 cùng G-Truth test.
+Theo quy tắc nhiễm dữ liệu (Bài học): đây là số **chính thức** của Q-Noise dev. Q-Noise test (110 câu) để chạy một lần ở Tuần 22 cùng G-Truth test.
+
+### Sửa P20-5 + chuẩn hoá cách gõ (Loi duyệt "cả 2", 18/10/2026) — dev ĐÃ NHÌN THẤY
+
+`prototype.py`: mọi khớp ý định chạy trên `chuan_hoa(câu hỏi)`.
+
+- **Bỏ dấu có chọn lọc.** Bỏ dấu chỉ các từ thuộc bộ từ khoá `TU_KHOA`; từ có dấu khác giữ nguyên nên không khớp mẫu.
+  - Lượt review 1 cho thấy bỏ dấu MỌI từ làm *thế→the, dự/dư→du, nền→nen* trùng từ khoá, nên câu trước đây bị từ chối lại bị trả lời như câu khác.
+- **Mở viết tắt theo ngữ cảnh:**
+  - *đk* trước HP/mã/hủy/rút là "đăng ký", còn lại là "điều kiện";
+  - *tn* = tốt nghiệp chỉ sau xét/điều kiện/luận văn/tiểu luận (lượt 2: "em tn cho thầy" là nhắn tin);
+  - *tl tn*, *lv*, *lvtn*, *tltn*, *hp*, *hk*, *đc*, *ko*, *e*.
+- **Câu hỏi mở bị chặn khỏi ý định có/không.** "Thế nào / ở đâu / là gì / mấy / vì sao…" không còn vào được các ý định có/không.
+- **Câu đăng ký** phải đủ các điều kiện sau:
+  - đúng MỘT mã HP;
+  - có "được/chưa/không";
+  - không hỏi trạng thái "đã đăng ký";
+  - không có "thì …" sau mã.
+- **Câu tốt nghiệp** loại thêm: lễ, thẻ SV, đồ án, khoá luận, thực tập, giỏi, hoãn, "khi tốt nghiệp", tín chỉ. Loại trừ có cả dạng có dấu và không dấu.
+- **Câu luận văn** chỉ là "làm LV/TL (tốt nghiệp) chưa/không" — không phải "làm luận văn nhóm", "tiểu luận thay luận văn".
+- **Các chỗ khác:**
+  - "nếu" là phản thực tế kể cả khi thiếu "thì";
+  - đọc chọn TLTN từ câu đã chuẩn hoá;
+  - bỏ khoá stub `du_dk_dang_ky` không đối số (P18-1);
+  - đề xuất đọc học kỳ từ câu không dấu, ưu tiên "kỳ N", "he" không dấu chỉ là hè sau kỳ/học/mùa (P19-3).
+
+**Kiểm thử:** `validate_integration` E17–E28. Câu mới, không chép từ Q-Noise; E17–E21 và E25–E28 fail với code cũ. Hai lượt review đối kháng: lượt 1 có 5 lỗi cao, lượt 2 có 1 lỗi cao, đều đã sửa và có ca hồi quy. Mọi tuần 5–20 ĐẠT.
+
+**Sau sửa** (`--hau-to _sau_P20-5`, KHÔNG thay số chính thức):
+
+| Bộ dev | Soundness | Coverage | Ghi chú |
+|---|---|---|---|
+| Q-Noise (130) | 0 unsound → **100%** | 88,5% (V0–V4 đều 26/26 đúng ý định) | phần chưa phủ = câu ngoài phạm vi, gold UNKNOWN |
+| G-Truth (58) | 100% | 93,1% | không đổi so với sau P20 |
+
+**Hai lưu ý về độ tin cậy của các số sau sửa:**
+- **Q-Noise sau sửa không độc lập.** Bảng viết tắt trong parser trùng bảng sinh Q-Noise, và đã sửa sau khi nhìn thấy dev. Ví dụ câu "khong??" lỗi vì hai dấu hỏi, phát hiện khi chạy dev. Số đáng tin hơn là Q-Noise **test** (Tuần 22), mà test cũng dùng cùng bảng viết tắt, nên chỉ Q-Real mới đo được cách gõ thật.
+- **Từ gõ KHÔNG dấu vẫn mơ hồ** ("the", "du", "thi"). Chốt chặn chỉ giảm chứ không loại bỏ hết khả năng trả lời nhầm. Nguyên tắc vẫn là nghiêng về từ chối.
 
 ## 6. Hạn chế
 
@@ -224,8 +261,7 @@ Theo quy tắc nhiễm dữ liệu (Bài học): đây là số **chính thức*
 - [x] Sửa P20-1 — R-Formal v1.10 + QD-14 (mục 5b)
 - [x] Sửa P20-2/P20-3 (mục 5b)
 - [ ] Xem lại P20-4 (M2 OCR)
-- [ ] **P20-5** (an toàn): loại trừ không dấu ở nhánh tốt nghiệp + TLTN không dấu — chờ Loi duyệt kế hoạch
-- [ ] Parser chuẩn hoá bỏ dấu/viết tắt (coverage V1/V2/V4) — chờ Loi duyệt
+- [x] **P20-5** (an toàn) + parser chuẩn hoá bỏ dấu/viết tắt (mục 5c, E17–E28)
 - [ ] Sau: Q-Elicit (phiếu kịch bản) + Google Form Q-Real nhỏ (Loi: "sau cập nhật thêm")
 - [ ] Tuần 21: chạy baseline (LLM thuần, RAG thuần, tool-calling) trên `baseline_dev/test.jsonl` (cần API key, `.env`)
 - [ ] Tuần 22: chạy CPA² trên test (một lần), báo cáo cả hai loại gold
