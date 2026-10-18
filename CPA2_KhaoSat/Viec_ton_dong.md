@@ -49,6 +49,7 @@ Gom mọi mục `- [ ]` còn mở trong báo cáo Tuần 1–17. Các mục đã
 | C6 | Mở rộng hồ sơ giả lập ≥ 20 (ca biên + đủ loại chứng chỉ) — **phần lớn đã phủ** bằng phép biến đổi của w17 (TOEIC/TOEFL/IELTS, D = 4,0, D+ = 5,0); còn thiếu `ctu_abc` | Tuần 7 |
 | C7 | Test `du_dk_dang_ky` qua passed / substituted / exempted_M (T4b) — w10 có ca passed; chưa có ca substituted/exempted_M | Tuần 9 |
 | C9 | Recommendation: `mo_khoa` chỉ đếm trực tiếp (chưa bắc cầu); chưa xét HP đang học / học cải thiện; parser Tuần 13 chưa có ý định `de_xuat` | Tuần 19 |
+| C10 | Parser Tuần 13 vẫn sinh `du_dk_dang_ky("<MÃ>")` (không xét song hành) — chuyển sang `duoc_dang_ky`; câu hỏi lẻ chưa xét `mo_hk`; câu phản thực tế trả UNKNOWN "chưa hỗ trợ" (B8) | sau Tuần 19 (P19-4) |
 | C8 | Độ phủ OCR thấp (Linux 7/18; Windows 1/18) | Tuần 15 |
 
 ## D. Thuộc phạm vi "không hình thức hoá được" (kết quả RQ1, không phải nợ)

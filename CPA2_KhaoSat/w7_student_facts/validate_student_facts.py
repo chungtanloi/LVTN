@@ -83,6 +83,14 @@ def kiem_loader_chung():
             and any(d in f.read_text(encoding="utf-8") for d in dau_hieu)]
     print(f"[{'OK' if not chep else 'FAIL'}] L3 không file nào ngoài loader.py tự đổi hồ sơ → ASP ({chep})")
     good = good and not chep
+    # L4 (R-A04 Đ7 k5): loader sinh da_hoc(C) cho mọi bản ghi có học (kể cả F, I), KHÔNG cho W (đã rút)
+    hs = {"grades": {"AA001": {"code": "AA001", "thang10": 30, "letter": "F", "status": "failed"},
+                     "AA002": {"code": "AA002", "thang10": None, "letter": None, "diem": "I", "status": "unknown"},
+                     "AA003": {"code": "AA003", "thang10": None, "letter": "W", "diem": "W", "status": "failed"}}}
+    asp4 = load_facts(hs)
+    l4 = 'da_hoc("AA001").' in asp4 and 'da_hoc("AA002").' in asp4 and 'da_hoc("AA003")' not in asp4
+    print(f"[{'OK' if l4 else 'FAIL'}] L4 loader: da_hoc cho bản ghi F và I, không cho W")
+    good = good and l4
     return ok and good
 
 

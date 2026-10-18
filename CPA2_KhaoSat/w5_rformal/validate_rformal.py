@@ -564,6 +564,30 @@ test("C36 Nhóm chuyên ngành là 'chọn một trong ba cặp', không phải 
      ctdt=True)
 
 
+# --- C37–C40. Song hành (R-A04 · QĐ3266 Đ7 k5): học trước HOẶC cùng lúc; "học" ≠ "tích lũy" ---
+SH = 'course(c,3). course(p,3). course(q,3). song_hanh(c,p). tien_quyet(p,q).'
+test("C37 Chưa học HP song hành p → c đăng ký được nhưng PHẢI học p cùng kỳ",
+     SH + " g10(q,80).",
+     expect_true=["du_dk_dang_ky(c)", "phai_hoc_cung_ky(c,p)", "duoc_dang_ky(c)"],
+     note="Đ7 k5 cho phép học cùng lúc → song hành không chặn đăng ký, nhưng phải kèm p")
+test("C38 Đã học p dù bị F (da_hoc từ bản ghi điểm) → không còn ràng buộc cùng kỳ",
+     SH + " g10(q,80). g10(p,30). da_hoc(p).",
+     expect_false=["phai_hoc_cung_ky(c,p)"], expect_true=["duoc_dang_ky(c)"],
+     note="khoản 4 (tiên quyết) dùng 'tích lũy', khoản 5 chỉ 'học' — quyết định (a), Loi 18/10/2026")
+test("C39 Chưa học p và p chưa đủ điều kiện đăng ký (thiếu tiên quyết q) → chưa thể học c kỳ này",
+     SH,
+     expect_true=["du_dk_dang_ky(c)", "chan_song_hanh(c,p)"], expect_false=["duoc_dang_ky(c)"],
+     note="không học trước được, cũng không học cùng lúc được → vi phạm Đ7 k5 nếu học c")
+test("C41 Song hành dây chuyền c→p→r (chưa học cả hai): phải học CẢ p và r cùng kỳ; r thiếu tiên quyết → chặn c",
+     'course(c,3). course(p,3). course(r,3). course(q,3). song_hanh(c,p). song_hanh(p,r). tien_quyet(r,q).',
+     expect_true=["phai_hoc_cung_ky(c,p)", "phai_hoc_cung_ky(c,r)", "chan_song_hanh(c,r)", "thieu_tien_quyet(r,q)"],
+     expect_false=["duoc_dang_ky(c)", "duoc_dang_ky(p)"],
+     note="review sau Tuần 19: chỉ xét HP song hành trực tiếp thì báo 'được' sai khi mắt xích xa không đăng ký được")
+test("C40 p đã tích lũy (miễn, điểm M) mà không có bản ghi da_hoc → vẫn coi là đã học",
+     SH + " diem_m(p).",
+     expect_false=["phai_hoc_cung_ky(c,p)", "chan_song_hanh(c,p)"], expect_true=["duoc_dang_ky(c)"])
+
+
 def section_c():
     print("\n" + "=" * 78)
     print("C. KIỂM THỬ NGỮ NGHĨA (clingo)")

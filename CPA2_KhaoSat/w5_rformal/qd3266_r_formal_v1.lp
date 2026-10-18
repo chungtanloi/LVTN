@@ -1,5 +1,5 @@
 %%=============================================================================
-%% qd3266_r_formal_v1.lp — R-Formal v1 (v1.8: trần thời gian tính theo HK, 3 HK/năm — sau Tuần 17)
+%% qd3266_r_formal_v1.lp — R-Formal v1 (v1.9: song hành khi hỏi đăng ký một HP — sau Tuần 19)
 %% Hình thức hoá các điều khoản lớp F của QĐ 3266/QĐ-ĐHCT (15/8/2024)
 %% Dự án: CPA² — Certified Personalized Academic Advising (Tuần 5/24)
 %%
@@ -158,6 +158,24 @@ why(du_dk_dang_ky(C), r_a03) :- du_dk_dang_ky(C).
 
 vi_pham_song_hanh(C,P) :- xep_hk(C,K1), song_hanh(C,P), xep_hk(P,K2), K2 > K1.
 why(vi_pham_song_hanh(C,P), r_a04) :- vi_pham_song_hanh(C,P).
+
+%% v1.9 (sau Tuần 19): Đ7 k5 "phải HỌC TRƯỚC hoặc HỌC CÙNG LÚC" khi hỏi đăng ký MỘT học phần.
+%% "Học" ≠ "tích lũy" (k4 dùng "tích lũy", k5 chỉ "học" — quyết định (a), Loi 18/10/2026): da_hoc/1 là dữ kiện
+%% từ loader cho mọi bản ghi điểm có học (kể cả F, I; không tính W). Học phần đã tích lũy (miễn, thay thế) cũng là đã học.
+%% Song hành KHÔNG chặn đăng ký (được học cùng lúc) — chỉ thêm điều kiện; chặn khi HP song hành không đăng ký được.
+#defined da_hoc/1.
+%% Bắc cầu: c song hành p, p song hành r, chưa học cả hai → phải học CẢ p và r cùng kỳ (review sau Tuần 19).
+phai_hoc_cung_ky(C,P) :- song_hanh(C,P), course(C,_), not da_hoc(P), not tich_luy(P).
+phai_hoc_cung_ky(C,Q) :- phai_hoc_cung_ky(C,P), phai_hoc_cung_ky(P,Q), C != Q.
+chan_song_hanh(C,P)   :- phai_hoc_cung_ky(C,P), not du_dk_dang_ky(P).
+%% Tiên quyết chưa đạt (R-A03, Đ7 k4) — để chứng chỉ trích từ why/2, không dựng tay ở tầng trả lời
+thieu_tien_quyet(C,P) :- course(C,_), tien_quyet(C,P), not passed(P).
+why(thieu_tien_quyet(C,P), r_a03) :- thieu_tien_quyet(C,P).
+duoc_dang_ky(C)       :- du_dk_dang_ky(C), not chan_song_hanh(C,_).
+why(phai_hoc_cung_ky(C,P), r_a04) :- phai_hoc_cung_ky(C,P).
+why(chan_song_hanh(C,P), r_a04)   :- chan_song_hanh(C,P).
+why(duoc_dang_ky(C), r_a03)       :- duoc_dang_ky(C).
+why(duoc_dang_ky(C), r_a04)       :- duoc_dang_ky(C), song_hanh(C,_).
 
 %% ---------------------------------------------------------------------------
 %% 6. SỐ TÍN CHỈ ĐĂNG KÝ — Điều 14 khoản 1, 2 (R-C01, R-C02)

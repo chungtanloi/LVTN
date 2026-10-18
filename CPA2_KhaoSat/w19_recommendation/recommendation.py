@@ -35,6 +35,7 @@ ROOT = HERE.parent
 sys.path.insert(0, str(ROOT / "w16_abstention"))
 sys.path.insert(0, str(ROOT / "w18_eligibility"))
 import abstention as A
+from loader import co_hoc   # w7: định nghĩa "đã học" dùng chung (R-A04)
 import eligibility as E
 
 LP = (HERE / "recommendation.lp").read_text(encoding="utf-8")
@@ -83,16 +84,16 @@ def _so_tc(models, mau):
 
 
 def _da_hoc(ho_so, tl, ma):
-    """R-A04 (Đ7 k5) 'học trước': co / khong / chua_ro. Có bản ghi điểm (kể cả F, I, đang học) = đã học; W = đã
-    rút, không tính; trạng thái 'unknown' không điểm = chưa rõ. Đã tích lũy (gồm miễn, thay thế) = đã học."""
+    """R-A04 (Đ7 k5) 'học trước': co / khong / chua_ro — định nghĩa "đã học" lấy từ loader.co_hoc (dùng chung với KB
+    da_hoc/1). Đã tích lũy (gồm miễn, thay thế) = đã học; bản ghi trạng thái 'unknown' không điểm = chưa rõ."""
     if tl.get(ma) == "TRUE":
         return "co"
     g = (ho_so.get("grades") or {}).get(ma)
-    if g is None or g.get("diem") == "W" or g.get("letter") == "W":
-        return "chua_ro" if tl.get(ma) == "UNKNOWN" else "khong"
-    if g.get("status") == "unknown" and g.get("thang10") is None and not g.get("letter") and not g.get("diem"):
+    if g is not None and co_hoc(g):
+        return "co"
+    if (g is not None and g.get("diem") != "W" and g.get("letter") != "W") or tl.get(ma) == "UNKNOWN":
         return "chua_ro"
-    return "co"
+    return "khong"
 
 
 def de_xuat(ho_so, hk, them=""):

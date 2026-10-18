@@ -83,6 +83,16 @@ def ra_soat(ho_so):
     return hs, "\n".join(them), mt
 
 
+def co_hoc(g):
+    """R-A04 (QĐ3266 Đ7 k5) "đã học": bản ghi có học — điểm số, M, I, điểm chữ, hoặc trạng thái đạt/rớt/công nhận/
+    miễn/đang học (kể cả F: "học" ≠ "tích lũy", quyết định (a) Loi 18/10/2026). W (đã rút) không tính.
+    Dùng chung cho KB (da_hoc/1) và Recommendation w19 — không chép lại định nghĩa."""
+    if g.get("diem") == "W" or g.get("letter") == "W":
+        return False
+    return (g.get("thang10") is not None or g.get("diem") in ("M", "I") or bool(g.get("letter"))
+            or g.get("status") in ("passed", "failed", "recognized", "exempted_M", "in_progress"))
+
+
 def sang_asp(j):
     """Hồ sơ → (chuỗi dữ kiện ASP, danh sách mâu thuẫn). LUÔN rà soát trước (P17-1). Thứ tự dòng cố định."""
     j, them, mt = ra_soat(j)
@@ -97,6 +107,8 @@ def sang_asp(j):
             lines.append(f'diem_i("{code}").')
         elif th is not None:
             lines.append(f'g10("{code}",{th}).')
+        if co_hoc(g):
+            lines.append(f'da_hoc("{code}").')
     for c in j.get("khong_tinh_tich_luy", []):
         lines.append(f'khong_tinh_tich_luy("{c}").')
     if j.get("che_do_sv_chon_tich_luy"):

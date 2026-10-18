@@ -71,6 +71,51 @@ def test_postcheck():
     res=proto.answer("em đủ điều kiện tốt nghiệp chưa?", str(HERE.parent / "w7_student_facts" / "students" / "sv_lvtn.json"))
     check(res["verdict"]!="BLOCKED", "D2 case thật không bị chặn")
 
+def test_dang_ky():
+    print("\nE. ĐĂNG KÝ MỘT HỌC PHẦN — tiên quyết (Đ7 k4) + song hành (Đ7 k5)")
+    import tempfile
+    base = json.loads((HERE.parent / "w7_student_facts" / "students" / "sv_lvtn.json").read_text(encoding="utf-8"))
+    def hoi(q, xoa=(), them=None):
+        j = json.loads(json.dumps(base))
+        for m in xoa:
+            j["grades"].pop(m, None)
+        j["grades"].update(them or {})
+        with tempfile.TemporaryDirectory() as d:
+            f = Path(d) / "sv.json"
+            f.write_text(json.dumps(j, ensure_ascii=False), encoding="utf-8")
+            return proto.answer(q, str(f))
+    r = hoi("Kỳ này em đăng ký CT180 được chưa?", xoa=["CT180"])
+    check(r.get("claim") == 'duoc_dang_ky("CT180")' and r["verdict"] == "TRUE",
+          f"E1 câu hỏi có mã HP → claim có đối số, không rơi về tot_nghiep ({r.get('claim')}, {r['verdict']})")
+    r = hoi("Kỳ này em đăng ký CT182 được chưa?", xoa=["CT180", "CT182"])
+    check(r["verdict"] == "TRUE" and "CT180" in r["explanation_vi"] and "cùng kỳ" in r["explanation_vi"]
+          and any(s["rule_id"] == "r_a04" for s in r["certificate"]["proof"]["steps"]),
+          f"E2 chưa học CT180 → được đăng ký CT182 VỚI ĐIỀU KIỆN học CT180 cùng kỳ, chứng chỉ r_a04 ({r['explanation_vi'][:120]})")
+    r = hoi("Kỳ này em đăng ký CT182 được chưa?", xoa=["CT180", "CT182", "CT177"])
+    check(r["verdict"] == "FALSE" and "CT180" in r["explanation_vi"],
+          f"E3 chưa học CT180 và CT180 thiếu tiên quyết CT177 → chưa thể học CT182 kỳ này ({r['verdict']}: {r['explanation_vi'][:120]})")
+    r = hoi("Kỳ này em đăng ký CT182 được chưa?", xoa=["CT182"],
+            them={"CT180": {"code": "CT180", "credits": 3, "thang10": 30, "letter": "F", "status": "failed"}})
+    check(r["verdict"] == "TRUE" and "cùng kỳ" not in r["explanation_vi"],
+          f"E4 đã học CT180 (bị F) → song hành thoả, không đặt điều kiện ({r['explanation_vi'][:100]})")
+    r = hoi("Kỳ này em đăng ký XH033 được chưa?", xoa=[m for m in base["grades"] if m.startswith("XH0")])
+    check(r["verdict"] == "TRUE" and all(m in r["explanation_vi"] for m in ("XH032", "XH031", "XH025", "XH024", "XH023")),
+          f"E6 song hành dây chuyền XH033→XH032→…→XH023: nêu ĐỦ các HP phải học cùng kỳ ({r['explanation_vi'][:160]})")
+    r = hoi("Kỳ này em đăng ký CT182 được chưa?", xoa=["CT180", "CT182", "CT177"])
+    check(any(s_["atom"].startswith('thieu_tien_quyet("CT180"') for s_ in r["certificate"]["proof"]["steps"]),
+          "E7 bước 'thiếu tiên quyết' trong chứng chỉ lấy từ why/2 của KB (không dựng tay)")
+    sai = {q: proto.parse_question(q) for q in (
+        "nếu em học lại CT177 thì được bao nhiêu điểm", "Nếu em không đăng ký CT180 thì có tốt nghiệp được không",
+        "em học xong ct180 thì được tốt nghiệp chưa", "em đã học ct180 được mấy điểm",
+        "IELTS 6.0 miễn được QP001 không, em đăng ký được chưa", "nếu em rot ct177 thì sao")}
+    check(not any(v.startswith("duoc_dang_ky") for v in sai.values()),
+          f"E8 câu điều kiện/điểm/miễn có mã HP không bị hiểu nhầm thành câu hỏi đăng ký ({sai})")
+    v = proto.parse_question("em có nên đăng ký ct180 không")
+    check(not v.startswith("duoc_dang_ky"), f"E9 'có NÊN đăng ký' không trả lời bằng 'được đăng ký' ({v})")
+    r = proto.answer("Nếu em rớt CT177 thì trễ mấy kỳ?", None)
+    check(r.get("claim") != "tot_nghiep" and r["verdict"] == "UNKNOWN",
+          f"E5 câu phản thực tế (chưa hỗ trợ) → UNKNOWN, không trả lời nhầm tot_nghiep ({r.get('claim')}, {r['verdict']})")
+
 def main():
     print("="*78)
     print("VALIDATE PROTOTYPE v1 — Tuần 12 (CPA2)")
@@ -80,6 +125,7 @@ def main():
     test_false()
     test_unknown()
     test_postcheck()
+    test_dang_ky()
     print("\n"+"="*78)
     if errors:
         print(f"KẾT LUẬN: CÓ {len(errors)} LỖI")

@@ -147,3 +147,29 @@ Tất cả đã có ca hồi quy.
 - [x] UNKNOWN → cần xác minh, không đề xuất (C1, I1)
 - [x] Mỗi HP đề xuất có chứng chỉ trỏ về điều/khoản
 - [x] Mọi tuần 5–19 ĐẠT
+
+---
+
+## 7. Cập nhật sau Tuần 19 — song hành khi hỏi đăng ký MỘT học phần (R-Formal v1.9)
+
+Sau khi rút QD-13, phần đề xuất (w19) đã áp Đ7 k5, nhưng câu hỏi lẻ "kỳ này em đăng ký CT182 được chưa" vẫn chưa xét song hành. Khi rà lại thì phát hiện thêm một lỗi nặng hơn.
+
+### P19-4 · Câu hỏi đăng ký một HP bị trả lời thành `tot_nghiep`
+Khoá của parser stub (w12) chứa chữ HOA (`"kỳ này em đăng ký CT180 được chưa"`), trong khi câu hỏi đã `lower()` → **không bao giờ khớp** → rơi về mặc định `tot_nghiep`. Lỗi có từ Tuần 12: "kỳ này em đăng ký CT180 được chưa" trả **tot_nghiep = TRUE**. Câu phản thực tế "nếu em rớt CT177…" cũng bị như vậy. Kể cả khi khớp, claim `du_dk_dang_ky` không có đối số nên luôn FALSE (họ P18-1).
+
+### Sửa (TDD — mọi ca dưới đây fail trước khi sửa)
+| Tầng | Thay đổi | Ca |
+|---|---|---|
+| R-Formal v1.9 | `phai_hoc_cung_ky(C,P)` (chưa học P) · `chan_song_hanh(C,P)` (P không đăng ký được) · `duoc_dang_ky(C)` = `du_dk_dang_ky(C)` ∧ không bị chặn; why → r_a03, r_a04. `du_dk_dang_ky` giữ nguyên (Đ7 k5 cho học cùng lúc nên không chặn đăng ký) | C37–C40 |
+| Loader (w7) | `co_hoc(g)` + dữ kiện `da_hoc(C)`: bản ghi có học, kể cả F, I; không tính W. Dùng chung cho KB và w19 (bỏ định nghĩa riêng ở w19) | L4 |
+| Prototype (w12) | câu "đăng ký <MÃ> được chưa" → `duoc_dang_ky("<MÃ>")`; khoá stub so khớp không phân biệt hoa thường; câu phản thực tế → UNKNOWN "chưa hỗ trợ" (RQ3, Tuần 22) | E1–E5 |
+
+Ví dụ trả lời (sv_lvtn bỏ CT180, CT182): *"Kết luận: được đăng ký CT182. Với điều kiện học CT180 cùng kỳ — song hành phải học trước hoặc học cùng lúc (QĐ3266 Điều 7 khoản 5)."* Bỏ thêm CT177 → *"chưa thể học CT182 kỳ này — chưa học học phần song hành CT180 và CT180 chưa đủ điều kiện đăng ký"* (FALSE). Đã học CT180 dù bị F → được, không kèm điều kiện.
+
+**Review (sửa, TDD — ca fail trước khi sửa):**
+- *Song hành dây chuyền:* XH033→XH032→XH031→XH025→XH024→XH023 — bản đầu chỉ nêu XH032. Nay `phai_hoc_cung_ky` **bắc cầu**; mắt xích nào không đăng ký được thì chặn (C41, E6).
+- *Thiếu tiên quyết* trong chứng chỉ lấy từ `why(thieu_tien_quyet(C,P), r_a03)` của KB, không dựng tay ở tầng trả lời (E7).
+- *Parser:* câu có mã HP nhưng là câu điều kiện ("nếu … thì"), hỏi điểm, học lại/xong, miễn → không còn bị hiểu là hỏi đăng ký; "có NÊN đăng ký X" → Recommendation (E8, E9).
+
+**Hạn chế:** parser Tuần 13 (regex) vẫn sinh `du_dk_dang_ky("<MÃ>")` (không xét song hành) — prototype đã dùng `duoc_dang_ky`; chưa xét lịch mở HK (`mo_hk`) khi trả lời câu hỏi lẻ.
+

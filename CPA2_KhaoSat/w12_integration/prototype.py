@@ -57,8 +57,20 @@ def parse_question(q: str) -> str:
     # đề xuất chung — câu hỏi về MỘT học phần / luận văn / tiểu luận đi nhánh riêng
     if DE_XUAT.search(ql) and not re.search(r"[a-z]{2}\d{3}|luận văn|tiểu luận", ql):
         return "de_xuat"
+    # đăng ký MỘT học phần → claim có đối số (P18-1: claim không đối số luôn FALSE). Khoá stub chứa chữ hoa
+    # (CT180) nên trước đây không bao giờ khớp câu đã lower() → rơi về tot_nghiep (sửa sau Tuần 19)
+    if re.search(r"\bnếu\b.*\bthì\b", ql):          # câu điều kiện / phản thực tế (RQ3 — chưa hỗ trợ)
+        return "counterfactual"
+    ma = re.search(r"\b([a-z]{2}\d{3}e?)\b", ql)
+    if ma and re.search(r"\bnên\b", ql) and not re.search(r"được\s*(?:chưa|không)", ql):
+        # "có NÊN đăng ký X (không)" là xin tư vấn; "nên đăng ký X được chưa" vẫn là hỏi điều kiện
+        return "de_xuat"
+    c = ma.group(1) if ma else None
+    if c and not re.search(r"miễn|xong|\blại\b|điểm|rớt|\brot\b", ql) and re.search(
+            rf"đăng\s*ký\s+(?:(?:môn|học phần|hp)\s+)?{c}\b|\bhọc\s+(?:(?:môn|học phần|hp)\s+)?{c}\s+(?:được|đc)", ql):
+        return f'duoc_dang_ky("{c.upper()}")'
     for k, v in PARSER_STUB.items():
-        if k in ql: return v
+        if k.lower() in ql: return v
     return "tot_nghiep"  # mặc định
 
 # ---------- Tầng 2+3: KB + Solver ----------
@@ -205,8 +217,73 @@ def answer_recommendation(question, student_path):
             "certificate": {"claim": "de_xuat", "proof": {"steps": steps}}, "missing_facts": [],
             "mau_thuan": r["mau_thuan"], "de_xuat": r}
 
+def answer_dang_ky(claim, student_path):
+    """Sau Tuần 19: "đăng ký C được chưa" → duoc_dang_ky(C) = tiên quyết (R-A03, Đ7 k4) + song hành (R-A04, Đ7 k5:
+    học trước HOẶC cùng lúc). Chưa học HP song hành P → được, VỚI ĐIỀU KIỆN học P cùng kỳ; P không đăng ký được → chưa
+    thể học C kỳ này."""
+    c = claim[len('duoc_dang_ky("'):-2]
+    if not student_path:
+        return {"verdict": "UNKNOWN", "claim": claim, "explanation_vi": "Cần hồ sơ học tập để xét đăng ký.",
+                "missing_facts": ["ho_so"], "can_bo_sung": [], "certificate": {"claim": claim, "proof": {"steps": []}}}
+    extra, sid, mt = load_student(student_path)
+    verdict, models, cautious, brave = solve_verdict(claim, extra)
+    cat = json.loads(CATALOG.read_text(encoding="utf-8"))
+    by_asp = {r["asp"]: r for r in cat["rules"] if r.get("asp")}
+    q = f'"{c}"'
+    lien_quan = lambda a: (a.startswith(f"duoc_dang_ky({q})") or a.startswith(f"du_dk_dang_ky({q})")
+                           or a.startswith(f"phai_hoc_cung_ky({q},") or a.startswith(f"chan_song_hanh({q},")
+                           or a.startswith(f"thieu_tc({q},") or a.startswith("thieu_tien_quyet("))
+    steps = []
+    for w in sorted(cautious):
+        m = re.match(r"why\((.+),(\w+)\)$", w)
+        if m and lien_quan(m.group(1)) and m.group(2) in by_asp:
+            rec = by_asp[m.group(2)]
+            steps.append({"atom": m.group(1), "rule_id": m.group(2), "source": {"van_ban": rec["van_ban"],
+                          "dieu": rec["dieu"], "khoan": rec["khoan"], "trich": rec["trich"][:150]}})
+    lay = lambda ten: sorted({a.split(",")[1][:-1].strip('"') for a in cautious if a.startswith(f"{ten}({q},")})
+    cung_ky, chan = lay("phai_hoc_cung_ky"), lay("chan_song_hanh")
+    thieu_tq = lay("thieu_tien_quyet")
+    # bước thiếu tiên quyết chỉ giữ cho chính C và các HP song hành bị chặn (lấy từ why/2 của KB)
+    giu = {q} | {f'"{p_}"' for p_ in chan}
+    steps = [s_ for s_ in steps if not s_["atom"].startswith("thieu_tien_quyet(")
+             or s_["atom"][len("thieu_tien_quyet("):].split(",")[0] in giu]
+    can = []
+    if verdict == "TRUE":
+        text = f"Kết luận: được đăng ký {c}."
+        if cung_ky:
+            text += (f" Với điều kiện học {', '.join(cung_ky)} cùng kỳ — song hành phải học trước hoặc học cùng lúc "
+                     "(QĐ3266 Điều 7 khoản 5).")
+    elif verdict == "FALSE":
+        if chan:
+            text = (f"Kết luận: chưa thể học {c} kỳ này — phải học cùng kỳ {', '.join(cung_ky)} (song hành, "
+                    f"QĐ3266 Điều 7 khoản 5: phải học trước hoặc cùng lúc) nhưng {', '.join(chan)} chưa đủ điều kiện đăng ký.")
+        else:
+            text = f"Kết luận: chưa đủ điều kiện đăng ký {c}" + (
+                f" — thiếu tiên quyết {', '.join(thieu_tq)} (QĐ3266 Điều 7 khoản 4)." if thieu_tq else
+                " (chưa đủ ngưỡng tín chỉ tích lũy hoặc không có trong CTĐT).")
+    elif verdict == "UNKNOWN":
+        can = abstention.bang_chung_thieu(claim, [frozenset(m) for m in models])
+        text = "Chưa đủ dữ kiện để kết luận — cần bổ sung: " + " | ".join(b["hoi"] for b in can)
+    else:
+        text = "Hồ sơ mâu thuẫn với quy chế — không kết luận."
+    cert = {"claim": claim, "verdict": verdict, "proof": {"steps": steps}, "missing_facts": [b["bien"] for b in can],
+            "can_bo_sung": can}
+    cert_text = " ".join([s["atom"] for s in steps] + cert["missing_facts"] + [claim])
+    la = [x for x in re.findall(r"[A-Z]{1,3}\d{2,3}E?", text) if x not in cert_text]
+    if la:
+        return {"verdict": "BLOCKED", "certificate": cert, "missing_facts": cert["missing_facts"], "claim": claim,
+                "explanation_vi": f"HẬU KIỂM CHẶN: mã {la[0]} trong explanation nhưng không có trong certificate"}
+    return {"verdict": verdict, "certificate": cert, "explanation_vi": text, "missing_facts": cert["missing_facts"],
+            "can_bo_sung": can, "mau_thuan": mt, "student_id": sid, "claim": claim}
+
 def answer(question, student_path):
     claim=parse_question(question)
+    if claim.startswith("duoc_dang_ky("):
+        return answer_dang_ky(claim, student_path)
+    if claim == "counterfactual":   # RQ3 / Tuần 22 — chưa hỗ trợ: không trả lời nhầm sang claim khác
+        return {"verdict": "UNKNOWN", "claim": claim, "missing_facts": [], "can_bo_sung": [],
+                "explanation_vi": "Câu hỏi phản thực tế (nếu … thì …) chưa được hỗ trợ — hệ thống không đoán.",
+                "certificate": {"claim": claim, "proof": {"steps": []}}}
     if claim == "du_dk_tc":
         return answer_eligibility(question, student_path)
     if claim == "de_xuat":
