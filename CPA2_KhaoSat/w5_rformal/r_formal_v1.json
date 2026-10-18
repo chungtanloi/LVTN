@@ -874,19 +874,19 @@
       "khoan": null,
       "trang": 19,
       "trich": "Để được nhận đề tài LVTN hoặc TLTN, SV phải thỏa mãn các điều kiện do đơn vị đào tạo quy định.",
-      "lop": "N",
-      "du_lieu": "khong",
-      "ly_do_PN": "con_tro_ngoai",
+      "lop": "F",
+      "du_lieu": "co",
+      "ly_do_PN": null,
       "taxo": [
         "T6",
         "T7"
       ],
       "nhom": "tot_nghiep",
-      "ghi_chu": "TRẢ LỜI ĐƯỢC MỘT PHẦN (v1.4): QĐ3266 để ngỏ, nhưng CTĐT CNTT K49 có ngưỡng tín chỉ cụ thể — CT550E Luận văn tốt nghiệp (15 TC) yêu cầu ≥120 TC tích lũy; CT501E Tiểu luận (6 TC) ≥120 TC; CT518E Thực tập doanh nghiệp (5 TC) ≥125 TC. Nên kết luận được ở mức 'đủ/chưa đủ điều kiện VỀ TÍN CHỈ'; các điều kiện khác của đơn vị đào tạo vẫn nằm ngoài → phần đó vẫn UNKNOWN. LƯU Ý: prototype Tuần 4 dùng 'CT466E = Luận văn tốt nghiệp, 10 TC' — SAI cả ba: CT466E là NIÊN LUẬN 3 TC. Tuần 18 (w18 eligibility.lp): vẫn lớp N — nội dung điều kiện do đơn vị quy định; KB chỉ mô hình KẾT QUẢ xét của đơn vị như dữ kiện ngoài dv_cong_bo/1 (hồ sơ: hinh_thuc_cuoi_khoa; thiếu → UNKNOWN). asp r_f04 dùng để trích dẫn trong chứng chỉ.",
+      "ghi_chu": "TRẢ LỜI ĐƯỢC MỘT PHẦN (v1.4): QĐ3266 để ngỏ, nhưng CTĐT CNTT K49 có ngưỡng tín chỉ cụ thể — CT550E Luận văn tốt nghiệp (15 TC) yêu cầu ≥120 TC tích lũy; CT501E Tiểu luận (6 TC) ≥120 TC; CT518E Thực tập doanh nghiệp (5 TC) ≥125 TC. Nên kết luận được ở mức 'đủ/chưa đủ điều kiện VỀ TÍN CHỈ'; [trước QD-12: các điều kiện khác của đơn vị đào tạo được coi là nằm ngoài → UNKNOWN; QD-12 (18/10/2026) xác nhận KHÔNG có điều kiện khác]. LƯU Ý: prototype Tuần 4 dùng 'CT466E = Luận văn tốt nghiệp, 10 TC' — SAI cả ba: CT466E là NIÊN LUẬN 3 TC. Tuần 18: N → F nhờ QD-12 (trước QD-12, w18 mô hình kết quả xét của đơn vị là dữ kiện ngoài → UNKNOWN khi thiếu).",
       "van_ban": "qd3266",
       "diem": null,
       "asp": "r_f04",
-      "quyet_dinh": null
+      "quyet_dinh": "QD-12 ĐÓNG (xác nhận ngoài văn bản — Loi, 18/10/2026): điều kiện nhận đề tài LVTN/TLTN mà Điều 31 giao cho đơn vị đào tạo CHỈ là ngưỡng tín chỉ của CTĐT (CNTT K49: CT550E, CT501E ≥ 120 TC tích lũy) — không có điều kiện nào khác. KB: du_dk(lvtn|tltn) = tiên quyết TC (R-A03) ∧ chưa hoàn thành hình thức cuối khóa khác ∧ không có khai báo hình thức khác."
     },
     {
       "id": "R-F05",

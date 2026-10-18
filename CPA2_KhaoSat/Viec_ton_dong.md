@@ -19,7 +19,7 @@ Gom mọi mục `- [ ]` còn mở trong báo cáo Tuần 1–17. Các mục đã
 | A9 | Chốt với GVHD: phạm vi 1 ngành hay 8 ngành | Tuần 1 | Phạm vi CTĐT |
 | A10 | Phần **đọc tài liệu**: toàn văn CoTu, Solver-Aided; xác minh Logic-LM/LINC/Adaptive-RAG trên ACL Anthology; nhánh degree-audit formal verification; liên hệ nhóm REBot; bộ 913 câu EXACT 2026 | Tuần 3 | Ô "Đọc" của checklist Tuần 11–17 đang ☐ — chỉ tích khi chính tác giả đọc |
 | A11 | Nguồn về **làm tròn** TB GDQP (4,975 → 5,0?) | Tuần 17 E17-2 | Gold NG-10 |
-| A12 | Văn bản **điều kiện nhận đề tài LVTN/TLTN** của Trường CNTT&TT (vd. ngưỡng ĐTBCTL) — QĐ3266 Đ31 giao cho đơn vị | Tuần 18 | Hiện chỉ nhận kết quả xét (`hinh_thuc_cuoi_khoa`); có văn bản thì hình thức hoá được |
+| ~~A12~~ | ✅ **Đóng 18/10/2026 — QD-12** (Loi xác nhận): điều kiện nhận đề tài LVTN/TLTN chỉ là ngưỡng TC của CTĐT | Tuần 18 | R-F04 N → F |
 
 ## B. Đúng lịch các tuần sau (kế hoạch 24 tuần)
 

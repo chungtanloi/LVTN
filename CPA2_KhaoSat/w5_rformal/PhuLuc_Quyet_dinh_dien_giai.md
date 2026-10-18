@@ -4,7 +4,7 @@
 
 > **Vị trí trong luận văn:** phụ lục này thuộc phần **giả định và hạn chế**, không thuộc phần kết quả. Mỗi mục dưới đây là điều tác giả **quyết định**, không phải điều **tìm thấy** trong văn bản quy phạm. Trộn hai loại vào nhau là cách nhanh nhất để một luận văn hình thức hoá bị bác ở phần phương pháp.
 
-**Tổng: 11 quyết định** — 🔴 1 mở, 🔄 1 đã sửa, ✅ 7 đóng, 🟡 1 đóng một phần, 🟠 1 đóng tạm
+**Tổng: 12 quyết định** — 🔴 1 mở, 🔄 1 đã sửa, ✅ 8 đóng, 🟡 1 đóng một phần, 🟠 1 đóng tạm
 
 ---
 
@@ -23,11 +23,12 @@
 | **QD-09** | ✅ đóng | QD5339 Điều 3 k.2 (R-M02) | XÁC NHẬN NGOÀI VĂN BẢN — CHƯA GHI RÕ NGƯỜI XÁC NHẬN VÀ NGÀY |
 | **QD-10** | ✅ đóng | QD5339 Điều 3 k.3 (R-M04) | Câu chữ QĐ5339 Điều 3 k.3 (suy trực tiếp từ văn bản) |
 | **QD-11** | ✅ đóng | QD5339 Điều 2 k.6 (R-M16) | Câu chữ QĐ5339 Điều 2 k.6 (suy trực tiếp từ văn bản) |
+| **QD-12** | ✅ đóng | QD3266 Điều 31 (R-F04) | XÁC NHẬN NGOÀI VĂN BẢN — Loi, 18/10/2026 (trong phiên làm việc Tuần 18): chỉ có quy định số TC |
 
 ### Hai nhóm cần chú ý
 
 - **Chưa có nguồn xác nhận** (2): `QD-03`, `QD-05` — đây là các quyết định treo, phải hỏi người có thẩm quyền.
-- **Xác nhận NGOÀI văn bản** (1): `QD-09` — hợp lệ, nhưng **bắt buộc ghi rõ ai xác nhận và ngày nào**; nếu là trao đổi miệng thì nên xin email hoặc ghi biên bản.
+- **Xác nhận NGOÀI văn bản** (2): `QD-09`, `QD-12` — hợp lệ, nhưng **bắt buộc ghi rõ ai xác nhận và ngày nào**; nếu là trao đổi miệng thì nên xin email hoặc ghi biên bản.
 
 ---
 
@@ -174,6 +175,19 @@
 **Quyết định:** QD-11 ĐÓNG (mới ở v1.1): việc miễn KHÔNG tự động. Có chứng chỉ chỉ tạo ra trạng thái ĐỦ ĐIỀU KIỆN XIN MIỄN; trạng thái ĐƯỢC MIỄN chỉ phát sinh sau đơn của SV và quyết định phê duyệt. CPA² phải phân biệt hai vị từ này và KHÔNG được suy passed(C) từ việc có chứng chỉ.
 
 **Nguồn xác nhận:** Câu chữ QĐ5339 Điều 2 k.6 (suy trực tiếp từ văn bản)
+
+
+### ✅ QD-12 — đóng
+
+**Điều khoản:** QD3266 Điều 31 · bản ghi `R-F04` · lớp **F**
+
+**Trích nguyên văn:**
+
+> *Để được nhận đề tài LVTN hoặc TLTN, SV phải thỏa mãn các điều kiện do đơn vị đào tạo quy định.*
+
+**Quyết định:** QD-12 ĐÓNG (xác nhận ngoài văn bản — Loi, 18/10/2026): điều kiện nhận đề tài LVTN/TLTN mà Điều 31 giao cho đơn vị đào tạo CHỈ là ngưỡng tín chỉ của CTĐT (CNTT K49: CT550E, CT501E ≥ 120 TC tích lũy) — không có điều kiện nào khác. KB: du_dk(lvtn|tltn) = tiên quyết TC (R-A03) ∧ chưa hoàn thành hình thức cuối khóa khác ∧ không có khai báo hình thức khác.
+
+**Nguồn xác nhận:** XÁC NHẬN NGOÀI VĂN BẢN — Loi, 18/10/2026 (trong phiên làm việc Tuần 18): chỉ có quy định số TC
 
 
 ---

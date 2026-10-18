@@ -30,6 +30,7 @@ NGUON = {
     "QD-09": "XÁC NHẬN NGOÀI VĂN BẢN — CHƯA GHI RÕ NGƯỜI XÁC NHẬN VÀ NGÀY",
     "QD-10": "Câu chữ QĐ5339 Điều 3 k.3 (suy trực tiếp từ văn bản)",
     "QD-11": "Câu chữ QĐ5339 Điều 2 k.6 (suy trực tiếp từ văn bản)",
+    "QD-12": "XÁC NHẬN NGOÀI VĂN BẢN — Loi, 18/10/2026 (trong phiên làm việc Tuần 18): chỉ có quy định số TC",
 }
 
 TRANG_THAI = [

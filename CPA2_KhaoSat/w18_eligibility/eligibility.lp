@@ -19,16 +19,14 @@ doi_tuong(thuc_tap,        "CT518E").   % Thực tập doanh nghiệp — ≥ 12
 %% ---------------------------------------------------------------------------
 %% 2. ĐIỀU KIỆN DO ĐƠN VỊ ĐÀO TẠO QUY ĐỊNH — QĐ3266 Điều 31 (tr.19), R-F04
 %%    "Để được nhận đề tài LVTN hoặc TLTN, SV phải thỏa mãn các điều kiện do đơn
-%%    vị đào tạo quy định. Cuối mỗi HK, đơn vị đào tạo xét và công bố hình thức
-%%    thực hiện cuối khóa." Nội dung các điều kiện đó KHÔNG có trong QĐ3266/QĐ5339
-%%    → không bịa: coi kết quả xét là DỮ KIỆN NGOÀI dv_cong_bo/1.
-%%    Hồ sơ không khai báo hinh_thuc_cuoi_khoa → mở nhánh, CHỈ cho hình thức đang
-%%    hỏi (dang_xet/1 do eligibility.py phát) — không hỏi thừa, không nhân mô hình.
-%%    khai_bao(hinh_thuc) chỉ do loader phát từ dữ kiện ĐẦU VÀO (bài học P16-1).
+%%    vị đào tạo quy định." QD-12 (xác nhận ngoài văn bản, Loi 18/10/2026): điều
+%%    kiện đó CHỈ là ngưỡng TC của CTĐT (≥ 120 TC) — không có điều kiện nào khác.
+%%    hinh_thuc_cuoi_khoa CHỈ dùng khi có khai báo: đã công bố hình thức khác →
+%%    không đủ điều kiện hình thức này (dv_cong_bo_khac). Không khai báo → không
+%%    ảnh hưởng (bản trước QD-12 mở nhánh → UNKNOWN).
 %% ---------------------------------------------------------------------------
 can_dv_xet(lvtn).
 can_dv_xet(tltn).
-{ dv_cong_bo(X) } :- can_dv_xet(X), dang_xet(X), not khai_bao(hinh_thuc).
 
 %% ---------------------------------------------------------------------------
 %% 3. LÝ DO KHÔNG ĐỦ
@@ -58,8 +56,7 @@ da_hoan_thanh(thay_the(B)) :- dang_xet(thay_the(B)), diem_m(B).
 %% ---------------------------------------------------------------------------
 du_dk_ctdt(X) :- doi_tuong(X,C), du_dk_dang_ky(C).
 
-du_dk(X) :- du_dk_ctdt(X), not can_dv_xet(X), not da_hoan_thanh(X).
-du_dk(X) :- du_dk_ctdt(X), can_dv_xet(X), dv_cong_bo(X), not da_hoan_thanh(X).
+du_dk(X) :- du_dk_ctdt(X), not dv_cong_bo_khac(X), not da_hoan_thanh(X).
 why(du_dk(X), r_a03) :- du_dk(X), doi_tuong(X,_).
 why(du_dk(X), r_f04) :- du_dk(X), can_dv_xet(X).
 

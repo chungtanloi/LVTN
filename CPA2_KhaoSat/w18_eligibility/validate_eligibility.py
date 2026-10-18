@@ -5,8 +5,9 @@ Tiêu chí (Kế hoạch 24 tuần, dòng 18): "Eligible / Not Eligible / Unknow
 Gold viết tay TRƯỚC khi cài đặt, theo:
   CTĐT CNTT K49 (tr.3–4): CT550E LVTN & CT501E TLTN ≥ 120 TC · CT466E Niên luận ≥ 80 TC · CT518E Thực tập ≥ 125 TC ·
                           CT271E Niên luận cơ sở: tiên quyết CT174, CT176                       (R-A03, QĐ3266 Đ7 k4)
-  QĐ3266 Đ31 (tr.19): nhận đề tài LVTN/TLTN cần điều kiện DO ĐƠN VỊ ĐÀO TẠO quy định và đơn vị xét, công bố hình thức
-                      (R-F04 → dữ kiện ngoài `hinh_thuc_cuoi_khoa`); k3: SV có thể chọn tích lũy TC thay LVTN/TLTN;
+  QĐ3266 Đ31 (tr.19): nhận đề tài LVTN/TLTN cần điều kiện DO ĐƠN VỊ ĐÀO TẠO quy định (R-F04). QD-12 (xác nhận ngoài
+                      văn bản, Loi 18/10/2026): điều kiện đó CHỈ là ngưỡng TC của CTĐT. `hinh_thuc_cuoi_khoa` chỉ dùng
+                      khi có khai báo (đã công bố hình thức khác → NOT); k3: SV có thể chọn tích lũy TC thay LVTN/TLTN;
                       F của LVTN/TLTN → làm lại hoặc học phần thay thế
   QĐ5339 Đ3 k9: ML009→ML014, ML010→ML016+ML018 (một → nhiều)
 
@@ -82,11 +83,11 @@ def main():
     def xet(j, dt, them=""):
         return E.xet(j, dt, them)
 
-    print("\nA. LUẬN VĂN / TIỂU LUẬN (CTĐT ≥ 120 TC + đơn vị đào tạo xét — Đ31, R-F04)")
+    print("\nA. LUẬN VĂN / TIỂU LUẬN (CTĐT ≥ 120 TC — Đ31 R-F04 + QD-12)")
     r = xet(hs(xoa=["CT550E"]), "lvtn")
-    check(r["ket_qua"] == "UNKNOWN" and "dv_cong_bo(lvtn)" in [b["bien"] for b in r["can_bo_sung"]],
-          f"A1 146 TC, chưa biết đơn vị đã xét/công bố → UNKNOWN + hỏi ({r['ket_qua']}, {[b['bien'] for b in r['can_bo_sung']]})",
-          "đủ 120 TC CHƯA đủ để nói Eligible: điều kiện còn lại do đơn vị đào tạo quy định")
+    check(r["ket_qua"] == "ELIGIBLE" and r["can_bo_sung"] == [],
+          f"A1 146 TC, không khai báo hình thức → ELIGIBLE, không hỏi thêm ({r['ket_qua']}, {[b['bien'] for b in r['can_bo_sung']]})",
+          "HỒI QUY QD-12: bản trước (chưa có xác nhận) cho UNKNOWN + hỏi đơn vị đã công bố chưa")
     r = xet(hs(xoa=["CT550E"], hinh_thuc_cuoi_khoa="lvtn"), "lvtn")
     check(r["ket_qua"] == "ELIGIBLE", f"A2 146 TC + đơn vị công bố hình thức LVTN → ELIGIBLE ({r['ket_qua']})")
     check(any(s["rule_id"] == "r_f04" for s in r["chung_chi"]) and any(s["rule_id"] == "r_a03" for s in r["chung_chi"]),
@@ -101,7 +102,7 @@ def main():
     check(r["ket_qua"] == "NOT_ELIGIBLE" and 'thieu_tc("CT550E",1)' in r["ly_do"],
           f"A7 119 TC → NOT_ELIGIBLE, lý do thiếu 1 TC ({r['ket_qua']}, {r['ly_do']})")
     r = xet(ho_so_tc(119, ["CT550E"]), "lvtn")
-    check(r["ket_qua"] == "NOT_ELIGIBLE", f"A8 119 TC, chưa biết đơn vị xét → vẫn NOT_ELIGIBLE (TC quyết định) ({r['ket_qua']})")
+    check(r["ket_qua"] == "NOT_ELIGIBLE", f"A8 119 TC, không khai báo hình thức → NOT_ELIGIBLE ({r['ket_qua']})")
     r = xet(hs(), "lvtn")
     check(r["ket_qua"] == "DA_HOAN_THANH", f"A9 LVTN đã đạt → DA_HOAN_THANH, không báo Eligible ({r['ket_qua']})")
     r = xet(hs(diem={"CT550E": 30}, hinh_thuc_cuoi_khoa="lvtn"), "lvtn")
@@ -157,8 +158,8 @@ def main():
         p = Path(d) / "sv.json"
         p.write_text(json.dumps(hs(xoa=["CT550E"]), ensure_ascii=False), encoding="utf-8")
         res = prototype.answer("em đủ điều kiện làm luận văn chưa", str(p))
-        check(res["verdict"] == "UNKNOWN", f"F1 146 TC, chưa biết đơn vị xét → UNKNOWN ({res['verdict']})",
-              "HỒI QUY: prototype ánh xạ sang claim 'du_dk_tc' không đối số → luôn FALSE")
+        check(res["verdict"] == "TRUE", f"F1 146 TC → TRUE ({res['verdict']})",
+              "HỒI QUY P18-1: prototype ánh xạ sang claim 'du_dk_tc' không đối số → luôn FALSE")
         p.write_text(json.dumps(hs(xoa=["CT550E"], hinh_thuc_cuoi_khoa="lvtn"), ensure_ascii=False), encoding="utf-8")
         res = prototype.answer("em đủ điều kiện làm luận văn chưa", str(p))
         check(res["verdict"] == "TRUE", f"F2 … + đơn vị công bố LVTN → TRUE ({res['verdict']})")
@@ -176,12 +177,9 @@ def main():
     except ValueError:
         loi = True
     check(loi, "H4 mã HP thay thế không có trong CTĐT → báo lỗi, không im lặng NOT_ELIGIBLE")
-    r = xet(hs(xoa=["CT550E"]), "lvtn")
-    check([b["bien"] for b in r["can_bo_sung"]] == ["dv_cong_bo(lvtn)"],
-          f"H5 hỏi LVTN chỉ hỏi đơn vị công bố LVTN, không hỏi TLTN ({[b['bien'] for b in r['can_bo_sung']]})")
     r = xet(hs(xoa=["CT550E"], hinh_thuc_cuoi_khoa="LVTN"), "lvtn")
-    check(r["ket_qua"] == "UNKNOWN" and r["mau_thuan"],
-          f"H6 giá trị hình thức sai ('LVTN' hoa) → mâu thuẫn, coi như chưa khai báo → UNKNOWN ({r['ket_qua']})")
+    check(r["ket_qua"] == "ELIGIBLE" and r["mau_thuan"],
+          f"H6 giá trị hình thức sai ('LVTN' hoa) → báo mâu thuẫn, coi như chưa khai báo → xét theo TC: ELIGIBLE ({r['ket_qua']})")
     with tempfile.TemporaryDirectory() as d:
         p = Path(d) / "sv.json"
         p.write_text(json.dumps(hs(xoa=["CT550E"], hinh_thuc_cuoi_khoa="tltn"), ensure_ascii=False), encoding="utf-8")
@@ -197,6 +195,10 @@ def main():
     check("hinh_thuc_cuoi_khoa" in sc.schema["properties"] and not list(sc.iter_errors(hs(hinh_thuc_cuoi_khoa="lvtn")))
           and list(sc.iter_errors(hs(hinh_thuc_cuoi_khoa="khac"))),
           "G1 schema có trường hinh_thuc_cuoi_khoa ∈ {lvtn, tltn, tich_luy_tc, null}")
+    cat = json.loads((ROOT / "w5_rformal" / "r_formal_v1.json").read_text(encoding="utf-8"))
+    f04 = next(r for r in cat["rules"] if r["id"] == "R-F04")
+    check(f04["lop"] == "F" and (f04.get("quyet_dinh") or "").startswith("QD-12"),
+          f"G2 R-F04 lớp F với quyết định QD-12 (xác nhận ngoài văn bản) ({f04['lop']}, {(f04.get('quyet_dinh') or '')[:20]})")
 
     print("\n" + "=" * 78)
     if errors:

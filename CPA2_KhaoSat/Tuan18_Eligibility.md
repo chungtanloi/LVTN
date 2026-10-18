@@ -5,11 +5,13 @@
 **Tiêu chí hoàn thành:** Eligible / Not Eligible / Unknown ✅
 - `validate_eligibility.py` đạt **36/36** kiểm tra (gold viết tay trước khi cài đặt; bộ test tự soạn)
 - Test mọi tuần 5–18 ĐẠT; bộ đối kháng Tuần 17 trả lời không đổi
-- ⚠️ Điều kiện nhận đề tài LVTN/TLTN **do đơn vị đào tạo quy định** — chưa có văn bản → chỉ nhận kết quả xét, chưa hình thức hoá nội dung (Viec_ton_dong A12)
+- **Cập nhật 18/10/2026 (QD-12):** Loi xác nhận điều kiện nhận đề tài LVTN/TLTN **chỉ là số TC** (≥ 120 TC theo CTĐT) → R-F04 chuyển lớp N → F; đủ TC → ELIGIBLE (bản đầu Tuần 18 trả UNKNOWN + hỏi đơn vị). Xem mục 6
 
 ---
 
 ## 0. Kết luận trước
+
+> ⚠️ **Đã thay bởi QD-12 (mục 6):** đoạn dưới mô tả bản đầu Tuần 18, khi chưa có xác nhận. Nay điều kiện nhận đề tài chỉ là ngưỡng TC → đủ 120 TC là ELIGIBLE.
 
 > **Đủ 120 TC chưa phải là đủ điều kiện làm luận văn.** QĐ3266 Điều 31 (tr.19): *"Để được nhận đề tài LVTN hoặc TLTN, SV phải thỏa mãn các điều kiện do đơn vị đào tạo quy định. Cuối mỗi HK, đơn vị đào tạo xét và công bố hình thức thực hiện cuối khóa."* Quy chế không nêu các điều kiện đó, nên hệ thống không bịa: nó kiểm phần có nguồn (ngưỡng TC/tiên quyết của CTĐT) và coi **kết quả xét của đơn vị** là dữ kiện ngoài. Thiếu dữ kiện → **UNKNOWN + hỏi "đơn vị đã công bố hình thức LVTN cho bạn chưa?"**, không phải ELIGIBLE. Thiếu TC thì NOT_ELIGIBLE dù chưa biết kết quả xét (TC quyết định).
 
@@ -75,7 +77,7 @@ Bản đầu báo ELIGIBLE LVTN cho SV đã đạt TLTN, và hỏi đơn vị v�
 ## 5. Việc còn lại → Tuần 19+
 
 - [ ] Tuần 19 (Recommendation): chỉ đề xuất phương án mà Eligibility trả ELIGIBLE — không đề xuất NOT_ELIGIBLE/UNKNOWN như thể chắc
-- [ ] A12: văn bản điều kiện nhận đề tài LVTN/TLTN của đơn vị
+- [x] A12: điều kiện nhận đề tài LVTN/TLTN — QD-12, chỉ có ngưỡng TC (mục 6)
 - [ ] Đưa ca eligibility vào bộ test mới của Tuần 20
 
 ### Ghi chú kiểm chứng
@@ -83,4 +85,20 @@ Bản đầu báo ELIGIBLE LVTN cho SV đã đạt TLTN, và hỏi đơn vị v�
 - [x] Eligible / Not Eligible / Unknown cho LVTN, TLTN, niên luận, niên luận cơ sở, thực tập, tích lũy TC, thay thế
 - [x] Mỗi kết luận có chứng chỉ trỏ về điều/khoản; Unknown kèm câu hỏi đúng dữ kiện quyết định
 - [x] Mọi tuần 5–18 ĐẠT
-- [ ] Điều kiện của đơn vị đào tạo chưa hình thức hoá (thiếu văn bản)
+- [x] Điều kiện của đơn vị đào tạo: QD-12 — chỉ ngưỡng TC (xác nhận ngoài văn bản, chưa có văn bản gốc)
+
+---
+
+## 6. Cập nhật sau Tuần 18 — QD-12 (18/10/2026)
+
+**Xác nhận ngoài văn bản (Loi, 18/10/2026):** "không có điều kiện nhận đề tài, chỉ có quy định số tín chỉ học được bao nhiêu mới được làm luận văn". Ghi nhận thành **QD-12** trong catalog (`quyet_dinh` của R-F04) và phụ lục `w5_rformal/PhuLuc_Quyet_dinh_dien_giai.md` (sinh lại bằng `gen_quyet_dinh.py`), cùng nhóm "xác nhận ngoài văn bản" với QD-09 — hợp lệ nhưng nên có email/biên bản.
+
+| | Trước QD-12 | Sau QD-12 |
+|---|---|---|
+| LVTN/TLTN, đủ 120 TC, không khai báo hình thức | UNKNOWN + hỏi "đơn vị đã công bố chưa" | **ELIGIBLE**, không hỏi |
+| Đủ 120 TC, khai báo đơn vị công bố hình thức khác | NOT_ELIGIBLE | NOT_ELIGIBLE (giữ — phương án (a)) |
+| Thiếu TC | NOT_ELIGIBLE | NOT_ELIGIBLE |
+| R-F04 | lớp N, nhánh mở `dv_cong_bo` | **lớp F**; `hinh_thuc_cuoi_khoa` chỉ dùng khi có khai báo |
+| R-Formal | F=58, P=8, N=5 · Formalization 81,7% · Executable 59,2% | **F=59, P=8, N=4 · 83,1% · 60,6%** |
+
+TDD: A1, F1, H6 đổi kỳ vọng (fail với luật trước QD-12), bỏ H5 (không còn câu hỏi), thêm G2 (R-F04 lớp F + QD-12) → `validate_eligibility.py` **36/36**. Câu hỏi `dv_cong_bo` bỏ khỏi engine w16.

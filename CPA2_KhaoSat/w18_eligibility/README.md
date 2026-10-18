@@ -21,4 +21,4 @@ python eligibility.py --student ... --doi-tuong thay_the:ML014
 
 ## Bất biến
 
-> **Đủ tín chỉ ≠ đủ điều kiện.** QĐ3266 Đ31 giao điều kiện nhận đề tài LVTN/TLTN cho đơn vị đào tạo; nội dung không có trong quy chế → hệ thống không bịa, chỉ nhận **kết quả xét** của đơn vị (`hinh_thuc_cuoi_khoa`). Chưa biết → UNKNOWN + hỏi.
+> **Không bịa điều kiện.** QĐ3266 Đ31 giao điều kiện nhận đề tài LVTN/TLTN cho đơn vị đào tạo; QD-12 (Loi xác nhận 18/10/2026) — điều kiện đó chỉ là ngưỡng TC của CTĐT (≥ 120 TC). `hinh_thuc_cuoi_khoa` chỉ dùng khi có khai báo (đã công bố hình thức khác → NOT_ELIGIBLE).
