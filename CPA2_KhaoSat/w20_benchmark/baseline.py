@@ -7,7 +7,7 @@ sự thật, tiền đề oracle, tên hồ sơ gốc (student_id, meta) — cù
 
 Chạy:  python baseline.py --split dev     → baseline_dev.jsonl   (Tuần 21 đọc file này)
 """
-import argparse, json, sys
+import argparse, hashlib, json, random, sys
 from pathlib import Path
 
 HERE = Path(__file__).parent
@@ -16,6 +16,12 @@ import dau_vao
 
 TRA_LOI = ("Trả lời đúng MỘT nhãn: TRUE (đúng/đủ điều kiện), FALSE (không đúng/không đủ), hoặc UNKNOWN (chưa đủ "
            "dữ kiện để kết luận, kèm dữ kiện cần bổ sung). Câu hỏi về sinh viên dựa trên hồ sơ đính kèm.")
+
+
+def id_mo(id_):
+    """Id cho baseline KHÔNG lộ nhóm/mức nhiễu (ON-xxM1 luôn TRUE, RC-* luôn TRUE — review Tuần 20). Bộ chấm Tuần 21
+    ánh xạ ngược bằng cùng hàm."""
+    return "B-" + hashlib.sha256(("cpa2-w20|" + id_).encode("utf-8")).hexdigest()[:10]
 
 
 def _sach(hs):
@@ -27,7 +33,7 @@ def _sach(hs):
 
 def dau_vao_baseline(ca):
     v = dau_vao.vat_lieu_hoa(ca)
-    out = {"id": ca["id"], "cau_hoi": ca.get("cau_hoi", ""), "dang_cau_tra_loi": TRA_LOI}
+    out = {"id": id_mo(ca["id"]), "cau_hoi": ca.get("cau_hoi", ""), "dang_cau_tra_loi": TRA_LOI}
     if ca["dau_vao"]["loai"] == "ho_so":
         out["ho_so"] = _sach(v["ho_so"])
         out["mo_ta"] = dau_vao.mo_ta_cho_nguoi(ca)
@@ -44,14 +50,13 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--split", choices=["dev", "test"], required=True)
     a = ap.parse_args()
-    n = 0
+    ds = [c for ten in ("gtruth.json", "ocr_noise.json")
+          for c in json.loads((HERE / ten).read_text(encoding="utf-8"))["cases"] if c["split"] == a.split]
+    random.Random(21).shuffle(ds)           # thứ tự không lộ nhóm
     with open(HERE / f"baseline_{a.split}.jsonl", "w", encoding="utf-8") as f:
-        for ten in ("gtruth.json", "ocr_noise.json"):
-            for c in json.loads((HERE / ten).read_text(encoding="utf-8"))["cases"]:
-                if c["split"] == a.split:
-                    f.write(json.dumps(dau_vao_baseline(c), ensure_ascii=False) + "\n")
-                    n += 1
-    print(f"đã ghi baseline_{a.split}.jsonl ({n} ca)")
+        for c in ds:
+            f.write(json.dumps(dau_vao_baseline(c), ensure_ascii=False) + "\n")
+    print(f"đã ghi baseline_{a.split}.jsonl ({len(ds)} ca)")
 
 
 if __name__ == "__main__":

@@ -50,6 +50,8 @@ def _chay(c):
         import recommendation
         r = recommendation.de_xuat(v["ho_so"], c["hk"], v["them_asp"])
         ma = [x["ma"] for x in r["dang_ky"]]
+        if not ma:      # không có phương án (vô nghiệm / hồ sơ mâu thuẫn) → không chứng minh được gì: từ chối, không tính TRUE
+            return "UNKNOWN", ["phuong_an_rong"]
         if c["claim"].startswith("tong_tc_le_20"):
             return ("TRUE" if r["tong_tc"] <= 20 else "FALSE"), []
         x = c["claim"].split(":")[1].split("@")[0]
@@ -62,8 +64,9 @@ def _chay(c):
             f = Path(d) / "sv.json"
             f.write_text(json.dumps(v["ho_so"], ensure_ascii=False), encoding="utf-8")
             r = prototype.answer(c["cau_hoi"], str(f))
-        vd = r["verdict"]
-        return {"BLOCKED": "UNKNOWN", "UNSAT": "MAU_THUAN"}.get(vd, vd), list(r.get("missing_facts") or [])
+        vd = r["verdict"]       # BLOCKED = hậu kiểm chặn → coi là từ chối (đếm riêng qua claim_parser)
+        return ({"BLOCKED": "UNKNOWN", "UNSAT": "MAU_THUAN", "DA_HOAN_THANH": "FALSE"}.get(vd, vd),
+                [f"claim_parser={r.get('claim')}", f"verdict_goc={vd}"] + list(r.get("missing_facts") or []))
     if he == "ocr":
         import ocr_transcript as O
         hs, extra, bc = O.sang_ho_so(v["doc"], khai_bao=v["khai_bao"])
@@ -90,7 +93,7 @@ def main():
         r.update(cham(c, tl, hoi))
         kq.append(r)
         dau = "✗ UNSOUND" if r["unsound"] else ("✓" if r["dung_gold"] else "· từ chối thừa" if r["tu_choi_thua"] else "·")
-        print(f"  {c['id']:8} {c['nhom']:14} gold={c['gold']:7} → {tl:9} {dau}" + (f"   {hoi}" if tl == "LOI" else ""))
+        print(f"  {c['id']:8} {c['nhom']:14} gold={c['gold']:7} → {tl:9} {dau}" + (f"   {hoi}" if tl == "LOI" or c["he"] == "nl" else ""))
     tg = {"tong": tong_hop(kq)}
     for lg in ("quy_che", "thiet_ke"):      # gold theo câu chữ quy chế vs theo nguyên tắc thiết kế — báo cáo tách riêng
         con = [r for r in kq if r["loai_gold"] == lg]

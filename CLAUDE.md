@@ -61,7 +61,7 @@ D:\LVTN\                          (git repo)
 ├── CLAUDE.md
 ├── Ke_hoach_nghien_cuu_CPA2_24_tuan.xlsx   kế hoạch + checklist + dashboard
 ├── CPA2_KhaoSat\
-│   ├── TuanN_*.md                báo cáo từng tuần (1–19)
+│   ├── TuanN_*.md                báo cáo từng tuần (1–20)
 │   ├── Viec_ton_dong.md          sổ việc tồn đọng (A cần người · B tuần sau · C kỹ thuật · D không hình thức hoá)
 │   ├── w4_solver_probe\          so sánh clingo / CP-SAT / Z3
 │   ├── w5_rformal\               R-Formal: qd3266/qd5339 *.lp, r_formal_v1.json, source/*_ocr_raw.txt
@@ -76,7 +76,8 @@ D:\LVTN\                          (git repo)
 │   ├── w16_abstention\           ba trị + missing evidence + từ chối kết luận (abstention.py)
 │   ├── w17_adversarial\          bộ đối kháng 80 ca, gold đóng băng (gold_dong_bang.json), oracle, run_adversarial.py
 │   ├── w18_eligibility\          đủ điều kiện LVTN/TLTN/niên luận/thực tập/thay thế (eligibility.lp/.py)
-│   └── w19_recommendation\       đề xuất đăng ký 1 HK: ứng viên ba trị + clingo tối ưu (recommendation.py/.lp)
+│   ├── w19_recommendation\       đề xuất đăng ký 1 HK: ứng viên ba trị + clingo tối ưu (recommendation.py/.lp)
+│   └── w20_benchmark\            G-Truth v1 + OCR-Noise v1 (gold đóng băng 312b7ff), Q-Real (qreal/, _tho/ gitignore), baseline.py, run_cpa2.py
 ├── ctu\                          PDF quy chế gốc (gitignore)
 ├── NiênLuan\                     niên luận cũ, có dữ liệu SV (gitignore)
 └── LVTN\                         repo riêng, chưa dùng (gitignore)
@@ -115,3 +116,6 @@ D:\LVTN\                          (git repo)
 - Bất biến kiểm lại không dùng `assert` (`python -O` bỏ). Parser: chuẩn hoá NFC, chấp nhận "kì"/"kỳ", số học kỳ ngoài 1–3 → hỏi lại, không mặc định im lặng (P19-3).
 - Khoá so khớp của parser phải cùng dạng với câu hỏi đã chuẩn hoá (NFC + lower): khoá stub chứa "CT180" viết HOA không bao giờ khớp → câu đăng ký rơi về `tot_nghiep` suốt từ Tuần 12 (P19-4). Ý định có mã HP phải sinh claim có đối số (`duoc_dang_ky("CT180")`).
 - "Đã học" (song hành) chỉ định nghĩa một nơi: `loader.co_hoc` → dữ kiện `da_hoc/1` (KB) và w19 dùng lại; `duoc_dang_ky(C)` = tiên quyết + song hành, `du_dk_dang_ky(C)` chỉ tiên quyết (R-Formal v1.9).
+- Bộ đánh giá Tuần 20: gold viết tay → soát độc lập KHÔNG chạy hệ thống → đóng băng (hash + commit) → mới chạy dev. Ca gold dựa nguyên tắc thiết kế (ngoài KB, OCR mâu thuẫn, chính sách) gắn `loai_gold=thiet_ke`, báo cáo tách khỏi gold theo quy chế. Sửa sau khi chạy = errata.
+- Công nhận/chuyển đổi (Lý luận chính trị QĐ5339 Đ3 k9, miễn QD-11) KHÔNG tự động: cần đơn + quyết định (Đ2 k6) → `passed` FALSE khi chưa có quyết định; "đủ điều kiện được xét" là claim khác.
+- So ngưỡng có biên thập phân (hạng 3,20–3,59 …) phải so hữu tỉ đúng câu chữ; mốc nguyên thang ×10 bỏ sót giá trị giữa hai mốc (P20-1). Test ngưỡng phải có giá trị KHÔNG trùng mốc.

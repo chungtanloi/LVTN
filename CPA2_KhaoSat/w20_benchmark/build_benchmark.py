@@ -460,8 +460,9 @@ def main():
         "cases": on}, ensure_ascii=False, indent=1), encoding="utf-8")
     print(f"G-Truth {len(gt)} ca · OCR-Noise {len(on)} ca")
     if "--dong-bang" in sys.argv:
-        from validate_benchmark import hash_gold
+        from validate_benchmark import hash_gold, hash_nguon
         (HERE / "gold_dong_bang.json").write_text(json.dumps({"gtruth": hash_gold(gt), "ocr_noise": hash_gold(on),
+            "nguon_du_lieu": hash_nguon(),
             "ngay": "2026-10-18", "ghi_chu": "Đóng băng TRƯỚC lần chạy CPA² đầu tiên. Sai sót phát hiện sau → errata, KHÔNG sửa gold."},
             ensure_ascii=False, indent=1), encoding="utf-8")
         print("đã ghi gold_dong_bang.json")

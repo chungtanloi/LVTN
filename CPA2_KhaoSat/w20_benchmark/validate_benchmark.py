@@ -50,9 +50,20 @@ def dau_luat():
     return set(re.findall(r"^\s*([a-z_][a-z0-9_]*)\s*(?:\(|:-)", s, re.M))
 
 
+TRUONG_KHOA = ("id", "nhom", "he", "claim", "cau_hoi", "dau_vao", "gold", "hk", "su_that", "can_hoi", "cham_diem",
+               "split", "loai_gold", "oracle")       # mọi trường ảnh hưởng đầu vào hoặc cách chấm (review Tuần 20)
+NGUON_DU_LIEU = ["w7_student_facts/students/" + n + ".json" for n in
+                 ("sv_5hp", "sv_du_hp", "sv_lvtn", "sv_mien_ielts", "sv_tltn", "sv_tron_ngoai_ngu")] + \
+                ["w6_curriculum/curriculum_cntt_k49.json"]
+
+
 def hash_gold(cases):
-    lo = [[c["id"], c["he"], c["claim"], c["dau_vao"], c["gold"]] for c in sorted(cases, key=lambda c: c["id"])]
+    lo = [{k: c.get(k) for k in TRUONG_KHOA} for c in sorted(cases, key=lambda c: c["id"])]
     return hashlib.sha256(json.dumps(lo, ensure_ascii=False, sort_keys=True).encode("utf-8")).hexdigest()
+
+
+def hash_nguon():
+    return {f: hashlib.sha256((ROOT / f).read_bytes().replace(b"\r\n", b"\n")).hexdigest() for f in NGUON_DU_LIEU}
 
 
 def main():
@@ -95,6 +106,9 @@ def main():
                 sai.append((c["id"], cl))
         elif c["he"] == "nl" and not c.get("cau_hoi"):
             sai.append((c["id"], "thiếu câu hỏi"))
+        for ma in re.findall(r"[A-Z]{2}\d{3}E?", cl):        # mã HP trong claim phải có trong CTĐT (trừ ca thiết kế ngoài KB)
+            if ma not in oracle._CT and c.get("loai_gold") != "thiet_ke":
+                sai.append((c["id"], ma))
     check(not sai, f"B2 mọi claim có vị từ đầu luật trong KB / đúng định dạng ({sai[:5]})")
 
     print("\nB3. TIỀN ĐỀ SỐ HỌC — oracle độc lập")
@@ -136,7 +150,8 @@ def main():
     try:
         db = json.loads((HERE / "gold_dong_bang.json").read_text(encoding="utf-8"))
         check(db["gtruth"] == hash_gold(gt) and db["ocr_noise"] == hash_gold(on),
-              f"B6 hash gold khớp bản đóng băng (commit {db.get('commit', '?')})")
+              f"B6a hash gold (mọi trường ảnh hưởng đầu vào/chấm điểm) khớp bản đóng băng (commit {db.get('commit', '?')})")
+        check(db.get("nguon_du_lieu") == hash_nguon(), "B6b hồ sơ gốc + CTĐT mà ca tham chiếu không đổi kể từ đóng băng")
     except FileNotFoundError:
         check(False, "B6 có gold_dong_bang.json")
 
@@ -147,7 +162,8 @@ def main():
         try:
             dau_vao.vat_lieu_hoa(c)
             b = json.dumps(baseline.dau_vao_baseline(c), ensure_ascii=False)
-            if re.search(r'"(gold|ly_do|nguon|su_that|oracle|can_hoi)"', b) or re.search(r"sv_(lvtn|tltn|5hp|du_hp|mien_ielts|tron_ngoai_ngu)", b):
+            if (re.search(r'"(gold|ly_do|nguon|su_that|oracle|can_hoi|nhom|loai_gold)"', b)
+                    or re.search(r"sv_(lvtn|tltn|5hp|du_hp|mien_ielts|tron_ngoai_ngu)", b) or c["id"] in b):
                 lo.append(c["id"])
         except Exception as e:  # noqa: BLE001
             loi.append((c["id"], f"{type(e).__name__}: {e}"))
@@ -157,11 +173,17 @@ def main():
     print("\nB9. Q-REAL")
     import nhap_qreal as Q
     mau = ["Em  đăng ký CT180 được chưa ạ? MSSV B2306555", "em đăng ký ct180 được chưa ạ? mssv b2306555",
-           "Liên hệ em qua loi@student.ctu.edu.vn hoặc 0912345678, em còn thiếu môn gì?", ""]
-    ra = Q.chuan_hoa_danh_sach([{"cau_hoi": x, "nguon": "mau"} for x in mau])
+           "Liên hệ em qua loi@student.ctu.edu.vn hoặc 0912 345 678, em còn thiếu môn gì?", "",
+           "Em lớp DI20V7A1, fb.com/nguyenvanan.99 và facebook.com/profile.php?id=100012345678, mã số sinh viên là B2306555, em tốt nghiệp được chưa?",
+           "MSSV B 2306555 hỏi: em còn 0123456789 tín chỉ thì sao?"]
+    ra = Q.chuan_hoa_danh_sach([{"cau_hoi": x, "nguon": "Nhóm FB Lớp DI20V7A1"} for x in mau])
     txt = json.dumps(ra, ensure_ascii=False)
-    check(len(ra) == 2 and not re.search(r"B2306555|@|0912345678", txt, re.I) and all(r["split"] in ("dev", "test") for r in ra),
-          f"B9a nhập Q-Real: ẩn danh MSSV/email/SĐT, khử trùng, bỏ câu rỗng, chia split ({len(ra)} câu)")
+    check(len(ra) == 4 and not re.search(r"2306555|@|0912|DI20V7A1|nguyenvanan|100012345678", txt, re.I)
+          and "[MSSV] [MSSV" not in txt and "0123456789 tín chỉ" in txt and all(r["split"] in ("dev", "test") for r in ra),
+          f"B9a nhập Q-Real: ẩn danh MSSV (cả có dấu cách)/email/SĐT/mã lớp/link FB, không nuốt số thường, khử trùng, chia split",
+          txt[:300] if not len(ra) == 4 else "")
+    check(Q.bo_qua_da_xoa([{"id": "QR-1"}, {"id": "QR-2"}], {"QR-2"}) == [{"id": "QR-1"}],
+          "B9b câu đã xoá tay (meta.da_xoa) không bị nhập lại")
     qr = Q.doc_qreal()
     n_ = len(qr)
     print(f"     Q-Real hiện có {n_} câu thật — mục tiêu 400–600: {'ĐẠT' if n_ >= 400 else 'CHƯA ĐẠT'} ({n_}/400)")

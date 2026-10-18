@@ -1,0 +1,19 @@
+{
+ "meta": {
+  "ten": "Q-Real (câu hỏi thật, đã ẩn danh)",
+  "y_dinh_hop_le": [
+   "tot_nghiep",
+   "dang_ky",
+   "du_dk_luan_van",
+   "mien",
+   "thieu_mon",
+   "thieu_tc",
+   "de_xuat",
+   "xep_loai",
+   "counterfactual",
+   "ngoai_pham_vi",
+   "tra_cuu_quy_che"
+  ]
+ },
+ "cau_hoi": []
+}

@@ -1,4 +1,4 @@
-# SỔ VIỆC TỒN ĐỌNG — CPA² (cập nhật 18/10/2026, Tuần 19)
+# SỔ VIỆC TỒN ĐỌNG — CPA² (cập nhật 18/10/2026, Tuần 20)
 
 Gom mọi mục `- [ ]` còn mở trong báo cáo Tuần 1–17. Các mục đã xong được tích ngay trong báo cáo gốc, kèm dòng "✅ đã xong: …" trỏ tới nơi làm (22 mục, đợt rà soát 18/10/2026). Sổ này **không thay** báo cáo tuần; khi đóng một mục, tích ở cả hai nơi.
 
@@ -21,6 +21,7 @@ Gom mọi mục `- [ ]` còn mở trong báo cáo Tuần 1–17. Các mục đã
 | A11 | Nguồn về **làm tròn** TB GDQP (4,975 → 5,0?) | Tuần 17 E17-2 | Gold NG-10 |
 | ~~A13~~ | ✅ **Đóng 18/10/2026:** QD-13 rút lại — song hành theo đúng QĐ3266 Đ7 k5 (học trước/cùng lúc; đã học kể cả F) | Tuần 19 §2 | Recommendation: ràng buộc cứng |
 | A14 | GVHD/cố vấn học tập xác nhận **thứ tự ưu tiên** tư vấn (bắt buộc → mở khóa → nhóm → TC) | Tuần 19 §1 | Recommendation (chính sách, không phải quy chế) |
+| A16 | **Câu hỏi thật cho Q-Real** (≥ 400) — đặt vào `w20_benchmark/qreal/_tho/`, rà tay sau khi nhập | Tuần 20 §3 | Đánh giá parser/độ phủ trên câu thật (RQ, H2) |
 | ~~A15~~ | ✅ **Đóng 18/10/2026:** trang 20 QĐ3266 (OCR trắng — Điều 33–35, tiêu đề Điều 33/34) chép tay từ PDF gốc Loi gửi; trích R-Formal khớp, thêm R-X20/R-X21 | Tuần 5 P-4, Tuần 14 | corpus RAG Điều 33–35 |
 | ~~A12~~ | ✅ **Đóng 18/10/2026 — QD-12** (Loi xác nhận): điều kiện nhận đề tài LVTN/TLTN chỉ là ngưỡng TC của CTĐT | Tuần 18 | R-F04 N → F |
 
@@ -28,8 +29,8 @@ Gom mọi mục `- [ ]` còn mở trong báo cáo Tuần 1–17. Các mục đã
 
 | # | Việc | Tuần |
 |---|---|---|
-| B1 | **Bộ test MỚI, chưa từng thấy** — test của Adversarial v1 đã nhiễm sau khi sửa P17-1/P17-2 | 20 |
-| B2 | **Q-Real** (400–600 câu thật) — đánh giá parser và hệ thống | 20 |
+| ~~B1~~ | ✅ **Tuần 20:** G-Truth v1 (115 ca) + OCR-Noise v1 (40 ca), gold đóng băng `312b7ff` — test chạy Tuần 22 | 20 |
+| B2 | **Q-Real** (400–600 câu thật) — pipeline xong (`w20_benchmark/nhap_qreal.py`), **chưa đạt 0/400**: chờ Loi cung cấp câu hỏi (A16) | 20–22 |
 | B3 | Đưa test10 (bẫy QD-09) và test13 (tiên quyết ngược chiều) của w14 vào bộ đánh giá RAG | 20–21 |
 | B4 | Baseline LLM / RAG thuần (`retriever.search`) / tool-calling trên cùng bộ ca (`dau_vao_baseline()`) | 21 |
 | B5 | Parser và Verbalizer **LLM thật** (cần API key, `.env`) + đo Verbalization Faithfulness (RQ4) | 21–22 |
@@ -50,6 +51,7 @@ Gom mọi mục `- [ ]` còn mở trong báo cáo Tuần 1–17. Các mục đã
 | C7 | Test `du_dk_dang_ky` qua passed / substituted / exempted_M (T4b) — w10 có ca passed; chưa có ca substituted/exempted_M | Tuần 9 |
 | C9 | Recommendation: `mo_khoa` chỉ đếm trực tiếp (chưa bắc cầu); chưa xét HP đang học / học cải thiện; parser Tuần 13 chưa có ý định `de_xuat` | Tuần 19 |
 | C10 | Parser Tuần 13 vẫn sinh `du_dk_dang_ky("<MÃ>")` (không xét song hành) — chuyển sang `duoc_dang_ky`; câu hỏi lẻ chưa xét `mo_hk`; câu phản thực tế trả UNKNOWN "chưa hỗ trợ" (B8) | sau Tuần 19 (P19-4) |
+| C11 | Lỗi bộ đánh giá Tuần 20 bắt được trên dev: P20-1 hạng tốt nghiệp (mốc nguyên — 3,14 không thuộc hạng nào), P20-2 câu ngoài phạm vi → `tot_nghiep`, P20-3 "đăng ký niên luận CT466E", P20-4 OCR mất ĐTBCHK → từ chối cả học kỳ | Tuần 20 §5 |
 | C8 | Độ phủ OCR thấp (Linux 7/18; Windows 1/18) | Tuần 15 |
 
 ## D. Thuộc phạm vi "không hình thức hoá được" (kết quả RQ1, không phải nợ)
