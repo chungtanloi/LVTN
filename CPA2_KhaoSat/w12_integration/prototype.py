@@ -11,7 +11,7 @@ Tuần 12 chưa có LLM Verbalizer thật nên tầng 4 là template + hậu ki�
 Chạy:  python prototype.py --student ../w7_student_facts/students/sv_lvtn.json --question "em đủ điều kiện tốt nghiệp chưa?"
        python prototype.py --demo
 """
-import json, re, argparse, sys
+import json, re, argparse, sys, unicodedata
 from pathlib import Path
 import clingo
 
@@ -50,8 +50,13 @@ PARSER_STUB = {
     "tot_nghiep": "tot_nghiep",
 }
 
+DE_XUAT = re.compile(r"nên\s+(?:đăng\s*ký|học)\b")   # Tuần 19: "kỳ này em (có) nên đăng ký gì" → Recommendation
+
 def parse_question(q: str) -> str:
-    ql = q.lower()
+    ql = unicodedata.normalize("NFC", q).lower()   # Unicode tổ hợp (NFD) không khớp chuỗi gõ vào — Bài học
+    # đề xuất chung — câu hỏi về MỘT học phần / luận văn / tiểu luận đi nhánh riêng
+    if DE_XUAT.search(ql) and not re.search(r"[a-z]{2}\d{3}|luận văn|tiểu luận", ql):
+        return "de_xuat"
     for k, v in PARSER_STUB.items():
         if k in ql: return v
     return "tot_nghiep"  # mặc định
@@ -173,10 +178,39 @@ def answer_eligibility(question, student_path):
     return {"verdict": v, "certificate": cert, "explanation_vi": text, "missing_facts": missing,
             "can_bo_sung": r["can_bo_sung"], "mau_thuan": r["mau_thuan"], "claim": f"du_dk({dt})", "eligibility": r}
 
+def answer_recommendation(question, student_path):
+    """Tuần 19: "kỳ này em nên đăng ký gì" → Recommendation (w19): chỉ đề xuất HP hợp lệ trên mọi thế giới;
+    chưa chắc → danh sách cần xác minh. Học kỳ lấy từ câu hỏi ("học kỳ 3"/"hè"), mặc định HK1."""
+    sys.path.insert(0, str(HERE.parent / "w19_recommendation"))
+    import recommendation
+    if not student_path:
+        return {"verdict": "UNKNOWN", "claim": "de_xuat", "explanation_vi": "Cần hồ sơ học tập để đề xuất đăng ký.",
+                "missing_facts": ["ho_so"], "certificate": {"claim": "de_xuat", "proof": {"steps": []}}}
+    ql = unicodedata.normalize("NFC", question).lower()
+    k = re.search(r"(?:\bk[ỳì]|\bhk)\s*(\d+|i{1,3})\b", ql)
+    hk = 3 if "hè" in ql else ({"i": 1, "ii": 2, "iii": 3}.get(k.group(1)) or int(k.group(1))) if k else 1
+    if hk not in (1, 2, 3):   # QĐ3266 Đ6 k1: một năm học có 3 HK — không lặng lẽ đổi sang HK1
+        return {"verdict": "UNKNOWN", "claim": "de_xuat", "missing_facts": ["hoc_ky"],
+                "explanation_vi": f"Không có học kỳ {hk} — một năm học có 3 học kỳ (QĐ3266 Điều 6 khoản 1). "
+                                  "Bạn muốn đăng ký học kỳ 1, 2 hay 3 (hè)?",
+                "certificate": {"claim": "de_xuat", "proof": {"steps": []}}}
+    r = recommendation.de_xuat(json.loads(Path(student_path).read_text(encoding="utf-8")), hk)
+    steps = [{"atom": c["atom"], "rule_id": c["rule_id"], "source": {"van_ban": c["nguon"]}}
+             for x in r["dang_ky"] for c in x["chung_chi"]]
+    text = (f"Đề xuất đăng ký HK{hk} ({r['tong_tc']} TC): " + ", ".join(x["ma"] for x in r["dang_ky"])
+            if r["dang_ky"] else f"Không có học phần nào chắc chắn hợp lệ để đề xuất cho HK{hk}.")
+    if r["can_xac_minh"]:
+        text += " Cần xác minh trước: " + ", ".join(x["ma"] or x["ly_do"] for x in r["can_xac_minh"])
+    return {"verdict": "TRUE" if r["dang_ky"] else "UNKNOWN", "claim": "de_xuat", "explanation_vi": text,
+            "certificate": {"claim": "de_xuat", "proof": {"steps": steps}}, "missing_facts": [],
+            "mau_thuan": r["mau_thuan"], "de_xuat": r}
+
 def answer(question, student_path):
     claim=parse_question(question)
     if claim == "du_dk_tc":
         return answer_eligibility(question, student_path)
+    if claim == "de_xuat":
+        return answer_recommendation(question, student_path)
     extra, sid, mt = load_student(student_path) if student_path else ("", "demo", [])
     verdict, models, cautious, brave = solve_verdict(claim, extra)
     cert=build_certificate(claim, verdict, models, cautious, brave)

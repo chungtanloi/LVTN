@@ -4,7 +4,7 @@
 
 > **Vị trí trong luận văn:** phụ lục này thuộc phần **giả định và hạn chế**, không thuộc phần kết quả. Mỗi mục dưới đây là điều tác giả **quyết định**, không phải điều **tìm thấy** trong văn bản quy phạm. Trộn hai loại vào nhau là cách nhanh nhất để một luận văn hình thức hoá bị bác ở phần phương pháp.
 
-**Tổng: 12 quyết định** — 🔴 1 mở, 🔄 1 đã sửa, ✅ 8 đóng, 🟡 1 đóng một phần, 🟠 1 đóng tạm
+**Tổng: 13 quyết định** — 🔴 1 mở, 🔄 1 đã sửa, ✅ 9 đóng, 🟡 1 đóng một phần, 🟠 1 đóng tạm
 
 ---
 
@@ -24,11 +24,12 @@
 | **QD-10** | ✅ đóng | QD5339 Điều 3 k.3 (R-M04) | Câu chữ QĐ5339 Điều 3 k.3 (suy trực tiếp từ văn bản) |
 | **QD-11** | ✅ đóng | QD5339 Điều 2 k.6 (R-M16) | Câu chữ QĐ5339 Điều 2 k.6 (suy trực tiếp từ văn bản) |
 | **QD-12** | ✅ đóng | QD3266 Điều 31 (R-F04) | XÁC NHẬN NGOÀI VĂN BẢN — Loi, 18/10/2026 (trong phiên làm việc Tuần 18): chỉ có quy định số TC |
+| **QD-13** | ✅ đóng | QD3266 Điều 7 k.5 (R-A04) | XÁC NHẬN NGOÀI VĂN BẢN — Loi, 18/10/2026 (trong phiên làm việc Tuần 19): song hành học trước/cùng/sau đều được, kết quả độc lập — khác câu chữ Đ7 k5 |
 
 ### Hai nhóm cần chú ý
 
 - **Chưa có nguồn xác nhận** (2): `QD-03`, `QD-05` — đây là các quyết định treo, phải hỏi người có thẩm quyền.
-- **Xác nhận NGOÀI văn bản** (2): `QD-09`, `QD-12` — hợp lệ, nhưng **bắt buộc ghi rõ ai xác nhận và ngày nào**; nếu là trao đổi miệng thì nên xin email hoặc ghi biên bản.
+- **Xác nhận NGOÀI văn bản** (3): `QD-09`, `QD-12`, `QD-13` — hợp lệ, nhưng **bắt buộc ghi rõ ai xác nhận và ngày nào**; nếu là trao đổi miệng thì nên xin email hoặc ghi biên bản.
 
 ---
 
@@ -188,6 +189,19 @@
 **Quyết định:** QD-12 ĐÓNG (xác nhận ngoài văn bản — Loi, 18/10/2026): điều kiện nhận đề tài LVTN/TLTN mà Điều 31 giao cho đơn vị đào tạo CHỈ là ngưỡng tín chỉ của CTĐT (CNTT K49: CT550E, CT501E ≥ 120 TC tích lũy) — không có điều kiện nào khác. KB: du_dk(lvtn|tltn) = tiên quyết TC (R-A03) ∧ chưa hoàn thành hình thức cuối khóa khác ∧ không có khai báo hình thức khác.
 
 **Nguồn xác nhận:** XÁC NHẬN NGOÀI VĂN BẢN — Loi, 18/10/2026 (trong phiên làm việc Tuần 18): chỉ có quy định số TC
+
+
+### ✅ QD-13 — đóng
+
+**Điều khoản:** QD3266 Điều 7 khoản 5 · bản ghi `R-A04` · lớp **F**
+
+**Trích nguyên văn:**
+
+> *Học phần song hành của học phần HPxxx là học phần mà SV phải học trước hoặc học cùng lúc với học phần HPxxx.*
+
+**Quyết định:** QD-13 ĐÓNG (xác nhận ngoài văn bản — Loi, 18/10/2026): song hành nghĩa là có thể học HP song hành TRƯỚC, CÙNG LÚC hoặc SAU; kết quả hai HP độc lập, chỉ bổ trợ nội dung. KHÁC câu chữ Đ7 k5 ('phải học trước hoặc học cùng lúc'): KB GIỮ r_a04 đúng văn bản (vi_pham_song_hanh khi xếp HP song hành sau); Recommendation Tuần 19 không dùng song hành làm ràng buộc, chỉ đưa lời khuyên. Nên có văn bản/email xác nhận.
+
+**Nguồn xác nhận:** XÁC NHẬN NGOÀI VĂN BẢN — Loi, 18/10/2026 (trong phiên làm việc Tuần 19): song hành học trước/cùng/sau đều được, kết quả độc lập — khác câu chữ Đ7 k5
 
 
 ---

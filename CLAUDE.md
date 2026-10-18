@@ -46,7 +46,7 @@ D:\LVTN\                          (git repo)
 ├── CLAUDE.md
 ├── Ke_hoach_nghien_cuu_CPA2_24_tuan.xlsx   kế hoạch + checklist + dashboard
 ├── CPA2_KhaoSat\
-│   ├── TuanN_*.md                báo cáo từng tuần (1–18)
+│   ├── TuanN_*.md                báo cáo từng tuần (1–19)
 │   ├── Viec_ton_dong.md          sổ việc tồn đọng (A cần người · B tuần sau · C kỹ thuật · D không hình thức hoá)
 │   ├── w4_solver_probe\          so sánh clingo / CP-SAT / Z3
 │   ├── w5_rformal\               R-Formal: qd3266/qd5339 *.lp, r_formal_v1.json, source/*_ocr_raw.txt
@@ -60,7 +60,8 @@ D:\LVTN\                          (git repo)
 │   ├── w15_ocr\                  OCR bảng điểm (Tesseract vie) → hồ sơ có confidence; _rieng/ _anh/ gitignore
 │   ├── w16_abstention\           ba trị + missing evidence + từ chối kết luận (abstention.py)
 │   ├── w17_adversarial\          bộ đối kháng 80 ca, gold đóng băng (gold_dong_bang.json), oracle, run_adversarial.py
-│   └── w18_eligibility\          đủ điều kiện LVTN/TLTN/niên luận/thực tập/thay thế (eligibility.lp/.py)
+│   ├── w18_eligibility\          đủ điều kiện LVTN/TLTN/niên luận/thực tập/thay thế (eligibility.lp/.py)
+│   └── w19_recommendation\       đề xuất đăng ký 1 HK: ứng viên ba trị + clingo tối ưu (recommendation.py/.lp)
 ├── ctu\                          PDF quy chế gốc (gitignore)
 ├── NiênLuan\                     niên luận cũ, có dữ liệu SV (gitignore)
 └── LVTN\                         repo riêng, chưa dùng (gitignore)
@@ -94,3 +95,6 @@ D:\LVTN\                          (git repo)
 - Điều khoản giao cho đơn vị đào tạo → KHÔNG bịa nội dung: mở nhánh (UNKNOWN) cho tới khi có văn bản hoặc xác nhận. QĐ3266 Đ31 (R-F04): QD-12 (Loi 18/10/2026) xác nhận điều kiện nhận đề tài LVTN/TLTN CHỈ là ngưỡng TC của CTĐT → R-F04 lớp F; `hinh_thuc_cuoi_khoa` chỉ dùng khi có khai báo.
 - Quyết định diễn giải ghi ở trường `quyet_dinh` của catalog + `NGUON` trong `gen_quyet_dinh.py`, rồi SINH LẠI phụ lục (không sửa tay `PhuLuc_Quyet_dinh_dien_giai.md`).
 - Claim không đối số (vd. `du_dk_tc` thay vì `du_dk_tc("CT550E")`) không bao giờ có trong answer set → ba trị luôn FALSE, im lặng (P18-1). Ý định mới của parser phải có ca kiểm thử đi qua prototype.
+- Recommendation: chỉ đề xuất điều hợp lệ trên MỌI thế giới; UNKNOWN → `can_xac_minh`. Thứ tự ưu tiên là CHÍNH SÁCH (ghi rõ), không phải quy chế. Đủ điều kiện ≠ nên làm: chỉ gợi ý xin miễn HP còn cần (P19-1).
+- QD-13 (song hành học trước/cùng/sau) KHÁC câu chữ Đ7 k5 → KB giữ đúng văn bản, quyết định chỉ áp ở tầng tư vấn. Xác nhận ngoài văn bản không được sửa R-Formal ngược câu chữ.
+- Bất biến kiểm lại không dùng `assert` (`python -O` bỏ). Parser: chuẩn hoá NFC, chấp nhận "kì"/"kỳ", số học kỳ ngoài 1–3 → hỏi lại, không mặc định im lặng (P19-3).

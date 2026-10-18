@@ -1,4 +1,4 @@
-# SỔ VIỆC TỒN ĐỌNG — CPA² (cập nhật 18/10/2026, Tuần 18)
+# SỔ VIỆC TỒN ĐỌNG — CPA² (cập nhật 18/10/2026, Tuần 19)
 
 Gom mọi mục `- [ ]` còn mở trong báo cáo Tuần 1–17. Các mục đã xong được tích ngay trong báo cáo gốc, kèm dòng "✅ đã xong: …" trỏ tới nơi làm (22 mục, đợt rà soát 18/10/2026). Sổ này **không thay** báo cáo tuần; khi đóng một mục, tích ở cả hai nơi.
 
@@ -19,6 +19,8 @@ Gom mọi mục `- [ ]` còn mở trong báo cáo Tuần 1–17. Các mục đã
 | A9 | Chốt với GVHD: phạm vi 1 ngành hay 8 ngành | Tuần 1 | Phạm vi CTĐT |
 | A10 | Phần **đọc tài liệu**: toàn văn CoTu, Solver-Aided; xác minh Logic-LM/LINC/Adaptive-RAG trên ACL Anthology; nhánh degree-audit formal verification; liên hệ nhóm REBot; bộ 913 câu EXACT 2026 | Tuần 3 | Ô "Đọc" của checklist Tuần 11–17 đang ☐ — chỉ tích khi chính tác giả đọc |
 | A11 | Nguồn về **làm tròn** TB GDQP (4,975 → 5,0?) | Tuần 17 E17-2 | Gold NG-10 |
+| A13 | Văn bản/email xác nhận **QD-13** (song hành: học trước/cùng/sau đều được — khác câu chữ QĐ3266 Đ7 k5) | Tuần 19 §2 | Song hành hiện chỉ là lời khuyên trong Recommendation |
+| A14 | GVHD/cố vấn học tập xác nhận **thứ tự ưu tiên** tư vấn (bắt buộc → mở khóa → song hành → nhóm → TC) | Tuần 19 §1 | Recommendation (chính sách, không phải quy chế) |
 | ~~A12~~ | ✅ **Đóng 18/10/2026 — QD-12** (Loi xác nhận): điều kiện nhận đề tài LVTN/TLTN chỉ là ngưỡng TC của CTĐT | Tuần 18 | R-F04 N → F |
 
 ## B. Đúng lịch các tuần sau (kế hoạch 24 tuần)
@@ -32,7 +34,7 @@ Gom mọi mục `- [ ]` còn mở trong báo cáo Tuần 1–17. Các mục đã
 | B5 | Parser và Verbalizer **LLM thật** (cần API key, `.env`) + đo Verbalization Faithfulness (RQ4) | 21–22 |
 | B6 | Recall@1 ≥ 0,80 / Recall@5 ≥ 0,95 của RAG trên test — **chưa đạt**; chỉ tinh chỉnh trên dev | 21–22 |
 | B7 | Thử embedding (cần mạng một lần) và so trên cùng tập test | 21 |
-| B8 | Counterfactual Optimality Gap (RQ3) | 18–19 / 22 |
+| B8 | Counterfactual Optimality Gap (RQ3) + kế hoạch nhiều học kỳ (Recommendation v1 mới lập 1 HK) | 22 |
 
 ## C. Kỹ thuật còn mở, Claude làm được khi được duyệt
 
@@ -45,6 +47,7 @@ Gom mọi mục `- [ ]` còn mở trong báo cáo Tuần 1–17. Các mục đã
 | C5 | So sánh ĐTBCTL với ĐTBCHK ở ca sát 2,00 (bẫy nhân 10) — ĐTBCTL đã có ca NG-01…04; phần ĐTBCHK chưa | Tuần 10 |
 | C6 | Mở rộng hồ sơ giả lập ≥ 20 (ca biên + đủ loại chứng chỉ) — **phần lớn đã phủ** bằng phép biến đổi của w17 (TOEIC/TOEFL/IELTS, D = 4,0, D+ = 5,0); còn thiếu `ctu_abc` | Tuần 7 |
 | C7 | Test `du_dk_dang_ky` qua passed / substituted / exempted_M (T4b) — w10 có ca passed; chưa có ca substituted/exempted_M | Tuần 9 |
+| C9 | Recommendation: `mo_khoa` chỉ đếm trực tiếp (chưa bắc cầu); chưa xét HP đang học / học cải thiện; parser Tuần 13 chưa có ý định `de_xuat` | Tuần 19 |
 | C8 | Độ phủ OCR thấp (Linux 7/18; Windows 1/18) | Tuần 15 |
 
 ## D. Thuộc phạm vi "không hình thức hoá được" (kết quả RQ1, không phải nợ)
