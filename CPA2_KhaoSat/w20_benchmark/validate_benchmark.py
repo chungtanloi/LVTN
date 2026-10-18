@@ -13,6 +13,8 @@ Tiêu chí (Kế hoạch 24 tuần, dòng 20): "Có ground truth". Kiểm:
   B8  đầu vào baseline KHÔNG lộ đáp án (không gold/lý do/nguồn/sự thật, không tên hồ sơ gốc)
   B9  Q-Real: pipeline nhập (NFC, ẩn danh MSSV/email/SĐT, khử trùng, chia split) chạy đúng trên mẫu; báo số câu
       thật hiện có so với mục tiêu 400 (không chặn KẾT LUẬN — dữ liệu do Loi cung cấp)
+  B10 Q-Noise (TỔNG HỢP, không thay Q-Real): câu gốc = ca G-Truth đi qua parser; V0–V4 kế thừa gold; V1/V4 không
+      dấu; giữ mã HP; sinh lại tất định; hash khớp qnoise_dong_bang.json (đóng băng trước lần chạy đầu)
 
 Chạy:  python validate_benchmark.py
 """
@@ -59,6 +61,12 @@ NGUON_DU_LIEU = ["w7_student_facts/students/" + n + ".json" for n in
 
 def hash_gold(cases):
     lo = [{k: c.get(k) for k in TRUONG_KHOA} for c in sorted(cases, key=lambda c: c["id"])]
+    return hashlib.sha256(json.dumps(lo, ensure_ascii=False, sort_keys=True).encode("utf-8")).hexdigest()
+
+
+def hash_ca(cases):
+    """Hash toàn bộ trường của mọi ca (Q-Noise: goc/bien_the/claim_ky_vong cũng quyết định cách chấm — review)."""
+    lo = sorted(cases, key=lambda c: c["id"])
     return hashlib.sha256(json.dumps(lo, ensure_ascii=False, sort_keys=True).encode("utf-8")).hexdigest()
 
 
@@ -187,7 +195,66 @@ def main():
     qr = Q.doc_qreal()
     n_ = len(qr)
     print(f"     Q-Real hiện có {n_} câu thật — mục tiêu 400–600: {'ĐẠT' if n_ >= 400 else 'CHƯA ĐẠT'} ({n_}/400)")
+    kiem_qnoise(gt)
     return ket_thuc()
+
+
+VIET = re.compile(r"[^\x00-\x7f]")
+
+
+def kiem_qnoise(gt):
+    """B10 — Q-Noise v1: câu G-Truth gõ kiểu sinh viên (bỏ dấu, viết tắt, gõ vội). TỔNG HỢP, không phải Q-Real."""
+    print("\nB10. Q-NOISE (tổng hợp — đo độ bền parser, KHÔNG thay Q-Real)")
+    try:
+        import build_qnoise as QN
+        qn = json.loads((HERE / "qnoise.json").read_text(encoding="utf-8"))
+    except (ImportError, FileNotFoundError) as e:
+        check(False, f"B10 có build_qnoise.py và qnoise.json ({e})")
+        return
+    cs = qn["cases"]
+    check(qn["meta"].get("loai") == "tong_hop" and "Q-Real" in qn["meta"].get("ghi_chu", ""),
+          "B10a nhãn TỔNG HỢP, ghi rõ không thay Q-Real")
+    goc = {c["id"]: c for c in gt}
+    chon = {c["id"] for c in gt if QN.la_goc(c)}
+    check(chon and chon == {c["goc"] for c in cs},
+          f"B10b câu gốc = mọi ca G-Truth đi qua parser, không dữ kiện mở ({len(chon)} ca)")
+    bt = defaultdict(set)
+    for c in cs:
+        bt[c["goc"]].add(c["bien_the"])
+    check(all(v == set(QN.BIEN_THE) for v in bt.values()) and len({c["id"] for c in cs}) == len(cs),
+          f"B10c mỗi câu gốc đủ biến thể {QN.BIEN_THE}, id không trùng ({len(cs)} câu)")
+    ke = [c["id"] for c in cs if c["he"] != "nl" or any(c.get(k) != goc[c["goc"]].get(k) for k in QN.KE_THUA)
+          or c["id"] != f"QN-{c['goc']}-{c['bien_the']}" or c["claim_goc"] != goc[c["goc"]]["claim"]]
+    check(not ke, f"B10d gold/split/đầu vào KẾ THỪA nguyên từ ca gốc đã đóng băng; id = QN-gốc-biến thể ({ke[:4]})")
+    yd = [c["id"] for c in cs if c.get("claim_ky_vong") != QN.y_dinh(goc[c["goc"]])
+          or any(x in QN.TU_CHOI for x in c["claim_ky_vong"])]
+    check(not yd and set(QN.Y_DINH_NL) == {i for i in chon if goc[i]["he"] == "nl"},
+          f"B10h mỗi câu có ý định kỳ vọng (claim parser phải sinh; rỗng = phải từ chối), câu nl gán tay đủ ({yd[:4]})")
+    v = {(c["goc"], c["bien_the"]): c["cau_hoi"] for c in cs}
+    xau = []
+    for c in cs:
+        q0 = goc[c["goc"]]["cau_hoi"]
+        q = c["cau_hoi"]
+        ma0 = sorted(m.upper() for m in re.findall(r"[A-Za-z]{2}\d{3}[Ee]?", q0))
+        if (c["bien_the"] == "V0") != (q == q0) or sorted(m.upper() for m in re.findall(r"[A-Za-z]{2}\d{3}[Ee]?", q)) != ma0:
+            xau.append((c["id"], "V0/mã HP"))
+        if c["bien_the"] in ("V1", "V4") and VIET.search(q):
+            xau.append((c["id"], "còn dấu"))
+        if c["bien_the"] == "V1" and QN.ma_thuong(QN.bo_dau(q0)) != q:
+            xau.append((c["id"], "V1 phải chỉ bỏ dấu"))
+        if c["bien_the"] == "V4" and QN.bo_dau(v[(c["goc"], "V2")]) != q:
+            xau.append((c["id"], "V4 phải = V2 bỏ dấu"))
+        if c["bien_the"] != "V0" and re.search(r"[A-Z]{2}\d{3}", q):
+            xau.append((c["id"], "mã HP chưa viết thường"))
+    check(not xau, f"B10e V0 = câu gốc; V1 = chỉ bỏ dấu; V4 = V2 bỏ dấu; giữ đúng mã HP (viết thường) ({xau[:4]})")
+    check(QN.sinh(gt) == cs, "B10f sinh lại tất định (seed theo id) — trùng qnoise.json")
+    try:
+        db = json.loads((HERE / "qnoise_dong_bang.json").read_text(encoding="utf-8"))
+        dbg = json.loads((HERE / "gold_dong_bang.json").read_text(encoding="utf-8"))
+        check(db.get("qnoise") == hash_ca(cs) and db.get("gtruth_goc") == dbg["gtruth"] == hash_gold(gt),
+              "B10g Q-Noise ĐÓNG BĂNG trước lần chạy đầu (hash TOÀN BỘ ca khớp; G-Truth gốc khớp bản đóng băng)")
+    except FileNotFoundError:
+        check(False, "B10g có qnoise_dong_bang.json")
 
 
 def ket_thuc():
