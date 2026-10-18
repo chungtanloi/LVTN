@@ -1,0 +1,4282 @@
+{
+ "meta": {
+  "ten": "CPA² G-Truth v1 (Tuần 20)",
+  "seed": 20,
+  "ghi_chu": "Gold viết tay trong build_benchmark.py, đóng băng (gold_dong_bang.json) TRƯỚC lần chạy đầu."
+ },
+ "cases": [
+  {
+   "id": "DK-01",
+   "nhom": "dang_ky",
+   "he": "kb",
+   "claim": "duoc_dang_ky(\"CT182\")",
+   "cau_hoi": "Kỳ này em đăng ký học phần CT182 được không?",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      "CT182"
+     ]
+    ]
+   },
+   "gold": "TRUE",
+   "ly_do": "Đã tích lũy CT176 (tiên quyết) và đã học CT180 (song hành).",
+   "nguon": "QĐ3266 Điều 7 khoản 4, tr.5 (R-A03: tiên quyết phải đã tích lũy); QĐ3266 Điều 7 khoản 5, tr.5 (R-A04: song hành phải học trước hoặc học cùng lúc; 'học' ≠ 'tích lũy' — quyết định (a), Loi 18/10/2026)",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "split": "test"
+  },
+  {
+   "id": "DK-02",
+   "nhom": "dang_ky",
+   "he": "kb",
+   "claim": "duoc_dang_ky(\"CT182\")",
+   "cau_hoi": "Kỳ này em đăng ký học phần CT182 được không?",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      [
+       "CT182",
+       "CT180"
+      ]
+     ]
+    ]
+   },
+   "gold": "TRUE",
+   "ly_do": "Chưa học CT180 nhưng CT180 đăng ký được (đã có CT177) → được, với điều kiện học CT180 cùng kỳ.",
+   "nguon": "QĐ3266 Điều 7 khoản 4, tr.5 (R-A03: tiên quyết phải đã tích lũy); QĐ3266 Điều 7 khoản 5, tr.5 (R-A04: song hành phải học trước hoặc học cùng lúc; 'học' ≠ 'tích lũy' — quyết định (a), Loi 18/10/2026)",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "split": "dev"
+  },
+  {
+   "id": "DK-03",
+   "nhom": "dang_ky",
+   "he": "kb",
+   "claim": "duoc_dang_ky(\"CT182\")",
+   "cau_hoi": "Kỳ này em đăng ký học phần CT182 được không?",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      [
+       "CT182",
+       "CT180",
+       "CT177"
+      ]
+     ]
+    ]
+   },
+   "gold": "FALSE",
+   "ly_do": "Chưa học CT180 và CT180 không đăng ký được (thiếu CT177) → không học trước, không học cùng lúc được.",
+   "nguon": "QĐ3266 Điều 7 khoản 4, tr.5 (R-A03: tiên quyết phải đã tích lũy); QĐ3266 Điều 7 khoản 5, tr.5 (R-A04: song hành phải học trước hoặc học cùng lúc; 'học' ≠ 'tích lũy' — quyết định (a), Loi 18/10/2026)",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "split": "dev"
+  },
+  {
+   "id": "DK-04",
+   "nhom": "dang_ky",
+   "he": "kb",
+   "claim": "duoc_dang_ky(\"CT182\")",
+   "cau_hoi": "Kỳ này em đăng ký học phần CT182 được không?",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      [
+       "CT182",
+       "CT176"
+      ]
+     ]
+    ]
+   },
+   "gold": "FALSE",
+   "ly_do": "Thiếu tiên quyết CT176.",
+   "nguon": "QĐ3266 Điều 7 khoản 4, tr.5 (R-A03: tiên quyết phải đã tích lũy)",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "split": "dev"
+  },
+  {
+   "id": "DK-05",
+   "nhom": "dang_ky",
+   "he": "kb",
+   "claim": "duoc_dang_ky(\"CT182\")",
+   "cau_hoi": "Kỳ này em đăng ký học phần CT182 được không?",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      "CT182"
+     ],
+     [
+      "diem",
+      "CT180",
+      30
+     ]
+    ]
+   },
+   "gold": "TRUE",
+   "ly_do": "CT180 đã HỌC (bị F) — song hành chỉ đòi 'học', không đòi 'tích lũy'.",
+   "nguon": "QĐ3266 Điều 7 khoản 5, tr.5 (R-A04: song hành phải học trước hoặc học cùng lúc; 'học' ≠ 'tích lũy' — quyết định (a), Loi 18/10/2026)",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "split": "dev"
+  },
+  {
+   "id": "DK-06",
+   "nhom": "dang_ky",
+   "he": "kb",
+   "claim": "duoc_dang_ky(\"CT182\")",
+   "cau_hoi": "Kỳ này em đăng ký học phần CT182 được không?",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      "CT182"
+     ],
+     [
+      "diem_dac_biet",
+      "CT180",
+      "W"
+     ]
+    ]
+   },
+   "gold": "TRUE",
+   "ly_do": "CT180 điểm W (đã rút) không tính là đã học, nhưng CT180 đăng ký được → được, kèm điều kiện học cùng kỳ.",
+   "nguon": "QĐ3266 Điều 7 khoản 5, tr.5 (R-A04: song hành phải học trước hoặc học cùng lúc; 'học' ≠ 'tích lũy' — quyết định (a), Loi 18/10/2026)",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "split": "dev"
+  },
+  {
+   "id": "DK-07",
+   "nhom": "dang_ky",
+   "he": "kb",
+   "claim": "duoc_dang_ky(\"CT182\")",
+   "cau_hoi": "Kỳ này em đăng ký học phần CT182 được không?",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      "CT182"
+     ],
+     [
+      "diem",
+      "CT176",
+      35
+     ]
+    ]
+   },
+   "gold": "FALSE",
+   "ly_do": "CT176 bị F (3,5) → chưa tích lũy tiên quyết.",
+   "nguon": "QĐ3266 Điều 7 khoản 4, tr.5 (R-A03: tiên quyết phải đã tích lũy); QĐ3266 Điều 22 khoản 2–3, tr.13–14 (bảng quy đổi; tích lũy từ D)",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "split": "dev"
+  },
+  {
+   "id": "DK-08",
+   "nhom": "dang_ky",
+   "he": "kb",
+   "claim": "duoc_dang_ky(\"CT182\")",
+   "cau_hoi": "Kỳ này em đăng ký học phần CT182 được không?",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      "CT182"
+     ],
+     [
+      "diem",
+      "CT176",
+      40
+     ]
+    ]
+   },
+   "gold": "TRUE",
+   "ly_do": "CT176 đạt D (4,0) → đã tích lũy tiên quyết.",
+   "nguon": "QĐ3266 Điều 7 khoản 4, tr.5 (R-A03: tiên quyết phải đã tích lũy); QĐ3266 Điều 22 khoản 2–3, tr.13–14 (bảng quy đổi; tích lũy từ D)",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "split": "dev"
+  },
+  {
+   "id": "DK-09",
+   "nhom": "dang_ky",
+   "he": "kb",
+   "claim": "duoc_dang_ky(\"CT182\")",
+   "cau_hoi": "Kỳ này em đăng ký học phần CT182 được không?",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      "CT182"
+     ],
+     [
+      "khong_chac",
+      "CT176",
+      [
+       30,
+       80
+      ]
+     ]
+    ]
+   },
+   "gold": "UNKNOWN",
+   "ly_do": "Điểm CT176 (tiên quyết) chưa rõ 3,0 hay 8,0.",
+   "nguon": "QĐ3266 Điều 7 khoản 4, tr.5 (R-A03: tiên quyết phải đã tích lũy)",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "can_hoi": [
+    "g10(\"CT176\")"
+   ],
+   "split": "test"
+  },
+  {
+   "id": "DK-10",
+   "nhom": "dang_ky",
+   "he": "kb",
+   "claim": "duoc_dang_ky(\"CT550E\")",
+   "cau_hoi": "Kỳ này em đăng ký học phần CT550E được không?",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      [
+       "CT550E",
+       "CT223",
+       "CT222",
+       "CT467",
+       "CT293",
+       "CT275",
+       "CT300",
+       "CT202",
+       "CT294",
+       "CT273"
+      ]
+     ]
+    ]
+   },
+   "gold": "FALSE",
+   "ly_do": "119 TC tích lũy < 120.",
+   "nguon": "CTĐT CNTT K49 (QĐ2423) tr.4 — tiên quyết theo số TC tích lũy + QĐ3266 Điều 24 khoản 1, tr.15",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "oracle": {
+    "tc_tich_luy": "119"
+   },
+   "split": "dev"
+  },
+  {
+   "id": "DK-11",
+   "nhom": "dang_ky",
+   "he": "kb",
+   "claim": "duoc_dang_ky(\"CT550E\")",
+   "cau_hoi": "Kỳ này em đăng ký học phần CT550E được không?",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      [
+       "CT550E",
+       "CT223",
+       "CT222",
+       "CT467",
+       "CT293",
+       "CT275",
+       "CT300",
+       "CT202",
+       "CT294",
+       "CT190"
+      ]
+     ]
+    ]
+   },
+   "gold": "TRUE",
+   "ly_do": "Đúng 120 TC tích lũy (biên).",
+   "nguon": "CTĐT CNTT K49 (QĐ2423) tr.4 — tiên quyết theo số TC tích lũy + QĐ3266 Điều 24 khoản 1, tr.15",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "oracle": {
+    "tc_tich_luy": "120"
+   },
+   "split": "test"
+  },
+  {
+   "id": "DK-12",
+   "nhom": "dang_ky",
+   "he": "kb",
+   "claim": "duoc_dang_ky(\"XH025\")",
+   "cau_hoi": "Kỳ này em đăng ký học phần XH025 được không?",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      "XH025"
+     ]
+    ]
+   },
+   "gold": "TRUE",
+   "ly_do": "XH025 song hành XH024 — đã học XH024.",
+   "nguon": "QĐ3266 Điều 7 khoản 5, tr.5 (R-A04: song hành phải học trước hoặc học cùng lúc; 'học' ≠ 'tích lũy' — quyết định (a), Loi 18/10/2026)",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "split": "test"
+  },
+  {
+   "id": "DK-13",
+   "nhom": "dang_ky",
+   "he": "kb",
+   "claim": "duoc_dang_ky(\"XH025\")",
+   "cau_hoi": "Kỳ này em đăng ký học phần XH025 được không?",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      [
+       "XH023",
+       "XH024",
+       "XH025"
+      ]
+     ]
+    ]
+   },
+   "gold": "TRUE",
+   "ly_do": "Chưa học XH024, XH023 nhưng cả chuỗi đăng ký được cùng kỳ (không có tiên quyết) → được, kèm điều kiện.",
+   "nguon": "QĐ3266 Điều 7 khoản 5, tr.5 (R-A04: song hành phải học trước hoặc học cùng lúc; 'học' ≠ 'tích lũy' — quyết định (a), Loi 18/10/2026)",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "split": "test"
+  },
+  {
+   "id": "DK-14",
+   "nhom": "dang_ky",
+   "he": "kb",
+   "claim": "duoc_dang_ky(\"CT271E\")",
+   "cau_hoi": "Kỳ này em đăng ký học phần CT271E được không?",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      "CT271E"
+     ],
+     [
+      "diem",
+      "CT174",
+      20
+     ]
+    ]
+   },
+   "gold": "FALSE",
+   "ly_do": "CT174 (tiên quyết của niên luận cơ sở) bị F.",
+   "nguon": "QĐ3266 Điều 7 khoản 4, tr.5 (R-A03: tiên quyết phải đã tích lũy)",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "split": "dev"
+  },
+  {
+   "id": "DK-15",
+   "nhom": "dang_ky",
+   "he": "kb",
+   "claim": "duoc_dang_ky(\"CT271E\")",
+   "cau_hoi": "Kỳ này em đăng ký học phần CT271E được không?",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      "CT271E"
+     ],
+     [
+      "diem",
+      "CT174",
+      45
+     ]
+    ]
+   },
+   "gold": "TRUE",
+   "ly_do": "CT174 đạt D (4,5), CT176 đạt → đủ tiên quyết.",
+   "nguon": "QĐ3266 Điều 7 khoản 4, tr.5 (R-A03: tiên quyết phải đã tích lũy); QĐ3266 Điều 22 khoản 2–3, tr.13–14 (bảng quy đổi; tích lũy từ D)",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "split": "test"
+  },
+  {
+   "id": "DK-16",
+   "nhom": "dang_ky",
+   "he": "kb",
+   "claim": "duoc_dang_ky(\"CT466E\")",
+   "cau_hoi": "Kỳ này em đăng ký học phần CT466E được không?",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      [
+       "CT466E",
+       "CT223",
+       "CT222",
+       "CT467",
+       "CT293",
+       "CT275",
+       "CT300",
+       "CT202",
+       "CT294",
+       "CT273",
+       "CT179",
+       "CT188",
+       "CT112",
+       "CT178",
+       "CT173",
+       "CT296",
+       "CT175",
+       "CT190",
+       "CT172",
+       "CT200",
+       "CT100",
+       "TN012",
+       "TN010",
+       "TN002",
+       "TN001",
+       "ML007",
+       "KL001E"
+      ]
+     ]
+    ]
+   },
+   "gold": "TRUE",
+   "ly_do": "Niên luận cần ≥ 80 TC; có đúng 80.",
+   "nguon": "CTĐT CNTT K49 (QĐ2423) tr.4 — tiên quyết theo số TC tích lũy + QĐ3266 Điều 24 khoản 1, tr.15",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "oracle": {
+    "tc_tich_luy": "80"
+   },
+   "split": "dev"
+  },
+  {
+   "id": "DK-17",
+   "nhom": "dang_ky",
+   "he": "kb",
+   "claim": "duoc_dang_ky(\"CT466E\")",
+   "cau_hoi": "Kỳ này em đăng ký học phần CT466E được không?",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      [
+       "CT466E",
+       "CT223",
+       "CT222",
+       "CT467",
+       "CT293",
+       "CT275",
+       "CT300",
+       "CT202",
+       "CT294",
+       "CT273",
+       "CT179",
+       "CT188",
+       "CT112",
+       "CT178",
+       "CT173",
+       "CT296",
+       "CT175",
+       "CT190",
+       "CT172",
+       "CT200",
+       "CT100",
+       "TN012",
+       "TN010",
+       "TN002",
+       "TN001",
+       "ML007",
+       "CT449"
+      ]
+     ]
+    ]
+   },
+   "gold": "FALSE",
+   "ly_do": "79 TC < 80.",
+   "nguon": "CTĐT CNTT K49 (QĐ2423) tr.4 — tiên quyết theo số TC tích lũy + QĐ3266 Điều 24 khoản 1, tr.15",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "oracle": {
+    "tc_tich_luy": "79"
+   },
+   "split": "test"
+  },
+  {
+   "id": "DK-18",
+   "nhom": "dang_ky",
+   "he": "kb",
+   "claim": "duoc_dang_ky(\"CT518E\")",
+   "cau_hoi": "Kỳ này em đăng ký học phần CT518E được không?",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      [
+       "CT518E",
+       "CT223",
+       "CT222",
+       "CT467",
+       "CT293",
+       "CT275",
+       "CT300",
+       "CT202",
+       "CT294",
+       "CT273",
+       "CT190",
+       "CT100"
+      ]
+     ]
+    ]
+   },
+   "gold": "TRUE",
+   "ly_do": "Thực tập cần ≥ 125 TC; có đúng 125.",
+   "nguon": "CTĐT CNTT K49 (QĐ2423) tr.4 — tiên quyết theo số TC tích lũy + QĐ3266 Điều 24 khoản 1, tr.15",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "oracle": {
+    "tc_tich_luy": "125"
+   },
+   "split": "test"
+  },
+  {
+   "id": "DK-19",
+   "nhom": "dang_ky",
+   "he": "kb",
+   "claim": "duoc_dang_ky(\"CT518E\")",
+   "cau_hoi": "Kỳ này em đăng ký học phần CT518E được không?",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      [
+       "CT518E",
+       "CT223",
+       "CT222",
+       "CT467",
+       "CT293",
+       "CT275",
+       "CT300",
+       "CT202",
+       "CT294",
+       "CT273",
+       "CT179",
+       "CT190"
+      ]
+     ]
+    ]
+   },
+   "gold": "FALSE",
+   "ly_do": "124 TC < 125.",
+   "nguon": "CTĐT CNTT K49 (QĐ2423) tr.4 — tiên quyết theo số TC tích lũy + QĐ3266 Điều 24 khoản 1, tr.15",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "oracle": {
+    "tc_tich_luy": "124"
+   },
+   "split": "dev"
+  },
+  {
+   "id": "DK-20",
+   "nhom": "dang_ky",
+   "he": "kb",
+   "claim": "duoc_dang_ky(\"ML019\")",
+   "cau_hoi": "Kỳ này em đăng ký học phần ML019 được không?",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      [
+       "ML019",
+       "ML018"
+      ]
+     ]
+    ]
+   },
+   "gold": "FALSE",
+   "ly_do": "Thiếu tiên quyết ML018.",
+   "nguon": "QĐ3266 Điều 7 khoản 4, tr.5 (R-A03: tiên quyết phải đã tích lũy)",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "split": "test"
+  },
+  {
+   "id": "DK-21",
+   "nhom": "dang_ky",
+   "he": "kb",
+   "claim": "duoc_dang_ky(\"ML019\")",
+   "cau_hoi": "Kỳ này em đăng ký học phần ML019 được không?",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      [
+       "ML019",
+       "ML018",
+       "ML016"
+      ]
+     ],
+     [
+      "diem_tho",
+      "ML010",
+      {
+       "credits": 3,
+       "thang10": 80,
+       "letter": "B+",
+       "status": "passed"
+      }
+     ]
+    ]
+   },
+   "gold": "FALSE",
+   "ly_do": "ML018 (tiên quyết của ML019) mới ĐỦ ĐIỀU KIỆN được xét công nhận từ ML010 — chưa có quyết định công nhận → chưa tích lũy. [Sửa trước đóng băng sau soát độc lập: bản đầu ghi TRUE.]",
+   "nguon": "QĐ3266 Điều 7 khoản 4, tr.5 (R-A03: tiên quyết phải đã tích lũy); QĐ5339 Điều 3 khoản 9, tr.8 (R-M13: bảng chuyển đổi Lý luận chính trị — ML009→ML014, ML010→ML016+ML018, ML011→ML019, ML006→ML021) + Điều 2 khoản 6, tr.4 (phải làm đơn, đơn vị xét duyệt — công nhận KHÔNG tự động; cùng tinh thần QD-11)",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "split": "test"
+  },
+  {
+   "id": "DK-22",
+   "nhom": "dang_ky",
+   "he": "kb",
+   "claim": "duoc_dang_ky(\"CT999\")",
+   "cau_hoi": "Kỳ này em đăng ký học phần CT999 được không?",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": []
+   },
+   "gold": "UNKNOWN",
+   "ly_do": "Mã CT999 không có trong CTĐT K49 — hệ thống không có dữ kiện về học phần này → không được kết luận 'không'.",
+   "nguon": "Nguyên tắc thiết kế CPA² (Tuần 1): không kết luận điều KB không hình thức hoá / không có dữ kiện — KHÔNG phải nội dung quy chế",
+   "cham_diem": true,
+   "loai_gold": "thiet_ke",
+   "can_hoi": [],
+   "split": "test"
+  },
+  {
+   "id": "EL-01",
+   "nhom": "du_dieu_kien",
+   "he": "elig",
+   "claim": "lvtn",
+   "cau_hoi": "Em có đủ điều kiện làm luận văn tốt nghiệp không?",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      "CT550E"
+     ]
+    ]
+   },
+   "gold": "TRUE",
+   "ly_do": "146 TC ≥ 120, chưa hoàn thành hình thức nào, không khai báo hình thức khác.",
+   "nguon": "QĐ3266 Điều 31, tr.19 + QD-12 (điều kiện nhận đề tài chỉ là ngưỡng TC — Loi 18/10/2026) + CTĐT K49 (CT550E/CT501E ≥ 120 TC)",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "split": "dev"
+  },
+  {
+   "id": "EL-02",
+   "nhom": "du_dieu_kien",
+   "he": "elig",
+   "claim": "lvtn",
+   "cau_hoi": "Em có đủ điều kiện làm luận văn tốt nghiệp không?",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      "CT550E"
+     ],
+     [
+      "dat",
+      "hinh_thuc_cuoi_khoa",
+      "tltn"
+     ]
+    ]
+   },
+   "gold": "FALSE",
+   "ly_do": "Đơn vị đã công bố hình thức TLTN cho SV → không làm LVTN.",
+   "nguon": "QĐ3266 Điều 31, tr.19: SV thực hiện MỘT trong ba hình thức; đơn vị đào tạo công bố hình thức cho SV",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "split": "dev"
+  },
+  {
+   "id": "EL-03",
+   "nhom": "du_dieu_kien",
+   "he": "elig",
+   "claim": "tltn",
+   "cau_hoi": "Em có đủ điều kiện làm tiểu luận tốt nghiệp không?",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      "CT550E"
+     ],
+     [
+      "dat",
+      "hinh_thuc_cuoi_khoa",
+      "tltn"
+     ]
+    ]
+   },
+   "gold": "TRUE",
+   "ly_do": "Đã công bố TLTN, đủ 146 TC.",
+   "nguon": "QĐ3266 Điều 31, tr.19 + QD-12 (điều kiện nhận đề tài chỉ là ngưỡng TC — Loi 18/10/2026) + CTĐT K49 (CT550E/CT501E ≥ 120 TC)",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "split": "dev"
+  },
+  {
+   "id": "EL-04",
+   "nhom": "du_dieu_kien",
+   "he": "elig",
+   "claim": "lvtn",
+   "cau_hoi": "Em có đủ điều kiện làm luận văn tốt nghiệp không?",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      [
+       "CT550E",
+       "CT223",
+       "CT222",
+       "CT467",
+       "CT293",
+       "CT275",
+       "CT300",
+       "CT202",
+       "CT294",
+       "CT273"
+      ]
+     ]
+    ]
+   },
+   "gold": "FALSE",
+   "ly_do": "119 TC < 120.",
+   "nguon": "QĐ3266 Điều 31, tr.19 + QD-12 (điều kiện nhận đề tài chỉ là ngưỡng TC — Loi 18/10/2026) + CTĐT K49 (CT550E/CT501E ≥ 120 TC)",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "oracle": {
+    "tc_tich_luy": "119"
+   },
+   "split": "dev"
+  },
+  {
+   "id": "EL-05",
+   "nhom": "du_dieu_kien",
+   "he": "elig",
+   "claim": "tltn",
+   "cau_hoi": "Em có đủ điều kiện làm tiểu luận tốt nghiệp không?",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      [
+       "CT550E",
+       "CT223",
+       "CT222",
+       "CT467",
+       "CT293",
+       "CT275",
+       "CT300",
+       "CT202",
+       "CT294",
+       "CT190"
+      ]
+     ]
+    ]
+   },
+   "gold": "TRUE",
+   "ly_do": "Đúng 120 TC.",
+   "nguon": "QĐ3266 Điều 31, tr.19 + QD-12 (điều kiện nhận đề tài chỉ là ngưỡng TC — Loi 18/10/2026) + CTĐT K49 (CT550E/CT501E ≥ 120 TC)",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "oracle": {
+    "tc_tich_luy": "120"
+   },
+   "split": "test"
+  },
+  {
+   "id": "EL-06",
+   "nhom": "du_dieu_kien",
+   "he": "elig",
+   "claim": "lvtn",
+   "cau_hoi": "Em bị F luận văn, em có được làm lại luận văn không?",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "diem",
+      "CT550E",
+      30
+     ]
+    ]
+   },
+   "gold": "TRUE",
+   "ly_do": "LVTN bị F → được đăng ký làm lại.",
+   "nguon": "QĐ3266 Điều 31 (đoạn cuối), tr.19: nhận điểm F của LVTN/TLTN phải đăng ký làm lại hoặc học HP thay thế",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "split": "test"
+  },
+  {
+   "id": "EL-07",
+   "nhom": "du_dieu_kien",
+   "he": "elig",
+   "claim": "tich_luy_tc",
+   "cau_hoi": "Em có thể học các học phần thay thế thay cho luận văn không?",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      "CT550E"
+     ]
+    ]
+   },
+   "gold": "TRUE",
+   "ly_do": "Chưa làm LVTN/TLTN, nhóm tốt nghiệp chưa đủ → được chọn tích lũy TC thay thế.",
+   "nguon": "QĐ3266 Điều 31 khoản 3, tr.19 (tích lũy TC tốt nghiệp thay LVTN/TLTN)",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "split": "dev"
+  },
+  {
+   "id": "EL-08",
+   "nhom": "du_dieu_kien",
+   "he": "elig",
+   "claim": "nien_luan",
+   "cau_hoi": "Em có đủ điều kiện làm niên luận không?",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      [
+       "CT466E",
+       "CT223",
+       "CT222",
+       "CT467",
+       "CT293",
+       "CT275",
+       "CT300",
+       "CT202",
+       "CT294",
+       "CT273",
+       "CT179",
+       "CT188",
+       "CT112",
+       "CT178",
+       "CT173",
+       "CT296",
+       "CT175",
+       "CT190",
+       "CT172",
+       "CT200",
+       "CT100",
+       "TN012",
+       "TN010",
+       "TN002",
+       "TN001",
+       "CT449"
+      ]
+     ]
+    ]
+   },
+   "gold": "TRUE",
+   "ly_do": "81 TC ≥ 80.",
+   "nguon": "CTĐT CNTT K49 (QĐ2423) tr.4 — tiên quyết theo số TC tích lũy + QĐ3266 Điều 24 khoản 1, tr.15",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "oracle": {
+    "tc_tich_luy": "81"
+   },
+   "split": "test"
+  },
+  {
+   "id": "EL-09",
+   "nhom": "du_dieu_kien",
+   "he": "elig",
+   "claim": "nien_luan",
+   "cau_hoi": "Em có đủ điều kiện làm niên luận không?",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      [
+       "CT466E",
+       "CT223",
+       "CT222",
+       "CT467",
+       "CT293",
+       "CT275",
+       "CT300",
+       "CT202",
+       "CT294",
+       "CT273",
+       "CT179",
+       "CT188",
+       "CT112",
+       "CT178",
+       "CT173",
+       "CT296",
+       "CT175",
+       "CT190",
+       "CT172",
+       "CT200",
+       "CT100",
+       "TN012",
+       "TN010",
+       "TN002",
+       "TN001",
+       "ML007",
+       "KL001E",
+       "ML021"
+      ]
+     ]
+    ]
+   },
+   "gold": "FALSE",
+   "ly_do": "78 TC < 80.",
+   "nguon": "CTĐT CNTT K49 (QĐ2423) tr.4 — tiên quyết theo số TC tích lũy + QĐ3266 Điều 24 khoản 1, tr.15",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "oracle": {
+    "tc_tich_luy": "78"
+   },
+   "split": "dev"
+  },
+  {
+   "id": "EL-10",
+   "nhom": "du_dieu_kien",
+   "he": "elig",
+   "claim": "thuc_tap",
+   "cau_hoi": "Em có đủ điều kiện đi thực tập doanh nghiệp không?",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      [
+       "CT518E",
+       "CT223",
+       "CT222",
+       "CT467",
+       "CT293",
+       "CT275",
+       "CT300",
+       "CT202",
+       "CT294",
+       "CT190"
+      ]
+     ]
+    ]
+   },
+   "gold": "TRUE",
+   "ly_do": "130 TC ≥ 125.",
+   "nguon": "CTĐT CNTT K49 (QĐ2423) tr.4 — tiên quyết theo số TC tích lũy + QĐ3266 Điều 24 khoản 1, tr.15",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "oracle": {
+    "tc_tich_luy": "130"
+   },
+   "split": "test"
+  },
+  {
+   "id": "EL-11",
+   "nhom": "du_dieu_kien",
+   "he": "elig",
+   "claim": "thuc_tap",
+   "cau_hoi": "Em có đủ điều kiện đi thực tập doanh nghiệp không?",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      [
+       "CT518E",
+       "CT223",
+       "CT222",
+       "CT467",
+       "CT293",
+       "CT275",
+       "CT300",
+       "CT202",
+       "CT294",
+       "CT273",
+       "CT179",
+       "CT190",
+       "CT100"
+      ]
+     ]
+    ]
+   },
+   "gold": "FALSE",
+   "ly_do": "122 TC < 125.",
+   "nguon": "CTĐT CNTT K49 (QĐ2423) tr.4 — tiên quyết theo số TC tích lũy + QĐ3266 Điều 24 khoản 1, tr.15",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "oracle": {
+    "tc_tich_luy": "122"
+   },
+   "split": "dev"
+  },
+  {
+   "id": "EL-12",
+   "nhom": "du_dieu_kien",
+   "he": "elig",
+   "claim": "nien_luan_co_so",
+   "cau_hoi": "Em có đủ điều kiện làm niên luận cơ sở không?",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      [
+       "CT271E",
+       "CT176"
+      ]
+     ]
+    ]
+   },
+   "gold": "FALSE",
+   "ly_do": "Thiếu tiên quyết CT176.",
+   "nguon": "QĐ3266 Điều 7 khoản 4, tr.5 (R-A03: tiên quyết phải đã tích lũy)",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "split": "dev"
+  },
+  {
+   "id": "EL-13",
+   "nhom": "du_dieu_kien",
+   "he": "elig",
+   "claim": "nien_luan_co_so",
+   "cau_hoi": "Em có đủ điều kiện làm niên luận cơ sở không?",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      "CT271E"
+     ],
+     [
+      "khong_chac",
+      "CT176",
+      [
+       35,
+       85
+      ]
+     ]
+    ]
+   },
+   "gold": "UNKNOWN",
+   "ly_do": "Điểm CT176 chưa rõ 3,5 hay 8,5.",
+   "nguon": "QĐ3266 Điều 7 khoản 4, tr.5 (R-A03: tiên quyết phải đã tích lũy)",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "can_hoi": [
+    "g10(\"CT176\")"
+   ],
+   "split": "test"
+  },
+  {
+   "id": "EL-14",
+   "nhom": "du_dieu_kien",
+   "he": "elig",
+   "claim": "nien_luan_co_so",
+   "cau_hoi": "Em có đủ điều kiện làm niên luận cơ sở không?",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      "CT271E"
+     ],
+     [
+      "diem",
+      "CT176",
+      40
+     ]
+    ]
+   },
+   "gold": "TRUE",
+   "ly_do": "CT176 đạt D (4,0) là đã tích lũy.",
+   "nguon": "QĐ3266 Điều 7 khoản 4, tr.5 (R-A03: tiên quyết phải đã tích lũy); QĐ3266 Điều 22 khoản 2–3, tr.13–14 (bảng quy đổi; tích lũy từ D)",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "split": "test"
+  },
+  {
+   "id": "EL-15",
+   "nhom": "du_dieu_kien",
+   "he": "elig",
+   "claim": "thay_the:ML018",
+   "cau_hoi": "Em đã học Lý luận chính trị cũ ML010, em có được công nhận ML018 không?",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      [
+       "ML016",
+       "ML018"
+      ]
+     ],
+     [
+      "diem_tho",
+      "ML010",
+      {
+       "credits": 3,
+       "thang10": 80,
+       "letter": "B+",
+       "status": "passed"
+      }
+     ]
+    ]
+   },
+   "gold": "TRUE",
+   "ly_do": "Đạt ML010 → được công nhận thay ML016 và ML018 (một → nhiều).",
+   "nguon": "QĐ5339 Điều 3 khoản 9, tr.8 (R-M13: bảng chuyển đổi Lý luận chính trị — ML009→ML014, ML010→ML016+ML018, ML011→ML019, ML006→ML021)",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "split": "test"
+  },
+  {
+   "id": "EL-16",
+   "nhom": "du_dieu_kien",
+   "he": "elig",
+   "claim": "thay_the:ML019",
+   "cau_hoi": "Em học ML011 rồi, em có được công nhận ML019 không?",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      "ML019"
+     ],
+     [
+      "diem_tho",
+      "ML011",
+      {
+       "credits": 3,
+       "thang10": 30,
+       "letter": "F",
+       "status": "failed"
+      }
+     ]
+    ]
+   },
+   "gold": "FALSE",
+   "ly_do": "ML011 bị F → không có học phần cũ đã đạt để công nhận ML019.",
+   "nguon": "QĐ5339 Điều 3 khoản 9, tr.8 (R-M13: bảng chuyển đổi Lý luận chính trị — ML009→ML014, ML010→ML016+ML018, ML011→ML019, ML006→ML021)",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "split": "dev"
+  },
+  {
+   "id": "EL-17",
+   "nhom": "du_dieu_kien",
+   "he": "elig",
+   "claim": "thay_the:ML021",
+   "cau_hoi": "Em học ML006 rồi, em có được công nhận ML021 không?",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      "ML021"
+     ],
+     [
+      "diem_tho",
+      "ML006",
+      {
+       "credits": 2,
+       "thang10": 65,
+       "letter": "C+",
+       "status": "passed"
+      }
+     ]
+    ]
+   },
+   "gold": "TRUE",
+   "ly_do": "Đạt ML006 → công nhận ML021.",
+   "nguon": "QĐ5339 Điều 3 khoản 9, tr.8 (R-M13: bảng chuyển đổi Lý luận chính trị — ML009→ML014, ML010→ML016+ML018, ML011→ML019, ML006→ML021)",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "split": "test"
+  },
+  {
+   "id": "RC-01",
+   "nhom": "de_xuat",
+   "he": "rec",
+   "claim": "khong_de_xuat:CT174@1",
+   "cau_hoi": "Hệ thống có thể đề xuất em đăng ký CT174 ở học kỳ 1 không?",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      [
+       "CT177",
+       "CT174",
+       "CT175",
+       "CT180",
+       "CT182",
+       "CT296",
+       "CT467",
+       "CT178",
+       "CT112",
+       "CT293",
+       "CT271E",
+       "CT273",
+       "CT294",
+       "CT202",
+       "CT275",
+       "CT300",
+       "CT223",
+       "CT222",
+       "CT449",
+       "CT484",
+       "CT466E",
+       "CT550E",
+       "CT518E",
+       "ML018",
+       "ML019",
+       "ML021",
+       "XH025",
+       "CT179",
+       "CT188"
+      ]
+     ]
+    ]
+   },
+   "gold": "TRUE",
+   "ly_do": "CT174 cần CT177 (chưa tích lũy).",
+   "nguon": "QĐ3266 Điều 7 khoản 4, tr.5 (R-A03: tiên quyết phải đã tích lũy)",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "hk": 1,
+   "split": "test"
+  },
+  {
+   "id": "RC-02",
+   "nhom": "de_xuat",
+   "he": "rec",
+   "claim": "khong_de_xuat:CT177@3",
+   "cau_hoi": "Hệ thống có thể đề xuất em đăng ký CT177 ở học kỳ 3 không?",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      [
+       "CT177",
+       "CT174",
+       "CT175",
+       "CT180",
+       "CT182",
+       "CT296",
+       "CT467",
+       "CT178",
+       "CT112",
+       "CT293",
+       "CT271E",
+       "CT273",
+       "CT294",
+       "CT202",
+       "CT275",
+       "CT300",
+       "CT223",
+       "CT222",
+       "CT449",
+       "CT484",
+       "CT466E",
+       "CT550E",
+       "CT518E",
+       "ML018",
+       "ML019",
+       "ML021",
+       "XH025",
+       "CT179",
+       "CT188"
+      ]
+     ]
+    ]
+   },
+   "gold": "TRUE",
+   "ly_do": "CT177 chỉ mở HK1, HK2.",
+   "nguon": "CTĐT CNTT K49 — học kỳ mở học phần (cột HK); GDQP&AN do Trường bố trí riêng",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "hk": 3,
+   "split": "dev"
+  },
+  {
+   "id": "RC-03",
+   "nhom": "de_xuat",
+   "he": "rec",
+   "claim": "khong_de_xuat:CT101@1",
+   "cau_hoi": "Hệ thống có thể đề xuất em đăng ký CT101 ở học kỳ 1 không?",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      [
+       "CT177",
+       "CT174",
+       "CT175",
+       "CT180",
+       "CT182",
+       "CT296",
+       "CT467",
+       "CT178",
+       "CT112",
+       "CT293",
+       "CT271E",
+       "CT273",
+       "CT294",
+       "CT202",
+       "CT275",
+       "CT300",
+       "CT223",
+       "CT222",
+       "CT449",
+       "CT484",
+       "CT466E",
+       "CT550E",
+       "CT518E",
+       "ML018",
+       "ML019",
+       "ML021",
+       "XH025",
+       "CT179",
+       "CT188"
+      ]
+     ]
+    ]
+   },
+   "gold": "TRUE",
+   "ly_do": "CT101 đã tích lũy.",
+   "nguon": "QĐ3266 Điều 22 khoản 2–3, tr.13–14 (bảng quy đổi; tích lũy từ D)",
+   "cham_diem": true,
+   "loai_gold": "thiet_ke",
+   "hk": 1,
+   "split": "test"
+  },
+  {
+   "id": "RC-04",
+   "nhom": "de_xuat",
+   "he": "rec",
+   "claim": "khong_de_xuat:CT182@1",
+   "cau_hoi": "Hệ thống có thể đề xuất em đăng ký CT182 ở học kỳ 1 không?",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      [
+       "CT177",
+       "CT174",
+       "CT175",
+       "CT180",
+       "CT182",
+       "CT296",
+       "CT467",
+       "CT178",
+       "CT112",
+       "CT293",
+       "CT271E",
+       "CT273",
+       "CT294",
+       "CT202",
+       "CT275",
+       "CT300",
+       "CT223",
+       "CT222",
+       "CT449",
+       "CT484",
+       "CT466E",
+       "CT550E",
+       "CT518E",
+       "ML018",
+       "ML019",
+       "ML021",
+       "XH025",
+       "CT179",
+       "CT188"
+      ]
+     ]
+    ]
+   },
+   "gold": "TRUE",
+   "ly_do": "CT182 song hành CT180: chưa học CT180 và CT180 không đăng ký được (thiếu CT177).",
+   "nguon": "QĐ3266 Điều 7 khoản 5, tr.5 (R-A04: song hành phải học trước hoặc học cùng lúc; 'học' ≠ 'tích lũy' — quyết định (a), Loi 18/10/2026)",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "hk": 1,
+   "split": "dev"
+  },
+  {
+   "id": "RC-05",
+   "nhom": "de_xuat",
+   "he": "rec",
+   "claim": "khong_de_xuat:FL001@2",
+   "cau_hoi": "Hệ thống có thể đề xuất em đăng ký FL001 ở học kỳ 2 không?",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      [
+       "CT177",
+       "CT174",
+       "CT175",
+       "CT180",
+       "CT182",
+       "CT296",
+       "CT467",
+       "CT178",
+       "CT112",
+       "CT293",
+       "CT271E",
+       "CT273",
+       "CT294",
+       "CT202",
+       "CT275",
+       "CT300",
+       "CT223",
+       "CT222",
+       "CT449",
+       "CT484",
+       "CT466E",
+       "CT550E",
+       "CT518E",
+       "ML018",
+       "ML019",
+       "ML021",
+       "XH025",
+       "CT179",
+       "CT188"
+      ]
+     ]
+    ]
+   },
+   "gold": "TRUE",
+   "ly_do": "Đã học nhánh Anh văn (XH023, XH024) → không học Pháp văn.",
+   "nguon": "CTĐT CNTT K49 (QĐ2423) tr.3–4 — khung 161 TC, nhóm tự chọn ('10 AV hoặc PV'; chuyên ngành chọn một cặp)",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "hk": 2,
+   "split": "dev"
+  },
+  {
+   "id": "RC-06",
+   "nhom": "de_xuat",
+   "he": "rec",
+   "claim": "khong_de_xuat:CT550E@1",
+   "cau_hoi": "Hệ thống có thể đề xuất em đăng ký CT550E ở học kỳ 1 không?",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      [
+       "CT177",
+       "CT174",
+       "CT175",
+       "CT180",
+       "CT182",
+       "CT296",
+       "CT467",
+       "CT178",
+       "CT112",
+       "CT293",
+       "CT271E",
+       "CT273",
+       "CT294",
+       "CT202",
+       "CT275",
+       "CT300",
+       "CT223",
+       "CT222",
+       "CT449",
+       "CT484",
+       "CT466E",
+       "CT550E",
+       "CT518E",
+       "ML018",
+       "ML019",
+       "ML021",
+       "XH025",
+       "CT179",
+       "CT188"
+      ]
+     ]
+    ]
+   },
+   "gold": "TRUE",
+   "ly_do": "Chưa đủ 120 TC.",
+   "nguon": "CTĐT CNTT K49 (QĐ2423) tr.4 — tiên quyết theo số TC tích lũy + QĐ3266 Điều 24 khoản 1, tr.15",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "hk": 1,
+   "split": "dev"
+  },
+  {
+   "id": "RC-07",
+   "nhom": "de_xuat",
+   "he": "rec",
+   "claim": "khong_de_xuat:CT518E@1",
+   "cau_hoi": "Hệ thống có thể đề xuất em đăng ký CT518E ở học kỳ 1 không?",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      [
+       "CT177",
+       "CT174",
+       "CT175",
+       "CT180",
+       "CT182",
+       "CT296",
+       "CT467",
+       "CT178",
+       "CT112",
+       "CT293",
+       "CT271E",
+       "CT273",
+       "CT294",
+       "CT202",
+       "CT275",
+       "CT300",
+       "CT223",
+       "CT222",
+       "CT449",
+       "CT484",
+       "CT466E",
+       "CT550E",
+       "CT518E",
+       "ML018",
+       "ML019",
+       "ML021",
+       "XH025",
+       "CT179",
+       "CT188"
+      ]
+     ]
+    ]
+   },
+   "gold": "TRUE",
+   "ly_do": "CT518E chỉ mở HK3 (và cần 125 TC).",
+   "nguon": "CTĐT CNTT K49 — học kỳ mở học phần (cột HK); GDQP&AN do Trường bố trí riêng; CTĐT CNTT K49 (QĐ2423) tr.4 — tiên quyết theo số TC tích lũy + QĐ3266 Điều 24 khoản 1, tr.15",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "hk": 1,
+   "split": "test"
+  },
+  {
+   "id": "RC-08",
+   "nhom": "de_xuat",
+   "he": "rec",
+   "claim": "khong_de_xuat:QP012@1",
+   "cau_hoi": "Hệ thống có thể đề xuất em đăng ký QP012 ở học kỳ 1 không?",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      [
+       "QP012",
+       "CT177",
+       "CT174"
+      ]
+     ]
+    ]
+   },
+   "gold": "TRUE",
+   "ly_do": "GDQP&AN do Trường bố trí, không thuộc phương án tự đăng ký.",
+   "nguon": "CTĐT CNTT K49 — học kỳ mở học phần (cột HK); GDQP&AN do Trường bố trí riêng",
+   "cham_diem": true,
+   "loai_gold": "thiet_ke",
+   "hk": 1,
+   "split": "test"
+  },
+  {
+   "id": "RC-09",
+   "nhom": "de_xuat",
+   "he": "rec",
+   "claim": "tong_tc_le_20@1",
+   "cau_hoi": "Phương án đăng ký học kỳ 1 đề xuất cho em có vượt 20 tín chỉ không?",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      [
+       "CT177",
+       "CT174",
+       "CT175",
+       "CT180",
+       "CT182",
+       "CT296",
+       "CT467",
+       "CT178",
+       "CT112",
+       "CT293",
+       "CT271E",
+       "CT273",
+       "CT294",
+       "CT202",
+       "CT275",
+       "CT300",
+       "CT223",
+       "CT222",
+       "CT449",
+       "CT484",
+       "CT466E",
+       "CT550E",
+       "CT518E",
+       "ML018",
+       "ML019",
+       "ML021",
+       "XH025",
+       "CT179",
+       "CT188"
+      ]
+     ]
+    ]
+   },
+   "gold": "TRUE",
+   "ly_do": "Không vượt 20 TC/HK.",
+   "nguon": "QĐ3266 Điều 14 khoản 1, tr.8 (R-C01: tối đa 20 TC/HK)",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "hk": 1,
+   "split": "dev"
+  },
+  {
+   "id": "RC-10",
+   "nhom": "de_xuat",
+   "he": "rec",
+   "claim": "tong_tc_le_20@3",
+   "cau_hoi": "Phương án đăng ký học kỳ 3 đề xuất cho em có vượt 20 tín chỉ không?",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      [
+       "CT177",
+       "CT174",
+       "CT175",
+       "CT180",
+       "CT182",
+       "CT296",
+       "CT467",
+       "CT178",
+       "CT112",
+       "CT293",
+       "CT271E",
+       "CT273",
+       "CT294",
+       "CT202",
+       "CT275",
+       "CT300",
+       "CT223",
+       "CT222",
+       "CT449",
+       "CT484",
+       "CT466E",
+       "CT550E",
+       "CT518E",
+       "ML018",
+       "ML019",
+       "ML021",
+       "XH025",
+       "CT179",
+       "CT188"
+      ]
+     ]
+    ]
+   },
+   "gold": "TRUE",
+   "ly_do": "Không vượt 20 TC/HK (cả học kỳ 3).",
+   "nguon": "QĐ3266 Điều 14 khoản 1, tr.8 (R-C01: tối đa 20 TC/HK)",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "hk": 3,
+   "split": "dev"
+  },
+  {
+   "id": "RC-11",
+   "nhom": "de_xuat",
+   "he": "rec",
+   "claim": "khong_de_xuat:CT182@1",
+   "cau_hoi": "Hệ thống có thể đề xuất em đăng ký CT182 ở học kỳ 1 không?",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      [
+       "CT182",
+       "CT176"
+      ]
+     ],
+     [
+      "khong_chac",
+      "CT176",
+      [
+       30,
+       80
+      ]
+     ]
+    ]
+   },
+   "gold": "TRUE",
+   "ly_do": "Tiên quyết CT176 chưa rõ → không được đề xuất như thể chắc chắn.",
+   "nguon": "QĐ3266 Điều 7 khoản 4, tr.5 (R-A03: tiên quyết phải đã tích lũy); Nguyên tắc thiết kế CPA² (Tuần 1): không kết luận điều KB không hình thức hoá / không có dữ kiện — KHÔNG phải nội dung quy chế",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "hk": 1,
+   "split": "test"
+  },
+  {
+   "id": "RC-12",
+   "nhom": "de_xuat",
+   "he": "rec",
+   "claim": "khong_de_xuat:CT501E@1",
+   "cau_hoi": "Hệ thống có thể đề xuất em đăng ký CT501E ở học kỳ 1 không?",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      "CT550E"
+     ],
+     [
+      "dat",
+      "hinh_thuc_cuoi_khoa",
+      "lvtn"
+     ]
+    ]
+   },
+   "gold": "TRUE",
+   "ly_do": "Đơn vị đã công bố hình thức LVTN → không làm TLTN.",
+   "nguon": "QĐ3266 Điều 31, tr.19: SV thực hiện MỘT trong ba hình thức; đơn vị đào tạo công bố hình thức cho SV",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "hk": 1,
+   "split": "test"
+  },
+  {
+   "id": "TN-01",
+   "nhom": "tot_nghiep",
+   "he": "kb",
+   "claim": "tot_nghiep",
+   "cau_hoi": "Em đã đủ điều kiện xét tốt nghiệp chưa?",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_tltn",
+    "bien_doi": [
+     [
+      "diem",
+      "CT182",
+      40
+     ]
+    ]
+   },
+   "gold": "TRUE",
+   "ly_do": "Hồ sơ TLTN đủ 161 TC; CT182 đạt D (4,0) vẫn tích lũy, ĐTBCTL vẫn ≥ 2.",
+   "nguon": "QĐ3266 Điều 32 khoản 1, tr.19; QĐ3266 Điều 22 khoản 2–3, tr.13–14 (bảng quy đổi; tích lũy từ D)",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "oracle": {
+    "tc_tich_luy": "161",
+    "dtbctl_ge_2": true
+   },
+   "split": "test"
+  },
+  {
+   "id": "TN-02",
+   "nhom": "tot_nghiep",
+   "he": "kb",
+   "claim": "tot_nghiep",
+   "cau_hoi": "Em đã đủ điều kiện xét tốt nghiệp chưa?",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_5hp",
+    "bien_doi": [
+     [
+      "diem",
+      "CT478",
+      45
+     ]
+    ]
+   },
+   "gold": "TRUE",
+   "ly_do": "Tích lũy 15 TC thay LVTN (5 HP); CT478 đạt D (4,5) vẫn tính.",
+   "nguon": "QĐ3266 Điều 32 khoản 1, tr.19; QĐ3266 Điều 31 khoản 3, tr.19 (tích lũy TC tốt nghiệp thay LVTN/TLTN)",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "oracle": {
+    "tc_tich_luy": "161"
+   },
+   "split": "dev"
+  },
+  {
+   "id": "TN-03",
+   "nhom": "tot_nghiep",
+   "he": "kb",
+   "claim": "tot_nghiep",
+   "cau_hoi": "Em đã đủ điều kiện xét tốt nghiệp chưa?",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "diem",
+      "CT180",
+      40
+     ]
+    ]
+   },
+   "gold": "TRUE",
+   "ly_do": "CT180 đạt D (4,0) vẫn tích lũy; ĐTBCTL vẫn ≥ 2.",
+   "nguon": "QĐ3266 Điều 22 khoản 2–3, tr.13–14 (bảng quy đổi; tích lũy từ D); QĐ3266 Điều 32 khoản 1, tr.19",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "oracle": {
+    "dtbctl_ge_2": true
+   },
+   "split": "test"
+  },
+  {
+   "id": "TN-04",
+   "nhom": "tot_nghiep",
+   "he": "kb",
+   "claim": "tot_nghiep",
+   "cau_hoi": "Em đã đủ điều kiện xét tốt nghiệp chưa?",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "diem",
+      "CT180",
+      39
+     ]
+    ]
+   },
+   "gold": "FALSE",
+   "ly_do": "CT180 (bắt buộc) 3,9 = F → chưa tích lũy.",
+   "nguon": "QĐ3266 Điều 22 khoản 2–3, tr.13–14 (bảng quy đổi; tích lũy từ D); QĐ3266 Điều 32 khoản 1, tr.19",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "split": "dev"
+  },
+  {
+   "id": "TN-05",
+   "nhom": "tot_nghiep",
+   "he": "kb",
+   "claim": "tot_nghiep",
+   "cau_hoi": "Em đã đủ điều kiện xét tốt nghiệp chưa?",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "diem",
+      "QP012",
+      30
+     ]
+    ]
+   },
+   "gold": "FALSE",
+   "ly_do": "QP012 bị F → chưa hoàn thành HP điều kiện GDQP&AN.",
+   "nguon": "QĐ3266 Điều 32 khoản 1 điểm b, tr.19 (hoàn thành HP điều kiện; TB GDQP&AN ≥ 5,0 thang 10)",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "split": "dev"
+  },
+  {
+   "id": "TN-06",
+   "nhom": "tot_nghiep",
+   "he": "kb",
+   "claim": "dk_gdqp",
+   "cau_hoi": "Điểm trung bình các học phần Giáo dục quốc phòng của em đã đạt 5,0 chưa?",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "diem",
+      "QP010E",
+      40
+     ],
+     [
+      "diem",
+      "QP011E",
+      60
+     ],
+     [
+      "diem",
+      "QP012",
+      50
+     ],
+     [
+      "diem",
+      "QP013",
+      50
+     ]
+    ]
+   },
+   "gold": "TRUE",
+   "ly_do": "TB GDQP đúng 5,0 (biên).",
+   "nguon": "QĐ3266 Điều 32 khoản 1 điểm b, tr.19 (hoàn thành HP điều kiện; TB GDQP&AN ≥ 5,0 thang 10)",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "oracle": {
+    "gdqp_tb": "5"
+   },
+   "split": "dev"
+  },
+  {
+   "id": "TN-07",
+   "nhom": "tot_nghiep",
+   "he": "kb",
+   "claim": "dk_gdqp",
+   "cau_hoi": "Điểm trung bình các học phần Giáo dục quốc phòng của em đã đạt 5,0 chưa?",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "diem",
+      "QP010E",
+      40
+     ],
+     [
+      "diem",
+      "QP011E",
+      50
+     ],
+     [
+      "diem",
+      "QP012",
+      50
+     ],
+     [
+      "diem",
+      "QP013",
+      50
+     ]
+    ]
+   },
+   "gold": "FALSE",
+   "ly_do": "TB GDQP 4,75 < 5,0.",
+   "nguon": "QĐ3266 Điều 32 khoản 1 điểm b, tr.19 (hoàn thành HP điều kiện; TB GDQP&AN ≥ 5,0 thang 10)",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "oracle": {
+    "gdqp_tb": "19/4"
+   },
+   "split": "test"
+  },
+  {
+   "id": "TN-08",
+   "nhom": "tot_nghiep",
+   "he": "kb",
+   "claim": "thieu_dk(thoi_gian)",
+   "cau_hoi": "Em có bị quá thời gian học tập tối đa không?",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "dat",
+      "da_hoc_nam2",
+      18
+     ]
+    ]
+   },
+   "gold": "FALSE",
+   "ly_do": "Đúng 9 năm = 27 HK, chưa vượt.",
+   "nguon": "QĐ3266 Điều 5, tr.4–5 (thiết kế 4,5 năm → tối đa 9 năm; K ≤ 49: mỗi 9 TC công nhận giảm 1 HK) + Điều 6 khoản 1, tr.5 (3 HK/năm)",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "oracle": {
+    "tran_hk": "27",
+    "qua_han": false
+   },
+   "split": "test"
+  },
+  {
+   "id": "TN-09",
+   "nhom": "tot_nghiep",
+   "he": "kb",
+   "claim": "thieu_dk(thoi_gian)",
+   "cau_hoi": "Em có bị quá thời gian học tập tối đa không?",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "dat",
+      "da_hoc_nam2",
+      19
+     ]
+    ]
+   },
+   "gold": "TRUE",
+   "ly_do": "9,5 năm > 9 năm.",
+   "nguon": "QĐ3266 Điều 5, tr.4–5 (thiết kế 4,5 năm → tối đa 9 năm; K ≤ 49: mỗi 9 TC công nhận giảm 1 HK) + Điều 6 khoản 1, tr.5 (3 HK/năm)",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "oracle": {
+    "qua_han": true
+   },
+   "split": "test"
+  },
+  {
+   "id": "TN-10",
+   "nhom": "tot_nghiep",
+   "he": "kb",
+   "claim": "thieu_dk(thoi_gian)",
+   "cau_hoi": "Em có bị quá thời gian học tập tối đa không?",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "dat",
+      "da_hoc_nam2",
+      18
+     ],
+     [
+      "dat",
+      "tc_cong_nhan",
+      9
+     ]
+    ]
+   },
+   "gold": "TRUE",
+   "ly_do": "9 TC công nhận → giảm 1 HK (26 HK); đã học 27 HK.",
+   "nguon": "QĐ3266 Điều 5, tr.4–5 (thiết kế 4,5 năm → tối đa 9 năm; K ≤ 49: mỗi 9 TC công nhận giảm 1 HK) + Điều 6 khoản 1, tr.5 (3 HK/năm)",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "oracle": {
+    "tran_hk": "26",
+    "qua_han": true
+   },
+   "split": "dev"
+  },
+  {
+   "id": "TN-11",
+   "nhom": "tot_nghiep",
+   "he": "kb",
+   "claim": "thieu_dk(thoi_gian)",
+   "cau_hoi": "Em có bị quá thời gian học tập tối đa không?",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "dat",
+      "da_hoc_nam2",
+      16
+     ],
+     [
+      "dat",
+      "tc_cong_nhan",
+      18
+     ]
+    ]
+   },
+   "gold": "FALSE",
+   "ly_do": "18 TC công nhận → 25 HK; đã học 8 năm = 24 HK. KHÔNG CHẤM: Đ5 có hai cách đọc — câu chính giảm 'thời gian theo kế hoạch học tập chuẩn' (4,5 năm − 2 HK → trần khác) còn ví dụ giảm trần 9 năm; hai cách cho gold khác nhau (soát độc lập).",
+   "nguon": "QĐ3266 Điều 5, tr.4–5 (thiết kế 4,5 năm → tối đa 9 năm; K ≤ 49: mỗi 9 TC công nhận giảm 1 HK) + Điều 6 khoản 1, tr.5 (3 HK/năm)",
+   "cham_diem": false,
+   "loai_gold": "quy_che",
+   "oracle": {
+    "tran_hk": "25",
+    "qua_han": false
+   },
+   "split": "test"
+  },
+  {
+   "id": "TN-12",
+   "nhom": "tot_nghiep",
+   "he": "kb",
+   "claim": "thieu_dk(thoi_gian)",
+   "cau_hoi": "Em có bị quá thời gian học tập tối đa không?",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "dat",
+      "da_hoc_nam2",
+      18
+     ],
+     [
+      "dat",
+      "tc_cong_nhan",
+      8
+     ]
+    ]
+   },
+   "gold": "FALSE",
+   "ly_do": "8 TC < 9 → không giảm; 27 HK đúng trần.",
+   "nguon": "QĐ3266 Điều 5, tr.4–5 (thiết kế 4,5 năm → tối đa 9 năm; K ≤ 49: mỗi 9 TC công nhận giảm 1 HK) + Điều 6 khoản 1, tr.5 (3 HK/năm)",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "oracle": {
+    "tran_hk": "27",
+    "qua_han": false
+   },
+   "split": "test"
+  },
+  {
+   "id": "TN-13",
+   "nhom": "tot_nghiep",
+   "he": "kb",
+   "claim": "dk_tin_chi",
+   "cau_hoi": "Em đã tích lũy đủ 161 tín chỉ của CTĐT chưa?",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      "KL001E"
+     ]
+    ]
+   },
+   "gold": "FALSE",
+   "ly_do": "159 TC < 161.",
+   "nguon": "CTĐT CNTT K49 (QĐ2423) tr.3–4 — khung 161 TC, nhóm tự chọn ('10 AV hoặc PV'; chuyên ngành chọn một cặp)",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "oracle": {
+    "tc_tich_luy": "159"
+   },
+   "split": "test"
+  },
+  {
+   "id": "TN-14",
+   "nhom": "tot_nghiep",
+   "he": "kb",
+   "claim": "dk_tin_chi",
+   "cau_hoi": "Em đã tích lũy đủ 161 tín chỉ của CTĐT chưa?",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "diem",
+      "CT211",
+      70
+     ]
+    ]
+   },
+   "gold": "TRUE",
+   "ly_do": "164 TC (học dư CT211) ≥ 161.",
+   "nguon": "CTĐT CNTT K49 (QĐ2423) tr.3–4 — khung 161 TC, nhóm tự chọn ('10 AV hoặc PV'; chuyên ngành chọn một cặp)",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "oracle": {
+    "tc_tich_luy": "164"
+   },
+   "split": "dev"
+  },
+  {
+   "id": "TN-15",
+   "nhom": "tot_nghiep",
+   "he": "kb",
+   "claim": "tot_nghiep",
+   "cau_hoi": "Em đã đủ điều kiện xét tốt nghiệp chưa?",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      "CT484"
+     ]
+    ]
+   },
+   "gold": "FALSE",
+   "ly_do": "Nhóm chuyên ngành còn 3/6 TC (chỉ CT449).",
+   "nguon": "CTĐT CNTT K49 (QĐ2423) tr.3–4 — khung 161 TC, nhóm tự chọn ('10 AV hoặc PV'; chuyên ngành chọn một cặp)",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "split": "test"
+  },
+  {
+   "id": "TN-16",
+   "nhom": "tot_nghiep",
+   "he": "kb",
+   "claim": "tot_nghiep",
+   "cau_hoi": "Em đã đủ điều kiện xét tốt nghiệp chưa?",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "dat",
+      "xac_nhan_ky_luat_sach",
+      null
+     ],
+     [
+      "xoa_diem",
+      "CT484"
+     ]
+    ]
+   },
+   "gold": "FALSE",
+   "ly_do": "Thiếu nhóm chuyên ngành → không tốt nghiệp bất kể kỷ luật (dữ kiện thiếu không quyết định).",
+   "nguon": "CTĐT CNTT K49 (QĐ2423) tr.3–4 — khung 161 TC, nhóm tự chọn ('10 AV hoặc PV'; chuyên ngành chọn một cặp); QĐ3266 Điều 32 khoản 1 điểm c, tr.19 (R-F03)",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "split": "dev"
+  },
+  {
+   "id": "TN-17",
+   "nhom": "tot_nghiep",
+   "he": "kb",
+   "claim": "tot_nghiep",
+   "cau_hoi": "Em đã đủ điều kiện xét tốt nghiệp chưa?",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "diem_dac_biet",
+      "CT484",
+      "W"
+     ]
+    ]
+   },
+   "gold": "FALSE",
+   "ly_do": "CT484 điểm W → không tích lũy → nhóm chuyên ngành thiếu.",
+   "nguon": "QĐ3266 Điều 22 khoản 5 điểm c, tr.14; CTĐT CNTT K49 (QĐ2423) tr.3–4 — khung 161 TC, nhóm tự chọn ('10 AV hoặc PV'; chuyên ngành chọn một cặp)",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "split": "test"
+  },
+  {
+   "id": "TN-18",
+   "nhom": "tot_nghiep",
+   "he": "kb",
+   "claim": "tot_nghiep",
+   "cau_hoi": "Em đã đủ điều kiện xét tốt nghiệp chưa?",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_5hp",
+    "bien_doi": [
+     [
+      "khong_chac",
+      "CT210",
+      [
+       30,
+       80
+      ]
+     ]
+    ]
+   },
+   "gold": "UNKNOWN",
+   "ly_do": "Nhóm tốt nghiệp đúng 15 TC — CT210 F thì thiếu.",
+   "nguon": "QĐ3266 Điều 22 khoản 2–3, tr.13–14 (bảng quy đổi; tích lũy từ D); QĐ3266 Điều 31 khoản 3, tr.19 (tích lũy TC tốt nghiệp thay LVTN/TLTN)",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "can_hoi": [
+    "g10(\"CT210\")"
+   ],
+   "split": "dev"
+  },
+  {
+   "id": "TN-19",
+   "nhom": "tot_nghiep",
+   "he": "kb",
+   "claim": "tot_nghiep",
+   "cau_hoi": "Em đã đủ điều kiện xét tốt nghiệp chưa?",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_5hp",
+    "bien_doi": [
+     [
+      "khong_chac",
+      "CT210",
+      [
+       70,
+       80
+      ]
+     ]
+    ]
+   },
+   "gold": "TRUE",
+   "ly_do": "CT210 7,0 hay 8,0 đều đạt → không cần hỏi.",
+   "nguon": "QĐ3266 Điều 22 khoản 2–3, tr.13–14 (bảng quy đổi; tích lũy từ D)",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "split": "dev"
+  },
+  {
+   "id": "TN-20",
+   "nhom": "tot_nghiep",
+   "he": "kb",
+   "claim": "tot_nghiep",
+   "cau_hoi": "Em đã đủ điều kiện xét tốt nghiệp chưa?",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "khong_chac",
+      "QP013",
+      [
+       30,
+       70
+      ]
+     ]
+    ]
+   },
+   "gold": "UNKNOWN",
+   "ly_do": "QP013 F thì chưa hoàn thành GDQP.",
+   "nguon": "QĐ3266 Điều 32 khoản 1 điểm b, tr.19 (hoàn thành HP điều kiện; TB GDQP&AN ≥ 5,0 thang 10)",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "can_hoi": [
+    "g10(\"QP013\")"
+   ],
+   "split": "test"
+  },
+  {
+   "id": "TN-21",
+   "nhom": "tot_nghiep",
+   "he": "kb",
+   "claim": "tot_nghiep",
+   "cau_hoi": "Em đã đủ điều kiện xét tốt nghiệp chưa?",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "dat",
+      "da_hoc_nam2",
+      20
+     ]
+    ]
+   },
+   "gold": "FALSE",
+   "ly_do": "10 năm > 9 năm tối đa.",
+   "nguon": "QĐ3266 Điều 5, tr.4–5 (thiết kế 4,5 năm → tối đa 9 năm; K ≤ 49: mỗi 9 TC công nhận giảm 1 HK) + Điều 6 khoản 1, tr.5 (3 HK/năm)",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "oracle": {
+    "qua_han": true
+   },
+   "split": "dev"
+  },
+  {
+   "id": "TN-22",
+   "nhom": "tot_nghiep",
+   "he": "kb",
+   "claim": "dk_dtbctl",
+   "cau_hoi": "ĐTBCTL của em đã đạt mức tối thiểu 2,00 để xét tốt nghiệp chưa?",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "tat_ca_khong_dk",
+      50
+     ]
+    ]
+   },
+   "gold": "FALSE",
+   "ly_do": "Mọi HP D+ (1,5) → ĐTBCTL 1,50.",
+   "nguon": "QĐ3266 Điều 24 khoản 4, tr.15 (ĐTBCTL không gồm F và HP điều kiện)",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "oracle": {
+    "dtbctl": "3/2"
+   },
+   "split": "dev"
+  },
+  {
+   "id": "TN-23",
+   "nhom": "tot_nghiep",
+   "he": "kb",
+   "claim": "dk_dtbctl",
+   "cau_hoi": "ĐTBCTL của em đã đạt mức tối thiểu 2,00 để xét tốt nghiệp chưa?",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "tat_ca_khong_dk",
+      65
+     ]
+    ]
+   },
+   "gold": "TRUE",
+   "ly_do": "Mọi HP C+ (2,5) → ĐTBCTL 2,50.",
+   "nguon": "QĐ3266 Điều 24 khoản 4, tr.15 (ĐTBCTL không gồm F và HP điều kiện)",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "oracle": {
+    "dtbctl": "5/2"
+   },
+   "split": "dev"
+  },
+  {
+   "id": "TN-24",
+   "nhom": "tot_nghiep",
+   "he": "kb",
+   "claim": "dk_dtbctl",
+   "cau_hoi": "ĐTBCTL của em đã đạt mức tối thiểu 2,00 để xét tốt nghiệp chưa?",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "tat_ca_khong_dk",
+      55
+     ],
+     [
+      "diem",
+      "CT112",
+      65
+     ],
+     [
+      "diem",
+      "CT484",
+      20
+     ]
+    ]
+   },
+   "gold": "TRUE",
+   "ly_do": "Mọi HP C (2,0) trừ 3 TC C+; CT484 F bị LOẠI khỏi ĐTBCTL → ĐTBCTL > 2 (bẫy tính cả F).",
+   "nguon": "QĐ3266 Điều 24 khoản 4, tr.15 (ĐTBCTL không gồm F và HP điều kiện)",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "oracle": {
+    "dtbctl_ge_2": true
+   },
+   "split": "test"
+  },
+  {
+   "id": "NH-01",
+   "nhom": "nhom",
+   "he": "kb",
+   "claim": "dat_nhom(g_chuyen_nganh)",
+   "cau_hoi": "",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      "CT484"
+     ],
+     [
+      "diem",
+      "CT211",
+      80
+     ]
+    ]
+   },
+   "gold": "FALSE",
+   "ly_do": "CT449 (cn2) + CT211 (cn1) — trộn hai nhánh, không nhánh nào đủ 6 TC.",
+   "nguon": "CTĐT CNTT K49 (QĐ2423) tr.3–4 — khung 161 TC, nhóm tự chọn ('10 AV hoặc PV'; chuyên ngành chọn một cặp)",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "split": "dev"
+  },
+  {
+   "id": "NH-02",
+   "nhom": "nhom",
+   "he": "kb",
+   "claim": "dat_nhom(g_chuyen_nganh)",
+   "cau_hoi": "",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      [
+       "CT449",
+       "CT484"
+      ]
+     ],
+     [
+      "diem",
+      "CT211",
+      80
+     ],
+     [
+      "diem",
+      "CT297",
+      70
+     ]
+    ]
+   },
+   "gold": "TRUE",
+   "ly_do": "CT211 + CT297 = nhánh cn1 đủ 6 TC.",
+   "nguon": "CTĐT CNTT K49 (QĐ2423) tr.3–4 — khung 161 TC, nhóm tự chọn ('10 AV hoặc PV'; chuyên ngành chọn một cặp)",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "split": "test"
+  },
+  {
+   "id": "NH-03",
+   "nhom": "nhom",
+   "he": "kb",
+   "claim": "dat_nhom(g_ngoai_ngu)",
+   "cau_hoi": "",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      [
+       "XH023",
+       "XH024",
+       "XH025"
+      ]
+     ],
+     [
+      "diem",
+      "FL001",
+      80
+     ],
+     [
+      "diem",
+      "FL002",
+      75
+     ],
+     [
+      "diem",
+      "FL003",
+      70
+     ]
+    ]
+   },
+   "gold": "TRUE",
+   "ly_do": "Pháp văn 4+3+3 = 10 TC.",
+   "nguon": "CTĐT CNTT K49 (QĐ2423) tr.3–4 — khung 161 TC, nhóm tự chọn ('10 AV hoặc PV'; chuyên ngành chọn một cặp)",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "split": "dev"
+  },
+  {
+   "id": "NH-04",
+   "nhom": "nhom",
+   "he": "kb",
+   "claim": "dat_nhom(g_ngoai_ngu)",
+   "cau_hoi": "",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      "XH025"
+     ],
+     [
+      "diem",
+      "FL003",
+      80
+     ]
+    ]
+   },
+   "gold": "FALSE",
+   "ly_do": "AV 7 TC + PV 3 TC — không cộng dồn giữa hai nhánh.",
+   "nguon": "CTĐT CNTT K49 (QĐ2423) tr.3–4 — khung 161 TC, nhóm tự chọn ('10 AV hoặc PV'; chuyên ngành chọn một cặp)",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "split": "test"
+  },
+  {
+   "id": "NH-05",
+   "nhom": "nhom",
+   "he": "kb",
+   "claim": "dat_nhom(g_gdtc)",
+   "cau_hoi": "",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      "TC100"
+     ]
+    ]
+   },
+   "gold": "FALSE",
+   "ly_do": "Chưa có GDTC.",
+   "nguon": "CTĐT CNTT K49 (QĐ2423) tr.3–4 — khung 161 TC, nhóm tự chọn ('10 AV hoặc PV'; chuyên ngành chọn một cặp)",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "split": "test"
+  },
+  {
+   "id": "NH-06",
+   "nhom": "nhom",
+   "he": "kb",
+   "claim": "dat_nhom(g_xa_hoi)",
+   "cau_hoi": "",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      "ML007"
+     ]
+    ]
+   },
+   "gold": "FALSE",
+   "ly_do": "Nhóm xã hội cần 2 TC, không còn HP nào.",
+   "nguon": "CTĐT CNTT K49 (QĐ2423) tr.3–4 — khung 161 TC, nhóm tự chọn ('10 AV hoặc PV'; chuyên ngành chọn một cặp)",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "split": "dev"
+  },
+  {
+   "id": "NH-07",
+   "nhom": "nhom",
+   "he": "kb",
+   "claim": "dat_nhom(g_tot_nghiep)",
+   "cau_hoi": "",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      "CT550E"
+     ],
+     [
+      "diem",
+      "CT501E",
+      70
+     ],
+     [
+      "diem",
+      "CT478",
+      70
+     ],
+     [
+      "diem",
+      "CT283",
+      70
+     ],
+     [
+      "diem",
+      "CT233",
+      70
+     ]
+    ]
+   },
+   "gold": "TRUE",
+   "ly_do": "TLTN 6 + 3×3 = 15 TC.",
+   "nguon": "CTĐT CNTT K49 (QĐ2423) tr.3–4 — khung 161 TC, nhóm tự chọn ('10 AV hoặc PV'; chuyên ngành chọn một cặp); QĐ3266 Điều 31 khoản 3, tr.19 (tích lũy TC tốt nghiệp thay LVTN/TLTN)",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "split": "test"
+  },
+  {
+   "id": "NH-08",
+   "nhom": "nhom",
+   "he": "kb",
+   "claim": "dat_nhom(g_tot_nghiep)",
+   "cau_hoi": "",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      "CT550E"
+     ],
+     [
+      "diem",
+      "CT501E",
+      70
+     ],
+     [
+      "diem",
+      "CT478",
+      70
+     ],
+     [
+      "diem",
+      "CT283",
+      70
+     ]
+    ]
+   },
+   "gold": "FALSE",
+   "ly_do": "TLTN 6 + 2×3 = 12 TC < 15.",
+   "nguon": "CTĐT CNTT K49 (QĐ2423) tr.3–4 — khung 161 TC, nhóm tự chọn ('10 AV hoặc PV'; chuyên ngành chọn một cặp)",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "split": "dev"
+  },
+  {
+   "id": "MT-01",
+   "nhom": "mien_thay_the",
+   "he": "kb",
+   "claim": "du_dk_xin_mien(\"XH024\")",
+   "cau_hoi": "",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "chung_chi",
+      "toeic",
+      450
+     ]
+    ]
+   },
+   "gold": "TRUE",
+   "ly_do": "TOEIC 450 = bậc 3 (biên).",
+   "nguon": "QĐ5339 Điều 3 khoản 5 điểm a, tr.5–6 + Phụ lục 1, tr.11 (K45 trở về sau: bậc 3 — IELTS 4.5 / TOEIC 450 / TOEFL iBT 45 / CTU A-B-C bậc 3)",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "split": "dev"
+  },
+  {
+   "id": "MT-02",
+   "nhom": "mien_thay_the",
+   "he": "kb",
+   "claim": "du_dk_xin_mien(\"XH024\")",
+   "cau_hoi": "",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "chung_chi",
+      "toeic",
+      445
+     ]
+    ]
+   },
+   "gold": "FALSE",
+   "ly_do": "TOEIC 445 < 450.",
+   "nguon": "QĐ5339 Điều 3 khoản 5 điểm a, tr.5–6 + Phụ lục 1, tr.11 (K45 trở về sau: bậc 3 — IELTS 4.5 / TOEIC 450 / TOEFL iBT 45 / CTU A-B-C bậc 3)",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "split": "dev"
+  },
+  {
+   "id": "MT-03",
+   "nhom": "mien_thay_the",
+   "he": "kb",
+   "claim": "du_dk_xin_mien(\"XH025\")",
+   "cau_hoi": "",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "chung_chi",
+      "ielts",
+      4.5
+     ]
+    ]
+   },
+   "gold": "TRUE",
+   "ly_do": "IELTS 4.5 = bậc 3 (biên).",
+   "nguon": "QĐ5339 Điều 3 khoản 5 điểm a, tr.5–6 + Phụ lục 1, tr.11 (K45 trở về sau: bậc 3 — IELTS 4.5 / TOEIC 450 / TOEFL iBT 45 / CTU A-B-C bậc 3)",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "split": "dev"
+  },
+  {
+   "id": "MT-04",
+   "nhom": "mien_thay_the",
+   "he": "kb",
+   "claim": "du_dk_xin_mien(\"XH025\")",
+   "cau_hoi": "",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "chung_chi",
+      "ielts",
+      4.0
+     ]
+    ]
+   },
+   "gold": "FALSE",
+   "ly_do": "IELTS 4.0 < 4.5 (bậc 2).",
+   "nguon": "QĐ5339 Điều 3 khoản 5 điểm a, tr.5–6 + Phụ lục 1, tr.11 (K45 trở về sau: bậc 3 — IELTS 4.5 / TOEIC 450 / TOEFL iBT 45 / CTU A-B-C bậc 3)",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "split": "dev"
+  },
+  {
+   "id": "MT-05",
+   "nhom": "mien_thay_the",
+   "he": "kb",
+   "claim": "du_dk_xin_mien(\"XH025\")",
+   "cau_hoi": "",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "chung_chi",
+      "ctu_abc",
+      3
+     ]
+    ]
+   },
+   "gold": "TRUE",
+   "ly_do": "Chứng chỉ CTU bậc 3.",
+   "nguon": "QĐ5339 Điều 3 khoản 5 điểm a, tr.5–6 + Phụ lục 1, tr.11 (K45 trở về sau: bậc 3 — IELTS 4.5 / TOEIC 450 / TOEFL iBT 45 / CTU A-B-C bậc 3)",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "split": "dev"
+  },
+  {
+   "id": "MT-06",
+   "nhom": "mien_thay_the",
+   "he": "kb",
+   "claim": "du_dk_xin_mien(\"XH025\")",
+   "cau_hoi": "",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "chung_chi",
+      "ctu_abc",
+      2
+     ]
+    ]
+   },
+   "gold": "FALSE",
+   "ly_do": "Chứng chỉ CTU bậc 2 < bậc 3 (K45 trở về sau).",
+   "nguon": "QĐ5339 Điều 3 khoản 5 điểm a, tr.5–6 + Phụ lục 1, tr.11 (K45 trở về sau: bậc 3 — IELTS 4.5 / TOEIC 450 / TOEFL iBT 45 / CTU A-B-C bậc 3)",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "split": "test"
+  },
+  {
+   "id": "MT-07",
+   "nhom": "mien_thay_the",
+   "he": "kb",
+   "claim": "du_dk_xin_mien(\"FL002\")",
+   "cau_hoi": "",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "chung_chi",
+      "ielts",
+      7.0
+     ]
+    ]
+   },
+   "gold": "FALSE",
+   "ly_do": "IELTS là tiếng Anh — không xét miễn Pháp văn.",
+   "nguon": "QĐ5339 Điều 3 khoản 5 điểm a ≠ điểm b (chứng chỉ tiếng Anh chỉ xét miễn Anh văn)",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "split": "test"
+  },
+  {
+   "id": "MT-08",
+   "nhom": "mien_thay_the",
+   "he": "kb",
+   "claim": "passed(\"ML016\")",
+   "cau_hoi": "",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      [
+       "ML016",
+       "ML018"
+      ]
+     ],
+     [
+      "diem_tho",
+      "ML010",
+      {
+       "credits": 3,
+       "thang10": 80,
+       "letter": "B+",
+       "status": "passed"
+      }
+     ]
+    ]
+   },
+   "gold": "FALSE",
+   "ly_do": "ML010 đạt chỉ cho ĐỦ ĐIỀU KIỆN xét công nhận ML016; chưa có quyết định → chưa đạt. [Sửa trước đóng băng: bản đầu TRUE.]",
+   "nguon": "QĐ5339 Điều 3 khoản 9, tr.8 (R-M13: bảng chuyển đổi Lý luận chính trị — ML009→ML014, ML010→ML016+ML018, ML011→ML019, ML006→ML021) + Điều 2 khoản 6, tr.4 (phải làm đơn, đơn vị xét duyệt — công nhận KHÔNG tự động; cùng tinh thần QD-11)",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "split": "test"
+  },
+  {
+   "id": "MT-09",
+   "nhom": "mien_thay_the",
+   "he": "kb",
+   "claim": "passed(\"ML018\")",
+   "cau_hoi": "",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      [
+       "ML016",
+       "ML018"
+      ]
+     ],
+     [
+      "diem_tho",
+      "ML010",
+      {
+       "credits": 3,
+       "thang10": 80,
+       "letter": "B+",
+       "status": "passed"
+      }
+     ]
+    ]
+   },
+   "gold": "FALSE",
+   "ly_do": "Như MT-08 với ML018 (một → nhiều). [Sửa trước đóng băng: bản đầu TRUE.]",
+   "nguon": "QĐ5339 Điều 3 khoản 9, tr.8 (R-M13: bảng chuyển đổi Lý luận chính trị — ML009→ML014, ML010→ML016+ML018, ML011→ML019, ML006→ML021) + Điều 2 khoản 6, tr.4 (phải làm đơn, đơn vị xét duyệt — công nhận KHÔNG tự động; cùng tinh thần QD-11)",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "split": "test"
+  },
+  {
+   "id": "MT-10",
+   "nhom": "mien_thay_the",
+   "he": "kb",
+   "claim": "passed(\"ML021\")",
+   "cau_hoi": "",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      "ML021"
+     ],
+     [
+      "diem_tho",
+      "ML006",
+      {
+       "credits": 2,
+       "thang10": 30,
+       "letter": "F",
+       "status": "failed"
+      }
+     ]
+    ]
+   },
+   "gold": "FALSE",
+   "ly_do": "ML006 bị F → không có gì để công nhận ML021.",
+   "nguon": "QĐ5339 Điều 3 khoản 9, tr.8 (R-M13: bảng chuyển đổi Lý luận chính trị — ML009→ML014, ML010→ML016+ML018, ML011→ML019, ML006→ML021)",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "split": "test"
+  },
+  {
+   "id": "MT-11",
+   "nhom": "mien_thay_the",
+   "he": "kb",
+   "claim": "passed(\"ML019\")",
+   "cau_hoi": "",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      "ML019"
+     ],
+     [
+      "diem_tho",
+      "ML011",
+      {
+       "credits": 3,
+       "thang10": 40,
+       "letter": "D",
+       "status": "passed"
+      }
+     ]
+    ]
+   },
+   "gold": "FALSE",
+   "ly_do": "ML011 đạt D (4,0) → đủ điều kiện XÉT công nhận ML019, chưa có quyết định → chưa đạt. [Sửa trước đóng băng: bản đầu TRUE.]",
+   "nguon": "QĐ5339 Điều 3 khoản 9, tr.8 (R-M13: bảng chuyển đổi Lý luận chính trị — ML009→ML014, ML010→ML016+ML018, ML011→ML019, ML006→ML021) + Điều 2 khoản 6, tr.4 (phải làm đơn, đơn vị xét duyệt — công nhận KHÔNG tự động; cùng tinh thần QD-11); QĐ3266 Điều 22 khoản 2–3, tr.13–14 (bảng quy đổi; tích lũy từ D)",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "split": "test"
+  },
+  {
+   "id": "MT-12",
+   "nhom": "mien_thay_the",
+   "he": "kb",
+   "claim": "passed(\"XH024\")",
+   "cau_hoi": "",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      "XH024"
+     ],
+     [
+      "chung_chi",
+      "ielts",
+      6.5
+     ]
+    ]
+   },
+   "gold": "FALSE",
+   "ly_do": "Đủ điều kiện XIN miễn nhưng chưa có quyết định miễn → chưa đạt (QD-11).",
+   "nguon": "QĐ5339 Điều 2 khoản 6, tr.4 (R-M16, QD-11: miễn phải có đơn và quyết định)",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "split": "dev"
+  },
+  {
+   "id": "HG-01",
+   "nhom": "hang",
+   "he": "kb",
+   "claim": "hang_cuoi(kha)",
+   "cau_hoi": "Nếu tốt nghiệp, em xếp hạng gì?",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": []
+   },
+   "gold": "TRUE",
+   "ly_do": "ĐTBCTL 439/140 ≈ 3,14 → khá.",
+   "nguon": "QĐ3266 Điều 34 khoản 2, tr.20 (chép tay từ PDF gốc): XS 3,60–4,00 · Giỏi 3,20–3,59 · Khá 2,50–3,19 · TB 2,00–2,49",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "oracle": {
+    "dtbctl": "439/140"
+   },
+   "split": "dev"
+  },
+  {
+   "id": "HG-02",
+   "nhom": "hang",
+   "he": "kb",
+   "claim": "hang_cuoi(gioi)",
+   "cau_hoi": "Nếu tốt nghiệp, em có đạt loại giỏi không?",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "tat_ca_khong_dk",
+      70
+     ],
+     [
+      "diem",
+      "CT100",
+      90
+     ],
+     [
+      "diem",
+      "CT101",
+      90
+     ],
+     [
+      "diem",
+      "CT112",
+      90
+     ],
+     [
+      "diem",
+      "CT172",
+      90
+     ],
+     [
+      "diem",
+      "CT173",
+      90
+     ],
+     [
+      "diem",
+      "CT174",
+      90
+     ],
+     [
+      "diem",
+      "CT175",
+      90
+     ],
+     [
+      "diem",
+      "CT176",
+      90
+     ],
+     [
+      "diem",
+      "CT177",
+      90
+     ],
+     [
+      "diem",
+      "CT178",
+      90
+     ],
+     [
+      "diem",
+      "CT179",
+      90
+     ],
+     [
+      "diem",
+      "CT180",
+      90
+     ],
+     [
+      "diem",
+      "CT182",
+      90
+     ],
+     [
+      "diem",
+      "CT188",
+      90
+     ],
+     [
+      "diem",
+      "CT200",
+      90
+     ],
+     [
+      "diem",
+      "CT202",
+      90
+     ],
+     [
+      "diem",
+      "CT222",
+      90
+     ],
+     [
+      "diem",
+      "CT223",
+      90
+     ],
+     [
+      "diem",
+      "CT271E",
+      90
+     ],
+     [
+      "diem",
+      "CT273",
+      90
+     ],
+     [
+      "diem",
+      "CT275",
+      90
+     ],
+     [
+      "diem",
+      "CT293",
+      90
+     ],
+     [
+      "diem",
+      "CT294",
+      90
+     ],
+     [
+      "diem",
+      "CT296",
+      90
+     ],
+     [
+      "diem",
+      "CT300",
+      90
+     ]
+    ]
+   },
+   "gold": "TRUE",
+   "ly_do": "ĐTBCTL đúng 3,55 → giỏi (3,20–3,59). [Ca này nảy ra khi đọc code KB — gold theo câu chữ Đ34.]",
+   "nguon": "QĐ3266 Điều 34 khoản 2, tr.20 (chép tay từ PDF gốc): XS 3,60–4,00 · Giỏi 3,20–3,59 · Khá 2,50–3,19 · TB 2,00–2,49",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "oracle": {
+    "dtbctl": "71/20"
+   },
+   "split": "test"
+  },
+  {
+   "id": "HG-03",
+   "nhom": "hang",
+   "he": "kb",
+   "claim": "hang_cuoi(xuat_sac)",
+   "cau_hoi": "Nếu tốt nghiệp, em có đạt loại xuất sắc không?",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "tat_ca_khong_dk",
+      70
+     ],
+     [
+      "diem",
+      "CT100",
+      90
+     ],
+     [
+      "diem",
+      "CT101",
+      90
+     ],
+     [
+      "diem",
+      "CT112",
+      90
+     ],
+     [
+      "diem",
+      "CT172",
+      90
+     ],
+     [
+      "diem",
+      "CT173",
+      90
+     ],
+     [
+      "diem",
+      "CT174",
+      90
+     ],
+     [
+      "diem",
+      "CT175",
+      90
+     ],
+     [
+      "diem",
+      "CT176",
+      90
+     ],
+     [
+      "diem",
+      "CT177",
+      90
+     ],
+     [
+      "diem",
+      "CT178",
+      90
+     ],
+     [
+      "diem",
+      "CT179",
+      90
+     ],
+     [
+      "diem",
+      "CT180",
+      90
+     ],
+     [
+      "diem",
+      "CT182",
+      90
+     ],
+     [
+      "diem",
+      "CT188",
+      90
+     ],
+     [
+      "diem",
+      "CT190",
+      90
+     ],
+     [
+      "diem",
+      "CT202",
+      90
+     ],
+     [
+      "diem",
+      "CT222",
+      90
+     ],
+     [
+      "diem",
+      "CT223",
+      90
+     ],
+     [
+      "diem",
+      "CT271E",
+      90
+     ],
+     [
+      "diem",
+      "CT273",
+      90
+     ],
+     [
+      "diem",
+      "CT275",
+      90
+     ],
+     [
+      "diem",
+      "CT293",
+      90
+     ],
+     [
+      "diem",
+      "CT294",
+      90
+     ],
+     [
+      "diem",
+      "CT296",
+      90
+     ],
+     [
+      "diem",
+      "CT300",
+      90
+     ],
+     [
+      "diem",
+      "CT449",
+      90
+     ],
+     [
+      "diem",
+      "CT466E",
+      90
+     ],
+     [
+      "diem",
+      "CT467",
+      90
+     ]
+    ]
+   },
+   "gold": "TRUE",
+   "ly_do": "ĐTBCTL đúng 3,60 → xuất sắc (biên).",
+   "nguon": "QĐ3266 Điều 34 khoản 2, tr.20 (chép tay từ PDF gốc): XS 3,60–4,00 · Giỏi 3,20–3,59 · Khá 2,50–3,19 · TB 2,00–2,49",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "oracle": {
+    "dtbctl": "18/5"
+   },
+   "split": "dev"
+  },
+  {
+   "id": "HG-04",
+   "nhom": "hang",
+   "he": "kb",
+   "claim": "hang_cuoi(gioi)",
+   "cau_hoi": "Nếu tốt nghiệp, em có đạt loại giỏi không?",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "tat_ca_khong_dk",
+      70
+     ],
+     [
+      "diem",
+      "CT100",
+      90
+     ],
+     [
+      "diem",
+      "CT101",
+      90
+     ],
+     [
+      "diem",
+      "CT112",
+      90
+     ],
+     [
+      "diem",
+      "CT172",
+      90
+     ],
+     [
+      "diem",
+      "CT173",
+      90
+     ],
+     [
+      "diem",
+      "CT174",
+      90
+     ],
+     [
+      "diem",
+      "CT175",
+      90
+     ],
+     [
+      "diem",
+      "CT176",
+      90
+     ],
+     [
+      "diem",
+      "CT177",
+      90
+     ]
+    ]
+   },
+   "gold": "TRUE",
+   "ly_do": "ĐTBCTL đúng 3,20 → giỏi (biên dưới).",
+   "nguon": "QĐ3266 Điều 34 khoản 2, tr.20 (chép tay từ PDF gốc): XS 3,60–4,00 · Giỏi 3,20–3,59 · Khá 2,50–3,19 · TB 2,00–2,49",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "oracle": {
+    "dtbctl": "16/5"
+   },
+   "split": "test"
+  },
+  {
+   "id": "HG-05",
+   "nhom": "hang",
+   "he": "kb",
+   "claim": "hang_cuoi(kha)",
+   "cau_hoi": "Nếu tốt nghiệp, em xếp hạng gì?",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "tat_ca_khong_dk",
+      70
+     ],
+     [
+      "diem",
+      "CT100",
+      90
+     ],
+     [
+      "diem",
+      "CT101",
+      90
+     ],
+     [
+      "diem",
+      "CT112",
+      90
+     ],
+     [
+      "diem",
+      "CT173",
+      90
+     ],
+     [
+      "diem",
+      "CT174",
+      90
+     ],
+     [
+      "diem",
+      "CT175",
+      90
+     ],
+     [
+      "diem",
+      "CT176",
+      90
+     ],
+     [
+      "diem",
+      "CT177",
+      90
+     ],
+     [
+      "diem",
+      "CT178",
+      90
+     ]
+    ]
+   },
+   "gold": "TRUE",
+   "ly_do": "ĐTBCTL 447/140 ≈ 3,19 → khá.",
+   "nguon": "QĐ3266 Điều 34 khoản 2, tr.20 (chép tay từ PDF gốc): XS 3,60–4,00 · Giỏi 3,20–3,59 · Khá 2,50–3,19 · TB 2,00–2,49",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "oracle": {
+    "dtbctl": "447/140"
+   },
+   "split": "dev"
+  },
+  {
+   "id": "HG-06",
+   "nhom": "hang",
+   "he": "kb",
+   "claim": "hang_cuoi(kha)",
+   "cau_hoi": "Nếu tốt nghiệp, em xếp hạng gì?",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "tat_ca_khong_dk",
+      65
+     ]
+    ]
+   },
+   "gold": "TRUE",
+   "ly_do": "ĐTBCTL đúng 2,50 → khá (biên dưới).",
+   "nguon": "QĐ3266 Điều 34 khoản 2, tr.20 (chép tay từ PDF gốc): XS 3,60–4,00 · Giỏi 3,20–3,59 · Khá 2,50–3,19 · TB 2,00–2,49",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "oracle": {
+    "dtbctl": "5/2"
+   },
+   "split": "test"
+  },
+  {
+   "id": "HG-07",
+   "nhom": "hang",
+   "he": "kb",
+   "claim": "hang_cuoi(trung_binh)",
+   "cau_hoi": "Nếu tốt nghiệp, em xếp hạng gì?",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "tat_ca_khong_dk",
+      55
+     ],
+     [
+      "diem",
+      "CT100",
+      65
+     ],
+     [
+      "diem",
+      "CT101",
+      65
+     ],
+     [
+      "diem",
+      "CT112",
+      65
+     ],
+     [
+      "diem",
+      "CT172",
+      65
+     ],
+     [
+      "diem",
+      "CT173",
+      65
+     ],
+     [
+      "diem",
+      "CT174",
+      65
+     ],
+     [
+      "diem",
+      "CT175",
+      65
+     ],
+     [
+      "diem",
+      "CT176",
+      65
+     ],
+     [
+      "diem",
+      "CT177",
+      65
+     ],
+     [
+      "diem",
+      "CT178",
+      65
+     ],
+     [
+      "diem",
+      "CT179",
+      65
+     ],
+     [
+      "diem",
+      "CT180",
+      65
+     ],
+     [
+      "diem",
+      "CT182",
+      65
+     ],
+     [
+      "diem",
+      "CT188",
+      65
+     ],
+     [
+      "diem",
+      "CT190",
+      65
+     ],
+     [
+      "diem",
+      "CT200",
+      65
+     ],
+     [
+      "diem",
+      "CT202",
+      65
+     ],
+     [
+      "diem",
+      "CT222",
+      65
+     ],
+     [
+      "diem",
+      "CT223",
+      65
+     ],
+     [
+      "diem",
+      "CT271E",
+      65
+     ],
+     [
+      "diem",
+      "CT273",
+      65
+     ],
+     [
+      "diem",
+      "CT275",
+      65
+     ],
+     [
+      "diem",
+      "CT293",
+      65
+     ],
+     [
+      "diem",
+      "CT294",
+      65
+     ],
+     [
+      "diem",
+      "CT296",
+      65
+     ],
+     [
+      "diem",
+      "CT300",
+      65
+     ],
+     [
+      "diem",
+      "CT449",
+      65
+     ],
+     [
+      "diem",
+      "CT466E",
+      65
+     ],
+     [
+      "diem",
+      "CT467",
+      65
+     ],
+     [
+      "diem",
+      "CT484",
+      65
+     ],
+     [
+      "diem",
+      "CT518E",
+      65
+     ],
+     [
+      "diem",
+      "CT550E",
+      65
+     ],
+     [
+      "diem",
+      "KL001E",
+      65
+     ],
+     [
+      "diem",
+      "ML007",
+      65
+     ],
+     [
+      "diem",
+      "ML014",
+      65
+     ],
+     [
+      "diem",
+      "ML016",
+      65
+     ],
+     [
+      "diem",
+      "ML018",
+      65
+     ],
+     [
+      "diem",
+      "ML019",
+      65
+     ],
+     [
+      "diem",
+      "ML021",
+      65
+     ],
+     [
+      "diem",
+      "TN001",
+      65
+     ],
+     [
+      "diem",
+      "TN002",
+      65
+     ],
+     [
+      "diem",
+      "TN012",
+      65
+     ]
+    ]
+   },
+   "gold": "TRUE",
+   "ly_do": "ĐTBCTL 697/280 ≈ 2,489 → trung bình.",
+   "nguon": "QĐ3266 Điều 34 khoản 2, tr.20 (chép tay từ PDF gốc): XS 3,60–4,00 · Giỏi 3,20–3,59 · Khá 2,50–3,19 · TB 2,00–2,49",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "oracle": {
+    "dtbctl": "697/280"
+   },
+   "split": "dev"
+  },
+  {
+   "id": "HG-08",
+   "nhom": "hang",
+   "he": "kb",
+   "claim": "hang_cuoi(gioi)",
+   "cau_hoi": "Nếu tốt nghiệp, em có đạt loại giỏi không?",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "tat_ca_khong_dk",
+      70
+     ],
+     [
+      "diem",
+      "CT100",
+      80
+     ],
+     [
+      "diem",
+      "CT101",
+      80
+     ],
+     [
+      "diem",
+      "CT112",
+      80
+     ],
+     [
+      "diem",
+      "CT172",
+      80
+     ],
+     [
+      "diem",
+      "CT173",
+      80
+     ],
+     [
+      "diem",
+      "CT174",
+      80
+     ],
+     [
+      "diem",
+      "CT175",
+      80
+     ],
+     [
+      "diem",
+      "CT176",
+      80
+     ],
+     [
+      "diem",
+      "CT177",
+      80
+     ],
+     [
+      "diem",
+      "CT178",
+      80
+     ],
+     [
+      "diem",
+      "CT179",
+      80
+     ],
+     [
+      "diem",
+      "CT180",
+      80
+     ],
+     [
+      "diem",
+      "CT182",
+      80
+     ],
+     [
+      "diem",
+      "CT188",
+      80
+     ],
+     [
+      "diem",
+      "CT190",
+      80
+     ],
+     [
+      "diem",
+      "CT200",
+      80
+     ],
+     [
+      "diem",
+      "CT202",
+      80
+     ],
+     [
+      "diem",
+      "CT222",
+      80
+     ],
+     [
+      "diem",
+      "CT223",
+      80
+     ],
+     [
+      "diem",
+      "CT271E",
+      80
+     ],
+     [
+      "diem",
+      "CT273",
+      80
+     ],
+     [
+      "diem",
+      "CT275",
+      80
+     ],
+     [
+      "diem",
+      "CT293",
+      80
+     ]
+    ]
+   },
+   "gold": "TRUE",
+   "ly_do": "ĐTBCTL đúng 3,25 (B+ 70 TC, B 70 TC) → giỏi.",
+   "nguon": "QĐ3266 Điều 34 khoản 2, tr.20 (chép tay từ PDF gốc): XS 3,60–4,00 · Giỏi 3,20–3,59 · Khá 2,50–3,19 · TB 2,00–2,49",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "oracle": {
+    "dtbctl": "13/4"
+   },
+   "split": "test"
+  },
+  {
+   "id": "NL-01",
+   "nhom": "cau_tu_nhien",
+   "he": "nl",
+   "claim": "nl",
+   "cau_hoi": "Kỳ này em đăng ký CT182 được không ạ?",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      [
+       "CT182",
+       "CT180"
+      ]
+     ]
+    ]
+   },
+   "gold": "TRUE",
+   "ly_do": "Như DK-02 nhưng qua parser.",
+   "nguon": "QĐ3266 Điều 7 khoản 4, tr.5 (R-A03: tiên quyết phải đã tích lũy); QĐ3266 Điều 7 khoản 5, tr.5 (R-A04: song hành phải học trước hoặc học cùng lúc; 'học' ≠ 'tích lũy' — quyết định (a), Loi 18/10/2026)",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "split": "test"
+  },
+  {
+   "id": "NL-02",
+   "nhom": "cau_tu_nhien",
+   "he": "nl",
+   "claim": "nl",
+   "cau_hoi": "Cho em hỏi em học CT182 được chưa?",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      [
+       "CT182",
+       "CT180",
+       "CT177"
+      ]
+     ]
+    ]
+   },
+   "gold": "FALSE",
+   "ly_do": "Như DK-03 nhưng qua parser.",
+   "nguon": "QĐ3266 Điều 7 khoản 5, tr.5 (R-A04: song hành phải học trước hoặc học cùng lúc; 'học' ≠ 'tích lũy' — quyết định (a), Loi 18/10/2026)",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "split": "dev"
+  },
+  {
+   "id": "NL-03",
+   "nhom": "cau_tu_nhien",
+   "he": "nl",
+   "claim": "nl",
+   "cau_hoi": "Em đủ điều kiện làm luận văn chưa ạ?",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      "CT550E"
+     ]
+    ]
+   },
+   "gold": "TRUE",
+   "ly_do": "146 TC ≥ 120.",
+   "nguon": "QĐ3266 Điều 31, tr.19 + QD-12 (điều kiện nhận đề tài chỉ là ngưỡng TC — Loi 18/10/2026) + CTĐT K49 (CT550E/CT501E ≥ 120 TC)",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "split": "test"
+  },
+  {
+   "id": "NL-04",
+   "nhom": "cau_tu_nhien",
+   "he": "nl",
+   "claim": "nl",
+   "cau_hoi": "Cho em hỏi em đủ điều kiện tốt nghiệp chưa ạ?",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_tltn",
+    "bien_doi": []
+   },
+   "gold": "TRUE",
+   "ly_do": "Như TN-01.",
+   "nguon": "QĐ3266 Điều 32 khoản 1, tr.19",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "split": "dev"
+  },
+  {
+   "id": "NL-05",
+   "nhom": "cau_tu_nhien",
+   "he": "nl",
+   "claim": "nl",
+   "cau_hoi": "Nếu em rớt CT296 thì em tốt nghiệp trễ mấy học kỳ?",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": []
+   },
+   "gold": "UNKNOWN",
+   "ly_do": "Câu phản thực tế — RQ3 chưa hỗ trợ.",
+   "nguon": "Nguyên tắc thiết kế CPA² (Tuần 1): không kết luận điều KB không hình thức hoá / không có dữ kiện — KHÔNG phải nội dung quy chế",
+   "cham_diem": true,
+   "loai_gold": "thiet_ke",
+   "split": "dev"
+  },
+  {
+   "id": "NL-06",
+   "nhom": "cau_tu_nhien",
+   "he": "nl",
+   "claim": "nl",
+   "cau_hoi": "Học phí học kỳ này của em là bao nhiêu?",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": []
+   },
+   "gold": "UNKNOWN",
+   "ly_do": "Học phí do Hiệu trưởng quyết định — KB không có.",
+   "nguon": "QĐ3266 Điều 10 khoản 1, tr.6; Nguyên tắc thiết kế CPA² (Tuần 1): không kết luận điều KB không hình thức hoá / không có dữ kiện — KHÔNG phải nội dung quy chế",
+   "cham_diem": true,
+   "loai_gold": "thiet_ke",
+   "split": "dev"
+  },
+  {
+   "id": "NL-07",
+   "nhom": "cau_tu_nhien",
+   "he": "nl",
+   "claim": "nl",
+   "cau_hoi": "Em có được xét học bổng khuyến khích học tập không?",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": []
+   },
+   "gold": "UNKNOWN",
+   "ly_do": "Học bổng cần ĐTBCHK + điểm rèn luyện học kỳ trước — hồ sơ không có.",
+   "nguon": "Nguyên tắc thiết kế CPA² (Tuần 1): không kết luận điều KB không hình thức hoá / không có dữ kiện — KHÔNG phải nội dung quy chế",
+   "cham_diem": true,
+   "loai_gold": "thiet_ke",
+   "split": "test"
+  },
+  {
+   "id": "NL-08",
+   "nhom": "cau_tu_nhien",
+   "he": "nl",
+   "claim": "nl",
+   "cau_hoi": "Em có bị cảnh báo học vụ không?",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": []
+   },
+   "gold": "UNKNOWN",
+   "ly_do": "Cảnh báo học vụ xét theo ĐTBCHK từng học kỳ — hồ sơ không có điểm theo học kỳ.",
+   "nguon": "QĐ3266 Điều 18, tr.10–11; Nguyên tắc thiết kế CPA² (Tuần 1): không kết luận điều KB không hình thức hoá / không có dữ kiện — KHÔNG phải nội dung quy chế",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "split": "test"
+  },
+  {
+   "id": "NL-09",
+   "nhom": "cau_tu_nhien",
+   "he": "nl",
+   "claim": "nl",
+   "cau_hoi": "ĐTBCTL của em có đủ xếp loại giỏi khi tốt nghiệp không?",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": []
+   },
+   "gold": "FALSE",
+   "ly_do": "ĐTBCTL ≈ 3,14 < 3,20.",
+   "nguon": "QĐ3266 Điều 34 khoản 2, tr.20 (chép tay từ PDF gốc): XS 3,60–4,00 · Giỏi 3,20–3,59 · Khá 2,50–3,19 · TB 2,00–2,49",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "split": "test"
+  },
+  {
+   "id": "NL-10",
+   "nhom": "cau_tu_nhien",
+   "he": "nl",
+   "claim": "nl",
+   "cau_hoi": "Em muốn chuyển ngành thì cần điều kiện gì?",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": []
+   },
+   "gold": "UNKNOWN",
+   "ly_do": "Chuyển ngành — ngoài phạm vi KB.",
+   "nguon": "Nguyên tắc thiết kế CPA² (Tuần 1): không kết luận điều KB không hình thức hoá / không có dữ kiện — KHÔNG phải nội dung quy chế",
+   "cham_diem": true,
+   "loai_gold": "thiet_ke",
+   "split": "dev"
+  },
+  {
+   "id": "NL-11",
+   "nhom": "cau_tu_nhien",
+   "he": "nl",
+   "claim": "nl",
+   "cau_hoi": "Kỳ này em đăng ký niên luận CT466E được không?",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      "CT466E"
+     ]
+    ]
+   },
+   "gold": "TRUE",
+   "ly_do": "158 TC ≥ 80.",
+   "nguon": "CTĐT CNTT K49 (QĐ2423) tr.4 — tiên quyết theo số TC tích lũy + QĐ3266 Điều 24 khoản 1, tr.15",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "split": "dev"
+  },
+  {
+   "id": "NL-12",
+   "nhom": "cau_tu_nhien",
+   "he": "nl",
+   "claim": "nl",
+   "cau_hoi": "Em ra trường được chưa ạ?",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      "CT484"
+     ]
+    ]
+   },
+   "gold": "FALSE",
+   "ly_do": "Như TN-15.",
+   "nguon": "CTĐT CNTT K49 (QĐ2423) tr.3–4 — khung 161 TC, nhóm tự chọn ('10 AV hoặc PV'; chuyên ngành chọn một cặp)",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "split": "test"
+  }
+ ]
+}

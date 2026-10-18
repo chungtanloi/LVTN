@@ -1,0 +1,1088 @@
+{
+ "meta": {
+  "ten": "CPA² OCR-Noise v1 (Tuần 20)",
+  "seed": 20
+ },
+ "cases": [
+  {
+   "id": "ON-01M1",
+   "nhom": "M1",
+   "he": "ocr",
+   "claim": "tot_nghiep",
+   "cau_hoi": "Em đã đủ điều kiện xét tốt nghiệp chưa?",
+   "dau_vao": {
+    "loai": "ocr_doc",
+    "goc": "sv_lvtn",
+    "that": [],
+    "bien_doi": [
+     [
+      "conf",
+      "CT180",
+      "thi",
+      0.4
+     ]
+    ],
+    "khai_bao_bo": []
+   },
+   "gold": "TRUE",
+   "ly_do": "Cột điểm thi của CT180 đọc kém nhưng T.Hợp và điểm chữ rõ, khớp nhau.",
+   "nguon": "Tuần 15 (OCR): không chắc ≠ sai — dòng/học kỳ đọc không chắc thì không được kết luận; QĐ3266 Điều 32 khoản 1, tr.19",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "su_that": "TRUE",
+   "split": "dev"
+  },
+  {
+   "id": "ON-01M2",
+   "nhom": "M2",
+   "he": "ocr",
+   "claim": "tot_nghiep",
+   "cau_hoi": "Em đã đủ điều kiện xét tốt nghiệp chưa?",
+   "dau_vao": {
+    "loai": "ocr_doc",
+    "goc": "sv_lvtn",
+    "that": [],
+    "bien_doi": [
+     [
+      "doi_dtbchk",
+      4,
+      null
+     ]
+    ],
+    "khai_bao_bo": []
+   },
+   "gold": "TRUE",
+   "ly_do": "ĐTBCHK không đọc được — mất kiểm chéo nhưng không có lỗi nào.",
+   "nguon": "Tuần 15 (OCR): không chắc ≠ sai — dòng/học kỳ đọc không chắc thì không được kết luận; QĐ3266 Điều 32 khoản 1, tr.19",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "su_that": "TRUE",
+   "split": "test"
+  },
+  {
+   "id": "ON-01M3",
+   "nhom": "M3",
+   "he": "ocr",
+   "claim": "tot_nghiep",
+   "cau_hoi": "Em đã đủ điều kiện xét tốt nghiệp chưa?",
+   "dau_vao": {
+    "loai": "ocr_doc",
+    "goc": "sv_lvtn",
+    "that": [],
+    "bien_doi": [
+     [
+      "doi_chu",
+      "CT180",
+      "F"
+     ]
+    ],
+    "khai_bao_bo": []
+   },
+   "gold": "UNKNOWN",
+   "ly_do": "Điểm chữ CT180 đọc thành F trái với T.Hợp → điểm CT180 không chắc.",
+   "nguon": "Tuần 15 (OCR): không chắc ≠ sai — dòng/học kỳ đọc không chắc thì không được kết luận",
+   "cham_diem": true,
+   "loai_gold": "thiet_ke",
+   "su_that": "TRUE",
+   "split": "dev"
+  },
+  {
+   "id": "ON-01M4",
+   "nhom": "M4",
+   "he": "ocr",
+   "claim": "tot_nghiep",
+   "cau_hoi": "Em đã đủ điều kiện xét tốt nghiệp chưa?",
+   "dau_vao": {
+    "loai": "ocr_doc",
+    "goc": "sv_lvtn",
+    "that": [],
+    "bien_doi": [
+     [
+      "mat_dong",
+      "CT180"
+     ]
+    ],
+    "khai_bao_bo": []
+   },
+   "gold": "UNKNOWN",
+   "ly_do": "Dòng CT180 mất, tổng TC học kỳ lệch → có HP bị ẩn.",
+   "nguon": "Tuần 15 (OCR): không chắc ≠ sai — dòng/học kỳ đọc không chắc thì không được kết luận",
+   "cham_diem": true,
+   "loai_gold": "thiet_ke",
+   "su_that": "TRUE",
+   "split": "test"
+  },
+  {
+   "id": "ON-02M1",
+   "nhom": "M1",
+   "he": "ocr",
+   "claim": "dk_bat_buoc",
+   "cau_hoi": "Em đã tích lũy đủ các học phần bắt buộc chưa?",
+   "dau_vao": {
+    "loai": "ocr_doc",
+    "goc": "sv_lvtn",
+    "that": [],
+    "bien_doi": [
+     [
+      "conf",
+      "CT296",
+      "thi",
+      0.4
+     ]
+    ],
+    "khai_bao_bo": []
+   },
+   "gold": "TRUE",
+   "ly_do": "Cột điểm thi của CT296 đọc kém nhưng T.Hợp và điểm chữ rõ, khớp nhau.",
+   "nguon": "Tuần 15 (OCR): không chắc ≠ sai — dòng/học kỳ đọc không chắc thì không được kết luận; QĐ3266 Điều 32 khoản 1, tr.19",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "su_that": "TRUE",
+   "split": "test"
+  },
+  {
+   "id": "ON-02M2",
+   "nhom": "M2",
+   "he": "ocr",
+   "claim": "dk_bat_buoc",
+   "cau_hoi": "Em đã tích lũy đủ các học phần bắt buộc chưa?",
+   "dau_vao": {
+    "loai": "ocr_doc",
+    "goc": "sv_lvtn",
+    "that": [],
+    "bien_doi": [
+     [
+      "doi_dtbchk",
+      4,
+      null
+     ]
+    ],
+    "khai_bao_bo": []
+   },
+   "gold": "TRUE",
+   "ly_do": "ĐTBCHK không đọc được — mất kiểm chéo nhưng không có lỗi nào.",
+   "nguon": "Tuần 15 (OCR): không chắc ≠ sai — dòng/học kỳ đọc không chắc thì không được kết luận; QĐ3266 Điều 32 khoản 1, tr.19",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "su_that": "TRUE",
+   "split": "dev"
+  },
+  {
+   "id": "ON-02M3",
+   "nhom": "M3",
+   "he": "ocr",
+   "claim": "dk_bat_buoc",
+   "cau_hoi": "Em đã tích lũy đủ các học phần bắt buộc chưa?",
+   "dau_vao": {
+    "loai": "ocr_doc",
+    "goc": "sv_lvtn",
+    "that": [],
+    "bien_doi": [
+     [
+      "doi_chu",
+      "CT296",
+      "F"
+     ]
+    ],
+    "khai_bao_bo": []
+   },
+   "gold": "UNKNOWN",
+   "ly_do": "Điểm chữ CT296 đọc thành F trái với T.Hợp → điểm CT296 không chắc.",
+   "nguon": "Tuần 15 (OCR): không chắc ≠ sai — dòng/học kỳ đọc không chắc thì không được kết luận",
+   "cham_diem": true,
+   "loai_gold": "thiet_ke",
+   "su_that": "TRUE",
+   "split": "dev"
+  },
+  {
+   "id": "ON-02M4",
+   "nhom": "M4",
+   "he": "ocr",
+   "claim": "dk_bat_buoc",
+   "cau_hoi": "Em đã tích lũy đủ các học phần bắt buộc chưa?",
+   "dau_vao": {
+    "loai": "ocr_doc",
+    "goc": "sv_lvtn",
+    "that": [],
+    "bien_doi": [
+     [
+      "mat_dong",
+      "CT296"
+     ]
+    ],
+    "khai_bao_bo": []
+   },
+   "gold": "UNKNOWN",
+   "ly_do": "Dòng CT296 mất, tổng TC học kỳ lệch → có HP bị ẩn.",
+   "nguon": "Tuần 15 (OCR): không chắc ≠ sai — dòng/học kỳ đọc không chắc thì không được kết luận",
+   "cham_diem": true,
+   "loai_gold": "thiet_ke",
+   "su_that": "TRUE",
+   "split": "dev"
+  },
+  {
+   "id": "ON-03M1",
+   "nhom": "M1",
+   "he": "ocr",
+   "claim": "tot_nghiep",
+   "cau_hoi": "Em đã đủ điều kiện xét tốt nghiệp chưa?",
+   "dau_vao": {
+    "loai": "ocr_doc",
+    "goc": "sv_tltn",
+    "that": [],
+    "bien_doi": [
+     [
+      "conf",
+      "CT501E",
+      "thi",
+      0.4
+     ]
+    ],
+    "khai_bao_bo": []
+   },
+   "gold": "TRUE",
+   "ly_do": "Cột điểm thi của CT501E đọc kém nhưng T.Hợp và điểm chữ rõ, khớp nhau.",
+   "nguon": "Tuần 15 (OCR): không chắc ≠ sai — dòng/học kỳ đọc không chắc thì không được kết luận; QĐ3266 Điều 32 khoản 1, tr.19",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "su_that": "TRUE",
+   "split": "test"
+  },
+  {
+   "id": "ON-03M2",
+   "nhom": "M2",
+   "he": "ocr",
+   "claim": "tot_nghiep",
+   "cau_hoi": "Em đã đủ điều kiện xét tốt nghiệp chưa?",
+   "dau_vao": {
+    "loai": "ocr_doc",
+    "goc": "sv_tltn",
+    "that": [],
+    "bien_doi": [
+     [
+      "doi_dtbchk",
+      8,
+      null
+     ]
+    ],
+    "khai_bao_bo": []
+   },
+   "gold": "TRUE",
+   "ly_do": "ĐTBCHK không đọc được — mất kiểm chéo nhưng không có lỗi nào.",
+   "nguon": "Tuần 15 (OCR): không chắc ≠ sai — dòng/học kỳ đọc không chắc thì không được kết luận; QĐ3266 Điều 32 khoản 1, tr.19",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "su_that": "TRUE",
+   "split": "test"
+  },
+  {
+   "id": "ON-03M3",
+   "nhom": "M3",
+   "he": "ocr",
+   "claim": "tot_nghiep",
+   "cau_hoi": "Em đã đủ điều kiện xét tốt nghiệp chưa?",
+   "dau_vao": {
+    "loai": "ocr_doc",
+    "goc": "sv_tltn",
+    "that": [],
+    "bien_doi": [
+     [
+      "doi_chu",
+      "CT501E",
+      "F"
+     ]
+    ],
+    "khai_bao_bo": []
+   },
+   "gold": "UNKNOWN",
+   "ly_do": "Điểm chữ CT501E đọc thành F trái với T.Hợp → điểm CT501E không chắc.",
+   "nguon": "Tuần 15 (OCR): không chắc ≠ sai — dòng/học kỳ đọc không chắc thì không được kết luận",
+   "cham_diem": true,
+   "loai_gold": "thiet_ke",
+   "su_that": "TRUE",
+   "split": "dev"
+  },
+  {
+   "id": "ON-03M4",
+   "nhom": "M4",
+   "he": "ocr",
+   "claim": "tot_nghiep",
+   "cau_hoi": "Em đã đủ điều kiện xét tốt nghiệp chưa?",
+   "dau_vao": {
+    "loai": "ocr_doc",
+    "goc": "sv_tltn",
+    "that": [],
+    "bien_doi": [
+     [
+      "mat_dong",
+      "CT501E"
+     ]
+    ],
+    "khai_bao_bo": []
+   },
+   "gold": "UNKNOWN",
+   "ly_do": "Dòng CT501E mất, tổng TC học kỳ lệch → có HP bị ẩn.",
+   "nguon": "Tuần 15 (OCR): không chắc ≠ sai — dòng/học kỳ đọc không chắc thì không được kết luận",
+   "cham_diem": true,
+   "loai_gold": "thiet_ke",
+   "su_that": "TRUE",
+   "split": "test"
+  },
+  {
+   "id": "ON-04M1",
+   "nhom": "M1",
+   "he": "ocr",
+   "claim": "tot_nghiep",
+   "cau_hoi": "Em đã đủ điều kiện xét tốt nghiệp chưa?",
+   "dau_vao": {
+    "loai": "ocr_doc",
+    "goc": "sv_5hp",
+    "that": [],
+    "bien_doi": [
+     [
+      "conf",
+      "CT478",
+      "thi",
+      0.4
+     ]
+    ],
+    "khai_bao_bo": []
+   },
+   "gold": "TRUE",
+   "ly_do": "Cột điểm thi của CT478 đọc kém nhưng T.Hợp và điểm chữ rõ, khớp nhau.",
+   "nguon": "Tuần 15 (OCR): không chắc ≠ sai — dòng/học kỳ đọc không chắc thì không được kết luận; QĐ3266 Điều 32 khoản 1, tr.19",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "su_that": "TRUE",
+   "split": "test"
+  },
+  {
+   "id": "ON-04M2",
+   "nhom": "M2",
+   "he": "ocr",
+   "claim": "tot_nghiep",
+   "cau_hoi": "Em đã đủ điều kiện xét tốt nghiệp chưa?",
+   "dau_vao": {
+    "loai": "ocr_doc",
+    "goc": "sv_5hp",
+    "that": [],
+    "bien_doi": [
+     [
+      "doi_dtbchk",
+      7,
+      null
+     ]
+    ],
+    "khai_bao_bo": []
+   },
+   "gold": "TRUE",
+   "ly_do": "ĐTBCHK không đọc được — mất kiểm chéo nhưng không có lỗi nào.",
+   "nguon": "Tuần 15 (OCR): không chắc ≠ sai — dòng/học kỳ đọc không chắc thì không được kết luận; QĐ3266 Điều 32 khoản 1, tr.19",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "su_that": "TRUE",
+   "split": "dev"
+  },
+  {
+   "id": "ON-04M3",
+   "nhom": "M3",
+   "he": "ocr",
+   "claim": "tot_nghiep",
+   "cau_hoi": "Em đã đủ điều kiện xét tốt nghiệp chưa?",
+   "dau_vao": {
+    "loai": "ocr_doc",
+    "goc": "sv_5hp",
+    "that": [],
+    "bien_doi": [
+     [
+      "doi_chu",
+      "CT478",
+      "F"
+     ]
+    ],
+    "khai_bao_bo": []
+   },
+   "gold": "UNKNOWN",
+   "ly_do": "Điểm chữ CT478 đọc thành F trái với T.Hợp → điểm CT478 không chắc.",
+   "nguon": "Tuần 15 (OCR): không chắc ≠ sai — dòng/học kỳ đọc không chắc thì không được kết luận",
+   "cham_diem": true,
+   "loai_gold": "thiet_ke",
+   "su_that": "TRUE",
+   "split": "test"
+  },
+  {
+   "id": "ON-04M4",
+   "nhom": "M4",
+   "he": "ocr",
+   "claim": "tot_nghiep",
+   "cau_hoi": "Em đã đủ điều kiện xét tốt nghiệp chưa?",
+   "dau_vao": {
+    "loai": "ocr_doc",
+    "goc": "sv_5hp",
+    "that": [],
+    "bien_doi": [
+     [
+      "mat_dong",
+      "CT478"
+     ]
+    ],
+    "khai_bao_bo": []
+   },
+   "gold": "UNKNOWN",
+   "ly_do": "Dòng CT478 mất, tổng TC học kỳ lệch → có HP bị ẩn.",
+   "nguon": "Tuần 15 (OCR): không chắc ≠ sai — dòng/học kỳ đọc không chắc thì không được kết luận",
+   "cham_diem": true,
+   "loai_gold": "thiet_ke",
+   "su_that": "TRUE",
+   "split": "test"
+  },
+  {
+   "id": "ON-05M1",
+   "nhom": "M1",
+   "he": "ocr",
+   "claim": "passed(\"ML019\")",
+   "cau_hoi": "Bảng điểm OCR đính kèm — passed(\"ML019\")?",
+   "dau_vao": {
+    "loai": "ocr_doc",
+    "goc": "sv_lvtn",
+    "that": [],
+    "bien_doi": [
+     [
+      "conf",
+      "ML019",
+      "thi",
+      0.4
+     ]
+    ],
+    "khai_bao_bo": []
+   },
+   "gold": "TRUE",
+   "ly_do": "Cột điểm thi của ML019 đọc kém nhưng T.Hợp và điểm chữ rõ, khớp nhau.",
+   "nguon": "Tuần 15 (OCR): không chắc ≠ sai — dòng/học kỳ đọc không chắc thì không được kết luận; QĐ3266 Điều 32 khoản 1, tr.19",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "su_that": "TRUE",
+   "split": "dev"
+  },
+  {
+   "id": "ON-05M2",
+   "nhom": "M2",
+   "he": "ocr",
+   "claim": "passed(\"ML019\")",
+   "cau_hoi": "Bảng điểm OCR đính kèm — passed(\"ML019\")?",
+   "dau_vao": {
+    "loai": "ocr_doc",
+    "goc": "sv_lvtn",
+    "that": [],
+    "bien_doi": [
+     [
+      "doi_dtbchk",
+      1,
+      null
+     ]
+    ],
+    "khai_bao_bo": []
+   },
+   "gold": "TRUE",
+   "ly_do": "ĐTBCHK không đọc được — mất kiểm chéo nhưng không có lỗi nào.",
+   "nguon": "Tuần 15 (OCR): không chắc ≠ sai — dòng/học kỳ đọc không chắc thì không được kết luận; QĐ3266 Điều 32 khoản 1, tr.19",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "su_that": "TRUE",
+   "split": "test"
+  },
+  {
+   "id": "ON-05M3",
+   "nhom": "M3",
+   "he": "ocr",
+   "claim": "passed(\"ML019\")",
+   "cau_hoi": "Bảng điểm OCR đính kèm — passed(\"ML019\")?",
+   "dau_vao": {
+    "loai": "ocr_doc",
+    "goc": "sv_lvtn",
+    "that": [],
+    "bien_doi": [
+     [
+      "doi_chu",
+      "ML019",
+      "F"
+     ]
+    ],
+    "khai_bao_bo": []
+   },
+   "gold": "UNKNOWN",
+   "ly_do": "Điểm chữ ML019 đọc thành F trái với T.Hợp → điểm ML019 không chắc.",
+   "nguon": "Tuần 15 (OCR): không chắc ≠ sai — dòng/học kỳ đọc không chắc thì không được kết luận",
+   "cham_diem": true,
+   "loai_gold": "thiet_ke",
+   "su_that": "TRUE",
+   "split": "test"
+  },
+  {
+   "id": "ON-05M4",
+   "nhom": "M4",
+   "he": "ocr",
+   "claim": "passed(\"ML019\")",
+   "cau_hoi": "Bảng điểm OCR đính kèm — passed(\"ML019\")?",
+   "dau_vao": {
+    "loai": "ocr_doc",
+    "goc": "sv_lvtn",
+    "that": [],
+    "bien_doi": [
+     [
+      "mat_dong",
+      "ML019"
+     ]
+    ],
+    "khai_bao_bo": []
+   },
+   "gold": "UNKNOWN",
+   "ly_do": "Dòng ML019 mất, tổng TC học kỳ lệch → có HP bị ẩn.",
+   "nguon": "Tuần 15 (OCR): không chắc ≠ sai — dòng/học kỳ đọc không chắc thì không được kết luận",
+   "cham_diem": true,
+   "loai_gold": "thiet_ke",
+   "su_that": "TRUE",
+   "split": "dev"
+  },
+  {
+   "id": "ON-06M1",
+   "nhom": "M1",
+   "he": "ocr",
+   "claim": "dat_nhom(g_chuyen_nganh)",
+   "cau_hoi": "Bảng điểm OCR đính kèm — dat_nhom(g_chuyen_nganh)?",
+   "dau_vao": {
+    "loai": "ocr_doc",
+    "goc": "sv_lvtn",
+    "that": [],
+    "bien_doi": [
+     [
+      "conf",
+      "CT484",
+      "thi",
+      0.4
+     ]
+    ],
+    "khai_bao_bo": []
+   },
+   "gold": "TRUE",
+   "ly_do": "Cột điểm thi của CT484 đọc kém nhưng T.Hợp và điểm chữ rõ, khớp nhau.",
+   "nguon": "Tuần 15 (OCR): không chắc ≠ sai — dòng/học kỳ đọc không chắc thì không được kết luận; QĐ3266 Điều 32 khoản 1, tr.19",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "su_that": "TRUE",
+   "split": "dev"
+  },
+  {
+   "id": "ON-06M2",
+   "nhom": "M2",
+   "he": "ocr",
+   "claim": "dat_nhom(g_chuyen_nganh)",
+   "cau_hoi": "Bảng điểm OCR đính kèm — dat_nhom(g_chuyen_nganh)?",
+   "dau_vao": {
+    "loai": "ocr_doc",
+    "goc": "sv_lvtn",
+    "that": [],
+    "bien_doi": [
+     [
+      "doi_dtbchk",
+      7,
+      null
+     ]
+    ],
+    "khai_bao_bo": []
+   },
+   "gold": "TRUE",
+   "ly_do": "ĐTBCHK không đọc được — mất kiểm chéo nhưng không có lỗi nào.",
+   "nguon": "Tuần 15 (OCR): không chắc ≠ sai — dòng/học kỳ đọc không chắc thì không được kết luận; QĐ3266 Điều 32 khoản 1, tr.19",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "su_that": "TRUE",
+   "split": "dev"
+  },
+  {
+   "id": "ON-06M3",
+   "nhom": "M3",
+   "he": "ocr",
+   "claim": "dat_nhom(g_chuyen_nganh)",
+   "cau_hoi": "Bảng điểm OCR đính kèm — dat_nhom(g_chuyen_nganh)?",
+   "dau_vao": {
+    "loai": "ocr_doc",
+    "goc": "sv_lvtn",
+    "that": [],
+    "bien_doi": [
+     [
+      "doi_chu",
+      "CT484",
+      "F"
+     ]
+    ],
+    "khai_bao_bo": []
+   },
+   "gold": "UNKNOWN",
+   "ly_do": "Điểm chữ CT484 đọc thành F trái với T.Hợp → điểm CT484 không chắc.",
+   "nguon": "Tuần 15 (OCR): không chắc ≠ sai — dòng/học kỳ đọc không chắc thì không được kết luận",
+   "cham_diem": true,
+   "loai_gold": "thiet_ke",
+   "su_that": "TRUE",
+   "split": "dev"
+  },
+  {
+   "id": "ON-06M4",
+   "nhom": "M4",
+   "he": "ocr",
+   "claim": "dat_nhom(g_chuyen_nganh)",
+   "cau_hoi": "Bảng điểm OCR đính kèm — dat_nhom(g_chuyen_nganh)?",
+   "dau_vao": {
+    "loai": "ocr_doc",
+    "goc": "sv_lvtn",
+    "that": [],
+    "bien_doi": [
+     [
+      "mat_dong",
+      "CT484"
+     ]
+    ],
+    "khai_bao_bo": []
+   },
+   "gold": "UNKNOWN",
+   "ly_do": "Dòng CT484 mất, tổng TC học kỳ lệch → có HP bị ẩn.",
+   "nguon": "Tuần 15 (OCR): không chắc ≠ sai — dòng/học kỳ đọc không chắc thì không được kết luận",
+   "cham_diem": true,
+   "loai_gold": "thiet_ke",
+   "su_that": "TRUE",
+   "split": "dev"
+  },
+  {
+   "id": "ON-07M1",
+   "nhom": "M1",
+   "he": "ocr",
+   "claim": "passed(\"ML016\")",
+   "cau_hoi": "Bảng điểm OCR đính kèm — passed(\"ML016\")?",
+   "dau_vao": {
+    "loai": "ocr_doc",
+    "goc": "sv_lvtn",
+    "that": [],
+    "bien_doi": [
+     [
+      "conf",
+      "ML016",
+      "thi",
+      0.4
+     ]
+    ],
+    "khai_bao_bo": []
+   },
+   "gold": "TRUE",
+   "ly_do": "Cột điểm thi của ML016 đọc kém nhưng T.Hợp và điểm chữ rõ, khớp nhau.",
+   "nguon": "Tuần 15 (OCR): không chắc ≠ sai — dòng/học kỳ đọc không chắc thì không được kết luận; QĐ3266 Điều 32 khoản 1, tr.19",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "su_that": "TRUE",
+   "split": "dev"
+  },
+  {
+   "id": "ON-07M2",
+   "nhom": "M2",
+   "he": "ocr",
+   "claim": "passed(\"ML016\")",
+   "cau_hoi": "Bảng điểm OCR đính kèm — passed(\"ML016\")?",
+   "dau_vao": {
+    "loai": "ocr_doc",
+    "goc": "sv_lvtn",
+    "that": [],
+    "bien_doi": [
+     [
+      "doi_dtbchk",
+      1,
+      null
+     ]
+    ],
+    "khai_bao_bo": []
+   },
+   "gold": "TRUE",
+   "ly_do": "ĐTBCHK không đọc được — mất kiểm chéo nhưng không có lỗi nào.",
+   "nguon": "Tuần 15 (OCR): không chắc ≠ sai — dòng/học kỳ đọc không chắc thì không được kết luận; QĐ3266 Điều 32 khoản 1, tr.19",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "su_that": "TRUE",
+   "split": "test"
+  },
+  {
+   "id": "ON-07M3",
+   "nhom": "M3",
+   "he": "ocr",
+   "claim": "passed(\"ML016\")",
+   "cau_hoi": "Bảng điểm OCR đính kèm — passed(\"ML016\")?",
+   "dau_vao": {
+    "loai": "ocr_doc",
+    "goc": "sv_lvtn",
+    "that": [],
+    "bien_doi": [
+     [
+      "doi_chu",
+      "ML016",
+      "F"
+     ]
+    ],
+    "khai_bao_bo": []
+   },
+   "gold": "UNKNOWN",
+   "ly_do": "Điểm chữ ML016 đọc thành F trái với T.Hợp → điểm ML016 không chắc.",
+   "nguon": "Tuần 15 (OCR): không chắc ≠ sai — dòng/học kỳ đọc không chắc thì không được kết luận",
+   "cham_diem": true,
+   "loai_gold": "thiet_ke",
+   "su_that": "TRUE",
+   "split": "dev"
+  },
+  {
+   "id": "ON-07M4",
+   "nhom": "M4",
+   "he": "ocr",
+   "claim": "passed(\"ML016\")",
+   "cau_hoi": "Bảng điểm OCR đính kèm — passed(\"ML016\")?",
+   "dau_vao": {
+    "loai": "ocr_doc",
+    "goc": "sv_lvtn",
+    "that": [],
+    "bien_doi": [
+     [
+      "mat_dong",
+      "ML016"
+     ]
+    ],
+    "khai_bao_bo": []
+   },
+   "gold": "UNKNOWN",
+   "ly_do": "Dòng ML016 mất, tổng TC học kỳ lệch → có HP bị ẩn.",
+   "nguon": "Tuần 15 (OCR): không chắc ≠ sai — dòng/học kỳ đọc không chắc thì không được kết luận",
+   "cham_diem": true,
+   "loai_gold": "thiet_ke",
+   "su_that": "TRUE",
+   "split": "test"
+  },
+  {
+   "id": "ON-08M1",
+   "nhom": "M1",
+   "he": "ocr",
+   "claim": "passed(\"CT173\")",
+   "cau_hoi": "Bảng điểm OCR đính kèm — passed(\"CT173\")?",
+   "dau_vao": {
+    "loai": "ocr_doc",
+    "goc": "sv_lvtn",
+    "that": [],
+    "bien_doi": [
+     [
+      "conf",
+      "CT173",
+      "thi",
+      0.4
+     ]
+    ],
+    "khai_bao_bo": []
+   },
+   "gold": "TRUE",
+   "ly_do": "Cột điểm thi của CT173 đọc kém nhưng T.Hợp và điểm chữ rõ, khớp nhau.",
+   "nguon": "Tuần 15 (OCR): không chắc ≠ sai — dòng/học kỳ đọc không chắc thì không được kết luận; QĐ3266 Điều 32 khoản 1, tr.19",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "su_that": "TRUE",
+   "split": "test"
+  },
+  {
+   "id": "ON-08M2",
+   "nhom": "M2",
+   "he": "ocr",
+   "claim": "passed(\"CT173\")",
+   "cau_hoi": "Bảng điểm OCR đính kèm — passed(\"CT173\")?",
+   "dau_vao": {
+    "loai": "ocr_doc",
+    "goc": "sv_lvtn",
+    "that": [],
+    "bien_doi": [
+     [
+      "doi_dtbchk",
+      4,
+      null
+     ]
+    ],
+    "khai_bao_bo": []
+   },
+   "gold": "TRUE",
+   "ly_do": "ĐTBCHK không đọc được — mất kiểm chéo nhưng không có lỗi nào.",
+   "nguon": "Tuần 15 (OCR): không chắc ≠ sai — dòng/học kỳ đọc không chắc thì không được kết luận; QĐ3266 Điều 32 khoản 1, tr.19",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "su_that": "TRUE",
+   "split": "dev"
+  },
+  {
+   "id": "ON-08M3",
+   "nhom": "M3",
+   "he": "ocr",
+   "claim": "passed(\"CT173\")",
+   "cau_hoi": "Bảng điểm OCR đính kèm — passed(\"CT173\")?",
+   "dau_vao": {
+    "loai": "ocr_doc",
+    "goc": "sv_lvtn",
+    "that": [],
+    "bien_doi": [
+     [
+      "doi_chu",
+      "CT173",
+      "F"
+     ]
+    ],
+    "khai_bao_bo": []
+   },
+   "gold": "UNKNOWN",
+   "ly_do": "Điểm chữ CT173 đọc thành F trái với T.Hợp → điểm CT173 không chắc.",
+   "nguon": "Tuần 15 (OCR): không chắc ≠ sai — dòng/học kỳ đọc không chắc thì không được kết luận",
+   "cham_diem": true,
+   "loai_gold": "thiet_ke",
+   "su_that": "TRUE",
+   "split": "test"
+  },
+  {
+   "id": "ON-08M4",
+   "nhom": "M4",
+   "he": "ocr",
+   "claim": "passed(\"CT173\")",
+   "cau_hoi": "Bảng điểm OCR đính kèm — passed(\"CT173\")?",
+   "dau_vao": {
+    "loai": "ocr_doc",
+    "goc": "sv_lvtn",
+    "that": [],
+    "bien_doi": [
+     [
+      "mat_dong",
+      "CT173"
+     ]
+    ],
+    "khai_bao_bo": []
+   },
+   "gold": "UNKNOWN",
+   "ly_do": "Dòng CT173 mất, tổng TC học kỳ lệch → có HP bị ẩn.",
+   "nguon": "Tuần 15 (OCR): không chắc ≠ sai — dòng/học kỳ đọc không chắc thì không được kết luận",
+   "cham_diem": true,
+   "loai_gold": "thiet_ke",
+   "su_that": "TRUE",
+   "split": "test"
+  },
+  {
+   "id": "ON-09M1",
+   "nhom": "M1",
+   "he": "ocr",
+   "claim": "tot_nghiep",
+   "cau_hoi": "Em đã đủ điều kiện xét tốt nghiệp chưa?",
+   "dau_vao": {
+    "loai": "ocr_doc",
+    "goc": "sv_tltn",
+    "that": [],
+    "bien_doi": [
+     [
+      "conf",
+      "CT182",
+      "thi",
+      0.4
+     ]
+    ],
+    "khai_bao_bo": []
+   },
+   "gold": "TRUE",
+   "ly_do": "Cột điểm thi của CT182 đọc kém nhưng T.Hợp và điểm chữ rõ, khớp nhau.",
+   "nguon": "Tuần 15 (OCR): không chắc ≠ sai — dòng/học kỳ đọc không chắc thì không được kết luận; QĐ3266 Điều 32 khoản 1, tr.19",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "su_that": "TRUE",
+   "split": "dev"
+  },
+  {
+   "id": "ON-09M2",
+   "nhom": "M2",
+   "he": "ocr",
+   "claim": "tot_nghiep",
+   "cau_hoi": "Em đã đủ điều kiện xét tốt nghiệp chưa?",
+   "dau_vao": {
+    "loai": "ocr_doc",
+    "goc": "sv_tltn",
+    "that": [],
+    "bien_doi": [
+     [
+      "doi_dtbchk",
+      4,
+      null
+     ]
+    ],
+    "khai_bao_bo": []
+   },
+   "gold": "TRUE",
+   "ly_do": "ĐTBCHK không đọc được — mất kiểm chéo nhưng không có lỗi nào.",
+   "nguon": "Tuần 15 (OCR): không chắc ≠ sai — dòng/học kỳ đọc không chắc thì không được kết luận; QĐ3266 Điều 32 khoản 1, tr.19",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "su_that": "TRUE",
+   "split": "test"
+  },
+  {
+   "id": "ON-09M3",
+   "nhom": "M3",
+   "he": "ocr",
+   "claim": "tot_nghiep",
+   "cau_hoi": "Em đã đủ điều kiện xét tốt nghiệp chưa?",
+   "dau_vao": {
+    "loai": "ocr_doc",
+    "goc": "sv_tltn",
+    "that": [],
+    "bien_doi": [
+     [
+      "doi_chu",
+      "CT182",
+      "F"
+     ]
+    ],
+    "khai_bao_bo": []
+   },
+   "gold": "UNKNOWN",
+   "ly_do": "Điểm chữ CT182 đọc thành F trái với T.Hợp → điểm CT182 không chắc.",
+   "nguon": "Tuần 15 (OCR): không chắc ≠ sai — dòng/học kỳ đọc không chắc thì không được kết luận",
+   "cham_diem": true,
+   "loai_gold": "thiet_ke",
+   "su_that": "TRUE",
+   "split": "test"
+  },
+  {
+   "id": "ON-09M4",
+   "nhom": "M4",
+   "he": "ocr",
+   "claim": "tot_nghiep",
+   "cau_hoi": "Em đã đủ điều kiện xét tốt nghiệp chưa?",
+   "dau_vao": {
+    "loai": "ocr_doc",
+    "goc": "sv_tltn",
+    "that": [],
+    "bien_doi": [
+     [
+      "mat_dong",
+      "CT182"
+     ]
+    ],
+    "khai_bao_bo": []
+   },
+   "gold": "UNKNOWN",
+   "ly_do": "Dòng CT182 mất, tổng TC học kỳ lệch → có HP bị ẩn.",
+   "nguon": "Tuần 15 (OCR): không chắc ≠ sai — dòng/học kỳ đọc không chắc thì không được kết luận",
+   "cham_diem": true,
+   "loai_gold": "thiet_ke",
+   "su_that": "TRUE",
+   "split": "dev"
+  },
+  {
+   "id": "ON-10M1",
+   "nhom": "M1",
+   "he": "ocr",
+   "claim": "dk_hp_dieu_kien",
+   "cau_hoi": "Em đã hoàn thành các học phần điều kiện chưa?",
+   "dau_vao": {
+    "loai": "ocr_doc",
+    "goc": "sv_5hp",
+    "that": [],
+    "bien_doi": [
+     [
+      "conf",
+      "XH024",
+      "thi",
+      0.4
+     ]
+    ],
+    "khai_bao_bo": []
+   },
+   "gold": "TRUE",
+   "ly_do": "Cột điểm thi của XH024 đọc kém nhưng T.Hợp và điểm chữ rõ, khớp nhau.",
+   "nguon": "Tuần 15 (OCR): không chắc ≠ sai — dòng/học kỳ đọc không chắc thì không được kết luận; QĐ3266 Điều 32 khoản 1, tr.19",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "su_that": "TRUE",
+   "split": "test"
+  },
+  {
+   "id": "ON-10M2",
+   "nhom": "M2",
+   "he": "ocr",
+   "claim": "dk_hp_dieu_kien",
+   "cau_hoi": "Em đã hoàn thành các học phần điều kiện chưa?",
+   "dau_vao": {
+    "loai": "ocr_doc",
+    "goc": "sv_5hp",
+    "that": [],
+    "bien_doi": [
+     [
+      "doi_dtbchk",
+      0,
+      null
+     ]
+    ],
+    "khai_bao_bo": []
+   },
+   "gold": "TRUE",
+   "ly_do": "ĐTBCHK không đọc được — mất kiểm chéo nhưng không có lỗi nào.",
+   "nguon": "Tuần 15 (OCR): không chắc ≠ sai — dòng/học kỳ đọc không chắc thì không được kết luận; QĐ3266 Điều 32 khoản 1, tr.19",
+   "cham_diem": true,
+   "loai_gold": "quy_che",
+   "su_that": "TRUE",
+   "split": "dev"
+  },
+  {
+   "id": "ON-10M3",
+   "nhom": "M3",
+   "he": "ocr",
+   "claim": "dk_hp_dieu_kien",
+   "cau_hoi": "Em đã hoàn thành các học phần điều kiện chưa?",
+   "dau_vao": {
+    "loai": "ocr_doc",
+    "goc": "sv_5hp",
+    "that": [],
+    "bien_doi": [
+     [
+      "doi_chu",
+      "XH024",
+      "F"
+     ]
+    ],
+    "khai_bao_bo": []
+   },
+   "gold": "UNKNOWN",
+   "ly_do": "Điểm chữ XH024 đọc thành F trái với T.Hợp → điểm XH024 không chắc.",
+   "nguon": "Tuần 15 (OCR): không chắc ≠ sai — dòng/học kỳ đọc không chắc thì không được kết luận",
+   "cham_diem": true,
+   "loai_gold": "thiet_ke",
+   "su_that": "TRUE",
+   "split": "test"
+  },
+  {
+   "id": "ON-10M4",
+   "nhom": "M4",
+   "he": "ocr",
+   "claim": "dk_hp_dieu_kien",
+   "cau_hoi": "Em đã hoàn thành các học phần điều kiện chưa?",
+   "dau_vao": {
+    "loai": "ocr_doc",
+    "goc": "sv_5hp",
+    "that": [],
+    "bien_doi": [
+     [
+      "mat_dong",
+      "XH024"
+     ]
+    ],
+    "khai_bao_bo": []
+   },
+   "gold": "UNKNOWN",
+   "ly_do": "Dòng XH024 mất, tổng TC học kỳ lệch → có HP bị ẩn.",
+   "nguon": "Tuần 15 (OCR): không chắc ≠ sai — dòng/học kỳ đọc không chắc thì không được kết luận",
+   "cham_diem": true,
+   "loai_gold": "thiet_ke",
+   "su_that": "TRUE",
+   "split": "dev"
+  }
+ ]
+}
