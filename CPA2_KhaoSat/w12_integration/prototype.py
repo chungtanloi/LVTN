@@ -26,6 +26,7 @@ sys.path.insert(0, str(HERE.parent / "w16_abstention"))
 sys.path.insert(0, str(HERE.parent / "w7_student_facts"))
 import abstention  # Tuần 16: missing evidence
 import loader      # loader dùng chung: rà soát hồ sơ mâu thuẫn (P17-1) + đổi sang ASP
+sys.path.insert(0, str(HERE.parent / "w18_eligibility"))
 
 RULES = [W5 / "qd3266_r_formal_v1.lp", W5 / "qd5339_r_formal_v1.lp"]
 SCHEMA = W6 / "curriculum_schema.lp"
@@ -42,6 +43,7 @@ PARSER_STUB = {
     "em còn thiếu bao nhiêu tín chỉ": "thieu_nhom",
     "kỳ này em đăng ký CT180 được chưa": "du_dk_dang_ky",
     "em đủ điều kiện làm luận văn chưa": "du_dk_tc",
+    "em đủ điều kiện làm tiểu luận chưa": "du_dk_tc",   # Tuần 18: nhánh TLTN của Eligibility
     "chứng chỉ ielts của em miễn được môn nào": "du_dk_xin_mien",
     "nếu em rớt CT177 thì trễ mấy kỳ": "counterfactual",
     "em đủ điều kiện tốt nghiệp chưa": "tot_nghiep",
@@ -140,8 +142,41 @@ def verbalize(cert, cautious):
             return None, f"HẬU KIỂM CHẶN: mã {c} trong explanation nhưng không có trong certificate"
     return text, None
 
+ELIG_VERDICT = {"ELIGIBLE": "TRUE", "NOT_ELIGIBLE": "FALSE", "UNKNOWN": "UNKNOWN", "DA_HOAN_THANH": "DA_HOAN_THANH",
+                "MAU_THUAN": "UNSAT"}
+
+def answer_eligibility(question, student_path):
+    """Tuần 18: "đủ điều kiện làm luận văn/tiểu luận" → Eligibility module (w18). Trước đây claim 'du_dk_tc' không
+    đối số không bao giờ có trong answer set → prototype luôn trả FALSE."""
+    import eligibility
+    dt = "tltn" if "tiểu luận" in question.lower() else "lvtn"
+    if not student_path:      # không có hồ sơ → không kết luận về sinh viên (thế giới đóng sẽ cho FALSE sai)
+        cert = {"claim": f"du_dk({dt})", "verdict": "UNKNOWN", "proof": {"steps": []}, "missing_facts": ["ho_so"]}
+        return {"verdict": "UNKNOWN", "certificate": cert, "explanation_vi": "Cần hồ sơ học tập để xét điều kiện.",
+                "missing_facts": ["ho_so"], "can_bo_sung": [], "mau_thuan": [], "claim": f"du_dk({dt})"}
+    r = eligibility.xet(json.loads(Path(student_path).read_text(encoding="utf-8")), dt)
+    v = ELIG_VERDICT[r["ket_qua"]]
+    steps = [{"atom": s["atom"], "rule_id": s["rule_id"], "source": {"van_ban": s["nguon"]}} for s in r["chung_chi"]]
+    missing = [b["bien"] for b in r["can_bo_sung"]]
+    text = {"TRUE": f"Kết luận: đủ điều kiện nhận đề tài {dt}.",
+            "FALSE": f"Kết luận: chưa đủ điều kiện {dt}: " + ", ".join(r["ly_do"]),
+            "UNKNOWN": "Chưa đủ dữ kiện — cần bổ sung: " + " | ".join(b["hoi"] for b in r["can_bo_sung"]),
+            "DA_HOAN_THANH": f"Đã hoàn thành {dt}.", "UNSAT": "Hồ sơ mâu thuẫn — không kết luận."}[v]
+    cert = {"claim": f"du_dk({dt})", "verdict": v, "proof": {"steps": steps}, "missing_facts": missing,
+            "can_bo_sung": r["can_bo_sung"]}
+    # hậu kiểm như verbalize: mọi mã HP trong lời giải thích phải có trong certificate
+    cert_text = " ".join([s["atom"] for s in steps] + r["ly_do"] + missing)
+    la = [c for c in re.findall(r"[A-Z]{1,3}\d{2,3}E?", text) if c not in cert_text]
+    if la:
+        return {"verdict": "BLOCKED", "certificate": cert, "missing_facts": missing,
+                "explanation_vi": f"HẬU KIỂM CHẶN: mã {la[0]} trong explanation nhưng không có trong certificate"}
+    return {"verdict": v, "certificate": cert, "explanation_vi": text, "missing_facts": missing,
+            "can_bo_sung": r["can_bo_sung"], "mau_thuan": r["mau_thuan"], "claim": f"du_dk({dt})", "eligibility": r}
+
 def answer(question, student_path):
     claim=parse_question(question)
+    if claim == "du_dk_tc":
+        return answer_eligibility(question, student_path)
     extra, sid, mt = load_student(student_path) if student_path else ("", "demo", [])
     verdict, models, cautious, brave = solve_verdict(claim, extra)
     cert=build_certificate(claim, verdict, models, cautious, brave)

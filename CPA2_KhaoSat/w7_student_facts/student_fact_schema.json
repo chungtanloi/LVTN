@@ -231,6 +231,11 @@
       "default": false,
       "description": "true = SV chưa khai báo lựa chọn, hệ thống xét MỌI cách chọn (∀∃) — I20"
     },
+    "hinh_thuc_cuoi_khoa": {
+      "type": ["string", "null"],
+      "enum": ["lvtn", "tltn", "tich_luy_tc", null],
+      "description": "Hình thức thực hiện cuối khóa ĐƠN VỊ ĐÀO TẠO đã xét và công bố cho SV (QĐ3266 Đ31, R-F04 — điều kiện do đơn vị quy định, dữ kiện ngoài). null/thiếu = chưa biết → nhận đề tài LVTN/TLTN là UNKNOWN (Tuần 18)."
+    },
     "xac_nhan_ky_luat_sach": {
       "type": [
         "boolean",

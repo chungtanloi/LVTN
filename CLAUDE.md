@@ -46,7 +46,7 @@ D:\LVTN\                          (git repo)
 ├── CLAUDE.md
 ├── Ke_hoach_nghien_cuu_CPA2_24_tuan.xlsx   kế hoạch + checklist + dashboard
 ├── CPA2_KhaoSat\
-│   ├── TuanN_*.md                báo cáo từng tuần (1–17)
+│   ├── TuanN_*.md                báo cáo từng tuần (1–18)
 │   ├── Viec_ton_dong.md          sổ việc tồn đọng (A cần người · B tuần sau · C kỹ thuật · D không hình thức hoá)
 │   ├── w4_solver_probe\          so sánh clingo / CP-SAT / Z3
 │   ├── w5_rformal\               R-Formal: qd3266/qd5339 *.lp, r_formal_v1.json, source/*_ocr_raw.txt
@@ -59,7 +59,8 @@ D:\LVTN\                          (git repo)
 │   ├── w14_rag\                  corpus điều/khoản, BM25, grounding, rag_queries.json
 │   ├── w15_ocr\                  OCR bảng điểm (Tesseract vie) → hồ sơ có confidence; _rieng/ _anh/ gitignore
 │   ├── w16_abstention\           ba trị + missing evidence + từ chối kết luận (abstention.py)
-│   └── w17_adversarial\          bộ đối kháng 80 ca, gold đóng băng (gold_dong_bang.json), oracle, run_adversarial.py
+│   ├── w17_adversarial\          bộ đối kháng 80 ca, gold đóng băng (gold_dong_bang.json), oracle, run_adversarial.py
+│   └── w18_eligibility\          đủ điều kiện LVTN/TLTN/niên luận/thực tập/thay thế (eligibility.lp/.py)
 ├── ctu\                          PDF quy chế gốc (gitignore)
 ├── NiênLuan\                     niên luận cũ, có dữ liệu SV (gitignore)
 └── LVTN\                         repo riêng, chưa dùng (gitignore)
@@ -90,3 +91,5 @@ D:\LVTN\                          (git repo)
 - Hồ sơ → ASP CHỈ qua `w7_student_facts/loader.py` (`sang_asp`: rà soát mâu thuẫn P17-1 + chứng chỉ ×10 + CQ-06). Trước đây 3 bản chép lệch nhau (w11/w12 thiếu `che_do`, w7 thiếu rà soát). validate_student_facts L3 chặn module nào tự đổi hồ sơ → ASP.
 - Việc còn mở gom ở `CPA2_KhaoSat/Viec_ton_dong.md`; đóng mục nào thì tích ở cả sổ lẫn báo cáo tuần.
 - Sửa hệ thống sau khi đã thấy ca test thất bại → test đã nhiễm: giữ số chính thức, ghi số sau sửa ra file riêng (`--hau-to`), cần bộ test mới.
+- Điều khoản giao cho đơn vị đào tạo (QĐ3266 Đ31, R-F04: điều kiện nhận đề tài LVTN/TLTN) → KHÔNG bịa nội dung; mô hình KẾT QUẢ xét như dữ kiện ngoài (`hinh_thuc_cuoi_khoa`), thiếu → UNKNOWN. Đủ TC ≠ đủ điều kiện.
+- Claim không đối số (vd. `du_dk_tc` thay vì `du_dk_tc("CT550E")`) không bao giờ có trong answer set → ba trị luôn FALSE, im lặng (P18-1). Ý định mới của parser phải có ca kiểm thử đi qua prototype.

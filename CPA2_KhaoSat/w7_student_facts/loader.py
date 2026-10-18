@@ -68,6 +68,10 @@ def ra_soat(ho_so):
         if g.get("diem") in ("M", "W", "I"):          # bản ghi tự nhận là M/W/I → giữ cả khả năng đó
             lc.append(f'diem_{g["diem"].lower()}("{ma}")')
         them.append("1 { " + "; ".join(lc) + " } 1.")
+    ht = hs.get("hinh_thuc_cuoi_khoa")
+    if ht is not None and ht not in ("lvtn", "tltn", "tich_luy_tc"):       # sai giá trị → không tin, coi như chưa khai báo
+        hs.pop("hinh_thuc_cuoi_khoa")
+        mt.append(f"hinh_thuc_cuoi_khoa: {ht!r} không thuộc {{lvtn, tltn, tich_luy_tc}} — coi như chưa khai báo")
     nam2 = hs.get("da_hoc_nam2")
     if nam2 is not None:
         tc = sum(g.get("credits") or 0 for g in hs.get("grades", {}).values() if g.get("diem") != "M")
@@ -101,6 +105,11 @@ def sang_asp(j):
         lines.append("xac_nhan_ky_luat_sach.")
     elif j.get("xac_nhan_ky_luat_sach") is False:
         lines.append("khai_bao(ky_luat).")   # khai báo "không" → FALSE; null/thiếu → KB mở nhánh (Tuần 16)
+    ht = j.get("hinh_thuc_cuoi_khoa")      # QĐ3266 Đ31, R-F04: đơn vị đào tạo xét và công bố hình thức (Tuần 18)
+    if ht is not None:
+        lines.append("khai_bao(hinh_thuc).")  # đã biết → đóng nhánh; null/thiếu → eligibility.lp mở nhánh
+        if ht in ("lvtn", "tltn"):
+            lines.append(f"dv_cong_bo({ht}).")
     for k in ("da_hoc_nam2", "tc_cong_nhan"):
         if j.get(k) is not None:
             lines.append(f"{k}({j[k]}).")

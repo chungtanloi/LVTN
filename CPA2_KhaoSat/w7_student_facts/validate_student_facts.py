@@ -77,7 +77,7 @@ def kiem_loader_chung():
     good = '1 { g10("CT177"' in load_facts(mt)
     print(f"[{'OK' if good else 'FAIL'}] L2 w7 load_facts rà soát bản ghi mâu thuẫn (CT177 8,0 ghi F → mở)")
     # L3 chống chép lại loader: chỉ loader.py được sinh dữ kiện chứng chỉ (quy ước ×10) và khai báo kỷ luật
-    dau_hieu = ("chung_chi({", "khai_bao(ky_luat).")
+    dau_hieu = ("chung_chi({", "khai_bao(ky_luat).", "khai_bao(hinh_thuc).")
     chep = [str(f.relative_to(HERE.parent)) for f in sorted(HERE.parent.glob("w*/*.py"))
             if f.name != "loader.py" and not f.name.startswith("validate_")   # test viết ASP tay, không phải loader
             and any(d in f.read_text(encoding="utf-8") for d in dau_hieu)]

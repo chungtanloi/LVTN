@@ -53,6 +53,7 @@ rule_src(r_e03, qd3266, 30, none, none).
 rule_src(r_f01a, qd3266, 32, 1, a).
 rule_src(r_f02a, qd3266, 32, 1, b).
 rule_src(r_f03, qd3266,  32, 1, c).
+rule_src(r_f04, qd3266,  31, none, none).   % v1.8: nhận đề tài LVTN/TLTN — điều kiện do đơn vị đào tạo quy định (dữ kiện ngoài, w18)
 rule_src(r_f05, qd3266,  31, 3, none).
 rule_src(r_f06, qd3266,  34, 2, none).
 rule_src(r_f07, qd3266,  34, 2, a).

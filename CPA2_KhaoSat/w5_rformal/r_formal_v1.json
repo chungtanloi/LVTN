@@ -882,10 +882,10 @@
         "T7"
       ],
       "nhom": "tot_nghiep",
-      "ghi_chu": "TRẢ LỜI ĐƯỢC MỘT PHẦN (v1.4): QĐ3266 để ngỏ, nhưng CTĐT CNTT K49 có ngưỡng tín chỉ cụ thể — CT550E Luận văn tốt nghiệp (15 TC) yêu cầu ≥120 TC tích lũy; CT501E Tiểu luận (6 TC) ≥120 TC; CT518E Thực tập doanh nghiệp (5 TC) ≥125 TC. Nên kết luận được ở mức 'đủ/chưa đủ điều kiện VỀ TÍN CHỈ'; các điều kiện khác của đơn vị đào tạo vẫn nằm ngoài → phần đó vẫn UNKNOWN. LƯU Ý: prototype Tuần 4 dùng 'CT466E = Luận văn tốt nghiệp, 10 TC' — SAI cả ba: CT466E là NIÊN LUẬN 3 TC.",
+      "ghi_chu": "TRẢ LỜI ĐƯỢC MỘT PHẦN (v1.4): QĐ3266 để ngỏ, nhưng CTĐT CNTT K49 có ngưỡng tín chỉ cụ thể — CT550E Luận văn tốt nghiệp (15 TC) yêu cầu ≥120 TC tích lũy; CT501E Tiểu luận (6 TC) ≥120 TC; CT518E Thực tập doanh nghiệp (5 TC) ≥125 TC. Nên kết luận được ở mức 'đủ/chưa đủ điều kiện VỀ TÍN CHỈ'; các điều kiện khác của đơn vị đào tạo vẫn nằm ngoài → phần đó vẫn UNKNOWN. LƯU Ý: prototype Tuần 4 dùng 'CT466E = Luận văn tốt nghiệp, 10 TC' — SAI cả ba: CT466E là NIÊN LUẬN 3 TC. Tuần 18 (w18 eligibility.lp): vẫn lớp N — nội dung điều kiện do đơn vị quy định; KB chỉ mô hình KẾT QUẢ xét của đơn vị như dữ kiện ngoài dv_cong_bo/1 (hồ sơ: hinh_thuc_cuoi_khoa; thiếu → UNKNOWN). asp r_f04 dùng để trích dẫn trong chứng chỉ.",
       "van_ban": "qd3266",
       "diem": null,
-      "asp": null,
+      "asp": "r_f04",
       "quyet_dinh": null
     },
     {

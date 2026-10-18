@@ -42,6 +42,13 @@ BIEN_BOOL = {
         "Bạn đã học bao lâu kể từ khi nhập học (tính theo nửa năm, ví dụ 4,5 năm = 9), và có được công nhận/chuyển đổi "
         "tín chỉ nào không? (lưu ý: một năm học có 3 học kỳ — không đếm số học kỳ)",
         "R-E01, R-E02 · QĐ3266 Điều 5"),
+    # Tuần 18 (w18 eligibility.lp): điều kiện nhận đề tài do ĐƠN VỊ ĐÀO TẠO quy định — dữ kiện ngoài
+    "dv_cong_bo(lvtn)": (
+        "Đơn vị đào tạo (Trường/Khoa) đã xét và công bố cho bạn hình thức Luận văn tốt nghiệp chưa?",
+        "R-F04 · QĐ3266 Điều 31, tr.19"),
+    "dv_cong_bo(tltn)": (
+        "Đơn vị đào tạo (Trường/Khoa) đã xét và công bố cho bạn hình thức Tiểu luận tốt nghiệp chưa?",
+        "R-F04 · QĐ3266 Điều 31, tr.19"),
 }
 G10 = re.compile(r'^g10\(("[^"]+"),(-?\d+)\)$')
 
