@@ -40,6 +40,20 @@ Sửa nhỏ (typo, đổi text, config 1 dòng) được bỏ qua Plan và TDD, 
 - Sửa Excel: sao lưu trước, dùng openpyxl (không `data_only`) để giữ công thức Dashboard.
 - Không đưa dữ liệu sinh viên thật vào repo; hồ sơ trong `w7_student_facts/students/` là giả lập.
 
+## Stack khi tích hợp thành ứng dụng (Loi chốt 18/10/2026 — dùng cho demo Tuần 24 và về sau)
+Khi đóng gói CPA² thành web app thì dùng đúng các công nghệ này (chưa dùng ở Tuần 1–19):
+- Web framework: Next.js · Styling: Tailwind
+- Hosting: Supabase · Database: Convex · Auth: Clerk · Payments: Stripe · Emails: Resend
+- AI: logic nhẹ — ChatGPT Terra; logic nặng/sáng tạo — ChatGPT Sol; tác vụ rẻ — Gemini Flash
+- Thiết kế giao diện: GPT image gen 2 + Claude Design · Công cụ build: Codex desktop app + ChatGPT Voice
+
+Lưu ý khi tích hợp (chưa quyết, hỏi trước khi làm):
+- Lõi suy diễn là Python + clingo → cần một dịch vụ Python riêng (API) để Next.js/Convex gọi; Convex chạy JS, Supabase không chạy Python. Chọn nơi chạy dịch vụ này trước khi code.
+- Supabase (Postgres) và Convex trùng vai trò backend/CSDL → cần chốt phân vai (vd. Convex là CSDL ứng dụng, Supabase chỉ lưu trữ file), hoặc bỏ một.
+- LLM CHỈ ở tầng Parser/Verbalizer (w13, w12); kết luận TRUE/FALSE/UNKNOWN luôn do solver + chứng chỉ, có hậu kiểm. Không để LLM tự kết luận học vụ.
+- API key (OpenAI, Gemini, Clerk, Stripe, Resend, Convex, Supabase) để trong `.env`, có `.env.example`; không commit secret. Chạy ECC security-scan trước khi deploy.
+- Hồ sơ/bảng điểm SV thật là dữ liệu nhạy cảm → không lưu khi chưa có đồng ý; tên model AI ở trên ghi đúng như Loi cung cấp, kiểm lại tên/giá API lúc tích hợp.
+
 ## Cấu trúc thư mục
 ```
 D:\LVTN\                          (git repo)
