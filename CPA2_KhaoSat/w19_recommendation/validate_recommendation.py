@@ -5,7 +5,7 @@ Tiêu chí (Kế hoạch 24 tuần, dòng 19): "Không recommend Not Eligible" �
 danh sách cần xác minh). Gold viết tay TRƯỚC khi cài đặt, theo:
   QĐ3266 Đ7 k4 (R-A03) tiên quyết = đã tích lũy · Đ14 k1 (R-C01) ≤ 20 TC/HK · CTĐT K49: lịch mở HK, nhóm tự chọn,
   nhóm một nhánh (AV hoặc PV; CN1/CN2/CN3) · QĐ5339 Đ2 k6 + QD-11 (đủ điều kiện xin miễn ≠ đã miễn) · w18 eligibility
-  (QD-12) · QD-13 (Loi 18/10/2026): song hành KHÔNG ràng buộc thứ tự/kết quả — chỉ là lời khuyên (khác câu chữ Đ7 k5)
+  (QD-12) · R-A04 QĐ3266 Đ7 k5: song hành phải học trước hoặc cùng lúc — 'học' = có học, kể cả F (QD-13 rút lại 18/10/2026)
 Thứ tự ưu tiên chọn HP là CHÍNH SÁCH TƯ VẤN (không phải quy chế): bắt buộc → mở khóa nhiều HP → hoàn thành nhóm → TC.
 
 Chạy:  python validate_recommendation.py
@@ -84,7 +84,7 @@ def main():
           f"B1 HK3 chỉ chọn HP mở ở HK3 (CT177 chỉ mở HK1/HK2) ({m})")
 
     check(not ({"XH031", "XH032", "XH033"} & set(m)) and {"XH024", "XH025"} <= set(m),
-          f"B2 nhóm AV: ưu tiên AV căn bản 2–3 trước AV tăng cường (song hành — chính sách, QD-13) ({m})")
+          f"B2 nhóm AV: AV căn bản 2–3 trước AV tăng cường (song hành Đ7 k5) ({m})")
 
     print("\nC. KHÔNG CHẮC → CẦN XÁC MINH, KHÔNG ĐỀ XUẤT")
     j = chi_giu([x for x in NAM2 if x != "CT101"])
@@ -124,15 +124,37 @@ def main():
     check("ML014" in {x["ma"] for x in r["thay_the"]} and "ML014" not in ma(r),
           f"E5 đạt ML009 → ML014 được công nhận thay thế, không đề xuất học ML014 ({ma(r)})")
 
-    print("\nF. SONG HÀNH (QD-13) — chỉ là lời khuyên")
+    print("\nF. SONG HÀNH — QĐ3266 Đ7 k5: 'phải học trước hoặc học cùng lúc' (QD-13 rút lại; 'học' = có học, kể cả F)")
     j = chi_giu(NAM2 + ["CT176"])
     r = R.de_xuat(j, hk=1)
-    if "CT182" in ma(r):
-        check(any("CT180" in k for k in r["loi_khuyen"]),
-              "F1 CT182 được đề xuất khi chưa học CT180 (song hành) → kèm lời khuyên, không chặn")
-    else:
-        check(any("CT182" in x["ma"] for x in r["ung_vien_khong_chon"]),
-              "F1 CT182 (song hành CT180 chưa học) vẫn là ứng viên hợp lệ — song hành không chặn")
+    sh = {x["ma"]: x for x in r.get("khong_du_song_hanh", [])}
+    check("CT182" not in ma(r) and "CT180" in sh.get("CT182", {}).get("song_hanh", [])
+          and "Điều 7 khoản 5" in sh.get("CT182", {}).get("nguon", ""),
+          f"F1 chưa học CT180 và CT180 không thể học cùng kỳ (thiếu CT177) → KHÔNG đề xuất CT182, nêu Đ7 k5 ({ma(r)})")
+    j = chi_giu(NAM2 + ["CT176"])
+    j["grades"]["CT180"] = {"code": "CT180", "credits": 3, "thang10": 30, "letter": "F", "status": "failed"}
+    r = R.de_xuat(j, hk=1)
+    check("CT182" not in {x["ma"] for x in r.get("khong_du_song_hanh", [])}
+          and "CT182" in ma(r) + [x["ma"] for x in r["ung_vien_khong_chon"]],
+          f"F2 đã học CT180 (dù bị F) → song hành thoả, CT182 hợp lệ (quyết định (a): 'học' ≠ 'tích lũy') ({ma(r)})")
+    j = chi_giu(NAM2 + ["CT176"])
+    j["grades"]["CT180"] = {"code": "CT180", "credits": 3, "thang10": None, "letter": "W", "diem": "W", "status": "failed"}
+    r = R.de_xuat(j, hk=1)
+    check("CT182" not in ma(r) and "CT182" in {x["ma"] for x in r.get("khong_du_song_hanh", [])},
+          "F3 CT180 điểm W (đã rút) → không tính là đã học → CT182 không đề xuất")
+    j = chi_giu(NAM2 + ["CT176"])
+    j["grades"]["CT177"] = {"code": "CT177", "credits": 3, "thang10": 30, "letter": "A", "status": "passed"}
+    r = R.de_xuat(j, hk=1)
+    xm = {x["ma"] for x in r["can_xac_minh"]}
+    check("CT182" in xm and "CT182" not in {x["ma"] for x in r.get("khong_du_song_hanh", [])},
+          f"F5 HP song hành CT180 chưa chắc (CT177 mâu thuẫn) → CT182 'cần xác minh', không kết luận chắc 'không đủ' (review)")
+    j = chi_giu(NAM2 + ["CT176"])
+    j["grades"]["CT180"] = {"code": "CT180", "credits": 3, "thang10": None, "letter": None, "diem": "I", "status": "unknown"}
+    check(R._da_hoc(j, {}, "CT180") == "co", "F6 CT180 điểm I (status unknown) → đã học (đã dự học, chờ bổ sung điểm)")
+    r = R.de_xuat(chi_giu(NAM2), hk=3)
+    m = ma(r)
+    bad = [x for x in m for p_ in CT[x]["song_hanh"] if p_ not in m and p_ not in NAM2]
+    check(not bad, f"F4 HK3: mọi HP đề xuất có song hành đã học hoặc cùng kỳ (XH025 cùng XH024; không XH031 khi chưa có XH025) ({m})")
 
     print("\nG. BẤT BIẾN AN TOÀN — kiểm lại độc lập mọi đề xuất (6 hồ sơ × 3 học kỳ + biến thể)")
     ca = [(goc(n), k) for n in ("sv_5hp", "sv_du_hp", "sv_lvtn", "sv_mien_ielts", "sv_tltn", "sv_tron_ngoai_ngu")
@@ -145,12 +167,18 @@ def main():
             d = A.tra_loi(f'tich_luy("{x["ma"]}")', j)["verdict"]
             if v != "TRUE" or d != "FALSE" or HK[k] not in (CT[x["ma"]]["hk"] or []):
                 sai.append((x["ma"], k, v, d))
+        m_ = {x["ma"] for x in r["dang_ky"]}
+        for x in r["dang_ky"]:      # Đ7 k5: song hành phải đã học (có bản ghi, không W) hoặc cùng kỳ
+            for p_ in CT[x["ma"]]["song_hanh"]:
+                g_ = j["grades"].get(p_)
+                if p_ not in m_ and not (g_ and g_.get("diem") != "W" and g_.get("letter") != "W"):
+                    sai.append((x["ma"], "song_hanh", p_, k))
         for x in r["hinh_thuc_tot_nghiep"]:
             if E.xet(j, x["doi_tuong"])["ket_qua"] != "ELIGIBLE":
                 sai.append((x["doi_tuong"], k))
         if r["tong_tc"] > 20:
             sai.append(("tong_tc", k, r["tong_tc"]))
-    check(not sai, f"G1 {len(ca)} lần đề xuất: mọi mục kiểm lại đều TRUE/ELIGIBLE, không vượt 20 TC", f"sai: {sai[:5]}" if sai else "")
+    check(not sai, f"G1 {len(ca)} lần đề xuất: mọi mục kiểm lại đều TRUE/ELIGIBLE, song hành thoả Đ7 k5, không vượt 20 TC", f"sai: {sai[:5]}" if sai else "")
 
     print("\nH. PROTOTYPE (Tuần 12)")
     import prototype

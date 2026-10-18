@@ -3,7 +3,8 @@
 **Giai đoạn:** Recommendation (Tuần 19/24) · **Mục tiêu:** Chỉ recommend phương án đã chứng minh hợp lệ
 **Sản phẩm:** Recommendation v1 (`w19_recommendation/`)
 **Tiêu chí hoàn thành:** Không recommend Not Eligible ✅
-- `validate_recommendation.py` đạt **34/34** kiểm tra (gold viết tay trước khi cài đặt; bộ test tự soạn)
+- `validate_recommendation.py` đạt **39/39** kiểm tra (gold viết tay trước khi cài đặt; bộ test tự soạn)
+- **Cập nhật 18/10/2026 — QD-13 RÚT LẠI:** đối chiếu PDF gốc, song hành theo đúng QĐ3266 Đ7 k5 (học trước hoặc cùng lúc) → ràng buộc CỨNG trong Recommendation. Xem mục 2
 - Bất biến G1: 21 lần đề xuất (6 hồ sơ × 3 HK + SV năm 2 × 3 HK) — mọi HP đề xuất được kiểm lại **độc lập** qua engine w16: `du_dk_dang_ky` TRUE, `tich_luy` FALSE, mở đúng HK; mọi hình thức tốt nghiệp đề xuất được Eligibility trả ELIGIBLE; không phương án nào vượt 20 TC
 - Test mọi tuần 5–19 ĐẠT
 
@@ -44,12 +45,12 @@ HP thuộc một trong các trường hợp sau được tách khỏi danh sách
 | ràng buộc | không chọn HP thừa trong nhóm (bỏ HP đó vẫn đủ thiếu hụt → cấm) | Tuần 8 "không gợi ý thừa" |
 | ưu tiên @5 | TC bắt buộc | **chính sách** |
 | ưu tiên @4 | số HP sau mà HP này mở khóa | **chính sách** |
-| ưu tiên @3 | tránh chọn HP có HP song hành chưa học và không cùng kỳ | **chính sách** (QD-13) |
+| ràng buộc | HP song hành phải đã học (có bản ghi điểm, kể cả F; không tính W) hoặc chọn cùng kỳ | quy chế R-A04 · Đ7 k5 |
 | ưu tiên @2 / @1 | TC lấp nhóm tự chọn / tổng TC | **chính sách** |
 
 **Bước 3: kiểm lại tường minh.** Mọi HP được chọn phải hợp lệ trên mọi thế giới, chưa tích lũy và mở đúng HK, đồng thời tổng TC ≤ 20. Không qua kiểm lại → bỏ cả phương án và ghi vào `can_xac_minh`. Bước này không dùng `assert`, vì `python -O` bỏ các lệnh assert.
 
-**Đầu ra:** `dang_ky` (mỗi HP có chứng chỉ, ví dụ `du_dk_dang_ky("CT176")` ← r_a03 ← QĐ3266 Điều 7 khoản 4), `can_xac_minh`, `ung_vien_khong_chon`, `hinh_thuc_tot_nghiep`, `xin_mien`, `thay_the`, `loi_khuyen`, `mau_thuan`.
+**Đầu ra:** `dang_ky` (mỗi HP có chứng chỉ, ví dụ `du_dk_dang_ky("CT176")` ← r_a03 ← QĐ3266 Điều 7 khoản 4), `can_xac_minh`, `ung_vien_khong_chon`, `hinh_thuc_tot_nghiep`, `xin_mien`, `thay_the`, `khong_du_song_hanh`, `mau_thuan`. HP có song hành có thêm chứng chỉ `song_hanh(C,P)` ← r_a04 ← QĐ3266 Điều 7 khoản 5.
 
 **Prototype (w12):** "kỳ này em (có) nên đăng ký gì" → `claim = de_xuat`. Học kỳ được đọc từ câu hỏi ("học kì 2", "kỳ 3", "HK III", "học hè"). "Học kỳ 4" → hỏi lại, không lặng lẽ dùng HK1. Câu hỏi về **một** HP hoặc về luận văn/tiểu luận không bị nhánh này chiếm. Câu hỏi được chuẩn hoá NFC trước khi khớp.
 
@@ -62,7 +63,11 @@ HP thuộc một trong các trường hợp sau được tách khỏi danh sách
 
 ---
 
-## 2. QD-13 — song hành (xác nhận ngoài văn bản)
+## 2. QD-13 — song hành (đã RÚT LẠI, theo câu chữ Đ7 k5)
+
+> **Cập nhật 18/10/2026:** Loi gửi PDF gốc QĐ3266 và chỉ ra văn bản quy định cụ thể song hành → **rút lại QD-13**. Nay: HP song hành phải **học trước hoặc học cùng lúc**; không được học sau. Loi chọn cách hiểu **(a)**: "học" ≠ "tích lũy" (khoản 4 dùng "tích lũy", khoản 5 chỉ "học") → đã học dù bị **F** vẫn thoả; điểm **W** (đã rút) không tính; trạng thái `unknown` không điểm → cần xác minh. Recommendation áp **ràng buộc cứng** (`can_cung_ky` trong `recommendation.lp`; HP không thể thoả → `khong_du_song_hanh` kèm nguồn Đ7 k5). Bỏ mức ưu tiên @3 và `loi_khuyen`. TDD: F1 (CT182 khi chưa học CT180 và không thể học CT180 cùng kỳ), F3 (CT180 điểm W) **fail với bản QD-13**; F2 (CT180 bị F → CT182 hợp lệ), F4, G1 (bất biến song hành trên 21 lần đề xuất) đạt. Review: HP song hành chưa chắc (UNKNOWN / chờ xin miễn) → HP phụ thuộc vào **cần xác minh**, không kết luận chắc "không đủ" (F5); điểm I = đã học (F6) — cả hai fail trước khi sửa. QĐ4544 (liên thông, 2019) Đ8 k5 ghi y hệt.
+
+Phần dưới là lịch sử bản đầu Tuần 19:
 
 **Loi, 18/10/2026:** "song hành nghĩa là có thể học trước tín chỉ đó hoặc học sau 2 tín chỉ cũng được, kết quả học 2 cái không ảnh hưởng nhau, chỉ có nội dung học bổ trợ nhau."
 
@@ -132,7 +137,7 @@ Tất cả đã có ca hồi quy.
 ## 6. Việc còn lại → Tuần 20+
 
 - [ ] Đưa ca recommendation vào bộ test mới của Tuần 20 (B1)
-- [ ] Văn bản/email xác nhận QD-13 (song hành)
+- [x] ~~Văn bản/email xác nhận QD-13~~ — QD-13 rút lại, theo câu chữ Đ7 k5 (18/10/2026)
 - [ ] GVHD xác nhận thứ tự ưu tiên tư vấn
 - [ ] Kế hoạch nhiều học kỳ + Optimality Gap (B8, Tuần 22)
 

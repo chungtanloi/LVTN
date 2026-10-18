@@ -96,5 +96,5 @@ D:\LVTN\                          (git repo)
 - Quyết định diễn giải ghi ở trường `quyet_dinh` của catalog + `NGUON` trong `gen_quyet_dinh.py`, rồi SINH LẠI phụ lục (không sửa tay `PhuLuc_Quyet_dinh_dien_giai.md`).
 - Claim không đối số (vd. `du_dk_tc` thay vì `du_dk_tc("CT550E")`) không bao giờ có trong answer set → ba trị luôn FALSE, im lặng (P18-1). Ý định mới của parser phải có ca kiểm thử đi qua prototype.
 - Recommendation: chỉ đề xuất điều hợp lệ trên MỌI thế giới; UNKNOWN → `can_xac_minh`. Thứ tự ưu tiên là CHÍNH SÁCH (ghi rõ), không phải quy chế. Đủ điều kiện ≠ nên làm: chỉ gợi ý xin miễn HP còn cần (P19-1).
-- QD-13 (song hành học trước/cùng/sau) KHÁC câu chữ Đ7 k5 → KB giữ đúng văn bản, quyết định chỉ áp ở tầng tư vấn. Xác nhận ngoài văn bản không được sửa R-Formal ngược câu chữ.
+- Song hành (R-A04, QĐ3266 Đ7 k5): phải HỌC TRƯỚC hoặc HỌC CÙNG LÚC; "học" ≠ "tích lũy" → đã học dù F vẫn thoả, W không tính. QD-13 (học sau cũng được) đã RÚT sau khi đối chiếu PDF gốc. Xác nhận ngoài văn bản trái câu chữ → đối chiếu lại văn bản gốc trước khi áp dụng, và không bao giờ sửa R-Formal ngược câu chữ.
 - Bất biến kiểm lại không dùng `assert` (`python -O` bỏ). Parser: chuẩn hoá NFC, chấp nhận "kì"/"kỳ", số học kỳ ngoài 1–3 → hỏi lại, không mặc định im lặng (P19-3).

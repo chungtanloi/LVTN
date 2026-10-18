@@ -9,7 +9,7 @@ recommendation.py — Recommendation v1 (CPA2, Tuần 19): chỉ đề xuất ph
       hinh_thuc_tot_nghiep: [{doi_tuong, chung_chi}] — Eligibility (Tuần 18) trả ELIGIBLE
       xin_mien:             [{ma, hanh_dong, nguon}] — đủ điều kiện NỘP ĐƠN xin miễn (QD-11: chưa phải đã miễn)
       thay_the:             [{ma, tu, nguon}] — HP được công nhận thay thế (Eligibility ELIGIBLE)
-      loi_khuyen:           [str] — song hành (QD-13: chỉ là lời khuyên, không chặn)
+      khong_du_song_hanh:   [{ma, song_hanh, nguon}] — chưa học HP song hành và không thể học cùng kỳ (R-A04, Đ7 k5)
       mau_thuan:            bản ghi hồ sơ mâu thuẫn (loader chung)
   }
 
@@ -18,9 +18,11 @@ recommendation.py — Recommendation v1 (CPA2, Tuần 19): chỉ đề xuất ph
     phải GDQP (trường bố trí riêng); và cần cho CTĐT: bắt buộc, hoặc thuộc nhóm tự chọn còn thiếu.
   · nhóm một nhánh (AV/PV; CN1–3): đã bắt đầu nhánh nào thì chỉ nhánh đó; chưa thì chọn tối đa một nhánh.
   · CT550E/CT501E: chỉ khi Eligibility trả ELIGIBLE; khai báo hình thức LVTN → không đề xuất HP khác trong nhóm.
+  · song hành (R-A04 · QĐ3266 Đ7 k5 "phải học trước hoặc học cùng lúc"): HP song hành phải ĐÃ HỌC (có bản ghi
+    điểm, kể cả F; không tính W) hoặc được chọn cùng kỳ — 'học' ≠ 'tích lũy' (khoản 4); QD-13 rút lại 18/10/2026.
   · Hợp lệ UNKNOWN → can_xac_minh. HP đủ điều kiện xin miễn / được thay thế → tách riêng, không đề xuất học.
 Chọn bằng clingo (recommendation.lp): ≤ 20 TC (R-C01, Đ14 k1), không dư nhóm; ưu tiên (CHÍNH SÁCH, không phải quy
-chế): TC bắt buộc @5 → số HP mở khóa @4 → tránh song hành chưa học @3 → TC lấp nhóm @2 → tổng TC @1. Kiểm lại phương án sau khi chọn.
+chế): TC bắt buộc @5 → số HP mở khóa @4 → TC lấp nhóm @2 → tổng TC @1. Kiểm lại phương án sau khi chọn.
 
 Chạy:  python recommendation.py --student ../w7_student_facts/students/sv_lvtn.json --hk 1
 """
@@ -80,13 +82,26 @@ def _so_tc(models, mau):
     return v.pop() if len(v) == 1 else None
 
 
+def _da_hoc(ho_so, tl, ma):
+    """R-A04 (Đ7 k5) 'học trước': co / khong / chua_ro. Có bản ghi điểm (kể cả F, I, đang học) = đã học; W = đã
+    rút, không tính; trạng thái 'unknown' không điểm = chưa rõ. Đã tích lũy (gồm miễn, thay thế) = đã học."""
+    if tl.get(ma) == "TRUE":
+        return "co"
+    g = (ho_so.get("grades") or {}).get(ma)
+    if g is None or g.get("diem") == "W" or g.get("letter") == "W":
+        return "chua_ro" if tl.get(ma) == "UNKNOWN" else "khong"
+    if g.get("status") == "unknown" and g.get("thang10") is None and not g.get("letter") and not g.get("diem"):
+        return "chua_ro"
+    return "co"
+
+
 def de_xuat(ho_so, hk, them=""):
     if hk not in LA_MA:
         raise ValueError(f"học kỳ phải là 1, 2 hoặc 3 (QĐ3266 Đ6 k1: một năm học có 3 HK), nhận {hk!r}")
     asp, mt = A.sang_asp(ho_so)
     models = A.giai(asp + "\n" + them)
     kq = {"hk": hk, "dang_ky": [], "tong_tc": 0, "can_xac_minh": [], "ung_vien_khong_chon": [],
-          "hinh_thuc_tot_nghiep": [], "xin_mien": [], "thay_the": [], "loi_khuyen": [], "mau_thuan": mt}
+          "hinh_thuc_tot_nghiep": [], "xin_mien": [], "thay_the": [], "khong_du_song_hanh": [], "mau_thuan": mt}
     if not models:
         kq["can_xac_minh"].append({"ma": None, "ly_do": "hồ sơ mâu thuẫn với quy chế (không có mô hình)"})
         return kq
@@ -185,6 +200,32 @@ def de_xuat(ho_so, hk, them=""):
         elif dk == "TRUE":
             ung[ma] = (loai, nhom)
 
+    # R-A04 · Đ7 k5: HP song hành phải đã học hoặc học cùng kỳ → bỏ ứng viên không thể thoả (lặp tới khi ổn định)
+    nguon_a04 = _nguon_rule("r_a04")
+
+    def xac_minh_all():
+        return {x["ma"] for x in kq["can_xac_minh"]}
+
+    doi = True
+    while doi:
+        doi = False
+        for ma in sorted(ung):
+            for sp in CT[ma]["song_hanh"]:
+                dh = _da_hoc(ho_so, tl, sp)
+                if dh == "khong" and sp not in ung and (sp in xac_minh_all() or sp in tach):
+                    dh = "chua_ro"           # HP song hành chưa chắc học được kỳ này (UNKNOWN / chờ xin miễn) — không kết luận chắc
+                if dh == "chua_ro":
+                    kq["can_xac_minh"].append({"ma": ma, "ly_do": f"chưa rõ đã học HP song hành {sp} chưa (Đ7 k5)"})
+                elif dh == "khong" and sp not in ung:
+                    kq["khong_du_song_hanh"].append({"ma": ma, "song_hanh": [sp], "nguon": nguon_a04,
+                        "ly_do": f"chưa học {sp} và {sp} không thể đăng ký cùng kỳ này — phải học trước hoặc cùng lúc"})
+                else:
+                    continue
+                del ung[ma]
+                doi = True
+                break
+    da_hoc_sh = {(ma, sp): _da_hoc(ho_so, tl, sp) == "co" for ma in ung for sp in CT[ma]["song_hanh"]}
+
     if ung:
         mo_khoa = {ma: sum(1 for k, h in CT.items() if ma in h["tien_quyet"] and tl[k] != "TRUE") for ma in ung}
         f = [f"tran_tc({TRAN_TC})."]
@@ -197,10 +238,9 @@ def de_xuat(ho_so, hk, them=""):
                 f.append(f'trong_nhom({g},"{ma}").' if b is None else f'trong_nhanh({g},{b},"{ma}").')
         for (g, b), d in thieu.items():
             f.append(f"thieu({g},{d})." if b is None else f"thieu_nhanh({g},{b},{d}).")
-        for ma in ung:
-            for sp in CT[ma]["song_hanh"]:
-                if tl.get(sp) != "TRUE":
-                    f.append(f'song_hanh_chua("{ma}","{sp}").')
+        for (ma, sp), da in da_hoc_sh.items():
+            if not da:
+                f.append(f'can_cung_ky("{ma}","{sp}").')
         for ma in LUAN_VAN:
             if ma in ung:
                 f.append(f'luan_van("{ma}").')
@@ -214,7 +254,8 @@ def de_xuat(ho_so, hk, them=""):
         # kiểm lại độc lập phương án (bất biến): hợp lệ mọi thế giới, chưa tích lũy, mở HK, ≤ 20 TC
         # (kiểm tường minh, không dùng assert — assert bị bỏ khi chạy python -O)
         if not (all(f'du_dk_dang_ky("{x}")' in chung and tl[x] == "FALSE" and LA_MA[hk] in CT[x]["hk"] for x in chon)
-                and sum(CT[x]["tin_chi"] for x in chon) <= TRAN_TC):
+                and sum(CT[x]["tin_chi"] for x in chon) <= TRAN_TC
+                and all(da_hoc_sh[(x, sp)] or sp in chon for x in chon for sp in CT[x]["song_hanh"])):
             kq["can_xac_minh"].append({"ma": None, "ly_do": f"phương án solver {chon} không qua kiểm lại — không đề xuất"})
             chon = []
         for x in chon:
@@ -222,16 +263,13 @@ def de_xuat(ho_so, hk, them=""):
             ly = "học phần bắt buộc" if loai == "bb" else f"lấp nhóm {nhom[0]}" + (f" (nhánh {nhom[1]})" if nhom[1] else "")
             if mo_khoa[x]:
                 ly += f"; mở khóa {mo_khoa[x]} HP sau"
-            kq["dang_ky"].append({"ma": x, "ten": CT[x]["ten"], "tc": CT[x]["tin_chi"], "ly_do": ly,
-                                  "chung_chi": _chung_chi(f'du_dk_dang_ky("{x}")', chung)})
+            cc = _chung_chi(f'du_dk_dang_ky("{x}")', chung)
+            for sp in CT[x]["song_hanh"]:
+                ly += f"; song hành {sp} " + ("đã học" if da_hoc_sh[(x, sp)] else "học cùng kỳ")
+                cc.append({"atom": f'song_hanh("{x}","{sp}")', "rule_id": "r_a04", "nguon": nguon_a04})
+            kq["dang_ky"].append({"ma": x, "ten": CT[x]["ten"], "tc": CT[x]["tin_chi"], "ly_do": ly, "chung_chi": cc})
         kq["tong_tc"] = sum(CT[x]["tin_chi"] for x in chon)
         kq["ung_vien_khong_chon"] = [{"ma": x, "tc": CT[x]["tin_chi"]} for x in sorted(ung) if x not in chon]
-        # QD-13: song hành chỉ là lời khuyên
-        for x in chon:
-            for p in CT[x]["song_hanh"]:
-                if tl.get(p) != "TRUE" and p not in chon:
-                    kq["loi_khuyen"].append(f"{x} song hành với {p}: nên học {p} trước hoặc cùng kỳ để bổ trợ nội dung "
-                                            "(QD-13 — không bắt buộc, kết quả hai HP độc lập)")
     return kq
 
 

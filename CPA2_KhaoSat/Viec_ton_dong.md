@@ -19,8 +19,8 @@ Gom mọi mục `- [ ]` còn mở trong báo cáo Tuần 1–17. Các mục đã
 | A9 | Chốt với GVHD: phạm vi 1 ngành hay 8 ngành | Tuần 1 | Phạm vi CTĐT |
 | A10 | Phần **đọc tài liệu**: toàn văn CoTu, Solver-Aided; xác minh Logic-LM/LINC/Adaptive-RAG trên ACL Anthology; nhánh degree-audit formal verification; liên hệ nhóm REBot; bộ 913 câu EXACT 2026 | Tuần 3 | Ô "Đọc" của checklist Tuần 11–17 đang ☐ — chỉ tích khi chính tác giả đọc |
 | A11 | Nguồn về **làm tròn** TB GDQP (4,975 → 5,0?) | Tuần 17 E17-2 | Gold NG-10 |
-| A13 | Văn bản/email xác nhận **QD-13** (song hành: học trước/cùng/sau đều được — khác câu chữ QĐ3266 Đ7 k5) | Tuần 19 §2 | Song hành hiện chỉ là lời khuyên trong Recommendation |
-| A14 | GVHD/cố vấn học tập xác nhận **thứ tự ưu tiên** tư vấn (bắt buộc → mở khóa → song hành → nhóm → TC) | Tuần 19 §1 | Recommendation (chính sách, không phải quy chế) |
+| ~~A13~~ | ✅ **Đóng 18/10/2026:** QD-13 rút lại — song hành theo đúng QĐ3266 Đ7 k5 (học trước/cùng lúc; đã học kể cả F) | Tuần 19 §2 | Recommendation: ràng buộc cứng |
+| A14 | GVHD/cố vấn học tập xác nhận **thứ tự ưu tiên** tư vấn (bắt buộc → mở khóa → nhóm → TC) | Tuần 19 §1 | Recommendation (chính sách, không phải quy chế) |
 | ~~A15~~ | ✅ **Đóng 18/10/2026:** trang 20 QĐ3266 (OCR trắng — Điều 33–35, tiêu đề Điều 33/34) chép tay từ PDF gốc Loi gửi; trích R-Formal khớp, thêm R-X20/R-X21 | Tuần 5 P-4, Tuần 14 | corpus RAG Điều 33–35 |
 | ~~A12~~ | ✅ **Đóng 18/10/2026 — QD-12** (Loi xác nhận): điều kiện nhận đề tài LVTN/TLTN chỉ là ngưỡng TC của CTĐT | Tuần 18 | R-F04 N → F |
 

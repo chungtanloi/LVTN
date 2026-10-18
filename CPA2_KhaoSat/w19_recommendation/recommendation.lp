@@ -5,7 +5,7 @@
 %%   ung_vien(C). tc(C,CR). mo_khoa(C,N). bb(C).
 %%   trong_nhom(G,C). thieu(G,D).                 nhóm tự chọn tính TC
 %%   trong_nhanh(G,B,C). thieu_nhanh(G,B,D).      nhóm một nhánh (AV/PV; CN1–3)
-%%   luan_van(C). tran_tc(N). song_hanh_chua(C,P)   (P song hành của C, chưa tích lũy)
+%%   luan_van(C). tran_tc(N). can_cung_ky(C,P)   (P song hành của C, chưa học → phải chọn cùng kỳ)
 %% Ràng buộc là quy chế/CTĐT; #maximize là CHÍNH SÁCH tư vấn, không phải quy chế.
 %%=============================================================================
 { chon(C) } :- ung_vien(C).
@@ -26,11 +26,12 @@ nhanh_chon(G,B) :- chon(C), trong_nhanh(G,B,C).
 :- thieu_nhanh(G,B,D), chon(C1), trong_nhanh(G,B,C1), tc(C1,CR1),
    S = #sum{ CR,C : chon(C), trong_nhanh(G,B,C), tc(C,CR) }, S - CR1 >= D.
 
-%% Ưu tiên (chính sách): TC bắt buộc → mở khóa → song hành → TC lấp nhóm → tổng TC
-%% song hành (QD-13) KHÔNG là ràng buộc; chỉ tránh chọn HP mà HP song hành chưa học và không cùng kỳ
+%% R-A04 · QĐ3266 Đ7 k5: HP song hành phải học trước hoặc học cùng lúc (chưa học → phải cùng kỳ)
+:- chon(C), can_cung_ky(C,P), not chon(P).
+
+%% Ưu tiên (chính sách): TC bắt buộc → mở khóa → TC lấp nhóm → tổng TC
 #maximize { CR@5,C : chon(C), bb(C), tc(C,CR) }.
 #maximize { N@4,C  : chon(C), mo_khoa(C,N) }.
-#minimize { 1@3,C,P : chon(C), song_hanh_chua(C,P), not chon(P) }.
 #maximize { CR@2,C : chon(C), not bb(C), tc(C,CR) }.
 #maximize { CR@1,C : chon(C), tc(C,CR) }.
 

@@ -24,12 +24,12 @@
 | **QD-10** | ✅ đóng | QD5339 Điều 3 k.3 (R-M04) | Câu chữ QĐ5339 Điều 3 k.3 (suy trực tiếp từ văn bản) |
 | **QD-11** | ✅ đóng | QD5339 Điều 2 k.6 (R-M16) | Câu chữ QĐ5339 Điều 2 k.6 (suy trực tiếp từ văn bản) |
 | **QD-12** | ✅ đóng | QD3266 Điều 31 (R-F04) | XÁC NHẬN NGOÀI VĂN BẢN — Loi, 18/10/2026 (trong phiên làm việc Tuần 18): chỉ có quy định số TC |
-| **QD-13** | ✅ đóng | QD3266 Điều 7 k.5 (R-A04) | XÁC NHẬN NGOÀI VĂN BẢN — Loi, 18/10/2026 (trong phiên làm việc Tuần 19): song hành học trước/cùng/sau đều được, kết quả độc lập — khác câu chữ Đ7 k5 |
+| **QD-13** | ✅ đóng | QD3266 Điều 7 k.5 (R-A04) | Câu chữ QĐ3266 Điều 7 k.5 (PDF gốc tr.5) — bản xác nhận cũ trái câu chữ (Loi 18/10/2026: học sau cũng được) ĐÃ RÚT; phần F vẫn thoả là diễn giải (Loi chọn (a), 18/10/2026) |
 
 ### Hai nhóm cần chú ý
 
 - **Chưa có nguồn xác nhận** (2): `QD-03`, `QD-05` — đây là các quyết định treo, phải hỏi người có thẩm quyền.
-- **Xác nhận NGOÀI văn bản** (3): `QD-09`, `QD-12`, `QD-13` — hợp lệ, nhưng **bắt buộc ghi rõ ai xác nhận và ngày nào**; nếu là trao đổi miệng thì nên xin email hoặc ghi biên bản.
+- **Xác nhận NGOÀI văn bản** (2): `QD-09`, `QD-12` — hợp lệ, nhưng **bắt buộc ghi rõ ai xác nhận và ngày nào**; nếu là trao đổi miệng thì nên xin email hoặc ghi biên bản.
 
 ---
 
@@ -199,9 +199,9 @@
 
 > *Học phần song hành của học phần HPxxx là học phần mà SV phải học trước hoặc học cùng lúc với học phần HPxxx.*
 
-**Quyết định:** QD-13 ĐÓNG (xác nhận ngoài văn bản — Loi, 18/10/2026): song hành nghĩa là có thể học HP song hành TRƯỚC, CÙNG LÚC hoặc SAU; kết quả hai HP độc lập, chỉ bổ trợ nội dung. KHÁC câu chữ Đ7 k5 ('phải học trước hoặc học cùng lúc'): KB GIỮ r_a04 đúng văn bản (vi_pham_song_hanh khi xếp HP song hành sau); Recommendation Tuần 19 không dùng song hành làm ràng buộc, chỉ đưa lời khuyên. Nên có văn bản/email xác nhận.
+**Quyết định:** QD-13 ĐÓNG (rút lại — Loi, 18/10/2026, sau khi đối chiếu PDF gốc QĐ3266 tr.5): THEO ĐÚNG câu chữ Đ7 k5 — HP song hành phải HỌC TRƯỚC hoặc HỌC CÙNG LÚC; không được học sau. 'Học' ≠ 'tích lũy' (khoản 4 dùng 'tích lũy', khoản 5 chỉ dùng 'học') → đã học dù bị F vẫn thoả; điểm W (đã rút) không tính. Recommendation Tuần 19 áp ràng buộc cứng. [Bản trước, đã rút: song hành học trước/cùng/sau đều được — trái câu chữ Đ7 k5 và QĐ4544 Đ8 k5.]
 
-**Nguồn xác nhận:** XÁC NHẬN NGOÀI VĂN BẢN — Loi, 18/10/2026 (trong phiên làm việc Tuần 19): song hành học trước/cùng/sau đều được, kết quả độc lập — khác câu chữ Đ7 k5
+**Nguồn xác nhận:** Câu chữ QĐ3266 Điều 7 k.5 (PDF gốc tr.5) — bản xác nhận cũ trái câu chữ (Loi 18/10/2026: học sau cũng được) ĐÃ RÚT; phần F vẫn thoả là diễn giải (Loi chọn (a), 18/10/2026)
 
 
 ---
