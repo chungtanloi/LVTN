@@ -10,7 +10,8 @@
 | OCR-Noise v1 | **đạt** — 40 ca (10 kịch bản × 4 mức nhiễu), đóng băng cùng commit |
 | Đầu vào baseline | **đạt** — `baseline_dev.jsonl` (78 ca), `baseline_test.jsonl` (77 ca), không lộ đáp án |
 | Q-Real | **chưa đạt (0/400)** — đã có pipeline nhập, ẩn danh, chia split và quy trình gán nhãn; chờ Loi cung cấp câu hỏi thật (phương án 1a) |
-| `validate_benchmark.py` | ĐẠT (B1–B9); mọi tuần 5–20 ĐẠT |
+| Q-Noise v1 (tổng hợp, **không** thay Q-Real) | **đạt** — 240 câu (48 câu gốc × 5 kiểu gõ), đóng băng `5d8601c` trước lần chạy đầu; dev phát hiện P20-5 (mục 5c) |
+| `validate_benchmark.py` | ĐẠT (B1–B10); mọi tuần 5–20 ĐẠT |
 
 ---
 
@@ -165,9 +166,53 @@ Coverage giảm vì 2 câu ngoài phạm vi nay trả UNKNOWN đúng như gold. 
 
 P20-4 (OCR mất ĐTBCHK thì từ chối cả học kỳ) **chưa sửa**. Đây là lựa chọn an toàn của Tuần 15; nới ra cần cân nhắc thêm (C11).
 
+## 5c. Q-Noise v1 — độ bền parser trước cách gõ của sinh viên (TỔNG HỢP)
+
+Q-Real chưa có câu thật (A16), nên em đo trước một phần việc Q-Real phải đo: **parser có chịu được cách sinh viên gõ hay không**. Q-Noise **không** cho biết sinh viên hỏi *gì* và **không** tính vào chỉ tiêu Q-Real (vẫn 0/400).
+
+- **Câu gốc:** 48 ca G-Truth có câu hỏi đi qua parser (đăng ký một HP, tốt nghiệp, đủ điều kiện làm LVTN/TLTN, câu tự nhiên) và không có dữ kiện mở. Chọn theo claim và đầu vào, **không** theo kết quả chạy.
+- **Biến thể** (`build_qnoise.py`, tất định, seed theo id):
+  - V0 câu gốc;
+  - V1 bỏ dấu;
+  - V2 viết tắt (đk, đki, tn, hp, đc, ko, e, lv, tl, hk, kì);
+  - V3 gõ vội (chữ thường, "ad ơi cho e hỏi", thiếu dấu một từ, "??");
+  - V4 = V2 bỏ dấu.
+  
+  Mã HP được viết thường.
+- **Gold:** kế thừa nguyên từ G-Truth (`312b7ff`). Biến đổi chỉ đổi cách viết, không đổi nghĩa (soát tay bằng cách đọc, không chạy hệ thống).
+- **Ý định kỳ vọng (`claim_ky_vong`):** gán tay trước khi chạy. Câu ngoài phạm vi thì để rỗng, nghĩa là phải từ chối.
+- **Chấm chặt (theo review trước đóng băng):** kết luận TRUE/FALSE suy từ claim KHÁC tính là **unsound**, kể cả khi trùng gold, vì chứng chỉ khi đó chứng minh cho một câu hỏi khác.
+- **Đóng băng:** `qnoise_dong_bang.json` (hash toàn bộ ca), commit `5d8601c`, trước lần chạy đầu. Validate B10a–h.
+
+**Dev, lần chạy chính thức đầu** (130 câu; `ket_qua_qnoise_dev.json`, `run_output_qnoise_dev.txt`):
+
+| Biến thể | n | Soundness | Coverage | Đúng ý định | Cùng verdict với V0 |
+|---|---|---|---|---|---|
+| V0 câu gốc | 26 | 100% | 88,5% | 26/26 | — |
+| V1 bỏ dấu | 26 | **84,6%** | 38,5% | 9/26 | 11/26 |
+| V2 viết tắt | 26 | 100% | **0%** | 3/26 | 3/26 |
+| V3 gõ vội | 26 | 100% | 65,4% | 20/26 | 20/26 |
+| V4 bỏ dấu + viết tắt | 26 | 100% | **0%** | 3/26 | 3/26 |
+| **Tổng** | 130 | **96,9%** | 38,5% | 61/130 | |
+
+V0 là câu dev **đã thấy** khi sửa P20-2/P20-3, nên 26/26 ở V0 không có giá trị như số đo độc lập.
+
+### Phát hiện
+
+- **P20-5 (an toàn — 4 unsound, chưa sửa).** Câu không dấu "Em co du dieu kien lam **luan van** tot nghiep khong?" (EL-01…04, V1) bị parser hiểu thành `tot_nghiep`. Nguyên nhân: nhánh tốt nghiệp không dấu có danh sách loại trừ (`luận văn`, `tiểu luận`, `đtbctl`, `loại`…) chỉ ở dạng **có dấu**. Hệ thống trả FALSE cho câu "đủ điều kiện tốt nghiệp", không phải câu đã hỏi.
+  - Chấm theo gold thuần thì chỉ 2 ca sai (EL-02/04 tình cờ trùng gold FALSE). Chấm chặt cho 4 — đúng loại lỗi P18-1/P19-4/P20-2: trả lời một câu khác mà vẫn kèm chứng chỉ.
+  - Thêm một lỗi tiềm ẩn cùng họ: `answer_eligibility` chọn TLTN bằng cách tìm chuỗi `"tiểu luận"` có dấu, nên câu "tieu luan" sẽ bị xét như LVTN.
+- **Parser không nhận câu không dấu và viết tắt (an toàn — chỉ từ chối thừa).**
+  - V1: 13/26 câu bị từ chối thừa, do regex đăng ký cần "đăng ký/được".
+  - V2/V4: gần như toàn bộ bị từ chối thừa (23/26), do "đk/đki/dky", "đc/dc", "tn", "lv", "hp" không có trong parser.
+  - Hệ thống không kết luận sai ở đây, nhưng sinh viên gõ như thật thì hầu như không được trả lời.
+- **V3 (gõ vội) bền hơn** (20/26). Các ca hỏng là ca có đúng từ khoá bị mất dấu ("đăng ky", "dang ký", "nien luận").
+
+Theo quy tắc nhiễm dữ liệu (Bài học): đây là số **chính thức** của Q-Noise dev. Nếu sửa P20-5 hoặc chuẩn hoá viết tắt, số sau sửa ghi ra file riêng (`--hau-to`). Q-Noise test (110 câu) để chạy một lần ở Tuần 22 cùng G-Truth test.
+
 ## 6. Hạn chế
 
-- Q-Real 0/400: chưa đo được parser trên câu thật.
+- Q-Real 0/400: chưa đo được parser trên câu thật. Q-Noise chỉ đo độ bền với cách gõ do em **tự định nghĩa** (bảng viết tắt, kiểu gõ vội) — không đại diện phân bố câu thật.
 - Gold do một người (Claude) viết. Đã có một lượt soát độc lập bằng agent, nhưng **chưa phải người thứ hai** để đo κ (A7).
 - OCR-Noise dựng ở mức tài liệu (sau nhận dạng), không render ảnh + Tesseract (phụ thuộc môi trường, như w17).
 - Mới chạy dev. Test chạy một lần ở Tuần 22.
@@ -179,6 +224,9 @@ P20-4 (OCR mất ĐTBCHK thì từ chối cả học kỳ) **chưa sửa**. Đâ
 - [x] Sửa P20-1 — R-Formal v1.10 + QD-14 (mục 5b)
 - [x] Sửa P20-2/P20-3 (mục 5b)
 - [ ] Xem lại P20-4 (M2 OCR)
+- [ ] **P20-5** (an toàn): loại trừ không dấu ở nhánh tốt nghiệp + TLTN không dấu — chờ Loi duyệt kế hoạch
+- [ ] Parser chuẩn hoá bỏ dấu/viết tắt (coverage V1/V2/V4) — chờ Loi duyệt
+- [ ] Sau: Q-Elicit (phiếu kịch bản) + Google Form Q-Real nhỏ (Loi: "sau cập nhật thêm")
 - [ ] Tuần 21: chạy baseline (LLM thuần, RAG thuần, tool-calling) trên `baseline_dev/test.jsonl` (cần API key, `.env`)
 - [ ] Tuần 22: chạy CPA² trên test (một lần), báo cáo cả hai loại gold
 
@@ -187,4 +235,5 @@ P20-4 (OCR mất ĐTBCHK thì từ chối cả học kỳ) **chưa sửa**. Đâ
 - [x] Có ground truth: G-Truth 115 + OCR-Noise 40, gold viết tay, nguồn, oracle, dev/test, đóng băng `312b7ff` trước lần chạy đầu
 - [x] Đầu vào baseline trung lập (B8)
 - [ ] Q-Real (0/400) — chờ dữ liệu
+- [x] Q-Noise v1 (tổng hợp): 240 câu, gold kế thừa, ý định gán tay, đóng băng `5d8601c` trước khi chạy; dev đã chạy
 - [x] Mọi tuần 5–20 ĐẠT
