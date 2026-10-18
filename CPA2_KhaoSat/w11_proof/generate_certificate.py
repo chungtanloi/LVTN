@@ -19,6 +19,8 @@ W8 = HERE.parent / "w8_elective"
 W9 = HERE.parent / "w9_exemption"
 W10 = HERE.parent / "w10_graduation"
 W7 = HERE.parent / "w7_student_facts"
+sys.path.insert(0, str(HERE.parent / "w16_abstention"))
+import abstention  # P17-1: rà soát hồ sơ mâu thuẫn trước khi giải
 
 RULES = [W5 / "qd3266_r_formal_v1.lp", W5 / "qd5339_r_formal_v1.lp"]
 SCHEMA = W6 / "curriculum_schema.lp"
@@ -32,7 +34,8 @@ def txt(p): return p.read_text(encoding="utf-8")
 
 def load_student(path):
     j=json.loads(Path(path).read_text(encoding="utf-8"))
-    lines=[]
+    j, them_rs, _ = abstention.ra_soat(j)   # P17-1: bỏ + mở bản ghi mâu thuẫn
+    lines=[them_rs] if them_rs else []
     for code,g in j.get("grades",{}).items():
         th=g.get("thang10"); diem=g.get("diem")
         if diem=="M": lines.append(f'diem_m("{code}").')

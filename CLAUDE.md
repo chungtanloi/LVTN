@@ -85,5 +85,6 @@ D:\LVTN\                          (git repo)
 - Quy định không có trong QĐ3266/QĐ5339 (vd. học phí ×1,5 sau thời gian thiết kế — Đ10 chỉ ghi "do Hiệu trưởng quyết định") thì chưa hình thức hoá, xin văn bản nguồn trước.
 - Bộ đánh giá: gold viết tay + commit TRƯỚC lần chạy đầu (w17: 200b860, `gold_dong_bang.json`, validate G1/G2). Sai sót phát hiện sau → errata, KHÔNG sửa gold; sửa công thức chấm thì báo cả số cũ lẫn mới.
 - Oracle kiểm gold phải độc lập với KB: nếu chung giả định (vd. "1 HK = nửa năm") thì ghi rõ là không kiểm được điểm đó.
-- QĐ3266 Đ6 k1 (tr.5): một năm học có 03 HK × 15 tuần → "giảm 1 HK" (Đ5) = 1/3 năm, không phải nửa năm (P17-3, chưa sửa R-Formal).
-- Loader hồ sơ chỉ đọc `thang10`: điểm chữ/trạng thái/TC mâu thuẫn không bị phát hiện (P17-1).
+- QĐ3266 Đ6 k1 (tr.5): một năm học có 03 HK → "giảm 1 HK" (Đ5) = 1/3 năm, không phải nửa năm. R-Formal v1.8 tính trần theo HK: `thoi_gian_toi_da_hk`, so `3·da_hoc_nam2 > 2·M` (P17-3).
+- Loader hồ sơ chỉ đọc `thang10` → phải gọi `abstention.ra_soat()` trước (bản ghi tự mâu thuẫn → mở F/D/A, không tin). Có 3 bản loader (w7/w11/w12) nên mỗi đường vào phải tự gọi — đã từng sót ở w11/w15 (P17-1).
+- Sửa hệ thống sau khi đã thấy ca test thất bại → test đã nhiễm: giữ số chính thức, ghi số sau sửa ra file riêng (`--hau-to`), cần bộ test mới.

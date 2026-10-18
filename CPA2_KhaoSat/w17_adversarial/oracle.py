@@ -15,6 +15,7 @@ chính hệ thống được đánh giá.
   QĐ3266 Đ24 (đ. ĐTBCTL) ĐTBCTL: các HP đã tích lũy, KHÔNG gồm điểm F và học phần điều kiện
   QĐ3266 Đ32 k1 b        TB chung các học phần GDQP&AN ≥ 5,0 (thang 10)
   QĐ3266 Đ5 (tr.4–5)     thiết kế 4,5 năm → tối đa 9 năm; K ≤ 49: mỗi 9 TC công nhận giảm 1 HK
+  QĐ3266 Đ6 k1 (tr.5)    một năm học có 03 HK → 1 HK = 1/3 năm (sửa P17-3; bản trước giả định nửa năm)
 
 Kết quả là Fraction (chính xác tuyệt đối), in ra dạng chuỗi "a/b" hoặc số nguyên.
 """
@@ -71,18 +72,19 @@ def tinh(ho_so):
         if r.get("thang10") is not None and r["thang10"] < 40 and not dieu_kien(m) and m not in bo:
             f_mau += r["credits"]
     nam2 = ho_so.get("da_hoc_nam2")
-    # CNTT K49: thiết kế 4,5 năm → tối đa 9 năm = 18 nửa năm. GIẢ ĐỊNH "1 HK = 1 nửa năm" — giống R-Formal, nên
-    # đây KHÔNG phải kiểm độc lập. QĐ3266 Đ6 k1 (tr.5): một năm có 03 HK × 15 tuần → "giảm 1 HK" = 1/3 năm.
-    # Gold NG-17/NG-18 đúng theo CẢ HAI cách đọc (xem Tuan17 E17-3).
-    tran = 18 - (ho_so.get("tc_cong_nhan") or 0) // 9
+    # CNTT K49: thiết kế 4,5 năm → tối đa 9 năm (Đ5) = 27 HK vì một năm học có 03 HK (Đ6 k1, tr.5); K ≤ 49:
+    # mỗi 9 TC công nhận giảm 1 HK. Thời gian đã học nhập theo nửa năm: A nửa năm = 3A/2 HK.
+    # KHÔNG KIỂM ĐỘC LẬP: cùng tác giả, cùng cách đọc "1 HK = 1/3 năm" với R-Formal v1.8 → các tiền đề
+    # tran_hk/qua_han chỉ kiểm số học, không kiểm cách đọc quy chế (CLAUDE.md, Bài học).
+    tran = 27 - (ho_so.get("tc_cong_nhan") or 0) // 9
     return {
         "tc_tich_luy": tc,
         "dtbctl": tu / mau if mau else None,
         "dtbctl_ge_2": (tu / mau >= 2) if mau else None,
         "dtbctl_tinh_ca_F": f_tu / f_mau if f_mau else None,
         "gdqp_tb": Fraction(sum(r["thang10"] * r["credits"] for r in qp.values()), 10 * qp_mau) if qp_mau else None,
-        "tran_nam2": tran,
-        "qua_han": (nam2 > tran) if nam2 is not None else None,
+        "tran_hk": tran,
+        "qua_han": (3 * nam2 > 2 * tran) if nam2 is not None else None,
     }
 
 

@@ -6,6 +6,7 @@ Tiêu chí (Kế hoạch 24 tuần, dòng 16): "Không đoán khi thiếu dữ l
   B. missing evidence: chỉ nêu dữ kiện QUYẾT ĐỊNH, kèm kết luận theo từng giá trị
   C. Chính sách từ chối: UNKNOWN thì không kết luận, kể cả khi đa số thế giới nghiêng một phía
   D. Tích hợp Prototype (Tuần 12) + 6 hồ sơ giả lập giữ nguyên kết luận
+  E. Hồ sơ mâu thuẫn → rà soát, mở bản ghi mâu thuẫn, không kết luận nếu nó quyết định (P17-1)
 
 Chạy:  python validate_abstention.py
 """
@@ -164,6 +165,49 @@ def test_integration():
     check(all(v == "FALSE" for v in thuc.values()), f"D4 6 hồ sơ đã khai báo da_hoc_nam2 → thời gian xác định ({thuc})")
 
 
+def test_mau_thuan():
+    print("\nE. HỒ SƠ MÂU THUẪN (P17-1, sau Tuần 17) — không kết luận từ bản ghi tự mâu thuẫn")
+    def ghi(rec, ten="sv_lvtn", ma="CT177"):
+        j = hs(ten)
+        j["grades"][ma] = dict(rec, code=ma)
+        return j
+    ca = [
+        ("E1 8,0 nhưng ghi F/failed (Đ22 k2)", ghi({"credits": 3, "thang10": 80, "letter": "F", "status": "failed"})),
+        ("E2 3,0 (F) nhưng trạng thái passed (Đ22 k3)", ghi({"credits": 3, "thang10": 30, "letter": "F", "status": "passed"})),
+        ("E3 điểm 15,0 ngoài thang 0–10 (Đ22 k1)", ghi({"credits": 3, "thang10": 150, "letter": "A", "status": "passed"})),
+        ("E4 4 TC trong khi CTĐT 3 TC", ghi({"credits": 4, "thang10": 75, "letter": "B", "status": "passed"})),
+        ("E5 8,0 ghi B (phải là B+)", ghi({"credits": 3, "thang10": 80, "letter": "B", "status": "passed"})),
+        ("E6 vừa điểm M vừa có điểm số", ghi({"credits": 3, "thang10": 80, "letter": "M", "diem": "M", "status": "passed"})),
+    ]
+    for ten, j in ca:
+        r = A.tra_loi("tot_nghiep", j)
+        check(r["verdict"] == "UNKNOWN" and any("CT177" in m for m in r.get("mau_thuan", []))
+              and 'g10("CT177")' in [b["bien"] for b in r["can_bo_sung"]],
+              f"{ten} → UNKNOWN, nêu mâu thuẫn + hỏi CT177 ({r['verdict']}, {r.get('mau_thuan')})")
+    r = A.tra_loi("tot_nghiep", hs("sv_lvtn", da_hoc_nam2=0))
+    check(r["verdict"] == "UNKNOWN" and any("da_hoc_nam2" in m for m in r.get("mau_thuan", []))
+          and "qua_thoi_gian_toi_da" in [b["bien"] for b in r["can_bo_sung"]],
+          f"E7 0 nửa năm mà đăng ký 161 TC (> 20 TC/HK, Đ14 k1) → coi như chưa khai báo → UNKNOWN ({r['verdict']})")
+    r = A.tra_loi("tot_nghiep", ghi({"credits": 3, "thang10": 80, "letter": "F", "status": "failed"}, ma="CT478"))
+    check(r["verdict"] == "TRUE" and r.get("mau_thuan"),
+          f"E8 mâu thuẫn ở HP tự chọn dư (CT478) không quyết định → vẫn TRUE, vẫn báo mâu thuẫn ({r['verdict']})")
+    sach = {k: A.ra_soat(hs(k))[2] for k in ("sv_5hp", "sv_du_hp", "sv_lvtn", "sv_mien_ielts", "sv_tltn", "sv_tron_ngoai_ngu")}
+    check(all(not v for v in sach.values()), f"E9 6 hồ sơ giả lập không bị báo mâu thuẫn nhầm ({sach})")
+    with tempfile.TemporaryDirectory() as d:
+        p = Path(d) / "sv_mt.json"
+        p.write_text(json.dumps(ghi({"credits": 3, "thang10": 80, "letter": "F", "status": "failed"}), ensure_ascii=False),
+                     encoding="utf-8")
+        res = prototype.answer("em đủ điều kiện tốt nghiệp chưa?", str(p))
+    check(res["verdict"] == "UNKNOWN", f"E10 prototype (Tuần 12) cũng rà soát → UNKNOWN ({res['verdict']})")
+    check(any("CT177" in m for m in res.get("mau_thuan", [])), f"E11 prototype nêu bản ghi mâu thuẫn ({res.get('mau_thuan')})")
+    try:
+        r = A.tra_loi("tot_nghiep", ghi({"credits": 3, "thang10": 80.0, "letter": "B+", "status": "passed"}))
+        ok = r["verdict"] == "UNKNOWN" and r["mau_thuan"]
+    except Exception as e:  # noqa: BLE001
+        ok, r = False, {"verdict": f"{type(e).__name__}: {e}"}
+    check(ok, f"E12 điểm 80.0 (số thực, trái schema) → mâu thuẫn, không crash ({r['verdict']})")
+
+
 def main():
     print("=" * 78)
     print("VALIDATE ABSTENTION ENGINE v1 — Tuần 16 (CPA2)")
@@ -173,6 +217,7 @@ def main():
     test_missing_evidence()
     test_policy()
     test_integration()
+    test_mau_thuan()
     print("\n" + "=" * 78)
     if errors:
         print(f"KẾT LUẬN: CÓ {len(errors)} LỖI")

@@ -46,6 +46,20 @@ D. TÍCH HỢP PROTOTYPE (Tuần 12) + 6 HỒ SƠ
   [OK]   D3 6 hồ sơ giả lập giữ nguyên kết luận Tuần 12
   [OK]   D4 6 hồ sơ đã khai báo da_hoc_nam2 → thời gian xác định ({'sv_5hp': 'FALSE', 'sv_du_hp': 'FALSE', 'sv_lvtn': 'FALSE', 'sv_mien_ielts': 'FALSE', 'sv_tltn': 'FALSE', 'sv_tron_ngoai_ngu': 'FALSE'})
 
+E. HỒ SƠ MÂU THUẪN (P17-1, sau Tuần 17) — không kết luận từ bản ghi tự mâu thuẫn
+  [OK]   E1 8,0 nhưng ghi F/failed (Đ22 k2) → UNKNOWN, nêu mâu thuẫn + hỏi CT177 (UNKNOWN, ['CT177: 8.0 quy đổi là B+, hồ sơ ghi F (Đ22 k2); 8.0 đạt nhưng trạng thái ghi failed (Đ22 k3)'])
+  [OK]   E2 3,0 (F) nhưng trạng thái passed (Đ22 k3) → UNKNOWN, nêu mâu thuẫn + hỏi CT177 (UNKNOWN, ['CT177: 3.0 không đạt nhưng trạng thái ghi passed (Đ22 k3)'])
+  [OK]   E3 điểm 15,0 ngoài thang 0–10 (Đ22 k1) → UNKNOWN, nêu mâu thuẫn + hỏi CT177 (UNKNOWN, ['CT177: điểm 15.0 ngoài thang 0–10 (Đ22 k1)'])
+  [OK]   E4 4 TC trong khi CTĐT 3 TC → UNKNOWN, nêu mâu thuẫn + hỏi CT177 (UNKNOWN, ['CT177: 4 TC, CTĐT ghi 3 TC'])
+  [OK]   E5 8,0 ghi B (phải là B+) → UNKNOWN, nêu mâu thuẫn + hỏi CT177 (UNKNOWN, ['CT177: 8.0 quy đổi là B+, hồ sơ ghi B (Đ22 k2)'])
+  [OK]   E6 vừa điểm M vừa có điểm số → UNKNOWN, nêu mâu thuẫn + hỏi CT177 (UNKNOWN, ['CT177: điểm M nhưng vẫn có điểm số 8.0'])
+  [OK]   E7 0 nửa năm mà đăng ký 161 TC (> 20 TC/HK, Đ14 k1) → coi như chưa khai báo → UNKNOWN (UNKNOWN)
+  [OK]   E8 mâu thuẫn ở HP tự chọn dư (CT478) không quyết định → vẫn TRUE, vẫn báo mâu thuẫn (TRUE)
+  [OK]   E9 6 hồ sơ giả lập không bị báo mâu thuẫn nhầm ({'sv_5hp': [], 'sv_du_hp': [], 'sv_lvtn': [], 'sv_mien_ielts': [], 'sv_tltn': [], 'sv_tron_ngoai_ngu': []})
+  [OK]   E10 prototype (Tuần 12) cũng rà soát → UNKNOWN (UNKNOWN)
+  [OK]   E11 prototype nêu bản ghi mâu thuẫn (['CT177: 8.0 quy đổi là B+, hồ sơ ghi F (Đ22 k2); 8.0 đạt nhưng trạng thái ghi failed (Đ22 k3)'])
+  [OK]   E12 điểm 80.0 (số thực, trái schema) → mâu thuẫn, không crash (UNKNOWN)
+
 ==============================================================================
 KẾT LUẬN: ĐẠT — Abstention engine không đoán khi thiếu dữ liệu
 ==============================================================================

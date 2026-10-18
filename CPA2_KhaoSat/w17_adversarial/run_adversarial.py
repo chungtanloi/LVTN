@@ -90,6 +90,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--split", choices=["dev", "test"], required=True)
     ap.add_argument("--anh", action="store_true", help="chạy thêm ca mức ảnh (không chấm)")
+    ap.add_argument("--hau-to", default="", help="hậu tố tên file kết quả (vd. _sau_P17) — giữ kết quả chính thức")
     a = ap.parse_args()
     ds = json.loads((HERE / "adversarial_set.json").read_text(encoding="utf-8"))["cases"]
     chon = [c for c in ds if c["cham_diem"] and c["split"] == a.split]
@@ -126,7 +127,7 @@ def main():
         print(f"\nRủi ro OCR ẩn (khong_phat_hien_duoc): {sum(r['unsound'] for r in an)}/{len(an)} ca kết luận trái sự thật "
               f"({', '.join(r['id'] + '→' + r['tra_loi'] for r in an)})")
         tg["rui_ro_ocr_an"] = {"n": len(an), "trai_su_that": sum(r["unsound"] for r in an)}
-    (HERE / f"ket_qua_{a.split}.json").write_text(
+    (HERE / f"ket_qua_{a.split}{a.hau_to}.json").write_text(
         json.dumps({"split": a.split, "tong_hop": tg, "ca": kq}, ensure_ascii=False, indent=1), encoding="utf-8")
     return 0
 

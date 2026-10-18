@@ -1,7 +1,7 @@
 # Tuần 16 — Three-valued logic / Abstention engine (CPA2)
 
 **Sản phẩm:** Abstention engine v1: ba trị TRUE/FALSE/UNKNOWN trên mọi answer set + missing evidence + chính sách từ chối kết luận
-**Tiêu chí hoàn thành:** Không đoán khi thiếu dữ liệu ✅. `validate_abstention.py` ĐẠT 30/30 kiểm tra (xem `../Tuan16_Abstention_Engine.md`)
+**Tiêu chí hoàn thành:** Không đoán khi thiếu dữ liệu ✅. `validate_abstention.py` ĐẠT 42/42 kiểm tra (30 của Tuần 16 + 12 ca hồ sơ mâu thuẫn E, sau Tuần 17) (xem `../Tuan16_Abstention_Engine.md`)
 
 ## Chạy
 
@@ -14,7 +14,7 @@ python abstention.py --student ../w7_student_facts/students/sv_lvtn.json --claim
 
 | File | Vai trò |
 |---|---|
-| `abstention.py` | `tra_loi(claim, ho_so, them)` → verdict, `ket_luan` (None nếu không chắc), `can_bo_sung` (dữ kiện quyết định + câu hỏi + nguồn), `giai_thich` |
+| `abstention.py` | `ra_soat(ho_so)` (P17-1: bản ghi tự mâu thuẫn → mở F/D/A, không tin) · `tra_loi(claim, ho_so, them)` → verdict, `ket_luan` (None nếu không chắc), `can_bo_sung` (dữ kiện quyết định + câu hỏi + nguồn), `giai_thich` |
 | `validate_abstention.py` | A thế giới mở · B missing evidence · C chính sách từ chối · D tích hợp Prototype + 6 hồ sơ |
 | `validate_output.txt` | Kết quả lần chạy gần nhất |
 

@@ -1,5 +1,5 @@
 %%=============================================================================
-%% qd3266_r_formal_v1.lp — R-Formal v1 (v1.7: thời gian tối đa là điều kiện tốt nghiệp — Tuần 16)
+%% qd3266_r_formal_v1.lp — R-Formal v1 (v1.8: trần thời gian tính theo HK, 3 HK/năm — sau Tuần 17)
 %% Hình thức hoá các điều khoản lớp F của QĐ 3266/QĐ-ĐHCT (15/8/2024)
 %% Dự án: CPA² — Certified Personalized Academic Advising (Tuần 5/24)
 %%
@@ -299,17 +299,20 @@ tran_nam2(8,  16).      % thiết kế 4   năm (8 nửa năm)  → tối đa 8 
 tran_nam2(9,  18).      % thiết kế 4,5 năm              → tối đa 9  năm
 tran_nam2(10, 20).      % thiết kế 5   năm              → tối đa 10 năm
 
-thoi_gian_toi_da(M) :- thiet_ke_nam2(D), tran_nam2(D,M0), giam_hk(H), M = M0 - H.
-why(thoi_gian_toi_da(M), r_e01) :- thoi_gian_toi_da(M).
+%% v1.8 (P17-3): trần tính theo HỌC KỲ. QĐ3266 Điều 6 khoản 1 (tr.5): "Mỗi năm học được tổ
+%% chức thành 03 HK" → "giảm tương ứng 1 HK" (Điều 5) = 1/3 năm, KHÔNG phải nửa năm như
+%% v1.0–v1.7 (giả định không có nguồn). Trần (HK) = trần (nửa năm) × 3/2 − giam_hk.
+%% da_hoc_nam2(A) vẫn nhập theo nửa năm: A nửa năm = 3A/2 HK → so sánh 3A > 2M (số nguyên).
+thoi_gian_toi_da_hk(M) :- thiet_ke_nam2(D), tran_nam2(D,M0), giam_hk(H), M = M0*3/2 - H.
+why(thoi_gian_toi_da_hk(M), r_e01) :- thoi_gian_toi_da_hk(M).
 
-%% Giảm trần theo TC được công nhận: K49 trở về trước mỗi 9 TC giảm 1 HK
-%% (1 HK = 1 nửa năm trong đơn vị nam2 nếu tính 2 HK chính/năm).
+%% Giảm trần theo TC được công nhận: K49 trở về trước mỗi 9 TC giảm 1 HK, K50 về sau mỗi 6 TC.
 giam_hk(H) :- tc_cong_nhan(X), khoa_den_k49, H = X/9.
 giam_hk(H) :- tc_cong_nhan(X), khoa_tu_k50, H = X/6.
 giam_hk(0) :- not tc_cong_nhan(_).          % không được công nhận TC nào
 why(giam_hk(H), r_e02) :- giam_hk(H).
 
-qua_thoi_gian_toi_da :- da_hoc_nam2(A), thoi_gian_toi_da(M), A > M.
+qua_thoi_gian_toi_da :- da_hoc_nam2(A), thoi_gian_toi_da_hk(M), 3*A > 2*M.
 
 %% ---------------------------------------------------------------------------
 %% 12. ĐIỀU KIỆN TỐT NGHIỆP — Điều 32 khoản 1 (R-F01a, R-F02a, R-F03)

@@ -57,7 +57,8 @@ def txt(p): return p.read_text(encoding="utf-8")
 
 def load_student(path):
     j=json.loads(Path(path).read_text(encoding="utf-8"))
-    lines=[]
+    j, them_rs, _ = abstention.ra_soat(j)   # P17-1: bỏ + mở bản ghi mâu thuẫn trước khi giải
+    lines=[them_rs] if them_rs else []
     for code,g in j.get("grades",{}).items():
         th=g.get("thang10"); diem=g.get("diem")
         if diem=="M": lines.append(f'diem_m("{code}").')
@@ -162,7 +163,8 @@ def answer(question, student_path):
     explanation, block = verbalize(cert, cautious)
     if block:
         return {"verdict": "BLOCKED", "certificate": cert, "explanation_vi": block, "missing_facts": cert["missing_facts"]}
-    return {"verdict": verdict, "certificate": cert, "explanation_vi": explanation, "missing_facts": cert["missing_facts"], "can_bo_sung": cert["can_bo_sung"], "student_id": sid, "claim": claim}
+    mt = abstention.ra_soat(json.loads(Path(student_path).read_text(encoding="utf-8")))[2] if student_path else []
+    return {"verdict": verdict, "certificate": cert, "explanation_vi": explanation, "missing_facts": cert["missing_facts"], "can_bo_sung": cert["can_bo_sung"], "mau_thuan": mt, "student_id": sid, "claim": claim}
 
 def demo():
     cases=[

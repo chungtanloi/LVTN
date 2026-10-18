@@ -22,7 +22,8 @@ python run_adversarial.py --split test # chạy để báo cáo
 | `oracle.py` | Tính ĐTBCTL, TC, TB GDQP, trần thời gian bằng Python thuần từ câu chữ quy chế (không clingo) |
 | `dau_vao.py` | Dựng hồ sơ / tài liệu OCR từ mô tả ca; `dau_vao_baseline()` cho baseline Tuần 21 (không lộ đáp án) |
 | `run_adversarial.py` | Chấm CPA²: Soundness, Coverage, Selective Accuracy, từ chối thừa, hỏi đúng |
-| `ket_qua_{dev,test}.json`, `run_output_{dev,test}.txt` | Kết quả chạy |
+| `ket_qua_{dev,test}.json`, `run_output_{dev,test}.txt` | Kết quả chạy **chính thức Tuần 17** |
+| `*_sau_P17.*` | Chạy lại sau khi sửa P17-1/2/3 (`--hau-to _sau_P17`) — **test đã nhiễm**, không dùng báo cáo H1 |
 
 ## Bất biến
 

@@ -4,6 +4,7 @@
 **Sản phẩm:** Abstention engine v1 (`w16_abstention/`)
 **Tiêu chí hoàn thành:** Không đoán khi thiếu dữ liệu ✅
 - `validate_abstention.py` đạt **30/30** kiểm tra (A 11 · B 10 · C 5 · D 4), bộ test tự soạn
+- Bổ sung sau Tuần 17 (P17-1, rà soát hồ sơ mâu thuẫn): nhóm E 12 kiểm tra → **42/42** (xem `Tuan17_Adversarial_Set.md` mục 7)
 - Đã viết test trước: bản đầu có 27 kiểm tra, **14** kiểm tra fail với KB/loader cũ, trong đó có ca hồi quy A2, A3, A6, A9 (luật cũ cho FALSE thay vì UNKNOWN)
 - Test của mọi tuần 5–16 đều ĐẠT, 6 hồ sơ giả lập giữ nguyên kết luận Tuần 12
 - P16-2 đã sửa (17/10/2026, sau khi chọn cách đọc (b)): quá thời gian tối đa thì không tốt nghiệp. R-Formal lên v1.7, có 5 ca hồi quy fail với luật cũ

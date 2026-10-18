@@ -840,7 +840,7 @@
    "nguon": "QĐ3266 Điều 5, tr.4–5 (R-E01, R-E02)",
    "cham_diem": true,
    "oracle": {
-    "tran_nam2": 18,
+    "tran_hk": 27,
     "qua_han": false
    },
    "split": "dev"
@@ -892,11 +892,11 @@
     ]
    },
    "gold": "FALSE",
-   "ly_do": "K49: 9 TC được công nhận → trần giảm 1 HK còn 17 nửa năm; đã học 18 → quá hạn.",
+   "ly_do": "K49: 9 TC được công nhận → trần giảm 1 HK (1/3 năm) còn 26 HK; đã học 18 nửa năm = 27 HK → quá hạn.",
    "nguon": "QĐ3266 Điều 5, tr.4–5 (R-E01, R-E02)",
    "cham_diem": true,
    "oracle": {
-    "tran_nam2": 17,
+    "tran_hk": 26,
     "qua_han": true
    },
    "split": "test"
@@ -923,11 +923,11 @@
     ]
    },
    "gold": "TRUE",
-   "ly_do": "8 TC công nhận < 9 → trần không giảm, vẫn 18.",
+   "ly_do": "8 TC công nhận < 9 → trần không giảm, vẫn 27 HK (9 năm).",
    "nguon": "QĐ3266 Điều 5, tr.4–5 (R-E01, R-E02)",
    "cham_diem": true,
    "oracle": {
-    "tran_nam2": 18,
+    "tran_hk": 27,
     "qua_han": false
    },
    "split": "test"
@@ -1442,7 +1442,7 @@
    "nguon": "QĐ3266 Điều 5, tr.4–5 (R-E01, R-E02)",
    "cham_diem": true,
    "oracle": {
-    "tran_nam2": 18,
+    "tran_hk": 27,
     "qua_han": false
    },
    "split": "test"

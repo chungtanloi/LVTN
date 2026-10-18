@@ -127,6 +127,10 @@ def test_graduation_cases():
     check(v=="TRUE", f"B7c Biên 18 = trần → tot_nghiep={v} (TRUE)")
     v=tri("tot_nghiep", sv(CHUAN+["CT550E"], them="xac_nhan_ky_luat_sach.\n"))
     check(v=="UNKNOWN", f"B7d Thiếu da_hoc_nam2 → tot_nghiep={v} (UNKNOWN)")
+    # B7e (P17-3): 27 TC công nhận → trần giảm 3 HK = 1 năm (1 HK = 1/3 năm, Điều 6 k1) → 8 năm; đã học 8 năm
+    v=tri("tot_nghiep", sv(CHUAN+["CT550E"], them="xac_nhan_ky_luat_sach.\nda_hoc_nam2(16).\ntc_cong_nhan(27).\n"))
+    check(v=="TRUE", f"B7e 27 TC công nhận, đã học 16 nửa năm (= trần 8 năm) → tot_nghiep={v} (TRUE)",
+          "HỒI QUY P17-3: luật cũ trừ 3 nửa năm → trần 7,5 năm → FALSE")
 
 def test_with_exemption():
     print("\nC. TÍCH HỢP MIỄN/THAY THẾ VÀO TỐT NGHIỆP")

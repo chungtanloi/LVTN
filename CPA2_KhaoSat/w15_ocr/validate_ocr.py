@@ -9,6 +9,7 @@ validate_ocr.py — kiểm chứng OCR pipeline v1 (CPA2, Tuần 15)
        - độ phủ (tỉ lệ kết luận không phải UNKNOWN)                            [báo cáo]
   C. Tiêm lỗi vào kết quả OCR: đọc sai điểm chữ / mất một dòng → bị bắt, không sinh kết luận sai
   D. Bảng điểm thật (chỉ chạy nếu có ảnh ở máy; kết quả ghi vào _rieng/, không commit)  [báo cáo]
+  F. Lỗi OCR nhất quán ở mức tài liệu (P17-2): ĐTBCHK không đọc được, mã bắt buộc đọc thành mã tự chọn
 
 Chạy: python validate_ocr.py           (đủ A–D)
       python validate_ocr.py --nhanh   (A, C và một biến thể của B)
@@ -159,12 +160,65 @@ def phan_D():
           f"loại {bc['loai']}, học kỳ lệch {bc['hoc_ky_lech']}, cần xác nhận {bc['can_xac_nhan']}", cong=False)
 
 
+def _doc_hoan_hao(j):
+    """Hồ sơ → tài liệu OCR đọc hoàn hảo (mức tài liệu, không cần Tesseract)."""
+    ct = O.ctdt()
+    doc = {"hoc_ky": []}
+    for i, ds in enumerate(RT.chia_hoc_ky(j, RT._ctdt())):
+        dong = [{"ma": m, "tc": ct[m]["tc"], "thi": j["grades"][m]["thang10"] / 10, "thop": j["grades"][m]["thang10"] / 10,
+                 "chu": j["grades"][m]["letter"], "mien": False,
+                 "conf": {"ma": .99, "tc": .99, "thi": .99, "thop": .99, "chu": .99}} for m in ds if m != "CC004"]
+        v = O._dtbchk(dong, ct)
+        doc["hoc_ky"].append({"ten": f"HK{i + 1}", "dong": dong, "tong_dk": sum(d["tc"] for d in dong),
+                              "dtbchk": round(v, 2) if v is not None else None})
+    return doc
+
+
+def _dong(doc, ma):
+    return next((hk, d) for hk in doc["hoc_ky"] for d in hk["dong"] if d["ma"] == ma)
+
+
+def phan_F():
+    print("F. LỖI OCR NHẤT QUÁN (P17-2, sau Tuần 17) — mức tài liệu")
+    j = ho_so("sv_lvtn")
+    kb = O.khai_bao_tu_json(j)
+    # 1) không đọc được ĐTBCHK → học kỳ không kiểm chéo được → điểm trong học kỳ không chắc
+    jf = copy.deepcopy(j)
+    jf["grades"]["CT177"].update(thang10=30, letter="F", status="failed")        # sự thật: CT177 = F
+    doc = _doc_hoan_hao(jf)
+    hk, d = _dong(doc, "CT177")
+    d.update(thi=4.5, thop=4.5, chu="D")                                          # OCR đọc nhất quán thành D
+    hk["dtbchk"] = None                                                          # và không đọc được ĐTBCHK
+    hs, extra, bc = O.sang_ho_so(doc, khai_bao=kb)
+    v = O.ket_luan(hs, extra, bc)
+    check(hk["ten"] + " (ĐTBCHK)" in bc["hoc_ky_lech"] and v != "TRUE",
+          f"F1 CT177 F đọc thành D + ĐTBCHK không đọc được → học kỳ nghi ngờ, không TRUE sai ({v})")
+    # 2) mã HP bắt buộc đọc nhất quán thành mã tự chọn lệch 1 ký tự, cùng TC (CT178 → CT478)
+    doc = _doc_hoan_hao(j)
+    _dong(doc, "CT178")[1]["ma"] = "CT478"
+    hs, extra, bc = O.sang_ho_so(doc, khai_bao=kb)
+    v = O.ket_luan(hs, extra, bc)
+    check({"CT178", "CT478"} <= set(bc["khong_chac"]) and v != "FALSE",
+          f"F2 CT178 (bắt buộc) đọc thành CT478 → cả hai không chắc, không FALSE sai ({v}, {bc['khong_chac']})")
+    # 2b) đọc thành một mã BẮT BUỘC khác (CT178 → CT177): CT177 xuất hiện hai dòng
+    doc = _doc_hoan_hao(j)
+    _dong(doc, "CT178")[1]["ma"] = "CT177"
+    hs, extra, bc = O.sang_ho_so(doc, khai_bao=kb)
+    v = O.ket_luan(hs, extra, bc)
+    check({"CT178", "CT177"} <= set(bc["khong_chac"]) and v != "FALSE",
+          f"F4 CT178 đọc thành CT177 (bắt buộc, thành 2 dòng) → cả hai không chắc, không FALSE sai ({v}, {bc['khong_chac']})")
+    # 3) không báo nhầm: bảng điểm đọc hoàn hảo vẫn kết luận được
+    hs, extra, bc = O.sang_ho_so(_doc_hoan_hao(j), khai_bao=kb)
+    check(not bc["khong_chac"] and O.ket_luan(hs, extra, bc) == "TRUE", "F3 bảng điểm đọc hoàn hảo → TRUE, không HP nào bị nghi")
+
+
 def main():
     nhanh = "--nhanh" in sys.argv
     phan_A()
     phan_B(nhanh)
     phan_C()
     phan_E()
+    phan_F()
     if not nhanh:
         phan_D()
     print("\nKẾT LUẬN:", "ĐẠT — fact OCR có confidence, kiểm chéo chặn fact sai, không sinh kết luận sai" if ok_all else "CHƯA ĐẠT")

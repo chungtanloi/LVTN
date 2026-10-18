@@ -48,7 +48,7 @@ def ctdt():
     global _CTDT
     if _CTDT is None:
         cur = json.loads(CURRICULUM.read_text(encoding="utf-8"))
-        _CTDT = {h["ma"]: {"tc": h["tin_chi"], "dieu_kien": h["dieu_kien"]} for h in cur["hoc_phan"]}
+        _CTDT = {h["ma"]: {"tc": h["tin_chi"], "dieu_kien": h["dieu_kien"], "bb": h["cot"] == "BB"} for h in cur["hoc_phan"]}
     return _CTDT
 
 
@@ -325,8 +325,9 @@ def sang_ho_so(doc, khai_bao=None, tau=None):
             bc["hoc_ky_lech"].append(hk["ten"])
             bc["dong_an"] += 1       # có thể có HP bị ẩn/không đọc được → không được kết luận "thiếu môn"
         tinh = _dtbchk(dong, ct)
-        lech_dtb = (not lech_tc and hk["dtbchk"] is not None and tinh is not None
-                    and abs(tinh - hk["dtbchk"]) > 0.006)
+        # P17-2: ĐTBCHK không đọc được → không kiểm chéo được điểm của học kỳ → coi như lệch (không tin điểm)
+        lech_dtb = (not lech_tc and tinh is not None
+                    and (hk["dtbchk"] is None or abs(tinh - hk["dtbchk"]) > 0.006))
         if lech_dtb:
             bc["hoc_ky_lech"].append(hk["ten"] + " (ĐTBCHK)")
         for d in dong:
@@ -369,6 +370,20 @@ def sang_ho_so(doc, khai_bao=None, tau=None):
         for m in ct:
             if m not in grades and m not in khong_chac and len(m) == len(ma) and sum(a != b for a, b in zip(m, ma)) == 1:
                 khong_chac.append(m)
+    # P17-2: HP BẮT BUỘC vắng mặt mà có HP KHÔNG bắt buộc đã nhận lệch đúng 1 ký tự, cùng TC → có thể mã bắt buộc bị đọc nhầm
+    # nhất quán (CT178 → CT478): mọi kiểm chéo khác đều qua. Không chắc cả hai thay vì kết luận "thiếu CT178".
+    # Hàng xóm là HP bắt buộc thì chỉ nghi khi nó xuất hiện ≥ 2 dòng (CT178 đọc thành CT177 → CT177 hai lần).
+    so_dong = {}
+    for hk in doc["hoc_ky"]:
+        for d in hk["dong"]:
+            so_dong[d.get("ma")] = so_dong.get(d.get("ma"), 0) + 1
+    for m, h in ct.items():
+        if not h["bb"] or m in grades or m in khong_chac or m in mien:
+            continue
+        for ma in list(grades):
+            if (ma != m and (not ct[ma]["bb"] or so_dong.get(ma, 0) > 1) and len(ma) == len(m) and sum(a != b for a, b in zip(m, ma)) == 1
+                    and ct[ma]["tc"] == h["tc"]):
+                khong_chac += [x for x in (m, ma) if x not in khong_chac]
     # mã có dù chỉ một dòng không chắc (vd. học lại đọc không ra) → cả mã là không chắc, kể cả khi
     # một lần học khác đọc chắc: điểm cuối là điểm cao nhất (R-B13) mà ta không biết
     for m in khong_chac:
@@ -406,7 +421,8 @@ def ket_luan(hs, extra, bc, claim="tot_nghiep"):
     if bc["dong_an"] or len(bc["khong_chac"]) > MAX_KHONG_CHAC:
         return "UNKNOWN"
     import prototype
-    return prototype.solve_verdict(claim, _w7().load_facts(hs) + "\n" + extra)[0]
+    hs, them_rs, _ = prototype.abstention.ra_soat(hs)      # P17-1: bản ghi tự mâu thuẫn → mở, không tin
+    return prototype.solve_verdict(claim, _w7().load_facts(hs) + "\n" + them_rs + "\n" + extra)[0]
 
 
 def ket_luan_tu_json(j, claim="tot_nghiep"):

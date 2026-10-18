@@ -354,13 +354,20 @@ g10(a,35). g10(b,35).
 # --- C15. Thời gian học tập tối đa (Điều 5) --------------------------------
 test("C15 CTĐT 4 năm, không được công nhận TC → trần 8 năm (16 nửa năm)",
      "khoa_tu_k45. khoa_den_k49. thiet_ke_nam2(8). da_hoc_nam2(15).",
-     expect_true=["thoi_gian_toi_da(16)"], expect_false=["qua_thoi_gian_toi_da"],
+     expect_true=["thoi_gian_toi_da_hk(24)"], expect_false=["qua_thoi_gian_toi_da"],
      note="Điều 5 bảng — OCR mất bảng này, phải đọc ảnh trang 4")
 
-test("C16 Được công nhận 18 TC (K49) → trần giảm 2 HK còn 14 nửa năm; đã học 15 → quá hạn",
+test("C16 Được công nhận 18 TC (K49) → trần giảm 2 HK còn 22 HK (7⅓ năm); đã học 15 nửa năm → quá hạn",
      "khoa_tu_k45. khoa_den_k49. thiet_ke_nam2(8). da_hoc_nam2(15). tc_cong_nhan(18).",
-     expect_true=["giam_hk(2)", "thoi_gian_toi_da(14)", "qua_thoi_gian_toi_da"],
-     note="Điều 5 đoạn 2 — mỗi 9 TC (K≤49) giảm 1 HK")
+     expect_true=["giam_hk(2)", "thoi_gian_toi_da_hk(22)", "qua_thoi_gian_toi_da"],
+     note="Điều 5 đoạn 2 — mỗi 9 TC (K≤49) giảm 1 HK; v1.8: 1 HK = 1/3 năm (Điều 6 k1) → 8 năm = 24 HK − 2 = 22 HK; "
+          "đã học 15 nửa năm = 22,5 HK > 22")
+
+test("C16b 27 TC công nhận (K49), thiết kế 4,5 năm: trần 27 − 3 = 24 HK = 8 năm; đã học 16 nửa năm = 8 năm → CHƯA quá hạn",
+     "khoa_tu_k45. khoa_den_k49. thiet_ke_nam2(9). da_hoc_nam2(16). tc_cong_nhan(27).",
+     expect_true=["giam_hk(3)", "thoi_gian_toi_da_hk(24)"], expect_false=["qua_thoi_gian_toi_da"],
+     note="HỒI QUY P17-3: v1.7 trừ 1 HK = 1 nửa năm → trần 15 nửa năm < 16 → quá hạn (sai). "
+          "QĐ3266 Điều 6 khoản 1 (tr.5): một năm học có 03 HK")
 
 
 # =============================================================================
@@ -514,8 +521,8 @@ test("C31 Nợ đọng 25 TC → CÓ cảnh báo",
 # =============================================================================
 test("C32 CTĐT CNTT K49: 4,5 năm thiết kế → trần 9 năm (18 nửa năm)",
      "da_hoc_nam2(17).",
-     expect_true=["thoi_gian_toi_da(18)"],
-     expect_false=["qua_thoi_gian_toi_da", "thoi_gian_toi_da(16)"],
+     expect_true=["thoi_gian_toi_da_hk(27)"],
+     expect_false=["qua_thoi_gian_toi_da", "thoi_gian_toi_da_hk(24)"],
      note="SỬA LỖI v1.0: tài liệu ghi nhầm K49 thiết kế 4 năm → trần 8 năm. CTĐT ghi rõ "
           "'Thời gian đào tạo: 4.5 năm', nên theo QĐ3266 Điều 5 trần là 9 năm",
      ctdt=True)
