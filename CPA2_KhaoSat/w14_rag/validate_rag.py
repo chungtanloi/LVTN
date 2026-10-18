@@ -51,6 +51,17 @@ def phan_A(r):
             if r.by_rule[x["id"]]["van_ban"] != x["van_ban"]
             or str(r.by_rule[x["id"]]["dieu"]) != str(x["dieu"] if x["dieu"] is not None else "PL1")]
     check(not lech, f"passage của mỗi quy tắc cùng văn bản + điều với bản ghi R-Formal (lệch: {lech})")
+    # trang 20 QĐ3266 (OCR trắng — Điều 32 k4 → Điều 35) chép tay từ PDF gốc: passage lấy từ bản chép, có tiêu đề
+    tr20 = [d for d in r.docs if d.get("van_ban") == "qd3266" and (str(d.get("dieu")) in ("33", "34", "35")
+            or d["id"] in ("qd3266:D32:K4", "qd3266:D32:K5", "qd3266:D32:K6"))]
+    check(tr20 and all(d.get("nguon") == "chep_tay" for d in tr20),
+          f"passage QĐ3266 Điều 32 k4 → Điều 35 lấy từ bản chép tay trang 20 ({sorted((d['id'], d.get('nguon')) for d in tr20)})")
+    td = {d["id"]: d["tieu_de"] for d in tr20}
+    check(td.get("qd3266:D33:K1") == "Xử lý sinh viên quá hạn thời gian học tập"
+          and td.get("qd3266:D34:K2") == "Bằng tốt nghiệp và hạng tốt nghiệp",
+          f"tiêu đề Điều 33, 34 theo PDF gốc ({td.get('qd3266:D33:K1')!r}, {td.get('qd3266:D34:K2')!r})")
+    check({"qd3266:D32:K4", "qd3266:D33:K3", "qd3266:D33:K4"} <= {d["id"] for d in r.docs},
+          "có passage Điều 32 k4 và Điều 33 k3, k4 (trước đây mất cùng trang OCR trắng)")
     trich = [d["id"] for d in r.docs if d.get("nguon") == "trich_r_formal"]
     print(f"     ghi nhận: {len(trich)} passage dựng từ trích R-Formal vì OCR hỏng/trắng: {trich}")
 

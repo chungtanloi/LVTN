@@ -114,6 +114,12 @@ def section_a(cat, lp_text):
     no_src = [r["id"] for r in cat["rules"]
               if r["lop"] != "X" and r["dieu"] is None and "Phụ lục" not in r["trich"]]
     check(not no_src, f"A6. mọi quy tắc trong miền đều trỏ tới một điều  (thiếu: {no_src})")
+    # A8 (sau Tuần 19): trang 20 QĐ3266 (OCR trắng) đã chép tay từ PDF gốc → đủ khoản Đ33 và có tiêu đề Đ33/Đ34
+    d33 = sorted(r["khoan"] for r in cat["rules"] if r["van_ban"] == "qd3266" and r["dieu"] == 33 and r["khoan"])
+    check(d33 == [1, 2, 3, 4], f"A8. QĐ3266 Điều 33 đủ khoản 1–4 trong danh mục  (có: {d33})")
+    td = {d: any(t in (r.get("ghi_chu") or "") for r in cat["rules"] if r["van_ban"] == "qd3266" and r["dieu"] == d)
+          for d, t in ((33, "Xử lý sinh viên quá hạn thời gian học tập"), (34, "Bằng tốt nghiệp và hạng tốt nghiệp"))}
+    check(all(td.values()), f"A9. tiêu đề Điều 33, 34 (PDF gốc tr.20) ghi trong danh mục  ({td})")
     return src
 
 

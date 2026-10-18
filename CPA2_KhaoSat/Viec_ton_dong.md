@@ -21,6 +21,7 @@ Gom mọi mục `- [ ]` còn mở trong báo cáo Tuần 1–17. Các mục đã
 | A11 | Nguồn về **làm tròn** TB GDQP (4,975 → 5,0?) | Tuần 17 E17-2 | Gold NG-10 |
 | A13 | Văn bản/email xác nhận **QD-13** (song hành: học trước/cùng/sau đều được — khác câu chữ QĐ3266 Đ7 k5) | Tuần 19 §2 | Song hành hiện chỉ là lời khuyên trong Recommendation |
 | A14 | GVHD/cố vấn học tập xác nhận **thứ tự ưu tiên** tư vấn (bắt buộc → mở khóa → song hành → nhóm → TC) | Tuần 19 §1 | Recommendation (chính sách, không phải quy chế) |
+| ~~A15~~ | ✅ **Đóng 18/10/2026:** trang 20 QĐ3266 (OCR trắng — Điều 33–35, tiêu đề Điều 33/34) chép tay từ PDF gốc Loi gửi; trích R-Formal khớp, thêm R-X20/R-X21 | Tuần 5 P-4, Tuần 14 | corpus RAG Điều 33–35 |
 | ~~A12~~ | ✅ **Đóng 18/10/2026 — QD-12** (Loi xác nhận): điều kiện nhận đề tài LVTN/TLTN chỉ là ngưỡng TC của CTĐT | Tuần 18 | R-F04 N → F |
 
 ## B. Đúng lịch các tuần sau (kế hoạch 24 tuần)

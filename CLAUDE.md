@@ -33,7 +33,7 @@ Sửa nhỏ (typo, đổi text, config 1 dòng) được bỏ qua Plan và TDD, 
 - Không commit/push khi chưa được yêu cầu; commit message theo Conventional Commits.
 - Không hardcode secret; dùng `.env` (và có `.env.example`).
 - Trước khi deploy: chạy ECC security-scan.
-- **Không bịa nội dung quy chế.** Mọi quy tắc phải có con trỏ nguồn (văn bản, điều, khoản, trang). Chỗ OCR không đọc được thì ghi là khoảng trống, không đoán (ví dụ: tiêu đề Điều 33–34, bảng quy đổi tiếng Pháp QĐ5339 tr.12).
+- **Không bịa nội dung quy chế.** Mọi quy tắc phải có con trỏ nguồn (văn bản, điều, khoản, trang). Chỗ OCR không đọc được thì ghi là khoảng trống, không đoán (ví dụ: bảng quy đổi tiếng Pháp QĐ5339 tr.12).
 - **Báo cáo trung thực:** chỉ tiêu chưa đạt thì ghi "chưa đạt" kèm số; checklist Excel chỉ tích ô có bằng chứng.
 - Đánh giá: đáp án gán trước khi chạy; tách dev/test; chỉ tinh chỉnh trên dev, test chạy để báo cáo.
 - File sinh tự động (`curriculum_cntt_k49.lp/.json`, `corpus.jsonl`) — sửa generator rồi chạy lại, không sửa tay. Ngoại lệ: `r_formal_v1.json` có chỉnh tay sau khi sinh, **không** chạy lại `build_catalog.py`.
@@ -73,7 +73,7 @@ D:\LVTN\                          (git repo)
 - `nguong_cc` lưu MỌI điểm chứng chỉ ×10 (IELTS 4.5→45, TOEIC 450→4500), riêng `ctu_abc` giữ bậc 1/2/3. Loader nào đổi chứng chỉ sang ASP cũng phải theo quy ước này (đã từng sai ở w7/w11/w12).
 - Miễn ngoại ngữ phải khớp ngôn ngữ chứng chỉ ↔ học phần (QĐ5339 Đ3 k5 điểm a ≠ điểm b) — R-Formal v1.6.
 - Test chỉ dùng một loại dữ liệu (chỉ IELTS) thì không kiểm được bảng quy đổi; bộ test phải phủ các biến thể đầu vào.
-- OCR QĐ3266: số khoản hay bị hỏng (`5,` · `2 Điểm` · `10.SV` · `+,`), trang 20 trắng (Điều 33–35) → dùng trích R-Formal làm nguồn dự phòng, ghi rõ `nguon=trich_r_formal`.
+- OCR QĐ3266: số khoản hay bị hỏng (`5,` · `2 Điểm` · `10.SV` · `+,`), trang 20 trắng (Điều 32 k4 → Điều 35) → nay có bản chép tay từ PDF gốc (`source/QD3266_tr20_chep_tay.txt`, `nguon=chep_tay`); chỗ OCR hỏng khác vẫn dùng trích R-Formal (`nguon=trich_r_formal`). Có PDF gốc thì chép tay trang trắng thay vì để khoảng trống.
 - Nguồn của một kết luận lấy từ chứng minh (asp → passage), không lấy từ truy hồi: truy hồi chọn sai văn bản ở bẫy QD-09 (điểm chuyển đổi 4,0–4,9).
 - README/báo cáo từng ghi tính năng chưa có trong code (kiểm schema, `--strict`) → khi viết báo cáo, đối chiếu với code và chạy thật.
 - KB dùng giả định thế giới đóng: dữ kiện ngoài bị thiếu (vd. `xac_nhan_ky_luat_sach`) cho FALSE, không phải UNKNOWN. Muốn "chưa biết" thì phải mở nhánh (`{ p }.`).
