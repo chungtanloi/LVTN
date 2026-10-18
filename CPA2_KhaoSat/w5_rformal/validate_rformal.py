@@ -588,6 +588,24 @@ test("C40 p đã tích lũy (miễn, điểm M) mà không có bản ghi da_hoc 
      expect_false=["phai_hoc_cung_ky(c,p)", "chan_song_hanh(c,p)"], expect_true=["duoc_dang_ky(c)"])
 
 
+# --- C42–C46. Hạng tốt nghiệp với ĐTBCTL KHÔNG trùng mốc (P20-1, Tuần 20): mốc nguyên thang ×10 bỏ sót giá trị giữa hai mốc
+#     Đ34 k2: XS 3,60–4,00 · Giỏi 3,20–3,59 · Khá 2,50–3,19 · TB 2,00–2,49; QD-14: không làm tròn ĐTBCTL, xếp theo cận dưới
+def hg(ta, ga, tb, gb):
+    return f"course(a,{ta}). course(b,{tb}). g10(a,{ga}). g10(b,{gb})."
+
+
+test("C42 ĐTBCTL 22/7 ≈ 3,14 (B+ 2TC, B 5TC) → KHÁ (luật cũ: 31,4 lọt khe 31–32, không hạng nào)",
+     hg(2, 85, 5, 75), expect_true=["hang_cuoi(kha)"], expect_false=["hang_cuoi(gioi)"])
+test("C43 ĐTBCTL 3,57 (A 7TC, B+ 43TC) → GIỎI (luật cũ: khe 35–36)",
+     hg(7, 95, 43, 85), expect_true=["hang_cuoi(gioi)"], expect_false=["hang_cuoi(xuat_sac)"])
+test("C44 ĐTBCTL 2,45 (C+ 9TC, C 1TC) → TRUNG BÌNH (luật cũ: khe 24–25)",
+     hg(9, 65, 1, 60), expect_true=["hang_cuoi(trung_binh)"], expect_false=["hang_cuoi(kha)"])
+test("C45 ĐTBCTL đúng 3,20 (A 2TC, B 8TC) → GIỎI (biên dưới)",
+     hg(2, 95, 8, 75), expect_true=["hang_cuoi(gioi)"], expect_false=["hang_cuoi(kha)"])
+test("C46 ĐTBCTL 3,595 (A 19TC, B+ 81TC) — giữa 3,59 và 3,60 → GIỎI (QD-14: không làm tròn, xếp theo cận dưới)",
+     hg(19, 95, 81, 85), expect_true=["hang_cuoi(gioi)"], expect_false=["hang_cuoi(xuat_sac)"],
+     note="Đ24/Đ34 không quy định làm tròn ĐTBCTL — quyết định diễn giải QD-14")
+
 def section_c():
     print("\n" + "=" * 78)
     print("C. KIỂM THỬ NGỮ NGHĨA (clingo)")

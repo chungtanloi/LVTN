@@ -32,6 +32,7 @@ NGUON = {
     "QD-11": "Câu chữ QĐ5339 Điều 2 k.6 (suy trực tiếp từ văn bản)",
     "QD-12": "XÁC NHẬN NGOÀI VĂN BẢN — Loi, 18/10/2026 (trong phiên làm việc Tuần 18): chỉ có quy định số TC",
     "QD-13": "Câu chữ QĐ3266 Điều 7 k.5 (PDF gốc tr.5) — bản xác nhận cũ trái câu chữ (Loi 18/10/2026: học sau cũng được) ĐÃ RÚT; phần F vẫn thoả là diễn giải (Loi chọn (a), 18/10/2026)",
+    "QD-14": "Quyết định của tác giả (Tuần 20, P20-1): QĐ3266 không quy định làm tròn ĐTBCTL — xếp hạng theo cận dưới, so hữu tỉ; chưa hỏi Phòng Đào tạo",
 }
 
 TRANG_THAI = [

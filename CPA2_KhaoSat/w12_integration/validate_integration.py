@@ -110,6 +110,31 @@ def test_dang_ky():
         "IELTS 6.0 miễn được QP001 không, em đăng ký được chưa", "nếu em rot ct177 thì sao")}
     check(not any(v.startswith("duoc_dang_ky") for v in sai.values()),
           f"E8 câu điều kiện/điểm/miễn có mã HP không bị hiểu nhầm thành câu hỏi đăng ký ({sai})")
+    # P20-2 (Tuần 20): câu ngoài phạm vi / không nhận ra ý định KHÔNG được rơi về tot_nghiep (trả lời nhầm TRUE)
+    for q in ("Mức học phí một tín chỉ năm nay là bao nhiêu ạ?", "Em muốn chuyển sang học ngành khác thì làm sao?",
+              "Thầy cô nào dạy môn này hay vậy?"):
+        r = proto.answer(q, str(HERE.parent / "w7_student_facts" / "students" / "sv_lvtn.json"))
+        check(r.get("claim") != "tot_nghiep" and r["verdict"] == "UNKNOWN",
+              f"E10 '{q[:32]}…' → UNKNOWN 'chưa hỗ trợ', không rơi về tot_nghiep ({r.get('claim')}, {r['verdict']})")
+    check(proto.parse_question("Em ra trường được chưa ạ?") == "tot_nghiep", "E11 'ra trường được chưa' vẫn là câu tốt nghiệp")
+    # P20-3: chữ chen giữa "đăng ký" và mã HP
+    for q, ma in (("Em có được đăng ký học phần niên luận CT466E chưa?", "CT466E"),
+                  ("kỳ này em đăng ký luận văn tốt nghiệp CT550E được không", "CT550E")):
+        check(proto.parse_question(q) == f'duoc_dang_ky("{ma}")', f"E12 '{q[:34]}…' → duoc_dang_ky(\"{ma}\") ({proto.parse_question(q)})")
+    # review P20: khe "đăng ký … <MÃ>" không được bắt câu về HP KHÁC / hủy / rút
+    sai = {q: proto.parse_question(q) for q in (
+        "em đã đăng ký học phần tiên quyết của CT180 chưa", "em đăng ký học phần song hành với CT180 được không",
+        "em đăng ký hủy học phần CT180 được không", "em đăng ký rút học phần CT180 được không",
+        "em cần đăng ký học phần gì để tốt nghiệp CT550E", "em đăng ký học phần nào để thay thế CT550E được không")}
+    check(not any(v_.startswith("duoc_dang_ky") for v_ in sai.values()), f"E13 câu về HP khác/hủy/rút không thành duoc_dang_ky ({sai})")
+    k = {q: proto.parse_question(q) for q in ("Em có đủ điều kiện làm luận văn tốt nghiệp không?",
+         "ĐTBCTL của em đạt 2,00 để xét tốt nghiệp chưa?", "Em có được miễn luận văn tốt nghiệp không?",
+         "Hồ sơ xét tốt nghiệp nộp ở đâu, có được nộp trễ không?", "Em tốt nghiệp loại trung bình được không?")}
+    check(not any(v_ == "tot_nghiep" for v_ in k.values()), f"E14 câu luận văn/ĐTBCTL/miễn/hồ sơ/xếp loại không thành tot_nghiep ({k})")
+    k = {q: proto.parse_question(q) for q in ("em du dieu kien tot nghiep chua", "Em có thể tốt nghiệp không?",
+         "em có tốt nghiệp kịp không")}
+    check(all(v_ == "tot_nghiep" for v_ in k.values()), f"E15 câu tốt nghiệp không dấu / 'có thể' / 'kịp' vẫn nhận ra ({k})")
+    check(proto.parse_question("đăng kí ct180 được ko") == 'duoc_dang_ky("CT180")', "E16 'đăng kí … được ko' (kí/ko) nhận là đăng ký")
     v = proto.parse_question("em có nên đăng ký ct180 không")
     check(not v.startswith("duoc_dang_ky"), f"E9 'có NÊN đăng ký' không trả lời bằng 'được đăng ký' ({v})")
     r = proto.answer("Nếu em rớt CT177 thì trễ mấy kỳ?", None)

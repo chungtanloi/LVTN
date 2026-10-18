@@ -51,7 +51,8 @@ Gom mọi mục `- [ ]` còn mở trong báo cáo Tuần 1–17. Các mục đã
 | C7 | Test `du_dk_dang_ky` qua passed / substituted / exempted_M (T4b) — w10 có ca passed; chưa có ca substituted/exempted_M | Tuần 9 |
 | C9 | Recommendation: `mo_khoa` chỉ đếm trực tiếp (chưa bắc cầu); chưa xét HP đang học / học cải thiện; parser Tuần 13 chưa có ý định `de_xuat` | Tuần 19 |
 | C10 | Parser Tuần 13 vẫn sinh `du_dk_dang_ky("<MÃ>")` (không xét song hành) — chuyển sang `duoc_dang_ky`; câu hỏi lẻ chưa xét `mo_hk`; câu phản thực tế trả UNKNOWN "chưa hỗ trợ" (B8) | sau Tuần 19 (P19-4) |
-| C11 | Lỗi bộ đánh giá Tuần 20 bắt được trên dev: P20-1 hạng tốt nghiệp (mốc nguyên — 3,14 không thuộc hạng nào), P20-2 câu ngoài phạm vi → `tot_nghiep`, P20-3 "đăng ký niên luận CT466E", P20-4 OCR mất ĐTBCHK → từ chối cả học kỳ | Tuần 20 §5 |
+| C11 | ~~P20-1, P20-2, P20-3~~ đã sửa (R-Formal v1.10, QD-14; parser không mặc định tot_nghiep). **Còn P20-4**: OCR mất ĐTBCHK → từ chối cả học kỳ (an toàn, coverage thấp) | Tuần 20 §5, §5b |
+| C12 | Parser chưa có ý định **xếp loại tốt nghiệp** (claim `hang_cuoi(...)`) — câu "em có đạt loại giỏi" trả UNKNOWN | Tuần 20 §5b |
 | C8 | Độ phủ OCR thấp (Linux 7/18; Windows 1/18) | Tuần 15 |
 
 ## D. Thuộc phạm vi "không hình thức hoá được" (kết quả RQ1, không phải nợ)

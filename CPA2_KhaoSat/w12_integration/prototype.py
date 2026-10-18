@@ -66,12 +66,28 @@ def parse_question(q: str) -> str:
         # "có NÊN đăng ký X (không)" là xin tư vấn; "nên đăng ký X được chưa" vẫn là hỏi điều kiện
         return "de_xuat"
     c = ma.group(1) if ma else None
-    if c and not re.search(r"miễn|xong|\blại\b|điểm|rớt|\brot\b", ql) and re.search(
-            rf"đăng\s*ký\s+(?:(?:môn|học phần|hp)\s+)?{c}\b|\bhọc\s+(?:(?:môn|học phần|hp)\s+)?{c}\s+(?:được|đc)", ql):
+    dk = re.search(rf"đăng\s*k[ýí]\s+(?P<khe>[^\d,.?!]{{0,40}}?\s)?{c}\b", ql) if c else None
+    # P20-3: cho phép TÊN học phần chen giữa ("đăng ký học phần niên luận CT466E"); review: khe không được nói về
+    # HP KHÁC (tiên quyết CỦA, song hành VỚI, thay thế), hủy/rút, hay hỏi "HP gì/nào để …"
+    khe_xau = dk and dk.group("khe") and re.search(
+        r"\b(?:của|với|cùng|thay|hủy|huỷ|rút|gì|nào|để|trước|tiên quyết|song hành)\b", dk.group("khe"))
+    if c and not re.search(r"miễn|xong|\blại\b|điểm|rớt|\brot\b|\bhủy\b|\bhuỷ\b|\brút\b", ql) and (
+            (dk and not khe_xau)
+            or re.search(rf"\bhọc\s+(?:(?:môn|học phần|hp)\s+)?{c}\s+(?:được|đc)", ql)):
         return f'duoc_dang_ky("{c.upper()}")'
     for k, v in PARSER_STUB.items():
         if k.lower() in ql: return v
-    return "tot_nghiep"  # mặc định
+    # đủ điều kiện LÀM luận văn/tiểu luận (diễn đạt khác stub) → Eligibility (w18)
+    if re.search(r"(?:đủ điều kiện|được)\s+(?:làm|nhận đề tài)\s+(?:luận văn|tiểu luận)", ql):
+        return "du_dk_tc"
+    # câu tốt nghiệp diễn đạt khác stub ("em ra trường được chưa", không dấu) — trừ câu về luận văn, ĐTBCTL, miễn, hồ sơ,
+    # xếp loại, học phí/học bổng (claim khác hoặc chưa hỗ trợ → không được trả lời như câu tốt nghiệp)
+    if re.search(r"tốt nghiệp|ra trường|tot nghiep|ra truong", ql) \
+            and re.search(r"\b(?:đủ|du|được|duoc|chưa|chua|thể|kịp)\b", ql) \
+            and not re.search(r"luận văn|tiểu luận|miễn|đtbctl|\bhồ sơ\b|\bloại\b|\bhạng\b|học phí|học bổng|\bnộp\b", ql):
+        return "tot_nghiep"
+    # P20-2 (Tuần 20): KHÔNG mặc định tot_nghiep — câu không nhận ra ý định → UNKNOWN "chưa hỗ trợ" (họ lỗi P18-1/P19-4)
+    return "khong_ro"
 
 # ---------- Tầng 2+3: KB + Solver ----------
 def txt(p): return p.read_text(encoding="utf-8")
@@ -280,6 +296,11 @@ def answer(question, student_path):
     claim=parse_question(question)
     if claim.startswith("duoc_dang_ky("):
         return answer_dang_ky(claim, student_path)
+    if claim == "khong_ro":
+        return {"verdict": "UNKNOWN", "claim": claim, "missing_facts": [], "can_bo_sung": [],
+                "explanation_vi": "Hệ thống chưa hiểu hoặc chưa hỗ trợ loại câu hỏi này (ngoài phạm vi quy chế đã hình thức "
+                                  "hoá) — không đoán. Bạn có thể hỏi về tốt nghiệp, đăng ký học phần, luận văn, miễn học phần.",
+                "certificate": {"claim": claim, "proof": {"steps": []}}}
     if claim == "counterfactual":   # RQ3 / Tuần 22 — chưa hỗ trợ: không trả lời nhầm sang claim khác
         return {"verdict": "UNKNOWN", "claim": claim, "missing_facts": [], "can_bo_sung": [],
                 "explanation_vi": "Câu hỏi phản thực tế (nếu … thì …) chưa được hỗ trợ — hệ thống không đoán.",

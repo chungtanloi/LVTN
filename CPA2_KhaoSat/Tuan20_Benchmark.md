@@ -136,6 +136,35 @@ Ca HG-03 (3,60, trùng mốc) đúng. Mọi ca thuộc nhóm mới của Tuần 
 
   Không thêm ca sau đóng băng; nếu cần sẽ làm G-Truth v1.1 với bản đóng băng riêng.
 
+## 5b. Sửa P20-1…P20-3 (Loi duyệt "hoàn thiện đi", 18/10/2026) — dev ĐÃ NHÌN THẤY
+
+TDD: mọi ca dưới đây fail với code/luật cũ.
+
+| | Sửa | Ca hồi quy |
+|---|---|---|
+| **P20-1** | R-Formal **v1.10**: bỏ mốc nguyên; `dat_can_hang` so **hữu tỉ** theo cận dưới thang ×100, hạng = mức cao nhất đạt cận dưới. **QD-14** (quyết định của tác giả): QĐ3266 không quy định làm tròn ĐTBCTL nên giá trị giữa 3,59 và 3,60 thuộc Giỏi. Ghi ở catalog R-F06 và phụ lục (sinh lại). | rformal C42 (3,14 → khá), C43 (3,57 → giỏi), C44 (2,45 → TB), C46 (3,595 → giỏi), C45 (biên 3,20) |
+| **P20-2** | Parser **không còn mặc định `tot_nghiep`**. Câu không nhận ra ý định trả `khong_ro` → UNKNOWN "chưa hỗ trợ". Câu tốt nghiệp diễn đạt khác ("ra trường được chưa") nhận bằng mẫu riêng, trừ câu hỏi xếp loại, học phí, học bổng. | integration E10 (học phí, chuyển ngành, câu lạc đề), E11 |
+| **P20-3** | Cho phép tên học phần chen giữa "đăng ký … <MÃ>". | integration E12 (niên luận CT466E, luận văn CT550E) |
+
+Câu hỏi trong ca hồi quy được **diễn đạt khác** câu của G-Truth để không khớp đúng bộ đánh giá.
+
+**Review lượt 2 (đã sửa, ca hồi quy E13–E16 fail trước khi sửa):**
+- Khe "đăng ký … <MÃ>" từng bắt nhầm câu về **học phần khác** ("đăng ký học phần tiên quyết **của** CT180", "song hành **với**", "học phần **gì để** tốt nghiệp CT550E") và câu **hủy/rút**. Nay khe chỉ chấp nhận tên học phần.
+- Mẫu tốt nghiệp không còn bắt câu về luận văn, ĐTBCTL, miễn, hồ sơ, xếp loại. "Đủ điều kiện làm luận văn/tiểu luận" chuyển sang Eligibility.
+- Nhận thêm câu không dấu ("tot nghiep chua"), "có thể / kịp tốt nghiệp", "đăng **kí** … được **ko**".
+- Phần hạng tốt nghiệp: review xác nhận đúng; đã kiểm biên < 2,00 (không hạng) và giảm một mức khi điểm F vượt 5%.
+
+**G-Truth dev sau khi sửa** (`ket_qua_gtruth_dev_sau_P20.json`, giữ nguyên số lần chạy đầu):
+
+| | n | Soundness | Coverage | Sel. Acc | Unsound |
+|---|---|---|---|---|---|
+| Lần đầu (chính thức dev) | 58 | 89,7% | 96,6% | 89,3% | 6 |
+| Sau P20 | 58 | **100%** | 93,1% | 100% | 0 |
+
+Coverage giảm vì 2 câu ngoài phạm vi nay trả UNKNOWN đúng như gold. Dev **đã nhìn thấy**, nên số chính thức của hệ thống là test, chạy một lần ở Tuần 22. Ca NL-09 (hỏi xếp loại giỏi) nay cũng trả UNKNOWN, tức từ chối chứ không sai, vì parser chưa có ý định xếp loại (C12).
+
+P20-4 (OCR mất ĐTBCHK thì từ chối cả học kỳ) **chưa sửa**. Đây là lựa chọn an toàn của Tuần 15; nới ra cần cân nhắc thêm (C11).
+
 ## 6. Hạn chế
 
 - Q-Real 0/400: chưa đo được parser trên câu thật.
@@ -147,8 +176,8 @@ Ca HG-03 (3,60, trùng mốc) đúng. Mọi ca thuộc nhóm mới của Tuần 
 ## 7. Việc còn lại → Tuần 21+
 
 - [ ] **Cần Loi:** câu hỏi thật cho Q-Real (≥ 400), đặt vào `qreal/_tho/`
-- [ ] Sửa P20-1 (hạng: so sánh hữu tỉ, hoặc mốc ×100 đúng câu chữ 3,59 / 3,19 / 2,49), có ca hồi quy fail với luật cũ (cần duyệt)
-- [ ] Sửa P20-2/P20-3: ý định không nhận ra → UNKNOWN "chưa hỗ trợ" thay vì mặc định `tot_nghiep`; nhận "đăng ký … <MÃ>" có chữ chen giữa (cần duyệt)
+- [x] Sửa P20-1 — R-Formal v1.10 + QD-14 (mục 5b)
+- [x] Sửa P20-2/P20-3 (mục 5b)
 - [ ] Xem lại P20-4 (M2 OCR)
 - [ ] Tuần 21: chạy baseline (LLM thuần, RAG thuần, tool-calling) trên `baseline_dev/test.jsonl` (cần API key, `.env`)
 - [ ] Tuần 22: chạy CPA² trên test (một lần), báo cáo cả hai loại gold

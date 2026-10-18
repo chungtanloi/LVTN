@@ -4,7 +4,7 @@
 
 > **Vị trí trong luận văn:** phụ lục này thuộc phần **giả định và hạn chế**, không thuộc phần kết quả. Mỗi mục dưới đây là điều tác giả **quyết định**, không phải điều **tìm thấy** trong văn bản quy phạm. Trộn hai loại vào nhau là cách nhanh nhất để một luận văn hình thức hoá bị bác ở phần phương pháp.
 
-**Tổng: 13 quyết định** — 🔴 1 mở, 🔄 1 đã sửa, ✅ 9 đóng, 🟡 1 đóng một phần, 🟠 1 đóng tạm
+**Tổng: 14 quyết định** — 🔴 1 mở, 🔄 1 đã sửa, ✅ 10 đóng, 🟡 1 đóng một phần, 🟠 1 đóng tạm
 
 ---
 
@@ -25,6 +25,7 @@
 | **QD-11** | ✅ đóng | QD5339 Điều 2 k.6 (R-M16) | Câu chữ QĐ5339 Điều 2 k.6 (suy trực tiếp từ văn bản) |
 | **QD-12** | ✅ đóng | QD3266 Điều 31 (R-F04) | XÁC NHẬN NGOÀI VĂN BẢN — Loi, 18/10/2026 (trong phiên làm việc Tuần 18): chỉ có quy định số TC |
 | **QD-13** | ✅ đóng | QD3266 Điều 7 k.5 (R-A04) | Câu chữ QĐ3266 Điều 7 k.5 (PDF gốc tr.5) — bản xác nhận cũ trái câu chữ (Loi 18/10/2026: học sau cũng được) ĐÃ RÚT; phần F vẫn thoả là diễn giải (Loi chọn (a), 18/10/2026) |
+| **QD-14** | ✅ đóng | QD3266 Điều 34 k.2 (R-F06) | Quyết định của tác giả (Tuần 20, P20-1): QĐ3266 không quy định làm tròn ĐTBCTL — xếp hạng theo cận dưới, so hữu tỉ; chưa hỏi Phòng Đào tạo |
 
 ### Hai nhóm cần chú ý
 
@@ -202,6 +203,19 @@
 **Quyết định:** QD-13 ĐÓNG (rút lại — Loi, 18/10/2026, sau khi đối chiếu PDF gốc QĐ3266 tr.5): THEO ĐÚNG câu chữ Đ7 k5 — HP song hành phải HỌC TRƯỚC hoặc HỌC CÙNG LÚC; không được học sau. 'Học' ≠ 'tích lũy' (khoản 4 dùng 'tích lũy', khoản 5 chỉ dùng 'học') → đã học dù bị F vẫn thoả; điểm W (đã rút) không tính. Recommendation Tuần 19 áp ràng buộc cứng. [Bản trước, đã rút: song hành học trước/cùng/sau đều được — trái câu chữ Đ7 k5 và QĐ4544 Đ8 k5.]
 
 **Nguồn xác nhận:** Câu chữ QĐ3266 Điều 7 k.5 (PDF gốc tr.5) — bản xác nhận cũ trái câu chữ (Loi 18/10/2026: học sau cũng được) ĐÃ RÚT; phần F vẫn thoả là diễn giải (Loi chọn (a), 18/10/2026)
+
+
+### ✅ QD-14 — đóng
+
+**Điều khoản:** QD3266 Điều 34 khoản 2 · bản ghi `R-F06` · lớp **F**
+
+**Trích nguyên văn:**
+
+> *Hạng tốt nghiệp theo ĐTBCTL: Loại xuất sắc từ 3,60 đến 4,00 | Loại giỏi từ 3,20 đến 3,59 | Loại khá từ 2,50 đến 3,19 | Loại trung bình từ 2,00 đến 2,49.*
+
+**Quyết định:** QD-14 ĐÓNG (quyết định của tác giả, Tuần 20): Đ34 k2 ghi các mức bằng hai chữ số thập phân (XS 3,60–4,00 · Giỏi 3,20–3,59 · Khá 2,50–3,19 · TB 2,00–2,49) nhưng QĐ3266 KHÔNG quy định làm tròn ĐTBCTL (Đ22 chỉ làm tròn điểm học phần) → ĐTBCTL được so HỮU TỈ theo CẬN DƯỚI: hạng = mức cao nhất có ĐTBCTL ≥ cận dưới; giá trị giữa 3,59 và 3,60 thuộc Giỏi. Bản trước (mốc nguyên thang ×10) bỏ sót ĐTBCTL giữa hai mốc (P20-1: 3,14 không thuộc hạng nào).
+
+**Nguồn xác nhận:** Quyết định của tác giả (Tuần 20, P20-1): QĐ3266 không quy định làm tròn ĐTBCTL — xếp hạng theo cận dưới, so hữu tỉ; chưa hỏi Phòng Đào tạo
 
 
 ---

@@ -1,5 +1,5 @@
 %%=============================================================================
-%% qd3266_r_formal_v1.lp — R-Formal v1 (v1.9: song hành khi hỏi đăng ký một HP — sau Tuần 19)
+%% qd3266_r_formal_v1.lp — R-Formal v1 (v1.10: hạng tốt nghiệp so hữu tỉ theo cận dưới — Tuần 20, P20-1)
 %% Hình thức hoá các điều khoản lớp F của QĐ 3266/QĐ-ĐHCT (15/8/2024)
 %% Dự án: CPA² — Certified Personalized Academic Advising (Tuần 5/24)
 %%
@@ -393,12 +393,17 @@ why(tot_nghiep, r_e01)  :- tot_nghiep.
 %% ---------------------------------------------------------------------------
 %% 13. HẠNG TỐT NGHIỆP — Điều 34 khoản 2 và điểm a (R-F06, R-F07)
 %% ---------------------------------------------------------------------------
-hang(xuat_sac, 36, 40).
-hang(gioi,     32, 35).
-hang(kha,      25, 31).
-hang(trung_binh,20, 24).
+%% v1.10 (P20-1, Tuần 20): bản trước khai mốc NGUYÊN thang ×10 (gioi 32–35, kha 25–31…) và so N ≤ Hi·D → ĐTBCTL nằm
+%% giữa hai mốc (3,14 · 3,57 · 2,45 …) KHÔNG thuộc hạng nào. Nay so HỮU TỈ theo CẬN DƯỚI thang ×100 (tl_tu là điểm ×10):
+%% hạng = mức cao nhất có ĐTBCTL ≥ cận dưới. Đ34 không quy định làm tròn ĐTBCTL → giá trị giữa 3,59 và 3,60 thuộc Giỏi
+%% (QD-14, quyết định diễn giải). Dưới 2,00 không có hạng (chưa đủ điều kiện tốt nghiệp — Đ32).
+hang(xuat_sac, 360).
+hang(gioi,     320).
+hang(kha,      250).
+hang(trung_binh,200).
 
-hang_goc(H) :- hang(H,Lo,Hi), tl_tu(N), tl_mau(D), D > 0, N >= Lo*D, N <= Hi*D.
+dat_can_hang(H) :- hang(H,Lo), tl_tu(N), tl_mau(D), D > 0, 10*N >= Lo*D.
+hang_goc(H) :- dat_can_hang(H), hang(H,Lo), not dat_can_hang(H2) : hang(H2,Lo2), Lo2 > Lo.
 why(hang_goc(H), r_f06) :- hang_goc(H).
 
 %% giảm một mức nếu TC học phần điểm F > 5% tổng TC quy định của CTĐT
