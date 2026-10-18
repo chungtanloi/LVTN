@@ -13,7 +13,7 @@ Có dòng không đọc được hoặc học kỳ lệch tổng TC → có th�
 
 Bảng điểm không ghi tình trạng kỷ luật, lựa chọn tích lũy (CQ-06) → lấy từ `khai_bao`, không OCR.
 """
-import json, os, re, sys, unicodedata
+import json, os, re, shutil, sys, unicodedata
 from pathlib import Path
 
 import numpy as np
@@ -26,8 +26,12 @@ CURRICULUM = ROOT / "w6_curriculum" / "curriculum_cntt_k49.json"
 sys.path.insert(0, str(ROOT / "w7_student_facts"))
 sys.path.insert(0, str(ROOT / "w12_integration"))
 
-pytesseract.pytesseract.tesseract_cmd = os.environ.get(
-    "TESSERACT_EXE", r"C:/Program Files/Tesseract-OCR/tesseract.exe")
+_WIN_TESS = r"C:/Program Files/Tesseract-OCR/tesseract.exe"
+# TESSERACT_EXE → bản cài Windows mặc định → "tesseract" trong PATH (Linux/macOS). Không có → để "tesseract":
+# pytesseract báo "tesseract is not installed or it's not in your PATH" (rõ hơn một đường dẫn Windows không tồn tại)
+pytesseract.pytesseract.tesseract_cmd = (os.environ.get("TESSERACT_EXE")
+                                         or (_WIN_TESS if Path(_WIN_TESS).exists() else None)
+                                         or shutil.which("tesseract") or "tesseract")
 
 TAU = 0.70                    # ngưỡng confidence (0–1) của một trường OCR — chốt trước khi đo
 MAX_KHONG_CHAC = 6            # quá số HP không chắc → không giải (3^k mô hình), trả UNKNOWN
@@ -421,8 +425,7 @@ def ket_luan(hs, extra, bc, claim="tot_nghiep"):
     if bc["dong_an"] or len(bc["khong_chac"]) > MAX_KHONG_CHAC:
         return "UNKNOWN"
     import prototype
-    hs, them_rs, _ = prototype.abstention.ra_soat(hs)      # P17-1: bản ghi tự mâu thuẫn → mở, không tin
-    return prototype.solve_verdict(claim, _w7().load_facts(hs) + "\n" + them_rs + "\n" + extra)[0]
+    return prototype.solve_verdict(claim, _w7().load_facts(hs) + "\n" + extra)[0]   # load_facts đã rà soát (P17-1)
 
 
 def ket_luan_tu_json(j, claim="tot_nghiep"):

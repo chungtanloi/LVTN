@@ -19,38 +19,9 @@ CURRICULUM = [W6 / "curriculum_schema.lp", W6 / "curriculum_cntt_k49.lp"]
 RULES = [W5 / "qd3266_r_formal_v1.lp", W5 / "qd5339_r_formal_v1.lp"]
 
 def load_facts(j):
-    lines=[]
-    for code, g in j["grades"].items():
-        th = g.get("thang10")
-        diem = g.get("diem")
-        if diem == "M":
-            lines.append(f'diem_m("{code}").')
-        elif diem == "W":
-            lines.append(f'diem_w("{code}").')
-        elif diem == "I":
-            lines.append(f'diem_i("{code}").')
-        elif th is not None:
-            lines.append(f'g10("{code}",{th}).')
-    for c in j.get("khong_tinh_tich_luy", []):
-        lines.append(f'khong_tinh_tich_luy("{c}").')
-    if j.get("che_do_sv_chon_tich_luy"):
-        lines.append("che_do(sv_chon_tich_luy).")
-    if j.get("xac_nhan_ky_luat_sach") is True:
-        lines.append("xac_nhan_ky_luat_sach.")
-    elif j.get("xac_nhan_ky_luat_sach") is False:
-        lines.append("khai_bao(ky_luat).")   # đã khai báo "không" → FALSE; null/thiếu → mở nhánh (Tuần 16)
-    for k in ("da_hoc_nam2", "tc_cong_nhan"):
-        if j.get(k) is not None:
-            lines.append(f"{k}({j[k]}).")
-    # certificates → chung_chi
-    for cert in j.get("certificates", []):
-        loai = cert["loai"]
-        diem = int(cert["diem"]) if loai == "ctu_abc" else round(cert["diem"]*10)  # nguong_cc lưu điểm ×10
-        lines.append(f'chung_chi({loai},{diem}).')
-    for ex in j.get("exemptions", []):
-        if ex["quyet_dinh"]:
-            lines.append(f'duoc_mien("{ex["ma_hp"]}").')
-    return "\n".join(lines)
+    """Hồ sơ → dữ kiện ASP. Dùng loader chung (loader.py): rà soát mâu thuẫn + quy ước ×10 cho chứng chỉ."""
+    from loader import sang_asp
+    return sang_asp(j)[0]
 
 def solve(extra):
     prog = "\n".join(p.read_text(encoding="utf-8") for p in RULES + CURRICULUM) + "\n" + extra
@@ -74,6 +45,46 @@ EXPECT = {
                       ['du_dk_xin_mien("FL001")', 'mien_treo("FL001")'],
                       "QD-11 miễn 10 TC Anh văn bằng IELTS 6.0; IELTS không mở quyền xin miễn Pháp văn"),
 }
+
+def kiem_loader_chung():
+    """L. Loader dùng chung (sau Tuần 17): mọi đường vào (w7, w11 certificate, w12 prototype, w16 abstention)
+    sinh CÙNG một ASP từ cùng hồ sơ — kể cả rà soát hồ sơ mâu thuẫn (P17-1) và lựa chọn tích lũy (CQ-06)."""
+    import importlib.util, tempfile
+    def nap(ten, f):
+        spec = importlib.util.spec_from_file_location(ten, HERE.parent / f)
+        m = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(m)
+        return m
+    w11 = nap("generate_certificate", "w11_proof/generate_certificate.py")
+    w12 = nap("prototype", "w12_integration/prototype.py")
+    ok = True
+    ho_so = {n: json.loads((STUDENTS / f"{n}.json").read_text(encoding="utf-8")) for n in EXPECT}
+    mt = json.loads(json.dumps(ho_so["sv_lvtn"]))
+    mt["grades"]["CT177"].update(thang10=80, letter="F", status="failed")          # bản ghi tự mâu thuẫn
+    ho_so["mau_thuan"] = mt
+    cd = json.loads(json.dumps(ho_so["sv_du_hp"]))
+    cd["che_do_sv_chon_tich_luy"] = True                                           # CQ-06
+    ho_so["che_do"] = cd
+    with tempfile.TemporaryDirectory() as d:
+        for ten, j in ho_so.items():
+            f = Path(d) / f"{ten}.json"
+            f.write_text(json.dumps(j, ensure_ascii=False), encoding="utf-8")
+            ra = {"w7": load_facts(j), "w11": w11.load_student(f), "w12": w12.load_student(f)[0]}
+            giong = len(set(ra.values())) == 1
+            if not giong:
+                ok = False
+            print(f"[{'OK' if giong else 'FAIL'}] L1 {ten}: w7 = w11 = w12 (cùng ASP)")
+    good = '1 { g10("CT177"' in load_facts(mt)
+    print(f"[{'OK' if good else 'FAIL'}] L2 w7 load_facts rà soát bản ghi mâu thuẫn (CT177 8,0 ghi F → mở)")
+    # L3 chống chép lại loader: chỉ loader.py được sinh dữ kiện chứng chỉ (quy ước ×10) và khai báo kỷ luật
+    dau_hieu = ("chung_chi({", "khai_bao(ky_luat).")
+    chep = [str(f.relative_to(HERE.parent)) for f in sorted(HERE.parent.glob("w*/*.py"))
+            if f.name != "loader.py" and not f.name.startswith("validate_")   # test viết ASP tay, không phải loader
+            and any(d in f.read_text(encoding="utf-8") for d in dau_hieu)]
+    print(f"[{'OK' if not chep else 'FAIL'}] L3 không file nào ngoài loader.py tự đổi hồ sơ → ASP ({chep})")
+    good = good and not chep
+    return ok and good
+
 
 def main():
     ok=True
@@ -114,6 +125,7 @@ def main():
     good=all(x in f for x in ("chung_chi(toeic,6000).","chung_chi(ielts,55).","chung_chi(ctu_abc,3)."))
     print(f"[{'OK' if good else 'FAIL'}] loader quy đổi điểm chứng chỉ ×10 (TOEIC 600→6000, IELTS 5.5→55, ctu_abc giữ bậc)")
     ok=ok and good
+    ok = kiem_loader_chung() and ok
     print("\nKẾT LUẬN:", f"ĐẠT {len(EXPECT)}/{len(EXPECT)} hồ sơ + loader" if ok else "CÓ LỖI")
     return 0 if ok else 1
 

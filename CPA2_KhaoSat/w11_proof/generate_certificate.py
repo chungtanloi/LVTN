@@ -19,8 +19,8 @@ W8 = HERE.parent / "w8_elective"
 W9 = HERE.parent / "w9_exemption"
 W10 = HERE.parent / "w10_graduation"
 W7 = HERE.parent / "w7_student_facts"
-sys.path.insert(0, str(HERE.parent / "w16_abstention"))
-import abstention  # P17-1: rà soát hồ sơ mâu thuẫn trước khi giải
+sys.path.insert(0, str(W7))
+import loader  # loader dùng chung: rà soát hồ sơ mâu thuẫn (P17-1) + đổi sang ASP
 
 RULES = [W5 / "qd3266_r_formal_v1.lp", W5 / "qd5339_r_formal_v1.lp"]
 SCHEMA = W6 / "curriculum_schema.lp"
@@ -33,26 +33,8 @@ CATALOG = W5 / "r_formal_v1.json"
 def txt(p): return p.read_text(encoding="utf-8")
 
 def load_student(path):
-    j=json.loads(Path(path).read_text(encoding="utf-8"))
-    j, them_rs, _ = abstention.ra_soat(j)   # P17-1: bỏ + mở bản ghi mâu thuẫn
-    lines=[them_rs] if them_rs else []
-    for code,g in j.get("grades",{}).items():
-        th=g.get("thang10"); diem=g.get("diem")
-        if diem=="M": lines.append(f'diem_m("{code}").')
-        elif diem=="W": lines.append(f'diem_w("{code}").')
-        elif diem=="I": lines.append(f'diem_i("{code}").')
-        elif th is not None: lines.append(f'g10("{code}",{th}).')
-    for c in j.get("khong_tinh_tich_luy",[]): lines.append(f'khong_tinh_tich_luy("{c}").')
-    if j.get("xac_nhan_ky_luat_sach") is True: lines.append('xac_nhan_ky_luat_sach.')
-    elif j.get("xac_nhan_ky_luat_sach") is False: lines.append('khai_bao(ky_luat).')  # null/thiếu → mở nhánh (Tuần 16)
-    for k in ("da_hoc_nam2","tc_cong_nhan"):
-        if j.get(k) is not None: lines.append(f'{k}({j[k]}).')
-    for c in j.get("certificates",[]):
-        loai=c["loai"]; diem=int(c["diem"]) if loai=="ctu_abc" else round(c["diem"]*10)  # nguong_cc lưu điểm ×10
-        lines.append(f'chung_chi({loai},{diem}).')
-    for ex in j.get("exemptions",[]):
-        if ex["quyet_dinh"]: lines.append(f'duoc_mien("{ex["ma_hp"]}").')
-    return "\n".join(lines)
+    """Hồ sơ JSON → dữ kiện ASP qua loader chung (w7_student_facts/loader.py)."""
+    return loader.sang_asp(json.loads(Path(path).read_text(encoding="utf-8")))[0]
 
 def kb(extra):
     return "\n".join([txt(p) for p in RULES] + [txt(SCHEMA), txt(ELECTIVE), txt(EXEMPT), txt(FACTS), txt(GRAD)]) + "\n" + extra

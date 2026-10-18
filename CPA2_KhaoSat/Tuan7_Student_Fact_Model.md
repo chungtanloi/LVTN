@@ -99,7 +99,7 @@ Validator giờ **kiểm schema trước** (jsonschema Draft 2020-12), rồi m�
 
 - [ ] Mở rộng lên ≥20 hồ sơ phủ ca biên điểm (D = 4,0; D+ = 5,0; GDQP cần D+) và đủ loại chứng chỉ (TOEIC, TOEFL, ctu_abc)
 - [ ] Chế độ `--strict`: tính lại GPA so với GPA in trên bảng điểm. **Chưa cài**, dời sang Tuần 15 (OCR)
-- [ ] Trường `confidence` / `ocr_raw` cho từng dữ kiện: Tuần 15
+- [x] Trường `confidence` / `ocr_raw` cho từng dữ kiện: Tuần 15 — ✅ đã xong: Tuần 15
 - [ ] Chép bảng quy đổi tiếng Pháp (QĐ5339 trang 12) từ **ảnh gốc**, không qua OCR
 - [ ] Hỏi Phòng Đào tạo: "Anh văn tăng cường" có được miễn bằng chứng chỉ theo điểm a không
 - [ ] Thử trên bảng điểm thật (đã ẩn danh)

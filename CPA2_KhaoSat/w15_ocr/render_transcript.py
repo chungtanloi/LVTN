@@ -19,8 +19,29 @@ from PIL import Image, ImageDraw, ImageFilter, ImageFont
 
 HERE = Path(__file__).parent
 CURRICULUM = HERE.parent / "w6_curriculum" / "curriculum_cntt_k49.json"
-FONT = "C:/Windows/Fonts/times.ttf"
-FONT_DAM = "C:/Windows/Fonts/timesbd.ttf"
+def _tim_font(bien_moi_truong, *ung_vien):
+    """Font đầu tiên tồn tại: biến môi trường → Times New Roman (Windows) → Liberation Serif (cùng số đo với
+    Times, Linux) → DejaVu Serif. Số liệu OCR phụ thuộc font — chỉ so trước/sau trên CÙNG font (Tuần 16)."""
+    import os
+    for f in (os.environ.get(bien_moi_truong), *ung_vien):
+        if f and Path(f).exists():
+            return f
+    raise FileNotFoundError(f"không tìm thấy font — đặt biến môi trường {bien_moi_truong}")
+
+
+_FONT = {}
+
+
+def font(dam=False):
+    """Đường dẫn font, chỉ tìm khi thật sự vẽ (import module không cần font — w17 dùng chia_hoc_ky)."""
+    if dam not in _FONT:
+        _FONT[dam] = (_tim_font("CPA2_FONT_DAM", "C:/Windows/Fonts/timesbd.ttf",
+                                "/usr/share/fonts/truetype/liberation/LiberationSerif-Bold.ttf",
+                                "/usr/share/fonts/truetype/dejavu/DejaVuSerif-Bold.ttf") if dam else
+                      _tim_font("CPA2_FONT", "C:/Windows/Fonts/times.ttf",
+                                "/usr/share/fonts/truetype/liberation/LiberationSerif-Regular.ttf",
+                                "/usr/share/fonts/truetype/dejavu/DejaVuSerif.ttf"))
+    return _FONT[dam]
 
 W, H = 1105, 1430
 CO = 21                      # cỡ chữ (px) ~ bảng điểm in từ trình duyệt
@@ -60,8 +81,8 @@ def chia_hoc_ky(j, ctdt):
 class Trang:
     def __init__(self):
         self.anh = []
-        self.f = ImageFont.truetype(FONT, CO)
-        self.fd = ImageFont.truetype(FONT_DAM, CO)
+        self.f = ImageFont.truetype(font(), CO)
+        self.fd = ImageFont.truetype(font(dam=True), CO)
         self.moi()
 
     def moi(self):
@@ -69,7 +90,7 @@ class Trang:
         self.d = ImageDraw.Draw(self.im)
         self.anh.append(self.im)
         self.y = 60
-        self.d.text((40, 28), "Hệ thống quản lý đào tạo - Trường Đại học Cần Thơ (bản giả lập)", font=ImageFont.truetype(FONT, 14), fill=0)
+        self.d.text((40, 28), "Hệ thống quản lý đào tạo - Trường Đại học Cần Thơ (bản giả lập)", font=ImageFont.truetype(font(), 14), fill=0)
 
     def can(self, h):
         if self.y + h > H - 60:

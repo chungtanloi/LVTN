@@ -78,7 +78,7 @@ Khi `confidence < 0.8` hoặc `intent` mơ hồ, Prototype trả `UNKNOWN` kèm 
 
 ## 5. Việc còn lại → Tuần 14
 
-- [ ] **RAG grounding:** kết nối retrieval với quy chế/CTĐT để LLM có ngữ cảnh khi dịch (ví dụ "môn tự chọn" → nhóm nào?)
+- [x] **RAG grounding:** kết nối retrieval với quy chế/CTĐT để LLM có ngữ cảnh khi dịch (ví dụ "môn tự chọn" → nhóm nào?) — ✅ đã xong: w14_rag (Tuần 14)
 - [ ] Đánh giá parser trên **Q-Real** (400-600 câu thật, Tuần 1 Input Q) — hiện mới 20 câu nội bộ
 - [ ] Đo **Verbalization Faithfulness** (RQ4) khi Verbalizer LLM hoạt động
 

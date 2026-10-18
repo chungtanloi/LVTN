@@ -214,6 +214,11 @@ def phan_F():
 
 def main():
     nhanh = "--nhanh" in sys.argv
+    try:   # số liệu OCR phụ thuộc font + phiên bản Tesseract → ghi lại để chỉ so trên CÙNG môi trường
+        tv = O.pytesseract.get_tesseract_version()
+    except Exception as e:  # noqa: BLE001
+        tv = f"không chạy được ({type(e).__name__})"
+    print(f"Môi trường: font={RT.font()} · tesseract={O.pytesseract.pytesseract.tesseract_cmd} {tv}\n")
     phan_A()
     phan_B(nhanh)
     phan_C()

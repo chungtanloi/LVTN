@@ -416,7 +416,7 @@ Tuần 6 phải xây **Curriculum KB v1** với tiêu chí *"solver đọc đư�
 - [x] Formalization Coverage và Executable Coverage được tính từ danh mục bằng mã, không đếm tay
 - [ ] **Chưa đối chiếu với con người.** QD-03 (*"TC nợ đọng"*) và QD-08 (*"tương đương"*) là
       suy đoán của tác giả, phải xác nhận với Phòng Đào tạo hoặc GVHD trước khi vào luận văn
-- [ ] Chưa thu thập *Quy định xét miễn và công nhận điểm học phần* — **chặn toàn bộ loại T5**
+- [x] Chưa thu thập *Quy định xét miễn và công nhận điểm học phần* — **chặn toàn bộ loại T5** — ✅ đã xong: QĐ5339 — R-Formal v1.1
 - [ ] Chưa kiểm quy tắc trên bảng điểm thật (mới chỉ hồ sơ thử tổng hợp); dự kiến Tuần 7
 - [ ] Danh mục chưa được người thứ hai soát độc lập — phân loại F/P/N hiện là **đánh giá đơn
       người**, cần nêu như hạn chế của RQ1 hoặc bổ sung một vòng soát chéo với GVHD

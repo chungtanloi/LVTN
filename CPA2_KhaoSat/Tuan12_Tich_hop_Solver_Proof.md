@@ -96,7 +96,7 @@ Không hồi quy: `w5` 39/39 · `w6` 31/31 · `w7` 5/5 · `w8` 29/29 · `w9` 22/
 ## 5. Việc còn lại → Tuần 13
 
 - [ ] **Semantic Parser (LLM):** thay stub bằng LLM dịch tiếng Việt → formal query (`?X : Requires(SV,X) ∧ ¬Completed(SV,X)`)
-- [ ] RAG grounding (Tuần 14) — truy hồi quy chế/CTĐT cho parser
+- [x] RAG grounding (Tuần 14) — truy hồi quy chế/CTĐT cho parser — ✅ đã xong: w14_rag (Tuần 14)
 - [ ] Verbalizer LLM thật + đo Faithfulness (RQ4)
 
 ---

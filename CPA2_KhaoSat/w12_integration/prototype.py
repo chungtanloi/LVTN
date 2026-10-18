@@ -23,7 +23,9 @@ W9 = HERE.parent / "w9_exemption"
 W10 = HERE.parent / "w10_graduation"
 W11 = HERE.parent / "w11_proof"
 sys.path.insert(0, str(HERE.parent / "w16_abstention"))
+sys.path.insert(0, str(HERE.parent / "w7_student_facts"))
 import abstention  # Tuần 16: missing evidence
+import loader      # loader dùng chung: rà soát hồ sơ mâu thuẫn (P17-1) + đổi sang ASP
 
 RULES = [W5 / "qd3266_r_formal_v1.lp", W5 / "qd5339_r_formal_v1.lp"]
 SCHEMA = W6 / "curriculum_schema.lp"
@@ -56,27 +58,10 @@ def parse_question(q: str) -> str:
 def txt(p): return p.read_text(encoding="utf-8")
 
 def load_student(path):
+    """Hồ sơ JSON → (dữ kiện ASP, student_id, mâu thuẫn) qua loader chung (w7_student_facts/loader.py)."""
     j=json.loads(Path(path).read_text(encoding="utf-8"))
-    j, them_rs, _ = abstention.ra_soat(j)   # P17-1: bỏ + mở bản ghi mâu thuẫn trước khi giải
-    lines=[them_rs] if them_rs else []
-    for code,g in j.get("grades",{}).items():
-        th=g.get("thang10"); diem=g.get("diem")
-        if diem=="M": lines.append(f'diem_m("{code}").')
-        elif diem=="W": lines.append(f'diem_w("{code}").')
-        elif diem=="I": lines.append(f'diem_i("{code}").')
-        elif th is not None: lines.append(f'g10("{code}",{th}).')
-    for c in j.get("khong_tinh_tich_luy",[]): lines.append(f'khong_tinh_tich_luy("{c}").')
-    if j.get("xac_nhan_ky_luat_sach") is True: lines.append('xac_nhan_ky_luat_sach.')
-    elif j.get("xac_nhan_ky_luat_sach") is False: lines.append('khai_bao(ky_luat).')  # null/thiếu → mở nhánh (Tuần 16)
-    for c in j.get("certificates",[]):
-        loai=c["loai"]; diem=int(c["diem"]) if loai=="ctu_abc" else round(c["diem"]*10)  # nguong_cc lưu điểm ×10
-        lines.append(f'chung_chi({loai},{diem}).')
-    for ex in j.get("exemptions",[]):
-        if ex["quyet_dinh"]: lines.append(f'duoc_mien("{ex["ma_hp"]}").')
-    # tinh chỉ bổ sung cho CTĐT demo
-    for k in ("da_hoc_nam2","tc_cong_nhan"):
-        if j.get(k) is not None: lines.append(f'{k}({j[k]}).')
-    return "\n".join(lines), j.get("student_id","demo")
+    asp, mt = loader.sang_asp(j)
+    return asp, j.get("student_id","demo"), mt
 
 def kb(extra):
     return "\n".join([txt(p) for p in RULES] + [txt(SCHEMA), txt(ELECTIVE), txt(EXEMPT), txt(FACTS), txt(GRAD)]) + "\n" + extra
@@ -157,13 +142,12 @@ def verbalize(cert, cautious):
 
 def answer(question, student_path):
     claim=parse_question(question)
-    extra, sid = load_student(student_path) if student_path else ("", "demo")
+    extra, sid, mt = load_student(student_path) if student_path else ("", "demo", [])
     verdict, models, cautious, brave = solve_verdict(claim, extra)
     cert=build_certificate(claim, verdict, models, cautious, brave)
     explanation, block = verbalize(cert, cautious)
     if block:
         return {"verdict": "BLOCKED", "certificate": cert, "explanation_vi": block, "missing_facts": cert["missing_facts"]}
-    mt = abstention.ra_soat(json.loads(Path(student_path).read_text(encoding="utf-8")))[2] if student_path else []
     return {"verdict": verdict, "certificate": cert, "explanation_vi": explanation, "missing_facts": cert["missing_facts"], "can_bo_sung": cert["can_bo_sung"], "mau_thuan": mt, "student_id": sid, "claim": claim}
 
 def demo():

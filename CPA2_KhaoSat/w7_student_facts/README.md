@@ -57,3 +57,7 @@ python validate_student_facts.py          # kiểm schema + 6/6 hồ sơ + loade
 
 - [ ] Mở rộng lên ≥20 hồ sơ phủ ca biên điểm (D=4.0, D+=5.0, GDQP) — Tuần 8 cần cho Elective & N-of-M
 - [ ] OCR pipeline Tuần 15: trường `confidence` + `ocr_raw` hiện để `null` với hồ sơ giả lập
+
+## Loader dùng chung (sau Tuần 17)
+
+`loader.py` — `sang_asp(hồ sơ)` → (dữ kiện ASP, danh sách mâu thuẫn): rà soát bản ghi tự mâu thuẫn (P17-1), chứng chỉ ×10, lựa chọn tích lũy (CQ-06). Mọi đường vào (w7 `load_facts`, w11, w12, w15, w16) gọi hàm này; `validate_student_facts.py` L1–L3 kiểm.

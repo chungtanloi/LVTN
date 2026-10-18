@@ -46,11 +46,12 @@ D:\LVTN\                          (git repo)
 ├── CLAUDE.md
 ├── Ke_hoach_nghien_cuu_CPA2_24_tuan.xlsx   kế hoạch + checklist + dashboard
 ├── CPA2_KhaoSat\
-│   ├── TuanN_*.md                báo cáo từng tuần (1–14)
+│   ├── TuanN_*.md                báo cáo từng tuần (1–17)
+│   ├── Viec_ton_dong.md          sổ việc tồn đọng (A cần người · B tuần sau · C kỹ thuật · D không hình thức hoá)
 │   ├── w4_solver_probe\          so sánh clingo / CP-SAT / Z3
 │   ├── w5_rformal\               R-Formal: qd3266/qd5339 *.lp, r_formal_v1.json, source/*_ocr_raw.txt
 │   ├── w6_curriculum\            Curriculum KB CNTT K49 (build_curriculum.py → .lp/.json)
-│   ├── w7_student_facts\         schema hồ sơ SV + 6 hồ sơ giả lập
+│   ├── w7_student_facts\         schema hồ sơ SV + 6 hồ sơ giả lập + loader.py (loader DÙNG CHUNG hồ sơ → ASP)
 │   ├── w8_elective\ … w10_graduation\   solver nhóm tự chọn / miễn-thay thế / tốt nghiệp
 │   ├── w11_proof\                proof certificate (why/2 → rule_src)
 │   ├── w12_integration\          Prototype v1: Parser → KB → Solver ba trị → Verbalizer + hậu kiểm
@@ -86,5 +87,6 @@ D:\LVTN\                          (git repo)
 - Bộ đánh giá: gold viết tay + commit TRƯỚC lần chạy đầu (w17: 200b860, `gold_dong_bang.json`, validate G1/G2). Sai sót phát hiện sau → errata, KHÔNG sửa gold; sửa công thức chấm thì báo cả số cũ lẫn mới.
 - Oracle kiểm gold phải độc lập với KB: nếu chung giả định (vd. "1 HK = nửa năm") thì ghi rõ là không kiểm được điểm đó.
 - QĐ3266 Đ6 k1 (tr.5): một năm học có 03 HK → "giảm 1 HK" (Đ5) = 1/3 năm, không phải nửa năm. R-Formal v1.8 tính trần theo HK: `thoi_gian_toi_da_hk`, so `3·da_hoc_nam2 > 2·M` (P17-3).
-- Loader hồ sơ chỉ đọc `thang10` → phải gọi `abstention.ra_soat()` trước (bản ghi tự mâu thuẫn → mở F/D/A, không tin). Có 3 bản loader (w7/w11/w12) nên mỗi đường vào phải tự gọi — đã từng sót ở w11/w15 (P17-1).
+- Hồ sơ → ASP CHỈ qua `w7_student_facts/loader.py` (`sang_asp`: rà soát mâu thuẫn P17-1 + chứng chỉ ×10 + CQ-06). Trước đây 3 bản chép lệch nhau (w11/w12 thiếu `che_do`, w7 thiếu rà soát). validate_student_facts L3 chặn module nào tự đổi hồ sơ → ASP.
+- Việc còn mở gom ở `CPA2_KhaoSat/Viec_ton_dong.md`; đóng mục nào thì tích ở cả sổ lẫn báo cáo tuần.
 - Sửa hệ thống sau khi đã thấy ca test thất bại → test đã nhiễm: giữ số chính thức, ghi số sau sửa ra file riêng (`--hau-to`), cần bộ test mới.

@@ -139,9 +139,9 @@ Học phí ×1,5 sau thời gian thiết kế: **không có trong QĐ3266/QĐ533
 
 - [x] Quyết định P16-2: chọn (b), đã sửa `tot_nghiep` và thêm ca hồi quy
 - [ ] Tìm văn bản quy định học phí (hệ số ×1,5 sau thời gian thiết kế) trước khi hình thức hoá
-- [ ] Đưa các ca dữ kiện thiếu / đa số ≠ chắc / QĐ miễn chưa rõ vào bộ Adversarial (Tuần 17)
-- [ ] Đo Coverage ↔ Selective Accuracy trên bộ đối kháng
-- [ ] Bỏ đường dẫn font Windows ở `render_transcript.py`; gộp loader
+- [x] Đưa các ca dữ kiện thiếu / đa số ≠ chắc / QĐ miễn chưa rõ vào bộ Adversarial (Tuần 17) — ✅ đã xong: Tuần 17 (TD-01…17, C3 của w16, TD-14)
+- [x] Đo Coverage ↔ Selective Accuracy trên bộ đối kháng — ✅ đã xong: Tuần 17 mục 2 (run_adversarial.py)
+- [x] Bỏ đường dẫn font Windows ở `render_transcript.py`; gộp loader — ✅ đã xong: sau Tuần 17: font/Tesseract tự dò; loader chung w7_student_facts/loader.py
 
 ### Ghi chú kiểm chứng
 

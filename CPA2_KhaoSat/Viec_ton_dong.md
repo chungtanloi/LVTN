@@ -1,0 +1,52 @@
+# SỔ VIỆC TỒN ĐỌNG — CPA² (cập nhật 18/10/2026, trước Tuần 18)
+
+Gom mọi mục `- [ ]` còn mở trong báo cáo Tuần 1–17. Các mục đã xong được tích ngay trong báo cáo gốc, kèm dòng "✅ đã xong: …" trỏ tới nơi làm (22 mục, đợt rà soát 18/10/2026). Sổ này **không thay** báo cáo tuần; khi đóng một mục, tích ở cả hai nơi.
+
+---
+
+## A. Cần người hoặc nguồn bên ngoài — Claude KHÔNG tự làm được
+
+| # | Việc | Nguồn trong báo cáo | Chặn gì |
+|---|---|---|---|
+| A1 | Hỏi Phòng Đào tạo: GDTC ghi **TC025–027** ↔ TC100 của CTĐT K49; dòng **CC004** (miễn 10 TC) ↔ nhánh Anh văn | Tuần 15 §6, P15-3 | Kết luận trên bảng điểm thật (ca KX-03 của w17 không chấm điểm) |
+| A2 | **QD-03** "TC nợ đọng" — xác nhận cách hiểu | Tuần 5 v1.1–v1.4 | Một ngưỡng cảnh báo học vụ |
+| A3 | Hỏi PĐT: "Anh văn tăng cường" có được miễn bằng chứng chỉ theo điểm a không | Tuần 7 (Việc còn lại) | Miễn ngoại ngữ |
+| A4 | Văn bản quy định **học phí** (hệ số ×1,5 sau thời gian thiết kế) | Tuần 16 | Hình thức hoá học phí (QĐ3266 Đ10 chỉ ghi "do Hiệu trưởng quyết định") |
+| A5 | Bảng quy đổi **tiếng Pháp** (QĐ5339 tr.12) chép từ **ảnh gốc** | Tuần 7 | Miễn Pháp văn (hiện không suy được) |
+| A6 | Kiểm QĐ5339 còn hiệu lực hay đã bị thay thế | Tuần 5 v1.1 | Toàn bộ nhóm miễn/công nhận |
+| A7 | **Người thứ hai** gán nhãn F/P/N (Tuần 5) và gold một mẫu bộ đối kháng (Tuần 17) → đo κ | Tuần 2, 5, 17 | Độ tin cậy của nhãn/gold (hiện một người gán) |
+| A8 | Đối chiếu tay 3 trang còn lại của **bảng điểm thật** (dữ liệu chỉ ở máy) | Tuần 15 | Đánh giá OCR ngoài ảnh tổng hợp |
+| A9 | Chốt với GVHD: phạm vi 1 ngành hay 8 ngành | Tuần 1 | Phạm vi CTĐT |
+| A10 | Phần **đọc tài liệu**: toàn văn CoTu, Solver-Aided; xác minh Logic-LM/LINC/Adaptive-RAG trên ACL Anthology; nhánh degree-audit formal verification; liên hệ nhóm REBot; bộ 913 câu EXACT 2026 | Tuần 3 | Ô "Đọc" của checklist Tuần 11–17 đang ☐ — chỉ tích khi chính tác giả đọc |
+| A11 | Nguồn về **làm tròn** TB GDQP (4,975 → 5,0?) | Tuần 17 E17-2 | Gold NG-10 |
+
+## B. Đúng lịch các tuần sau (kế hoạch 24 tuần)
+
+| # | Việc | Tuần |
+|---|---|---|
+| B1 | **Bộ test MỚI, chưa từng thấy** — test của Adversarial v1 đã nhiễm sau khi sửa P17-1/P17-2 | 20 |
+| B2 | **Q-Real** (400–600 câu thật) — đánh giá parser và hệ thống | 20 |
+| B3 | Đưa test10 (bẫy QD-09) và test13 (tiên quyết ngược chiều) của w14 vào bộ đánh giá RAG | 20–21 |
+| B4 | Baseline LLM / RAG thuần (`retriever.search`) / tool-calling trên cùng bộ ca (`dau_vao_baseline()`) | 21 |
+| B5 | Parser và Verbalizer **LLM thật** (cần API key, `.env`) + đo Verbalization Faithfulness (RQ4) | 21–22 |
+| B6 | Recall@1 ≥ 0,80 / Recall@5 ≥ 0,95 của RAG trên test — **chưa đạt**; chỉ tinh chỉnh trên dev | 21–22 |
+| B7 | Thử embedding (cần mạng một lần) và so trên cùng tập test | 21 |
+| B8 | Counterfactual Optimality Gap (RQ3) | 18–19 / 22 |
+
+## C. Kỹ thuật còn mở, Claude làm được khi được duyệt
+
+| # | Việc | Nguồn |
+|---|---|---|
+| C1 | Ưu tiên nguồn của **điều kiện vi phạm** khi trích dẫn cho FALSE/UNKNOWN (grounded_answer) | Tuần 14 |
+| C2 | `tc_cong_nhan` vẫn thế giới đóng (thiếu = 0) — P16-3 | Tuần 16 |
+| C3 | Missing evidence chỉ xét **từng biến**; chưa tìm tập câu hỏi nhỏ nhất | Tuần 16 §4 |
+| C4 | Câu hỏi bổ sung của OCR thô: lệch ĐTBCHK → hỏi cả học kỳ (P17-4) | Tuần 17 |
+| C5 | So sánh ĐTBCTL với ĐTBCHK ở ca sát 2,00 (bẫy nhân 10) — ĐTBCTL đã có ca NG-01…04; phần ĐTBCHK chưa | Tuần 10 |
+| C6 | Mở rộng hồ sơ giả lập ≥ 20 (ca biên + đủ loại chứng chỉ) — **phần lớn đã phủ** bằng phép biến đổi của w17 (TOEIC/TOEFL/IELTS, D = 4,0, D+ = 5,0); còn thiếu `ctu_abc` | Tuần 7 |
+| C7 | Test `du_dk_dang_ky` qua passed / substituted / exempted_M (T4b) — w10 có ca passed; chưa có ca substituted/exempted_M | Tuần 9 |
+| C8 | Độ phủ OCR thấp (Linux 7/18; Windows 1/18) | Tuần 15 |
+
+## D. Thuộc phạm vi "không hình thức hoá được" (kết quả RQ1, không phải nợ)
+
+- R-F01b chuẩn đầu ra ngoại ngữ/CNTT (N) → luôn UNKNOWN (Tuần 9, 10)
+- QD-05 thời hạn bổ sung điểm I "do GV quy định"; QD-08 "tương đương" do Tổ Xét miễn quyết (Tuần 5)

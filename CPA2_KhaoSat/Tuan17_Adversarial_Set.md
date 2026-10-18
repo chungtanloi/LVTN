@@ -150,7 +150,7 @@ Khi ĐTBCHK hoặc tổng TC lệch, cả học kỳ (6 HP) thành không chắc
 - [x] P17-3: đơn vị học kỳ trong trần thời gian — R-Formal v1.8 (mục 7)
 - [x] P17-2: giảm rủi ro OCR ẩn (mục 7)
 - [ ] **Tuần 20: bộ test MỚI, chưa từng thấy** — test của bộ v1 đã nhiễm sau khi sửa P17-1/P17-2
-- [ ] Gộp 3 bản loader hồ sơ (w7/w11/w12) — hiện ra_soat được gọi ở từng nơi
+- [x] Gộp 3 bản loader hồ sơ (w7/w11/w12) — hiện ra_soat được gọi ở từng nơi — ✅ đã xong: w7_student_facts/loader.py (validate_student_facts L1–L3)
 - [ ] Tuần 21: chạy baseline LLM/RAG trên cùng bộ ca bằng `dau_vao_baseline()`
 - [ ] Mời người thứ hai gán gold một mẫu để đo κ
 
@@ -187,3 +187,9 @@ Review tìm ra 10 điểm. Đã sửa: rà soát chưa phủ w11/w15; prototype 
 - Coverage giảm vì 6 ca hồ sơ lỗi nay trả UNKNOWN (đúng gold), không phải từ chối thừa (từ chối thừa vẫn 0).
 - **Test đã nhiễm:** P17-1 và P17-2 được thiết kế sau khi đã thấy các ca test thất bại (HL-02/03/06, OC-07, OC-11). Con số 100% trên test **không phải đánh giá trên dữ liệu chưa thấy** và không dùng để báo cáo H1. Cần một bộ test mới ở Tuần 20.
 - Độ phủ OCR trên ảnh tổng hợp (w15 B, Linux) không đổi: 7/18.
+
+### 7.3. Hoàn tất trước Tuần 18
+
+- **Loader dùng chung** `w7_student_facts/loader.py`: `sang_asp()` luôn rà soát (P17-1) rồi sinh dữ kiện; w7 `load_facts`, w11 `load_student`, w12 `load_student`, w16 `tra_loi`, w15 `ket_luan` đều gọi vào đây. Ba bản cũ lệch nhau: w11/w12 thiếu `che_do(sv_chon_tich_luy)` (CQ-06), sv_mien_ielts sinh khác thứ tự. Test w7 L1–L3 viết trước (fail với code cũ). L3 chặn module không phải test tự đổi hồ sơ → ASP. Chạy lại bộ đối kháng: câu trả lời **giống hệt** `*_sau_P17`. Vì `load_facts` nay rà soát, đáp án JSON của w15 (`ket_luan_tu_json`) và các ca w7 đi qua rà soát; 6 hồ sơ giả lập đều sạch (w16 E9) nên không đổi số.
+- **w15 chạy được trên mọi máy:** font tìm lúc vẽ (biến môi trường `CPA2_FONT`/`CPA2_FONT_DAM` → Times New Roman → Liberation Serif → DejaVu Serif); Tesseract: `TESSERACT_EXE` → bản cài Windows → `tesseract` trong PATH. `validate_ocr.py` in font + phiên bản Tesseract đang dùng. Trên Linux chạy thẳng, không cần wrapper: ĐẠT, độ phủ 7/18 (giống bản wrapper).
+- **Sổ tồn đọng** `Viec_ton_dong.md`: 22 mục đã xong được tích trong báo cáo gốc kèm con trỏ; phần còn mở chia A (cần người/nguồn) · B (tuần sau) · C (kỹ thuật) · D (không hình thức hoá được).

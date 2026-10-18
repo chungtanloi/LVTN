@@ -24,7 +24,6 @@ import clingo
 HERE = Path(__file__).parent
 ROOT = HERE.parent
 sys.path.insert(0, str(ROOT / "w7_student_facts"))
-import validate_student_facts as w7
 
 KB_FILES = [ROOT / "w5_rformal" / "qd3266_r_formal_v1.lp", ROOT / "w5_rformal" / "qd5339_r_formal_v1.lp",
             ROOT / "w6_curriculum" / "curriculum_schema.lp", ROOT / "w8_elective" / "elective_solver.lp",
@@ -108,78 +107,13 @@ def bang_chung_thieu(claim, models):
     return ds
 
 
-# ---------------------------------------------------------------- rà soát hồ sơ (P17-1, sau Tuần 17)
-# Bảng quy đổi QĐ3266 Đ22 k2 (tr.13–14): cận dưới thang 10 ×10 → điểm chữ. Viết riêng ở đây (không dùng
-# oracle của w17) để oracle vẫn độc lập với hệ thống được chấm.
-_BANG = [(90, "A"), (80, "B+"), (70, "B"), (65, "C+"), (55, "C"), (50, "D+"), (40, "D"), (0, "F")]
-_CT = {h["ma"]: h for h in json.loads((ROOT / "w6_curriculum" / "curriculum_cntt_k49.json")
-                                       .read_text(encoding="utf-8"))["hoc_phan"]}
-DIEM_MO = (0, 40, 100)          # F / D / A — như HP không chắc của Tuần 15 (tot_nghiep không đơn điệu theo điểm)
-TC_TOI_DA_HK = 20               # QĐ3266 Đ14 k1 (tr.8)
-
-
-def _chu(t):
-    return next(c for lo, c in _BANG if t >= lo)
-
-
-def _so_hop_le(t):
-    return isinstance(t, int) and not isinstance(t, bool) and 0 <= t <= 100
-
-
-def _loi_ban_ghi(ma, g):
-    t, L, st, cr = g.get("thang10"), g.get("letter"), g.get("status"), g.get("credits")
-    loi = []
-    if t is not None and not (isinstance(t, int) and not isinstance(t, bool)):
-        return [f"điểm {t!r} không phải số nguyên thang 10 ×10"]
-    if t is not None and not 0 <= t <= 100:
-        loi.append(f"điểm {t / 10:.1f} ngoài thang 0–10 (Đ22 k1)")
-    if g.get("diem") in ("M", "W", "I") and t is not None:
-        loi.append(f"điểm {g['diem']} nhưng vẫn có điểm số {t / 10:.1f}")
-    if t is not None and 0 <= t <= 100:
-        if L and L not in ("M", "W", "I") and L != _chu(t):
-            loi.append(f"{t / 10:.1f} quy đổi là {_chu(t)}, hồ sơ ghi {L} (Đ22 k2)")
-        if st in ("passed", "failed") and (st == "passed") != (t >= 40):
-            loi.append(f"{t / 10:.1f} {'đạt' if t >= 40 else 'không đạt'} nhưng trạng thái ghi {st} (Đ22 k3)")
-    if ma in _CT and cr is not None and cr != _CT[ma]["tin_chi"]:
-        loi.append(f"{cr} TC, CTĐT ghi {_CT[ma]['tin_chi']} TC")
-    return loi
-
-
-def ra_soat(ho_so):
-    """Hồ sơ → (hồ sơ đã bỏ bản ghi mâu thuẫn, ASP mở các bản ghi đó, danh sách mâu thuẫn).
-    Bản ghi điểm tự mâu thuẫn → bỏ, mở điểm HP thành F/D/A (+ điểm số ghi trên hồ sơ nếu hợp lệ): không biết trường
-    nào đúng thì không đoán. Thời gian đã học không thể (TC đã đăng ký > 20 TC × số HK, 3 HK/năm — Đ14 k1, Đ6 k1)
-    → coi như chưa khai báo (KB tự mở nhánh)."""
-    hs = json.loads(json.dumps(ho_so))
-    them, mt = [], []
-    for ma, g in list(hs.get("grades", {}).items()):
-        loi = _loi_ban_ghi(ma, g)
-        if not loi:
-            continue
-        hs["grades"].pop(ma)
-        mt.append(f"{ma}: " + "; ".join(loi))
-        ds = sorted(set(DIEM_MO) | ({g["thang10"]} if _so_hop_le(g.get("thang10")) else set()))
-        lc = [f'g10("{ma}",{v})' for v in ds]
-        if g.get("diem") in ("M", "W", "I"):          # bản ghi tự nhận là M/W/I → giữ cả khả năng đó
-            lc.append(f'diem_{g["diem"].lower()}("{ma}")')
-        them.append("1 { " + "; ".join(lc) + " } 1.")
-    nam2 = hs.get("da_hoc_nam2")
-    if nam2 is not None:
-        tc = sum(g.get("credits") or 0 for g in hs.get("grades", {}).values() if g.get("diem") != "M")
-        so_hk = -(-3 * nam2 // 2)                 # nửa năm → HK (làm tròn lên, có lợi cho SV)
-        if tc > TC_TOI_DA_HK * so_hk:
-            hs.pop("da_hoc_nam2")
-            mt.append(f"da_hoc_nam2: {nam2} nửa năm ({so_hk} HK) nhưng đã đăng ký {tc} TC > {TC_TOI_DA_HK} TC/HK "
-                      f"(Đ14 k1) — coi như chưa khai báo")
-    return hs, "\n".join(them), mt
+# Rà soát hồ sơ (P17-1) + đổi hồ sơ → ASP: loader dùng chung ở w7_student_facts/loader.py
+from loader import ra_soat, sang_asp  # noqa: E402,F401  (ra_soat xuất lại: validate_abstention E9 gọi abstention.ra_soat)
 
 
 def tra_loi(claim, ho_so=None, them=""):
-    mt = []
-    if ho_so is not None:
-        ho_so, them_rs, mt = ra_soat(ho_so)
-        them = them_rs + "\n" + them
-    asp = (w7.load_facts(ho_so) if ho_so is not None else "") + "\n" + them
+    asp, mt = sang_asp(ho_so) if ho_so is not None else ("", [])
+    asp += "\n" + them
     models = giai(asp)
     v = ba_tri(claim, models)
     can = bang_chung_thieu(claim, models) if v == "UNKNOWN" else []

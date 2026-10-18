@@ -17,7 +17,7 @@ B. TRƯỜNG BẮT BUỘC
 
 C. TÁCH DEV/TEST
   [OK]   C1 mọi ca chấm điểm có split dev/test
-  [OK]   C2 phân tầng: mỗi nhóm có ở cả dev và test, lệch ≤ 1 ({'bay_quy_che': (8, 7), 'sat_nguong': (12, 12), 'ocr_sai': (9, 9), 'thieu_du_lieu': (9, 8), 'ho_so_loi': (3, 3)})
+  [OK]   C2 phân tầng: mỗi nhóm có ở cả dev và test, lệch ≤ 1 ({'bay_quy_che': (8, 7), 'ocr_sai': (9, 9), 'sat_nguong': (12, 12), 'thieu_du_lieu': (9, 8), 'ho_so_loi': (3, 3)})
 
 D. ĐẦU VÀO DỰNG ĐƯỢC
   [OK]   D1 dựng được đầu vào của mọi ca

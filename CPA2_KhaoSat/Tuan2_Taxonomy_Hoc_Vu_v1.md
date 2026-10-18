@@ -394,7 +394,7 @@ Bảy loại phủ hết bảy câu hỏi trọng tâm → **taxonomy v1 đủ d
       `w5_rformal/PhuLuc_Quyet_dinh_dien_giai.md`
 - [x] **Tuần 6:** bổ sung T4b (tiên quyết theo ngưỡng tín chỉ) và T4c (song hành) vào T4;
       thay ví dụ "10 chọn 2" bằng 5 nhóm thật của CTĐT K49 (3 kiểu nhóm)
-- [ ] Xây bộ test riêng cho T3 (N-of-M) — tiêu chí hoàn thành của Tuần 8
+- [x] Xây bộ test riêng cho T3 (N-of-M) — tiêu chí hoàn thành của Tuần 8 — ✅ đã xong: w8_elective (Tuần 8)
       *(đã có 3 ca ở `w6_curriculum/validate_curriculum.py`: I4 thiếu nhóm, I5 trộn nhánh, I9 chéo cặp)*
 - [ ] **Mới:** chốt vị trí của `du_dk_xin_mien` (trạng thái hồ sơ hay trạng thái học phần)
       khi xây Student Fact Model ở Tuần 7
