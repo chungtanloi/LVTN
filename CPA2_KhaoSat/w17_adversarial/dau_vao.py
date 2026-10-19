@@ -17,6 +17,8 @@ Phép biến đổi tài liệu OCR (sau khi dựng doc từ hồ sơ thật):
   ["doi_chu", ma, chu] · ["doi_diem", ma, t10] (đọc nhất quán: Thi, T.Hợp, chữ cùng sai) · ["mat_dong", ma]
   ["doi_ma", ma, ma_moi|None] · ["conf", ma, truong, gia_tri] · ["doi_tc", ma, tc]
   ["doi_tong_dk", i_hk, v] · ["doi_dtbchk", i_hk, v|None] · ["hoc_lai", ma, t10, i_hk, doc_duoc]
+  Mỗi học kỳ có tổng TC đăng ký, ĐTBCHK và (C14) TC tích lũy + ĐTBCTL in sau học kỳ — tính từ SỰ THẬT trước các phép
+  đọc sai, nên phép đọc sai không sửa số in.
     (thêm MỘT LẦN HỌC KHÁC của ma, điểm t10, ở học kỳ i_hk; doc_duoc=False → dòng sẵn có của ma đọc không ra
     điểm. Thứ tự lần học không ảnh hưởng gold vì điểm học phần là điểm cao nhất — QĐ3266 Đ17 k2)
 """
@@ -104,6 +106,22 @@ def _tong(hk):
     hk["dtbchk"] = round(v, 2) if v is not None else None
 
 
+def _tich_luy(doc):
+    """Số tích lũy IN sau mỗi học kỳ (C14), tính bằng dữ liệu oracle — độc lập với ocr_transcript: TC tích lũy gồm HP
+    điều kiện; ĐTBCTL bỏ F + HP điều kiện (R-B10); học lại lấy điểm cao nhất (QĐ3266 Đ17 k2)."""
+    tot = {}
+    for hk in doc["hoc_ky"]:
+        for d in hk["dong"]:
+            t10 = round(d["thop"] * 10)
+            tot[d["ma"]] = max(tot.get(d["ma"], -1), t10)
+        dat = {m: t for m, t in tot.items() if t >= 40}
+        diem = {m: t for m, t in dat.items() if not oracle.dieu_kien(m)}
+        mau = sum(oracle._CT[m]["tin_chi"] for m in diem)
+        hk["tc_tich_luy"] = sum(oracle._CT[m]["tin_chi"] for m in dat)
+        hk["dtbctl"] = (round(float(sum(oracle.thang4(t) * oracle._CT[m]["tin_chi"] for m, t in diem.items()) / mau), 2)
+                        if mau else 0.0)
+
+
 def doc_tu_ho_so(j):
     """Hồ sơ → bảng điểm đọc HOÀN HẢO (định dạng doc_bang_diem). Chia học kỳ như render_transcript."""
     import render_transcript as RT
@@ -112,6 +130,7 @@ def doc_tu_ho_so(j):
         hk = {"ten": f"HK{i + 1}", "dong": [_dong(m, j["grades"][m]["thang10"]) for m in ds if m != "CC004"]}
         _tong(hk)
         doc["hoc_ky"].append(hk)
+    _tich_luy(doc)
     return doc
 
 
@@ -124,7 +143,7 @@ def _tim(doc, ma):
 
 
 def _ap_doc(doc, ops):
-    for op in ops:
+    for n, op in enumerate(ops):
         k = op[0]
         if k == "doi_chu":
             _tim(doc, op[1])[1]["chu"] = op[2]
@@ -148,11 +167,15 @@ def _ap_doc(doc, ops):
         elif k == "doi_dtbchk":
             doc["hoc_ky"][op[1]]["dtbchk"] = op[2]
         elif k == "hoc_lai":          # thêm một lần học ở học kỳ i (in đầy đủ, tổng học kỳ nhất quán)
+            # là SỰ THẬT (số in tính lại) → trước mọi phép đọc sai, kể cả hoc_lai doc_duoc=False (làm mất điểm một dòng)
+            if any(o[0] != "hoc_lai" or not o[4] for o in ops[:n]):
+                raise ValueError(f"hoc_lai phải đứng trước mọi phép đọc sai: {ops}")
             _, ma, t10, i, doc_duoc = op
             hk = doc["hoc_ky"][i]
             d = _dong(ma, t10)
             hk["dong"].insert(0, d)
             _tong(hk)
+            _tich_luy(doc)
             if not doc_duoc:          # dòng sẵn có của ma (lần học kia) đọc không ra điểm
                 _, sau = next((h, x) for h in doc["hoc_ky"] if h is not hk for x in h["dong"] if x["ma"] == ma)
                 sau.update(thi=None, thop=None, chu=None, conf={"ma": .99, "tc": .99})

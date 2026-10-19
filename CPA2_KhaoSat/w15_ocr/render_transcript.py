@@ -138,6 +138,7 @@ def render(j, bien_the="sach"):
                 dong = {"tc": "10", "thi": "-2.0", "thop": "Miễn", "qd": "M", "sao": "*(BL)"}
                 dk += tc
                 tl_hk += tc
+                tl_tong += tc          # C14: 10 TC miễn vào TC tích lũy của MỌI học kỳ sau (trước chỉ cộng ở học kỳ này)
             else:
                 g = j["grades"][m]
                 hp = ctdt.get(m, {"ten": f"Học phần {m}", "dieu_kien": None})
@@ -171,7 +172,7 @@ def render(j, bien_the="sach"):
         p.chu(X["ma"], "Tổng Số Tín Chỉ Đăng Ký"); p.chu(400, str(dk)); p.xuong()
         p.chu(X["ma"], "Tổng Số Tín Chỉ Tích Lũy Học Kỳ"); p.chu(400, str(tl_hk))
         p.chu(X["nhom"], "Điểm T.Bình chung học kỳ (hệ 4)"); p.chu(870, f"{hk_diem / hk_tc if hk_tc else 0:.2f}"); p.xuong()
-        p.chu(X["ma"], "Tổng Số Tín Chỉ Tích Lũy"); p.chu(400, str(int(tl_tong + (10 if 'CC004' in ds else 0))))
+        p.chu(X["ma"], "Tổng Số Tín Chỉ Tích Lũy"); p.chu(400, str(int(tl_tong)))
         p.chu(X["nhom"], "Điểm T.Bình chung tích lũy (hệ 4)"); p.chu(870, f"{tl_diem / tl_tc if tl_tc else 0:.2f}"); p.xuong()
         p.chu(X["ma"], "Điểm Rèn Luyện"); p.chu(218, "80", dam=True); p.chu(400, "Tốt"); p.xuong(2)
     return [bien_doi(a, bien_the) for a in p.anh]

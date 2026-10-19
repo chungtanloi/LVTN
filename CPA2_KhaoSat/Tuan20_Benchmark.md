@@ -335,6 +335,61 @@ Câu trả lời nay **không tin hạng cuối của KB** với hạng gốc xu
 | Chính thức (gold đóng băng) | 100% | 91,4% | 57 | HG-03 từ chối thừa |
 | Theo errata | 100% | 91,4% | 58 | |
 
+## 5g. C14 — kiểm chéo bằng số tích lũy in sau mỗi học kỳ (P20-4 phương án B, Loi duyệt 19/10/2026)
+
+Sau mỗi học kỳ, bảng điểm in "Tổng Số Tín Chỉ Tích Lũy" và "Điểm T.Bình chung tích lũy (hệ 4)" (Loi xác nhận 19/10/2026). C14 dùng hai số này theo hai cách (`w15_ocr/ocr_transcript.py`).
+
+**1. Luôn kiểm TC tích lũy khi đọc được — bịt một lỗ hổng có sẵn.** Lỗi: GDTC (TC100) thật là F nhưng OCR đọc nhất quán thành D, và hệ thống kết luận **TRUE sai** (sự thật FALSE). ĐTBCHK không tính GDTC (R-B08), nên kiểm chéo cũ không thấy lỗi này. Ca G9 tái hiện lỗi trên mã cũ.
+- Số TC tích lũy là số nguyên, nên lỗi đạt↔F luôn làm lệch.
+- Lệch ở học kỳ i thì nghi mọi học kỳ từ sau mốc khớp gần nhất đến i.
+- Dòng GDTC chỉ được tin qua **phép thử lật giả thuyết**: phải có một lần kiểm mà khi lật đạt↔F của chính dòng đó, số in rơi ra ngoài tập giá trị tính lại.
+
+**2. Cứu học kỳ mất ĐTBCHK** (không có khai báo). Học kỳ được tin khi đủ các điều kiện:
+- mọi học kỳ trước đã được tin;
+- mọi dòng đến học kỳ này đều biết điểm, và không có dòng miễn trong khi chưa biết quy ước của trường;
+- TC tích lũy khớp **chính xác**;
+- ĐTBCTL khớp trong ±0,006;
+- **đủ độ phân giải:** lệch một bậc (0,5) của học phần không điều kiện nhỏ nhất trong học kỳ làm ĐTBCTL đổi hơn 0,011 (= dung sai 0,006 + sai số làm tròn số in 0,005). Học kỳ muộn có mẫu số lớn nên thường không đạt, ví dụ HK9 của sv_tltn có độ phân giải 0,0107 (G4).
+
+Dòng GDQP trong học kỳ được cứu vẫn để "không chắc", vì số tích lũy chỉ xác nhận đạt/rớt mà TB GDQP cần mức điểm. Hệ thống vẫn hỏi một số ĐTBCHK để chốt.
+
+**Sửa kèm:**
+- `render_transcript`: TC tích lũy in ra chỉ cộng 10 TC của CC004 ở đúng học kỳ chứa nó; nay cộng vào mọi học kỳ sau.
+- `w17/dau_vao`: bộ dựng tài liệu sinh hai số tích lũy từ dữ liệu oracle, cài độc lập với bộ kiểm. Phép `hoc_lai` tính lại số tích lũy và phải đứng trước mọi phép đọc sai.
+
+**Review hai lượt tìm ra lỗi trong chính bản sửa, đã sửa:**
+- **Mức cao — "nhận TC tích lũy có hoặc không cộng TC miễn" là độ chùng.** Nó che lỗi đạt↔F của học phần có TC đúng bằng tổng TC miễn.
+  - Nhánh cứu: cho **FALSE sai** (G12). Nay khi có dòng miễn mà chưa biết quy ước (hằng `MIEN_TRONG_TC_TICH_LUY = None`) thì không cứu.
+  - Nhánh luôn kiểm: cho TRUE sai với GDTC (G13).
+- **Mức trung bình — độ chùng thứ hai.** Dòng không đọc được điểm cùng số TC cũng che lỗi GDTC (G15). Nay xử lý bằng phép thử lật giả thuyết, bao mọi nguồn độ chùng.
+- **Mức trung bình — mã GDTC thật TC025–027** (ngoài KB, xem Bài học) bị tính vào ĐTBCTL, nên không cứu được học kỳ nào trên bảng điểm thật. Nay có bảng `DIEU_KIEN_NGOAI_KB` (G14).
+- **Mức thấp:**
+  - mốc chỉ dời khi khớp không nhờ độ chùng;
+  - parser bỏ qua dòng học kỳ bị OCR làm hỏng chữ "Học Kỳ";
+  - không ghi khai báo ĐTBCHK làm nguồn cho học kỳ bị nghi;
+  - guard `hoc_lai`.
+
+**Kiểm thử** (`validate_ocr` nhóm G/G'): 16 ca G0–G15 và 2 ca G11 OCR ảnh tổng hợp (Tesseract đọc đủ hai số tích lũy).
+- Bản đầu: chạy trên mã cũ có **8 ca fail**, trong đó G9 cho TRUE sai.
+- G12–G15 viết sau review: fail trên bản sửa trước đó, cho FALSE sai, TRUE sai, mất độ phủ, TRUE sai theo thứ tự.
+- Nhóm F (P17-2, P20-4) giữ nguyên ý nghĩa: tài liệu không có dòng tích lũy.
+
+**OCR-Noise dev** (`_sau_C14`; gold không đổi, split test không chạy):
+
+| | Sound | Coverage | Đúng / 20 | M2 |
+|---|---|---|---|---|
+| Sau P20-4 | 100% | 25,0% | 15 | 0/5 |
+| Sau C14 | 100% | 45,0% | 19 | **4/5** |
+
+ON-10M2 vẫn từ chối (HK1 toàn HP điều kiện, có GDQP). ⚠️ **Cách dựng đầu vào M2 đã đổi:** tài liệu nay có thêm hai dòng tích lũy đọc đúng, khớp mô tả "không đọc được ĐTBCHK, không có lỗi nào khác". Gold không đổi. Ca w17 OC-11 (F→D + mất ĐTBCHK) nay bị bắt bởi TC tích lũy và vẫn trả UNKNOWN.
+
+**Giới hạn** (chưa kiểm trên ảnh bảng điểm thật, cần Loi chạy `validate_ocr` phần D trên Windows; kết quả vào `_rieng/`):
+- nhãn dòng tích lũy trên bảng điểm thật có đọc được không;
+- TC tích lũy có cộng TC dòng miễn không (đặt `MIEN_TRONG_TC_TICH_LUY`);
+- TC tích lũy có gồm HP điều kiện không. Đây là giả định "có", theo bố cục bảng điểm đã chép trong `render_transcript`.
+
+Công thức của trường khác giả định thì chỉ mất độ phủ. Không đọc được dòng tích lũy thì GDTC vẫn như trước C14 (chưa kiểm được). Mỗi lần chỉ giả định một lỗi: nhiều lỗi bù trừ nhau chưa xét, giống kiểm chéo ĐTBCHK.
+
 ## 5c. Q-Noise v1 — độ bền parser trước cách gõ của sinh viên (TỔNG HỢP)
 
 Q-Real chưa có câu thật (A16), nên em đo trước một phần việc Q-Real phải đo: **parser có chịu được cách sinh viên gõ hay không**. Q-Noise **không** cho biết sinh viên hỏi *gì* và **không** tính vào chỉ tiêu Q-Real (vẫn 0/400).
@@ -430,7 +485,8 @@ Theo quy tắc nhiễm dữ liệu (Bài học): đây là số **chính thức*
 - [x] Sửa P20-1 — R-Formal v1.10 + QD-14 (mục 5b)
 - [x] Sửa P20-2/P20-3 (mục 5b)
 - [x] P20-4 (M2 OCR): giữ từ chối, hỏi 1 số ĐTBCHK, nhận khai báo số in (mục 5d)
-- [ ] P20-4 phương án B: kiểm chéo bằng ĐTB/TC tích lũy in sau mỗi học kỳ (C14)
+- [x] P20-4 phương án B (C14): kiểm chéo bằng ĐTB/TC tích lũy in sau mỗi học kỳ + bịt lỗ GDTC F→D (mục 5g)
+- [ ] **A18 (cần Loi, Windows):** kiểm C14 trên ảnh bảng điểm thật — đọc được dòng tích lũy? TC tích lũy có cộng TC miễn / HP điều kiện?
 - [x] C12 ý định xếp loại tốt nghiệp (mục 5e, QD-15)
 - [x] **C15 (KB):** R-Formal v1.11 — hạ bậc Đ34 k2 a+b, mở nhánh khi chưa khai báo, errata HG (mục 5f)
 - [ ] **A17 (cần Loi / Phòng Đào tạo):** học phần điều kiện có tính vào "khối lượng HP bị điểm F … so với tổng số TC quy định của CTĐT" (Đ34 k2 a) không

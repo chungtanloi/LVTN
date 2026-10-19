@@ -10,6 +10,7 @@ validate_ocr.py — kiểm chứng OCR pipeline v1 (CPA2, Tuần 15)
   C. Tiêm lỗi vào kết quả OCR: đọc sai điểm chữ / mất một dòng → bị bắt, không sinh kết luận sai
   D. Bảng điểm thật (chỉ chạy nếu có ảnh ở máy; kết quả ghi vào _rieng/, không commit)  [báo cáo]
   F. Lỗi OCR nhất quán ở mức tài liệu (P17-2): ĐTBCHK không đọc được, mã bắt buộc đọc thành mã tự chọn
+  G. C14: kiểm chéo bằng TC tích lũy + ĐTBCTL in sau mỗi học kỳ (cứu học kỳ mất ĐTBCHK; bắt lỗi GDTC F→D)
 
 Chạy: python validate_ocr.py           (đủ A–D)
       python validate_ocr.py --nhanh   (A, C và một biến thể của B)
@@ -160,8 +161,28 @@ def phan_D():
           f"loại {bc['loai']}, học kỳ lệch {bc['hoc_ky_lech']}, cần xác nhận {bc['can_xac_nhan']}", cong=False)
 
 
-def _doc_hoan_hao(j):
-    """Hồ sơ → tài liệu OCR đọc hoàn hảo (mức tài liệu, không cần Tesseract)."""
+def _ghi_tich_luy(doc):
+    """Ghi số tích lũy IN sau mỗi học kỳ, cài ĐỘC LẬP với ocr_transcript: TC tích lũy gồm HP điều kiện và dòng miễn;
+    ĐTBCTL bỏ điểm F và HP điều kiện (R-B10); học lại lấy điểm cao nhất (R-B13)."""
+    ct = RT._ctdt()
+    tot, mien = {}, 0
+    for hk in doc["hoc_ky"]:
+        for d in hk["dong"]:
+            if d.get("mien"):
+                mien += d["tc"]
+            elif d["ma"] not in tot or RT.CHU_4[d["chu"]] > RT.CHU_4[tot[d["ma"]]["chu"]]:
+                tot[d["ma"]] = dict(d)
+        dat = [d for d in tot.values() if d["chu"] != "F"]
+        diem = [d for d in dat if not ct.get(d["ma"], {}).get("dieu_kien")]
+        mau = sum(d["tc"] for d in diem)
+        hk["tc_tich_luy"] = sum(d["tc"] for d in dat) + mien
+        hk["dtbctl"] = round(sum(RT.CHU_4[d["chu"]] * d["tc"] for d in diem) / mau, 2) if mau else 0.0
+    return doc
+
+
+def _doc_hoan_hao(j, tich_luy=False):
+    """Hồ sơ → tài liệu OCR đọc hoàn hảo (mức tài liệu, không cần Tesseract). tich_luy=True: có cả hai số tích lũy
+    in sau mỗi học kỳ (C14); mặc định không có — các ca F (P17-2, P20-4) mô tả lúc OCR chưa đọc dòng tích lũy."""
     ct = O.ctdt()
     doc = {"hoc_ky": []}
     for i, ds in enumerate(RT.chia_hoc_ky(j, RT._ctdt())):
@@ -171,7 +192,7 @@ def _doc_hoan_hao(j):
         v = O._dtbchk(dong, ct)
         doc["hoc_ky"].append({"ten": f"HK{i + 1}", "dong": dong, "tong_dk": sum(d["tc"] for d in dong),
                               "dtbchk": round(v, 2) if v is not None else None})
-    return doc
+    return _ghi_tich_luy(doc) if tich_luy else doc
 
 
 def _dong(doc, ma):
@@ -268,6 +289,203 @@ def phan_F():
           f"F11 học kỳ lệch tổng TC → khai báo ĐTBCHK KHÔNG được dùng và không ghi là nguồn ({bc['dtbchk_khai_bao']})")
 
 
+def _do_phan_giai(doc, i):
+    """0,5 × TC nhỏ nhất của HP không điều kiện trong học kỳ i / TC tính ĐTBCTL sau học kỳ i (tính độc lập)."""
+    ct = RT._ctdt()
+    tot = {d["ma"]: d for hk in doc["hoc_ky"][: i + 1] for d in hk["dong"]}
+    mau = sum(d["tc"] for d in tot.values() if d["chu"] != "F" and not ct[d["ma"]].get("dieu_kien"))
+    tc = [d["tc"] for d in doc["hoc_ky"][i]["dong"] if not ct[d["ma"]].get("dieu_kien")]
+    return 0.5 * min(tc) / mau if tc and mau else None
+
+
+def phan_G():
+    print("G. C14 — KIỂM CHÉO BẰNG SỐ TÍCH LŨY IN SAU MỖI HỌC KỲ (Tuần 20) — mức tài liệu")
+    j = ho_so("sv_lvtn")
+    kb = O.khai_bao_tu_json(j)
+
+    def chay(doc, ho=j, them=None):
+        hs, extra, bc = O.sang_ho_so(doc, khai_bao={**O.khai_bao_tu_json(ho), **(them or {})})
+        return hs, bc, O.ket_luan(hs, extra, bc)
+
+    def khong_dong(doc, hk):      # sửa một học kỳ (sự thật) → tính lại tổng TC đăng ký + ĐTBCHK in
+        hk["tong_dk"] = sum(d["tc"] for d in hk["dong"])
+        hk["dtbchk"] = round(O._dtbchk(hk["dong"], O.ctdt()), 2)
+
+    # G0 bảng điểm sạch có số tích lũy → không báo nhầm (TC tích lũy luôn được kiểm khi đọc được)
+    hs, bc, v = chay(_doc_hoan_hao(j, tich_luy=True))
+    check(v == "TRUE" and not bc["hoc_ky_lech"] and not bc["khong_chac"] and not bc.get("tich_luy_kiem_cheo"),
+          f"G0 bảng điểm sạch có số tích lũy → TRUE, không học kỳ nào bị nghi ({bc['hoc_ky_lech']})")
+    # G1 (= OCR-Noise M2) mất ĐTBCHK, số tích lũy đọc được và khớp → tin học kỳ, không cần hỏi
+    doc = _doc_hoan_hao(j, tich_luy=True)
+    hk, _ = _dong(doc, "CT177")
+    hk["dtbchk"] = None
+    hs, bc, v = chay(doc)
+    check(v == "TRUE" and not bc["khong_chac"] and not bc.get("can_hoi") and bc.get("tich_luy_kiem_cheo") == [hk["ten"]],
+          f"G1 mất ĐTBCHK {hk['ten']}, số tích lũy khớp → tin điểm học kỳ → TRUE, không hỏi, ghi nguồn "
+          f"({v}, hỏi {bc.get('can_hoi')}, nguồn {bc.get('tich_luy_kiem_cheo')})")
+    # G2 (= F1) sự thật CT177 = F, OCR đọc nhất quán thành D + mất ĐTBCHK; số tích lũy in theo sự thật → TC lệch
+    jf = copy.deepcopy(j)
+    jf["grades"]["CT177"].update(thang10=30, letter="F", status="failed")
+    doc = _doc_hoan_hao(jf, tich_luy=True)
+    hk, d = _dong(doc, "CT177")
+    d.update(thi=4.5, thop=4.5, chu="D")
+    hk["dtbchk"] = None
+    hs, bc, v = chay(doc)
+    check(v != "TRUE" and hk["ten"] + " (TC tích lũy)" in bc["hoc_ky_lech"] and not bc.get("tich_luy_kiem_cheo"),
+          f"G2 CT177 F đọc thành D + mất ĐTBCHK → TC tích lũy lệch → không tin, không TRUE sai ({v}, {bc['hoc_ky_lech']})")
+    # G3 đạt → đạt: CT177 (B) đọc nhất quán thành A + mất ĐTBCHK → TC tích lũy khớp nhưng ĐTBCTL lệch → không tin
+    doc = _doc_hoan_hao(j, tich_luy=True)
+    hk, d = _dong(doc, "CT177")
+    d.update(thi=9.5, thop=9.5, chu="A")
+    hk["dtbchk"] = None
+    hs, bc, v = chay(doc)
+    check("CT177" in bc["khong_chac"] and not bc.get("tich_luy_kiem_cheo") and bc.get("can_hoi") == [f"dtbchk:{hk['ten']}"],
+          f"G3 CT177 B đọc thành A + mất ĐTBCHK → ĐTBCTL lệch → không tin, vẫn hỏi ĐTBCHK ({bc.get('can_hoi')})")
+    # G4 độ phân giải không đủ: học kỳ cuối của sv_tltn (TC tính ĐTBCTL lớn) — lệch một bậc của HP 3 TC chỉ đổi
+    #    ĐTBCTL ≈ 0,0107 < 0,011 (sai số làm tròn 0,005 + dung sai 0,006) → không được tin dù số tích lũy khớp
+    jt = ho_so("sv_tltn")
+    doc = _doc_hoan_hao(jt, tich_luy=True)
+    hk, _ = _dong(doc, "CT501E")
+    i = doc["hoc_ky"].index(hk)
+    pg = _do_phan_giai(doc, i)
+    hk["dtbchk"] = None
+    hs, bc, v = chay(doc, ho=jt)
+    check(pg < 0.011 and not bc.get("tich_luy_kiem_cheo") and bc.get("can_hoi") == [f"dtbchk:{hk['ten']}"] and v != "TRUE",
+          f"G4 {hk['ten']} sv_tltn độ phân giải {pg:.4f} < 0,011 → không tin bằng số tích lũy, vẫn hỏi ĐTBCHK ({v})")
+    # G5 học kỳ TRƯỚC chưa được tin (lệch tổng TC) → không cứu học kỳ sau bằng số tích lũy
+    doc = _doc_hoan_hao(j, tich_luy=True)
+    hk, _ = _dong(doc, "CT177")
+    hk["dtbchk"] = None
+    doc["hoc_ky"][0]["tong_dk"] += 3
+    hs, bc, v = chay(doc)
+    check("CT177" in bc["khong_chac"] and not bc.get("tich_luy_kiem_cheo"),
+          f"G5 học kỳ trước lệch tổng TC → {hk['ten']} không được cứu bằng số tích lũy ({bc.get('tich_luy_kiem_cheo')})")
+    # G6 HP GDQP: số tích lũy chỉ xác nhận đạt/không đạt, không xác nhận mức điểm (TB GDQP cần mức) → GDQP vẫn không
+    #    chắc; HP điều kiện khác (chỉ cần đạt) được tin
+    doc = _doc_hoan_hao(j, tich_luy=True)
+    hk = doc["hoc_ky"][0]
+    hk["dtbchk"] = None
+    hs, bc, v = chay(doc)
+    qp = sorted(d["ma"] for d in hk["dong"] if O.ctdt()[d["ma"]]["dieu_kien"] == "gdqp")
+    check(bc.get("tich_luy_kiem_cheo") == [hk["ten"]] and sorted(bc["khong_chac"]) == qp and "TC100" in hs["grades"]
+          and "XH023" in hs["grades"] and bc.get("can_hoi") == [f"dtbchk:{hk['ten']}"],
+          f"G6 {hk['ten']} toàn HP điều kiện, mất ĐTBCHK → tin TC100/XH023, GDQP {qp} vẫn không chắc, hỏi ĐTBCHK "
+          f"({bc['khong_chac']}, {bc.get('can_hoi')})")
+    # G7 dòng miễn CC004 (10 TC): TC tích lũy in CÓ hoặc KHÔNG cộng 10 TC miễn đều nhận (chưa biết bảng điểm thật)
+    kq = []
+    for cong in (True, False):
+        doc = _doc_hoan_hao(j, tich_luy=True)
+        doc["hoc_ky"][1]["dong"].insert(0, {"ma": "CC004", "tc": 10, "thi": None, "thop": None, "chu": "M", "mien": True,
+                                           "conf": {"ma": .99, "tc": .99}})
+        doc["hoc_ky"][1]["tong_dk"] += 10
+        _ghi_tich_luy(doc)
+        if not cong:
+            for hk in doc["hoc_ky"][1:]:
+                hk["tc_tich_luy"] -= 10
+        hk, _ = _dong(doc, "CT177")
+        hk["dtbchk"] = None
+        hs, bc, v = chay(doc)
+        kq.append((bc.get("tich_luy_kiem_cheo"), [x for x in bc["hoc_ky_lech"] if "tích lũy" in x]))
+    check(all(not a and not b for a, b in kq),
+          f"G7 có dòng miễn CC004: TC tích lũy in có / không cộng 10 TC miễn → không báo lệch nhầm, nhưng KHÔNG cứu "
+          f"{hk['ten']} khi chưa biết quy ước của trường (review C14) ({kq})")
+    # G8 học lại: CT177 học lần đầu D ở học kỳ trước, học lại B ở học kỳ 4 → số tích lũy tính MỘT lần, điểm cao nhất
+    doc = _doc_hoan_hao(j, tich_luy=True)
+    hk, d = _dong(doc, "CT177")
+    i = doc["hoc_ky"].index(hk)
+    truoc = doc["hoc_ky"][i - 1]
+    truoc["dong"].insert(0, dict(d, thi=4.5, thop=4.5, chu="D", conf=dict(d["conf"])))
+    khong_dong(doc, truoc)
+    _ghi_tich_luy(doc)
+    hk["dtbchk"] = None
+    hs, bc, v = chay(doc)
+    check(v == "TRUE" and bc.get("tich_luy_kiem_cheo") == [hk["ten"]] and hs["grades"]["CT177"]["letter"] == "B"
+          and not [x for x in bc["hoc_ky_lech"] if "tích lũy" in x],
+          f"G8 CT177 D rồi học lại B → số tích lũy tính một lần theo điểm cao nhất → khớp, cứu {hk['ten']} ({v}, {bc['hoc_ky_lech']})")
+    # G9 lỗ hổng cũ: GDTC (TC100) thật F, OCR đọc nhất quán thành D. ĐTBCHK KHÔNG tính GDTC (R-B08) nên vẫn khớp →
+    #    trước C14 hệ thống nhận TC100 đạt → TRUE sai. TC tích lũy in theo sự thật lệch 1 TC → không tin
+    jf = copy.deepcopy(j)
+    jf["grades"]["TC100"].update(thang10=30, letter="F", status="failed")
+    doc = _doc_hoan_hao(jf, tich_luy=True)
+    hk, d = _dong(doc, "TC100")
+    d.update(thi=4.5, thop=4.5, chu="D")
+    hs, bc, v = chay(doc, ho=jf)
+    that = O.ket_luan_tu_json(jf)
+    check(v != "TRUE" and hk["ten"] + " (TC tích lũy)" in bc["hoc_ky_lech"] and "TC100" not in hs["grades"],
+          f"G9 TC100 F đọc thành D (ĐTBCHK không tính GDTC nên vẫn khớp) → TC tích lũy lệch → không TRUE sai "
+          f"({v}, sự thật {that})")
+    # G10 không đọc được số tích lũy → như trước C14 (P20-4: hỏi ĐTBCHK)
+    doc = _doc_hoan_hao(j, tich_luy=True)
+    hk, _ = _dong(doc, "CT177")
+    hk["dtbchk"] = hk["dtbctl"] = None
+    hs, bc, v = chay(doc)
+    check(v != "TRUE" and bc.get("can_hoi") == [f"dtbchk:{hk['ten']}"] and not bc.get("tich_luy_kiem_cheo"),
+          f"G10 mất cả ĐTBCHK lẫn ĐTBCTL của {hk['ten']} → không cứu, hỏi ĐTBCHK ({bc.get('can_hoi')})")
+
+    # review C14 (HIGH): "TC tích lũy in có HOẶC không cộng TC miễn" là độ chùng — lệch đạt ↔ F của HP có TC đúng bằng
+    # tổng TC miễn bị che. Dòng miễn 3 TC ở HK1 (mã ngoài CTĐT ZZ999 — _tich_luy cộng mọi dòng "Miễn" bất kể mã).
+    def them_mien(doc):
+        doc["hoc_ky"][0]["dong"].insert(0, {"ma": "ZZ999", "tc": 3, "thi": None, "thop": None, "chu": "M", "mien": True,
+                                           "conf": {"ma": .99, "tc": .99}})
+        doc["hoc_ky"][0]["tong_dk"] += 3
+        return _ghi_tich_luy(doc)
+    # G12 nhánh cứu: số in KHÔNG cộng TC miễn; CT179 (B, 3 TC) đọc nhất quán thành F + mất ĐTBCHK → khớp qua phương án
+    #      "có miễn" và ĐTBCTL vẫn khớp → trước khi sửa: cứu học kỳ → FALSE sai (sự thật TRUE)
+    doc = them_mien(_doc_hoan_hao(j, tich_luy=True))
+    for h in doc["hoc_ky"]:
+        h["tc_tich_luy"] -= 3
+    hk, d = _dong(doc, "CT179")
+    d.update(thi=3.5, thop=3.5, chu="F")
+    hk["dtbchk"] = None
+    hs, bc, v = chay(doc)
+    check(v != "FALSE" and not bc.get("tich_luy_kiem_cheo"),
+          f"G12 có dòng miễn 3 TC, CT179 B đọc thành F + mất ĐTBCHK → không cứu bằng số tích lũy, không FALSE sai ({v})")
+    # G13 nhánh luôn kiểm: số in CÓ cộng TC miễn; TC100 (GDTC, 3 TC) thật F đọc thành D, ĐTBCHK có (không tính GDTC)
+    #      → khớp qua phương án "không miễn" → trước khi sửa: TRUE sai (như G9)
+    doc = them_mien(_doc_hoan_hao(jf, tich_luy=True))
+    hk, d = _dong(doc, "TC100")
+    d.update(thi=4.5, thop=4.5, chu="D")
+    hs, bc, v = chay(doc, ho=jf)
+    check(v != "TRUE" and "TC100" not in hs["grades"],
+          f"G13 có dòng miễn 3 TC, TC100 F đọc thành D → lỗi bị độ chùng che → TC100 không chắc, không TRUE sai ({v})")
+    # G14 (review MEDIUM) bảng điểm thật in GDTC là TC025–027 (ngoài KB K49, Bài học CLAUDE.md): ĐTBCTL của trường bỏ GDTC
+    #      → số tính lại cũng phải bỏ, nếu không mọi học kỳ sau đều lệch ĐTBCTL và không cứu được
+    doc = _doc_hoan_hao(j, tich_luy=True)                     # số in tính khi dòng còn là TC100 (GDTC)
+    _dong(doc, "TC100")[1]["ma"] = "TC025"
+    hk, _ = _dong(doc, "CT177")
+    hk["dtbchk"] = None
+    hs, bc, v = chay(doc)
+    check(bc.get("tich_luy_kiem_cheo") == [hk["ten"]] and not [x for x in bc["hoc_ky_lech"] if "tích lũy" in x],
+          f"G14 GDTC in mã TC025 (ngoài CTĐT) → vẫn coi là GDTC khi tính ĐTBCTL → cứu được {hk['ten']} ({bc['hoc_ky_lech']})")
+    # G15 (review lượt 2, MEDIUM) độ chùng thứ hai: dòng KHÔNG đọc được điểm cũng làm TC tích lũy tính lại có hai giá trị.
+    #      Dòng ngoài CTĐT XX999 (3 TC, thật đạt) không đọc được điểm ở HK1 + TC100 (3 TC) thật F đọc thành D: số in
+    #      khớp qua nhánh "XX999 rớt" ở mọi học kỳ, ĐTBCHK bỏ cả hai dòng → trước khi sửa: TRUE sai
+    doc = _doc_hoan_hao(jf)
+    hk1 = doc["hoc_ky"][0]
+    hk1["dong"].append({"ma": "XX999", "tc": 3, "thi": 7.0, "thop": 7.0, "chu": "B", "mien": False,
+                        "conf": {"ma": .99, "tc": .99, "thop": .99, "chu": .99}})
+    hk1["tong_dk"] += 3
+    _ghi_tich_luy(doc)
+    hk1["dong"][-1].update(thi=None, thop=None, chu=None)
+    _dong(doc, "TC100")[1].update(thi=4.5, thop=4.5, chu="D")
+    hs, bc, v = chay(doc, ho=jf)
+    check(v != "TRUE" and "TC100" not in hs["grades"],
+          f"G15 dòng không đọc được điểm cùng TC với TC100 (F đọc thành D) → lỗi bị che → TC100 không chắc, không TRUE sai ({v})")
+
+
+def phan_G_anh():
+    print("G'. C14 — OCR ĐỌC DÒNG TÍCH LŨY TRÊN ẢNH TỔNG HỢP")
+    for ten in ("sv_lvtn", "sv_mien_ielts"):
+        j = ho_so(ten)
+        doc = O.doc_bang_diem(RT.render(j, bien_the="sach"))
+        tl = [hk.get("tc_tich_luy") for hk in doc["hoc_ky"]]
+        dtb = [hk.get("dtbctl") for hk in doc["hoc_ky"]]
+        hs, extra, bc = O.sang_ho_so(doc, khai_bao=O.khai_bao_tu_json(j))
+        lech = [x for x in bc["hoc_ky_lech"] if "tích lũy" in x]
+        check(None not in tl and None not in dtb and tl == sorted(tl) and not lech,
+              f"G11 {ten}/sach: đọc đủ TC tích lũy {tl} (không giảm) + ĐTBCTL mọi học kỳ, khớp số tính lại ({lech})")
+
+
 def main():
     nhanh = "--nhanh" in sys.argv
     try:   # số liệu OCR phụ thuộc font + phiên bản Tesseract → ghi lại để chỉ so trên CÙNG môi trường
@@ -280,6 +498,8 @@ def main():
     phan_C()
     phan_E()
     phan_F()
+    phan_G()
+    phan_G_anh()
     if not nhanh:
         phan_D()
     print("\nKẾT LUẬN:", "ĐẠT — fact OCR có confidence, kiểm chéo chặn fact sai, không sinh kết luận sai" if ok_all else "CHƯA ĐẠT")
