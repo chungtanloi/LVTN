@@ -136,7 +136,7 @@
       "van_ban": "qd3266",
       "diem": null,
       "ly_do_PN": null,
-      "quyet_dinh": null,
+      "quyet_dinh": "QD-13 ĐÓNG (rút lại — Loi, 18/10/2026, sau khi đối chiếu PDF gốc QĐ3266 tr.5): THEO ĐÚNG câu chữ Đ7 k5 — HP song hành phải HỌC TRƯỚC hoặc HỌC CÙNG LÚC; không được học sau. 'Học' ≠ 'tích lũy' (khoản 4 dùng 'tích lũy', khoản 5 chỉ dùng 'học') → đã học dù bị F vẫn thoả; điểm W (đã rút) không tính. Recommendation Tuần 19 áp ràng buộc cứng. [Bản trước, đã rút: song hành học trước/cùng/sau đều được — trái câu chữ Đ7 k5 và QĐ4544 Đ8 k5.]",
       "ghi_chu": ""
     },
     {
@@ -874,19 +874,19 @@
       "khoan": null,
       "trang": 19,
       "trich": "Để được nhận đề tài LVTN hoặc TLTN, SV phải thỏa mãn các điều kiện do đơn vị đào tạo quy định.",
-      "lop": "N",
-      "du_lieu": "khong",
-      "ly_do_PN": "con_tro_ngoai",
+      "lop": "F",
+      "du_lieu": "co",
+      "ly_do_PN": null,
       "taxo": [
         "T6",
         "T7"
       ],
       "nhom": "tot_nghiep",
-      "ghi_chu": "TRẢ LỜI ĐƯỢC MỘT PHẦN (v1.4): QĐ3266 để ngỏ, nhưng CTĐT CNTT K49 có ngưỡng tín chỉ cụ thể — CT550E Luận văn tốt nghiệp (15 TC) yêu cầu ≥120 TC tích lũy; CT501E Tiểu luận (6 TC) ≥120 TC; CT518E Thực tập doanh nghiệp (5 TC) ≥125 TC. Nên kết luận được ở mức 'đủ/chưa đủ điều kiện VỀ TÍN CHỈ'; các điều kiện khác của đơn vị đào tạo vẫn nằm ngoài → phần đó vẫn UNKNOWN. LƯU Ý: prototype Tuần 4 dùng 'CT466E = Luận văn tốt nghiệp, 10 TC' — SAI cả ba: CT466E là NIÊN LUẬN 3 TC.",
+      "ghi_chu": "TRẢ LỜI ĐƯỢC MỘT PHẦN (v1.4): QĐ3266 để ngỏ, nhưng CTĐT CNTT K49 có ngưỡng tín chỉ cụ thể — CT550E Luận văn tốt nghiệp (15 TC) yêu cầu ≥120 TC tích lũy; CT501E Tiểu luận (6 TC) ≥120 TC; CT518E Thực tập doanh nghiệp (5 TC) ≥125 TC. Nên kết luận được ở mức 'đủ/chưa đủ điều kiện VỀ TÍN CHỈ'; [trước QD-12: các điều kiện khác của đơn vị đào tạo được coi là nằm ngoài → UNKNOWN; QD-12 (18/10/2026) xác nhận KHÔNG có điều kiện khác]. LƯU Ý: prototype Tuần 4 dùng 'CT466E = Luận văn tốt nghiệp, 10 TC' — SAI cả ba: CT466E là NIÊN LUẬN 3 TC. Tuần 18: N → F nhờ QD-12 (trước QD-12, w18 mô hình kết quả xét của đơn vị là dữ kiện ngoài → UNKNOWN khi thiếu).",
       "van_ban": "qd3266",
       "diem": null,
-      "asp": null,
-      "quyet_dinh": null
+      "asp": "r_f04",
+      "quyet_dinh": "QD-12 ĐÓNG (xác nhận ngoài văn bản — Loi, 18/10/2026): điều kiện nhận đề tài LVTN/TLTN mà Điều 31 giao cho đơn vị đào tạo CHỈ là ngưỡng tín chỉ của CTĐT (CNTT K49: CT550E, CT501E ≥ 120 TC tích lũy) — không có điều kiện nào khác. KB: du_dk(lvtn|tltn) = tiên quyết TC (R-A03) ∧ chưa hoàn thành hình thức cuối khóa khác ∧ không có khai báo hình thức khác."
     },
     {
       "id": "R-F05",
@@ -922,11 +922,11 @@
       ],
       "nhom": "xep_loai",
       "asp": "r_f06",
-      "ghi_chu": "Trang 20 OCR TRẮNG HOÀN TOÀN — toàn bộ Điều 33, 34, 35 chỉ khôi phục được bằng đọc ảnh. Ca lỗi pipeline phải ghi nhận (xem mục Case lỗi Tuần 5).",
+      "ghi_chu": "Trang 20 OCR TRẮNG HOÀN TOÀN — toàn bộ Điều 33, 34, 35 chỉ khôi phục được bằng đọc ảnh (nay có bản chép tay). Ca lỗi pipeline phải ghi nhận (xem mục Case lỗi Tuần 5). [Sau Tuần 19] Tiêu đề Điều 34: \"Bằng tốt nghiệp và hạng tốt nghiệp\" — đọc từ PDF gốc (Loi gửi 18/10/2026), trang 20 chép tay ở source/QD3266_tr20_chep_tay.txt; đối chiếu: trích khớp NỘI DUNG nhưng không nguyên văn (diễn đạt lại/rút gọn) — nguyên văn ở bản chép tay.",
       "van_ban": "qd3266",
       "diem": null,
       "ly_do_PN": null,
-      "quyet_dinh": null
+      "quyet_dinh": "QD-14 ĐÓNG (quyết định của tác giả, Tuần 20): Đ34 k2 ghi các mức bằng hai chữ số thập phân (XS 3,60–4,00 · Giỏi 3,20–3,59 · Khá 2,50–3,19 · TB 2,00–2,49) nhưng QĐ3266 KHÔNG quy định làm tròn ĐTBCTL (Đ22 chỉ làm tròn điểm học phần) → ĐTBCTL được so HỮU TỈ theo CẬN DƯỚI: hạng = mức cao nhất có ĐTBCTL ≥ cận dưới; giá trị giữa 3,59 và 3,60 thuộc Giỏi. Bản trước (mốc nguyên thang ×10) bỏ sót ĐTBCTL giữa hai mốc (P20-1: 3,14 không thuộc hạng nào)."
     },
     {
       "id": "R-F07",
@@ -943,7 +943,27 @@
       ],
       "nhom": "xep_loai",
       "asp": "r_f07",
-      "ghi_chu": "Cần dữ kiện phân biệt lần học đầu / lần học cải thiện — xem rủi ro ở R-B13.",
+      "ghi_chu": "Cần dữ kiện phân biệt lần học đầu / lần học cải thiện — xem rủi ro ở R-B13. [Sau Tuần 19] Tiêu đề Điều 34: \"Bằng tốt nghiệp và hạng tốt nghiệp\" — đọc từ PDF gốc (Loi gửi 18/10/2026), trang 20 chép tay ở source/QD3266_tr20_chep_tay.txt; đối chiếu: trích khớp nguyên văn. [C15, Tuần 20] KB cũ chỉ đọc tc_diem_f (không nơi nào sinh) → luật không bao giờ chạy. v1.11: HP KHÔNG điều kiện có điểm CUỐI là F tính chắc chắn; tc_diem_f là khai báo của SV (TC HP không điều kiện từng F, gồm HP sau đó học lại đạt); chưa khai báo → mở nhánh f_ngoai_ho_so_vuot_5 (graduation_solver). HP điều kiện có thuộc 'tổng TC quy định của CTĐT' không: văn bản chưa rõ → mở nhánh hp_dk_tinh_vao_tong (A17).",
+      "van_ban": "qd3266",
+      "ly_do_PN": null,
+      "quyet_dinh": "QD-15 ĐÓNG (Loi chọn (a), 19/10/2026 — Tuần 20, C12): câu hỏi \"có đạt loại X không\" hỏi ĐÚNG hạng X: Đ34 xếp hạng tốt nghiệp thành MỘT mức (xuất sắc/giỏi/khá/trung bình) ghi trên bằng → hạng thực xuất sắc thì \"có đạt loại giỏi không\" trả FALSE và nêu hạng thực (không hiểu là \"ít nhất giỏi\"). Hạng tính theo ĐTBCTL HIỆN TẠI (hang_cuoi không phụ thuộc tot_nghiep) → câu trả lời luôn ghi là hạng DỰ KIẾN, chưa xét đủ điều kiện tốt nghiệp."
+    },
+    {
+      "id": "R-F07b",
+      "chuong": "IV",
+      "dieu": 34,
+      "khoan": 2,
+      "diem": "b",
+      "trang": 20,
+      "trich": "Hạng tốt nghiệp loại xuất sắc và giỏi sẽ bị giảm một mức nếu thuộc một trong các trường hợp sau: ... b) Đã bị kỷ luật từ mức cảnh cáo cấp Trường trong thời gian học.",
+      "lop": "F",
+      "du_lieu": "co",
+      "taxo": [
+        "T7"
+      ],
+      "nhom": "xep_loai",
+      "asp": "r_f07b",
+      "ghi_chu": "[C15, Tuần 20] Bổ sung — trước đây R-F07 chỉ hình thức hoá điểm a, điểm b bị '...' che. Nguồn: chép tay trang 20 từ PDF gốc (source/QD3266_tr20_chep_tay.txt). Dữ kiện không có trên bảng điểm → khai báo ky_luat_canh_cao_cap_truong; chưa khai báo → mở nhánh (graduation_solver).",
       "van_ban": "qd3266",
       "ly_do_PN": null,
       "quyet_dinh": null
@@ -963,7 +983,7 @@
         "T7"
       ],
       "nhom": "xep_loai",
-      "ghi_chu": "Hệ quả ba trị: hạng tốt nghiệp XS/Giỏi chỉ kết luận được ở mức UNKNOWN, hạng Khá/TB thì kết luận được TRUE vì không chịu điều khoản giảm mức.",
+      "ghi_chu": "Hệ quả ba trị: hạng tốt nghiệp XS/Giỏi chỉ kết luận được ở mức UNKNOWN, hạng Khá/TB thì kết luận được TRUE vì không chịu điều khoản giảm mức. [Sau Tuần 19] Tiêu đề Điều 34: \"Bằng tốt nghiệp và hạng tốt nghiệp\" — đọc từ PDF gốc (Loi gửi 18/10/2026), trang 20 chép tay ở source/QD3266_tr20_chep_tay.txt; đối chiếu: trích khớp nguyên văn.",
       "van_ban": "qd3266",
       "asp": null,
       "quyet_dinh": null
@@ -986,7 +1006,7 @@
       "diem": null,
       "ly_do_PN": null,
       "quyet_dinh": null,
-      "ghi_chu": ""
+      "ghi_chu": "[Sau Tuần 19] Tiêu đề Điều 33: \"Xử lý sinh viên quá hạn thời gian học tập\" — đọc từ PDF gốc (Loi gửi 18/10/2026), trang 20 chép tay ở source/QD3266_tr20_chep_tay.txt; đối chiếu: trích khớp nguyên văn."
     },
     {
       "id": "R-F10",
@@ -1002,7 +1022,7 @@
       ],
       "nhom": "tot_nghiep",
       "asp": "r_f10",
-      "ghi_chu": "K49 thuộc 'Khóa 47 trở về sau' → thời hạn 3 năm (không phải 5 năm).",
+      "ghi_chu": "K49 thuộc 'Khóa 47 trở về sau' → thời hạn 3 năm (không phải 5 năm). [Sau Tuần 19] Tiêu đề Điều 33: \"Xử lý sinh viên quá hạn thời gian học tập\" — đọc từ PDF gốc (Loi gửi 18/10/2026), trang 20 chép tay ở source/QD3266_tr20_chep_tay.txt; đối chiếu: trích khớp NỘI DUNG nhưng không nguyên văn (diễn đạt lại/rút gọn) — nguyên văn ở bản chép tay.",
       "van_ban": "qd3266",
       "diem": null,
       "ly_do_PN": null,
@@ -1806,6 +1826,42 @@
       "ghi_chu": "Ngoài miền suy diễn học vụ cá nhân hoá: không sinh mệnh đề nào về trạng thái học vụ của một SV cụ thể (thủ tục, tổ chức, tài chính, kỷ luật thi cử).",
       "van_ban": "qd3266",
       "khoan": null,
+      "diem": null,
+      "ly_do_PN": null,
+      "asp": null,
+      "quyet_dinh": null
+    },
+    {
+      "id": "R-X20",
+      "chuong": "-",
+      "dieu": 33,
+      "trang": 20,
+      "trich": "Sinh viên không đủ điều kiện tốt nghiệp sẽ được Trường bảo lưu, công nhận kết quả học tập đã tích lũy và cấp bảng điểm các học phần đã tích lũy (nếu có yêu cầu).",
+      "lop": "X",
+      "du_lieu": "-",
+      "taxo": [],
+      "nhom": "ngoai_mien",
+      "ghi_chu": "Ngoài miền suy diễn học vụ cá nhân hoá: không sinh mệnh đề nào về trạng thái học vụ của một SV cụ thể (thủ tục, tổ chức, tài chính, kỷ luật thi cử). [Sau Tuần 19] Thêm từ PDF gốc trang 20 (OCR trắng) — tiêu đề Điều 33: \"Xử lý sinh viên quá hạn thời gian học tập\"; chép tay ở source/QD3266_tr20_chep_tay.txt.",
+      "van_ban": "qd3266",
+      "khoan": 3,
+      "diem": null,
+      "ly_do_PN": null,
+      "asp": null,
+      "quyet_dinh": null
+    },
+    {
+      "id": "R-X21",
+      "chuong": "-",
+      "dieu": 33,
+      "trang": 20,
+      "trich": "Sinh viên hết thời gian học hình thức chính quy được chuyển qua học hình thức vừa làm vừa học, hình thức đào tạo từ xa tương ứng (nếu có) của Trường ĐHCT nếu còn trong thời gian học tập theo quy định đối với hình thức đào tạo chuyển đến.",
+      "lop": "X",
+      "du_lieu": "-",
+      "taxo": [],
+      "nhom": "ngoai_mien",
+      "ghi_chu": "Ngoài miền suy diễn học vụ cá nhân hoá: không sinh mệnh đề nào về trạng thái học vụ của một SV cụ thể (thủ tục, tổ chức, tài chính, kỷ luật thi cử). [Sau Tuần 19] Thêm từ PDF gốc trang 20 (OCR trắng) — tiêu đề Điều 33: \"Xử lý sinh viên quá hạn thời gian học tập\"; chép tay ở source/QD3266_tr20_chep_tay.txt.",
+      "van_ban": "qd3266",
+      "khoan": 4,
       "diem": null,
       "ly_do_PN": null,
       "asp": null,

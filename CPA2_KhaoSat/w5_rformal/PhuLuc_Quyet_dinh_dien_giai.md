@@ -4,7 +4,7 @@
 
 > **Vị trí trong luận văn:** phụ lục này thuộc phần **giả định và hạn chế**, không thuộc phần kết quả. Mỗi mục dưới đây là điều tác giả **quyết định**, không phải điều **tìm thấy** trong văn bản quy phạm. Trộn hai loại vào nhau là cách nhanh nhất để một luận văn hình thức hoá bị bác ở phần phương pháp.
 
-**Tổng: 11 quyết định** — 🔴 1 mở, 🔄 1 đã sửa, ✅ 7 đóng, 🟡 1 đóng một phần, 🟠 1 đóng tạm
+**Tổng: 15 quyết định** — 🔴 1 mở, 🔄 1 đã sửa, ✅ 11 đóng, 🟡 1 đóng một phần, 🟠 1 đóng tạm
 
 ---
 
@@ -23,11 +23,15 @@
 | **QD-09** | ✅ đóng | QD5339 Điều 3 k.2 (R-M02) | XÁC NHẬN NGOÀI VĂN BẢN — CHƯA GHI RÕ NGƯỜI XÁC NHẬN VÀ NGÀY |
 | **QD-10** | ✅ đóng | QD5339 Điều 3 k.3 (R-M04) | Câu chữ QĐ5339 Điều 3 k.3 (suy trực tiếp từ văn bản) |
 | **QD-11** | ✅ đóng | QD5339 Điều 2 k.6 (R-M16) | Câu chữ QĐ5339 Điều 2 k.6 (suy trực tiếp từ văn bản) |
+| **QD-12** | ✅ đóng | QD3266 Điều 31 (R-F04) | XÁC NHẬN NGOÀI VĂN BẢN — Loi, 18/10/2026 (trong phiên làm việc Tuần 18): chỉ có quy định số TC |
+| **QD-13** | ✅ đóng | QD3266 Điều 7 k.5 (R-A04) | Câu chữ QĐ3266 Điều 7 k.5 (PDF gốc tr.5) — bản xác nhận cũ trái câu chữ (Loi 18/10/2026: học sau cũng được) ĐÃ RÚT; phần F vẫn thoả là diễn giải (Loi chọn (a), 18/10/2026) |
+| **QD-14** | ✅ đóng | QD3266 Điều 34 k.2 (R-F06) | Quyết định của tác giả (Tuần 20, P20-1): QĐ3266 không quy định làm tròn ĐTBCTL — xếp hạng theo cận dưới, so hữu tỉ; chưa hỏi Phòng Đào tạo |
+| **QD-15** | ✅ đóng | QD3266 Điều 34 k.2 đ.a (R-F07) | Loi chọn (a), 19/10/2026 (Tuần 20, C12): diễn giải câu hỏi của sinh viên — "có đạt loại X" = đúng hạng X (Đ34 ghi một hạng trên bằng); không phải nội dung quy chế |
 
 ### Hai nhóm cần chú ý
 
 - **Chưa có nguồn xác nhận** (2): `QD-03`, `QD-05` — đây là các quyết định treo, phải hỏi người có thẩm quyền.
-- **Xác nhận NGOÀI văn bản** (1): `QD-09` — hợp lệ, nhưng **bắt buộc ghi rõ ai xác nhận và ngày nào**; nếu là trao đổi miệng thì nên xin email hoặc ghi biên bản.
+- **Xác nhận NGOÀI văn bản** (2): `QD-09`, `QD-12` — hợp lệ, nhưng **bắt buộc ghi rõ ai xác nhận và ngày nào**; nếu là trao đổi miệng thì nên xin email hoặc ghi biên bản.
 
 ---
 
@@ -174,6 +178,58 @@
 **Quyết định:** QD-11 ĐÓNG (mới ở v1.1): việc miễn KHÔNG tự động. Có chứng chỉ chỉ tạo ra trạng thái ĐỦ ĐIỀU KIỆN XIN MIỄN; trạng thái ĐƯỢC MIỄN chỉ phát sinh sau đơn của SV và quyết định phê duyệt. CPA² phải phân biệt hai vị từ này và KHÔNG được suy passed(C) từ việc có chứng chỉ.
 
 **Nguồn xác nhận:** Câu chữ QĐ5339 Điều 2 k.6 (suy trực tiếp từ văn bản)
+
+
+### ✅ QD-12 — đóng
+
+**Điều khoản:** QD3266 Điều 31 · bản ghi `R-F04` · lớp **F**
+
+**Trích nguyên văn:**
+
+> *Để được nhận đề tài LVTN hoặc TLTN, SV phải thỏa mãn các điều kiện do đơn vị đào tạo quy định.*
+
+**Quyết định:** QD-12 ĐÓNG (xác nhận ngoài văn bản — Loi, 18/10/2026): điều kiện nhận đề tài LVTN/TLTN mà Điều 31 giao cho đơn vị đào tạo CHỈ là ngưỡng tín chỉ của CTĐT (CNTT K49: CT550E, CT501E ≥ 120 TC tích lũy) — không có điều kiện nào khác. KB: du_dk(lvtn|tltn) = tiên quyết TC (R-A03) ∧ chưa hoàn thành hình thức cuối khóa khác ∧ không có khai báo hình thức khác.
+
+**Nguồn xác nhận:** XÁC NHẬN NGOÀI VĂN BẢN — Loi, 18/10/2026 (trong phiên làm việc Tuần 18): chỉ có quy định số TC
+
+
+### ✅ QD-13 — đóng
+
+**Điều khoản:** QD3266 Điều 7 khoản 5 · bản ghi `R-A04` · lớp **F**
+
+**Trích nguyên văn:**
+
+> *Học phần song hành của học phần HPxxx là học phần mà SV phải học trước hoặc học cùng lúc với học phần HPxxx.*
+
+**Quyết định:** QD-13 ĐÓNG (rút lại — Loi, 18/10/2026, sau khi đối chiếu PDF gốc QĐ3266 tr.5): THEO ĐÚNG câu chữ Đ7 k5 — HP song hành phải HỌC TRƯỚC hoặc HỌC CÙNG LÚC; không được học sau. 'Học' ≠ 'tích lũy' (khoản 4 dùng 'tích lũy', khoản 5 chỉ dùng 'học') → đã học dù bị F vẫn thoả; điểm W (đã rút) không tính. Recommendation Tuần 19 áp ràng buộc cứng. [Bản trước, đã rút: song hành học trước/cùng/sau đều được — trái câu chữ Đ7 k5 và QĐ4544 Đ8 k5.]
+
+**Nguồn xác nhận:** Câu chữ QĐ3266 Điều 7 k.5 (PDF gốc tr.5) — bản xác nhận cũ trái câu chữ (Loi 18/10/2026: học sau cũng được) ĐÃ RÚT; phần F vẫn thoả là diễn giải (Loi chọn (a), 18/10/2026)
+
+
+### ✅ QD-14 — đóng
+
+**Điều khoản:** QD3266 Điều 34 khoản 2 · bản ghi `R-F06` · lớp **F**
+
+**Trích nguyên văn:**
+
+> *Hạng tốt nghiệp theo ĐTBCTL: Loại xuất sắc từ 3,60 đến 4,00 | Loại giỏi từ 3,20 đến 3,59 | Loại khá từ 2,50 đến 3,19 | Loại trung bình từ 2,00 đến 2,49.*
+
+**Quyết định:** QD-14 ĐÓNG (quyết định của tác giả, Tuần 20): Đ34 k2 ghi các mức bằng hai chữ số thập phân (XS 3,60–4,00 · Giỏi 3,20–3,59 · Khá 2,50–3,19 · TB 2,00–2,49) nhưng QĐ3266 KHÔNG quy định làm tròn ĐTBCTL (Đ22 chỉ làm tròn điểm học phần) → ĐTBCTL được so HỮU TỈ theo CẬN DƯỚI: hạng = mức cao nhất có ĐTBCTL ≥ cận dưới; giá trị giữa 3,59 và 3,60 thuộc Giỏi. Bản trước (mốc nguyên thang ×10) bỏ sót ĐTBCTL giữa hai mốc (P20-1: 3,14 không thuộc hạng nào).
+
+**Nguồn xác nhận:** Quyết định của tác giả (Tuần 20, P20-1): QĐ3266 không quy định làm tròn ĐTBCTL — xếp hạng theo cận dưới, so hữu tỉ; chưa hỏi Phòng Đào tạo
+
+
+### ✅ QD-15 — đóng
+
+**Điều khoản:** QD3266 Điều 34 khoản 2 điểm a · bản ghi `R-F07` · lớp **F**
+
+**Trích nguyên văn:**
+
+> *Hạng tốt nghiệp loại xuất sắc và giỏi sẽ bị giảm một mức nếu ... Có khối lượng các học phần bị điểm F vượt quá 5% so với tổng số TC quy định của CTĐT (không tính khối lượng học phần học cải thiện điểm bị điểm F).*
+
+**Quyết định:** QD-15 ĐÓNG (Loi chọn (a), 19/10/2026 — Tuần 20, C12): câu hỏi "có đạt loại X không" hỏi ĐÚNG hạng X: Đ34 xếp hạng tốt nghiệp thành MỘT mức (xuất sắc/giỏi/khá/trung bình) ghi trên bằng → hạng thực xuất sắc thì "có đạt loại giỏi không" trả FALSE và nêu hạng thực (không hiểu là "ít nhất giỏi"). Hạng tính theo ĐTBCTL HIỆN TẠI (hang_cuoi không phụ thuộc tot_nghiep) → câu trả lời luôn ghi là hạng DỰ KIẾN, chưa xét đủ điều kiện tốt nghiệp.
+
+**Nguồn xác nhận:** Loi chọn (a), 19/10/2026 (Tuần 20, C12): diễn giải câu hỏi của sinh viên — "có đạt loại X" = đúng hạng X (Đ34 ghi một hạng trên bằng); không phải nội dung quy chế
 
 
 ---

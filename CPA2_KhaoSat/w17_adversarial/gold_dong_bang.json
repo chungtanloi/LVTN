@@ -1,0 +1,701 @@
+{
+ "commit": "200b860",
+ "ghi_chu": "Gold đóng băng — trích từ adversarial_set.json ở commit 200b860, trước lần chạy CPA² đầu tiên. KHÔNG sửa tay.",
+ "gold": {
+  "TD-01": {
+   "gold": "UNKNOWN",
+   "su_that": null,
+   "cham_diem": true,
+   "khong_phat_hien_duoc": null,
+   "split": "dev",
+   "can_hoi": [
+    "xac_nhan_ky_luat_sach"
+   ]
+  },
+  "TD-02": {
+   "gold": "UNKNOWN",
+   "su_that": null,
+   "cham_diem": true,
+   "khong_phat_hien_duoc": null,
+   "split": "dev",
+   "can_hoi": [
+    "xac_nhan_ky_luat_sach"
+   ]
+  },
+  "TD-03": {
+   "gold": "FALSE",
+   "su_that": null,
+   "cham_diem": true,
+   "khong_phat_hien_duoc": null,
+   "split": "test",
+   "can_hoi": null
+  },
+  "TD-04": {
+   "gold": "UNKNOWN",
+   "su_that": null,
+   "cham_diem": true,
+   "khong_phat_hien_duoc": null,
+   "split": "dev",
+   "can_hoi": [
+    "qua_thoi_gian_toi_da"
+   ]
+  },
+  "TD-05": {
+   "gold": "UNKNOWN",
+   "su_that": null,
+   "cham_diem": true,
+   "khong_phat_hien_duoc": null,
+   "split": "test",
+   "can_hoi": [
+    "xac_nhan_ky_luat_sach",
+    "qua_thoi_gian_toi_da"
+   ]
+  },
+  "TD-06": {
+   "gold": "FALSE",
+   "su_that": null,
+   "cham_diem": true,
+   "khong_phat_hien_duoc": null,
+   "split": "test",
+   "can_hoi": null
+  },
+  "TD-07": {
+   "gold": "FALSE",
+   "su_that": null,
+   "cham_diem": true,
+   "khong_phat_hien_duoc": null,
+   "split": "dev",
+   "can_hoi": null
+  },
+  "TD-08": {
+   "gold": "FALSE",
+   "su_that": null,
+   "cham_diem": true,
+   "khong_phat_hien_duoc": null,
+   "split": "dev",
+   "can_hoi": null
+  },
+  "TD-09": {
+   "gold": "FALSE",
+   "su_that": null,
+   "cham_diem": true,
+   "khong_phat_hien_duoc": null,
+   "split": "dev",
+   "can_hoi": null
+  },
+  "TD-10": {
+   "gold": "FALSE",
+   "su_that": null,
+   "cham_diem": true,
+   "khong_phat_hien_duoc": null,
+   "split": "test",
+   "can_hoi": null
+  },
+  "TD-11": {
+   "gold": "UNKNOWN",
+   "su_that": "TRUE",
+   "cham_diem": true,
+   "khong_phat_hien_duoc": null,
+   "split": "dev",
+   "can_hoi": [
+    "g10(\"CT550E\")"
+   ]
+  },
+  "TD-12": {
+   "gold": "TRUE",
+   "su_that": null,
+   "cham_diem": true,
+   "khong_phat_hien_duoc": null,
+   "split": "test",
+   "can_hoi": null
+  },
+  "TD-13": {
+   "gold": "UNKNOWN",
+   "su_that": "TRUE",
+   "cham_diem": true,
+   "khong_phat_hien_duoc": null,
+   "split": "dev",
+   "can_hoi": [
+    "g10(\"CT177\")"
+   ]
+  },
+  "TD-14": {
+   "gold": "UNKNOWN",
+   "su_that": "TRUE",
+   "cham_diem": true,
+   "khong_phat_hien_duoc": null,
+   "split": "test",
+   "can_hoi": [
+    "duoc_mien(\"XH025\")"
+   ]
+  },
+  "TD-15": {
+   "gold": "FALSE",
+   "su_that": null,
+   "cham_diem": true,
+   "khong_phat_hien_duoc": null,
+   "split": "test",
+   "can_hoi": null
+  },
+  "TD-16": {
+   "gold": "TRUE",
+   "su_that": null,
+   "cham_diem": true,
+   "khong_phat_hien_duoc": null,
+   "split": "test",
+   "can_hoi": null
+  },
+  "TD-17": {
+   "gold": "TRUE",
+   "su_that": null,
+   "cham_diem": true,
+   "khong_phat_hien_duoc": null,
+   "split": "dev",
+   "can_hoi": null
+  },
+  "NG-01": {
+   "gold": "TRUE",
+   "su_that": null,
+   "cham_diem": true,
+   "khong_phat_hien_duoc": null,
+   "split": "test",
+   "can_hoi": null
+  },
+  "NG-02": {
+   "gold": "TRUE",
+   "su_that": null,
+   "cham_diem": true,
+   "khong_phat_hien_duoc": null,
+   "split": "test",
+   "can_hoi": null
+  },
+  "NG-03": {
+   "gold": "TRUE",
+   "su_that": null,
+   "cham_diem": true,
+   "khong_phat_hien_duoc": null,
+   "split": "test",
+   "can_hoi": null
+  },
+  "NG-04": {
+   "gold": "FALSE",
+   "su_that": null,
+   "cham_diem": true,
+   "khong_phat_hien_duoc": null,
+   "split": "dev",
+   "can_hoi": null
+  },
+  "NG-05": {
+   "gold": "TRUE",
+   "su_that": null,
+   "cham_diem": true,
+   "khong_phat_hien_duoc": null,
+   "split": "test",
+   "can_hoi": null
+  },
+  "NG-06": {
+   "gold": "FALSE",
+   "su_that": null,
+   "cham_diem": true,
+   "khong_phat_hien_duoc": null,
+   "split": "test",
+   "can_hoi": null
+  },
+  "NG-07": {
+   "gold": "TRUE",
+   "su_that": null,
+   "cham_diem": true,
+   "khong_phat_hien_duoc": null,
+   "split": "dev",
+   "can_hoi": null
+  },
+  "NG-08": {
+   "gold": "FALSE",
+   "su_that": null,
+   "cham_diem": true,
+   "khong_phat_hien_duoc": null,
+   "split": "dev",
+   "can_hoi": null
+  },
+  "NG-09": {
+   "gold": "TRUE",
+   "su_that": null,
+   "cham_diem": true,
+   "khong_phat_hien_duoc": null,
+   "split": "dev",
+   "can_hoi": null
+  },
+  "NG-10": {
+   "gold": "FALSE",
+   "su_that": null,
+   "cham_diem": true,
+   "khong_phat_hien_duoc": null,
+   "split": "dev",
+   "can_hoi": null
+  },
+  "NG-11": {
+   "gold": "TRUE",
+   "su_that": null,
+   "cham_diem": true,
+   "khong_phat_hien_duoc": null,
+   "split": "dev",
+   "can_hoi": null
+  },
+  "NG-12": {
+   "gold": "FALSE",
+   "su_that": null,
+   "cham_diem": true,
+   "khong_phat_hien_duoc": null,
+   "split": "test",
+   "can_hoi": null
+  },
+  "NG-13": {
+   "gold": "TRUE",
+   "su_that": null,
+   "cham_diem": true,
+   "khong_phat_hien_duoc": null,
+   "split": "test",
+   "can_hoi": null
+  },
+  "NG-14": {
+   "gold": "FALSE",
+   "su_that": null,
+   "cham_diem": true,
+   "khong_phat_hien_duoc": null,
+   "split": "dev",
+   "can_hoi": null
+  },
+  "NG-15": {
+   "gold": "TRUE",
+   "su_that": null,
+   "cham_diem": true,
+   "khong_phat_hien_duoc": null,
+   "split": "dev",
+   "can_hoi": null
+  },
+  "NG-16": {
+   "gold": "FALSE",
+   "su_that": null,
+   "cham_diem": true,
+   "khong_phat_hien_duoc": null,
+   "split": "dev",
+   "can_hoi": null
+  },
+  "NG-17": {
+   "gold": "FALSE",
+   "su_that": null,
+   "cham_diem": true,
+   "khong_phat_hien_duoc": null,
+   "split": "test",
+   "can_hoi": null
+  },
+  "NG-18": {
+   "gold": "TRUE",
+   "su_that": null,
+   "cham_diem": true,
+   "khong_phat_hien_duoc": null,
+   "split": "test",
+   "can_hoi": null
+  },
+  "NG-19": {
+   "gold": "TRUE",
+   "su_that": null,
+   "cham_diem": true,
+   "khong_phat_hien_duoc": null,
+   "split": "dev",
+   "can_hoi": null
+  },
+  "NG-20": {
+   "gold": "FALSE",
+   "su_that": null,
+   "cham_diem": true,
+   "khong_phat_hien_duoc": null,
+   "split": "dev",
+   "can_hoi": null
+  },
+  "NG-21": {
+   "gold": "TRUE",
+   "su_that": null,
+   "cham_diem": true,
+   "khong_phat_hien_duoc": null,
+   "split": "test",
+   "can_hoi": null
+  },
+  "NG-22": {
+   "gold": "FALSE",
+   "su_that": null,
+   "cham_diem": true,
+   "khong_phat_hien_duoc": null,
+   "split": "dev",
+   "can_hoi": null
+  },
+  "NG-23": {
+   "gold": "TRUE",
+   "su_that": null,
+   "cham_diem": true,
+   "khong_phat_hien_duoc": null,
+   "split": "test",
+   "can_hoi": null
+  },
+  "NG-24": {
+   "gold": "FALSE",
+   "su_that": null,
+   "cham_diem": true,
+   "khong_phat_hien_duoc": null,
+   "split": "test",
+   "can_hoi": null
+  },
+  "BQ-01": {
+   "gold": "FALSE",
+   "su_that": null,
+   "cham_diem": true,
+   "khong_phat_hien_duoc": null,
+   "split": "dev",
+   "can_hoi": null
+  },
+  "BQ-02": {
+   "gold": "TRUE",
+   "su_that": null,
+   "cham_diem": true,
+   "khong_phat_hien_duoc": null,
+   "split": "dev",
+   "can_hoi": null
+  },
+  "BQ-03": {
+   "gold": "FALSE",
+   "su_that": null,
+   "cham_diem": true,
+   "khong_phat_hien_duoc": null,
+   "split": "dev",
+   "can_hoi": null
+  },
+  "BQ-04": {
+   "gold": "TRUE",
+   "su_that": null,
+   "cham_diem": true,
+   "khong_phat_hien_duoc": null,
+   "split": "test",
+   "can_hoi": null
+  },
+  "BQ-05": {
+   "gold": "TRUE",
+   "su_that": null,
+   "cham_diem": true,
+   "khong_phat_hien_duoc": null,
+   "split": "test",
+   "can_hoi": null
+  },
+  "BQ-06": {
+   "gold": "TRUE",
+   "su_that": null,
+   "cham_diem": true,
+   "khong_phat_hien_duoc": null,
+   "split": "dev",
+   "can_hoi": null
+  },
+  "BQ-07": {
+   "gold": "TRUE",
+   "su_that": null,
+   "cham_diem": true,
+   "khong_phat_hien_duoc": null,
+   "split": "test",
+   "can_hoi": null
+  },
+  "BQ-08": {
+   "gold": "FALSE",
+   "su_that": null,
+   "cham_diem": true,
+   "khong_phat_hien_duoc": null,
+   "split": "test",
+   "can_hoi": null
+  },
+  "BQ-09": {
+   "gold": "TRUE",
+   "su_that": null,
+   "cham_diem": true,
+   "khong_phat_hien_duoc": null,
+   "split": "dev",
+   "can_hoi": null
+  },
+  "BQ-10": {
+   "gold": "FALSE",
+   "su_that": null,
+   "cham_diem": true,
+   "khong_phat_hien_duoc": null,
+   "split": "test",
+   "can_hoi": null
+  },
+  "BQ-11": {
+   "gold": "TRUE",
+   "su_that": null,
+   "cham_diem": true,
+   "khong_phat_hien_duoc": null,
+   "split": "dev",
+   "can_hoi": null
+  },
+  "BQ-12": {
+   "gold": "TRUE",
+   "su_that": null,
+   "cham_diem": true,
+   "khong_phat_hien_duoc": null,
+   "split": "test",
+   "can_hoi": null
+  },
+  "BQ-13": {
+   "gold": "FALSE",
+   "su_that": null,
+   "cham_diem": true,
+   "khong_phat_hien_duoc": null,
+   "split": "dev",
+   "can_hoi": null
+  },
+  "BQ-14": {
+   "gold": "TRUE",
+   "su_that": null,
+   "cham_diem": true,
+   "khong_phat_hien_duoc": null,
+   "split": "test",
+   "can_hoi": null
+  },
+  "BQ-15": {
+   "gold": "FALSE",
+   "su_that": null,
+   "cham_diem": true,
+   "khong_phat_hien_duoc": null,
+   "split": "dev",
+   "can_hoi": null
+  },
+  "HL-01": {
+   "gold": "UNKNOWN",
+   "su_that": null,
+   "cham_diem": true,
+   "khong_phat_hien_duoc": null,
+   "split": "dev",
+   "can_hoi": null
+  },
+  "HL-02": {
+   "gold": "UNKNOWN",
+   "su_that": null,
+   "cham_diem": true,
+   "khong_phat_hien_duoc": null,
+   "split": "test",
+   "can_hoi": null
+  },
+  "HL-03": {
+   "gold": "UNKNOWN",
+   "su_that": null,
+   "cham_diem": true,
+   "khong_phat_hien_duoc": null,
+   "split": "test",
+   "can_hoi": null
+  },
+  "HL-04": {
+   "gold": "UNKNOWN",
+   "su_that": null,
+   "cham_diem": true,
+   "khong_phat_hien_duoc": null,
+   "split": "dev",
+   "can_hoi": null
+  },
+  "HL-05": {
+   "gold": "UNKNOWN",
+   "su_that": null,
+   "cham_diem": true,
+   "khong_phat_hien_duoc": null,
+   "split": "dev",
+   "can_hoi": null
+  },
+  "HL-06": {
+   "gold": "UNKNOWN",
+   "su_that": null,
+   "cham_diem": true,
+   "khong_phat_hien_duoc": null,
+   "split": "test",
+   "can_hoi": null
+  },
+  "OC-01": {
+   "gold": "TRUE",
+   "su_that": null,
+   "cham_diem": true,
+   "khong_phat_hien_duoc": null,
+   "split": "test",
+   "can_hoi": null
+  },
+  "OC-02": {
+   "gold": "FALSE",
+   "su_that": null,
+   "cham_diem": true,
+   "khong_phat_hien_duoc": null,
+   "split": "dev",
+   "can_hoi": null
+  },
+  "OC-03": {
+   "gold": "UNKNOWN",
+   "su_that": "TRUE",
+   "cham_diem": true,
+   "khong_phat_hien_duoc": null,
+   "split": "test",
+   "can_hoi": null
+  },
+  "OC-04": {
+   "gold": "UNKNOWN",
+   "su_that": "TRUE",
+   "cham_diem": true,
+   "khong_phat_hien_duoc": null,
+   "split": "dev",
+   "can_hoi": null
+  },
+  "OC-05": {
+   "gold": "UNKNOWN",
+   "su_that": "TRUE",
+   "cham_diem": true,
+   "khong_phat_hien_duoc": null,
+   "split": "test",
+   "can_hoi": null
+  },
+  "OC-06": {
+   "gold": "UNKNOWN",
+   "su_that": "TRUE",
+   "cham_diem": true,
+   "khong_phat_hien_duoc": null,
+   "split": "test",
+   "can_hoi": null
+  },
+  "OC-07": {
+   "gold": "TRUE",
+   "su_that": "TRUE",
+   "cham_diem": true,
+   "khong_phat_hien_duoc": true,
+   "split": "test",
+   "can_hoi": null
+  },
+  "OC-08": {
+   "gold": "UNKNOWN",
+   "su_that": "TRUE",
+   "cham_diem": true,
+   "khong_phat_hien_duoc": null,
+   "split": "dev",
+   "can_hoi": null
+  },
+  "OC-09": {
+   "gold": "UNKNOWN",
+   "su_that": "TRUE",
+   "cham_diem": true,
+   "khong_phat_hien_duoc": null,
+   "split": "dev",
+   "can_hoi": null
+  },
+  "OC-10": {
+   "gold": "UNKNOWN",
+   "su_that": "TRUE",
+   "cham_diem": true,
+   "khong_phat_hien_duoc": null,
+   "split": "dev",
+   "can_hoi": null
+  },
+  "OC-11": {
+   "gold": "FALSE",
+   "su_that": "FALSE",
+   "cham_diem": true,
+   "khong_phat_hien_duoc": true,
+   "split": "test",
+   "can_hoi": null
+  },
+  "OC-12": {
+   "gold": "UNKNOWN",
+   "su_that": "FALSE",
+   "cham_diem": true,
+   "khong_phat_hien_duoc": null,
+   "split": "test",
+   "can_hoi": null
+  },
+  "OC-13": {
+   "gold": "UNKNOWN",
+   "su_that": "TRUE",
+   "cham_diem": true,
+   "khong_phat_hien_duoc": null,
+   "split": "test",
+   "can_hoi": null
+  },
+  "OC-14": {
+   "gold": "UNKNOWN",
+   "su_that": "TRUE",
+   "cham_diem": true,
+   "khong_phat_hien_duoc": null,
+   "split": "dev",
+   "can_hoi": null
+  },
+  "OC-15": {
+   "gold": "TRUE",
+   "su_that": "TRUE",
+   "cham_diem": true,
+   "khong_phat_hien_duoc": null,
+   "split": "dev",
+   "can_hoi": null
+  },
+  "OC-16": {
+   "gold": "UNKNOWN",
+   "su_that": "TRUE",
+   "cham_diem": true,
+   "khong_phat_hien_duoc": null,
+   "split": "dev",
+   "can_hoi": null
+  },
+  "OC-17": {
+   "gold": "UNKNOWN",
+   "su_that": "TRUE",
+   "cham_diem": true,
+   "khong_phat_hien_duoc": null,
+   "split": "dev",
+   "can_hoi": null
+  },
+  "OC-18": {
+   "gold": "UNKNOWN",
+   "su_that": "TRUE",
+   "cham_diem": true,
+   "khong_phat_hien_duoc": null,
+   "split": "test",
+   "can_hoi": null
+  },
+  "KX-01": {
+   "gold": "UNKNOWN",
+   "su_that": null,
+   "cham_diem": false,
+   "khong_phat_hien_duoc": null,
+   "split": null,
+   "can_hoi": null
+  },
+  "KX-02": {
+   "gold": "UNKNOWN",
+   "su_that": null,
+   "cham_diem": false,
+   "khong_phat_hien_duoc": null,
+   "split": null,
+   "can_hoi": null
+  },
+  "KX-03": {
+   "gold": "UNKNOWN",
+   "su_that": null,
+   "cham_diem": false,
+   "khong_phat_hien_duoc": null,
+   "split": null,
+   "can_hoi": null
+  },
+  "KX-04": {
+   "gold": "TRUE",
+   "su_that": null,
+   "cham_diem": false,
+   "khong_phat_hien_duoc": null,
+   "split": null,
+   "can_hoi": null
+  },
+  "KX-05": {
+   "gold": "TRUE",
+   "su_that": null,
+   "cham_diem": false,
+   "khong_phat_hien_duoc": null,
+   "split": null,
+   "can_hoi": null
+  }
+ }
+}

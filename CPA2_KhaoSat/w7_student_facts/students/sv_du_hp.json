@@ -372,6 +372,7 @@
   "khong_tinh_tich_luy": [],
   "che_do_sv_chon_tich_luy": false,
   "xac_nhan_ky_luat_sach": true,
+  "da_hoc_nam2": 9,
   "meta": {
     "nguon": "gia_lap",
     "ghi_chu": "CQ-06 — học dư CT478 điểm D (4.5), toàn bộ C=2.0 nếu tính tất cả → ĐTBCTL sát 2.0; nếu bỏ CT478 thì ĐTBCTL=2.0 vẫn tốt nghiệp. Dùng để test I15/I16 và ∀∃ ở I20"

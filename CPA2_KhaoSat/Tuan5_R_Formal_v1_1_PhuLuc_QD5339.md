@@ -249,4 +249,4 @@ Câu số 3 đáng hỏi sớm nhất vì rẻ nhất và rủi ro cao nhất.
       đã đối chiếu thủ công trên ảnh trang — OCR làm nát cả ba
 - [ ] QD-09 và QD-03 là suy đoán, **chưa xác nhận với người**
 - [ ] Chưa kiểm tra QĐ5339 còn hiệu lực hay đã bị thay thế
-- [ ] Trục C của Tuần 2 (6 trạng thái) **cần sửa thành 7** — chưa cập nhật vào file Tuần 2
+- [x] Trục C của Tuần 2 (6 trạng thái) **cần sửa thành 7** — chưa cập nhật vào file Tuần 2 — ✅ đã xong: Tuan2 đã cập nhật (dòng 'Trục C: 6 → 7 trạng thái')

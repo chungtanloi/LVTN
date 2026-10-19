@@ -1,5 +1,5 @@
 %%=============================================================================
-%% qd3266_r_formal_v1.lp — R-Formal v1 (v1.5: sửa 3 lỗi tích hợp phát hiện ở Tuần 6)
+%% qd3266_r_formal_v1.lp — R-Formal v1 (v1.11: hạ một mức hạng XS/G theo Đ34 k2 a+b — Tuần 20, C15)
 %% Hình thức hoá các điều khoản lớp F của QĐ 3266/QĐ-ĐHCT (15/8/2024)
 %% Dự án: CPA² — Certified Personalized Academic Advising (Tuần 5/24)
 %%
@@ -53,9 +53,11 @@ rule_src(r_e03, qd3266, 30, none, none).
 rule_src(r_f01a, qd3266, 32, 1, a).
 rule_src(r_f02a, qd3266, 32, 1, b).
 rule_src(r_f03, qd3266,  32, 1, c).
+rule_src(r_f04, qd3266,  31, none, none).   % v1.8: nhận đề tài LVTN/TLTN — điều kiện do đơn vị đào tạo quy định (dữ kiện ngoài, w18)
 rule_src(r_f05, qd3266,  31, 3, none).
 rule_src(r_f06, qd3266,  34, 2, none).
 rule_src(r_f07, qd3266,  34, 2, a).
+rule_src(r_f07b, qd3266, 34, 2, b).
 rule_src(r_f09, qd3266,  33, 1, none).
 rule_src(r_f10, qd3266,  33, 2, none).
 rule_src(r_g01, qd3266,  20, 1, b).
@@ -157,6 +159,24 @@ why(du_dk_dang_ky(C), r_a03) :- du_dk_dang_ky(C).
 
 vi_pham_song_hanh(C,P) :- xep_hk(C,K1), song_hanh(C,P), xep_hk(P,K2), K2 > K1.
 why(vi_pham_song_hanh(C,P), r_a04) :- vi_pham_song_hanh(C,P).
+
+%% v1.9 (sau Tuần 19): Đ7 k5 "phải HỌC TRƯỚC hoặc HỌC CÙNG LÚC" khi hỏi đăng ký MỘT học phần.
+%% "Học" ≠ "tích lũy" (k4 dùng "tích lũy", k5 chỉ "học" — quyết định (a), Loi 18/10/2026): da_hoc/1 là dữ kiện
+%% từ loader cho mọi bản ghi điểm có học (kể cả F, I; không tính W). Học phần đã tích lũy (miễn, thay thế) cũng là đã học.
+%% Song hành KHÔNG chặn đăng ký (được học cùng lúc) — chỉ thêm điều kiện; chặn khi HP song hành không đăng ký được.
+#defined da_hoc/1.
+%% Bắc cầu: c song hành p, p song hành r, chưa học cả hai → phải học CẢ p và r cùng kỳ (review sau Tuần 19).
+phai_hoc_cung_ky(C,P) :- song_hanh(C,P), course(C,_), not da_hoc(P), not tich_luy(P).
+phai_hoc_cung_ky(C,Q) :- phai_hoc_cung_ky(C,P), phai_hoc_cung_ky(P,Q), C != Q.
+chan_song_hanh(C,P)   :- phai_hoc_cung_ky(C,P), not du_dk_dang_ky(P).
+%% Tiên quyết chưa đạt (R-A03, Đ7 k4) — để chứng chỉ trích từ why/2, không dựng tay ở tầng trả lời
+thieu_tien_quyet(C,P) :- course(C,_), tien_quyet(C,P), not passed(P).
+why(thieu_tien_quyet(C,P), r_a03) :- thieu_tien_quyet(C,P).
+duoc_dang_ky(C)       :- du_dk_dang_ky(C), not chan_song_hanh(C,_).
+why(phai_hoc_cung_ky(C,P), r_a04) :- phai_hoc_cung_ky(C,P).
+why(chan_song_hanh(C,P), r_a04)   :- chan_song_hanh(C,P).
+why(duoc_dang_ky(C), r_a03)       :- duoc_dang_ky(C).
+why(duoc_dang_ky(C), r_a04)       :- duoc_dang_ky(C), song_hanh(C,_).
 
 %% ---------------------------------------------------------------------------
 %% 6. SỐ TÍN CHỈ ĐĂNG KÝ — Điều 14 khoản 1, 2 (R-C01, R-C02)
@@ -299,17 +319,20 @@ tran_nam2(8,  16).      % thiết kế 4   năm (8 nửa năm)  → tối đa 8 
 tran_nam2(9,  18).      % thiết kế 4,5 năm              → tối đa 9  năm
 tran_nam2(10, 20).      % thiết kế 5   năm              → tối đa 10 năm
 
-thoi_gian_toi_da(M) :- thiet_ke_nam2(D), tran_nam2(D,M0), giam_hk(H), M = M0 - H.
-why(thoi_gian_toi_da(M), r_e01) :- thoi_gian_toi_da(M).
+%% v1.8 (P17-3): trần tính theo HỌC KỲ. QĐ3266 Điều 6 khoản 1 (tr.5): "Mỗi năm học được tổ
+%% chức thành 03 HK" → "giảm tương ứng 1 HK" (Điều 5) = 1/3 năm, KHÔNG phải nửa năm như
+%% v1.0–v1.7 (giả định không có nguồn). Trần (HK) = trần (nửa năm) × 3/2 − giam_hk.
+%% da_hoc_nam2(A) vẫn nhập theo nửa năm: A nửa năm = 3A/2 HK → so sánh 3A > 2M (số nguyên).
+thoi_gian_toi_da_hk(M) :- thiet_ke_nam2(D), tran_nam2(D,M0), giam_hk(H), M = M0*3/2 - H.
+why(thoi_gian_toi_da_hk(M), r_e01) :- thoi_gian_toi_da_hk(M).
 
-%% Giảm trần theo TC được công nhận: K49 trở về trước mỗi 9 TC giảm 1 HK
-%% (1 HK = 1 nửa năm trong đơn vị nam2 nếu tính 2 HK chính/năm).
+%% Giảm trần theo TC được công nhận: K49 trở về trước mỗi 9 TC giảm 1 HK, K50 về sau mỗi 6 TC.
 giam_hk(H) :- tc_cong_nhan(X), khoa_den_k49, H = X/9.
 giam_hk(H) :- tc_cong_nhan(X), khoa_tu_k50, H = X/6.
 giam_hk(0) :- not tc_cong_nhan(_).          % không được công nhận TC nào
 why(giam_hk(H), r_e02) :- giam_hk(H).
 
-qua_thoi_gian_toi_da :- da_hoc_nam2(A), thoi_gian_toi_da(M), A > M.
+qua_thoi_gian_toi_da :- da_hoc_nam2(A), thoi_gian_toi_da_hk(M), 3*A > 2*M.
 
 %% ---------------------------------------------------------------------------
 %% 12. ĐIỀU KIỆN TỐT NGHIỆP — Điều 32 khoản 1 (R-F01a, R-F02a, R-F03)
@@ -359,32 +382,63 @@ why(truc_ky_luat_khong_co_du_lieu, r_f03) :- truc_ky_luat_khong_co_du_lieu.
 
 du_dk_hoc_vu :- dk_bat_buoc, dk_tu_chon, dk_tin_chi, dk_dtbctl,
                 dk_hp_dieu_kien, dk_gdqp.
-tot_nghiep   :- du_dk_hoc_vu, xac_nhan_ky_luat_sach.
+%% v1.7 (Tuần 16, P16-2): phải hoàn thành CTĐT trong thời gian tối đa — Điều 5
+%% ("thời gian học tập tối đa cho phép để SV hoàn thành CTĐT", tr.4; R-E01/R-E02).
+%% v1.6 bỏ điều kiện này → SV quá hạn vẫn tot_nghiep. Thiếu da_hoc_nam2: ở đây
+%% (thế giới đóng) coi như chưa quá hạn; graduation_solver.lp mục 0 mở nhánh → UNKNOWN.
+tot_nghiep   :- du_dk_hoc_vu, xac_nhan_ky_luat_sach, not qua_thoi_gian_toi_da.
 why(tot_nghiep, r_f01a) :- tot_nghiep.
 why(tot_nghiep, r_f03)  :- tot_nghiep.
+why(tot_nghiep, r_e01)  :- tot_nghiep.
 
 %% ---------------------------------------------------------------------------
 %% 13. HẠNG TỐT NGHIỆP — Điều 34 khoản 2 và điểm a (R-F06, R-F07)
 %% ---------------------------------------------------------------------------
-hang(xuat_sac, 36, 40).
-hang(gioi,     32, 35).
-hang(kha,      25, 31).
-hang(trung_binh,20, 24).
+%% v1.10 (P20-1, Tuần 20): bản trước khai mốc NGUYÊN thang ×10 (gioi 32–35, kha 25–31…) và so N ≤ Hi·D → ĐTBCTL nằm
+%% giữa hai mốc (3,14 · 3,57 · 2,45 …) KHÔNG thuộc hạng nào. Nay so HỮU TỈ theo CẬN DƯỚI thang ×100 (tl_tu là điểm ×10):
+%% hạng = mức cao nhất có ĐTBCTL ≥ cận dưới. Đ34 không quy định làm tròn ĐTBCTL → giá trị giữa 3,59 và 3,60 thuộc Giỏi
+%% (QD-14, quyết định diễn giải). Dưới 2,00 không có hạng (chưa đủ điều kiện tốt nghiệp — Đ32).
+hang(xuat_sac, 360).
+hang(gioi,     320).
+hang(kha,      250).
+hang(trung_binh,200).
 
-hang_goc(H) :- hang(H,Lo,Hi), tl_tu(N), tl_mau(D), D > 0, N >= Lo*D, N <= Hi*D.
+dat_can_hang(H) :- hang(H,Lo), tl_tu(N), tl_mau(D), D > 0, 10*N >= Lo*D.
+hang_goc(H) :- dat_can_hang(H), hang(H,Lo), not dat_can_hang(H2) : hang(H2,Lo2), Lo2 > Lo.
 why(hang_goc(H), r_f06) :- hang_goc(H).
 
-%% giảm một mức nếu TC học phần điểm F > 5% tổng TC quy định của CTĐT
-%% (không tính học phần học cải thiện bị điểm F — R-B13)
-vuot_5_phan_tram :- tc_diem_f(X), tc_toi_thieu_ctdt(M), 100*X > 5*M.
+%% v1.11 (C15, Tuần 20) — Đ34 k2 (chép tay tr.20): hạng XUẤT SẮC, GIỎI bị giảm một mức nếu
+%%   a) khối lượng các HP bị điểm F vượt quá 5% tổng số TC quy định của CTĐT (không tính HP học cải thiện bị F) — R-F07;
+%%   b) đã bị kỷ luật từ mức cảnh cáo cấp Trường trong thời gian học — R-F07b.
+%% Bản trước chỉ đọc tc_diem_f/1, mà KHÔNG nơi nào sinh dữ kiện này (chỉ có trong test) → không bao giờ hạ; điểm b thiếu;
+%% why(hang_cuoi, r_f07) sinh vô điều kiện.
+%% (a) HP có điểm CUỐI là F → chắc chắn bị tính (điểm cuối F thì không phải lần học cải thiện — R-B13 giữ điểm cao nhất).
+%%     HP ĐIỀU KIỆN (GDQP, GDTC, NN/TH căn bản) có thuộc "tổng TC quy định của CTĐT" không, văn bản không nói rõ →
+%%     chỉ HP không điều kiện là chắc chắn (vuot_5_chac); thêm HP điều kiện mới vượt thì graduation_solver MỞ NHÁNH (A17).
+%%     tc_diem_f/1 = khai báo của sinh viên: TC HP KHÔNG điều kiện từng bị F (gồm cả HP sau đó học lại đạt — hồ sơ chỉ giữ
+%%     điểm cuối), không tính học cải thiện. Dùng giá trị lớn hơn giữa khai báo và TC HP không điều kiện đang F.
+%%     review C15: vuot_5_chac KHÔNG phụ thuộc vuot_5_phan_tram (bản đầu có vòng lặp lẻ → nhánh A17 không bao giờ mở).
+#defined tc_diem_f/1.
+#defined ky_luat_canh_cao_cap_truong/0.
+tc_f_chac(Y) :- Y = #sum{ CR,C : course(C,CR), letter(C,"F"), not hp_dieu_kien(C) }.
+tc_f_dk(Z)   :- Z = #sum{ CR,C : course(C,CR), letter(C,"F"), hp_dieu_kien(C) }.
+vuot_5_chac :- tc_f_chac(Y), tc_toi_thieu_ctdt(M), 100*Y > 5*M.
+vuot_5_chac :- tc_diem_f(X), tc_toi_thieu_ctdt(M), 100*X > 5*M.
+vuot_5_phan_tram :- vuot_5_chac.
+co_the_vuot_5_do_hp_dk :- not vuot_5_chac, tc_f_dk(Z), Z > 0, tc_f_chac(Y), tc_toi_thieu_ctdt(M), 100*(Y+Z) > 5*M.
+co_the_vuot_5_do_hp_dk :- not vuot_5_chac, tc_f_dk(Z), Z > 0, tc_diem_f(X), tc_toi_thieu_ctdt(M), 100*(X+Z) > 5*M.
 why(vuot_5_phan_tram, r_f07) :- vuot_5_phan_tram.
+ha_mot_muc :- vuot_5_phan_tram.
+ha_mot_muc :- ky_luat_canh_cao_cap_truong.
 
 giam_mot_muc(xuat_sac, gioi).
 giam_mot_muc(gioi, kha).
-hang_cuoi(H2) :- hang_goc(H1), giam_mot_muc(H1,H2), vuot_5_phan_tram.
-hang_cuoi(H)  :- hang_goc(H), not vuot_5_phan_tram.
-hang_cuoi(H)  :- hang_goc(H), vuot_5_phan_tram, not giam_mot_muc(H,_).
-why(hang_cuoi(H), r_f07) :- hang_cuoi(H).
+hang_cuoi(H2) :- hang_goc(H1), giam_mot_muc(H1,H2), ha_mot_muc.
+hang_cuoi(H)  :- hang_goc(H), not ha_mot_muc.
+hang_cuoi(H)  :- hang_goc(H), ha_mot_muc, not giam_mot_muc(H,_).
+why(hang_cuoi(H2), r_f07)  :- hang_goc(H1), giam_mot_muc(H1,H2), vuot_5_phan_tram.
+why(hang_cuoi(H2), r_f07b) :- hang_goc(H1), giam_mot_muc(H1,H2), ky_luat_canh_cao_cap_truong.
+why(hang_cuoi(H), r_f06)   :- hang_cuoi(H), hang_goc(H).
 
 %% ---------------------------------------------------------------------------
 %% 14. QUÁ HẠN THỜI GIAN HỌC TẬP — Điều 33 khoản 1, 2 (R-F09, R-F10)

@@ -231,6 +231,11 @@
       "default": false,
       "description": "true = SV chưa khai báo lựa chọn, hệ thống xét MỌI cách chọn (∀∃) — I20"
     },
+    "hinh_thuc_cuoi_khoa": {
+      "type": ["string", "null"],
+      "enum": ["lvtn", "tltn", "tich_luy_tc", null],
+      "description": "Hình thức thực hiện cuối khóa ĐƠN VỊ ĐÀO TẠO đã xét và công bố cho SV (QĐ3266 Đ31, R-F04 — điều kiện do đơn vị quy định, dữ kiện ngoài). null/thiếu = chưa biết → nhận đề tài LVTN/TLTN là UNKNOWN (Tuần 18)."
+    },
     "xac_nhan_ky_luat_sach": {
       "type": [
         "boolean",
@@ -251,6 +256,21 @@
         "null"
       ],
       "description": "Số TC được công nhận/chuyển đổi — giảm trần Điều 5"
+    },
+    "tc_diem_f": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0,
+      "description": "C15 (QĐ3266 Đ34 k2 a): tổng TC các học phần KHÔNG điều kiện TỪNG bị điểm F (gồm cả HP sau đó học lại đạt), KHÔNG tính HP học cải thiện bị F. Hồ sơ chỉ giữ điểm cuối nên SV khai báo. HP điều kiện xử lý riêng (A17). null/thiếu → KB mở nhánh."
+    },
+    "ky_luat_canh_cao_cap_truong": {
+      "type": [
+        "boolean",
+        "null"
+      ],
+      "description": "C15 (QĐ3266 Đ34 k2 b): đã bị kỷ luật từ mức cảnh cáo cấp Trường trong thời gian học. Không có trên bảng điểm → SV khai báo. null/thiếu → KB mở nhánh."
     },
     "meta": {
       "type": "object",

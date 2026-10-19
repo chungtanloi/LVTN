@@ -99,7 +99,7 @@ Không hồi quy: `w5` 39/39 · `w6` 31/31 · `w7` 5/5 · `w8` 29/29 · `w9` 22/
 
 ## 5. Việc còn lại → Tuần 11
 
-- [ ] **Proof Certificate (Tuần 11):** Claim → Proof → Rule → Fact → Source — `why/2` đã có, cần dựng `certificate` kiểm được bằng máy
+- [x] **Proof Certificate (Tuần 11):** Claim → Proof → Rule → Fact → Source — `why/2` đã có, cần dựng `certificate` kiểm được bằng máy — ✅ đã xong: w11_proof (Tuần 11)
 - [ ] Chuẩn đầu ra ngoại ngữ/CNTT (R-F01b, N) — vẫn `UNKNOWN`
 - [ ] So sánh `dtbctl` với `dtbchk` ở ca sát ngưỡng 2.00 (bẫy nhân 10)
 
@@ -110,4 +110,4 @@ Không hồi quy: `w5` 39/39 · `w6` 31/31 · `w7` 5/5 · `w8` 29/29 · `w9` 22/
 - [x] 3 biến thể T4 đều có test
 - [x] 7 điều kiện tốt nghiệp có test thành phần + hợp
 - [x] Tích hợp miễn/thay thế (T5/T6) vào tốt nghiệp
-- [ ] Chưa test trên **bảng điểm thật** (chờ OCR Tuần 15)
+- [x] Chưa test trên **bảng điểm thật** (chờ OCR Tuần 15) — ✅ đã xong: Tuần 15 phần D (chạy trên bảng điểm thật ở máy, kết quả không commit)

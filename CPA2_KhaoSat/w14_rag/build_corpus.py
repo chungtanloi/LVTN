@@ -9,8 +9,9 @@ Ba nguồn, theo thứ tự tin cậy:
   2. OCR toàn văn (w5_rformal/source/*_ocr_raw.txt)                — thân passage
   3. Curriculum KB (curriculum_cntt_k49.json)                       — passage CTĐT (học phần, nhóm)
 
-Trang OCR trắng (QĐ3266 trang 20 → Điều 33–35) KHÔNG làm mất passage: điều/khoản nào có quy tắc
-R-Formal mà OCR không có thì passage được dựng từ trích R-Formal, gắn nguon="trich_r_formal".
+Trang OCR trắng KHÔNG làm mất passage: điều/khoản nào có quy tắc R-Formal mà OCR không có thì passage
+được dựng từ trích R-Formal, gắn nguon="trich_r_formal". QĐ3266 trang 20 (Điều 32 k4 → Điều 35) nay có
+bản CHÉP TAY từ ảnh PDF gốc (w5_rformal/source/QD3266_tr20_chep_tay.txt) → nguon="chep_tay".
 
 Chạy: python build_corpus.py   → corpus.jsonl + corpus_report.txt
 """
@@ -26,6 +27,7 @@ OCR = {
     "qd3266": W5 / "source" / "QD3266_ocr_raw.txt",
     "qd5339": W5 / "source" / "QD5339_ocr_raw.txt",
 }
+CHEP_TAY = [W5 / "source" / "QD3266_tr20_chep_tay.txt"]   # trang OCR trắng, chép tay từ PDF gốc
 TEN_VB = {"qd3266": "QĐ3266", "qd5339": "QĐ5339"}
 # Trang bắt đầu phần quy định (bỏ quyết định ban hành ở trang 1–2) và trang kết thúc
 # (QĐ5339: sau Phụ lục 1 là các mẫu đơn, trang 13–19 — không phải quy định)
@@ -99,6 +101,28 @@ def parse_ocr(vb, path):
             trang_buf = trang
         buf.append(line)
     flush()
+    return passages
+
+
+def parse_chep_tay(path):
+    """Bản chép tay: mỗi passage mở bằng dòng '@@ văn bản | điều | khoản | trang | tiêu đề điều'."""
+    passages, cur = {}, None
+    for raw in path.read_text(encoding="utf-8").splitlines():
+        line = raw.strip()
+        if not line or line.startswith("#"):
+            continue
+        if line.startswith("@@"):
+            vb, dieu, khoan, trang, tieu_de = [x.strip() for x in line[2:].split("|", 4)]
+            key = pid(vb, int(dieu), int(khoan))
+            if key in passages:
+                raise ValueError(f"{path.name}: passage {key} khai báo hai lần")
+            cur = passages[key] = {
+                "van_ban": vb, "dieu": int(dieu), "khoan": int(khoan) or None, "tieu_de": tieu_de,
+                "trang": int(trang), "ocr": "", "chep_tay": True}
+        elif cur is None:
+            raise ValueError(f"{path.name}: dòng nội dung trước dòng '@@' đầu tiên: {line[:40]!r}")
+        else:
+            cur["ocr"] = clean([cur["ocr"], line])
     return passages
 
 
@@ -190,6 +214,13 @@ def build():
     for vb, path in OCR.items():
         passages.update(parse_ocr(vb, path))
     so_ocr = len(passages)
+    for path in CHEP_TAY:
+        chep = parse_chep_tay(path)
+        trung = set(chep) & set(passages)
+        if trung:      # không dùng assert (python -O bỏ) — P19-3
+            raise ValueError(f"bản chép tay trùng passage OCR: {sorted(trung)}")
+        passages.update(chep)
+    so_chep = len(passages) - so_ocr
     thieu_ocr = gan_r_formal(passages, cat["rules"])
 
     corpus = []
@@ -199,14 +230,14 @@ def build():
         if k:
             dia_chi += f" khoản {k}"
         trich = " ".join(p.get("trich", []))
-        tieu_de = f" {p['tieu_de']}." if p["tieu_de"] else ""   # Đ33–34: trang OCR trắng, không có tiêu đề
+        tieu_de = f" {p['tieu_de']}." if p["tieu_de"] else ""
         text = f"{dia_chi}.{tieu_de} {p['ocr']} {trich}".strip()
         corpus.append({
             "id": key, "loai": "quy_che", "van_ban": vb, "dieu": dieu, "khoan": k,
             "trang": p["trang"], "tieu_de": p["tieu_de"], "dia_chi": dia_chi,
             "text": re.sub(r"\s+", " ", text),
             "rules": p.get("rules", []), "asp": p.get("asp", []),
-            "nguon": "ocr" if p["ocr"] else "trich_r_formal",
+            "nguon": "chep_tay" if p.get("chep_tay") else ("ocr" if p["ocr"] else "trich_r_formal"),
         })
     corpus.sort(key=lambda d: (d["van_ban"], str(d["dieu"]).zfill(4), d["khoan"] or 0))
     cur = json.loads(CURRICULUM.read_text(encoding="utf-8"))
@@ -221,7 +252,7 @@ def build():
     qc = [d for d in corpus if d["loai"] == "quy_che"]
     rep = [
         "CORPUS TUẦN 14",
-        f"  passage quy chế: {len(qc)} (OCR {so_ocr}, dựng từ trích R-Formal {len(qc) - so_ocr})",
+        f"  passage quy chế: {len(qc)} (OCR {so_ocr}, chép tay {so_chep}, dựng từ trích R-Formal {len(qc) - so_ocr - so_chep})",
         f"  passage CTĐT   : {len(corpus) - len(qc)}",
         f"  quy tắc R-Formal không có passage OCR (dùng trích): {thieu_ocr}",
         f"  điều theo văn bản: " + ", ".join(

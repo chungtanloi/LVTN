@@ -61,7 +61,7 @@ def sv(chon, diem=80, bo=(), them=""):
     ds=[c for c in BB if c not in bo] + list(chon)
     return "\n".join(f'g10("{c}",{diem}).' for c in ds) + "\n" + them
 CHUAN = ["TC100","XH023","XH024","XH025","ML007","CT449","CT484"]
-KY_LUAT = "xac_nhan_ky_luat_sach.\n"
+KY_LUAT = "xac_nhan_ky_luat_sach.\nda_hoc_nam2(9).\n"   # hồ sơ khai báo đủ (Tuần 16)
 
 # =============================================================
 def test_prerequisite():
@@ -111,11 +111,26 @@ def test_graduation_cases():
     m=solve_one('course("QP1",2). loai_hp("QP1",gdqp). g10("QP1",45).\n' + sv(CHUAN+["CT550E"], them=KY_LUAT))
     check("khong_dat_gdqp(\"QP1\")" in m, "B5 GDQP D → khong_dat_gdqp → dk_gdqp FALSE")
     # B6: Thiếu xác nhận kỷ luật → UNKNOWN (ba trị)
+    #     Tuần 16 (P15-2): trước đây kỳ vọng FALSE — đó là giả định thế giới đóng, trái schema w7
     v=tri("tot_nghiep", sv(CHUAN+["CT550E"]))
-    check(v=="FALSE", f"B6 Thiếu xac_nhan_ky_luat_sach → tot_nghiep={v} (FALSE, vì dk_ky_luat bắt buộc)")
+    check(v=="UNKNOWN", f"B6 Thiếu xac_nhan_ky_luat_sach → tot_nghiep={v} (UNKNOWN, dữ kiện ngoài chưa khai báo)")
+    v=tri("tot_nghiep", sv(CHUAN+["CT550E"], them="khai_bao(ky_luat).\n"))
+    check(v=="FALSE", f"B6b Đã khai báo KHÔNG có xác nhận kỷ luật → tot_nghiep={v} (FALSE)")
     # B7: Quá hạn
     m=solve_one(sv(CHUAN+["CT550E"], them="da_hoc_nam2(20).\n"))
     check("qua_thoi_gian_toi_da" in m and "thieu_dk(thoi_gian)" in m, "B7 Quá hạn 10 năm → thiếu thời gian")
+    # B7b/c (Tuần 16, P16-2): thời gian là điều kiện tốt nghiệp (Điều 5, R-E01)
+    v=tri("tot_nghiep", sv(CHUAN+["CT550E"], them="xac_nhan_ky_luat_sach.\nda_hoc_nam2(20).\n"))
+    check(v=="FALSE", f"B7b Đủ học vụ + kỷ luật sạch nhưng quá hạn (20 > 18) → tot_nghiep={v} (FALSE)",
+          "HỒI QUY P16-2: luật cũ cho TRUE")
+    v=tri("tot_nghiep", sv(CHUAN+["CT550E"], them="xac_nhan_ky_luat_sach.\nda_hoc_nam2(18).\n"))
+    check(v=="TRUE", f"B7c Biên 18 = trần → tot_nghiep={v} (TRUE)")
+    v=tri("tot_nghiep", sv(CHUAN+["CT550E"], them="xac_nhan_ky_luat_sach.\n"))
+    check(v=="UNKNOWN", f"B7d Thiếu da_hoc_nam2 → tot_nghiep={v} (UNKNOWN)")
+    # B7e (P17-3): 27 TC công nhận → trần giảm 3 HK = 1 năm (1 HK = 1/3 năm, Điều 6 k1) → 8 năm; đã học 8 năm
+    v=tri("tot_nghiep", sv(CHUAN+["CT550E"], them="xac_nhan_ky_luat_sach.\nda_hoc_nam2(16).\ntc_cong_nhan(27).\n"))
+    check(v=="TRUE", f"B7e 27 TC công nhận, đã học 16 nửa năm (= trần 8 năm) → tot_nghiep={v} (TRUE)",
+          "HỒI QUY P17-3: luật cũ trừ 3 nửa năm → trần 7,5 năm → FALSE")
 
 def test_with_exemption():
     print("\nC. TÍCH HỢP MIỄN/THAY THẾ VÀO TỐT NGHIỆP")
@@ -143,6 +158,29 @@ xac_nhan_ky_luat_sach.
     m=solve_one(extra2)
     check("passed(\"ML014\")" in m, "C2 ML009→ML014 vẫn passed")
 
+def test_ha_bac():
+    print("\nD. HẠ MỘT MỨC HẠNG XUẤT SẮC/GIỎI (C15, Đ34 k2) — dữ kiện ngoài: mở nhánh khi chưa khai báo")
+    xs = sv(CHUAN + ["CT550E"], diem=95, them=KY_LUAT)              # ĐTBCTL 4,0 → hạng gốc xuất sắc
+    v = (tri("hang_cuoi(xuat_sac)", xs), tri("hang_cuoi(gioi)", xs))
+    check(v == ("UNKNOWN", "UNKNOWN"), f"D1 xuất sắc, CHƯA khai báo TC điểm F / kỷ luật cấp Trường → hạng cuối UNKNOWN (xuất sắc hoặc giỏi) {v}",
+          "HỒI QUY C15: luật cũ TRUE xuất sắc (thế giới đóng — không bao giờ hạ)")
+    sach = xs + "tc_diem_f(0). khai_bao(ky_luat_cap_truong).\n"
+    check(tri("hang_cuoi(xuat_sac)", sach) == "TRUE", "D2 khai báo đủ: không F, không kỷ luật cấp Trường → TRUE xuất sắc")
+    kl = xs + "tc_diem_f(0). khai_bao(ky_luat_cap_truong). ky_luat_canh_cao_cap_truong.\n"
+    check(tri("hang_cuoi(gioi)", kl) == "TRUE", "D3 khai báo bị kỷ luật cảnh cáo cấp Trường → TRUE giỏi")
+    kha = sv(CHUAN + ["CT550E"], diem=75, them=KY_LUAT)              # ĐTBCTL 3,0 → khá: không thuộc diện hạ
+    check(tri("hang_cuoi(kha)", kha) == "TRUE", "D4 khá, chưa khai báo gì → vẫn TRUE khá (Đ34 k2 chỉ hạ xuất sắc, giỏi)")
+    # review C15: nhánh A17 (HP điều kiện có tính vào tổng TC CTĐT không) phải MỞ thật — bản đầu có vòng lặp lẻ nên nhánh
+    # không bao giờ mở (âm thầm chọn "có tính")
+    dk = ["QP010E", "QP011E", "QP012", "QP013", "XH023"]            # 12 TC HP điều kiện điểm F > 5% × 161
+    xs_dk = sv(CHUAN + ["CT550E"], diem=95, bo=dk, them=KY_LUAT + "".join(f'g10("{c}",30).' for c in dk)
+               + "\ntc_diem_f(0). khai_bao(ky_luat_cap_truong).\n")
+    v = (tri("hang_cuoi(xuat_sac)", xs_dk), tri("hang_cuoi(gioi)", xs_dk))
+    check(v == ("UNKNOWN", "UNKNOWN"), f"D5 khai báo đủ, chỉ HP ĐIỀU KIỆN điểm F mới vượt 5% → UNKNOWN (A17 chưa rõ HP điều kiện có tính) {v}")
+    ct_f = ["CT177", "CT174", "CT175"]                               # 9 TC HP không điều kiện điểm F > 5%
+    xs_f = sv(CHUAN + ["CT550E"], diem=95, bo=ct_f, them=KY_LUAT + "".join(f'g10("{c}",30).' for c in ct_f))
+    check(tri("hang_cuoi(gioi)", xs_f) == "TRUE", "D6 HP KHÔNG điều kiện đang điểm F > 5% → chắc chắn hạ: TRUE giỏi (kể cả chưa khai báo)")
+
 def main():
     print("="*78)
     print("VALIDATE GRADUATION SOLVER v1 — Tuần 10 (CPA2)")
@@ -150,6 +188,7 @@ def main():
     test_prerequisite()
     test_graduation_cases()
     test_with_exemption()
+    test_ha_bac()
     print("\n"+"="*78)
     if errors:
         print(f"KẾT LUẬN: CÓ {len(errors)} LỖI")

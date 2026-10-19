@@ -1,0 +1,27 @@
+{
+ "gtruth": "c977717d96ba0e6473c5fda9e9f76744f29c7a96f4cc2f3c731e7d8699a74b2c",
+ "ocr_noise": "754a6bf67f6928f304aeec526595c897361f8f6dc581e7963fab1c0c2fe73507",
+ "nguon_du_lieu": {
+  "w7_student_facts/students/sv_5hp.json": "1237c3c1e86bb04f3c1049e2d8a129c070e5b5c5ce57816b72fc9a34fac86868",
+  "w7_student_facts/students/sv_du_hp.json": "5d7203fecbf3097b17911a7d5f37e0182491fc53007a08076af3f67c984f4596",
+  "w7_student_facts/students/sv_lvtn.json": "81c7d502bf9f9b0d71d017ae7363b6b37a63fada3aae4f07eff512e5e2e8d312",
+  "w7_student_facts/students/sv_mien_ielts.json": "983386e652ad1be83bac7845675100b92cfa1cb608bbc91e3ce84615a3251a42",
+  "w7_student_facts/students/sv_tltn.json": "172555f7b4d445d06b298c101cfd4ff4a395a1ed2252a5177bc3bf0b9da19ec4",
+  "w7_student_facts/students/sv_tron_ngoai_ngu.json": "06445f4efb2d9312f3997bf41bd43af7d12b8d5931ff588020ea179beb07c8e0",
+  "w6_curriculum/curriculum_cntt_k49.json": "bd9551bdaa30a6b990936ef6787acf76018b1f165a5534e134f15078e5ba6656"
+ },
+ "commit": "312b7ff",
+ "ngay": "2026-10-18",
+ "hash_v1": {
+  "gtruth": "a9b43d7b7d162504c15aabd5c6b4e930be97f5f39610d5a8939f4be0f4627dab",
+  "ocr_noise": "9ac4faec2c3c6c521138b267593a0e5ab9b06f538570f87755c1c42090c25232",
+  "truong": [
+   "id",
+   "he",
+   "claim",
+   "dau_vao",
+   "gold"
+  ]
+ },
+ "ghi_chu": "Gold đóng băng ở commit 312b7ff (trước lần chạy CPA² đầu). Sau review, hash MỞ RỘNG sang mọi trường ảnh hưởng đầu vào/chấm điểm + hồ sơ gốc + CTĐT, tính trên ĐÚNG nội dung gtruth.json/ocr_noise.json của 312b7ff (git diff rỗng) — không đổi dữ liệu. Sai sót phát hiện sau → errata, KHÔNG sửa gold."
+}

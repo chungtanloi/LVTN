@@ -25,6 +25,8 @@
 - **OCR làm hỏng số khoản** theo nhiều kiểu: `5,` · `2 Điểm` · `10.SV` · `+,` (thay cho `4.`) · `s6`. Bộ tách chấp nhận dấu `.`/`,` tuỳ chọn và chữ hoa theo sau, cho phép nhảy cóc 1 khoản; số điều và số khoản phải tăng đơn điệu để tham chiếu chéo kiểu "xem Điều 24" không mở passage mới.
 - **8 passage dựng từ trích R-Formal**, vì OCR hỏng hoặc trắng: QĐ3266 Đ24 k3–5 · Đ33 k1–2 · Đ34 k2 · Đ35 (trang 20 OCR trắng) · QĐ5339 Đ3 k8. Đây là lỗi "OCR trang trắng im lặng" đã gặp ở Tuần 5; ở đây nó bị phát hiện và được bù chứ không bị bỏ qua im lặng.
 - Điều 33, 34 không có tiêu đề ở bất kỳ nguồn nào. **Không tự đặt tiêu đề.**
+- ✅ **Đã lấp 18/10/2026 (sau Tuần 19):** Loi gửi PDF gốc QĐ3266; trang 20 được chép tay đúng chữ vào `w5_rformal/source/QD3266_tr20_chep_tay.txt` (Điều 32 k4–6, Điều 33 k1–4, Điều 34 k1–2, Điều 35). Đối chiếu: các trích R-Formal đọc từ ảnh ở Tuần 5 (R-F06…F10) **đúng nội dung** (R-F07–F09 nguyên văn; R-F06, R-F10 diễn đạt lại/rút gọn — nguyên văn ở bản chép tay); thêm R-X20, R-X21 (Đ33 k3, k4 — thủ tục, lớp X). Tiêu đề: Điều 33 "Xử lý sinh viên quá hạn thời gian học tập", Điều 34 "Bằng tốt nghiệp và hạng tốt nghiệp".
+  Corpus nay: 144 passage quy chế (OCR 130, **chép tay 10**, dựng từ trích 4). Truy hồi (cùng bộ câu hỏi, không tinh chỉnh): dev Recall@1 19/24 → 19/24, **Recall@5 22/24 → 21/24** (dev08 "điều kiện tốt nghiệp" → Đ32 k1 tụt hạng 6, bị Đ32 k4 và Đ33 k2 mới vượt), MRR 0,849 → 0,845; test không đổi (16/24 · 22/24 · 0,788). Mục tiêu Recall vẫn **chưa đạt** (B6).
 
 ---
 

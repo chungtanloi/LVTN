@@ -120,9 +120,9 @@ KẾT LUẬN: ĐẠT — Elective Solver pass toàn bộ N-of-M
 
 ## 5. Việc còn lại → Tuần 9
 
-- [ ] **Exemption & Substitution (T5/T6):** phân biệt `passed / exempted_M / recognized / substituted` trên nhóm (ví dụ miễn AV bằng IELTS có tính cho `g_ngoai_ngu` không? → có, 10 TC, nhưng điểm M không vào ĐTBCTL)
-- [ ] Tích hợp `du_dk_xin_mien` → `duoc_mien` (QD-11) với nhóm ngoại ngữ
-- [ ] Chênh lệch tín chỉ khi thay thế (QD-10, QĐ5339 Đ3 k.3) — học phần thay thế có TC khác
+- [x] **Exemption & Substitution (T5/T6):** phân biệt `passed / exempted_M / recognized / substituted` trên nhóm (ví dụ miễn AV bằng IELTS có tính cho `g_ngoai_ngu` không? → có, 10 TC, nhưng điểm M không vào ĐTBCTL) — ✅ đã xong: w9_exemption (Tuần 9)
+- [x] Tích hợp `du_dk_xin_mien` → `duoc_mien` (QD-11) với nhóm ngoại ngữ — ✅ đã xong: w9_exemption (Tuần 9)
+- [x] Chênh lệch tín chỉ khi thay thế (QD-10, QĐ5339 Đ3 k.3) — học phần thay thế có TC khác — ✅ đã xong: w9 validate_exemption A6, C6
 
 ---
 

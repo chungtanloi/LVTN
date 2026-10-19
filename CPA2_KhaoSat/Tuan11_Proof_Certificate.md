@@ -95,8 +95,8 @@ KẾT LUẬN: ĐẠT — Mỗi kết luận có trace Claim→Proof→Rule→Fac
 
 ## 4. Việc còn lại → Tuần 12
 
-- [ ] **Tích hợp Solver + Proof (Prototype v1):** nối 4 tầng (Parser → KB → Solver → Verbalizer + hậu kiểm), trả về `⟨ verdict, certificate, explanation_vi, missing_facts ⟩` end-to-end
-- [ ] Hậu kiểm `explanation_vi`: chặn mọi số/mã không có trong `certificate`
+- [x] **Tích hợp Solver + Proof (Prototype v1):** nối 4 tầng (Parser → KB → Solver → Verbalizer + hậu kiểm), trả về `⟨ verdict, certificate, explanation_vi, missing_facts ⟩` end-to-end — ✅ đã xong: w12_integration (Tuần 12)
+- [x] Hậu kiểm `explanation_vi`: chặn mọi số/mã không có trong `certificate` — ✅ đã xong: w12 prototype.verbalize + validate_integration D
 - [ ] Đo `Counterfactual Optimality Gap` cho RQ3 (T3 lập kế hoạch)
 
 ---

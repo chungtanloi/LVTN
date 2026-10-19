@@ -1,0 +1,64 @@
+==============================================================================
+VALIDATE RECOMMENDATION v1 — Tuần 19 (CPA2)
+==============================================================================
+
+A. ĐĂNG KÝ HỌC KỲ TỚI — sinh viên năm 2 (đã học AV1, CT101, CT173, TN001 …)
+  [OK]   A1 có phương án, tổng 20 TC ≤ 20 (Đ14 k1) (['CT176', 'CT177', 'CT178', 'CT179', 'CT188', 'CT273', 'ML016'])
+  [OK]   A2 không đề xuất HP thiếu tiên quyết (CT174/175/180 cần CT177; CT112 cần CT178; ML018 cần ML016)
+  [OK]   A3 không đề xuất HP đã tích lũy
+  [OK]   A4 đã học AV → không đề xuất Pháp văn (nhóm một nhánh)
+  [OK]   A5 không đề xuất GDQP (trường bố trí riêng)
+  [OK]   A6 còn đủ HP bắt buộc lấp 20 TC → chỉ chọn bắt buộc (['CT176', 'CT177', 'CT178', 'CT179', 'CT188', 'CT273', 'ML016'])
+  [OK]   A7 ưu tiên HP mở khóa nhiều HP sau (CT177 → CT174/175/180; CT176 → CT182/271E/300)
+  [OK]   A8 mọi HP đề xuất có mở ở HK1
+  [OK]   A9 mỗi HP đề xuất có chứng chỉ (tiên quyết R-A03 …)
+
+B. HỌC KỲ 3
+  [OK]   B1 HK3 chỉ chọn HP mở ở HK3 (CT177 chỉ mở HK1/HK2) (['ML016', 'TN002', 'KN002E', 'XH024', 'XH025'])
+  [OK]   B2 nhóm AV: AV căn bản 2–3 trước AV tăng cường (song hành Đ7 k5) (['ML016', 'TN002', 'KN002E', 'XH024', 'XH025'])
+
+C. KHÔNG CHẮC → CẦN XÁC MINH, KHÔNG ĐỀ XUẤT
+  [OK]   C1 điểm CT101 chưa rõ → CT177, CT176 vào 'cần xác minh', không vào phương án (['CT178', 'CT188', 'CT222', 'CT223', 'CT273', 'CT294', 'ML016'] | ['CT101', 'CT177', 'CT176'])
+
+D. GIAI ĐOẠN CUỐI — 146 TC, chưa làm LVTN
+  [OK]   D1 chỉ chọn trong nhóm tốt nghiệp, không cùng lúc LVTN + TLTN (['CT550E'])
+  [OK]   D2 hình thức tốt nghiệp đủ điều kiện: lvtn, tltn, tich_luy_tc ({'tltn', 'lvtn', 'tich_luy_tc'})
+  [OK]   D3 đã công bố hình thức TLTN → không đề xuất LVTN (['CT210', 'CT283', 'CT482', 'CT501E'])
+  [OK]   D4 đã đủ CTĐT → không đề xuất gì thêm
+
+E. XIN MIỄN (QD-11) VÀ THAY THẾ
+  [OK]   E1 IELTS 6.0 → đề xuất NỘP ĐƠN xin miễn AV 1–3 (['XH023', 'XH024', 'XH025', 'XH031', 'XH032', 'XH033'])
+  [OK]   E2 HP đủ điều kiện xin miễn không bị đề xuất học
+  [OK]   E3 diễn đạt 'nộp đơn xin miễn', không phải 'đã miễn'
+  [OK]   E4 đã có quyết định miễn → không đề xuất xin miễn nữa
+  [OK]   E5 đạt ML009 → ML014 được công nhận thay thế, không đề xuất học ML014 (['CT176', 'CT177', 'CT178', 'CT179', 'CT188', 'CT273', 'ML016'])
+
+F. SONG HÀNH — QĐ3266 Đ7 k5: 'phải học trước hoặc học cùng lúc' (QD-13 rút lại; 'học' = có học, kể cả F)
+  [OK]   F1 chưa học CT180 và CT180 không thể học cùng kỳ (thiếu CT177) → KHÔNG đề xuất CT182, nêu Đ7 k5 (['CT177', 'CT178', 'CT188', 'CT223', 'CT273', 'CT300', 'ML016'])
+  [OK]   F2 đã học CT180 (dù bị F) → song hành thoả, CT182 hợp lệ (quyết định (a): 'học' ≠ 'tích lũy') (['CT177', 'CT178', 'CT188', 'CT202', 'CT273', 'CT294', 'ML016'])
+  [OK]   F3 CT180 điểm W (đã rút) → không tính là đã học → CT182 không đề xuất
+  [OK]   F5 HP song hành CT180 chưa chắc (CT177 mâu thuẫn) → CT182 'cần xác minh', không kết luận chắc 'không đủ' (review)
+  [OK]   F6 CT180 điểm I (status unknown) → đã học (đã dự học, chờ bổ sung điểm)
+  [OK]   F4 HK3: mọi HP đề xuất có song hành đã học hoặc cùng kỳ (XH025 cùng XH024; không XH031 khi chưa có XH025) (['ML016', 'TN002', 'KN002E', 'XH024', 'XH025'])
+
+G. BẤT BIẾN AN TOÀN — kiểm lại độc lập mọi đề xuất (6 hồ sơ × 3 học kỳ + biến thể)
+  [OK]   G1 21 lần đề xuất: mọi mục kiểm lại đều TRUE/ELIGIBLE, song hành thoả Đ7 k5, không vượt 20 TC
+
+H. PROTOTYPE (Tuần 12)
+  [OK]   H1 'kỳ này em nên đăng ký môn gì' → Recommendation (de_xuat)
+  [OK]   H2 'học kì 2 em nên đăng ký gì' → HK2 (2)
+  [OK]   H2 'kỳ 3 em nên đăng ký môn gì' → HK3 (3)
+  [OK]   H2 'HK III em nên đăng ký gì' → HK3 (3)
+  [OK]   H2 'học hè em nên đăng ký gì' → HK3 (3)
+  [OK]   H3 'học kỳ 4' không tồn tại (Đ6 k1: 3 HK) → hỏi lại, không lặng lẽ dùng HK1 (UNKNOWN)
+  [OK]   H4 câu hỏi về MỘT học phần không bị nhánh đề xuất chiếm
+  [OK]   H5 'em có nên đăng ký môn gì' → đề xuất (không rơi về tot_nghiep mặc định — P18-1)
+  [OK]   H6 câu hỏi Unicode tổ hợp (NFD) vẫn nhận đúng ý định
+
+I. HỒI QUY REVIEW
+  [OK]   I1 đã học cả AV lẫn PV → cần xác minh với lý do 'cả hai nhánh', không phải 'chưa xác định thiếu bao nhiêu' ({'đã học cả hai nhánh của nhóm g_ngoai_ngu (av, pv) — hỏi Phòng Đào tạo nhánh nào được tính'})
+  [OK]   I2 bất biến kiểm lại phương án không dùng assert (bị bỏ khi chạy python -O)
+
+==============================================================================
+KẾT LUẬN: ĐẠT — chỉ đề xuất phương án đã chứng minh hợp lệ; không đề xuất Not Eligible/Unknown
+==============================================================================

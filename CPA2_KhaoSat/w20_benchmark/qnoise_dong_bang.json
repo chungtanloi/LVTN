@@ -1,0 +1,6 @@
+{
+ "qnoise": "e75df4d85de64af5b81433d103566ffc6919eee80cf0f35c2b03c64d29ca5ffd",
+ "gtruth_goc": "c977717d96ba0e6473c5fda9e9f76744f29c7a96f4cc2f3c731e7d8699a74b2c",
+ "ngay": "2026-10-18",
+ "ghi_chu": "Q-Noise v1 đóng băng TRƯỚC lần chạy CPA² đầu tiên — commit đóng băng là commit đầu tiên chứa file này (git log -- qnoise_dong_bang.json). Gold kế thừa từ G-Truth v1 (312b7ff); ý định kỳ vọng (claim_ky_vong) gán tay theo câu chữ. Nghĩa các biến thể soát tay bằng cách đọc (mọi biến thể của ca NL/EL, mẫu đại diện của ca DK/TN vốn chung một mẫu câu chỉ khác mã HP) — không chạy hệ thống. Hash phủ TOÀN BỘ trường của mọi ca. Sai sót phát hiện sau → errata, KHÔNG sửa."
+}

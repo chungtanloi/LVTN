@@ -204,5 +204,5 @@ Việc chọn solver xong không có nghĩa là hết việc. Ba câu hỏi thi�
 
 - [x] Ba solver cho cùng đáp án trên T1 và T3 — đã đối chiếu chéo tự động trong `bench.py`
 - [x] Ba trị phân biệt đúng TRUE / FALSE / UNKNOWN trên ba hồ sơ đại diện
-- [ ] Chưa kiểm tra khả năng mở rộng ở quy mô CTĐT thật (> 60 học phần)
-- [ ] Chưa dùng số liệu quy chế thật — mọi ngưỡng trong `kb.py` là **giá trị thu nhỏ để chạy thử**
+- [x] Chưa kiểm tra khả năng mở rộng ở quy mô CTĐT thật (> 60 học phần) — ✅ đã xong: Tuần 6 (CTĐT K49 78 dòng, clingo/CP-SAT/Python)
+- [x] Chưa dùng số liệu quy chế thật — mọi ngưỡng trong `kb.py` là **giá trị thu nhỏ để chạy thử** — ✅ đã xong: Tuần 5–6 (R-Formal + CTĐT thật, ERRATA_Tuan6.md)
