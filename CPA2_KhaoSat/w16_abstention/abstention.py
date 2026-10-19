@@ -6,6 +6,8 @@ Ba trị TRUE / FALSE / UNKNOWN trên MỌI answer set + "missing evidence" + ch
   Dữ kiện mở (thế giới mở có kiểm soát, graduation_solver.lp mục 0):
     xac_nhan_ky_luat_sach   — hồ sơ null/thiếu → { xac_nhan_ky_luat_sach } (R-F03, QĐ3266 Đ32 k1)
     qua_thoi_gian_toi_da    — thiếu da_hoc_nam2 → { qua_thoi_gian_toi_da } (R-E01, QĐ3266 Đ5)
+    f_ngoai_ho_so_vuot_5, hp_dk_tinh_vao_tong, ky_luat_canh_cao_cap_truong — thiếu tc_diem_f / HP điều kiện chưa rõ
+                            (A17) / thiếu khai báo kỷ luật cấp Trường (R-F07/F07b, Đ34 k2)
     g10(C,_)                — điểm không chắc (OCR Tuần 15) → lựa chọn 1 { g10(C,v) ... } 1
 
   missing evidence: mỗi answer set là một "thế giới" (một cách gán dữ kiện mở). Với mỗi biến mở,
@@ -42,6 +44,18 @@ BIEN_BOOL = {
         "Bạn đã học bao lâu kể từ khi nhập học (tính theo nửa năm, ví dụ 4,5 năm = 9), và có được công nhận/chuyển đổi "
         "tín chỉ nào không? (lưu ý: một năm học có 3 học kỳ — không đếm số học kỳ)",
         "R-E01, R-E02 · QĐ3266 Điều 5"),
+    # C15 (Tuần 20): hạ một mức hạng xuất sắc/giỏi — QĐ3266 Đ34 k2 (graduation_solver.lp mục 0)
+    "f_ngoai_ho_so_vuot_5": (
+        "Tổng số tín chỉ các học phần (không tính học phần điều kiện: GDQP, GDTC, ngoại ngữ/tin học căn bản) bạn TỪNG bị "
+        "điểm F — kể cả học phần sau đó đã học lại đạt, không tính lần học cải thiện điểm bị F — là bao nhiêu?",
+        "R-F07 · QĐ3266 Điều 34 khoản 2 điểm a"),
+    "hp_dk_tinh_vao_tong": (
+        "Học phần điều kiện (GDQP, GDTC, ngoại ngữ/tin học căn bản) bị điểm F có tính vào 'khối lượng học phần bị điểm F' "
+        "của Điều 34 khoản 2 điểm a không? (văn bản chưa rõ — cần Phòng Đào tạo xác nhận)",
+        "R-F07 · QĐ3266 Điều 34 khoản 2 điểm a · việc tồn đọng A17"),
+    "ky_luat_canh_cao_cap_truong": (
+        "Trong thời gian học, bạn có từng bị kỷ luật từ mức cảnh cáo cấp Trường trở lên không?",
+        "R-F07b · QĐ3266 Điều 34 khoản 2 điểm b"),
 }
 G10 = re.compile(r'^g10\(("[^"]+"),(-?\d+)\)$')
 

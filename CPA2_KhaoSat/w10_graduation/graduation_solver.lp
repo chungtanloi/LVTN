@@ -28,6 +28,19 @@
 khai_bao(thoi_gian) :- da_hoc_nam2(_).
 { xac_nhan_ky_luat_sach } :- not khai_bao(ky_luat).
 { qua_thoi_gian_toi_da }  :- not khai_bao(thoi_gian).
+%% C15 (Tuần 20, Đ34 k2 — R-F07/R-F07b): hạ một mức hạng xuất sắc/giỏi. Hồ sơ chỉ giữ điểm CUỐI → không biết HP từng F
+%% rồi học lại đạt; kỷ luật cấp Trường không có trên bảng điểm → chưa khai báo thì mở nhánh. HP điều kiện có thuộc
+%% "tổng TC của CTĐT" không chưa rõ → chỉ vượt 5% khi tính cả HP điều kiện cũng mở nhánh.
+%% Lựa chọn đặt trên atom TỰ DO (review C15): f_ngoai_ho_so_vuot_5 = HP từng F rồi học lại đạt (không còn trên hồ sơ) làm
+%% vượt 5%; hp_dk_tinh_vao_tong = HP điều kiện có tính (A17). Không chọn trực tiếp vuot_5_phan_tram (atom được suy ra —
+%% abstention sẽ coi nhầm là biến quyết định ở thế giới nó bị ép đúng).
+khai_bao(tc_diem_f) :- tc_diem_f(_).
+{ f_ngoai_ho_so_vuot_5 } :- not khai_bao(tc_diem_f).          % ĐỘC LẬP với điểm — phụ thuộc vuot_5_chac làm nó tương quan với
+%%                                                              điểm không chắc → abstention coi nhầm là quyết định (B5)
+vuot_5_phan_tram :- f_ngoai_ho_so_vuot_5.
+{ hp_dk_tinh_vao_tong }.                      % A17 chưa có câu trả lời — ĐỘC LẬP với điểm (review lượt 2); khi Phòng
+vuot_5_phan_tram :- hp_dk_tinh_vao_tong, co_the_vuot_5_do_hp_dk.   % Đào tạo xác nhận thì thay bằng dữ kiện
+{ ky_luat_canh_cao_cap_truong } :- not khai_bao(ky_luat_cap_truong).
 
 %% ---------------------------------------------------------------------------
 %% 1. BẢY ĐIỀU KIỆN THÀNH PHẦN (Taxonomy Tuần 2, T7 — đã có ở R-Formal, ở đây chỉ alias)

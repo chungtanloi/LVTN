@@ -1,0 +1,26 @@
+{
+ "ngay": "2026-10-19",
+ "ghi_chu": "Errata G-Truth v1 — KHÔNG sửa gtruth.json (đóng băng 312b7ff). C15 (R-Formal v1.11): QĐ3266 Đ34 k2 hạ một mức hạng XUẤT SẮC/GIỎI nếu (a) TC học phần bị điểm F vượt 5% (không tính học cải thiện) hoặc (b) đã bị kỷ luật từ mức cảnh cáo cấp Trường. Gold HG giỏi/xuất sắc viết khi KB không hạ bậc (tc_diem_f không được sinh, điểm b thiếu) và ngầm giả định 'không F, không kỷ luật'. Hồ sơ không khai báo hai dữ kiện này → câu trả lời đúng theo quy chế là UNKNOWN. Hạng khá/trung bình không thuộc diện hạ → gold giữ nguyên. Báo CẢ HAI cách chấm (chính thức theo gold đóng băng + theo errata).",
+ "sua": {
+  "HG-02": {
+   "gold_v1": "TRUE",
+   "gold_errata": "UNKNOWN",
+   "ly_do": "Hạng gốc giỏi/xuất sắc; hồ sơ không khai báo tc_diem_f và kỷ luật cảnh cáo cấp Trường → có thể bị hạ một mức (Đ34 k2)."
+  },
+  "HG-03": {
+   "gold_v1": "TRUE",
+   "gold_errata": "UNKNOWN",
+   "ly_do": "Hạng gốc giỏi/xuất sắc; hồ sơ không khai báo tc_diem_f và kỷ luật cảnh cáo cấp Trường → có thể bị hạ một mức (Đ34 k2)."
+  },
+  "HG-04": {
+   "gold_v1": "TRUE",
+   "gold_errata": "UNKNOWN",
+   "ly_do": "Hạng gốc giỏi/xuất sắc; hồ sơ không khai báo tc_diem_f và kỷ luật cảnh cáo cấp Trường → có thể bị hạ một mức (Đ34 k2)."
+  },
+  "HG-08": {
+   "gold_v1": "TRUE",
+   "gold_errata": "UNKNOWN",
+   "ly_do": "Hạng gốc giỏi/xuất sắc; hồ sơ không khai báo tc_diem_f và kỷ luật cảnh cáo cấp Trường → có thể bị hạ một mức (Đ34 k2)."
+  }
+ }
+}

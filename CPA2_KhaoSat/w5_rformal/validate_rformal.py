@@ -606,6 +606,34 @@ test("C46 ĐTBCTL 3,595 (A 19TC, B+ 81TC) — giữa 3,59 và 3,60 → GIỎI (Q
      hg(19, 95, 81, 85), expect_true=["hang_cuoi(gioi)"], expect_false=["hang_cuoi(xuat_sac)"],
      note="Đ24/Đ34 không quy định làm tròn ĐTBCTL — quyết định diễn giải QD-14")
 
+# --- C47–C53. Hạ một mức hạng XUẤT SẮC/GIỎI (Đ34 k2, chép tay tr.20) — C15 (Tuần 20): luật cũ chỉ đọc tc_diem_f (KHÔNG
+#     nơi nào sinh) và thiếu điểm b → không bao giờ hạ. (a) TC HP đang điểm F là cận dưới CHẮC CHẮN (điểm cuối F thì không
+#     phải học cải thiện — R-B13 lấy điểm cao nhất); (b) kỷ luật từ mức cảnh cáo cấp Trường.
+F_KB = ctdt([("a", 10, "bat_buoc"), ("f", 7, "bat_buoc")]) + "khoa_tu_k45. g10(a,95). tc_toi_thieu_ctdt(120). "
+test("C47 Xuất sắc + HP đang điểm F 7/120 TC (> 5%), KHÔNG khai báo tc_diem_f → hạng cuối GIỎI",
+     F_KB + "g10(f,20).",
+     expect_true=["hang_goc(xuat_sac)", "vuot_5_phan_tram", "hang_cuoi(gioi)"], expect_false=["hang_cuoi(xuat_sac)"],
+     note="HỒI QUY C15: luật cũ chỉ dùng tc_diem_f (không được sinh) → giữ xuất sắc")
+test("C48 HP đang điểm F đúng 6/120 TC (= 5%) → KHÔNG hạ (vượt quá 5% mới hạ)",
+     ctdt([("a", 10, "bat_buoc"), ("f", 6, "bat_buoc")]) + "khoa_tu_k45. g10(a,95). tc_toi_thieu_ctdt(120). g10(f,20).",
+     expect_true=["hang_cuoi(xuat_sac)"], expect_false=["vuot_5_phan_tram"])
+test("C49 Xuất sắc + kỷ luật từ mức cảnh cáo cấp Trường → GIỎI (Đ34 k2 điểm b)",
+     hg(2, 95, 8, 95) + " ky_luat_canh_cao_cap_truong.",
+     expect_true=["hang_cuoi(gioi)", "why(hang_cuoi(gioi),r_f07b)"], expect_false=["hang_cuoi(xuat_sac)"],
+     note="HỒI QUY C15: điểm b chưa hình thức hoá")
+test("C50 Giỏi (ĐTBCTL đúng 3,20) + kỷ luật cảnh cáo cấp Trường → KHÁ",
+     hg(2, 95, 8, 75) + " ky_luat_canh_cao_cap_truong.",
+     expect_true=["hang_cuoi(kha)"], expect_false=["hang_cuoi(gioi)"])
+test("C51 Khá + kỷ luật cảnh cáo cấp Trường → vẫn KHÁ (Đ34 k2 chỉ hạ xuất sắc, giỏi)",
+     hg(2, 85, 5, 75) + " ky_luat_canh_cao_cap_truong.",
+     expect_true=["hang_cuoi(kha)"], expect_false=["hang_cuoi(trung_binh)"])
+test("C52 Không hạ bậc → chứng chỉ KHÔNG có bước R-F07 (luật cũ sinh why(hang_cuoi, r_f07) vô điều kiện)",
+     hg(2, 85, 5, 75),
+     expect_true=["hang_cuoi(kha)", "why(hang_cuoi(kha),r_f06)"], expect_false=["why(hang_cuoi(kha),r_f07)"])
+test("C53 Khai báo tc_diem_f(7) (HP từng F rồi học lại đạt) dù không HP nào đang F → hạ (giữ ca C10 theo khai báo)",
+     F_KB.replace("g10(a,95). ", "g10(a,95). ") + "g10(f,95). tc_diem_f(7).",
+     expect_true=["vuot_5_phan_tram", "hang_cuoi(gioi)"], expect_false=["hang_cuoi(xuat_sac)"])
+
 def section_c():
     print("\n" + "=" * 78)
     print("C. KIỂM THỬ NGỮ NGHĨA (clingo)")

@@ -1,5 +1,5 @@
 %%=============================================================================
-%% qd3266_r_formal_v1.lp — R-Formal v1 (v1.10: hạng tốt nghiệp so hữu tỉ theo cận dưới — Tuần 20, P20-1)
+%% qd3266_r_formal_v1.lp — R-Formal v1 (v1.11: hạ một mức hạng XS/G theo Đ34 k2 a+b — Tuần 20, C15)
 %% Hình thức hoá các điều khoản lớp F của QĐ 3266/QĐ-ĐHCT (15/8/2024)
 %% Dự án: CPA² — Certified Personalized Academic Advising (Tuần 5/24)
 %%
@@ -57,6 +57,7 @@ rule_src(r_f04, qd3266,  31, none, none).   % v1.8: nhận đề tài LVTN/TLTN 
 rule_src(r_f05, qd3266,  31, 3, none).
 rule_src(r_f06, qd3266,  34, 2, none).
 rule_src(r_f07, qd3266,  34, 2, a).
+rule_src(r_f07b, qd3266, 34, 2, b).
 rule_src(r_f09, qd3266,  33, 1, none).
 rule_src(r_f10, qd3266,  33, 2, none).
 rule_src(r_g01, qd3266,  20, 1, b).
@@ -406,17 +407,38 @@ dat_can_hang(H) :- hang(H,Lo), tl_tu(N), tl_mau(D), D > 0, 10*N >= Lo*D.
 hang_goc(H) :- dat_can_hang(H), hang(H,Lo), not dat_can_hang(H2) : hang(H2,Lo2), Lo2 > Lo.
 why(hang_goc(H), r_f06) :- hang_goc(H).
 
-%% giảm một mức nếu TC học phần điểm F > 5% tổng TC quy định của CTĐT
-%% (không tính học phần học cải thiện bị điểm F — R-B13)
-vuot_5_phan_tram :- tc_diem_f(X), tc_toi_thieu_ctdt(M), 100*X > 5*M.
+%% v1.11 (C15, Tuần 20) — Đ34 k2 (chép tay tr.20): hạng XUẤT SẮC, GIỎI bị giảm một mức nếu
+%%   a) khối lượng các HP bị điểm F vượt quá 5% tổng số TC quy định của CTĐT (không tính HP học cải thiện bị F) — R-F07;
+%%   b) đã bị kỷ luật từ mức cảnh cáo cấp Trường trong thời gian học — R-F07b.
+%% Bản trước chỉ đọc tc_diem_f/1, mà KHÔNG nơi nào sinh dữ kiện này (chỉ có trong test) → không bao giờ hạ; điểm b thiếu;
+%% why(hang_cuoi, r_f07) sinh vô điều kiện.
+%% (a) HP có điểm CUỐI là F → chắc chắn bị tính (điểm cuối F thì không phải lần học cải thiện — R-B13 giữ điểm cao nhất).
+%%     HP ĐIỀU KIỆN (GDQP, GDTC, NN/TH căn bản) có thuộc "tổng TC quy định của CTĐT" không, văn bản không nói rõ →
+%%     chỉ HP không điều kiện là chắc chắn (vuot_5_chac); thêm HP điều kiện mới vượt thì graduation_solver MỞ NHÁNH (A17).
+%%     tc_diem_f/1 = khai báo của sinh viên: TC HP KHÔNG điều kiện từng bị F (gồm cả HP sau đó học lại đạt — hồ sơ chỉ giữ
+%%     điểm cuối), không tính học cải thiện. Dùng giá trị lớn hơn giữa khai báo và TC HP không điều kiện đang F.
+%%     review C15: vuot_5_chac KHÔNG phụ thuộc vuot_5_phan_tram (bản đầu có vòng lặp lẻ → nhánh A17 không bao giờ mở).
+#defined tc_diem_f/1.
+#defined ky_luat_canh_cao_cap_truong/0.
+tc_f_chac(Y) :- Y = #sum{ CR,C : course(C,CR), letter(C,"F"), not hp_dieu_kien(C) }.
+tc_f_dk(Z)   :- Z = #sum{ CR,C : course(C,CR), letter(C,"F"), hp_dieu_kien(C) }.
+vuot_5_chac :- tc_f_chac(Y), tc_toi_thieu_ctdt(M), 100*Y > 5*M.
+vuot_5_chac :- tc_diem_f(X), tc_toi_thieu_ctdt(M), 100*X > 5*M.
+vuot_5_phan_tram :- vuot_5_chac.
+co_the_vuot_5_do_hp_dk :- not vuot_5_chac, tc_f_dk(Z), Z > 0, tc_f_chac(Y), tc_toi_thieu_ctdt(M), 100*(Y+Z) > 5*M.
+co_the_vuot_5_do_hp_dk :- not vuot_5_chac, tc_f_dk(Z), Z > 0, tc_diem_f(X), tc_toi_thieu_ctdt(M), 100*(X+Z) > 5*M.
 why(vuot_5_phan_tram, r_f07) :- vuot_5_phan_tram.
+ha_mot_muc :- vuot_5_phan_tram.
+ha_mot_muc :- ky_luat_canh_cao_cap_truong.
 
 giam_mot_muc(xuat_sac, gioi).
 giam_mot_muc(gioi, kha).
-hang_cuoi(H2) :- hang_goc(H1), giam_mot_muc(H1,H2), vuot_5_phan_tram.
-hang_cuoi(H)  :- hang_goc(H), not vuot_5_phan_tram.
-hang_cuoi(H)  :- hang_goc(H), vuot_5_phan_tram, not giam_mot_muc(H,_).
-why(hang_cuoi(H), r_f07) :- hang_cuoi(H).
+hang_cuoi(H2) :- hang_goc(H1), giam_mot_muc(H1,H2), ha_mot_muc.
+hang_cuoi(H)  :- hang_goc(H), not ha_mot_muc.
+hang_cuoi(H)  :- hang_goc(H), ha_mot_muc, not giam_mot_muc(H,_).
+why(hang_cuoi(H2), r_f07)  :- hang_goc(H1), giam_mot_muc(H1,H2), vuot_5_phan_tram.
+why(hang_cuoi(H2), r_f07b) :- hang_goc(H1), giam_mot_muc(H1,H2), ky_luat_canh_cao_cap_truong.
+why(hang_cuoi(H), r_f06)   :- hang_cuoi(H), hang_goc(H).
 
 %% ---------------------------------------------------------------------------
 %% 14. QUÁ HẠN THỜI GIAN HỌC TẬP — Điều 33 khoản 1, 2 (R-F09, R-F10)

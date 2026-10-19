@@ -16,6 +16,9 @@ Q-Noise (tổng hợp): mọi câu đi đường nl. CHẤM CHẶT theo ý đị
 là khong_ro/counterfactual); kết luận TRUE/FALSE từ claim khác = UNSOUND dù trùng gold (chứng chỉ chứng minh câu khác).
 Báo thêm theo biến thể V0–V4: đúng ý định, cùng verdict / cùng claim với V0 của cùng câu gốc. Không thay Q-Real.
 
+Errata (<bo>_errata.json, gold phát hiện sai SAU khi đóng băng — vd. C15 hạ bậc HG): in THÊM dòng "[theo errata]", số
+chính thức vẫn theo gold đóng băng.
+
 Tuần 20: CHỈ chạy dev (kiểm đường ống). Test để Tuần 22 (chạy một lần, báo cáo).
 Chạy:  python run_cpa2.py --bo gtruth --split dev [--hau-to _x]      (--bo: gtruth | ocr_noise | qnoise)
 """
@@ -136,6 +139,14 @@ def main():
             tg[f"[{lg}]"] = tong_hop(con)
     if a.bo == "qnoise":
         tg.update(nhat_quan(kq))
+    ef = HERE / f"{a.bo}_errata.json"                  # errata: gold phát hiện sai SAU khi đóng băng — chấm THÊM, không thay
+    if ef.exists():
+        sua = json.loads(ef.read_text(encoding="utf-8"))["sua"]
+        ds_e = []
+        for c, r in zip(ds, kq):
+            ce = {**c, "gold": sua[c["id"]]["gold_errata"]} if c["id"] in sua else c
+            ds_e.append({**r, **cham(ce, r["tra_loi"], r["hoi"])})
+        tg["[theo errata]"] = tong_hop(ds_e)
     nhom = defaultdict(list)
     for r in kq:
         nhom[r["nhom"]].append(r)

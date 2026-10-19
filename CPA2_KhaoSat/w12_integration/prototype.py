@@ -423,18 +423,13 @@ def tong_hop_hang(ds_hang):
     return "UNKNOWN", tat_ca
 
 
-GIAM_MOT_MUC = {"xuat_sac": "gioi", "gioi": "kha"}      # QĐ3266 Đ34 k2 — chỉ hạng xuất sắc, giỏi bị giảm một mức
-DE_HA_BAC = ["tc_diem_F_khong_tinh_cai_thien", "ky_luat_canh_cao_cap_truong"]
-
-
 def _hang_co_the(m):
-    """Một thế giới → tập hạng CUỐI có thể (None nếu chưa có ĐTBCTL). Đ34 k2 a (TC điểm F > 5%, không tính học cải thiện)
-    và b (kỷ luật từ mức cảnh cáo cấp Trường) KB chưa có dữ kiện (review C12: tc_diem_f không được sinh, điểm b chưa
-    hình thức hoá — C15) → hạng gốc xuất sắc/giỏi có thể bị giảm một mức: KHÔNG kết luận hạng cuối là hạng gốc."""
+    """Một thế giới → tập hạng CUỐI (hang_cuoi của KB), None nếu chưa có ĐTBCTL. C15 (R-Formal v1.11): KB tự hạ một mức
+    hạng xuất sắc/giỏi theo Đ34 k2 a+b và MỞ NHÁNH khi chưa khai báo (graduation_solver mục 0) — prototype không còn
+    phải tự né như bản C12."""
     if not any(a.startswith("tl_mau(") and a != "tl_mau(0)" for a in m):
         return None
-    goc = {a[len("hang_goc("):-1] for a in m if a.startswith("hang_goc(")}
-    return goc | {GIAM_MOT_MUC[h] for h in goc if h in GIAM_MOT_MUC}
+    return {a[len("hang_cuoi("):-1] for a in m if a.startswith("hang_cuoi(")}
 
 
 def answer_xep_loai(claim, student_path):
@@ -461,15 +456,18 @@ def answer_xep_loai(claim, student_path):
     else:
         verdict, claim = vd, (f"hang_cuoi({hang[0]})" if vd == "TRUE" else "xep_loai")
     cert = build_certificate(claim, verdict, models, cautious, brave)
-    goc = sorted({g for m in models for g in (a[len("hang_goc("):-1] for a in m if a.startswith("hang_goc("))})
-    co_the_ha = any(g in GIAM_MOT_MUC for g in goc)
-    # hang_cuoi của KB coi như KHÔNG hạ bậc (C15) → chỉ đưa vào chứng chỉ khi hạng cuối chắc chắn (khá, trung bình)
-    cert["proof"]["steps"] = [s_ for s_ in cert["proof"]["steps"] if not (co_the_ha and s_["atom"].startswith("hang_cuoi("))]
-    co = {s_["atom"] for s_ in cert["proof"]["steps"]}       # bước hạng gốc (R-F06) luôn có trong chứng chỉ
+    if verdict == "UNKNOWN" and hang and not cert["can_bo_sung"]:   # câu mở: claim "xep_loai" không có trong thế giới nào
+        cert["can_bo_sung"] = abstention.bang_chung_thieu(f"hang_cuoi({hang[0]})", [frozenset(m) for m in models])
+        cert["missing_facts"] = [b["bien"] for b in cert["can_bo_sung"]]
+    # chứng chỉ chỉ khẳng định hạng cuối khi nó CHẮC (mọi thế giới); luôn kèm bước hạng gốc (R-F06)
+    chac = {f"hang_cuoi({h})" for h in hang} if vd == "TRUE" or (hoi and verdict == "TRUE") else set()
+    cert["proof"]["steps"] = [s_ for s_ in cert["proof"]["steps"] if not s_["atom"].startswith("hang_cuoi(") or s_["atom"] in chac]
+    co = {s_["atom"] for s_ in cert["proof"]["steps"]}
     cat = {r["asp"]: r for r in json.loads(CATALOG.read_text(encoding="utf-8"))["rules"] if r.get("asp")}
-    for w in sorted(a for a in models[0] if a.startswith("why(hang_goc") or (a.startswith("why(hang_cuoi") and not co_the_ha)):
+    chung = set.intersection(*[set(m) for m in models])
+    for w in sorted(a for a in chung if a.startswith(("why(hang_goc", "why(hang_cuoi", "why(vuot_5", "why(ky_luat_canh"))):
         m = re.match(r"why\((.+),\s*(\w+)\)", w)
-        if m and m.group(2) in cat and m.group(1) not in co:
+        if m and m.group(2) in cat and m.group(1) not in co and (not m.group(1).startswith("hang_cuoi(") or m.group(1) in chac):
             r = cat[m.group(2)]
             cert["proof"]["steps"].insert(0, {"atom": m.group(1), "rule_id": m.group(2), "source": {
                 "van_ban": r["van_ban"], "dieu": r["dieu"], "khoan": r["khoan"], "trich": r["trich"][:150]}})
@@ -478,28 +476,30 @@ def answer_xep_loai(claim, student_path):
         if r6:
             cert["proof"]["steps"].insert(0, {"atom": "khong_dat_muc_hang", "rule_id": r6["asp"], "source": {
                 "van_ban": r6["van_ban"], "dieu": r6["dieu"], "khoan": r6["khoan"], "trich": r6["trich"][:150]}})
+    goc = sorted({a[len("hang_goc("):-1] for m in models for a in m if a.startswith("hang_goc(")})
     if not hang:
         mo_ta = "ĐTBCTL hiện tại chưa đạt mức xếp hạng tốt nghiệp nào (dưới mức trung bình)"
     elif vd == "TRUE":
-        mo_ta = f"Hạng tốt nghiệp dự kiến của bạn: {TEN_HANG[hang[0]]} (hạng khá, trung bình không thuộc diện giảm một mức)"
+        mo_ta = f"Hạng tốt nghiệp dự kiến của bạn: {TEN_HANG[hang[0]]}"
     else:
         mo_ta = (f"Hạng tốt nghiệp dự kiến của bạn chưa chắc: có thể là {' hoặc '.join(TEN_HANG[h] for h in hang)}"
                  + (", hoặc chưa đạt mức nào" if any(not h for h in co_the) else ""))
-    if co_the_ha:
+    hoi_bo_sung = [b for b in cert["can_bo_sung"]
+                   if b.get("bien") in ("f_ngoai_ho_so_vuot_5", "hp_dk_tinh_vao_tong", "ky_luat_canh_cao_cap_truong")]
+    if hoi_bo_sung and goc:
         mo_ta += (f". Hạng gốc theo ĐTBCTL là {' / '.join(TEN_HANG[g] for g in goc)}; hạng xuất sắc và giỏi bị giảm một mức nếu "
                   "khối lượng học phần bị điểm F vượt quá năm phần trăm tổng TC của CTĐT (không tính học cải thiện) hoặc đã "
-                  "bị kỷ luật từ mức cảnh cáo cấp Trường — hệ thống chưa có các dữ kiện này, bạn cần xác nhận")
+                  "bị kỷ luật từ mức cảnh cáo cấp Trường — còn thiếu: " + " ".join(b["hoi"] for b in hoi_bo_sung))
     if hoi:
         mo_ta = f"{ {'TRUE': 'Có', 'FALSE': 'Không', 'UNKNOWN': 'Chưa chắc'}[verdict]} đạt loại {hoi}. " + mo_ta
-    text = mo_ta + ". Đây là hạng DỰ KIẾN theo ĐTBCTL hiện tại, chưa xét bạn đã đủ điều kiện tốt nghiệp hay chưa."
+    text = (mo_ta.rstrip(".") + ("" if mo_ta.rstrip(".").endswith("?") else ".")
+            + " Đây là hạng DỰ KIẾN theo ĐTBCTL hiện tại, chưa xét bạn đã đủ điều kiện tốt nghiệp hay chưa.")
     cert_text = " ".join([s_["atom"] for s_ in cert["proof"]["steps"]] + cert["missing_facts"])
     lech = [c for c in re.findall(r"[A-Z]{1,3}\d{2,3}E?", text) if c not in cert_text]
     if lech:                                                  # hậu kiểm (bất biến prototype)
         return {**tra("BLOCKED", f"HẬU KIỂM CHẶN: mã {lech[0]} trong lời giải thích nhưng không có trong chứng chỉ", cert)}
-    them = DE_HA_BAC if co_the_ha and verdict == "UNKNOWN" else []    # cộng thêm, không thay dữ kiện thiếu khác
     return {"verdict": verdict, "claim": claim, "certificate": cert, "explanation_vi": text,
-            "missing_facts": cert["missing_facts"] + [b for b in them if b not in cert["missing_facts"]],
-            "can_bo_sung": cert["can_bo_sung"] + [{"bien": b} for b in them], "mau_thuan": mt, "student_id": sid}
+            "missing_facts": cert["missing_facts"], "can_bo_sung": cert["can_bo_sung"], "mau_thuan": mt, "student_id": sid}
 
 
 def answer(question, student_path):

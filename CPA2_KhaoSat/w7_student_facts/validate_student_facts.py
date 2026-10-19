@@ -91,6 +91,23 @@ def kiem_loader_chung():
     l4 = 'da_hoc("AA001").' in asp4 and 'da_hoc("AA002").' in asp4 and 'da_hoc("AA003")' not in asp4
     print(f"[{'OK' if l4 else 'FAIL'}] L4 loader: da_hoc cho bản ghi F và I, không cho W")
     good = good and l4
+    # L5 (C15, Đ34 k2): khai báo hạ bậc — tc_diem_f (TC HP từng bị F, không tính học cải thiện) và kỷ luật từ mức cảnh cáo
+    # cấp Trường. Có khai báo → dữ kiện + khai_bao(...) (đóng nhánh); thiếu → KB mở nhánh; khai báo sai kiểu/âm → mâu
+    # thuẫn, bỏ khai báo (để nhánh mở). tc_diem_f KHÔNG tính HP điều kiện (loader không biết HP nào là điều kiện) → không
+    # so với TC đang F ở loader; KB lấy giá trị LỚN HƠN giữa khai báo và TC HP không điều kiện đang F
+    f5 = {"grades": {"AA001": {"code": "AA001", "credits": 4, "thang10": 30, "letter": "F", "status": "failed"}}}
+    a1, m1 = __import__("loader").sang_asp({**f5, "tc_diem_f": 7, "ky_luat_canh_cao_cap_truong": True})
+    a2, m2 = __import__("loader").sang_asp({**f5, "tc_diem_f": 4, "ky_luat_canh_cao_cap_truong": False})
+    a3, m3 = __import__("loader").sang_asp(f5)
+    a4, m4 = __import__("loader").sang_asp({**f5, "tc_diem_f": 2})
+    a5, m5 = __import__("loader").sang_asp({**f5, "tc_diem_f": -1, "ky_luat_canh_cao_cap_truong": "co"})
+    l5 = ("tc_diem_f(7)." in a1 and "ky_luat_canh_cao_cap_truong." in a1 and "khai_bao(ky_luat_cap_truong)." in a1
+          and "tc_diem_f(4)." in a2 and "ky_luat_canh_cao_cap_truong." not in a2 and "khai_bao(ky_luat_cap_truong)." in a2
+          and "tc_diem_f(" not in a3 and "khai_bao(ky_luat_cap_truong)" not in a3 and not m3
+          and "tc_diem_f(2)." in a4 and not m4 and "tc_diem_f(" not in a5 and "ky_luat_cap_truong" not in a5 and len(m5) == 2)
+    print(f"[{'OK' if l5 else 'FAIL'}] L5 loader: khai báo hạ bậc (tc_diem_f, kỷ luật cảnh cáo cấp Trường) → dữ kiện + khai_bao; "
+          f"thiếu → không sinh; sai kiểu → mâu thuẫn, bỏ ({m4}, {m5})")
+    good = good and l5
     return ok and good
 
 

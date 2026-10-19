@@ -125,6 +125,22 @@ def sang_asp(j):
     for k in ("da_hoc_nam2", "tc_cong_nhan"):
         if j.get(k) is not None:
             lines.append(f"{k}({j[k]}).")
+    # C15 (Đ34 k2): khai báo hạ một mức hạng xuất sắc/giỏi. Có khai báo → dữ kiện + khai_bao(...) đóng nhánh; thiếu → KB
+    # mở nhánh (graduation_solver). tc_diem_f = TC HP KHÔNG điều kiện từng bị F; loader không biết HP nào là điều kiện →
+    # chỉ kiểm kiểu (số nguyên ≥ 0); KB dùng giá trị lớn hơn giữa khai báo và TC HP không điều kiện đang F.
+    tf = j.get("tc_diem_f")
+    if tf is not None:
+        if isinstance(tf, bool) or not isinstance(tf, int) or tf < 0:
+            mt.append(f"tc_diem_f = {tf!r}: không phải số nguyên ≥ 0 → bỏ khai báo")
+        else:
+            lines.append(f"tc_diem_f({tf}).")
+    kl = j.get("ky_luat_canh_cao_cap_truong")
+    if kl is True:
+        lines += ["ky_luat_canh_cao_cap_truong.", "khai_bao(ky_luat_cap_truong)."]
+    elif kl is False:
+        lines.append("khai_bao(ky_luat_cap_truong).")
+    elif kl is not None:
+        mt.append(f"ky_luat_canh_cao_cap_truong = {kl!r}: không phải true/false → bỏ khai báo")
     for c in j.get("certificates", []):
         loai = c["loai"]
         diem = int(c["diem"]) if loai == "ctu_abc" else round(c["diem"] * 10)   # nguong_cc lưu điểm ×10

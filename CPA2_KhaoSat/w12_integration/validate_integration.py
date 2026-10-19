@@ -275,6 +275,31 @@ def test_dang_ky():
           and not any(s_["atom"].startswith("hang_cuoi(") for r_ in (v1, v2, v3) for s_ in r_["certificate"]["proof"]["steps"]),
           f"E36 hạng gốc xuất sắc: Đ34 k2 (F > 5% · kỷ luật cảnh cáo cấp Trường) có thể hạ một mức, KB chưa biết → câu mở / 'xuất sắc' "
           f"UNKNOWN nêu dữ kiện cần; 'khá' FALSE chắc chắn; chứng chỉ KHÔNG khẳng định hạng cuoi chưa chắc ({v1['verdict']}, {v2['verdict']}, {v3['verdict']}; {v1['explanation_vi'][:140]})")
+    # C15: KB nay mở nhánh hạ bậc khi chưa khai báo → khai báo đủ (không F, không kỷ luật cấp Trường) thì kết luận được
+    with tempfile.TemporaryDirectory() as d_:
+        f_ = Path(d_) / "xs_kb.json"
+        f_.write_text(json.dumps({**j, "tc_diem_f": 0, "ky_luat_canh_cao_cap_truong": False}, ensure_ascii=False), encoding="utf-8")
+        r = proto.answer("Nếu tốt nghiệp, em xếp hạng gì?", str(f_))
+        r2 = proto.answer("em có đạt loại xuất sắc khi tốt nghiệp không", str(f_))
+        f_.write_text(json.dumps({**j, "tc_diem_f": 0, "ky_luat_canh_cao_cap_truong": True}, ensure_ascii=False), encoding="utf-8")
+        r3 = proto.answer("Nếu tốt nghiệp, em xếp hạng gì?", str(f_))
+    check(r["verdict"] == "TRUE" and r.get("claim") == "hang_cuoi(xuat_sac)" and r2["verdict"] == "TRUE"
+          and r3["verdict"] == "TRUE" and r3.get("claim") == "hang_cuoi(gioi)"
+          and any(s_["rule_id"] == "r_f07b" for s_ in r3["certificate"]["proof"]["steps"]),
+          f"E42 khai báo sạch → TRUE xuất sắc; khai báo kỷ luật cảnh cáo cấp Trường → TRUE giỏi kèm R-F07b "
+          f"({r['verdict']} {r.get('claim')}, {r2['verdict']}, {r3['verdict']} {r3.get('claim')})")
+    # review C15 lượt 2: nhánh A17 (chỉ HP điều kiện điểm F mới vượt 5%) → UNKNOWN có câu hỏi, không bị hậu kiểm chặn nhầm
+    # ("A17" trong câu hỏi từng bị đọc như mã HP); lời giải thích không có "?."
+    jd = json.loads(json.dumps(j))
+    for c_ in ("QP010E", "QP011E", "QP012", "QP013", "XH023"):
+        if c_ in jd["grades"]:
+            jd["grades"][c_].update(thang10=30, letter="F", status="failed")
+    with tempfile.TemporaryDirectory() as d_:
+        f_ = Path(d_) / "xs_dk.json"
+        f_.write_text(json.dumps({**jd, "tc_diem_f": 0, "ky_luat_canh_cao_cap_truong": False}, ensure_ascii=False), encoding="utf-8")
+        r = proto.answer("Nếu tốt nghiệp, em xếp hạng gì?", str(f_))
+    check(r["verdict"] == "UNKNOWN" and "?." not in r["explanation_vi"] and "hp_dk_tinh_vao_tong" in r.get("missing_facts", []),
+          f"E43 chỉ HP điều kiện điểm F mới vượt 5% → UNKNOWN, hỏi Phòng Đào tạo (không BLOCKED) ({r['verdict']}, {r.get('missing_facts')}, {r['explanation_vi'][:100]})")
     j["grades"] = {m: g for m, g in j["grades"].items() if g.get("letter") == "M"}
     with tempfile.TemporaryDirectory() as d_:
         f_ = Path(d_) / "rong.json"

@@ -293,6 +293,48 @@ Câu trả lời nay **không tin hạng cuối của KB** với hạng gốc xu
 
 **Q-Elicit v2:** KB-05 bản v1 ("bằng của bạn loại gì") trùng đúng mẫu parser mới, nên mớm lời. Em viết lại câu này **trước khi mở form**; hash v1 vẫn giữ.
 
+## 5f. C15 — R-Formal v1.11: hạ một mức hạng xuất sắc/giỏi (QĐ3266 Đ34 k2, Loi duyệt 19/10/2026)
+
+**Lỗi.** Luật hạ bậc chỉ đọc dữ kiện `tc_diem_f`, mà **không nơi nào sinh dữ kiện này** (chỉ có trong test), nên luật không bao giờ chạy. Đ34 k2 điểm b (kỷ luật từ mức cảnh cáo cấp Trường, chép tay tr.20) thì chưa được hình thức hoá. Ngoài ra `why(hang_cuoi, r_f07)` được sinh vô điều kiện.
+
+**Sửa:**
+- **R-Formal v1.11:**
+  - TC các học phần có **điểm cuối F** là cận dưới chắc chắn, vì điểm cuối F thì không phải lần học cải thiện (R-B13);
+  - `tc_diem_f` là khai báo của sinh viên;
+  - thêm **R-F07b** (điểm b);
+  - các bước `why` chỉ sinh khi thực sự hạ bậc.
+- **`graduation_solver` mục 0:** chưa khai báo thì **mở nhánh** trên các atom **tự do**:
+  - `f_ngoai_ho_so_vuot_5`: học phần từng F rồi học lại đạt, không còn trên hồ sơ;
+  - `ky_luat_canh_cao_cap_truong`.
+- **Học phần điều kiện** (GDQP, GDTC, NN/TH căn bản): văn bản không nói rõ chúng có thuộc "tổng số TC quy định của CTĐT" hay không. Nếu chỉ khi tính cả chúng mới vượt 5% thì **mở nhánh** `hp_dk_tinh_vao_tong` (A17, ca D5).
+- **Schema và loader:**
+  - thêm hai khai báo `tc_diem_f` (TC học phần **không điều kiện** từng bị F) và `ky_luat_canh_cao_cap_truong`;
+  - loader kiểm kiểu (số nguyên ≥ 0 / true-false), sai thì bỏ khai báo và báo mâu thuẫn;
+  - KB lấy giá trị lớn hơn giữa khai báo và số tính từ hồ sơ.
+- **Review lượt 1 tìm ra hai lỗi cao, đã sửa:**
+  - Bản đầu chọn trực tiếp trên atom được suy ra `vuot_5_phan_tram`, khiến abstention hỏi nhầm sinh viên về tín chỉ F trong câu hỏi tốt nghiệp (w16 B5 không đạt).
+  - Vòng lặp lẻ khiến nhánh A17 không bao giờ mở, tức hệ thống âm thầm chọn cách hiểu "có tính". Nay `vuot_5_chac` tách riêng, và atom tự do độc lập với điểm.
+- **Abstention:** hỏi đúng hai dữ kiện này.
+- **Prototype:** bỏ phần tạm né của C12, dùng thẳng `hang_cuoi` của KB.
+- **Catalog:** 96 quy tắc, F = 60 (thêm R-F07b).
+
+**Kiểm thử:**
+- **Ca hồi quy fail với luật cũ:**
+  - `validate_rformal`: C47, C49, C50, C52;
+  - `validate_graduation`: D1, D3, D5;
+  - `validate_student_facts`: L5;
+  - `validate_integration`: E42.
+- **Bất biến** (đạt cả với luật cũ): C48, C51, C53, D2, D4, D6. w16 B5 giữ: không hỏi thừa.
+
+**Errata G-Truth** (`gtruth_errata.json`, không sửa gold). HG-02/04/08 thuộc split test và được ghi errata **trước** lần chạy test (Tuần 22). Gold errata khớp hệ thống mới là do thiết kế, nên Tuần 22 sẽ báo cả hai cách chấm. Gold TRUE của HG-02/03/04/08 (hạng giỏi/xuất sắc) ngầm giả định "không F, không kỷ luật". Hồ sơ không khai báo hai dữ kiện này, nên theo quy chế câu trả lời đúng là **UNKNOWN**. `run_cpa2` in thêm dòng `[theo errata]`.
+
+**G-Truth dev** (`_sau_C15`):
+
+| Cách chấm | Sound | Coverage | Đúng / 58 | Ghi chú |
+|---|---|---|---|---|
+| Chính thức (gold đóng băng) | 100% | 91,4% | 57 | HG-03 từ chối thừa |
+| Theo errata | 100% | 91,4% | 58 | |
+
 ## 5c. Q-Noise v1 — độ bền parser trước cách gõ của sinh viên (TỔNG HỢP)
 
 Q-Real chưa có câu thật (A16), nên em đo trước một phần việc Q-Real phải đo: **parser có chịu được cách sinh viên gõ hay không**. Q-Noise **không** cho biết sinh viên hỏi *gì* và **không** tính vào chỉ tiêu Q-Real (vẫn 0/400).
@@ -390,7 +432,8 @@ Theo quy tắc nhiễm dữ liệu (Bài học): đây là số **chính thức*
 - [x] P20-4 (M2 OCR): giữ từ chối, hỏi 1 số ĐTBCHK, nhận khai báo số in (mục 5d)
 - [ ] P20-4 phương án B: kiểm chéo bằng ĐTB/TC tích lũy in sau mỗi học kỳ (C14)
 - [x] C12 ý định xếp loại tốt nghiệp (mục 5e, QD-15)
-- [ ] **C15 (KB):** Đ34 k2 a (`tc_diem_f` chưa sinh) + điểm b (kỷ luật cảnh cáo cấp Trường) — lập kế hoạch R-Formal; ảnh hưởng gold HG xuất sắc/giỏi (errata)
+- [x] **C15 (KB):** R-Formal v1.11 — hạ bậc Đ34 k2 a+b, mở nhánh khi chưa khai báo, errata HG (mục 5f)
+- [ ] **A17 (cần Loi / Phòng Đào tạo):** học phần điều kiện có tính vào "khối lượng HP bị điểm F … so với tổng số TC quy định của CTĐT" (Đ34 k2 a) không
 - [x] **P20-5** (an toàn) + parser chuẩn hoá bỏ dấu/viết tắt (mục 5c, E17–E28)
 - [x] Q-Elicit (20 kịch bản, đóng băng) + nội dung Google Form + nhập CSV/rút lại (§3b)
 - [ ] Tuần 21: chạy baseline (LLM thuần, RAG thuần, tool-calling) trên `baseline_dev/test.jsonl` (cần API key, `.env`)
