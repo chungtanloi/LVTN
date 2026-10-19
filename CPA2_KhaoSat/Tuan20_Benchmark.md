@@ -216,7 +216,37 @@ Câu hỏi trong ca hồi quy được **diễn đạt khác** câu của G-Trut
 
 Coverage giảm vì 2 câu ngoài phạm vi nay trả UNKNOWN đúng như gold. Dev **đã nhìn thấy**, nên số chính thức của hệ thống là test, chạy một lần ở Tuần 22. Ca NL-09 (hỏi xếp loại giỏi) nay cũng trả UNKNOWN, tức từ chối chứ không sai, vì parser chưa có ý định xếp loại (C12).
 
-P20-4 (OCR mất ĐTBCHK thì từ chối cả học kỳ) **chưa sửa**. Đây là lựa chọn an toàn của Tuần 15; nới ra cần cân nhắc thêm (C11).
+P20-4 (OCR mất ĐTBCHK thì từ chối cả học kỳ): xem mục 5d.
+
+## 5d. P20-4 — mất ĐTBCHK: giữ từ chối, hỏi đúng MỘT con số (Loi chọn phương án A, 19/10/2026)
+
+**Không nới được mà vẫn an toàn.** Ca M2 (bảng điểm sạch, chỉ mất ĐTBCHK) và ca F1 của `validate_ocr` trông **y hệt nhau** với hệ thống. Ở F1, sự thật là F nhưng OCR đọc nhất quán thành D, và cũng mất ĐTBCHK. Nếu tin điểm từng dòng khi mất ĐTBCHK thì M2 thành TRUE, nhưng F1 cũng thành TRUE, và đó là kết luận sai. Gold "TRUE" của M2 dựa trên sự thật mà hệ thống không biết được.
+
+**Sửa (`w15_ocr/sang_ho_so`):**
+- **Vẫn không tin điểm** của học kỳ mất ĐTBCHK.
+- **Câu hỏi bổ sung** (`bc["can_hoi"]`) chỉ còn một mục `dtbchk:<học kỳ>`, tức "ĐTBCHK **in** trên bảng điểm", thay vì 5–7 học phần. Việc này cũng cải thiện P17-4/C4 cho trường hợp mất số.
+- **Sinh viên khai báo số in** (`khai_bao["dtbchk_khai_bao"]`) thì kiểm chéo được khôi phục:
+  - khớp số tính lại thì tin điểm, và ghi `bc["dtbchk_khai_bao"]` làm nguồn;
+  - lệch thì vẫn không tin. Ca F1 khai báo số thật vẫn lệch, nên an toàn (F7).
+- **Số OCR đọc được luôn thắng khai báo.**
+- **Kiểm tra khai báo** (lỗi review: "NaN" từng làm học kỳ được tin):
+  - chỉ nhận số hữu hạn trong [0, 4]; nhận cả dạng "3,08";
+  - tên học kỳ được chuẩn hoá;
+  - khai báo sai, tên học kỳ lạ, hoặc khác số OCR thì báo ở `bc["khai_bao_loi"]` và không crash;
+  - học kỳ lệch tổng TC thì không dùng khai báo.
+
+**Kiểm thử:** `validate_ocr` F5–F11.
+- F5–F6, F9–F11 viết trước và fail với code cũ.
+- F7–F8 là bất biến an toàn: đã đạt từ trước và phải tiếp tục đạt.
+- F9 có thêm ca NaN, fail với bản sửa đầu.
+
+**OCR-Noise dev** (`_sau_P20-4`):
+- số **không đổi**: M2 vẫn bị từ chối 5/5, 0 unsound;
+- câu hỏi lại giảm từ 5–7 học phần xuống **1 con số**.
+
+Benchmark không có lượt hỏi đáp qua lại, nên Coverage của M2 vẫn **0%**. Mô phỏng lượt thứ hai, khi sinh viên trả lời đúng số in, thì cả 5/5 ca M2 ra TRUE, khớp gold. Đây là số **phân tích**, không phải số chính thức.
+
+**Phương án B (Loi xác nhận bảng điểm in ĐTB/TC tích lũy sau từng học kỳ):** kiểm chéo thay thế bằng số tích lũy. Việc này cần đọc thêm dòng tích lũy (OCR) và kiểm trên ảnh thật, vì môi trường cloud không có ảnh, font hay Tesseract của Windows. Phương án này **lập kế hoạch riêng** (Viec_ton_dong C14).
 
 ## 5c. Q-Noise v1 — độ bền parser trước cách gõ của sinh viên (TỔNG HỢP)
 
@@ -312,7 +342,8 @@ Theo quy tắc nhiễm dữ liệu (Bài học): đây là số **chính thức*
 - [ ] **Cần Loi:** câu hỏi thật cho Q-Real (≥ 400), đặt vào `qreal/_tho/`. Đã có form (§3b): điền `<<ĐIỀN>>`, tạo Google Form theo `qreal/bieu_mau.md`, phát cho sinh viên, xuất CSV vào `_tho/`
 - [x] Sửa P20-1 — R-Formal v1.10 + QD-14 (mục 5b)
 - [x] Sửa P20-2/P20-3 (mục 5b)
-- [ ] Xem lại P20-4 (M2 OCR)
+- [x] P20-4 (M2 OCR): giữ từ chối, hỏi 1 số ĐTBCHK, nhận khai báo số in (mục 5d)
+- [ ] P20-4 phương án B: kiểm chéo bằng ĐTB/TC tích lũy in sau mỗi học kỳ (C14)
 - [x] **P20-5** (an toàn) + parser chuẩn hoá bỏ dấu/viết tắt (mục 5c, E17–E28)
 - [x] Q-Elicit (20 kịch bản, đóng băng) + nội dung Google Form + nhập CSV/rút lại (§3b)
 - [ ] Tuần 21: chạy baseline (LLM thuần, RAG thuần, tool-calling) trên `baseline_dev/test.jsonl` (cần API key, `.env`)

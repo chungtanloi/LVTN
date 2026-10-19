@@ -210,6 +210,62 @@ def phan_F():
     # 3) không báo nhầm: bảng điểm đọc hoàn hảo vẫn kết luận được
     hs, extra, bc = O.sang_ho_so(_doc_hoan_hao(j), khai_bao=kb)
     check(not bc["khong_chac"] and O.ket_luan(hs, extra, bc) == "TRUE", "F3 bảng điểm đọc hoàn hảo → TRUE, không HP nào bị nghi")
+    # P20-4 (Tuần 20): mất ĐTBCHK vẫn KHÔNG tin điểm (M2 không phân biệt được với F1), nhưng hỏi đúng MỘT con số
+    # (ĐTBCHK in trên bảng điểm) thay vì cả học kỳ; sinh viên khai báo số in → khôi phục kiểm chéo
+    doc = _doc_hoan_hao(j)
+    hk, _ = _dong(doc, "CT177")
+    so_in, hk["dtbchk"] = hk["dtbchk"], None
+    hs, extra, bc = O.sang_ho_so(doc, khai_bao=kb)
+    check(bc.get("can_hoi") == [f"dtbchk:{hk['ten']}"] and O.ket_luan(hs, extra, bc) != "TRUE",
+          f"F5 mất ĐTBCHK → vẫn không kết luận, nhưng chỉ hỏi ĐTBCHK của {hk['ten']} ({bc.get('can_hoi')})")
+    hs, extra, bc = O.sang_ho_so(doc, khai_bao={**kb, "dtbchk_khai_bao": {hk["ten"]: so_in}})
+    v = O.ket_luan(hs, extra, bc)
+    check(v == "TRUE" and not bc["khong_chac"] and not bc.get("can_hoi") and bc.get("dtbchk_khai_bao") == [hk["ten"]]
+          and "dtbchk_khai_bao" not in hs,
+          f"F6 sinh viên khai báo ĐTBCHK in ({so_in}) khớp số tính lại → tin điểm học kỳ → TRUE, ghi nguồn khai báo ({v})")
+    jf = copy.deepcopy(j)
+    jf["grades"]["CT177"].update(thang10=30, letter="F", status="failed")
+    doc = _doc_hoan_hao(jf)
+    hk, d = _dong(doc, "CT177")
+    so_in_that = hk["dtbchk"]                                                   # số in thật (CT177 = F)
+    d.update(thi=4.5, thop=4.5, chu="D")
+    hk["dtbchk"] = None
+    hs, extra, bc = O.sang_ho_so(doc, khai_bao={**kb, "dtbchk_khai_bao": {hk["ten"]: so_in_that}})
+    v = O.ket_luan(hs, extra, bc)
+    check(v != "TRUE" and hk["ten"] + " (ĐTBCHK)" in bc["hoc_ky_lech"],
+          f"F7 như F1 + khai báo đúng số in thật → số tính từ điểm đọc nhầm LỆCH → vẫn không TRUE sai ({v})")
+    hs, extra, bc = O.sang_ho_so(_doc_hoan_hao(j), khai_bao={**kb, "dtbchk_khai_bao": {"HK1": 0.5}})
+    check(O.ket_luan(hs, extra, bc) == "TRUE" and not bc.get("dtbchk_khai_bao"),
+          "F8 ĐTBCHK đã đọc được thì số in thắng khai báo (khai báo chỉ dùng khi OCR mất số)")
+    # review P20-4: khai báo phải là SỐ HỮU HẠN trong [0, 4] — "NaN" làm |tính − NaN| > ε luôn False → tin học kỳ (F1 thành TRUE)
+    jf = copy.deepcopy(j)
+    jf["grades"]["CT177"].update(thang10=30, letter="F", status="failed")
+    doc = _doc_hoan_hao(jf)
+    hk, d = _dong(doc, "CT177")
+    d.update(thi=4.5, thop=4.5, chu="D")
+    hk["dtbchk"] = None
+    kq = {}
+    for x in ("nan", float("nan"), float("inf"), "abc", None, True, 5.0, -1):
+        try:
+            hs, extra, bc = O.sang_ho_so(doc, khai_bao={**kb, "dtbchk_khai_bao": {hk["ten"]: x}})
+            kq[repr(x)] = (O.ket_luan(hs, extra, bc), bc.get("can_hoi"), bool(bc.get("khai_bao_loi")))
+        except Exception as e:  # noqa: BLE001
+            kq[repr(x)] = (type(e).__name__,)
+    check(all(v[0] != "TRUE" and v[0] in ("UNKNOWN", "FALSE") and v[1] == [f"dtbchk:{hk['ten']}"] and v[2] for v in kq.values()),
+          f"F9 khai báo không phải số hợp lệ (NaN, inf, chữ, None, True, ngoài [0,4]) → bỏ, báo lỗi, vẫn hỏi; không crash, không TRUE sai ({kq})")
+    doc = _doc_hoan_hao(j)
+    hk, _ = _dong(doc, "CT177")
+    so_in, hk["dtbchk"] = hk["dtbchk"], None
+    hs, extra, bc = O.sang_ho_so(doc, khai_bao={**kb, "dtbchk_khai_bao": {" " + hk["ten"] + " ": f"{so_in:.2f}".replace(".", ","), "HK99": 3.0}})
+    check(O.ket_luan(hs, extra, bc) == "TRUE" and bc["dtbchk_khai_bao"] == [hk["ten"]]
+          and any("HK99" in x for x in bc.get("khai_bao_loi", [])),
+          f"F10 khai báo dạng '3,16' và tên học kỳ có khoảng trắng vẫn nhận; tên học kỳ không có trên bảng điểm → báo ({bc.get('khai_bao_loi')})")
+    doc = _doc_hoan_hao(j)
+    hk, d = _dong(doc, "CT177")
+    hk["dtbchk"], hk["tong_dk"] = None, hk["tong_dk"] + 3                          # lệch tổng TC: không kiểm chéo ĐTBCHK
+    hs, extra, bc = O.sang_ho_so(doc, khai_bao={**kb, "dtbchk_khai_bao": {hk["ten"]: so_in}})
+    check(not bc["dtbchk_khai_bao"] and O.ket_luan(hs, extra, bc) != "TRUE",
+          f"F11 học kỳ lệch tổng TC → khai báo ĐTBCHK KHÔNG được dùng và không ghi là nguồn ({bc['dtbchk_khai_bao']})")
 
 
 def main():

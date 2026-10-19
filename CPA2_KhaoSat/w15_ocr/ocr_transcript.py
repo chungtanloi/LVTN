@@ -12,8 +12,13 @@ Không chắc ≠ sai: HP đọc được mã mà điểm không chắc → solv
 Có dòng không đọc được hoặc học kỳ lệch tổng TC → có thể có HP bị ẩn → kết luận UNKNOWN.
 
 Bảng điểm không ghi tình trạng kỷ luật, lựa chọn tích lũy (CQ-06) → lấy từ `khai_bao`, không OCR.
+
+P20-4 (Tuần 20): ĐTBCHK không đọc được → vẫn KHÔNG tin điểm của học kỳ (P17-2: lỗi đọc nhất quán F→D không phân biệt
+được với bảng điểm sạch), nhưng câu hỏi bổ sung (`bc["can_hoi"]`) chỉ còn MỘT con số "dtbchk:<học kỳ>" thay vì cả
+học kỳ. Sinh viên khai báo số in (`khai_bao["dtbchk_khai_bao"] = {học kỳ: số}`) → dùng thay số OCR mất để kiểm chéo
+lại; số tính từ điểm đọc nhầm sẽ lệch số in thật → vẫn không tin. Số OCR đọc được luôn thắng khai báo.
 """
-import json, os, re, shutil, sys, unicodedata
+import json, math, os, re, shutil, sys, unicodedata
 from pathlib import Path
 
 import numpy as np
@@ -311,13 +316,37 @@ def _dtbchk(dong, ct):
     return tu / mau if mau else None
 
 
+def _so_khai_bao(x):
+    """ĐTBCHK sinh viên khai báo → số hữu hạn trong [0, 4] (nhận "3,08"), hoặc None nếu không hợp lệ. NaN phải bị
+    loại: |tính − NaN| > ε luôn False → học kỳ sẽ được tin (review P20-4: F1 thành TRUE sai)."""
+    if isinstance(x, bool):
+        return None
+    if isinstance(x, str):
+        x = x.strip().replace(",", ".")
+    try:
+        v = float(x)
+    except (TypeError, ValueError):
+        return None
+    return round(v, 2) if math.isfinite(v) and 0 <= v <= 4 else None
+
+
+def _ten_hk(t):
+    return re.sub(r"\s+", " ", unicodedata.normalize("NFC", str(t))).strip()
+
+
 def sang_ho_so(doc, khai_bao=None, tau=None):
     """Kết quả OCR → (hồ sơ JSON theo student_fact_schema, ASP bổ sung, báo cáo)."""
     tau = TAU if tau is None else tau
     ct = ctdt()
+    khai_bao = dict(khai_bao or {})
+    dtb_khai = {_ten_hk(k): v for k, v in (khai_bao.pop("dtbchk_khai_bao", None) or {}).items()}   # P20-4: không vào hồ sơ
     grades, mien, khong_chac = {}, [], []
+    hoi_dtb, chi_do_dtb, ly_do_khac = [], set(), set()          # P20-4: HP chỉ không chắc vì mất ĐTBCHK → hỏi 1 số
     bc = {"tong_dong": 0, "nhan": 0, "loai": 0, "khong_chac": khong_chac, "hoc_ky_lech": [], "dong_an": 0,
-          "can_xac_nhan": [], "ngoai_ctdt": [], "chi_tiet": []}
+          "can_xac_nhan": [], "ngoai_ctdt": [], "chi_tiet": [], "dtbchk_khai_bao": [], "khai_bao_loi": []}
+    ten_doc = {_ten_hk(hk["ten"]) for hk in doc["hoc_ky"]}
+    bc["khai_bao_loi"] += [f"dtbchk_khai_bao: không có học kỳ '{k}' trên bảng điểm ({sorted(ten_doc)})"
+                           for k in dtb_khai if k not in ten_doc]
     for hk in doc["hoc_ky"]:
         dong = [d for d in hk["dong"] if d.get("ma") != "SHCVHT"]
         bc["tong_dong"] += len(dong)
@@ -329,11 +358,26 @@ def sang_ho_so(doc, khai_bao=None, tau=None):
             bc["hoc_ky_lech"].append(hk["ten"])
             bc["dong_an"] += 1       # có thể có HP bị ẩn/không đọc được → không được kết luận "thiếu môn"
         tinh = _dtbchk(dong, ct)
+        so_in, ten = hk["dtbchk"], _ten_hk(hk["ten"])
+        if ten in dtb_khai:                                     # P20-4: số OCR mất → dùng số in sinh viên khai báo
+            v = _so_khai_bao(dtb_khai[ten])
+            if v is None:
+                bc["khai_bao_loi"].append(f"dtbchk_khai_bao[{ten}] = {dtb_khai[ten]!r}: không phải ĐTBCHK hợp lệ (0–4) → bỏ")
+            elif so_in is not None:
+                if abs(v - so_in) > 0.006:
+                    bc["khai_bao_loi"].append(f"dtbchk_khai_bao[{ten}] = {v} khác số OCR đọc được {so_in} → dùng số OCR")
+            else:
+                so_in = v
+                if not lech_tc and tinh is not None:          # chỉ ghi là nguồn khi kiểm chéo thực sự dùng số này
+                    bc["dtbchk_khai_bao"].append(hk["ten"])
         # P17-2: ĐTBCHK không đọc được → không kiểm chéo được điểm của học kỳ → coi như lệch (không tin điểm)
         lech_dtb = (not lech_tc and tinh is not None
-                    and (hk["dtbchk"] is None or abs(tinh - hk["dtbchk"]) > 0.006))
+                    and (so_in is None or abs(tinh - so_in) > 0.006))
+        mat_dtb = lech_dtb and so_in is None
         if lech_dtb:
             bc["hoc_ky_lech"].append(hk["ten"] + " (ĐTBCHK)")
+        if mat_dtb:
+            hoi_dtb.append(f"dtbchk:{hk['ten']}")
         for d in dong:
             dac_biet = anh_xa_dac_biet(d)
             if dac_biet and "duoc_mien" in dac_biet:
@@ -369,11 +413,14 @@ def sang_ho_so(doc, khai_bao=None, tau=None):
                 for m in (ma, d.get("ma_khac")):
                     if m in ct and m not in khong_chac:
                         khong_chac.append(m)
+                for m in (ma, d.get("ma_khac")):
+                    (chi_do_dtb if kq["hop_le"] and mat_dtb and m == ma else ly_do_khac).add(m)
     # mã đọc ra ngoài CTĐT nhưng chỉ lệch 1 ký tự với một HP CTĐT chưa có → có thể là HP đó đọc sai
     for ma in bc["ngoai_ctdt"]:
         for m in ct:
             if m not in grades and m not in khong_chac and len(m) == len(ma) and sum(a != b for a, b in zip(m, ma)) == 1:
                 khong_chac.append(m)
+                ly_do_khac.add(m)
     # P17-2: HP BẮT BUỘC vắng mặt mà có HP KHÔNG bắt buộc đã nhận lệch đúng 1 ký tự, cùng TC → có thể mã bắt buộc bị đọc nhầm
     # nhất quán (CT178 → CT478): mọi kiểm chéo khác đều qua. Không chắc cả hai thay vì kết luận "thiếu CT178".
     # Hàng xóm là HP bắt buộc thì chỉ nghi khi nó xuất hiện ≥ 2 dòng (CT178 đọc thành CT177 → CT177 hai lần).
@@ -388,18 +435,21 @@ def sang_ho_so(doc, khai_bao=None, tau=None):
             if (ma != m and (not ct[ma]["bb"] or so_dong.get(ma, 0) > 1) and len(ma) == len(m) and sum(a != b for a, b in zip(m, ma)) == 1
                     and ct[ma]["tc"] == h["tc"]):
                 khong_chac += [x for x in (m, ma) if x not in khong_chac]
+                ly_do_khac.update((m, ma))
     # mã có dù chỉ một dòng không chắc (vd. học lại đọc không ra) → cả mã là không chắc, kể cả khi
     # một lần học khác đọc chắc: điểm cuối là điểm cao nhất (R-B13) mà ta không biết
     for m in khong_chac:
         grades.pop(m, None)
+    # câu hỏi bổ sung: một số ĐTBCHK cho mỗi học kỳ mất số (thay cho cả học kỳ) + HP không chắc vì lý do khác
+    bc["can_hoi"] = hoi_dtb + [m for m in khong_chac if m in ly_do_khac or m not in chi_do_dtb]
     extra = lua_chon(khong_chac)
     # Dữ kiện ngoài bảng điểm chưa khai báo: từ Tuần 16 KB tự mở nhánh (graduation_solver.lp mục 0),
     # ở đây chỉ ghi lại để báo cáo / hỏi sinh viên.
-    bc["khai_bao_thieu"] = [k for k in ("xac_nhan_ky_luat_sach", "da_hoc_nam2") if k not in (khai_bao or {})]
+    bc["khai_bao_thieu"] = [k for k in ("xac_nhan_ky_luat_sach", "da_hoc_nam2") if k not in khai_bao]
     hs = {"student_id": "sv_ocr", "major": "cntt", "cohort": "K49", "ctdt": "cntt_k49", "grades": grades,
           "exemptions": [{"ma_hp": m, "chung_chi_ref": None, "quyet_dinh": True} for m in mien],
           "meta": {"nguon": "ocr", "tau": tau}}
-    hs.update(khai_bao or {})
+    hs.update(khai_bao)
     return hs, extra, bc
 
 
@@ -435,7 +485,7 @@ def ket_luan_tu_json(j, claim="tot_nghiep"):
 
 def khai_bao_tu_json(j):
     return {k: j[k] for k in ("xac_nhan_ky_luat_sach", "khong_tinh_tich_luy", "che_do_sv_chon_tich_luy",
-                                    "da_hoc_nam2", "tc_cong_nhan") if k in j}
+                                    "da_hoc_nam2", "tc_cong_nhan", "dtbchk_khai_bao") if k in j}
 
 
 def so_khop(hs, j):

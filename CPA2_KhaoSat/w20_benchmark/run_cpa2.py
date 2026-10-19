@@ -75,7 +75,7 @@ def _chay(c):
         import ocr_transcript as O
         hs, extra, bc = O.sang_ho_so(v["doc"], khai_bao=v["khai_bao"])
         out = O.ket_luan(hs, extra, bc, claim=c["claim"])
-        return ("MAU_THUAN" if out == "UNSAT" else out), sorted(bc["khong_chac"])
+        return ("MAU_THUAN" if out == "UNSAT" else out), bc["can_hoi"]     # P20-4: hỏi 1 số ĐTBCHK thay cả học kỳ
     raise ValueError(he)
 
 

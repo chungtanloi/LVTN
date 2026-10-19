@@ -45,15 +45,16 @@ Gom mọi mục `- [ ]` còn mở trong báo cáo Tuần 1–17. Các mục đã
 | C1 | Ưu tiên nguồn của **điều kiện vi phạm** khi trích dẫn cho FALSE/UNKNOWN (grounded_answer) | Tuần 14 |
 | C2 | `tc_cong_nhan` vẫn thế giới đóng (thiếu = 0) — P16-3 | Tuần 16 |
 | C3 | Missing evidence chỉ xét **từng biến**; chưa tìm tập câu hỏi nhỏ nhất | Tuần 16 §4 |
-| C4 | Câu hỏi bổ sung của OCR thô: lệch ĐTBCHK → hỏi cả học kỳ (P17-4) | Tuần 17 |
+| C4 | Câu hỏi bổ sung của OCR thô: lệch ĐTBCHK → hỏi cả học kỳ (P17-4). **Một phần:** MẤT ĐTBCHK nay chỉ hỏi 1 số (P20-4); ĐTBCHK đọc được mà LỆCH vẫn hỏi cả học kỳ (không biết dòng nào sai) | Tuần 17, Tuần 20 §5d |
 | C5 | So sánh ĐTBCTL với ĐTBCHK ở ca sát 2,00 (bẫy nhân 10) — ĐTBCTL đã có ca NG-01…04; phần ĐTBCHK chưa | Tuần 10 |
 | C6 | Mở rộng hồ sơ giả lập ≥ 20 (ca biên + đủ loại chứng chỉ) — **phần lớn đã phủ** bằng phép biến đổi của w17 (TOEIC/TOEFL/IELTS, D = 4,0, D+ = 5,0); còn thiếu `ctu_abc` | Tuần 7 |
 | C7 | Test `du_dk_dang_ky` qua passed / substituted / exempted_M (T4b) — w10 có ca passed; chưa có ca substituted/exempted_M | Tuần 9 |
 | C9 | Recommendation: `mo_khoa` chỉ đếm trực tiếp (chưa bắc cầu); chưa xét HP đang học / học cải thiện; parser Tuần 13 chưa có ý định `de_xuat` | Tuần 19 |
 | C10 | Parser Tuần 13 vẫn sinh `du_dk_dang_ky("<MÃ>")` (không xét song hành) — chuyển sang `duoc_dang_ky`; câu hỏi lẻ chưa xét `mo_hk`; câu phản thực tế trả UNKNOWN "chưa hỗ trợ" (B8) | sau Tuần 19 (P19-4) |
-| C11 | ~~P20-1, P20-2, P20-3~~ đã sửa (R-Formal v1.10, QD-14; parser không mặc định tot_nghiep). **Còn P20-4**: OCR mất ĐTBCHK → từ chối cả học kỳ (an toàn, coverage thấp) | Tuần 20 §5, §5b |
+| C11 | ~~P20-1, P20-2, P20-3, P20-4 (A)~~ đã sửa. P20-4: mất ĐTBCHK vẫn không tin điểm (M2 ≡ F1 với hệ thống) nhưng chỉ hỏi 1 số ĐTBCHK in + nhận khai báo số in để kiểm chéo lại (validate_ocr F5–F11) | Tuần 20 §5, §5b, §5d |
 | C12 | Parser chưa có ý định **xếp loại tốt nghiệp** (claim `hang_cuoi(...)`) — câu "em có đạt loại giỏi" trả UNKNOWN | Tuần 20 §5b |
 | C13 | ~~P20-5~~ đã sửa (parser chuẩn hoá: bỏ dấu từ khoá + viết tắt theo ngữ cảnh + chặn câu hỏi mở; E17–E28). **Còn:** từ gõ không dấu vốn mơ hồ ("the", "du", "thi") — chốt chặn chỉ giảm rủi ro; bảng viết tắt trùng bảng sinh Q-Noise → cần Q-Real để đo cách gõ thật | Tuần 20 §5c |
+| C14 | **P20-4 phương án B:** kiểm chéo học kỳ mất ĐTBCHK bằng ĐTB tích lũy + TC tích lũy in sau mỗi học kỳ (Loi xác nhận bảng điểm có in, 19/10/2026). Cần OCR dòng tích lũy + kiểm trên ảnh thật (Windows/Tesseract, `_rieng/`) — lập kế hoạch riêng | Tuần 20 §5d |
 | C8 | Độ phủ OCR thấp (Linux 7/18; Windows 1/18) | Tuần 15 |
 
 ## D. Thuộc phạm vi "không hình thức hoá được" (kết quả RQ1, không phải nợ)
