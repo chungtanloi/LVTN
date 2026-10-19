@@ -59,7 +59,7 @@ DE_XUAT = re.compile(r"\bnen\s+(?:dang ky|hoc)\b")   # Tuần 19: "kỳ này em 
 TU_KHOA = set("""đăng ký kí được không chưa đủ điều kiện tốt nghiệp trường luận văn tiểu nên nếu thì học phần môn kỳ kì
 miễn lại điểm rớt hủy huỷ rút của với cùng thay gì nào để đề tài trước tiên quyết song hành làm nhận thể kịp đtbctl hồ sơ
 loại hạng phí bổng nộp xét này hè đã có còn thiếu bao nhiêu tín chỉ chứng mấy trễ niên xong là ở đâu giờ sao đk đki đky
-đc""".split())
+đc xếp giỏi khá xuất sắc trung bình bằng đạt""".split())   # C12: từ xếp loại (khá/bằng chỉ dùng kèm loại/hạng/bằng)
 VIET_TAT = [   # (mẫu trên dạng đã chuẩn, dạng đầy đủ) — theo thứ tự; viết tắt mơ hồ chỉ mở khi có ngữ cảnh
     (r"\b(?:dki|dky|dang ki)\b", "dang ky"),
     (r"\bdk(?=\s+(?:hp|hoc phan|mon|huy|rut|[a-z]{2}\d{3}e?\b))", "dang ky"),   # đk + HP/mã/hủy/rút = đăng ký
@@ -96,10 +96,65 @@ def _la_tot_nghiep(ql):
     return bool(re.search(r"tot nghiep|ra truong", ql) and re.search(r"\b(?:du|duoc|chua|the|kip)\b", ql)
                 and not HOI_MO.search(ql)
                 and not re.search(r"luan van|tieu luan|\bmien\b|dtbctl|tin chi|\bho so\b|\bloai\b|\bhang\b"
+                                  r"|\bbang (?:loai|hang|xuat sac|gioi|kha|trung binh)\b"     # C12: "bằng trung bình" = hạng
                                   r"|hoc phi|hoc bong|\bnop\b|\bkhi tot nghiep\b"
                                   # từ ngoài TU_KHOA giữ dấu → loại trừ phải có cả dạng có dấu (review lượt 2)
                                   r"|\bl(?:e|ễ)\b|\bth(?:e|ẻ) (?:sinh vien|sv)|thẻ|đồ án|do an|khóa luận|khoá luận|khoa luan"
                                   r"|thực tập|thuc tap|giỏi|gioi|xuất sắc|xuat sac|hoãn|hoan", ql))   # "X khi tốt nghiệp" hỏi việc khác
+
+
+# C12 (Tuần 20): xếp loại tốt nghiệp (QĐ3266 Đ34 — R-F06 hạng gốc theo ĐTBCTL, R-F07 hạ một bậc). Câu mở → "xep_loai"
+# (tìm hạng); câu có/không về MỘT hạng → hang_cuoi(hạng). QD-15 (Loi chọn (a), 19/10/2026): "có đạt loại giỏi không" hỏi
+# ĐÚNG hạng giỏi — hạng thực là xuất sắc thì FALSE và nêu hạng thực (bằng ghi đúng một hạng).
+HANG_TU = {"xuat sac": "xuat_sac", "gioi": "gioi", "kha": "kha", "trung binh": "trung_binh"}
+TEN_HANG = {"xuat_sac": "xuất sắc", "gioi": "giỏi", "kha": "khá", "trung_binh": "trung bình"}
+
+
+# Review C12 lượt 2: danh sách CHẶN vẫn lọt (phủ định, ngưỡng "trở lên", hạng đứng sau, câu ghép, người khác …) →
+# DANH SÁCH CHO PHÉP: chỉ nhận vài MẪU câu, khớp TOÀN câu (sau khi bỏ lời gọi đầu câu, trợ từ cuối câu và tiền tố
+# "nếu tốt nghiệp (thì)"). "đủ / trở lên / ít nhất loại X" là câu NGƯỠNG (≥ X), khác QD-15 (đúng hạng) → chưa hỗ trợ.
+# Lượt 3: mẫu khớp trên câu CHỈ bỏ dấu TỪ KHOÁ (chuan_hoa) — bỏ dấu toàn câu làm cô→có, hàng→hạng, bảng→bằng, đặt→đạt,
+# tối→tôi; BẮT BUỘC chủ ngữ ngôi thứ nhất; "bằng gì/nào" là hỏi TÊN văn bằng (kỹ sư, cử nhân), không phải hạng.
+_X = r"(xuat sac|gioi|kha|trung binh)"
+_TOI = r"(?:em|e|mình|minh|tôi|toi) "
+_TN = r"(?:tot nghiep|ra truong|tn)"
+MAU_MO = [   # câu mở → xep_loai
+    rf"^{_TOI}(?:se )?(?:duoc )?xep (?:loai|hang)(?: {_TN})? (?:loai |hang )?(?:gi|nao)$",
+    rf"^{_TOI}(?:se )?{_TN} (?:se )?(?:duoc )?(?:xep )?(?:loai|hang|bang loai|bang hang) (?:gi|nao)$",
+    rf"^bang(?: {_TN})? cua (?:em|mình|minh|tôi|toi)(?: se)?(?: la)? (?:loai|hang) (?:gi|nao)$",
+    rf"^(?:hang|xep loai|xep hang) {_TN}(?: du kien)? cua (?:em|mình|minh|tôi|toi)(?: la)? (?:gi|loai gi|loai nao|hang gi|hang nao)$",
+    rf"^(?:{_TOI})?{_TN} {_TOI}(?:se )?(?:duoc )?(?:loai|hang|bang) {_X} hay {_X}$",
+]
+MAU_CO_KHONG = [   # câu có/không về ĐÚNG một hạng (QD-15) → hang_cuoi(X)
+    rf"^{_TOI}(?:co )?(?:dat|duoc|se dat|se duoc|duoc xep) (?:loai|hang|bang) {_X}(?: (?:khi|lúc|luc) {_TN})?(?: (?:khong|chua))?$",
+    rf"^{_TOI}(?:co )?{_TN} (?:se )?(?:dat |duoc )?(?:loai|hang|bang) {_X}(?: (?:khong|chua))?$",
+    rf"^{_TOI}{_TN} (?:se )?(?:duoc |dat )?(?:loai |hang |bang )?{_X} (?:duoc |dat )?(?:khong|chua)$",
+    rf"^{_TN} {_TOI}(?:co )?(?:se )?(?:dat|duoc) (?:loai|hang|bang) {_X}(?: (?:khong|chua))?$",
+]
+_DAU = re.compile(r"^(?:(?:ad|admin|anh chi|anh|chi|thay|co|mn|moi nguoi|ban) oi,?\s*)?(?:cho (?:em|e|minh|toi) hoi(?: xiu| chut| voi)?,?\s*)?")
+_CUOI = re.compile(r"(?:[\s?!.,]+|\b(?:a|ad|nhe|nha|vay|ha|z)\b)*$")
+
+
+def _xep_loai(ql):
+    """'xep_loai' / 'hang_cuoi(X)' / None — CHỈ khi cả câu khớp một mẫu cho phép (xem MAU_MO, MAU_CO_KHONG).
+    Lời gọi đầu câu và trợ từ cuối câu tìm trên bản bỏ dấu toàn bộ (cùng độ dài với câu NFC) rồi cắt trên câu gốc."""
+    qb = bo_dau(ql)
+    if len(qb) != len(ql):
+        return None
+    a = _DAU.match(qb).end()
+    b = a + _CUOI.search(qb[a:]).start()
+    q = ql[a:b].strip()
+    q2 = re.sub(r"^neu (?:em |mình |minh )?(?:duoc )?(?:tot nghiep|ra truong),? (?:thi )?", "", q)
+    if not (q2 != q or re.search(r"\b(?:tot nghiep|ra truong|tn|bang)\b", q2)):
+        return None
+    for mau in MAU_CO_KHONG:
+        m = re.match(mau, q2)
+        if m:
+            return f"hang_cuoi({HANG_TU[m.group(1)]})"
+    for mau in MAU_MO:
+        if re.match(mau, q2):
+            return "xep_loai"
+    return None
 
 
 PARSER_STUB_CHUAN = {chuan_hoa(k): v for k, v in PARSER_STUB.items()}
@@ -107,6 +162,9 @@ PARSER_STUB_CHUAN = {chuan_hoa(k): v for k, v in PARSER_STUB.items()}
 
 def parse_question(q: str) -> str:
     ql = chuan_hoa(q)   # Unicode tổ hợp (NFD), không dấu, viết tắt → cùng một dạng (Bài học, P20-5)
+    xl = _xep_loai(ql)  # C12: trước chốt "nếu" — "nếu tốt nghiệp, em xếp hạng gì" không phải phản thực tế
+    if xl:
+        return xl
     # đề xuất chung — câu hỏi về MỘT học phần / luận văn / tiểu luận đi nhánh riêng
     if DE_XUAT.search(ql) and not HOI_MO.search(ql) and not re.search(r"[a-z]{2}\d{3}|luan van|tieu luan", ql):
         return "de_xuat"
@@ -354,8 +412,100 @@ def answer_dang_ky(claim, student_path):
     return {"verdict": verdict, "certificate": cert, "explanation_vi": text, "missing_facts": cert["missing_facts"],
             "can_bo_sung": can, "mau_thuan": mt, "student_id": sid, "claim": claim}
 
+def tong_hop_hang(ds_hang):
+    """Hạng (hang_cuoi) của từng thế giới → (verdict câu mở, các hạng có thể). Mọi thế giới cùng MỘT hạng → TRUE;
+    mọi thế giới không đạt mức nào → FALSE; còn lại → UNKNOWN (ba trị theo số thế giới, không theo đa số)."""
+    tat_ca = sorted(set().union(*ds_hang)) if ds_hang else []
+    if ds_hang and all(len(h) == 1 for h in ds_hang) and len(tat_ca) == 1:
+        return "TRUE", tat_ca
+    if ds_hang and all(not h for h in ds_hang):
+        return "FALSE", []
+    return "UNKNOWN", tat_ca
+
+
+GIAM_MOT_MUC = {"xuat_sac": "gioi", "gioi": "kha"}      # QĐ3266 Đ34 k2 — chỉ hạng xuất sắc, giỏi bị giảm một mức
+DE_HA_BAC = ["tc_diem_F_khong_tinh_cai_thien", "ky_luat_canh_cao_cap_truong"]
+
+
+def _hang_co_the(m):
+    """Một thế giới → tập hạng CUỐI có thể (None nếu chưa có ĐTBCTL). Đ34 k2 a (TC điểm F > 5%, không tính học cải thiện)
+    và b (kỷ luật từ mức cảnh cáo cấp Trường) KB chưa có dữ kiện (review C12: tc_diem_f không được sinh, điểm b chưa
+    hình thức hoá — C15) → hạng gốc xuất sắc/giỏi có thể bị giảm một mức: KHÔNG kết luận hạng cuối là hạng gốc."""
+    if not any(a.startswith("tl_mau(") and a != "tl_mau(0)" for a in m):
+        return None
+    goc = {a[len("hang_goc("):-1] for a in m if a.startswith("hang_goc(")}
+    return goc | {GIAM_MOT_MUC[h] for h in goc if h in GIAM_MOT_MUC}
+
+
+def answer_xep_loai(claim, student_path):
+    """C12: 'xep_loai' (câu mở) hoặc 'hang_cuoi(X)' (câu có/không, QD-15: đúng hạng X). Luôn nêu hạng tính được, ghi rõ
+    là DỰ KIẾN theo ĐTBCTL hiện tại (hang_cuoi không phụ thuộc việc đã đủ điều kiện tốt nghiệp)."""
+    def tra(verdict, text, cert=None, missing=()):
+        return {"verdict": verdict, "claim": claim, "certificate": cert or {"claim": claim, "proof": {"steps": []}},
+                "explanation_vi": text, "missing_facts": list(missing), "can_bo_sung": [{"bien": b} for b in missing]}
+    if not student_path:
+        return tra("UNKNOWN", "Cần hồ sơ học tập để tính hạng tốt nghiệp.", missing=["ho_so"])
+    extra, sid, mt = load_student(student_path)
+    hoi = TEN_HANG.get(claim[len("hang_cuoi("):-1]) if claim.startswith("hang_cuoi(") else None   # câu có/không
+    verdict, models, cautious, brave = solve_verdict(claim if hoi else "hang_cuoi(_)", extra)
+    if verdict == "UNSAT":
+        return {**tra("UNSAT", "Hồ sơ mâu thuẫn — không tính hạng."), "mau_thuan": mt}
+    co_the = [_hang_co_the(m) for m in models]
+    if any(h is None for h in co_the):
+        return tra("UNKNOWN", "Chưa có ĐTBCTL (chưa có học phần nào tính vào điểm trung bình tích lũy) — chưa tính được hạng.",
+                   missing=["diem_hoc_phan"])
+    vd, hang = tong_hop_hang(co_the)
+    if hoi:
+        x = claim[len("hang_cuoi("):-1]
+        verdict = ("TRUE" if all(h == {x} for h in co_the) else "FALSE" if all(x not in h for h in co_the) else "UNKNOWN")
+    else:
+        verdict, claim = vd, (f"hang_cuoi({hang[0]})" if vd == "TRUE" else "xep_loai")
+    cert = build_certificate(claim, verdict, models, cautious, brave)
+    goc = sorted({g for m in models for g in (a[len("hang_goc("):-1] for a in m if a.startswith("hang_goc("))})
+    co_the_ha = any(g in GIAM_MOT_MUC for g in goc)
+    # hang_cuoi của KB coi như KHÔNG hạ bậc (C15) → chỉ đưa vào chứng chỉ khi hạng cuối chắc chắn (khá, trung bình)
+    cert["proof"]["steps"] = [s_ for s_ in cert["proof"]["steps"] if not (co_the_ha and s_["atom"].startswith("hang_cuoi("))]
+    co = {s_["atom"] for s_ in cert["proof"]["steps"]}       # bước hạng gốc (R-F06) luôn có trong chứng chỉ
+    cat = {r["asp"]: r for r in json.loads(CATALOG.read_text(encoding="utf-8"))["rules"] if r.get("asp")}
+    for w in sorted(a for a in models[0] if a.startswith("why(hang_goc") or (a.startswith("why(hang_cuoi") and not co_the_ha)):
+        m = re.match(r"why\((.+),\s*(\w+)\)", w)
+        if m and m.group(2) in cat and m.group(1) not in co:
+            r = cat[m.group(2)]
+            cert["proof"]["steps"].insert(0, {"atom": m.group(1), "rule_id": m.group(2), "source": {
+                "van_ban": r["van_ban"], "dieu": r["dieu"], "khoan": r["khoan"], "trich": r["trich"][:150]}})
+    if not any(co_the):                                     # không thế giới nào đạt mức nào → nguồn: ngưỡng R-F06
+        r6 = next((r for r in cat.values() if r["id"] == "R-F06"), None)
+        if r6:
+            cert["proof"]["steps"].insert(0, {"atom": "khong_dat_muc_hang", "rule_id": r6["asp"], "source": {
+                "van_ban": r6["van_ban"], "dieu": r6["dieu"], "khoan": r6["khoan"], "trich": r6["trich"][:150]}})
+    if not hang:
+        mo_ta = "ĐTBCTL hiện tại chưa đạt mức xếp hạng tốt nghiệp nào (dưới mức trung bình)"
+    elif vd == "TRUE":
+        mo_ta = f"Hạng tốt nghiệp dự kiến của bạn: {TEN_HANG[hang[0]]} (hạng khá, trung bình không thuộc diện giảm một mức)"
+    else:
+        mo_ta = (f"Hạng tốt nghiệp dự kiến của bạn chưa chắc: có thể là {' hoặc '.join(TEN_HANG[h] for h in hang)}"
+                 + (", hoặc chưa đạt mức nào" if any(not h for h in co_the) else ""))
+    if co_the_ha:
+        mo_ta += (f". Hạng gốc theo ĐTBCTL là {' / '.join(TEN_HANG[g] for g in goc)}; hạng xuất sắc và giỏi bị giảm một mức nếu "
+                  "khối lượng học phần bị điểm F vượt quá năm phần trăm tổng TC của CTĐT (không tính học cải thiện) hoặc đã "
+                  "bị kỷ luật từ mức cảnh cáo cấp Trường — hệ thống chưa có các dữ kiện này, bạn cần xác nhận")
+    if hoi:
+        mo_ta = f"{ {'TRUE': 'Có', 'FALSE': 'Không', 'UNKNOWN': 'Chưa chắc'}[verdict]} đạt loại {hoi}. " + mo_ta
+    text = mo_ta + ". Đây là hạng DỰ KIẾN theo ĐTBCTL hiện tại, chưa xét bạn đã đủ điều kiện tốt nghiệp hay chưa."
+    cert_text = " ".join([s_["atom"] for s_ in cert["proof"]["steps"]] + cert["missing_facts"])
+    lech = [c for c in re.findall(r"[A-Z]{1,3}\d{2,3}E?", text) if c not in cert_text]
+    if lech:                                                  # hậu kiểm (bất biến prototype)
+        return {**tra("BLOCKED", f"HẬU KIỂM CHẶN: mã {lech[0]} trong lời giải thích nhưng không có trong chứng chỉ", cert)}
+    them = DE_HA_BAC if co_the_ha and verdict == "UNKNOWN" else []    # cộng thêm, không thay dữ kiện thiếu khác
+    return {"verdict": verdict, "claim": claim, "certificate": cert, "explanation_vi": text,
+            "missing_facts": cert["missing_facts"] + [b for b in them if b not in cert["missing_facts"]],
+            "can_bo_sung": cert["can_bo_sung"] + [{"bien": b} for b in them], "mau_thuan": mt, "student_id": sid}
+
+
 def answer(question, student_path):
     claim=parse_question(question)
+    if claim == "xep_loai" or claim.startswith("hang_cuoi("):
+        return answer_xep_loai(claim, student_path)
     if claim.startswith("duoc_dang_ky("):
         return answer_dang_ky(claim, student_path)
     if claim == "khong_ro":

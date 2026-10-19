@@ -52,9 +52,10 @@ Gom mọi mục `- [ ]` còn mở trong báo cáo Tuần 1–17. Các mục đã
 | C9 | Recommendation: `mo_khoa` chỉ đếm trực tiếp (chưa bắc cầu); chưa xét HP đang học / học cải thiện; parser Tuần 13 chưa có ý định `de_xuat` | Tuần 19 |
 | C10 | Parser Tuần 13 vẫn sinh `du_dk_dang_ky("<MÃ>")` (không xét song hành) — chuyển sang `duoc_dang_ky`; câu hỏi lẻ chưa xét `mo_hk`; câu phản thực tế trả UNKNOWN "chưa hỗ trợ" (B8) | sau Tuần 19 (P19-4) |
 | C11 | ~~P20-1, P20-2, P20-3, P20-4 (A)~~ đã sửa. P20-4: mất ĐTBCHK vẫn không tin điểm (M2 ≡ F1 với hệ thống) nhưng chỉ hỏi 1 số ĐTBCHK in + nhận khai báo số in để kiểm chéo lại (validate_ocr F5–F11) | Tuần 20 §5, §5b, §5d |
-| C12 | Parser chưa có ý định **xếp loại tốt nghiệp** (claim `hang_cuoi(...)`) — câu "em có đạt loại giỏi" trả UNKNOWN | Tuần 20 §5b |
+| C12 | ~~Parser chưa có ý định xếp loại tốt nghiệp~~ — đã có (`xep_loai` / `hang_cuoi(X)`, QD-15, E29–E37) | Tuần 20 §5b, §5e |
 | C13 | ~~P20-5~~ đã sửa (parser chuẩn hoá: bỏ dấu từ khoá + viết tắt theo ngữ cảnh + chặn câu hỏi mở; E17–E28). **Còn:** từ gõ không dấu vốn mơ hồ ("the", "du", "thi") — chốt chặn chỉ giảm rủi ro; bảng viết tắt trùng bảng sinh Q-Noise → cần Q-Real để đo cách gõ thật | Tuần 20 §5c |
 | C14 | **P20-4 phương án B:** kiểm chéo học kỳ mất ĐTBCHK bằng ĐTB tích lũy + TC tích lũy in sau mỗi học kỳ (Loi xác nhận bảng điểm có in, 19/10/2026). Cần OCR dòng tích lũy + kiểm trên ảnh thật (Windows/Tesseract, `_rieng/`) — lập kế hoạch riêng | Tuần 20 §5d |
+| C15 | **KB hạng tốt nghiệp chưa đủ (R-F07, QĐ3266 Đ34 k2):** (a) `tc_diem_f` KHÔNG được loader/KB sinh → `vuot_5_phan_tram` luôn sai (không hạ bậc dù F > 5%; R-B13: không phân biệt được F học cải thiện); (b) "đã bị kỷ luật từ mức cảnh cáo cấp Trường" chưa hình thức hoá (dữ kiện ngoài → mở nhánh như P16-1); `why(hang_cuoi, r_f07)` sinh vô điều kiện. Prototype đã né (hạng gốc XS/G → UNKNOWN). Sửa R-Formal cần kế hoạch + ca hồi quy; **ảnh hưởng gold G-Truth HG xuất sắc/giỏi (HG-02/03/04/08 TRUE)** → errata, không sửa gold | Tuần 20 §5e |
 | C8 | Độ phủ OCR thấp (Linux 7/18; Windows 1/18) | Tuần 15 |
 
 ## D. Thuộc phạm vi "không hình thức hoá được" (kết quả RQ1, không phải nợ)

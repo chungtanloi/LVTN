@@ -98,7 +98,7 @@ Lựa chọn:
 
 *Đoạn văn (trả lời dài), không bắt buộc.*
 
-### [KB-05] Điểm trung bình tích lũy của bạn hiện khoảng 3,1. Bạn muốn biết với mức điểm này, lúc nhận bằng thì bằng của bạn loại gì.
+### [KB-05] Điểm trung bình tích lũy của bạn hiện khoảng 3,1. Bạn muốn biết với mức điểm này, tấm bằng bạn nhận được sẽ ghi mức nào.
 
 *Đoạn văn (trả lời dài), không bắt buộc.*
 

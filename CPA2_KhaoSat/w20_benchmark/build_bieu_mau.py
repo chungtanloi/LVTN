@@ -28,7 +28,8 @@ BIEU_MAU = HERE / "qreal" / "bieu_mau.md"
 # cụm từ parser (w12 prototype.parse_question) dựa vào để nhận ý định — trên dạng đã chuẩn hoá
 MOM = [r"dieu kien", r"dang ky", r"tot nghiep", r"ra truong", r"luan van", r"tieu luan", r"duoc khong", r"duoc chua",
        r"\bmien\b", r"con thieu", r"xep loai", r"xep hang", r"\bneu\b", r"\bnen\b", r"de xuat", r"dtbctl",
-       r"nhan de tai"]
+       r"nhan de tai", r"xep (?:loai|hang)", r"\b(?:loai|hang) (?:gi|nao)\b",
+       r"\b(?:loai|hang|bang) (?:xuat sac|gioi|kha|trung binh)\b"]       # C12: mẫu ý định xếp loại tốt nghiệp
 
 
 def doc_kich_ban():

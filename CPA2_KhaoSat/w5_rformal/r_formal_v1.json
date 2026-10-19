@@ -946,7 +946,7 @@
       "ghi_chu": "Cần dữ kiện phân biệt lần học đầu / lần học cải thiện — xem rủi ro ở R-B13. [Sau Tuần 19] Tiêu đề Điều 34: \"Bằng tốt nghiệp và hạng tốt nghiệp\" — đọc từ PDF gốc (Loi gửi 18/10/2026), trang 20 chép tay ở source/QD3266_tr20_chep_tay.txt; đối chiếu: trích khớp nguyên văn.",
       "van_ban": "qd3266",
       "ly_do_PN": null,
-      "quyet_dinh": null
+      "quyet_dinh": "QD-15 ĐÓNG (Loi chọn (a), 19/10/2026 — Tuần 20, C12): câu hỏi \"có đạt loại X không\" hỏi ĐÚNG hạng X: Đ34 xếp hạng tốt nghiệp thành MỘT mức (xuất sắc/giỏi/khá/trung bình) ghi trên bằng → hạng thực xuất sắc thì \"có đạt loại giỏi không\" trả FALSE và nêu hạng thực (không hiểu là \"ít nhất giỏi\"). Hạng tính theo ĐTBCTL HIỆN TẠI (hang_cuoi không phụ thuộc tot_nghiep) → câu trả lời luôn ghi là hạng DỰ KIẾN, chưa xét đủ điều kiện tốt nghiệp."
     },
     {
       "id": "R-F08",

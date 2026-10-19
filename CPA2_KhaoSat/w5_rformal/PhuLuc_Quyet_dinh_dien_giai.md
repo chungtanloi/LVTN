@@ -4,7 +4,7 @@
 
 > **Vị trí trong luận văn:** phụ lục này thuộc phần **giả định và hạn chế**, không thuộc phần kết quả. Mỗi mục dưới đây là điều tác giả **quyết định**, không phải điều **tìm thấy** trong văn bản quy phạm. Trộn hai loại vào nhau là cách nhanh nhất để một luận văn hình thức hoá bị bác ở phần phương pháp.
 
-**Tổng: 14 quyết định** — 🔴 1 mở, 🔄 1 đã sửa, ✅ 10 đóng, 🟡 1 đóng một phần, 🟠 1 đóng tạm
+**Tổng: 15 quyết định** — 🔴 1 mở, 🔄 1 đã sửa, ✅ 11 đóng, 🟡 1 đóng một phần, 🟠 1 đóng tạm
 
 ---
 
@@ -26,6 +26,7 @@
 | **QD-12** | ✅ đóng | QD3266 Điều 31 (R-F04) | XÁC NHẬN NGOÀI VĂN BẢN — Loi, 18/10/2026 (trong phiên làm việc Tuần 18): chỉ có quy định số TC |
 | **QD-13** | ✅ đóng | QD3266 Điều 7 k.5 (R-A04) | Câu chữ QĐ3266 Điều 7 k.5 (PDF gốc tr.5) — bản xác nhận cũ trái câu chữ (Loi 18/10/2026: học sau cũng được) ĐÃ RÚT; phần F vẫn thoả là diễn giải (Loi chọn (a), 18/10/2026) |
 | **QD-14** | ✅ đóng | QD3266 Điều 34 k.2 (R-F06) | Quyết định của tác giả (Tuần 20, P20-1): QĐ3266 không quy định làm tròn ĐTBCTL — xếp hạng theo cận dưới, so hữu tỉ; chưa hỏi Phòng Đào tạo |
+| **QD-15** | ✅ đóng | QD3266 Điều 34 k.2 đ.a (R-F07) | Loi chọn (a), 19/10/2026 (Tuần 20, C12): diễn giải câu hỏi của sinh viên — "có đạt loại X" = đúng hạng X (Đ34 ghi một hạng trên bằng); không phải nội dung quy chế |
 
 ### Hai nhóm cần chú ý
 
@@ -216,6 +217,19 @@
 **Quyết định:** QD-14 ĐÓNG (quyết định của tác giả, Tuần 20): Đ34 k2 ghi các mức bằng hai chữ số thập phân (XS 3,60–4,00 · Giỏi 3,20–3,59 · Khá 2,50–3,19 · TB 2,00–2,49) nhưng QĐ3266 KHÔNG quy định làm tròn ĐTBCTL (Đ22 chỉ làm tròn điểm học phần) → ĐTBCTL được so HỮU TỈ theo CẬN DƯỚI: hạng = mức cao nhất có ĐTBCTL ≥ cận dưới; giá trị giữa 3,59 và 3,60 thuộc Giỏi. Bản trước (mốc nguyên thang ×10) bỏ sót ĐTBCTL giữa hai mốc (P20-1: 3,14 không thuộc hạng nào).
 
 **Nguồn xác nhận:** Quyết định của tác giả (Tuần 20, P20-1): QĐ3266 không quy định làm tròn ĐTBCTL — xếp hạng theo cận dưới, so hữu tỉ; chưa hỏi Phòng Đào tạo
+
+
+### ✅ QD-15 — đóng
+
+**Điều khoản:** QD3266 Điều 34 khoản 2 điểm a · bản ghi `R-F07` · lớp **F**
+
+**Trích nguyên văn:**
+
+> *Hạng tốt nghiệp loại xuất sắc và giỏi sẽ bị giảm một mức nếu ... Có khối lượng các học phần bị điểm F vượt quá 5% so với tổng số TC quy định của CTĐT (không tính khối lượng học phần học cải thiện điểm bị điểm F).*
+
+**Quyết định:** QD-15 ĐÓNG (Loi chọn (a), 19/10/2026 — Tuần 20, C12): câu hỏi "có đạt loại X không" hỏi ĐÚNG hạng X: Đ34 xếp hạng tốt nghiệp thành MỘT mức (xuất sắc/giỏi/khá/trung bình) ghi trên bằng → hạng thực xuất sắc thì "có đạt loại giỏi không" trả FALSE và nêu hạng thực (không hiểu là "ít nhất giỏi"). Hạng tính theo ĐTBCTL HIỆN TẠI (hang_cuoi không phụ thuộc tot_nghiep) → câu trả lời luôn ghi là hạng DỰ KIẾN, chưa xét đủ điều kiện tốt nghiệp.
+
+**Nguồn xác nhận:** Loi chọn (a), 19/10/2026 (Tuần 20, C12): diễn giải câu hỏi của sinh viên — "có đạt loại X" = đúng hạng X (Đ34 ghi một hạng trên bằng); không phải nội dung quy chế
 
 
 ---

@@ -192,6 +192,95 @@ def test_dang_ky():
           and "HK3" in k["hoc ki 3 em nen hoc gi"][1] and "HK2" in k["ky 2 em he clc nen dang ky gi"][1]
           and "HK3" in k["hè này em nên đăng ký gì"][1],
           f"E28 đề xuất: học kỳ đọc từ câu không dấu ('ky 2', 'hoc ki 3'), không lặng lẽ về HK1 (P19-3) ({k})")
+    # C12 (Tuần 20): ý định XẾP LOẠI tốt nghiệp — câu mở → xep_loai (tìm hạng), câu có/không → hang_cuoi(X)
+    k = {q: proto.parse_question(q) for q in ("Nếu tốt nghiệp, em xếp hạng gì?", "nếu ra trường thì bằng của em loại gì",
+         "tốt nghiệp em được bằng trung bình hay khá")}
+    check(all(v_ == "xep_loai" for v_ in k.values()), f"E29 câu mở về xếp loại tốt nghiệp → xep_loai ('nếu tốt nghiệp' không phải phản thực tế) ({k})")
+    k = {q: proto.parse_question(q) for q, _ in (("em có đạt loại giỏi khi tốt nghiệp không", 0), ("e tn bang xuat sac dc ko", 0),
+         ("ra trường em được bằng khá không ạ", 0), ("cho em hỏi em có được loại giỏi khi ra trường không", 0))}
+    check(list(k.values()) == ["hang_cuoi(gioi)", "hang_cuoi(xuat_sac)", "hang_cuoi(kha)", "hang_cuoi(gioi)"],
+          f"E30 câu có/không về một hạng (có dấu, không dấu, viết tắt) → hang_cuoi(hạng) ({k})")
+    k = {q: proto.parse_question(q) for q in ("em khá lo không biết có tốt nghiệp kịp không", "nếu em rớt CT177 thì xếp loại tốt nghiệp gì",
+         "xếp loại rèn luyện của em là gì", "làm sao để tốt nghiệp loại giỏi", "học kỳ này em xếp loại học lực gì",
+         "loại giỏi khi tốt nghiệp được học bổng bao nhiêu", "điểm trung bình tích lũy của em khi tốt nghiệp là bao nhiêu",
+         "em xếp loại gì")}
+    check(not any(v_ == "xep_loai" or v_.startswith("hang_cuoi") for v_ in k.values()),
+          f"E31 khá (trạng từ) / nếu rớt…thì / rèn luyện / làm sao để / học lực học kỳ / học bổng / ĐTB bao nhiêu / thiếu ngữ cảnh tốt nghiệp → KHÔNG phải xếp loại ({k})")
+    sv = str(HERE.parent / "w7_student_facts" / "students" / "sv_lvtn.json")
+    r = proto.answer("Nếu tốt nghiệp, em xếp hạng gì?", sv)
+    check(r["verdict"] == "TRUE" and r.get("claim") == "hang_cuoi(kha)" and "khá" in r["explanation_vi"]
+          and "dự kiến" in r["explanation_vi"] and any(s_["rule_id"] in ("r_f06", "r_f07") for s_ in r["certificate"]["proof"]["steps"]),
+          f"E32 câu mở: hạng dự kiến 'khá' (ĐTBCTL ≈ 3,14) kèm chứng chỉ R-F06/F07 và ghi rõ là dự kiến ({r.get('claim')}, {r['explanation_vi'][:120]})")
+    r = proto.answer("em có đạt loại giỏi khi tốt nghiệp không", sv)
+    check(r["verdict"] == "FALSE" and "khá" in r["explanation_vi"],
+          f"E33 QD-15 (a): hỏi 'loại giỏi' mà hạng là khá → FALSE và nêu hạng thực ({r['verdict']}, {r['explanation_vi'][:120]})")
+    check(proto.tong_hop_hang([{"kha"}, {"gioi"}]) == ("UNKNOWN", ["gioi", "kha"])
+          and proto.tong_hop_hang([{"kha"}, {"kha"}]) == ("TRUE", ["kha"]) and proto.tong_hop_hang([set(), set()]) == ("FALSE", [])
+          and proto.tong_hop_hang([set(), {"kha"}]) == ("UNKNOWN", ["kha"]),
+          "E34 hạng khác nhau giữa các thế giới → UNKNOWN (nêu các hạng có thể); mọi thế giới không đạt mức nào → FALSE")
+    # review C12: giả định (giả sử / lỡ / số điểm / "thì"), người khác, hệ quả của hạng, "loại" nghĩa khác (chứng chỉ, luận văn,
+    # văn bằng 2), ghép với điều kiện tốt nghiệp, "khá giỏi"/"trung bình khá" → KHÔNG phải câu hỏi hạng của chính sinh viên
+    k = {q: proto.parse_question(q) for q in (
+        "giả sử em được 3.4 thì tốt nghiệp loại gì", "lỡ em rớt thêm môn thì bằng loại gì", "ĐTBCTL bằng 3.2 thì tốt nghiệp loại gì",
+        "học cải thiện CT177 thì xếp loại tốt nghiệp gì", "bạn em tốt nghiệp loại gì", "anh em tốt nghiệp bằng giỏi thì em có được không",
+        "bằng loại giỏi có được học thạc sĩ không", "tốt nghiệp loại giỏi có được giữ lại trường không",
+        "tốt nghiệp loại xuất sắc có được khen thưởng không", "Bằng tốt nghiệp loại xuất sắc bị hạ một bậc khi nào?",
+        "loại giỏi khi tốt nghiệp là từ mấy điểm", "bằng IELTS loại khá, em được tốt nghiệp chưa",
+        "chứng chỉ tin học loại giỏi có được miễn không", "luận văn tốt nghiệp của em được loại gì", "văn bằng 2 em tốt nghiệp loại gì",
+        "em đủ điều kiện tốt nghiệp loại giỏi chưa", "em tốt nghiệp bằng trung bình khá phải không", "em tốt nghiệp loại khá giỏi không")}
+    check(not any(v_ == "xep_loai" or v_.startswith("hang_cuoi") for v_ in k.values()),
+          f"E35 giả định / người khác / hệ quả / 'loại' nghĩa khác / ghép điều kiện → KHÔNG phải xếp loại ({ {q: v_ for q, v_ in k.items() if v_ == 'xep_loai' or v_.startswith('hang_cuoi')} })")
+    # review C12 lượt 2: danh sách CHẶN vẫn lọt → parser chỉ nhận vài MẪU câu (khớp toàn câu). Ngưỡng (đủ / trở lên /
+    # ít nhất loại X = ≥ X, khác QD-15 đúng hạng), hạng đứng sau, phủ định, hệ quả/định nghĩa, câu ghép, câu tương lai,
+    # người khác → từ chối
+    k = {q: proto.parse_question(q) for q in (
+        "ĐTBCTL của em có đủ xếp loại giỏi khi tốt nghiệp không?", "dtbctl cua e du loai kha khi ra truong chua",
+        "em tốt nghiệp loại khá trở lên không", "em xếp loại tốt nghiệp khá đúng không", "có bị xếp loại tốt nghiệp trung bình không",
+        "em tốt nghiệp không phải loại trung bình đúng không", "tốt nghiệp trễ có bị xếp loại thấp hơn không",
+        "học lại có ảnh hưởng xếp loại tốt nghiệp không", "xếp loại tốt nghiệp là gì", "xếp loại tốt nghiệp gồm những loại nào",
+        "em tốt nghiệp chưa? bằng loại gì?", "em còn cơ hội tốt nghiệp loại giỏi không", "con tôi tốt nghiệp loại gì",
+        "anh ấy tốt nghiệp loại gì", "nó tốt nghiệp bằng giỏi không", "lớp em tốt nghiệp loại gì", "bằng loại khá có đi làm nhà nước được không")}
+    check(not any(v_ == "xep_loai" or v_.startswith("hang_cuoi") for v_ in k.values()),
+          f"E38 ngưỡng / hạng đứng sau / phủ định / hệ quả / định nghĩa / câu ghép / tương lai / người khác → KHÔNG phải xếp loại "
+          f"({ {q: v_ for q, v_ in k.items() if v_ == 'xep_loai' or v_.startswith('hang_cuoi')} })")
+    # review C12 lượt 3: bỏ dấu TOÀN câu làm cô→có, hàng→hạng, bảng→bằng, đặt→đạt, tối→tôi; "bằng gì" hỏi TÊN văn bằng
+    # (kỹ sư/cử nhân); câu không chủ ngữ có thể hỏi chung → từ chối
+    k = {q: proto.parse_question(q) for q in (
+        "Cô tốt nghiệp loại giỏi không ạ", "cô được bằng giỏi không", "nếu tốt nghiệp thì cô được loại giỏi không",
+        "em tốt nghiệp bằng gì", "em ra trường được bằng nào", "em ra trường được bằng gì", "tốt nghiệp loại nào", "tn loại gì",
+        "em tốt nghiệp hàng gì", "bảng của em là loại gì", "em có đặt bằng giỏi không", "tối tốt nghiệp loại gì")}
+    check(not any(v_ == "xep_loai" or v_.startswith("hang_cuoi") for v_ in k.values()),
+          f"E39 cô/hàng/bảng/đặt/tối (khác dấu), 'bằng gì' (tên văn bằng), câu không chủ ngữ → KHÔNG phải xếp loại "
+          f"({ {q: v_ for q, v_ in k.items() if v_ == 'xep_loai' or v_.startswith('hang_cuoi')} })")
+    k = {q: proto.parse_question(q) for q in ("Anh chị ơi, nếu tốt nghiệp thì em xếp hạng gì ạ?", "cho mình hỏi mình tốt nghiệp loại gì vậy",
+                                              "tôi có đạt loại giỏi khi ra trường không")}
+    check(list(k.values()) == ["xep_loai", "xep_loai", "hang_cuoi(gioi)"],
+          f"E40 lời gọi / trợ từ / chủ ngữ mình, tôi vẫn nhận ({k})")
+    r = proto.answer("Nếu tốt nghiệp, em xếp hạng gì?", str(HERE.parent / "w7_student_facts" / "students" / "sv_du_hp.json"))
+    check(r["verdict"] in ("FALSE", "UNKNOWN") and any(s_["rule_id"] == "r_f06" for s_ in r["certificate"]["proof"]["steps"]),
+          f"E41 không đạt mức nào → chứng chỉ vẫn có nguồn R-F06 (ngưỡng hạng) ({r['verdict']}, {[s_['rule_id'] for s_ in r['certificate']['proof']['steps']][:4]})")
+    import tempfile
+    j = json.loads(Path(sv).read_text(encoding="utf-8"))
+    for g in j["grades"].values():
+        if g.get("letter") and g.get("letter") != "M":
+            g.update(thang10=95, letter="A", status="passed")
+    with tempfile.TemporaryDirectory() as d_:
+        f_ = Path(d_) / "xs.json"
+        f_.write_text(json.dumps(j, ensure_ascii=False), encoding="utf-8")
+        k = {q: proto.answer(q, str(f_)) for q in ("Nếu tốt nghiệp, em xếp hạng gì?", "em có đạt loại xuất sắc khi tốt nghiệp không",
+                                                    "em có đạt loại khá khi tốt nghiệp không")}
+    v1, v2, v3 = k.values()
+    check(v1["verdict"] == "UNKNOWN" and "xuất sắc" in v1["explanation_vi"] and "giỏi" in v1["explanation_vi"]
+          and "kỷ luật" in v1["explanation_vi"] and v2["verdict"] == "UNKNOWN" and v3["verdict"] == "FALSE"
+          and not any(s_["atom"].startswith("hang_cuoi(") for r_ in (v1, v2, v3) for s_ in r_["certificate"]["proof"]["steps"]),
+          f"E36 hạng gốc xuất sắc: Đ34 k2 (F > 5% · kỷ luật cảnh cáo cấp Trường) có thể hạ một mức, KB chưa biết → câu mở / 'xuất sắc' "
+          f"UNKNOWN nêu dữ kiện cần; 'khá' FALSE chắc chắn; chứng chỉ KHÔNG khẳng định hạng cuoi chưa chắc ({v1['verdict']}, {v2['verdict']}, {v3['verdict']}; {v1['explanation_vi'][:140]})")
+    j["grades"] = {m: g for m, g in j["grades"].items() if g.get("letter") == "M"}
+    with tempfile.TemporaryDirectory() as d_:
+        f_ = Path(d_) / "rong.json"
+        f_.write_text(json.dumps(j, ensure_ascii=False), encoding="utf-8")
+        r = proto.answer("Nếu tốt nghiệp, em xếp hạng gì?", str(f_))
+    check(r["verdict"] == "UNKNOWN", f"E37 chưa có ĐTBCTL (không HP nào tính điểm) → UNKNOWN, không FALSE 'chưa đạt mức nào' ({r['verdict']})")
     v = proto.parse_question("em có nên đăng ký ct180 không")
     check(not v.startswith("duoc_dang_ky"), f"E9 'có NÊN đăng ký' không trả lời bằng 'được đăng ký' ({v})")
     r = proto.answer("Nếu em rớt CT177 thì trễ mấy kỳ?", None)

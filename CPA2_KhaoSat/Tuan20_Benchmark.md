@@ -248,6 +248,51 @@ Benchmark không có lượt hỏi đáp qua lại, nên Coverage của M2 vẫn
 
 **Phương án B (Loi xác nhận bảng điểm in ĐTB/TC tích lũy sau từng học kỳ):** kiểm chéo thay thế bằng số tích lũy. Việc này cần đọc thêm dòng tích lũy (OCR) và kiểm trên ảnh thật, vì môi trường cloud không có ảnh, font hay Tesseract của Windows. Phương án này **lập kế hoạch riêng** (Viec_ton_dong C14).
 
+## 5e. C12 — ý định xếp loại tốt nghiệp (Loi chọn (a) → QD-15, 19/10/2026)
+
+**Parser** (`prototype._xep_loai`) dùng **danh sách CHO PHÉP**: chỉ nhận vài mẫu câu, và mẫu phải khớp **toàn câu**. Trước khi so khớp, câu được bỏ lời gọi đầu câu, trợ từ cuối câu và tiền tố "nếu tốt nghiệp (thì)".
+- **Câu mở** ("Nếu tốt nghiệp, em xếp hạng gì?", "bằng của em loại gì") → `xep_loai`.
+- **Câu có/không về đúng một hạng** ("em có đạt loại giỏi khi tốt nghiệp không", "ra trường em được bằng khá không") → `hang_cuoi(X)`.
+- **Mọi câu khác bị từ chối**, gồm:
+  - câu ngưỡng "đủ / trở lên / ít nhất loại X" (≥ X, khác QD-15 đúng hạng — chưa hỗ trợ, nên NL-09 vẫn bị từ chối);
+  - phủ định, hạng đứng sau trong câu;
+  - hệ quả hay định nghĩa của hạng;
+  - câu ghép, câu hỏi về cơ hội trong tương lai;
+  - người khác, "loại" theo nghĩa khác.
+
+Hai lượt review đầu đi theo hướng **danh sách CHẶN**, và lần nào cũng còn lọt câu cho kết luận sai, nên em đổi sang danh sách cho phép. Lượt 3 tìm thêm hai lỗi, đã sửa:
+- **Bỏ dấu toàn câu làm từ khác trùng nhau** (cô→có, hàng→hạng, bảng→bằng, đặt→đạt, tối→tôi). Mẫu nay khớp trên câu chỉ bỏ dấu **từ khoá**, và bắt buộc có chủ ngữ ngôi thứ nhất.
+- **"Bằng gì" là hỏi tên văn bằng** (kỹ sư, cử nhân), không phải hạng, nên bị từ chối. Review cũng phát hiện câu "tốt nghiệp em được bằng trung bình hay khá" lọt vào nhánh `tot_nghiep`; nhánh này nay đã loại trừ "bằng + hạng".
+
+**Trả lời** (`answer_xep_loai`):
+- **QD-15:** "có đạt loại X" hỏi **đúng** hạng X, và câu trả lời luôn nêu hạng thực.
+- **Luôn ghi "hạng DỰ KIẾN theo ĐTBCTL hiện tại"**, vì `hang_cuoi` không phụ thuộc việc đã đủ điều kiện tốt nghiệp.
+- **Chưa có ĐTBCTL** thì trả UNKNOWN.
+
+**Review lượt 1 tìm ra lỗ hổng KB (C15).** Đ34 k2 hạ hạng xuất sắc/giỏi một mức khi:
+- (a) khối lượng học phần bị điểm F vượt 5%;
+- (b) đã bị kỷ luật từ mức cảnh cáo cấp Trường (chép tay tr.20).
+
+Nhưng `tc_diem_f` **không được sinh** ở đâu, và điểm b **chưa được hình thức hoá**, nên KB luôn coi như không hạ.
+
+Câu trả lời nay **không tin hạng cuối của KB** với hạng gốc xuất sắc/giỏi:
+- hạng cuối có thể bằng hạng gốc hoặc thấp hơn một mức, nên trả UNKNOWN kèm 2 dữ kiện cần xác nhận;
+- câu "có đạt loại khá" khi hạng gốc là xuất sắc trả FALSE chắc chắn;
+- khá và trung bình không bị hạ, nên trả lời chắc chắn.
+
+**Kiểm thử:** `validate_integration` E29–E37 (câu mới).
+- E29–E30 và E32–E37 viết trước và fail với code cũ.
+- E31, E35, E38 và E39 là các ca âm tính. E35, E38 và E39 lấy từ review và fail với các bản trước.
+- E40 là các ca dương có lời gọi đầu câu và chủ ngữ "mình/tôi".
+- E41: không đạt mức hạng nào thì chứng chỉ vẫn có nguồn R-F06.
+- Ba lượt review đối kháng.
+
+**Số đo dev** (`_sau_C12`): G-Truth không đổi (58/58 sound). Q-Noise không đổi, vì NL-09 thuộc test.
+
+**Q-Noise:** NL-09 ("có **đủ** xếp loại giỏi") là câu ngưỡng, nên vẫn bị từ chối, đúng như ý định kỳ vọng lúc đóng băng. Vì vậy **không cần errata**.
+
+**Q-Elicit v2:** KB-05 bản v1 ("bằng của bạn loại gì") trùng đúng mẫu parser mới, nên mớm lời. Em viết lại câu này **trước khi mở form**; hash v1 vẫn giữ.
+
 ## 5c. Q-Noise v1 — độ bền parser trước cách gõ của sinh viên (TỔNG HỢP)
 
 Q-Real chưa có câu thật (A16), nên em đo trước một phần việc Q-Real phải đo: **parser có chịu được cách sinh viên gõ hay không**. Q-Noise **không** cho biết sinh viên hỏi *gì* và **không** tính vào chỉ tiêu Q-Real (vẫn 0/400).
@@ -344,6 +389,8 @@ Theo quy tắc nhiễm dữ liệu (Bài học): đây là số **chính thức*
 - [x] Sửa P20-2/P20-3 (mục 5b)
 - [x] P20-4 (M2 OCR): giữ từ chối, hỏi 1 số ĐTBCHK, nhận khai báo số in (mục 5d)
 - [ ] P20-4 phương án B: kiểm chéo bằng ĐTB/TC tích lũy in sau mỗi học kỳ (C14)
+- [x] C12 ý định xếp loại tốt nghiệp (mục 5e, QD-15)
+- [ ] **C15 (KB):** Đ34 k2 a (`tc_diem_f` chưa sinh) + điểm b (kỷ luật cảnh cáo cấp Trường) — lập kế hoạch R-Formal; ảnh hưởng gold HG xuất sắc/giỏi (errata)
 - [x] **P20-5** (an toàn) + parser chuẩn hoá bỏ dấu/viết tắt (mục 5c, E17–E28)
 - [x] Q-Elicit (20 kịch bản, đóng băng) + nội dung Google Form + nhập CSV/rút lại (§3b)
 - [ ] Tuần 21: chạy baseline (LLM thuần, RAG thuần, tool-calling) trên `baseline_dev/test.jsonl` (cần API key, `.env`)
