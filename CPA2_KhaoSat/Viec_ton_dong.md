@@ -21,7 +21,7 @@ Gom mọi mục `- [ ]` còn mở trong báo cáo Tuần 1–17. Các mục đã
 | A11 | Nguồn về **làm tròn** TB GDQP (4,975 → 5,0?) | Tuần 17 E17-2 | Gold NG-10 |
 | ~~A13~~ | ✅ **Đóng 18/10/2026:** QD-13 rút lại — song hành theo đúng QĐ3266 Đ7 k5 (học trước/cùng lúc; đã học kể cả F) | Tuần 19 §2 | Recommendation: ràng buộc cứng |
 | A14 | GVHD/cố vấn học tập xác nhận **thứ tự ưu tiên** tư vấn (bắt buộc → mở khóa → nhóm → TC) | Tuần 19 §1 | Recommendation (chính sách, không phải quy chế) |
-| A16 | **Câu hỏi thật cho Q-Real** (≥ 400) — đặt vào `w20_benchmark/qreal/_tho/`, rà tay sau khi nhập | Tuần 20 §3 | Đánh giá parser/độ phủ trên câu thật (RQ, H2) |
+| A16 | **Câu hỏi thật cho Q-Real** (≥ 400) — đã có Google Form (`w20_benchmark/qreal/bieu_mau.md`): Loi điền `<<ĐIỀN>>` (họ tên, email liên hệ, ngày xoá bản thô), tạo form, phát cho SV, xuất CSV vào `qreal/_tho/`, chạy `nhap_qreal.py`, rà tay | Tuần 20 §3, §3b | Đánh giá parser/độ phủ trên câu thật (RQ, H2) |
 | ~~A15~~ | ✅ **Đóng 18/10/2026:** trang 20 QĐ3266 (OCR trắng — Điều 33–35, tiêu đề Điều 33/34) chép tay từ PDF gốc Loi gửi; trích R-Formal khớp, thêm R-X20/R-X21 | Tuần 5 P-4, Tuần 14 | corpus RAG Điều 33–35 |
 | ~~A12~~ | ✅ **Đóng 18/10/2026 — QD-12** (Loi xác nhận): điều kiện nhận đề tài LVTN/TLTN chỉ là ngưỡng TC của CTĐT | Tuần 18 | R-F04 N → F |
 
@@ -30,7 +30,7 @@ Gom mọi mục `- [ ]` còn mở trong báo cáo Tuần 1–17. Các mục đã
 | # | Việc | Tuần |
 |---|---|---|
 | ~~B1~~ | ✅ **Tuần 20:** G-Truth v1 (115 ca) + OCR-Noise v1 (40 ca), gold đóng băng `312b7ff` — test chạy Tuần 22 | 20 |
-| B2 | **Q-Real** (400–600 câu thật) — pipeline xong (`w20_benchmark/nhap_qreal.py`), **chưa đạt 0/400**: chờ Loi cung cấp câu hỏi (A16) | 20–22 |
+| B2 | **Q-Real** (400–600 câu thật) — pipeline + biểu mẫu xong, **chưa đạt 0/400**: chờ Loi phát form (A16). Q-Elicit (20 kịch bản, đóng băng) báo RIÊNG, không tính vào 400 | 20–22 |
 | B3 | Đưa test10 (bẫy QD-09) và test13 (tiên quyết ngược chiều) của w14 vào bộ đánh giá RAG | 20–21 |
 | B4 | Baseline LLM / RAG thuần (`retriever.search`) / tool-calling trên cùng bộ ca (`dau_vao_baseline()`) | 21 |
 | B5 | Parser và Verbalizer **LLM thật** (cần API key, `.env`) + đo Verbalization Faithfulness (RQ4) | 21–22 |

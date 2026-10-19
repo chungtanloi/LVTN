@@ -74,6 +74,58 @@ Theo phương án 1a, câu hỏi thật do Loi cung cấp. Đã có sẵn:
 
 Script ẩn danh chỉ bắt được các mẫu cố định, nên **bước rà tay là bắt buộc**.
 
+### 3b. Biểu mẫu thu câu hỏi + Q-Elicit (Loi duyệt 19/10/2026: giữ chỉ tiêu 400 câu TỰ NHIÊN)
+
+Loi thấy rất khó tìm câu thật. Việc cào dữ liệu nhóm Facebook đã bị loại vì lý do đạo đức, điều khoản sử dụng và Nghị định 13/2023. Vì vậy em làm một **Google Form** để Loi gửi cho sinh viên. Nội dung form ở `qreal/bieu_mau.md`, sinh bằng `build_bieu_mau.py`. Form có:
+
+1. **Đồng ý (NĐ 13/2023):**
+   - người thu và liên hệ (`<<ĐIỀN>>` — Loi điền trước khi mở);
+   - mục đích;
+   - nơi lưu: kho GitHub có thể công khai, có thể gửi tới dịch vụ AI để so sánh;
+   - thời hạn xoá bản thô;
+   - **rút lại bằng mã tự đặt** (≥ 6 ký tự, chỉ lưu dạng băm trong `_tho/_noi_bo/`, không lên GitHub), kèm giới hạn: lịch sử git, báo cáo, dịch vụ AI thì không thu hồi được;
+   - tự nguyện.
+
+   Form không hỏi tên, MSSV, email, SĐT hay ngày sinh.
+2. **Câu tự do** `[TU_DO-1..3]`:
+   - hỏi **trước** mọi kịch bản; mọi chữ người trả lời đọc trước đó không chứa cụm từ parser dựa vào (B11e2);
+   - đây là **Q-Real** (nguồn `bieu_mau`), tính vào chỉ tiêu 400.
+3. **Q-Elicit**:
+   - 20 kịch bản viết tay (`qreal/kich_ban_q_elicit.json`), 4 bộ × 5; người trả lời tự chọn số 1–4;
+   - phủ đủ 11 ý định, có cả ngoài phạm vi;
+   - **chống mớm lời:** tình huống không chứa cụm từ parser dựa vào, và parser không tự nhận ra ý định từ chính tình huống (mọi kịch bản → `khong_ro`);
+   - ý định gán trước theo kịch bản; split theo kịch bản;
+   - kịch bản **đóng băng** trước khi mở form (`qreal/kich_ban_dong_bang.json`, B11h).
+
+   Câu elicit ghi **riêng** ở `qreal/qelicit.json` và **KHÔNG tính** vào 400 vì chủ đề do người làm luận văn đặt.
+
+**`nhap_qreal.py`:**
+- nhận ra CSV xuất từ form theo các mã `[..]`, kể cả khi Google thêm tiền tố;
+- chỉ lấy dòng đồng ý và cảnh báo mọi file/dòng bị bỏ;
+- đánh dấu ô có nhiều câu (`nhieu_cau`);
+- `--rut <mã>` xoá câu của người đó; câu trùng của người khác vẫn giữ.
+
+**Kiểm thử:** `validate_benchmark` B11a–h, gồm nhập đầu–cuối trên dữ liệu GIẢ trong thư mục tạm. Có hai lượt review. Lượt 1 có 4 lỗi cao:
+- B11 không kiểm đường nhập thật;
+- file bị bỏ im lặng;
+- câu tự do bị mớm;
+- phần đồng ý thiếu.
+
+Lượt 2 có 3 lỗi cao:
+- kiểm nhầm đoạn văn bản;
+- mã rút băm nằm trong file công khai, dò ngược được;
+- câu chữ đồng ý chưa đúng sự thật.
+
+Tất cả đã sửa.
+
+**Hạn chế:**
+- Nút *Quay lại* của Google Form cho phép sửa câu tự do sau khi đọc kịch bản (đã nhắc người trả lời).
+- Tỉ lệ các bộ phụ thuộc số người tự chọn.
+- Người trả lời là ai tuỳ cách Loi phát form: thiên lệch mẫu. Báo cáo sẽ ghi kênh phát.
+- Script không bắt được tên người, nên vẫn phải rà tay.
+
+**Trạng thái: Q-Real vẫn CHƯA ĐẠT (0/400)** cho tới khi có câu thật.
+
 ## 4. Đầu vào baseline (cho Tuần 21)
 
 `baseline.py` sinh cho mỗi ca:
@@ -257,12 +309,12 @@ Theo quy tắc nhiễm dữ liệu (Bài học): đây là số **chính thức*
 
 ## 7. Việc còn lại → Tuần 21+
 
-- [ ] **Cần Loi:** câu hỏi thật cho Q-Real (≥ 400), đặt vào `qreal/_tho/`
+- [ ] **Cần Loi:** câu hỏi thật cho Q-Real (≥ 400), đặt vào `qreal/_tho/`. Đã có form (§3b): điền `<<ĐIỀN>>`, tạo Google Form theo `qreal/bieu_mau.md`, phát cho sinh viên, xuất CSV vào `_tho/`
 - [x] Sửa P20-1 — R-Formal v1.10 + QD-14 (mục 5b)
 - [x] Sửa P20-2/P20-3 (mục 5b)
 - [ ] Xem lại P20-4 (M2 OCR)
 - [x] **P20-5** (an toàn) + parser chuẩn hoá bỏ dấu/viết tắt (mục 5c, E17–E28)
-- [ ] Sau: Q-Elicit (phiếu kịch bản) + Google Form Q-Real nhỏ (Loi: "sau cập nhật thêm")
+- [x] Q-Elicit (20 kịch bản, đóng băng) + nội dung Google Form + nhập CSV/rút lại (§3b)
 - [ ] Tuần 21: chạy baseline (LLM thuần, RAG thuần, tool-calling) trên `baseline_dev/test.jsonl` (cần API key, `.env`)
 - [ ] Tuần 22: chạy CPA² trên test (một lần), báo cáo cả hai loại gold
 

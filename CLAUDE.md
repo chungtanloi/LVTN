@@ -77,7 +77,7 @@ D:\LVTN\                          (git repo)
 │   ├── w17_adversarial\          bộ đối kháng 80 ca, gold đóng băng (gold_dong_bang.json), oracle, run_adversarial.py
 │   ├── w18_eligibility\          đủ điều kiện LVTN/TLTN/niên luận/thực tập/thay thế (eligibility.lp/.py)
 │   ├── w19_recommendation\       đề xuất đăng ký 1 HK: ứng viên ba trị + clingo tối ưu (recommendation.py/.lp)
-│   └── w20_benchmark\            G-Truth v1 + OCR-Noise v1 (gold đóng băng 312b7ff), Q-Real (qreal/, _tho/ gitignore), baseline.py, run_cpa2.py
+│   └── w20_benchmark\            G-Truth v1 + OCR-Noise v1 (gold đóng băng 312b7ff), Q-Noise (tổng hợp), Q-Real + Q-Elicit + biểu mẫu (qreal/, _tho/ gitignore), baseline.py, run_cpa2.py
 ├── ctu\                          PDF quy chế gốc (gitignore)
 ├── NiênLuan\                     niên luận cũ, có dữ liệu SV (gitignore)
 └── LVTN\                         repo riêng, chưa dùng (gitignore)
@@ -121,3 +121,4 @@ D:\LVTN\                          (git repo)
 - So ngưỡng có biên thập phân (hạng 3,20–3,59 …) phải so hữu tỉ đúng câu chữ; mốc nguyên thang ×10 bỏ sót giá trị giữa hai mốc (P20-1, đã sửa R-Formal v1.10 + QD-14: không làm tròn ĐTBCTL, xếp theo cận dưới). Test ngưỡng phải có giá trị KHÔNG trùng mốc.
 - Parser KHÔNG có ý định mặc định: câu không nhận ra → `khong_ro` (UNKNOWN "chưa hỗ trợ"). Mặc định `tot_nghiep` từng trả TRUE cho câu học phí/chuyển ngành (P20-2). Sửa file qua heredoc Python: `\b` trong chuỗi thường thành ký tự backspace — dùng chuỗi raw hoặc công cụ Edit.
 - Bộ tổng hợp kế thừa gold (Q-Noise) phải chấm cả Ý ĐỊNH: kết luận từ claim khác mà tình cờ trùng gold vẫn là unsound (chứng chỉ chứng minh câu khác). Danh sách loại trừ/từ khoá của parser phải có cả dạng KHÔNG DẤU — loại trừ chỉ có dấu làm "luan van tot nghiep" thành `tot_nghiep` (P20-5). Nhưng KHÔNG bỏ dấu mọi từ: thế→the, dự→du, nền→nen trùng từ khoá → chỉ bỏ dấu từ trong `TU_KHOA`, viết tắt mơ hồ (đk, tn) mở theo ngữ cảnh, câu hỏi mở (thế nào/ở đâu/là gì) không vào ý định có/không. Mỗi lần nới parser phải có ca ÂM TÍNH (câu phải vẫn bị từ chối).
+- Thu câu hỏi thật: KHÔNG cào nhóm/diễn đàn (đạo đức, ToS, NĐ 13/2023) → biểu mẫu có đồng ý đầy đủ (người thu + liên hệ, mục đích, nơi lưu GitHub + dịch vụ AI, hạn xoá bản thô, rút lại bằng mã tự đặt + giới hạn rút). Câu đồng ý phải ĐÚNG sự thật (băm ≠ mã hoá; mã rút không lên repo). Câu tự do hỏi TRƯỚC kịch bản; kịch bản không chứa cụm từ parser dựa vào (chống mớm). Câu elicit báo RIÊNG, không tính vào Q-Real (Loi 19/10/2026: giữ 400 câu tự nhiên).

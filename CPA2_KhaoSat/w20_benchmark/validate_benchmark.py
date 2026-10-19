@@ -196,7 +196,114 @@ def main():
     n_ = len(qr)
     print(f"     Q-Real hiện có {n_} câu thật — mục tiêu 400–600: {'ĐẠT' if n_ >= 400 else 'CHƯA ĐẠT'} ({n_}/400)")
     kiem_qnoise(gt)
+    kiem_qelicit()
     return ket_thuc()
+
+
+def kiem_qelicit():
+    """B11 — Q-Elicit (kịch bản → sinh viên tự viết câu hỏi) + biểu mẫu thu Q-Real. Câu elicit KHÔNG tính vào Q-Real."""
+    print("\nB11. Q-ELICIT + BIỂU MẪU (câu elicit báo riêng, KHÔNG tính vào chỉ tiêu 400 câu tự nhiên)")
+    try:
+        import build_bieu_mau as BM
+        import nhap_qreal as Q
+        import prototype
+        kb = BM.doc_kich_ban()
+    except (ImportError, FileNotFoundError, AttributeError) as e:
+        check(False, f"B11 có build_bieu_mau.py, qreal/kich_ban_q_elicit.json và nhập biểu mẫu ({e})")
+        return
+    ds = kb["kich_ban"]
+    thieu = [k.get("id") for k in ds if not all(k.get(t) not in (None, "") for t in ("id", "bo", "y_dinh", "tinh_huong", "split"))
+             or k["y_dinh"] not in Q.Y_DINH or k["split"] not in ("dev", "test") or "can_ho_so" not in k]
+    bo = Counter(k["bo"] for k in ds)
+    check(len(ds) >= 20 and not thieu and len({k["id"] for k in ds}) == len(ds) and len(bo) == 4 and min(bo.values()) >= 5,
+          f"B11a ≥ 20 kịch bản, 4 bộ × ≥ 5, đủ trường, ý định hợp lệ ({len(ds)}; bộ {dict(bo)}; lỗi {thieu[:4]})")
+    phu = {k["y_dinh"] for k in ds}
+    check(phu == set(Q.Y_DINH), f"B11b phủ MỌI ý định, có ngoài phạm vi (thiếu {sorted(set(Q.Y_DINH) - phu)})")
+    mom = [(k["id"], m) for k in ds for m in BM.mom(k["tinh_huong"])]
+    tu_nhan = [(k["id"], prototype.parse_question(k["tinh_huong"])) for k in ds]
+    tu_nhan = [x for x in tu_nhan if x[1] != "khong_ro"]
+    check(not mom and not tu_nhan,
+          f"B11c chống mớm lời: tình huống không chứa cụm từ parser dựa vào, và parser KHÔNG tự nhận ra ý định từ chính "
+          f"tình huống ({mom[:3]} {tu_nhan[:3]})")
+    theo_y = defaultdict(set)
+    for k in ds:
+        theo_y[k["y_dinh"]].add(k["split"])
+    lech = [y for y, v in theo_y.items() if sum(k["y_dinh"] == y for k in ds) >= 2 and v != {"dev", "test"}]
+    n_test = sum(k["split"] == "test" for k in ds)
+    check(not lech and 8 <= n_test <= len(ds) - 8,
+          f"B11d chia dev/test THEO KỊCH BẢN; ý định có ≥ 2 kịch bản thì có ở cả hai phía ({lech}; test {n_test})")
+    bm = (HERE / "qreal" / "bieu_mau.md").read_text(encoding="utf-8") if (HERE / "qreal" / "bieu_mau.md").exists() else ""
+    tieu_de = re.findall(r"^#+ .*?(\[[A-Z_]+(?:-\d+)?\])", bm, re.M)
+    vt = {t: i for i, t in enumerate(tieu_de)}
+    check(bm == BM.sinh_bieu_mau(kb) and {f"[{k['id']}]" for k in ds} <= set(tieu_de)
+          and {"[DONG_Y]", "[BO]", "[MA_RUT]", "[TU_DO-1]", "[TU_DO-2]", "[TU_DO-3]"} <= set(tieu_de)
+          and not re.search(r"^#+ .*(?:mssv|mã số|\btên\b|email|điện thoại|tháng sinh|ngày sinh)", bm, re.I | re.M),
+          "B11e bieu_mau.md sinh từ kịch bản (đồng bộ); đủ câu đồng ý/mã rút lại/chọn bộ/kịch bản/câu tự do; KHÔNG hỏi "
+          "tên, MSSV, email, SĐT, ngày/tháng sinh")
+    if {"[TU_DO-1]", "[BO]"} <= set(vt) and "## Tiêu đề" in bm:
+        doc_truoc = bm[bm.index("## Tiêu đề"):bm.index("### [BO]")]   # chữ người trả lời THẬT SỰ đọc trước câu tự do
+        check(vt["[TU_DO-1]"] < vt["[BO]"] < min(vt.get(f"[{k['id']}]", 10**6) for k in ds) and not BM.mom(doc_truoc),
+              f"B11e2 câu tự do (Q-Real) hỏi TRƯỚC mọi kịch bản; chữ đọc trước nó không chứa cụm từ parser ({BM.mom(doc_truoc)})")
+    dy = bm[bm.index("[DONG_Y]"):bm.index("### [MA_RUT]")] if "### [MA_RUT]" in bm and "[DONG_Y]" in bm else ""
+    check(all(re.search(x, dy, re.I) for x in (r"<<ĐIỀN", r"liên hệ", r"github|công khai", r"dịch vụ AI|OpenAI|Gemini",
+                                               r"bản thô[^.]*xo[áa]", r"mã rút", r"tự nguyện", r"không thể thu hồi",
+                                               r"lịch sử")) and not re.search(r"mã hoá|mã hóa|mọi câu \(trừ câu này\)", bm),
+          "B11e3 phần đồng ý (NĐ 13/2023) nói ĐÚNG: người thu + liên hệ (chỗ điền), mục đích, kho mã công khai + dịch vụ AI, "
+          "thời hạn xoá bản thô, rút lại bằng mã tự đặt và GIỚI HẠN của việc rút (lịch sử git, dịch vụ AI), tự nguyện")
+    import csv, tempfile
+    k1, k2 = ds[0], ds[1]
+    hang = [["Dấu thời gian", "2. [DONG_Y] Đồng ý ", "[MA_RUT] Mã", "[BO] Bộ", f" [{k1['id']}] …", f"[{k2['id']}] … (2)",
+             "[KB-99] lạ", "[TU_DO-1] …", "[TU_DO-2] …"],
+            ["1", "Tôi đồng ý.", "x7k2m9", "1", "e dk ct180 dc ko ad", "  ", "câu kịch bản lạ", "MSSV B2306555 hỏi: học phí kỳ hè tính sao ạ?", ""],
+            ["2", "Không đồng ý", "", "1", "câu của người KHÔNG đồng ý phải bị loại", "", "", "người không đồng ý hỏi", ""],
+            ["3", "Tôi đồng ý", "Q8w2Lp", "1", "E DK CT180 DC KO AD", "em muốn hỏi xíu về chuyện này nha", "", "",
+             "câu một nè?\ncâu hai nữa?"],
+            ["4", "Tôi đồng ý", "ab1", "2", "", "", "", "câu của người đặt mã quá ngắn nè", ""]]
+    with tempfile.TemporaryDirectory() as d:
+        d = Path(d)
+        (d / "_tho").mkdir()
+        with open(d / "_tho" / "bieu_mau_xuat.csv", "w", encoding="utf-8-sig", newline="") as fh:
+            csv.writer(fh).writerows(hang)
+        (d / "_tho" / "ban_be.txt").write_text("em đăng ký ct180 được không ạ\n", encoding="utf-8")
+        (d / "_tho" / "khong_dung_cot.csv").write_text("cau hoi\nmột câu sai tên cột\n", encoding="utf-8")
+        (d / "_tho" / "bang.xlsx").write_bytes(b"x")
+        out, el_f, th = d / "qreal.json", d / "qelicit.json", d / "_tho"
+        n_tn, n_el, cb = Q.nhap(th, out, el_f)
+        tn, el = Q.doc_qreal(out), Q.doc_elicit(el_f)
+        cong_khai = out.read_text(encoding="utf-8") + el_f.read_text(encoding="utf-8")
+        r1 = Q.rut("x7k2m9", out, el_f, th)
+        tn1, el1 = Q.doc_qreal(out), Q.doc_elicit(el_f)
+        r_hoa = Q.rut("X7K2M9", out, el_f, th)
+        r2 = Q.rut("Q8w2Lp", out, el_f, th)
+        tn2, el2 = Q.doc_qreal(out), Q.doc_elicit(el_f)
+        Q.nhap(th, out, el_f)                     # nhập lại: câu đã rút KHÔNG quay lại
+        tn3, el3 = Q.doc_qreal(out), Q.doc_elicit(el_f)
+    txt = json.dumps([tn, el], ensure_ascii=False)
+    theo = {k["id"]: k for k in ds}
+    ok = (len(el) == 2 and {e["kich_ban"] for e in el} == {k1["id"], k2["id"]}
+          and all(e["y_dinh_kich_ban"] == theo[e["kich_ban"]]["y_dinh"] and e["split"] == theo[e["kich_ban"]]["split"]
+                  and e["id"].startswith("QE-") for e in el)
+          and len(tn) == 4 and {x["nguon"] for x in tn} == {"bieu_mau", "ban_be"}
+          and any("[MSSV]" in x["cau_hoi"] for x in tn) and any(x.get("nhieu_cau") for x in tn)
+          and not any(x.get("kich_ban") for x in tn) and "e dk ct180" not in json.dumps(tn, ensure_ascii=False)
+          and "học phí" not in json.dumps(el, ensure_ascii=False)
+          and "KHÔNG đồng ý" not in txt and "không đồng ý hỏi" not in txt and "2306555" not in txt
+          and not re.search(r'x7k2m9|Q8w2Lp|"ma_rut|"_chu"', cong_khai)
+          and all(any(w in c for c in cb) for w in ("KB-99", "ab1", "khong_dung_cot.csv", "bang.xlsx")))
+    check(ok, "B11f nhập đầu–cuối (mẫu GIẢ, thư mục tạm): tiêu đề có tiền tố, 'Tôi đồng ý.'; loại người không đồng ý; "
+              "elicit → qelicit.json, tự do + .txt → qreal.json, KHÔNG lẫn hai nguồn; ẩn danh; đánh dấu ô nhiều câu; mã rút "
+              "KHÔNG nằm trong file công khai; cảnh báo mã kịch bản lạ, mã rút quá ngắn, CSV sai cột, file lạ",
+          "" if ok else txt[:300] + f" | cảnh báo {cb}")
+    check(r1 == 1 and len(tn1) == 3 and len(el1) == 2 and r_hoa == 0 and r2 == 3 and len(tn2) == 2 and len(el2) == 0
+          and len(tn3) == 2 and len(el3) == 0,
+          f"B11g rút lại: mã phân biệt hoa/thường; câu TRÙNG của người khác vẫn giữ tới khi họ cũng rút; nhập lại không "
+          f"thêm lại ({r1}, {r_hoa}, {r2}; {len(tn1)}/{len(el1)} → {len(tn2)}/{len(el2)} → {len(tn3)}/{len(el3)})")
+    try:
+        db = json.loads((HERE / "qreal" / "kich_ban_dong_bang.json").read_text(encoding="utf-8"))
+        check(db.get("kich_ban") == BM.hash_kich_ban(kb), "B11h kịch bản ĐÓNG BĂNG trước khi mở biểu mẫu (hash khớp)")
+    except FileNotFoundError:
+        check(False, "B11h có qreal/kich_ban_dong_bang.json")
+    print(f"     Q-Real (tự nhiên) {len(Q.doc_qreal())}/400 — Q-Elicit {len(Q.doc_elicit())} câu (báo riêng, không tính)")
 
 
 VIET = re.compile(r"[^\x00-\x7f]")
