@@ -69,7 +69,7 @@ Các endpoint `/v1/*` yêu cầu `Authorization: Bearer <CPA2_SERVICE_KEY>`. `/h
 
 Chế độ demo luôn bị vô hiệu hóa trong `NODE_ENV=production`, kể cả khi vô tình đặt `CPA2_DEMO_MODE=true`. Khi chưa có Clerk/Convex, production hiển thị trang chờ cấu hình, không mở quyền truy cập tạm.
 
-Không commit/push hoặc tạo dịch vụ trả phí tự động trong phiên triển khai này. Việc publish cloud cần tài khoản/dự án và cấu hình môi trường tương ứng.
+Người dùng đã phê duyệt commit/push phần ứng dụng và cấu hình lên nhánh riêng `codex/cpa2-web-deploy`. API Render đang dùng gói `free`; chưa tạo dịch vụ trả phí. Trạng thái triển khai và phần còn thiếu được ghi ở `VALIDATION.md`.
 
 ## Kiểm tra
 

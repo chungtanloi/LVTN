@@ -21,9 +21,12 @@ Các bộ khảo sát chạy trên bản sao tạm. Không sửa quy tắc, gold
 
 ## Chưa nghiệm thu online
 
-- Chưa có deployment Vercel/Convex/Clerk/Render được cấu hình trong phiên làm việc.
+- Đã push mã ứng dụng lên nhánh `codex/cpa2-web-deploy`, commit `49d37f5`.
+- Render: `cpa2-api` đã live tại https://cpa2-api.onrender.com; `/health` trả 200 và KB `2e7757765cfa09ae`. Đường suy luận còn khóa vì chưa cấu hình service key; không coi health thành nghiệm thu tư vấn online.
+- Vercel: đã tạo dự án `cpa2-web` trong workspace `loi5`, chưa phát hành giao diện có đăng nhập.
+- Convex và Clerk: đang chờ xác nhận team Convex và hoàn tất đăng nhập/provisioning trước khi cấu hình môi trường.
 - Kiểm thử Convex là kiểm thử chức năng backend trong bộ nhớ, chưa thay cho kiểm tra hai tài khoản Clerk thật trên cloud.
-- Chưa build container Docker trên máy này vì không có Docker CLI; kiểm tra runtime chỉ xác nhận tập file và luồng Python, không xác nhận image Linux.
+- Container Docker đã build và khởi động thành công trên Render Linux. Chưa kiểm thử suy luận/OCR có xác thực qua cloud.
 - Trước khi công bố demo online: tạo/kết nối các dự án, cấu hình môi trường theo README, build Docker, thử đăng nhập hai tài khoản, upload/OCR, xóa dữ liệu và kiểm tra lại health.
 
 Chưa tích hợp AI API, thanh toán hoặc email, theo phạm vi bản đầu đã chốt. Website và tài liệu sản phẩm sử dụng tên CPA²; AcademiQ chỉ là nguồn kế thừa của niên luận.
