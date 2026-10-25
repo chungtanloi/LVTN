@@ -1,5 +1,5 @@
 
 .env.local
-
-.vercel
+.vercel/
 .env*
+!.env.example
