@@ -105,6 +105,7 @@ def de_xuat(ho_so, hk, them=""):
           "hinh_thuc_tot_nghiep": [], "xin_mien": [], "thay_the": [], "khong_du_song_hanh": [], "mau_thuan": mt}
     if not models:
         kq["can_xac_minh"].append({"ma": None, "ly_do": "hồ sơ mâu thuẫn với quy chế (không có mô hình)"})
+        kq["vo_nghiem"] = True          # solver vô nghiệm: lớp trên phải báo MÂU THUẪN, không phải "không có đề xuất"
         return kq
     chung = frozenset.intersection(*models)
     tl = {ma: _moi(models, f'tich_luy("{ma}")') for ma in CT}

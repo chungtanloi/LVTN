@@ -352,6 +352,10 @@ def answer_recommendation(question, student_path):
                                   "Bạn muốn đăng ký học kỳ 1, 2 hay 3 (hè)?",
                 "certificate": {"claim": "de_xuat", "proof": {"steps": []}}}
     r = recommendation.de_xuat(doc_ho_so(student_path), hk)
+    if r.get("vo_nghiem"):     # solver vô nghiệm (như nhánh UNSAT của answer): KHÔNG đề xuất, không giả vờ "chưa có học phần hợp lệ"
+        return {"verdict": "UNSAT", "claim": "de_xuat", "missing_facts": [], "can_bo_sung": [], "mau_thuan": r["mau_thuan"],
+                "certificate": {"claim": "de_xuat", "verdict": "UNSAT", "proof": {"steps": []}, "missing_facts": [], "can_bo_sung": []},
+                "explanation_vi": "Hồ sơ mâu thuẫn với quy chế hoặc với chính nó — hệ thống không đề xuất. Hãy kiểm tra lại hồ sơ."}
     steps = [{"atom": c["atom"], "rule_id": c["rule_id"], "source": {"van_ban": c["nguon"]}}
              for x in r["dang_ky"] for c in x["chung_chi"]]
     text = (f"Đề xuất đăng ký HK{hk} ({r['tong_tc']} TC): " + ", ".join(x["ma"] for x in r["dang_ky"])

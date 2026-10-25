@@ -214,6 +214,11 @@ def main():
           f"I1 đã học cả AV lẫn PV → cần xác minh với lý do 'cả hai nhánh', không phải 'chưa xác định thiếu bao nhiêu' ({ly})")
     src = (HERE / "recommendation.py").read_text(encoding="utf-8")
     check(not re.search(r"^\s*assert\b", src, re.M), "I2 bất biến kiểm lại phương án không dùng assert (bị bỏ khi chạy python -O)")
+    j = goc()
+    j["khong_tinh_tich_luy"] = ["CT177"]            # loại HP bắt buộc khỏi tích lũy → trái quy chế → solver vô nghiệm
+    r = R.de_xuat(j, hk=1)
+    check(r.get("vo_nghiem") is True and not r["dang_ky"], "I3 solver vô nghiệm gắn cờ vo_nghiem (lớp trên báo MÂU THUẪN, không phải 'chưa có đề xuất')")
+    check(not R.de_xuat(goc(), hk=1).get("vo_nghiem"), "I4 hồ sơ bình thường không gắn cờ vo_nghiem")
 
     print("\n" + "=" * 78)
     if errors:

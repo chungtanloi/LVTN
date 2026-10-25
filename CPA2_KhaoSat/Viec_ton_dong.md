@@ -66,6 +66,7 @@ Gom mọi mục `- [ ]` còn mở trong báo cáo Tuần 1–17. Các mục đã
 | C17 | **Hiện thực đúng 3 ý định của parser**: `thieu_bat_buoc` (còn thiếu môn gì), `thieu_nhom` (còn thiếu bao nhiêu TC), `du_dk_xin_mien` (chứng chỉ nào miễn môn nào) sinh claim KHÔNG đối số nên CLI trả FALSE sai (họ lỗi P18-1); API đang chặn thành `ngoai_pham_vi`. 'Miễn học phần' nằm trong kế hoạch web → lặp `du_dk_xin_mien("<mã>")` qua các HP ngoại ngữ (w9) và liệt kê. Cần ca kiểm thử đi qua prototype | Web Mốc 1 (review H4) |
 | C18 | **Build image Docker thật** (cloud dev không có Docker daemon): `docker build -f services/cpa2_api/Dockerfile -t cpa2-api .`, kiểm `apt-get` (tesseract-ocr-vie), HEALTHCHECK, người dùng không đặc quyền; ghim digest image gốc; xem xét Python 3.14 | Web Mốc 1, README |
 | C19 | **OCR bất đồng bộ**: `/v1/ocr` đồng bộ (vài chục giây đến vài phút, trần 240s); tác vụ có trạng thái chờ / đang xử lý / hoàn tất nằm ở Convex | Web Mốc 4 |
+| C21 | **Đo thật bể tiến trình trên nền tảng triển khai**: RAM mỗi tiến trình con (lõi + clingo + Tesseract) để chọn `CPA2_RAM_MB` và giới hạn container (ước lượng 1,5 GB/tiến trình chưa đo); RLIMIT_AS với Tesseract thật trong container; `tini (đã thêm vào Dockerfile, chưa kiểm); build image Docker (C18) | Web Mốc 1 (review vòng 2) |
 | C20 | Mốc 2–5 của kế hoạch web: Next.js + Clerk + Convex (hồ sơ theo phiên bản, hội thoại, file), chat + khung chứng chỉ, upload ảnh + rà soát OCR, kiểm thử tích hợp + deploy + kịch bản bảo vệ | Web kế hoạch §4 |
 | C8 | Độ phủ OCR thấp (Linux 7/18; Windows 1/18) | Tuần 15 |
 

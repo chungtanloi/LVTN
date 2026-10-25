@@ -16,6 +16,7 @@ import math
 import re
 from dataclasses import dataclass, field
 from functools import lru_cache
+from pathlib import Path
 
 import jsonschema
 
@@ -27,6 +28,10 @@ MO_TA_PHAM_VI = "Hiện chỉ hỗ trợ ngành CNTT, khoá K49 (CTĐT cntt_k49)
 _MA = re.compile(r"[A-Za-z0-9_]{1,20}\Z")
 _SV_ID = re.compile(r"sv_[a-z0-9_]{1,60}\Z")
 SO_NGUYEN = {"da_hoc_nam2": (0, 100), "tc_cong_nhan": (0, 400), "tc_diem_f": (0, 400)}
+# Trần danh sách: mỗi mục là một dòng ASP (exemptions → duoc_mien, certificates → chung_chi, khong_tinh_tich_luy) và có thể mở thêm nhánh
+# → đầu vào không giới hạn là cách ép solver / bộ nhớ (review bảo mật vòng 2). Khớp với trần ở loader (lớp phòng thủ thứ hai).
+TRAN_DANH_SACH = {"exemptions": 50, "certificates": 20, "khong_tinh_tich_luy": 100}
+_TEN_BIET = set()          # tên trường CỦA SCHEMA (không phải do người dùng đặt) → được nêu nguyên văn trong đường dẫn lỗi
 MAX_DO_SAU = 12
 
 
@@ -41,8 +46,25 @@ class KetQua:
 @lru_cache(maxsize=2)
 def _nap(goc):
     schema = json.loads((goc / "w7_student_facts" / "student_fact_schema.json").read_text(encoding="utf-8"))
+    _TEN_BIET.update(_ten_trong_schema(schema))
     ct = json.loads((goc / "w6_curriculum" / "curriculum_cntt_k49.json").read_text(encoding="utf-8"))
     return jsonschema.Draft7Validator(schema), set(schema["properties"]) - {"meta"}, {h["ma"]: h["tin_chi"] for h in ct["hoc_phan"]}
+
+
+def _ten_trong_schema(x):
+    if isinstance(x, dict):
+        for k, v in x.items():
+            if k == "properties" and isinstance(v, dict):
+                yield from (t for t in v if isinstance(t, str))
+            yield from _ten_trong_schema(v)
+    elif isinstance(x, list):
+        for v in x:
+            yield from _ten_trong_schema(v)
+
+
+def nap_ten_schema(goc):
+    nap_duong_dan(goc)
+    _nap(Path(goc))
 
 
 def _cat(x, n=24):
@@ -52,7 +74,7 @@ def _cat(x, n=24):
 
 def _seg(x):
     s = str(x)
-    return s if re.fullmatch(r"[A-Za-z0-9_]{1,20}", s) else "[khoá]"
+    return s if s in _TEN_BIET or re.fullmatch(r"[A-Za-z0-9_]{1,20}", s) else "[khoá]"
 
 
 def _so_nguyen(x):
@@ -75,7 +97,6 @@ def _duyet(x, duong, kq, sau=0):
             if not _duyet(v, f"{duong}.{i}", kq, sau + 1):
                 return False
     return True
-    return True
 
 
 def kiem_tra(j, cfg=None):
@@ -85,9 +106,9 @@ def kiem_tra(j, cfg=None):
         kq.loi.append({"duong_dan": "", "thong_bao": "hồ sơ phải là một đối tượng JSON"})
         return kq
     nap_duong_dan(cfg.cpa2_root)
+    validator, truong_hop_le, tin_chi = _nap(cfg.cpa2_root)         # trước _duyet: nạp tên trường schema cho _seg
     if not _duyet(j, "", kq) or kq.loi:
         return kq
-    validator, truong_hop_le, tin_chi = _nap(cfg.cpa2_root)
     for e in sorted(validator.iter_errors(j), key=lambda e: list(map(str, e.absolute_path)))[:20]:
         # thông báo của jsonschema có thể kèm GIÁ TRỊ đầu vào → chỉ nêu loại lỗi, hoặc TÊN trường thiếu
         tb = (e.message if e.validator == "required" and re.fullmatch(r"'[a-z_0-9]+' is a required property", e.message) else
@@ -105,6 +126,11 @@ def kiem_tra(j, cfg=None):
         v = j.get(k)
         if v is not None and not (_so_nguyen(v) and lo <= v <= hi):
             kq.loi.append({"duong_dan": k, "thong_bao": f"{k} phải là số nguyên trong [{lo}, {hi}]"})
+    for ten, tran in TRAN_DANH_SACH.items():
+        if len(j.get(ten) or []) > tran:
+            kq.loi.append({"duong_dan": ten, "thong_bao": f"quá nhiều mục ({len(j[ten])} > {tran})"})
+    if kq.loi:
+        return kq
     for i, c in enumerate(j.get("certificates", [])):
         d = c["diem"]
         if not (0 <= d <= 100000) or (c.get("bac") is not None and not _so_nguyen(c["bac"])):

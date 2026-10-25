@@ -13,6 +13,7 @@ Trạng thái trả về (trang_thai) — lỗi kỹ thuật KHÔNG bao giờ th
 """
 import hashlib
 import io
+import math
 import re
 import sys
 from functools import lru_cache
@@ -26,6 +27,7 @@ LOI_GIAI_NGOAI_PHAM_VI = ("Hệ thống chưa hỗ trợ loại câu hỏi này 
                           "— không đoán. Bạn có thể hỏi về tốt nghiệp, đăng ký học phần, điều kiện luận văn / tiểu luận, xếp loại tốt nghiệp, "
                           "hoặc đề xuất đăng ký.")
 LOI_GIAI_BI_CHAN = "Câu trả lời bị hậu kiểm chặn vì không đủ căn cứ nguồn — hệ thống không đưa ra kết luận."
+LOI_GIAI_MAU_THUAN = "Hồ sơ mâu thuẫn với quy chế hoặc với chính nó — hệ thống không kết luận. Hãy kiểm tra lại hồ sơ."
 
 # tệp ảnh hưởng đến kết quả → vào hash phiên bản KB (cả mã: parser / loader / schema, không chỉ luật)
 TEP_PHIEN_BAN = ("w7_student_facts/loader.py", "w7_student_facts/student_fact_schema.json", "w12_integration/prototype.py",
@@ -44,6 +46,8 @@ def nap_duong_dan(goc):
 
 def an_toan(x):
     """Đổi sang kiểu JSON: tập → danh sách có thứ tự, khoá không phải chuỗi → chuỗi, kiểu lạ → chuỗi."""
+    if isinstance(x, float) and not math.isfinite(x):
+        return None                                           # NaN / ±Infinity không phải JSON hợp lệ (ngoại lệ ở phía trả lời)
     if isinstance(x, dict):
         return {str(k): an_toan(v) for k, v in x.items()}
     if isinstance(x, (list, tuple)):
@@ -90,12 +94,15 @@ class DichVu:
         base = {"claim": claim, "canh_bao": canh_bao, "phien_ban_kb": self.kb, "thong_bao": "", "chi_tiet": []}
         if v == "BLOCKED":
             return an_toan({**base, "trang_thai": "hau_kiem_chan", "ket_luan": None, "claim": None, "loi_giai": LOI_GIAI_BI_CHAN,
+                            "thong_bao": LOI_GIAI_BI_CHAN,
                             "chung_chi": None, "nguon": [], "du_kien_thieu": [], "can_bo_sung": [], "mau_thuan": []})
         if v == "UNSAT":
             return an_toan({**base, "trang_thai": "ho_so_mau_thuan", "ket_luan": "MAU_THUAN", "loi_giai": res.get("explanation_vi"),
+                            "thong_bao": LOI_GIAI_MAU_THUAN,
                             "chung_chi": None, "nguon": [], "du_kien_thieu": [], "can_bo_sung": [], "mau_thuan": res.get("mau_thuan", [])})
         if not (isinstance(claim, str) and CLAIM_DUOC_PHEP.match(claim)):
             return an_toan({**base, "trang_thai": "ngoai_pham_vi", "ket_luan": None, "loi_giai": LOI_GIAI_NGOAI_PHAM_VI,
+                            "thong_bao": LOI_GIAI_NGOAI_PHAM_VI,
                             "chung_chi": None, "nguon": [], "du_kien_thieu": [], "can_bo_sung": [], "mau_thuan": []})
         if v not in KET_LUAN_HOP_LE:
             raise ValueError("verdict lạ")
@@ -116,7 +123,11 @@ class DichVu:
         if not isinstance(ho_so, dict):
             raise TypeError("ho_so phải là dict")
         r = self.recommendation.de_xuat(ho_so, hoc_ky)
-        out = {k: v for k, v in r.items() if k != "hk"}
+        if r.get("vo_nghiem"):      # như /v1/advice: solver vô nghiệm là MÂU THUẪN, không phải "ok / không có đề xuất"
+            return an_toan({"trang_thai": "ho_so_mau_thuan", "ket_luan": "MAU_THUAN", "thong_bao": LOI_GIAI_MAU_THUAN, "chi_tiet": [],
+                            "hoc_ky": hoc_ky, "dang_ky": [], "tong_tc": 0, "can_xac_minh": [], "mau_thuan": r.get("mau_thuan", []),
+                            "canh_bao": canh_bao, "phien_ban_kb": self.kb})
+        out = {k: v for k, v in r.items() if k not in ("hk", "vo_nghiem")}
         for x in out.get("dang_ky", []):
             x["chung_chi"] = x.get("chung_chi") or []
         return an_toan({"trang_thai": "ok", "ket_luan": None, "thong_bao": "", "chi_tiet": [], "hoc_ky": hoc_ky, **out,

@@ -4,11 +4,11 @@
 FROM python:3.13-slim
 
 ENV PYTHONUNBUFFERED=1 PYTHONDONTWRITEBYTECODE=1 PYTHONIOENCODING=utf-8 \
-    CPA2_ROOT=/app/CPA2_KhaoSat CPA2_WORKERS=2 OMP_THREAD_LIMIT=1
+    CPA2_ROOT=/app/CPA2_KhaoSat CPA2_WORKERS=2 CPA2_WORKERS_OCR=1 CPA2_RAM_MB=4096 OMP_THREAD_LIMIT=1
 
 # Tesseract + gói ngôn ngữ Việt (OCR bảng điểm). Số liệu OCR đổi theo phiên bản Tesseract (Bài học Tuần 15): chỉ so sánh trước/sau
 # trên CÙNG môi trường. Chưa build được image trong môi trường phát triển (không có Docker daemon) — xem README.
-RUN apt-get update && apt-get install -y --no-install-recommends tesseract-ocr tesseract-ocr-vie \
+RUN apt-get update && apt-get install -y --no-install-recommends tesseract-ocr tesseract-ocr-vie tini \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
@@ -38,5 +38,10 @@ USER cpa2
 EXPOSE 8000
 HEALTHCHECK --interval=30s --timeout=5s --start-period=20s CMD python -c "import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://127.0.0.1:8000/health', timeout=4).status==200 else 1)"
 # Một tiến trình uvicorn; việc nặng (clingo, OCR) chạy trong CPA2_WORKERS tiến trình con có giới hạn thời gian cứng (tien_trinh.py).
-# --limit-concurrency: quá số kết nối đang xử lý thì từ chối 503 thay vì xếp hàng vô hạn.
-CMD ["uvicorn", "cpa2_api.main:tao_app", "--factory", "--host", "0.0.0.0", "--port", "8000", "--limit-concurrency", "32"]
+# KHÔNG dùng --limit-concurrency: nó tính cả kết nối nhàn rỗi/treo và từ chối 503 cả /health lẫn yêu cầu hợp lệ. Quá tải được xử lý ở bể
+# tiến trình (qua_tai sau 5s). Chống kết nối treo: --timeout-keep-alive ở đây, thời gian chờ đọc header/body đặt ở reverse proxy của nền tảng.
+# Giới hạn bộ nhớ: mỗi tiến trình con tự giới hạn RLIMIT_AS (CPA2_RAM_MB, mặc định 4096); đặt giới hạn RAM của container
+# ≥ (CPA2_WORKERS + CPA2_WORKERS_OCR) × ~1,5 GB + 0,5 GB (xem README).
+# tini làm PID 1: dọn zombie (tesseract cháu bị giết cả nhóm khi hết giờ sẽ được nhận làm con của PID 1 — uvicorn không gặt chúng).
+ENTRYPOINT ["/usr/bin/tini", "--"]
+CMD ["uvicorn", "cpa2_api.main:tao_app", "--factory", "--host", "0.0.0.0", "--port", "8000", "--timeout-keep-alive", "5"]

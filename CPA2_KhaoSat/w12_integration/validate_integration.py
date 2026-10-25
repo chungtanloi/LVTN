@@ -370,6 +370,9 @@ def test_an_toan_web():
         check(ok, f"E46 hồ sơ làm solver vô nghiệm → kết quả có cấu trúc, không ngoại lệ — {hoi[:30]} ({ghi})")
     r = proto.answer("em đủ điều kiện tốt nghiệp chưa?", j)
     check(r["verdict"] == "UNSAT" and "mâu thuẫn" in r["explanation_vi"].lower(), f"E46 tot_nghiep + UNSAT → verdict UNSAT, giải thích 'mâu thuẫn' ({r['verdict']})")
+    r = proto.answer("kỳ này em nên đăng ký môn gì?", j)
+    check(r["verdict"] == "UNSAT" and "mâu thuẫn" in r["explanation_vi"].lower() and r.get("claim") == "de_xuat",
+          f"E46 de_xuat + UNSAT → verdict UNSAT (không phải 'chưa có HP hợp lệ') ({r['verdict']})")
 
 def main():
     print("="*78)

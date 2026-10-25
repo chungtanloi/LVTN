@@ -12,6 +12,8 @@ validate_api.py — kiểm chứng dịch vụ Python (FastAPI) bọc lõi CPA²
   H. Hồ sơ độc hại: tiêm ASP (mã học phần, khong_tinh_tich_luy, ma_hp, số, chứng chỉ), NaN/Infinity, quá nhiều mâu thuẫn, UNSAT
   I. Hình dạng phản hồi thống nhất, xác thực trước parse, Cache-Control, không phản hồi lại dữ liệu người dùng
   J. Bể tiến trình: hết giờ → giết, quá tải → 503, tiến trình chết, lõi thật trong tiến trình con
+  K. Review bảo mật vòng 2: trần danh sách, ngoại lệ chưa bắt, dọn bể khi khởi động hỏng, tiến trình rảnh chết, bể OCR riêng,
+     UNSAT nhất quán ở /v1/recommendations, tên trường thật không bị che, khoá trùng, tiến trình cháu mồ côi, giới hạn RAM, biến môi trường
 
 Chạy (cần fastapi + httpx; xem requirements-dev.txt):  python validate_api.py [--nhanh]     (--nhanh bỏ OCR ảnh)
 """
@@ -557,6 +559,236 @@ def phan_J():
         c.app.state.backend.dong()
 
 
+def thu(ten, ham):
+    """Chạy một nhóm kiểm tra; ngoại lệ không dừng cả bộ mà ghi thành FAIL (để thấy hết các lỗi cùng lúc)."""
+    try:
+        ham()
+    except Exception as e:  # noqa: BLE001
+        check(False, f"{ten}: ngoại lệ {type(e).__name__}: {str(e)[:120]}")
+
+
+def phan_K():
+    import time
+    import multiprocessing
+    print("K. REVIEW BẢO MẬT VÒNG 2")
+    base = ho_so("sv_lvtn")
+    q = "em đủ điều kiện tốt nghiệp chưa?"
+
+    def k1():
+        check(cau_hinh.CauHinh(api_key=KHOA).max_mau_thuan == 2, "trần bản ghi tự mâu thuẫn mặc định = 2 (4 bản ghi ≈ 21s)")
+        for ten, sua in (("exemptions 60 mục", {"exemptions": [{"ma_hp": f"X{i}", "chung_chi_ref": None, "quyet_dinh": True} for i in range(60)]}),
+                         ("certificates 25 mục", {"certificates": [{"loai": "ielts", "diem": 6.0} for _ in range(25)]}),
+                         ("khong_tinh_tich_luy 150 mục", {"khong_tinh_tich_luy": [f"X{i}" for i in range(150)]})):
+            r = HS.kiem_tra({**copy.deepcopy(base), **sua})
+            check(r.loi and not r.ho_so, f"{ten} → loi_dau_vao (mỗi mục là một dòng ASP / một lần mở nhánh) ({[x['duong_dan'] for x in r.loi][:2]})")
+        j = copy.deepcopy(base)
+        for m in ("CT177", "CT174", "CT172"):
+            j["grades"][m].update(thang10=90, letter="F", status="passed")
+        r = HS.kiem_tra(j)
+        check(r.loi and "mâu thuẫn" in json.dumps(r.loi, ensure_ascii=False), "3 bản ghi tự mâu thuẫn → loi_dau_vao (trần 2)")
+    thu("K1", k1)
+
+    def k2():
+        from cpa2_api import dich_vu
+        check(dich_vu.an_toan({"a": float("nan"), "b": [float("inf"), 1.5, float("-inf")]}) == {"a": None, "b": [None, 1.5, None]},
+              "an_toan đổi NaN / ±Infinity thành null (JSON hợp lệ)")
+        goc = HS.kiem_tra
+        HS.kiem_tra = lambda *a, **k: (_ for _ in ()).throw(RuntimeError("BI_MAT_TRONG_NGOAI_LE"))
+        try:
+            cfg = cau_hinh.CauHinh(api_key=KHOA, so_worker=0)
+            c = TestClient(tao_app(cfg), raise_server_exceptions=False)
+            r = c.post("/v1/advice", json={"ho_so": base, "cau_hoi": q}, headers=H)
+            a = r.json() if r.headers.get("content-type", "").startswith("application/json") else {}
+            check(r.status_code == 500 and a.get("trang_thai") == "loi_he_thong" and a.get("ket_luan") is None and a.get("thong_bao") and "chi_tiet" in a
+                  and r.headers.get("cache-control") == "no-store" and "BI_MAT" not in r.text,
+                  f"ngoại lệ chưa bắt trong endpoint → 500 cùng hình dạng + no-store, không lộ nội dung ({r.status_code}, {r.headers.get('content-type')})")
+        finally:
+            HS.kiem_tra = goc
+    thu("K2", k2)
+
+    def k3():
+        # khởi động hỏng: không để lại tiến trình con mồ côi, lần gọi sau không cộng dồn
+        c, _ = may_khach(so_worker=2, khoi_tao_worker="cpa2_api.khong_co_module:x")
+        r = c.post("/v1/advice", json={"ho_so": base, "cau_hoi": q}, headers=H)
+        check(r.status_code == 500 and r.json()["trang_thai"] == "loi_he_thong", f"bể không khởi động được → 500 loi_he_thong ({r.status_code})")
+        bk = c.app.state.backend
+        han = time.time() + 5
+        while time.time() < han and multiprocessing.active_children():
+            time.sleep(0.1)
+        check(not multiprocessing.active_children() and bk.ds == [] and not bk.da_khoi_dong,
+              f"khởi động hỏng → dọn sạch tiến trình con ({len(multiprocessing.active_children())} còn sống, ds={len(bk.ds)})")
+        h = c.get("/health")
+        check(h.status_code == 503 and h.json()["trang_thai"] == "loi_he_thong", f"khởi động hỏng → /health 503 (bể chưa từng chạy được nhưng cũng không khoẻ) ({h.status_code})")
+        bk.dong()
+        # /health và yêu cầu khác không bị chặn bởi khoá trong lúc bể khởi động chậm
+        os.environ["GIA_KHOI_NGU"] = "4"
+        try:
+            c2, _ = may_khach(so_worker=1, khoi_tao_worker="gia_lap_tien_trinh:tao", cho_hang_doi=1.0)
+            th = threading.Thread(target=lambda: c2.post("/v1/advice", json={"ho_so": base, "cau_hoi": "x"}, headers=H))
+            th.start()
+            time.sleep(1.0)
+            t = time.time()
+            h = c2.get("/health")
+            check(h.status_code == 200 and time.time() - t < 1.0, f"/health không bị chặn khi bể đang khởi động chậm ({time.time() - t:.2f}s)")
+            t = time.time()
+            r = c2.post("/v1/lookup", json={"truy_van": "x"}, headers=H)
+            check(r.status_code == 503 and r.json()["trang_thai"] == "qua_tai" and time.time() - t < 3,
+                  f"yêu cầu đến trong lúc khởi động chờ ≤ cho_hang_doi rồi qua_tai ({r.status_code}, {time.time() - t:.1f}s)")
+            th.join()
+            c2.app.state.backend.dong()
+        finally:
+            os.environ.pop("GIA_KHOI_NGU", None)
+    thu("K3a", k3)
+
+    def k4():
+        kh = "gia_lap_tien_trinh:tao"
+        c, cfg = may_khach(so_worker=1, khoi_tao_worker=kh, timeout_advice=3.0, cho_hang_doi=1.0)
+        bk = c.app.state.backend
+        try:
+            body = lambda qq: {"ho_so": base, "cau_hoi": qq}        # noqa: E731
+            check(c.post("/v1/advice", json=body("x"), headers=H).status_code == 200, "làm nóng bể")
+            h = c.get("/health").json()
+            check(h.get("bo_xu_ly", {}).get("san_sang") == 1 and h["bo_xu_ly"].get("tong") == 1, f"/health nêu tình trạng bể ({h.get('bo_xu_ly')})")
+            bk.ranh.queue[0].proc.kill()                           # tiến trình RẢNH chết (OOM killer, v.v.)
+            time.sleep(0.5)
+            r = c.post("/v1/advice", json=body("x"), headers=H)
+            check(r.status_code == 200 and r.json()["trang_thai"] == "ok", f"tiến trình rảnh đã chết → yêu cầu vẫn được phục vụ (thay thế trong suốt) ({r.status_code})")
+            # không dựng lại được → bể rỗng → /health 503 (để nền tảng khởi động lại container)
+            from cpa2_api import tien_trinh as TT
+            goc, goc_lui = TT._Worker.khoi_dong, TT.LUI_BUOC_HOI_SINH
+            TT.LUI_BUOC_HOI_SINH = (0.0, 0.3)                      # mặc định ~31s: rút ngắn để test
+            TT._Worker.khoi_dong = lambda self: (_ for _ in ()).throw(OSError("het tai nguyen"))
+            try:
+                c.post("/v1/advice", json=body("chet"), headers=H)
+                han = time.time() + 15
+                while time.time() < han and c.get("/health").status_code == 200:
+                    time.sleep(0.2)
+                r = c.get("/health")
+                check(r.status_code == 503 and r.json()["trang_thai"] == "loi_he_thong", f"mọi tiến trình mất và không dựng lại được → /health 503 ({r.status_code})")
+            finally:
+                TT._Worker.khoi_dong = goc
+                TT.LUI_BUOC_HOI_SINH = goc_lui
+        finally:
+            bk.dong()
+    thu("K3b", k4)
+
+    def k5():
+        # bể OCR riêng: OCR chậm không làm nghẽn advice
+        os.environ["GIA_OCR_NGU"] = "4"
+        try:
+            c, cfg = may_khach(so_worker=1, so_worker_ocr=1, khoi_tao_worker="gia_lap_tien_trinh:tao", timeout_advice=3.0, cho_hang_doi=0.5, timeout_ocr=20.0)
+            anh = anh_png("sv_lvtn")[:1]
+            try:
+                c.post("/v1/advice", json={"ho_so": base, "cau_hoi": "x"}, headers=H)                    # làm nóng bể advice
+                kq = {}
+                th = threading.Thread(target=lambda: kq.update(r=c.post("/v1/ocr", files=[("anh", ("a.png", anh[0], "image/png"))], headers=H)))
+                th.start()
+                time.sleep(1.5)
+                t = time.time()
+                r = c.post("/v1/advice", json={"ho_so": base, "cau_hoi": "x"}, headers=H)
+                check(r.status_code == 200 and time.time() - t < 2, f"OCR đang chạy (4s) không chặn advice ({r.status_code}, {time.time() - t:.1f}s)")
+                th.join()
+                check(kq["r"].status_code == 200 and kq["r"].json()["trang_thai"] == "ok", "OCR vẫn hoàn tất")
+            finally:
+                for b in {id(c.app.state.backend): c.app.state.backend, id(getattr(c.app.state, "backend_ocr", None)): getattr(c.app.state, "backend_ocr", None)}.values():
+                    if b is not None:
+                        b.dong()
+        finally:
+            os.environ.pop("GIA_OCR_NGU", None)
+    thu("K4", k5)
+
+    def k6():
+        c, _ = may_khach()
+        j = copy.deepcopy(base); j["khong_tinh_tich_luy"] = ["CT177"]
+        for ten, pt, body in (("recommendations", "/v1/recommendations", {"ho_so": j, "hoc_ky": 1}),
+                              ("advice đề xuất", "/v1/advice", {"ho_so": j, "cau_hoi": "kỳ này em nên đăng ký môn gì?"})):
+            a = c.post(pt, json=body, headers=H).json()
+            check(a["trang_thai"] == "ho_so_mau_thuan" and a["ket_luan"] == "MAU_THUAN" and a.get("thong_bao"),
+                  f"UNSAT nhất quán ở {ten} → ho_so_mau_thuan / MAU_THUAN, có thong_bao ({a['trang_thai']}/{a['ket_luan']})")
+        a = c.post("/v1/advice", json={"ho_so": base, "cau_hoi": "học phí kỳ này bao nhiêu?"}, headers=H).json()
+        check(a["trang_thai"] == "ngoai_pham_vi" and a.get("thong_bao"), f"ngoai_pham_vi có thong_bao khác rỗng ({a['trang_thai']})")
+    thu("K5", k6)
+
+    def k7():
+        j = copy.deepcopy(base); j["xac_nhan_ky_luat_sach"] = "co"; j["student_id"] = "sv_a\n"
+        r = HS.kiem_tra(j)
+        duong = {x["duong_dan"] for x in r.loi}
+        check("xac_nhan_ky_luat_sach" in duong, f"đường dẫn lỗi giữ tên trường THẬT dài > 20 ký tự ({sorted(duong)})")
+        c, _ = may_khach()
+        a = c.post("/v1/advice", json={"ho_so": {**base, "xac_nhan_ky_luat_sach": "co"}, "cau_hoi": q}, headers=H).json()
+        check(any(x["duong_dan"] == "xac_nhan_ky_luat_sach" for x in a["chi_tiet"]), "…và ở phản hồi HTTP")
+        j = copy.deepcopy(base); j["x" * 30] = 1
+        a = c.post("/v1/advice", json={"ho_so": {**base, "x" * 30: 1}, "cau_hoi": q}, headers=H).json()
+        check("x" * 30 not in json.dumps(a, ensure_ascii=False), "tên trường LẠ do người dùng đặt vẫn không được phản hồi lại")
+    thu("K6", k7)
+
+    def k8():
+        c, _ = may_khach()
+        r = c.post("/v1/advice/", json={"ho_so": base, "cau_hoi": q}, headers=H, follow_redirects=False)
+        check(r.status_code == 404 and r.json()["trang_thai"] == "loi_dau_vao", f"đường dẫn có '/' thừa → 404 cùng hình dạng, không chuyển hướng ({r.status_code})")
+        check(c.head("/health").status_code == 200, "HEAD /health → 200 (bộ kiểm tra sức khoẻ của nền tảng)")
+        r = c.post("/v1/advice", json={"ho_so": base, "cau_hoi": q}, headers=[("X-API-Key", "sai"), ("X-API-Key", KHOA)])
+        check(r.status_code == 401, f"hai tiêu đề X-API-Key: dùng cái ĐẦU TIÊN (cái sai) → 401 ({r.status_code})")
+        goc = os.environ.get("CPA2_WORKERS")
+        try:
+            for v, mong in (("3", 3), ("0", 0), (None, 2), ("abc", ValueError), ("-1", ValueError), ("", 2), ("9999", ValueError)):
+                if v is None:
+                    os.environ.pop("CPA2_WORKERS", None)
+                else:
+                    os.environ["CPA2_WORKERS"] = v
+                try:
+                    kq = cau_hinh.CauHinh(api_key=KHOA).so_worker
+                except ValueError:
+                    kq = ValueError
+                check(kq == mong, f"CPA2_WORKERS={v!r} → {mong if mong is not ValueError else 'lỗi rõ ràng lúc khởi động'} (được {kq})")
+        finally:
+            if goc is None:
+                os.environ.pop("CPA2_WORKERS", None)
+            else:
+                os.environ["CPA2_WORKERS"] = goc
+        dk = (HERE / "Dockerfile").read_text(encoding="utf-8")
+        check(not any("--limit-concurrency" in l for l in dk.splitlines() if not l.lstrip().startswith("#")), "Dockerfile không dùng --limit-concurrency (làm /health và yêu cầu hợp lệ bị 503 khi có kết nối treo)")
+        di = (HERE.parent.parent / ".dockerignore").read_text(encoding="utf-8")
+        check("**/.env" in di and "**/.env.*" in di, ".dockerignore chặn .env ở mọi thư mục con")
+    thu("K7", k8)
+
+    def k9():
+        kh = "gia_lap_tien_trinh:tao"
+        os.environ["CPA2_API_KEY"] = "KHOA-CHA-KHONG-DUOC-LOT-SANG-CON"
+        try:
+            c, _ = may_khach(so_worker=1, khoi_tao_worker=kh, timeout_advice=3.0, cho_hang_doi=1.0, gioi_han_ram_mb=512)
+            bk = c.app.state.backend
+            try:
+                a = c.post("/v1/advice", json={"ho_so": base, "cau_hoi": "env"}, headers=H).json()
+                check(a.get("loi_giai") == "KHONG_CO_KHOA", f"khoá API không lọt vào môi trường tiến trình con ({a.get('loi_giai')})")
+                r = c.post("/v1/advice", json={"ho_so": base, "cau_hoi": "ram"}, headers=H)
+                check(r.status_code == 500 and r.json()["trang_thai"] == "loi_he_thong", f"xin 900 MB khi giới hạn 512 MB → MemoryError → 500 ({r.status_code})")
+                r = c.post("/v1/advice", json={"ho_so": base, "cau_hoi": "x"}, headers=H)
+                check(r.status_code == 200, f"…tiến trình con vẫn dùng tiếp được sau MemoryError ({r.status_code})")
+                tep = HERE / "_pid_chau.tmp"
+                tep.unlink(missing_ok=True)
+                r = c.post("/v1/advice", json={"ho_so": base, "cau_hoi": f"con:{tep}"}, headers=H)
+                check(r.status_code == 504, f"tiến trình treo có tiến trình cháu → 504 ({r.status_code})")
+                pid = int(tep.read_text()) if tep.exists() else 0
+                han = time.time() + 5
+                song = True
+                while time.time() < han and song and pid:
+                    try:
+                        os.kill(pid, 0)
+                        time.sleep(0.1)
+                    except ProcessLookupError:
+                        song = False
+                check(pid and not song, f"tiến trình cháu (kiểu tesseract) bị giết cùng nhóm, không mồ côi (pid {pid}, còn sống={song})")
+                if pid and song:
+                    os.kill(pid, 9)
+                tep.unlink(missing_ok=True)
+            finally:
+                bk.dong()
+        finally:
+            os.environ.pop("CPA2_API_KEY", None)
+    thu("K8", k9)
+
+
 def main():
     nhanh = "--nhanh" in sys.argv
     os.environ.pop("CPA2_API_KEY", None)
@@ -569,6 +801,7 @@ def main():
     phan_H()
     phan_I()
     phan_J()
+    phan_K()
     print("\nKẾT LUẬN:", "ĐẠT — API trùng CLI, đóng khi thiếu khoá, không lộ hồ sơ, lỗi kỹ thuật không thành kết luận học vụ" if ok_all else "CHƯA ĐẠT")
     return 0 if ok_all else 1
 

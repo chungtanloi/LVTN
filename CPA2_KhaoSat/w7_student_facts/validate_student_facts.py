@@ -110,8 +110,8 @@ def kiem_loader_chung():
     good = good and l5
     # L6 (Web, review bảo mật): chuỗi trong hồ sơ KHÔNG được ghép thẳng vào chương trình ASP (tiêm mã). Mã học phần, mục trong
     # khong_tinh_tich_luy, exemptions[].ma_hp, số khai báo, loại chứng chỉ sai dạng → bỏ + báo mâu thuẫn; tập nguyên tử sinh ra
-    # phải BẰNG tập của hồ sơ sạch (không thêm dữ kiện giả như xac_nhan_ky_luat_sach / tot_nghiep).
-    import loader as LD
+    # phải BẰNG tập của hồ sơ tham chiếu đã bỏ đúng mục sai (không thêm dữ kiện giả, không mất dữ kiện thật).
+    import copy, loader as LD
     base = json.loads((STUDENTS / "sv_lvtn.json").read_text(encoding="utf-8"))
     base["xac_nhan_ky_luat_sach"] = None
 
@@ -123,37 +123,73 @@ def kiem_loader_chung():
             for m in h:
                 return {str(a) for a in m.symbols(atoms=True)}
         return set()
-    sach = atoms(LD.sang_asp(base)[0])
+
+    def sua(j, **kv):
+        j = copy.deepcopy(j)
+        for k, v in kv.items():
+            if v is Ellipsis:
+                j.pop(k, None)
+            else:
+                j[k] = v
+        return j
     xau = 'CT177"). xac_nhan_ky_luat_sach. tot_nghiep. %'
-    ca6 = []
-    j = json.loads(json.dumps(base)); j["grades"][xau] = {"code": xau, "credits": 3, "thang10": 80, "letter": "B+", "status": "passed"}
-    ca6.append(("khoá grades + code", j))
-    j = json.loads(json.dumps(base)); j["khong_tinh_tich_luy"] = [xau]
-    ca6.append(("khong_tinh_tich_luy[]", j))
-    j = json.loads(json.dumps(base)); j["exemptions"] = [{"ma_hp": xau, "chung_chi_ref": None, "quyet_dinh": True}]
-    ca6.append(("exemptions[].ma_hp", j))
+    ca6 = []                                                 # (tên, hồ sơ độc, hồ sơ tham chiếu)
+    j = copy.deepcopy(base); j["grades"][xau] = {"code": xau, "credits": 3, "thang10": 80, "letter": "B+", "status": "passed"}
+    ca6.append(("khoá grades + code", j, base))
+    ca6.append(("khong_tinh_tich_luy[]", sua(base, khong_tinh_tich_luy=[xau]), sua(base, khong_tinh_tich_luy=[])))
+    ca6.append(("exemptions[].ma_hp", sua(base, exemptions=[{"ma_hp": xau, "chung_chi_ref": None, "quyet_dinh": True}]), sua(base, exemptions=[])))
     for k in ("da_hoc_nam2", "tc_cong_nhan"):
         for v in ("5). xac_nhan_ky_luat_sach. %", 5.0, True, 10 ** 30):
-            j = json.loads(json.dumps(base)); j[k] = v
-            ca6.append((f"{k}={str(v)[:12]!r}", j))
+            ca6.append((f"{k}={str(v)[:12]!r}", sua(base, **{k: v}), sua(base, **{k: ...})))
     for loai, d in (("ielts,60). xac_nhan_ky_luat_sach. foo(", 6.0), ("ielts", float("nan")), ("ielts", float("inf")), ("ielts", "6")):
-        j = json.loads(json.dumps(base)); j["certificates"] = [{"loai": loai, "diem": d}]
-        ca6.append((f"certificates loai={loai[:10]!r} diem={str(d)[:5]}", j))
-    j = json.loads(json.dumps(base)); j["grades"]["CT177"]["diem"] = 'M"). xac_nhan_ky_luat_sach. %'
-    ca6.append(("diem kiểu chuỗi lạ", j))
-    j = json.loads(json.dumps(base)); j["grades"]["CT177"] = "không phải đối tượng"
-    ca6.append(("bản ghi điểm không phải đối tượng", j))
-    for ten, j in ca6:
+        ca6.append((f"certificates loai={loai[:10]!r} diem={str(d)[:5]}", sua(base, certificates=[{"loai": loai, "diem": d}]), sua(base, certificates=[])))
+    for ten, j, ref in ca6:
         try:
             a, m = LD.sang_asp(j)
-            tap = atoms(a)
-            t = tap - sach
-            dung = ("xac_nhan_ky_luat_sach" not in tap and "tot_nghiep" not in tap and not any("xac_nhan" in x for x in t) and m)
-            ghi = f"thừa {sorted(t)[:3]}, mâu thuẫn {len(m)}"
+            tap, tc = atoms(a), atoms(LD.sang_asp(ref)[0])
+            dung = tap == tc and m
+            ghi = f"thừa {sorted(tap - tc)[:3]}, thiếu {sorted(tc - tap)[:3]}, mâu thuẫn {len(m)}"
         except Exception as e:  # noqa: BLE001 — chương trình ASP hỏng cú pháp cũng là lỗi
             dung, ghi = False, f"{type(e).__name__}: {str(e)[:80]}"
         print(f"[{'OK' if dung else 'FAIL'}] L6 không tiêm ASP — {ten} ({ghi})")
         good = good and bool(dung)
+    # L7: đầu vào CHƯA qua schema (loader là thư viện dùng chung, không được giả định đã kiểm). Không ngoại lệ, không dữ kiện giả,
+    # thông báo mâu thuẫn không phản hồi lại chuỗi thô (xuống dòng, nháy, #).
+    doc = 'X\n#include "/etc/passwd"'
+    ca7 = [("grades = null", sua(base, grades=None)), ("grades = danh sách", sua(base, grades=[1, 2])), ("grades = chuỗi", sua(base, grades="x")),
+           ("thang10 = 10**400", sua(base, grades={**base["grades"], "CT177": {**base["grades"]["CT177"], "thang10": 10 ** 400}})),
+           ("credits chuỗi + da_hoc_nam2", sua(base, da_hoc_nam2=4, grades={**base["grades"], "CT177": {**base["grades"]["CT177"], "credits": "ba"}})),
+           ("credits âm / khổng lồ", sua(base, da_hoc_nam2=4, grades={**base["grades"], "CT177": {**base["grades"]["CT177"], "credits": -5}, "CT174": {**base["grades"]["CT174"], "credits": 10 ** 12}})),
+           ("exemptions thiếu quyet_dinh", sua(base, exemptions=[{"ma_hp": "CT100"}])),
+           ("exemptions quyet_dinh = 'no'", sua(base, exemptions=[{"ma_hp": "CT100", "chung_chi_ref": None, "quyet_dinh": "no"}])),
+           ("che_do_sv_chon_tich_luy = 'false'", sua(base, che_do_sv_chon_tich_luy="false")),
+           ("tc_diem_f = 10**12", sua(base, tc_diem_f=10 ** 12)),
+           ("letter độc", sua(base, grades={**base["grades"], "CT177": {**base["grades"]["CT177"], "letter": doc}})),
+           ("status độc", sua(base, grades={**base["grades"], "CT177": {**base["grades"]["CT177"], "status": doc, "thang10": 90, "letter": "F"}})),
+           ("hinh_thuc_cuoi_khoa độc", sua(base, hinh_thuc_cuoi_khoa='lvtn"). evil. %')),
+           ("ky_luat_canh_cao_cap_truong độc", sua(base, ky_luat_canh_cao_cap_truong=doc)), ("tc_diem_f độc", sua(base, tc_diem_f=doc))]
+    ca7.append(("certificates diem = 10**400", sua(base, certificates=[{"loai": "ielts", "diem": 10 ** 400}])))
+    for ten, j in ca7:
+        try:
+            a, m = LD.sang_asp(j)
+            tap = atoms(a)
+            msg = "\n".join(m)
+            dung = ("xac_nhan_ky_luat_sach" not in tap and "tot_nghiep" not in tap and "evil" not in tap and "duoc_mien(\"CT100\")" not in tap
+                    and "che_do(sv_chon_tich_luy)" not in tap and not any(c in msg for c in ('\n#', '"/', 'passwd"')) and len(msg) < 4000)
+            ghi = f"mâu thuẫn {len(m)}"
+        except Exception as e:  # noqa: BLE001
+            dung, ghi = False, f"{type(e).__name__}: {str(e)[:80]}"
+        print(f"[{'OK' if dung else 'FAIL'}] L7 loader chịu được đầu vào chưa qua schema — {ten} ({ghi})")
+        good = good and bool(dung)
+    # L8: trùng lặp HỢP LỆ theo schema không được làm rơi quyết định: miễn HP có hai mục (một chưa/một đã có quyết định) vẫn được miễn;
+    # khong_tinh_tich_luy trùng không sinh thông báo mâu thuẫn thừa.
+    j = sua(base, exemptions=[{"ma_hp": "CT101", "chung_chi_ref": None, "quyet_dinh": False}, {"ma_hp": "CT101", "chung_chi_ref": 0, "quyet_dinh": True}],
+            khong_tinh_tich_luy=["TC100", "TC100"])
+    a, m = LD.sang_asp(j)
+    tap = atoms(a)
+    dung = 'duoc_mien("CT101")' in tap and not m
+    print(f"[{'OK' if dung else 'FAIL'}] L8 miễn HP trùng mục (OR quyết định), khong_tinh_tich_luy trùng không báo mâu thuẫn ({sorted(x for x in tap if 'mien' in x)}, {len(m)} mâu thuẫn)")
+    good = good and dung
     return ok and good
 
 

@@ -19,6 +19,7 @@ import uuid
 from functools import lru_cache
 from typing import Annotated
 
+from anyio import CapacityLimiter, to_thread
 from fastapi import FastAPI, File, Form, Request, UploadFile
 from fastapi.concurrency import run_in_threadpool
 from fastapi.exceptions import RequestValidationError
@@ -63,8 +64,12 @@ class XacThucVaTieuDe:
         if scope["type"] != "http":
             return await self.app(scope, receive, send)
 
+        da_bat_dau = False
+
         async def gui(m):
+            nonlocal da_bat_dau
             if m["type"] == "http.response.start":
+                da_bat_dau = True
                 hd = [(k, v) for k, v in m.get("headers", []) if k.lower() not in (b"cache-control", b"x-content-type-options")]
                 m = {**m, "headers": hd + [(b"cache-control", b"no-store"), (b"x-content-type-options", b"nosniff")]}
             await send(m)
@@ -73,12 +78,21 @@ class XacThucVaTieuDe:
             if not self.cfg.api_key:
                 loi = (503, loi_chung("loi_he_thong", "Dịch vụ chưa cấu hình khoá xác thực."))
             else:
-                khoa = dict(scope["headers"]).get(b"x-api-key", b"")
+                khoa = next((v for k, v in scope["headers"] if k.lower() == b"x-api-key"), b"")      # tiêu đề ĐẦU TIÊN (không để tiêu đề trùng lách proxy)
                 if not khoa or not hmac.compare_digest(khoa, self.cfg.api_key.encode("utf-8")):
                     loi = (401, loi_chung("khong_xac_thuc", "Thiếu hoặc sai khoá."))
             if loi:
                 return await _json(*loi)(scope, receive, gui)
-        await self.app(scope, receive, gui)
+        try:
+            await self.app(scope, receive, gui)
+        except _QuaLon:
+            raise
+        except Exception as e:  # noqa: BLE001 — ngoại lệ chưa bắt: cùng hình dạng + tiêu đề an toàn (nếu không, Starlette trả text/plain trần)
+            ma = uuid.uuid4().hex[:8]
+            log.error("path=%s loi_chua_bat=%s ma=%s", scope["path"], type(e).__name__, ma)
+            if da_bat_dau:
+                raise
+            await _json(500, loi_chung("loi_he_thong", "Lỗi nội bộ khi xử lý yêu cầu.", ma_loi=ma))(scope, receive, gui)
 
 
 class _QuaLon(Exception):
@@ -172,14 +186,43 @@ def _rong_tu_van(trang_thai, thong_bao, chi_tiet=None, **kw):
                                                          "can_bo_sung": [], "mau_thuan": [], "canh_bao": [], "phien_ban_kb": None, **kw})
 
 
+def _kiem_anh(data, cfg):
+    """Kiểm định dạng + khổ ảnh TRƯỚC khi giải nén, rồi giải nén thử (ảnh cắt dở lộ ra ở đây). Trả danh sách lỗi hoặc None."""
+    from PIL import Image, UnidentifiedImageError
+    tong_px = 0
+    for i, b in enumerate(data):
+        try:
+            with Image.open(io.BytesIO(b)) as im:
+                if im.format not in ("PNG", "JPEG"):
+                    return [{"duong_dan": f"anh.{i}", "thong_bao": "chỉ nhận ảnh PNG hoặc JPEG"}]
+                px = im.size[0] * im.size[1]
+                if px > cfg.max_pixels:
+                    return [{"duong_dan": f"anh.{i}", "thong_bao": f"ảnh quá lớn (> {cfg.max_pixels} điểm ảnh)"}]
+                tong_px += px
+                if tong_px > cfg.max_pixels_tong:
+                    return [{"duong_dan": "anh", "thong_bao": f"tổng điểm ảnh của yêu cầu vượt {cfg.max_pixels_tong}"}]
+                im.load()
+        except (UnidentifiedImageError, OSError, ValueError, SyntaxError, Image.DecompressionBombError):
+            return [{"duong_dan": f"anh.{i}", "thong_bao": "không đọc được ảnh (hỏng hoặc bị cắt dở)"}]
+    return None
+
+
 def tao_app(cfg=None):
     cfg = cfg or CauHinh()
     _cau_hinh_log()
-    app = FastAPI(title="CPA² API", version=PHIEN_BAN, docs_url=None, redoc_url=None, openapi_url=None)
+    app = FastAPI(title="CPA² API", version=PHIEN_BAN, docs_url=None, redoc_url=None, openapi_url=None, redirect_slashes=False)
     app.state.cfg = cfg
     tham_so = {"goc": str(cfg.cpa2_root)}
-    app.state.backend = (NhomTienTrinh(cfg.khoi_tao_worker, tham_so, cfg.so_worker, cfg.cho_hang_doi) if cfg.so_worker > 0
-                         else TrongTienTrinh(cfg.khoi_tao_worker, tham_so))
+    if cfg.so_worker > 0:
+        app.state.backend = NhomTienTrinh(cfg.khoi_tao_worker, tham_so, cfg.so_worker, cfg.cho_hang_doi, ram_mb=cfg.gioi_han_ram_mb, ten="chinh")
+        # OCR nặng (tới timeout_ocr giây, nhiều RAM) có bể RIÊNG: không để vài yêu cầu OCR chiếm hết tiến trình của advice / lookup.
+        # Bể này chỉ khởi động khi có yêu cầu OCR đầu tiên.
+        app.state.backend_ocr = (NhomTienTrinh(cfg.khoi_tao_worker, tham_so, cfg.so_worker_ocr, cfg.cho_hang_doi, ram_mb=cfg.gioi_han_ram_mb, ten="ocr")
+                                 if cfg.so_worker_ocr > 0 else app.state.backend)
+    else:
+        app.state.backend = app.state.backend_ocr = TrongTienTrinh(cfg.khoi_tao_worker, tham_so)
+    app.state.gioi_han_giai_ma = CapacityLimiter(cfg.max_giai_ma_dong_thoi)
+    HS.nap_ten_schema(cfg.cpa2_root)              # tên trường schema được nêu nguyên văn trong đường dẫn lỗi (validation 422 cũng dùng)
     kb = phien_ban_kb(str(cfg.cpa2_root))
     app.add_middleware(GioiHanBody, cfg=cfg)
     app.add_middleware(XacThucVaTieuDe, cfg=cfg)           # thêm SAU = ngoài cùng: xác thực chạy trước khi đọc body
@@ -198,10 +241,10 @@ def tao_app(cfg=None):
         # 400 (body hỏng / lồng quá sâu / số quá dài), 404, 405… : cùng hình dạng, không phản hồi lại `detail`
         return _json(e.status_code, loi_chung("loi_dau_vao", THONG_BAO_HTTP.get(e.status_code, "Yêu cầu không hợp lệ.")))
 
-    def chay(ten, ten_pt, args, timeout):
+    def chay(ten, ten_pt, args, timeout, backend=None):
         t, ma = time.perf_counter(), uuid.uuid4().hex[:8]
         try:
-            kq = app.state.backend.goi(ten_pt, *args, timeout=timeout)
+            kq = (backend or app.state.backend).goi(ten_pt, *args, timeout=timeout)
         except HetGio:
             log.warning("endpoint=%s het_gio timeout=%ss", ten, timeout)
             return _json(504, loi_chung("het_gio", "Yêu cầu xử lý quá lâu và đã bị dừng. Hãy thử lại hoặc đơn giản hoá hồ sơ."))
@@ -214,9 +257,16 @@ def tao_app(cfg=None):
         log.info("endpoint=%s trang_thai=%s ket_luan=%s ms=%d", ten, kq.get("trang_thai"), kq.get("ket_luan"), (time.perf_counter() - t) * 1000)
         return kq
 
-    @app.get("/health")
+    @app.api_route("/health", methods=["GET", "HEAD"])
     def health():
-        return {"trang_thai": "ok", "ket_luan": None, "dich_vu": "cpa2_api", "phien_ban": PHIEN_BAN, "kb": kb}
+        # Bể tiến trình đã từng chạy mà nay rỗng (dựng lại thất bại) → 503 để nền tảng khởi động lại container. Chưa dùng lần nào ≠ hỏng.
+        bo, bo_ocr = app.state.backend.tinh_trang(), app.state.backend_ocr.tinh_trang()
+        khoe = bo["khoe"] and bo_ocr["khoe"]
+        kq = {"trang_thai": "ok" if khoe else "loi_he_thong", "ket_luan": None, "dich_vu": "cpa2_api", "phien_ban": PHIEN_BAN, "kb": kb,
+              "bo_xu_ly": bo, "bo_xu_ly_ocr": bo_ocr}
+        if not khoe:
+            kq.update(thong_bao="Bể tiến trình xử lý không còn tiến trình nào.", chi_tiet=[])
+        return _json(200 if khoe else 503, kq)
 
     @app.post("/v1/advice")
     def advice(body: AdviceIn):
@@ -254,22 +304,11 @@ def tao_app(cfg=None):
             if len(b) > cfg.max_bytes_file:
                 return loi([{"duong_dan": f"anh.{i}", "thong_bao": f"ảnh vượt {cfg.max_bytes_file} byte"}])
             data.append(b)
-        from PIL import Image, UnidentifiedImageError
-        tong_px = 0
-        for i, b in enumerate(data):
-            try:
-                with Image.open(io.BytesIO(b)) as im:          # đọc phần đầu: kiểm định dạng + khổ ảnh TRƯỚC khi giải nén
-                    if im.format not in ("PNG", "JPEG"):
-                        return loi([{"duong_dan": f"anh.{i}", "thong_bao": "chỉ nhận ảnh PNG hoặc JPEG"}])
-                    px = im.size[0] * im.size[1]
-                    if px > cfg.max_pixels:
-                        return loi([{"duong_dan": f"anh.{i}", "thong_bao": f"ảnh quá lớn (> {cfg.max_pixels} điểm ảnh)"}])
-                    tong_px += px
-                    if tong_px > cfg.max_pixels_tong:
-                        return loi([{"duong_dan": "anh", "thong_bao": f"tổng điểm ảnh của yêu cầu vượt {cfg.max_pixels_tong}"}])
-                    im.load()                                  # ảnh bị cắt dở / hỏng lộ ra ở đây (OSError), không phải ở bước OCR
-            except (UnidentifiedImageError, OSError, ValueError, SyntaxError, Image.DecompressionBombError):
-                return loi([{"duong_dan": f"anh.{i}", "thong_bao": "không đọc được ảnh (hỏng hoặc bị cắt dở)"}])
+        # giải mã ảnh là việc nặng CPU + RAM: không chạy trong vòng lặp sự kiện, và không quá `max_giai_ma_dong_thoi` yêu cầu cùng lúc
+        # (mỗi yêu cầu tới 60 triệu điểm ảnh ≈ 240 MB trong tiến trình cha, không có RLIMIT_AS)
+        loi_anh = await to_thread.run_sync(_kiem_anh, data, cfg, limiter=app.state.gioi_han_giai_ma)
+        if loi_anh:
+            return loi(loi_anh)
         kb_ = {}
         canh_bao = []
         if khai_bao:
@@ -286,7 +325,7 @@ def tao_app(cfg=None):
             la = sorted(set(j) - set(kb_))
             if la:
                 canh_bao.append("khai báo không hỗ trợ bị bỏ qua: " + ", ".join(HS._cat(x, 20) for x in la[:10]))
-        kq = await run_in_threadpool(chay, "ocr", "ocr", (data, kb_), cfg.timeout_ocr)
+        kq = await run_in_threadpool(chay, "ocr", "ocr", (data, kb_), cfg.timeout_ocr, app.state.backend_ocr)
         if isinstance(kq, dict):
             kq["canh_bao"] = canh_bao
         return kq

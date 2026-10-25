@@ -17,7 +17,7 @@ pip install -r requirements-dev.txt                    # cần thêm: cài Tesse
 export CPA2_API_KEY=dat-mot-chuoi-ngau-nhien-dai       # bắt buộc; thiếu thì /v1/* trả 503 (đóng, không mở công khai)
 export CPA2_ROOT=../../CPA2_KhaoSat                    # mặc định đã đúng khi chạy trong repo
 uvicorn cpa2_api.main:tao_app --factory --port 8000
-python validate_api.py            # ~150 kiểm tra; --nhanh bỏ OCR ảnh thật (vài phút)
+python validate_api.py            # ~190 kiểm tra; --nhanh bỏ OCR ảnh thật (vài phút)
 ```
 
 ## Hợp đồng
@@ -32,7 +32,7 @@ của framework (400/404/405/413/422): một hình dạng để máy khách Type
 | `ok` | 200 | solver + chứng chỉ cho kết luận | `TRUE` `FALSE` `UNKNOWN` `DA_HOAN_THANH` |
 | `ngoai_pham_vi` | 200 | câu hỏi chưa hỗ trợ: ngoài quy chế đã hình thức hoá, phản thực tế, hoặc loại câu chưa có lời giải đúng (**"còn thiếu môn gì", "còn thiếu bao nhiêu tín chỉ", "chứng chỉ nào miễn được môn nào"** — xem dưới). Không kèm chứng chỉ / nguồn | `null` |
 | `hau_kiem_chan` | 200 | hậu kiểm chặn câu trả lời (trích nguồn/mã học phần sai). Không kèm chứng chỉ / nguồn / nội dung bị chặn | `null` |
-| `ho_so_mau_thuan` | 200 | solver vô nghiệm | `MAU_THUAN` |
+| `ho_so_mau_thuan` | 200 | solver vô nghiệm — nhất quán ở `/v1/advice` và `/v1/recommendations` | `MAU_THUAN` |
 | `khong_ho_tro_ho_so` | 200 | không phải CNTT K49 | `null` |
 | `loi_dau_vao` | 200 / 413 / 422 | hồ sơ/ảnh/yêu cầu sai; kèm `chi_tiet` (đường dẫn trường, **không** kèm giá trị) | `null` |
 | `khong_xac_thuc` | 401 | thiếu hoặc sai `X-API-Key` | — |
@@ -43,8 +43,10 @@ của framework (400/404/405/413/422): một hình dạng để máy khách Type
 `UNKNOWN` là kết luận hợp lệ của hệ thống ba trị (thiếu dữ kiện → kèm `du_kien_thieu`, `can_bo_sung`), **khác** `ngoai_pham_vi` và
 `loi_he_thong`. Hồ sơ tự mâu thuẫn (vd. điểm chữ ≠ điểm số) cho `UNKNOWN` kèm `mau_thuan` và câu hỏi bổ sung.
 
-### `GET /health` (không cần khoá)
-`{"trang_thai":"ok","dich_vu":"cpa2_api","phien_ban":"0.1.0","kb":{"r_formal":"v1.11","sha256":"…","ctdt":"cntt_k49"}}`
+### `GET|HEAD /health` (không cần khoá)
+`{"trang_thai":"ok","dich_vu":"cpa2_api","phien_ban":"0.1.0","kb":{"r_formal":"v1.11","sha256":"…","ctdt":"cntt_k49"},"bo_xu_ly":{"tong":2,"san_sang":2,"khoe":true},"bo_xu_ly_ocr":{…}}`
+**503** (`trang_thai: loi_he_thong`) khi một bể tiến trình ĐÃ từng chạy mà nay không còn tiến trình nào (dựng lại thất bại) — để nền tảng khởi động lại
+container. Bể chưa dùng lần nào (khởi động lười) vẫn là 200.
 
 ### `POST /v1/advice`
 Yêu cầu: `{"ho_so": {…student_fact_schema…}, "cau_hoi": "em đủ điều kiện tốt nghiệp chưa?"}` (câu hỏi 1–500 ký tự; trường thừa bị từ chối).
@@ -76,8 +78,15 @@ Sửa tay không biến dữ kiện thành "đã xác minh".
 - **Chống tiêm mã ASP** (review bảo mật): mã học phần, `ma_hp`, mục `khong_tinh_tich_luy` chỉ gồm chữ-số-`_` ≤ 20 ký tự; số khai báo phải là
   số nguyên thật trong khoảng; NaN / Infinity bị từ chối. Lớp thứ hai nằm ở `loader.py` (lõi dùng chung): sai dạng thì bỏ bản ghi và báo mâu thuẫn.
   Trước đây `X"). xac_nhan_ky_luat_sach. %` làm kết luận UNKNOWN thành TRUE, `#include` đọc file, và `b(1..20000)` làm solver chạy hàng chục giây.
-- **Giới hạn thời gian cứng**: lõi chạy trong `CPA2_WORKERS` (mặc định 2) tiến trình con (`tien_trinh.py`, 'spawn'); quá giờ thì giết và dựng lại ở nền.
-  Hồ sơ có > 3 bản ghi tự mâu thuẫn bị từ chối ngay (mỗi bản ghi mở 4 nhánh, thời gian solver ×4,5: 4 bản ghi ≈ 21 giây, 6 bản ghi > 100 giây).
+- **Giới hạn thời gian cứng**: lõi chạy trong `CPA2_WORKERS` (mặc định 2) tiến trình con (`tien_trinh.py`, 'spawn'); quá giờ thì giết **cả nhóm tiến trình**
+  (con tự `setsid`, nên `tesseract` cháu cũng chết) và dựng lại ở nền. OCR có bể **riêng** (`CPA2_WORKERS_OCR`, mặc định 1, khởi động ở yêu cầu OCR đầu tiên) —
+  OCR chậm không làm nghẽn advice / lookup. Tiến trình rảnh chết thì được thay trong suốt; dựng lại thất bại thì lùi bước thử lại rồi bỏ khỏi bể.
+  `CPA2_WORKERS` / `CPA2_WORKERS_OCR` / `CPA2_RAM_MB` sai (không phải số, âm, quá lớn) → **lỗi lúc khởi động**, không đoán.
+  Hồ sơ có > 2 bản ghi tự mâu thuẫn bị từ chối ngay (mỗi bản ghi mở 4 nhánh, thời gian solver ×4,5: 4 bản ghi ≈ 21 giây, 6 bản ghi > 100 giây).
+  Trần danh sách: `exemptions` ≤ 50, `certificates` ≤ 20, `khong_tinh_tich_luy` ≤ 100 (mỗi mục là một dòng ASP / một lần mở nhánh).
+- **Bộ nhớ**: mỗi tiến trình con tự đặt `RLIMIT_AS` = `CPA2_RAM_MB` (mặc định 4096 MB, chỉ Unix) — cấp phát quá mức → `MemoryError` → 500, tiến trình vẫn dùng tiếp,
+  thay vì kéo cả container bị OOM-kill. Đặt giới hạn RAM của container ≥ (`CPA2_WORKERS` + `CPA2_WORKERS_OCR`) × ~1,5 GB + 0,5 GB (ước lượng, **chưa đo trên
+  nền tảng thật**). Khoá `CPA2_API_KEY` được bỏ khỏi môi trường tiến trình con.
   `so_worker = 0` chạy trong tiến trình (phát triển, test) và **không** có giới hạn thời gian.
 - Hồ sơ vào lõi **chỉ ở dạng dict đã chuẩn hoá** (trường lạ và `meta` bị loại), không bao giờ là đường dẫn file.
 - Log (stdout, INFO) chỉ có endpoint, trạng thái, thời gian, loại ngoại lệ. Không có hồ sơ, câu hỏi, khoá hay nội dung ngoại lệ.
@@ -86,7 +95,7 @@ Sửa tay không biến dữ kiện thành "đã xác minh".
 
 ## Docker
 
-`docker build -f services/cpa2_api/Dockerfile -t cpa2-api .` (từ gốc repo), chạy với `-e CPA2_API_KEY=…`. Cài từ `requirements.lock` (đủ phụ thuộc gián tiếp).
+`docker build -f services/cpa2_api/Dockerfile -t cpa2-api .` (từ gốc repo), chạy với `-e CPA2_API_KEY=…` (image dùng `tini` làm PID 1 để dọn zombie; lệnh `apt-get install tini` chưa kiểm vì chưa build được image). Không dùng `--limit-concurrency` của uvicorn: nó tính cả kết nối treo và trả 503 cho cả `/health`. Cài từ `requirements.lock` (đủ phụ thuộc gián tiếp).
 Có `.dockerignore` ở gốc repo (bộ dựng cũ không đọc `Dockerfile.dockerignore`).
 
 ⚠️ **Chưa build được image trong môi trường phát triển (không có Docker daemon).** Đã kiểm thay thế: dựng cây thư mục đúng theo các dòng
