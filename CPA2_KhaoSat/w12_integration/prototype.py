@@ -132,7 +132,9 @@ MAU_CO_KHONG = [   # câu có/không về ĐÚNG một hạng (QD-15) → hang_c
     rf"^{_TN} {_TOI}(?:co )?(?:se )?(?:dat|duoc) (?:loai|hang|bang) {_X}(?: (?:khong|chua))?$",
 ]
 _DAU = re.compile(r"^(?:(?:ad|admin|anh chi|anh|chi|thay|co|mn|moi nguoi|ban) oi,?\s*)?(?:cho (?:em|e|minh|toi) hoi(?: xiu| chut| voi)?,?\s*)?")
-_CUOI = re.compile(r"(?:[\s?!.,]+|\b(?:a|ad|nhe|nha|vay|ha|z)\b)*$")
+# Review bảo mật (Mốc 1 web): dạng cũ `(?:[\s?!.,]+|\b(?:…)\b)*$` có lượng từ lồng nhau → bùng nổ tổ hợp (ReDoS) khi sau chuỗi dấu
+# câu / trợ từ có đuôi KHÔNG khớp: câu hỏi 53 ký tự treo > 20 giây. Dạng dưới cùng ngôn ngữ (dấu câu*, rồi (trợ từ dấu câu*)*), tuyến tính.
+_CUOI = re.compile(r"[\s?!.,]*(?:\b(?:a|ad|nhe|nha|vay|ha|z)\b[\s?!.,]*)*$")
 
 
 def _xep_loai(ql):
@@ -210,9 +212,16 @@ def parse_question(q: str) -> str:
 # ---------- Tầng 2+3: KB + Solver ----------
 def txt(p): return p.read_text(encoding="utf-8")
 
+def doc_ho_so(nguon):
+    """Hồ sơ từ đường dẫn file (CLI) HOẶC từ dict (API web: không nhận đường dẫn của người dùng). Luôn trả bản sao —
+    không sửa hồ sơ của nơi gọi."""
+    if isinstance(nguon, dict):
+        return json.loads(json.dumps(nguon))
+    return json.loads(Path(nguon).read_text(encoding="utf-8"))
+
 def load_student(path):
-    """Hồ sơ JSON → (dữ kiện ASP, student_id, mâu thuẫn) qua loader chung (w7_student_facts/loader.py)."""
-    j=json.loads(Path(path).read_text(encoding="utf-8"))
+    """Hồ sơ JSON (đường dẫn hoặc dict) → (dữ kiện ASP, student_id, mâu thuẫn) qua loader chung (w7_student_facts/loader.py)."""
+    j=doc_ho_so(path)
     asp, mt = loader.sang_asp(j)
     return asp, j.get("student_id","demo"), mt
 
@@ -305,7 +314,7 @@ def answer_eligibility(question, student_path):
         cert = {"claim": f"du_dk({dt})", "verdict": "UNKNOWN", "proof": {"steps": []}, "missing_facts": ["ho_so"]}
         return {"verdict": "UNKNOWN", "certificate": cert, "explanation_vi": "Cần hồ sơ học tập để xét điều kiện.",
                 "missing_facts": ["ho_so"], "can_bo_sung": [], "mau_thuan": [], "claim": f"du_dk({dt})"}
-    r = eligibility.xet(json.loads(Path(student_path).read_text(encoding="utf-8")), dt)
+    r = eligibility.xet(doc_ho_so(student_path), dt)
     v = ELIG_VERDICT[r["ket_qua"]]
     steps = [{"atom": s["atom"], "rule_id": s["rule_id"], "source": {"van_ban": s["nguon"]}} for s in r["chung_chi"]]
     missing = [b["bien"] for b in r["can_bo_sung"]]
@@ -342,7 +351,7 @@ def answer_recommendation(question, student_path):
                 "explanation_vi": f"Không có học kỳ {hk} — một năm học có 3 học kỳ (QĐ3266 Điều 6 khoản 1). "
                                   "Bạn muốn đăng ký học kỳ 1, 2 hay 3 (hè)?",
                 "certificate": {"claim": "de_xuat", "proof": {"steps": []}}}
-    r = recommendation.de_xuat(json.loads(Path(student_path).read_text(encoding="utf-8")), hk)
+    r = recommendation.de_xuat(doc_ho_so(student_path), hk)
     steps = [{"atom": c["atom"], "rule_id": c["rule_id"], "source": {"van_ban": c["nguon"]}}
              for x in r["dang_ky"] for c in x["chung_chi"]]
     text = (f"Đề xuất đăng ký HK{hk} ({r['tong_tc']} TC): " + ", ".join(x["ma"] for x in r["dang_ky"])
@@ -523,6 +532,11 @@ def answer(question, student_path):
         return answer_recommendation(question, student_path)
     extra, sid, mt = load_student(student_path) if student_path else ("", "demo", [])
     verdict, models, cautious, brave = solve_verdict(claim, extra)
+    if verdict == "UNSAT":     # solver vô nghiệm (hồ sơ trái quy chế, vd. loại HP bắt buộc khỏi tích lũy): KHÔNG kết luận, không ngoại lệ
+        cert = {"claim": claim, "verdict": "UNSAT", "proof": {"steps": []}, "missing_facts": [], "can_bo_sung": []}
+        return {"verdict": "UNSAT", "claim": claim, "certificate": cert, "missing_facts": [], "can_bo_sung": [], "mau_thuan": mt,
+                "explanation_vi": "Hồ sơ mâu thuẫn với quy chế hoặc với chính nó — hệ thống không kết luận. Hãy kiểm tra lại hồ sơ.",
+                "student_id": sid}
     cert=build_certificate(claim, verdict, models, cautious, brave)
     explanation, block = verbalize(cert, cautious)
     if block:

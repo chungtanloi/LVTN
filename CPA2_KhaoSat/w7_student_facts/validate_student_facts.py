@@ -108,6 +108,52 @@ def kiem_loader_chung():
     print(f"[{'OK' if l5 else 'FAIL'}] L5 loader: khai báo hạ bậc (tc_diem_f, kỷ luật cảnh cáo cấp Trường) → dữ kiện + khai_bao; "
           f"thiếu → không sinh; sai kiểu → mâu thuẫn, bỏ ({m4}, {m5})")
     good = good and l5
+    # L6 (Web, review bảo mật): chuỗi trong hồ sơ KHÔNG được ghép thẳng vào chương trình ASP (tiêm mã). Mã học phần, mục trong
+    # khong_tinh_tich_luy, exemptions[].ma_hp, số khai báo, loại chứng chỉ sai dạng → bỏ + báo mâu thuẫn; tập nguyên tử sinh ra
+    # phải BẰNG tập của hồ sơ sạch (không thêm dữ kiện giả như xac_nhan_ky_luat_sach / tot_nghiep).
+    import loader as LD
+    base = json.loads((STUDENTS / "sv_lvtn.json").read_text(encoding="utf-8"))
+    base["xac_nhan_ky_luat_sach"] = None
+
+    def atoms(asp):
+        ctl = clingo.Control(["--warn=none"])
+        ctl.add("base", [], asp)
+        ctl.ground([("base", [])])
+        with ctl.solve(yield_=True) as h:
+            for m in h:
+                return {str(a) for a in m.symbols(atoms=True)}
+        return set()
+    sach = atoms(LD.sang_asp(base)[0])
+    xau = 'CT177"). xac_nhan_ky_luat_sach. tot_nghiep. %'
+    ca6 = []
+    j = json.loads(json.dumps(base)); j["grades"][xau] = {"code": xau, "credits": 3, "thang10": 80, "letter": "B+", "status": "passed"}
+    ca6.append(("khoá grades + code", j))
+    j = json.loads(json.dumps(base)); j["khong_tinh_tich_luy"] = [xau]
+    ca6.append(("khong_tinh_tich_luy[]", j))
+    j = json.loads(json.dumps(base)); j["exemptions"] = [{"ma_hp": xau, "chung_chi_ref": None, "quyet_dinh": True}]
+    ca6.append(("exemptions[].ma_hp", j))
+    for k in ("da_hoc_nam2", "tc_cong_nhan"):
+        for v in ("5). xac_nhan_ky_luat_sach. %", 5.0, True, 10 ** 30):
+            j = json.loads(json.dumps(base)); j[k] = v
+            ca6.append((f"{k}={str(v)[:12]!r}", j))
+    for loai, d in (("ielts,60). xac_nhan_ky_luat_sach. foo(", 6.0), ("ielts", float("nan")), ("ielts", float("inf")), ("ielts", "6")):
+        j = json.loads(json.dumps(base)); j["certificates"] = [{"loai": loai, "diem": d}]
+        ca6.append((f"certificates loai={loai[:10]!r} diem={str(d)[:5]}", j))
+    j = json.loads(json.dumps(base)); j["grades"]["CT177"]["diem"] = 'M"). xac_nhan_ky_luat_sach. %'
+    ca6.append(("diem kiểu chuỗi lạ", j))
+    j = json.loads(json.dumps(base)); j["grades"]["CT177"] = "không phải đối tượng"
+    ca6.append(("bản ghi điểm không phải đối tượng", j))
+    for ten, j in ca6:
+        try:
+            a, m = LD.sang_asp(j)
+            tap = atoms(a)
+            t = tap - sach
+            dung = ("xac_nhan_ky_luat_sach" not in tap and "tot_nghiep" not in tap and not any("xac_nhan" in x for x in t) and m)
+            ghi = f"thừa {sorted(t)[:3]}, mâu thuẫn {len(m)}"
+        except Exception as e:  # noqa: BLE001 — chương trình ASP hỏng cú pháp cũng là lỗi
+            dung, ghi = False, f"{type(e).__name__}: {str(e)[:80]}"
+        print(f"[{'OK' if dung else 'FAIL'}] L6 không tiêm ASP — {ten} ({ghi})")
+        good = good and bool(dung)
     return ok and good
 
 

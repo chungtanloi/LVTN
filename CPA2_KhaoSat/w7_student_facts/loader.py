@@ -9,9 +9,34 @@ ba (Bài học, CLAUDE.md). Mọi đường vào giờ gọi sang_asp() ở đâ
   ra_soat(j)  → (hồ sơ sạch, ASP mở các bản ghi mâu thuẫn, danh sách mâu thuẫn)
 """
 import json
+import math
+import re
 from pathlib import Path
 
 ROOT = Path(__file__).parent.parent
+
+# ---------------------------------------------------------------- chống tiêm mã ASP (review bảo mật, Mốc 1 web)
+# Dữ kiện ASP được sinh bằng f-string. Chuỗi trong hồ sơ (mã học phần, mục khong_tinh_tich_luy, ma_hp miễn, loại chứng chỉ)
+# mà chứa dấu nháy / dấu chấm có thể đóng chuỗi và chèn dữ kiện giả (xac_nhan_ky_luat_sach.), luật, hoặc `#include` đọc file.
+# → mọi định danh phải khớp mẫu chặt; sai dạng thì BỎ bản ghi và báo mâu thuẫn (không đoán, không sửa).
+_MA = re.compile(r"[A-Za-z0-9_]{1,20}\Z")
+_LOAI_CC = ("ielts", "toeic", "toefl_itp", "toefl_ibt", "toefl_cbt", "ctu_abc", "cambridge", "cntt_coban", "other")
+NAM2_TOI_DA = 100               # nửa năm (50 năm) — chặn số khổng lồ; TC công nhận cùng trần dưới
+TC_CONG_NHAN_TOI_DA = 400
+
+
+def _ma_hop_le(x):
+    return isinstance(x, str) and _MA.match(x) is not None
+
+
+def _so_nguyen(x):
+    return isinstance(x, int) and not isinstance(x, bool)
+
+
+def _cat(x, n=24):
+    """Trích đoạn AN TOÀN để đưa vào thông báo (không phản hồi lại chuỗi dài / ký tự điều khiển)."""
+    t = re.sub(r"[^\w .,;:()+\-]", "?", str(x))
+    return t[:n] + ("…" if len(t) > n else "")
 
 # ---------------------------------------------------------------- rà soát hồ sơ (P17-1, sau Tuần 17)
 # Bảng quy đổi QĐ3266 Đ22 k2 (tr.13–14): cận dưới thang 10 ×10 → điểm chữ. Viết riêng ở đây (không dùng
@@ -34,6 +59,8 @@ def _so_hop_le(t):
 def _loi_ban_ghi(ma, g):
     t, L, st, cr = g.get("thang10"), g.get("letter"), g.get("status"), g.get("credits")
     loi = []
+    if g.get("diem") not in (None, "M", "W", "I"):
+        loi.append(f"điểm đặc biệt {_cat(g.get('diem'))!r} không thuộc {{M, W, I}}")
     if t is not None and not (isinstance(t, int) and not isinstance(t, bool)):
         return [f"điểm {t!r} không phải số nguyên thang 10 ×10"]
     if t is not None and not 0 <= t <= 100:
@@ -50,6 +77,43 @@ def _loi_ban_ghi(ma, g):
     return loi
 
 
+def _lam_sach(hs, mt):
+    """Loại mọi giá trị sẽ được ghép vào ASP mà sai dạng (xem trên). Sửa trực tiếp `hs`, ghi lý do vào `mt`."""
+    gs = hs.get("grades")
+    if gs is not None and not isinstance(gs, dict):
+        hs["grades"] = {}
+        mt.append("grades: không phải đối tượng → bỏ")
+    for ma in list(hs.get("grades", {})):
+        g = hs["grades"][ma]
+        if not _ma_hop_le(ma) or not isinstance(g, dict):
+            hs["grades"].pop(ma)
+            mt.append(f"bản ghi điểm {_cat(ma)!r}: mã học phần hoặc nội dung sai dạng → bỏ")
+    ds = hs.get("khong_tinh_tich_luy")
+    if ds is not None:
+        ok = [c for c in ds if _ma_hop_le(c)] if isinstance(ds, list) else []
+        if not isinstance(ds, list) or len(ok) != len(ds):
+            mt.append("khong_tinh_tich_luy: có mục sai dạng → bỏ các mục đó")
+        hs["khong_tinh_tich_luy"] = ok
+    ex = hs.get("exemptions")
+    if ex is not None:
+        ok = [e for e in ex if isinstance(e, dict) and _ma_hop_le(e.get("ma_hp"))] if isinstance(ex, list) else []
+        if not isinstance(ex, list) or len(ok) != len(ex):
+            mt.append("exemptions: có mục sai dạng (ma_hp) → bỏ các mục đó")
+        hs["exemptions"] = ok
+    cc = hs.get("certificates")
+    if cc is not None:
+        ok = [c for c in cc if isinstance(c, dict) and c.get("loai") in _LOAI_CC and isinstance(c.get("diem"), (int, float))
+              and not isinstance(c.get("diem"), bool) and math.isfinite(c["diem"]) and 0 <= c["diem"] <= 100000] if isinstance(cc, list) else []
+        if not isinstance(cc, list) or len(ok) != len(cc):
+            mt.append("certificates: có mục sai dạng (loai/diem) → bỏ các mục đó")
+        hs["certificates"] = ok
+    for k, tran in (("da_hoc_nam2", NAM2_TOI_DA), ("tc_cong_nhan", TC_CONG_NHAN_TOI_DA)):
+        v = hs.get(k)
+        if v is not None and not (_so_nguyen(v) and 0 <= v <= tran):
+            hs.pop(k)
+            mt.append(f"{k} = {_cat(v)!r}: không phải số nguyên trong [0, {tran}] → coi như chưa khai báo")
+
+
 def ra_soat(ho_so):
     """Hồ sơ → (hồ sơ đã bỏ bản ghi mâu thuẫn, ASP mở các bản ghi đó, danh sách mâu thuẫn).
     Bản ghi điểm tự mâu thuẫn → bỏ, mở điểm HP thành F/D/A (+ điểm số ghi trên hồ sơ nếu hợp lệ): không biết trường
@@ -57,6 +121,7 @@ def ra_soat(ho_so):
     → coi như chưa khai báo (KB tự mở nhánh)."""
     hs = json.loads(json.dumps(ho_so))
     them, mt = [], []
+    _lam_sach(hs, mt)
     for ma, g in list(hs.get("grades", {}).items()):
         loi = _loi_ban_ghi(ma, g)
         if not loi:

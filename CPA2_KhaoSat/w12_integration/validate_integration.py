@@ -312,6 +312,65 @@ def test_dang_ky():
     check(r.get("claim") != "tot_nghiep" and r["verdict"] == "UNKNOWN",
           f"E5 câu phản thực tế (chưa hỗ trợ) → UNKNOWN, không trả lời nhầm tot_nghiep ({r.get('claim')}, {r['verdict']})")
 
+def test_ho_so_dict():
+    """Web (Mốc 1): API nhận hồ sơ JSON, không nhận đường dẫn file của người dùng → answer() nhận cả dict. CLI cũ (đường dẫn) vẫn chạy."""
+    for ten, hoi in [("sv_lvtn", "em đủ điều kiện tốt nghiệp chưa?"), ("sv_tron_ngoai_ngu", "em đủ điều kiện tốt nghiệp chưa?"),
+                     ("sv_lvtn", "Em đăng ký CT180 được không?"), ("sv_lvtn", "Nếu tốt nghiệp, em xếp hạng gì?"),
+                     ("sv_lvtn", "Em có đủ điều kiện làm luận văn không?"), ("sv_lvtn", "kỳ này em nên đăng ký môn gì?"),
+                     ("sv_5hp", "em đủ điều kiện tốt nghiệp chưa?")]:
+        f = HERE.parent / "w7_student_facts" / "students" / f"{ten}.json"
+        j = json.loads(f.read_text(encoding="utf-8"))
+        goc = json.dumps(j, sort_keys=True)
+        try:
+            a, b = proto.answer(hoi, str(f)), proto.answer(hoi, j)
+            kq = (a["verdict"], a.get("explanation_vi")) == (b["verdict"], b.get("explanation_vi")) \
+                and json.dumps(a.get("certificate"), sort_keys=True, default=str) == json.dumps(b.get("certificate"), sort_keys=True, default=str)
+            ghi = f"{a['verdict']} / {b['verdict']}"
+        except Exception as e:  # noqa: BLE001
+            kq, ghi = False, f"{type(e).__name__}: {e}"
+        check(kq, f"E44 answer(hồ sơ dict) == answer(đường dẫn) — {ten} · {hoi[:34]} ({ghi})")
+        check(json.dumps(j, sort_keys=True) == goc, f"E44 answer() không sửa hồ sơ đầu vào ({ten})")
+
+def test_an_toan_web():
+    """Web (Mốc 1, review bảo mật): parser không được bùng nổ thời gian với câu hỏi do người dùng gõ (ReDoS); hồ sơ khiến solver vô
+    nghiệm phải ra kết quả có cấu trúc, không ngoại lệ."""
+    import itertools, random, re, time
+    cu = re.compile(r"(?:[\s?!.,]+|\b(?:a|ad|nhe|nha|vay|ha|z)\b)*$")          # regex CŨ (chỉ để so tương đương trên chuỗi ngắn)
+    rnd = random.Random(44)
+    kho = [" ", "?", "!", ".", ",", "a", "ad", "nhe", "nha", "vay", "ha", "z", "x", "bang", "ab"]
+    khac = 0
+    for _ in range(3000):
+        t = "".join(rnd.choice(kho) for _ in range(rnd.randint(0, 9)))
+        khac += cu.search(t).start() != proto._CUOI.search(t).start()
+    check(khac == 0, f"E45 _CUOI mới tương đương regex cũ trên 3000 chuỗi ngắn ({khac} khác)")
+    tan_cong = ["?" * 500, "em" + " ?!." * 120, "em xếp loại gì" + "?" * 480, "ad " * 160, "a" * 499 + "x", ("nha " * 100) + "x",
+                "em ơi " + "z ?" * 150, "cho em hỏi " + ("ha," * 150),
+                # đuôi KHÔNG khớp sau chuỗi dấu câu / trợ từ → regex lồng nhau cũ bùng nổ tổ hợp
+                "?" * 40 + "x", "em" + " ?!." * 12 + "x", "em xếp loại gì" + "?" * 30 + "x", "em" + " ha" * 30 + "x", "em" + " nha," * 20 + "x"]
+    import subprocess, sys as _s
+    ma = ("import sys, time, json; sys.path.insert(0, %r); import prototype as P; qs = json.loads(sys.stdin.read()); m = 0\n"
+          "for q in qs:\n    t = time.perf_counter(); P.parse_question(q); m = max(m, time.perf_counter() - t)\n"
+          "print(m)") % str(HERE)
+    try:
+        out = subprocess.run([_s.executable, "-c", ma], input=json.dumps(tan_cong), capture_output=True, text=True, timeout=20)
+        cham = float(out.stdout.strip() or 99)
+    except subprocess.TimeoutExpired:
+        cham = float("inf")
+    check(cham < 0.5, f"E45 parse_question với {len(tan_cong)} câu tấn công ≤ 500 ký tự (kể cả đuôi không khớp): chậm nhất "
+          + ("> 20s (treo)" if cham == float("inf") else f"{cham:.3f}s") + " (cần < 0,5s)")
+    j = json.loads((HERE.parent / "w7_student_facts" / "students" / "sv_lvtn.json").read_text(encoding="utf-8"))
+    j["khong_tinh_tich_luy"] = ["CT177"]            # HP bắt buộc không được loại khỏi tích lũy (CQ-06) → solver vô nghiệm
+    for hoi in ("em đủ điều kiện tốt nghiệp chưa?", "Em đăng ký CT180 được không?", "Nếu tốt nghiệp, em xếp hạng gì?"):
+        try:
+            r = proto.answer(hoi, j)
+            ok = r["verdict"] in ("UNSAT", "UNKNOWN", "TRUE", "FALSE") and bool(r.get("explanation_vi")) and "certificate" in r
+            ghi = r["verdict"]
+        except Exception as e:  # noqa: BLE001
+            ok, ghi = False, f"{type(e).__name__}: {e}"
+        check(ok, f"E46 hồ sơ làm solver vô nghiệm → kết quả có cấu trúc, không ngoại lệ — {hoi[:30]} ({ghi})")
+    r = proto.answer("em đủ điều kiện tốt nghiệp chưa?", j)
+    check(r["verdict"] == "UNSAT" and "mâu thuẫn" in r["explanation_vi"].lower(), f"E46 tot_nghiep + UNSAT → verdict UNSAT, giải thích 'mâu thuẫn' ({r['verdict']})")
+
 def main():
     print("="*78)
     print("VALIDATE PROTOTYPE v1 — Tuần 12 (CPA2)")
@@ -322,6 +381,8 @@ def main():
     test_unknown()
     test_postcheck()
     test_dang_ky()
+    test_ho_so_dict()
+    test_an_toan_web()
     print("\n"+"="*78)
     if errors:
         print(f"KẾT LUẬN: CÓ {len(errors)} LỖI")
