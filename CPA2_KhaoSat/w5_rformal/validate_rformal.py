@@ -114,6 +114,12 @@ def section_a(cat, lp_text):
     no_src = [r["id"] for r in cat["rules"]
               if r["lop"] != "X" and r["dieu"] is None and "Phụ lục" not in r["trich"]]
     check(not no_src, f"A6. mọi quy tắc trong miền đều trỏ tới một điều  (thiếu: {no_src})")
+    # A8 (sau Tuần 19): trang 20 QĐ3266 (OCR trắng) đã chép tay từ PDF gốc → đủ khoản Đ33 và có tiêu đề Đ33/Đ34
+    d33 = sorted(r["khoan"] for r in cat["rules"] if r["van_ban"] == "qd3266" and r["dieu"] == 33 and r["khoan"])
+    check(d33 == [1, 2, 3, 4], f"A8. QĐ3266 Điều 33 đủ khoản 1–4 trong danh mục  (có: {d33})")
+    td = {d: any(t in (r.get("ghi_chu") or "") for r in cat["rules"] if r["van_ban"] == "qd3266" and r["dieu"] == d)
+          for d, t in ((33, "Xử lý sinh viên quá hạn thời gian học tập"), (34, "Bằng tốt nghiệp và hạng tốt nghiệp"))}
+    check(all(td.values()), f"A9. tiêu đề Điều 33, 34 (PDF gốc tr.20) ghi trong danh mục  ({td})")
     return src
 
 
@@ -305,6 +311,15 @@ test("C9 Bổ sung dữ kiện kỷ luật sạch → kết luận tốt nghiệ
      expect_true=["tot_nghiep"],
      note="cùng hồ sơ C8, chỉ thêm một dữ kiện → chân trị đổi từ UNKNOWN sang TRUE")
 
+# --- C9b. Tốt nghiệp phải trong thời gian tối đa (Điều 5) — P16-2, Tuần 16 -----
+test("C9b Đủ học vụ + kỷ luật sạch nhưng đã học 19 nửa năm (trần 18) → KHÔNG tốt nghiệp",
+     FULL + "xac_nhan_ky_luat_sach. thiet_ke_nam2(9). da_hoc_nam2(19).",
+     expect_true=["qua_thoi_gian_toi_da"], expect_false=["tot_nghiep"],
+     note="HỒI QUY P16-2: v1.6 cho tot_nghiep TRUE. Điều 5: thời gian tối đa để SV HOÀN THÀNH CTĐT")
+test("C9c Biên: đã học đúng 18 nửa năm (= trần) → vẫn tốt nghiệp",
+     FULL + "xac_nhan_ky_luat_sach. thiet_ke_nam2(9). da_hoc_nam2(18).",
+     expect_true=["tot_nghiep"], expect_false=["qua_thoi_gian_toi_da"])
+
 # --- C10. Hạng tốt nghiệp bị giảm một mức do điểm F > 5% (Điều 34 k.2 đ.a) --
 test("C10 ĐTBCTL 3,7 (xuất sắc) + TC điểm F > 5% CTĐT → hạng cuối là GIỎI",
      ctdt([("a", 10, "bat_buoc")]) + """
@@ -345,13 +360,20 @@ g10(a,35). g10(b,35).
 # --- C15. Thời gian học tập tối đa (Điều 5) --------------------------------
 test("C15 CTĐT 4 năm, không được công nhận TC → trần 8 năm (16 nửa năm)",
      "khoa_tu_k45. khoa_den_k49. thiet_ke_nam2(8). da_hoc_nam2(15).",
-     expect_true=["thoi_gian_toi_da(16)"], expect_false=["qua_thoi_gian_toi_da"],
+     expect_true=["thoi_gian_toi_da_hk(24)"], expect_false=["qua_thoi_gian_toi_da"],
      note="Điều 5 bảng — OCR mất bảng này, phải đọc ảnh trang 4")
 
-test("C16 Được công nhận 18 TC (K49) → trần giảm 2 HK còn 14 nửa năm; đã học 15 → quá hạn",
+test("C16 Được công nhận 18 TC (K49) → trần giảm 2 HK còn 22 HK (7⅓ năm); đã học 15 nửa năm → quá hạn",
      "khoa_tu_k45. khoa_den_k49. thiet_ke_nam2(8). da_hoc_nam2(15). tc_cong_nhan(18).",
-     expect_true=["giam_hk(2)", "thoi_gian_toi_da(14)", "qua_thoi_gian_toi_da"],
-     note="Điều 5 đoạn 2 — mỗi 9 TC (K≤49) giảm 1 HK")
+     expect_true=["giam_hk(2)", "thoi_gian_toi_da_hk(22)", "qua_thoi_gian_toi_da"],
+     note="Điều 5 đoạn 2 — mỗi 9 TC (K≤49) giảm 1 HK; v1.8: 1 HK = 1/3 năm (Điều 6 k1) → 8 năm = 24 HK − 2 = 22 HK; "
+          "đã học 15 nửa năm = 22,5 HK > 22")
+
+test("C16b 27 TC công nhận (K49), thiết kế 4,5 năm: trần 27 − 3 = 24 HK = 8 năm; đã học 16 nửa năm = 8 năm → CHƯA quá hạn",
+     "khoa_tu_k45. khoa_den_k49. thiet_ke_nam2(9). da_hoc_nam2(16). tc_cong_nhan(27).",
+     expect_true=["giam_hk(3)", "thoi_gian_toi_da_hk(24)"], expect_false=["qua_thoi_gian_toi_da"],
+     note="HỒI QUY P17-3: v1.7 trừ 1 HK = 1 nửa năm → trần 15 nửa năm < 16 → quá hạn (sai). "
+          "QĐ3266 Điều 6 khoản 1 (tr.5): một năm học có 03 HK")
 
 
 # =============================================================================
@@ -505,8 +527,8 @@ test("C31 Nợ đọng 25 TC → CÓ cảnh báo",
 # =============================================================================
 test("C32 CTĐT CNTT K49: 4,5 năm thiết kế → trần 9 năm (18 nửa năm)",
      "da_hoc_nam2(17).",
-     expect_true=["thoi_gian_toi_da(18)"],
-     expect_false=["qua_thoi_gian_toi_da", "thoi_gian_toi_da(16)"],
+     expect_true=["thoi_gian_toi_da_hk(27)"],
+     expect_false=["qua_thoi_gian_toi_da", "thoi_gian_toi_da_hk(24)"],
      note="SỬA LỖI v1.0: tài liệu ghi nhầm K49 thiết kế 4 năm → trần 8 năm. CTĐT ghi rõ "
           "'Thời gian đào tạo: 4.5 năm', nên theo QĐ3266 Điều 5 trần là 9 năm",
      ctdt=True)
@@ -541,6 +563,76 @@ test("C36 Nhóm chuyên ngành là 'chọn một trong ba cặp', không phải 
           "'nhóm 10 chọn 2' dùng ở Tuần 2 và prototype Tuần 4",
      ctdt=True)
 
+
+# --- C37–C40. Song hành (R-A04 · QĐ3266 Đ7 k5): học trước HOẶC cùng lúc; "học" ≠ "tích lũy" ---
+SH = 'course(c,3). course(p,3). course(q,3). song_hanh(c,p). tien_quyet(p,q).'
+test("C37 Chưa học HP song hành p → c đăng ký được nhưng PHẢI học p cùng kỳ",
+     SH + " g10(q,80).",
+     expect_true=["du_dk_dang_ky(c)", "phai_hoc_cung_ky(c,p)", "duoc_dang_ky(c)"],
+     note="Đ7 k5 cho phép học cùng lúc → song hành không chặn đăng ký, nhưng phải kèm p")
+test("C38 Đã học p dù bị F (da_hoc từ bản ghi điểm) → không còn ràng buộc cùng kỳ",
+     SH + " g10(q,80). g10(p,30). da_hoc(p).",
+     expect_false=["phai_hoc_cung_ky(c,p)"], expect_true=["duoc_dang_ky(c)"],
+     note="khoản 4 (tiên quyết) dùng 'tích lũy', khoản 5 chỉ 'học' — quyết định (a), Loi 18/10/2026")
+test("C39 Chưa học p và p chưa đủ điều kiện đăng ký (thiếu tiên quyết q) → chưa thể học c kỳ này",
+     SH,
+     expect_true=["du_dk_dang_ky(c)", "chan_song_hanh(c,p)"], expect_false=["duoc_dang_ky(c)"],
+     note="không học trước được, cũng không học cùng lúc được → vi phạm Đ7 k5 nếu học c")
+test("C41 Song hành dây chuyền c→p→r (chưa học cả hai): phải học CẢ p và r cùng kỳ; r thiếu tiên quyết → chặn c",
+     'course(c,3). course(p,3). course(r,3). course(q,3). song_hanh(c,p). song_hanh(p,r). tien_quyet(r,q).',
+     expect_true=["phai_hoc_cung_ky(c,p)", "phai_hoc_cung_ky(c,r)", "chan_song_hanh(c,r)", "thieu_tien_quyet(r,q)"],
+     expect_false=["duoc_dang_ky(c)", "duoc_dang_ky(p)"],
+     note="review sau Tuần 19: chỉ xét HP song hành trực tiếp thì báo 'được' sai khi mắt xích xa không đăng ký được")
+test("C40 p đã tích lũy (miễn, điểm M) mà không có bản ghi da_hoc → vẫn coi là đã học",
+     SH + " diem_m(p).",
+     expect_false=["phai_hoc_cung_ky(c,p)", "chan_song_hanh(c,p)"], expect_true=["duoc_dang_ky(c)"])
+
+
+# --- C42–C46. Hạng tốt nghiệp với ĐTBCTL KHÔNG trùng mốc (P20-1, Tuần 20): mốc nguyên thang ×10 bỏ sót giá trị giữa hai mốc
+#     Đ34 k2: XS 3,60–4,00 · Giỏi 3,20–3,59 · Khá 2,50–3,19 · TB 2,00–2,49; QD-14: không làm tròn ĐTBCTL, xếp theo cận dưới
+def hg(ta, ga, tb, gb):
+    return f"course(a,{ta}). course(b,{tb}). g10(a,{ga}). g10(b,{gb})."
+
+
+test("C42 ĐTBCTL 22/7 ≈ 3,14 (B+ 2TC, B 5TC) → KHÁ (luật cũ: 31,4 lọt khe 31–32, không hạng nào)",
+     hg(2, 85, 5, 75), expect_true=["hang_cuoi(kha)"], expect_false=["hang_cuoi(gioi)"])
+test("C43 ĐTBCTL 3,57 (A 7TC, B+ 43TC) → GIỎI (luật cũ: khe 35–36)",
+     hg(7, 95, 43, 85), expect_true=["hang_cuoi(gioi)"], expect_false=["hang_cuoi(xuat_sac)"])
+test("C44 ĐTBCTL 2,45 (C+ 9TC, C 1TC) → TRUNG BÌNH (luật cũ: khe 24–25)",
+     hg(9, 65, 1, 60), expect_true=["hang_cuoi(trung_binh)"], expect_false=["hang_cuoi(kha)"])
+test("C45 ĐTBCTL đúng 3,20 (A 2TC, B 8TC) → GIỎI (biên dưới)",
+     hg(2, 95, 8, 75), expect_true=["hang_cuoi(gioi)"], expect_false=["hang_cuoi(kha)"])
+test("C46 ĐTBCTL 3,595 (A 19TC, B+ 81TC) — giữa 3,59 và 3,60 → GIỎI (QD-14: không làm tròn, xếp theo cận dưới)",
+     hg(19, 95, 81, 85), expect_true=["hang_cuoi(gioi)"], expect_false=["hang_cuoi(xuat_sac)"],
+     note="Đ24/Đ34 không quy định làm tròn ĐTBCTL — quyết định diễn giải QD-14")
+
+# --- C47–C53. Hạ một mức hạng XUẤT SẮC/GIỎI (Đ34 k2, chép tay tr.20) — C15 (Tuần 20): luật cũ chỉ đọc tc_diem_f (KHÔNG
+#     nơi nào sinh) và thiếu điểm b → không bao giờ hạ. (a) TC HP đang điểm F là cận dưới CHẮC CHẮN (điểm cuối F thì không
+#     phải học cải thiện — R-B13 lấy điểm cao nhất); (b) kỷ luật từ mức cảnh cáo cấp Trường.
+F_KB = ctdt([("a", 10, "bat_buoc"), ("f", 7, "bat_buoc")]) + "khoa_tu_k45. g10(a,95). tc_toi_thieu_ctdt(120). "
+test("C47 Xuất sắc + HP đang điểm F 7/120 TC (> 5%), KHÔNG khai báo tc_diem_f → hạng cuối GIỎI",
+     F_KB + "g10(f,20).",
+     expect_true=["hang_goc(xuat_sac)", "vuot_5_phan_tram", "hang_cuoi(gioi)"], expect_false=["hang_cuoi(xuat_sac)"],
+     note="HỒI QUY C15: luật cũ chỉ dùng tc_diem_f (không được sinh) → giữ xuất sắc")
+test("C48 HP đang điểm F đúng 6/120 TC (= 5%) → KHÔNG hạ (vượt quá 5% mới hạ)",
+     ctdt([("a", 10, "bat_buoc"), ("f", 6, "bat_buoc")]) + "khoa_tu_k45. g10(a,95). tc_toi_thieu_ctdt(120). g10(f,20).",
+     expect_true=["hang_cuoi(xuat_sac)"], expect_false=["vuot_5_phan_tram"])
+test("C49 Xuất sắc + kỷ luật từ mức cảnh cáo cấp Trường → GIỎI (Đ34 k2 điểm b)",
+     hg(2, 95, 8, 95) + " ky_luat_canh_cao_cap_truong.",
+     expect_true=["hang_cuoi(gioi)", "why(hang_cuoi(gioi),r_f07b)"], expect_false=["hang_cuoi(xuat_sac)"],
+     note="HỒI QUY C15: điểm b chưa hình thức hoá")
+test("C50 Giỏi (ĐTBCTL đúng 3,20) + kỷ luật cảnh cáo cấp Trường → KHÁ",
+     hg(2, 95, 8, 75) + " ky_luat_canh_cao_cap_truong.",
+     expect_true=["hang_cuoi(kha)"], expect_false=["hang_cuoi(gioi)"])
+test("C51 Khá + kỷ luật cảnh cáo cấp Trường → vẫn KHÁ (Đ34 k2 chỉ hạ xuất sắc, giỏi)",
+     hg(2, 85, 5, 75) + " ky_luat_canh_cao_cap_truong.",
+     expect_true=["hang_cuoi(kha)"], expect_false=["hang_cuoi(trung_binh)"])
+test("C52 Không hạ bậc → chứng chỉ KHÔNG có bước R-F07 (luật cũ sinh why(hang_cuoi, r_f07) vô điều kiện)",
+     hg(2, 85, 5, 75),
+     expect_true=["hang_cuoi(kha)", "why(hang_cuoi(kha),r_f06)"], expect_false=["why(hang_cuoi(kha),r_f07)"])
+test("C53 Khai báo tc_diem_f(7) (HP từng F rồi học lại đạt) dù không HP nào đang F → hạ (giữ ca C10 theo khai báo)",
+     F_KB.replace("g10(a,95). ", "g10(a,95). ") + "g10(f,95). tc_diem_f(7).",
+     expect_true=["vuot_5_phan_tram", "hang_cuoi(gioi)"], expect_false=["hang_cuoi(xuat_sac)"])
 
 def section_c():
     print("\n" + "=" * 78)

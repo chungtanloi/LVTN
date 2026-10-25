@@ -1,0 +1,65 @@
+==============================================================================
+VALIDATE ABSTENTION ENGINE v1 — Tuần 16 (CPA2)
+Thiếu dữ kiện → UNKNOWN + danh sách dữ kiện quyết định; không đoán
+==============================================================================
+
+A. DỮ KIỆN NGOÀI THIẾU → UNKNOWN (P15-2)
+  [OK]   A1 sv_lvtn khai báo đủ → TRUE (got TRUE)
+  [OK]   A2 kỷ luật = null → UNKNOWN (got UNKNOWN)
+          ↳ HỒI QUY: luật Tuần 10 cho FALSE (thế giới đóng)
+  [OK]   A3 thiếu hẳn trường kỷ luật → UNKNOWN (got UNKNOWN)
+  [OK]   A4 kỷ luật = false (đã khai báo) → FALSE (got FALSE)
+  [OK]   A5 trộn AV/PV + kỷ luật null → vẫn FALSE (got FALSE)
+          ↳ dữ kiện mở không cứu được hồ sơ đã thiếu điều kiện học vụ
+  [OK]   A6 thiếu da_hoc_nam2 → thieu_dk(thoi_gian) UNKNOWN (got UNKNOWN)
+          ↳ HỒI QUY: luật Tuần 10 cho FALSE — coi như chưa quá hạn khi không biết đã học bao lâu
+  [OK]   A7 da_hoc_nam2 = 9 (trần 18) → thieu_dk(thoi_gian) FALSE (got FALSE)
+  [OK]   A8 da_hoc_nam2 = 20 (trần 18) → thieu_dk(thoi_gian) TRUE (got TRUE)
+  [OK]   A9 chưa đủ ĐK + thiếu da_hoc_nam2 → bi_xoa_ten UNKNOWN (got UNKNOWN)
+          ↳ HỒI QUY: luật cũ cho FALSE (R-F09/R-D08 — xoá tên khi quá hạn mà chưa đủ ĐK)
+  [OK]   A10 thiếu da_hoc_nam2 → tot_nghiep UNKNOWN (got UNKNOWN)
+          ↳ HỒI QUY P16-2: luật cũ cho TRUE — thời gian là điều kiện tốt nghiệp (Điều 5)
+  [OK]   A11 hỏi thời gian đã học: quá hạn → FALSE, chưa → TRUE ({'false': 'TRUE', 'true': 'FALSE'})
+
+B. MISSING EVIDENCE — chỉ nêu dữ kiện quyết định
+  [OK]   B1 kỷ luật null → hỏi xac_nhan_ky_luat_sach (quyết định)
+  [OK]   B2 true → TRUE, false → FALSE ({'false': 'FALSE', 'true': 'TRUE'})
+  [OK]   B3 câu hỏi có nội dung + nguồn R-F03
+  [OK]   B4 đã FALSE chắc chắn → không hỏi gì thêm ([])
+  [OK]   B5 chỉ hỏi CT550E, không hỏi CT478 (không quyết định) (UNKNOWN, ['g10("CT550E")'])
+  [OK]   B6 CT550E: 80 → TRUE, 30 → FALSE ({'30': 'FALSE', '80': 'TRUE'})
+  [OK]   B7 hai biến mở đều được hỏi (['g10("CT550E")', 'xac_nhan_ky_luat_sach'])
+  [OK]   B8 kỷ luật true → vẫn UNKNOWN (còn CT550E) ({'false': 'FALSE', 'true': 'UNKNOWN'})
+  [OK]   B9 F/D/A: liệt kê đủ 3 giá trị, F → FALSE ({'0': 'FALSE', '100': 'TRUE', '40': 'TRUE'})
+  [OK]   B10 QĐ miễn XH025 chưa rõ → hỏi duoc_mien("XH025") (UNKNOWN, {'false': 'FALSE', 'true': 'TRUE'})
+
+C. CHÍNH SÁCH TỪ CHỐI KẾT LUẬN
+  [OK]   C1 UNKNOWN → ket_luan = None (không kết luận)
+  [OK]   C2 giải thích hỏi bằng tiếng Việt, không lộ tên atom
+  [OK]   C3 đa số 3/4 thế giới TRUE → vẫn UNKNOWN, không kết luận (UNKNOWN)
+  [OK]   C4 KB mâu thuẫn (vô nghiệm) → MAU_THUAN, không kết luận (MAU_THUAN)
+  [OK]   C5 TRUE chắc chắn → ket_luan True, không hỏi thêm
+
+D. TÍCH HỢP PROTOTYPE (Tuần 12) + 6 HỒ SƠ
+  [OK]   D1 prototype: kỷ luật null → UNKNOWN (got UNKNOWN)
+  [OK]   D2 missing_facts = ['xac_nhan_ky_luat_sach']
+  [OK]   D3 6 hồ sơ giả lập giữ nguyên kết luận Tuần 12
+  [OK]   D4 6 hồ sơ đã khai báo da_hoc_nam2 → thời gian xác định ({'sv_5hp': 'FALSE', 'sv_du_hp': 'FALSE', 'sv_lvtn': 'FALSE', 'sv_mien_ielts': 'FALSE', 'sv_tltn': 'FALSE', 'sv_tron_ngoai_ngu': 'FALSE'})
+
+E. HỒ SƠ MÂU THUẪN (P17-1, sau Tuần 17) — không kết luận từ bản ghi tự mâu thuẫn
+  [OK]   E1 8,0 nhưng ghi F/failed (Đ22 k2) → UNKNOWN, nêu mâu thuẫn + hỏi CT177 (UNKNOWN, ['CT177: 8.0 quy đổi là B+, hồ sơ ghi F (Đ22 k2); 8.0 đạt nhưng trạng thái ghi failed (Đ22 k3)'])
+  [OK]   E2 3,0 (F) nhưng trạng thái passed (Đ22 k3) → UNKNOWN, nêu mâu thuẫn + hỏi CT177 (UNKNOWN, ['CT177: 3.0 không đạt nhưng trạng thái ghi passed (Đ22 k3)'])
+  [OK]   E3 điểm 15,0 ngoài thang 0–10 (Đ22 k1) → UNKNOWN, nêu mâu thuẫn + hỏi CT177 (UNKNOWN, ['CT177: điểm 15.0 ngoài thang 0–10 (Đ22 k1)'])
+  [OK]   E4 4 TC trong khi CTĐT 3 TC → UNKNOWN, nêu mâu thuẫn + hỏi CT177 (UNKNOWN, ['CT177: 4 TC, CTĐT ghi 3 TC'])
+  [OK]   E5 8,0 ghi B (phải là B+) → UNKNOWN, nêu mâu thuẫn + hỏi CT177 (UNKNOWN, ['CT177: 8.0 quy đổi là B+, hồ sơ ghi B (Đ22 k2)'])
+  [OK]   E6 vừa điểm M vừa có điểm số → UNKNOWN, nêu mâu thuẫn + hỏi CT177 (UNKNOWN, ['CT177: điểm M nhưng vẫn có điểm số 8.0'])
+  [OK]   E7 0 nửa năm mà đăng ký 161 TC (> 20 TC/HK, Đ14 k1) → coi như chưa khai báo → UNKNOWN (UNKNOWN)
+  [OK]   E8 mâu thuẫn ở HP tự chọn dư (CT478) không quyết định → vẫn TRUE, vẫn báo mâu thuẫn (TRUE)
+  [OK]   E9 6 hồ sơ giả lập không bị báo mâu thuẫn nhầm ({'sv_5hp': [], 'sv_du_hp': [], 'sv_lvtn': [], 'sv_mien_ielts': [], 'sv_tltn': [], 'sv_tron_ngoai_ngu': []})
+  [OK]   E10 prototype (Tuần 12) cũng rà soát → UNKNOWN (UNKNOWN)
+  [OK]   E11 prototype nêu bản ghi mâu thuẫn (['CT177: 8.0 quy đổi là B+, hồ sơ ghi F (Đ22 k2); 8.0 đạt nhưng trạng thái ghi failed (Đ22 k3)'])
+  [OK]   E12 điểm 80.0 (số thực, trái schema) → mâu thuẫn, không crash (UNKNOWN)
+
+==============================================================================
+KẾT LUẬN: ĐẠT — Abstention engine không đoán khi thiếu dữ liệu
+==============================================================================

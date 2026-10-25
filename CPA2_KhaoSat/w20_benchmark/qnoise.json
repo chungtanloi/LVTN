@@ -1,0 +1,7804 @@
+{
+ "meta": {
+  "ten": "Q-Noise v1",
+  "loai": "tong_hop",
+  "nguon": "G-Truth v1 (đóng băng 312b7ff)",
+  "ghi_chu": "Câu G-Truth biến đổi tự động (bỏ dấu, viết tắt, gõ vội) — đo độ bền parser. TỔNG HỢP, KHÔNG phải câu thật, KHÔNG tính vào Q-Real. Gold kế thừa từ ca gốc.",
+  "bien_the": {
+   "V0": "câu gốc",
+   "V1": "bỏ dấu",
+   "V2": "viết tắt",
+   "V3": "gõ vội",
+   "V4": "bỏ dấu + viết tắt"
+  },
+  "so_cau_goc": 48,
+  "so_cau": 240
+ },
+ "cases": [
+  {
+   "id": "QN-DK-01-V0",
+   "goc": "DK-01",
+   "bien_the": "V0",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "duoc_dang_ky(\"CT182\")",
+   "claim_ky_vong": [
+    "duoc_dang_ky(\"CT182\")"
+   ],
+   "cau_hoi": "Kỳ này em đăng ký học phần CT182 được không?",
+   "gold": "TRUE",
+   "loai_gold": "quy_che",
+   "split": "test",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      "CT182"
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "dang_ky"
+  },
+  {
+   "id": "QN-DK-01-V1",
+   "goc": "DK-01",
+   "bien_the": "V1",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "duoc_dang_ky(\"CT182\")",
+   "claim_ky_vong": [
+    "duoc_dang_ky(\"CT182\")"
+   ],
+   "cau_hoi": "Ky nay em dang ky hoc phan ct182 duoc khong?",
+   "gold": "TRUE",
+   "loai_gold": "quy_che",
+   "split": "test",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      "CT182"
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "dang_ky"
+  },
+  {
+   "id": "QN-DK-01-V2",
+   "goc": "DK-01",
+   "bien_the": "V2",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "duoc_dang_ky(\"CT182\")",
+   "claim_ky_vong": [
+    "duoc_dang_ky(\"CT182\")"
+   ],
+   "cau_hoi": "kì này e đki hp ct182 đc k?",
+   "gold": "TRUE",
+   "loai_gold": "quy_che",
+   "split": "test",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      "CT182"
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "dang_ky"
+  },
+  {
+   "id": "QN-DK-01-V3",
+   "goc": "DK-01",
+   "bien_the": "V3",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "duoc_dang_ky(\"CT182\")",
+   "claim_ky_vong": [
+    "duoc_dang_ky(\"CT182\")"
+   ],
+   "cau_hoi": "ad ơi cho e hỏi ky này em đăng ký học phần ct182 được không ?",
+   "gold": "TRUE",
+   "loai_gold": "quy_che",
+   "split": "test",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      "CT182"
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "dang_ky"
+  },
+  {
+   "id": "QN-DK-01-V4",
+   "goc": "DK-01",
+   "bien_the": "V4",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "duoc_dang_ky(\"CT182\")",
+   "claim_ky_vong": [
+    "duoc_dang_ky(\"CT182\")"
+   ],
+   "cau_hoi": "ki nay e dki hp ct182 dc k?",
+   "gold": "TRUE",
+   "loai_gold": "quy_che",
+   "split": "test",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      "CT182"
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "dang_ky"
+  },
+  {
+   "id": "QN-DK-02-V0",
+   "goc": "DK-02",
+   "bien_the": "V0",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "duoc_dang_ky(\"CT182\")",
+   "claim_ky_vong": [
+    "duoc_dang_ky(\"CT182\")"
+   ],
+   "cau_hoi": "Kỳ này em đăng ký học phần CT182 được không?",
+   "gold": "TRUE",
+   "loai_gold": "quy_che",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      [
+       "CT182",
+       "CT180"
+      ]
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "dang_ky"
+  },
+  {
+   "id": "QN-DK-02-V1",
+   "goc": "DK-02",
+   "bien_the": "V1",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "duoc_dang_ky(\"CT182\")",
+   "claim_ky_vong": [
+    "duoc_dang_ky(\"CT182\")"
+   ],
+   "cau_hoi": "Ky nay em dang ky hoc phan ct182 duoc khong?",
+   "gold": "TRUE",
+   "loai_gold": "quy_che",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      [
+       "CT182",
+       "CT180"
+      ]
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "dang_ky"
+  },
+  {
+   "id": "QN-DK-02-V2",
+   "goc": "DK-02",
+   "bien_the": "V2",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "duoc_dang_ky(\"CT182\")",
+   "claim_ky_vong": [
+    "duoc_dang_ky(\"CT182\")"
+   ],
+   "cau_hoi": "kì này e đki hp ct182 đc ko?",
+   "gold": "TRUE",
+   "loai_gold": "quy_che",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      [
+       "CT182",
+       "CT180"
+      ]
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "dang_ky"
+  },
+  {
+   "id": "QN-DK-02-V3",
+   "goc": "DK-02",
+   "bien_the": "V3",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "duoc_dang_ky(\"CT182\")",
+   "claim_ky_vong": [
+    "duoc_dang_ky(\"CT182\")"
+   ],
+   "cau_hoi": "mn ơi kỳ này em dang ký học phần ct182 được không ?",
+   "gold": "TRUE",
+   "loai_gold": "quy_che",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      [
+       "CT182",
+       "CT180"
+      ]
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "dang_ky"
+  },
+  {
+   "id": "QN-DK-02-V4",
+   "goc": "DK-02",
+   "bien_the": "V4",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "duoc_dang_ky(\"CT182\")",
+   "claim_ky_vong": [
+    "duoc_dang_ky(\"CT182\")"
+   ],
+   "cau_hoi": "ki nay e dki hp ct182 dc ko?",
+   "gold": "TRUE",
+   "loai_gold": "quy_che",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      [
+       "CT182",
+       "CT180"
+      ]
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "dang_ky"
+  },
+  {
+   "id": "QN-DK-03-V0",
+   "goc": "DK-03",
+   "bien_the": "V0",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "duoc_dang_ky(\"CT182\")",
+   "claim_ky_vong": [
+    "duoc_dang_ky(\"CT182\")"
+   ],
+   "cau_hoi": "Kỳ này em đăng ký học phần CT182 được không?",
+   "gold": "FALSE",
+   "loai_gold": "quy_che",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      [
+       "CT182",
+       "CT180",
+       "CT177"
+      ]
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "dang_ky"
+  },
+  {
+   "id": "QN-DK-03-V1",
+   "goc": "DK-03",
+   "bien_the": "V1",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "duoc_dang_ky(\"CT182\")",
+   "claim_ky_vong": [
+    "duoc_dang_ky(\"CT182\")"
+   ],
+   "cau_hoi": "Ky nay em dang ky hoc phan ct182 duoc khong?",
+   "gold": "FALSE",
+   "loai_gold": "quy_che",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      [
+       "CT182",
+       "CT180",
+       "CT177"
+      ]
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "dang_ky"
+  },
+  {
+   "id": "QN-DK-03-V2",
+   "goc": "DK-03",
+   "bien_the": "V2",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "duoc_dang_ky(\"CT182\")",
+   "claim_ky_vong": [
+    "duoc_dang_ky(\"CT182\")"
+   ],
+   "cau_hoi": "kì này e đki hp ct182 dc k?",
+   "gold": "FALSE",
+   "loai_gold": "quy_che",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      [
+       "CT182",
+       "CT180",
+       "CT177"
+      ]
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "dang_ky"
+  },
+  {
+   "id": "QN-DK-03-V3",
+   "goc": "DK-03",
+   "bien_the": "V3",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "duoc_dang_ky(\"CT182\")",
+   "claim_ky_vong": [
+    "duoc_dang_ky(\"CT182\")"
+   ],
+   "cau_hoi": "cho em hỏi xíu ky này em đăng ký học phần ct182 được không",
+   "gold": "FALSE",
+   "loai_gold": "quy_che",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      [
+       "CT182",
+       "CT180",
+       "CT177"
+      ]
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "dang_ky"
+  },
+  {
+   "id": "QN-DK-03-V4",
+   "goc": "DK-03",
+   "bien_the": "V4",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "duoc_dang_ky(\"CT182\")",
+   "claim_ky_vong": [
+    "duoc_dang_ky(\"CT182\")"
+   ],
+   "cau_hoi": "ki nay e dki hp ct182 dc k?",
+   "gold": "FALSE",
+   "loai_gold": "quy_che",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      [
+       "CT182",
+       "CT180",
+       "CT177"
+      ]
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "dang_ky"
+  },
+  {
+   "id": "QN-DK-04-V0",
+   "goc": "DK-04",
+   "bien_the": "V0",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "duoc_dang_ky(\"CT182\")",
+   "claim_ky_vong": [
+    "duoc_dang_ky(\"CT182\")"
+   ],
+   "cau_hoi": "Kỳ này em đăng ký học phần CT182 được không?",
+   "gold": "FALSE",
+   "loai_gold": "quy_che",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      [
+       "CT182",
+       "CT176"
+      ]
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "dang_ky"
+  },
+  {
+   "id": "QN-DK-04-V1",
+   "goc": "DK-04",
+   "bien_the": "V1",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "duoc_dang_ky(\"CT182\")",
+   "claim_ky_vong": [
+    "duoc_dang_ky(\"CT182\")"
+   ],
+   "cau_hoi": "Ky nay em dang ky hoc phan ct182 duoc khong?",
+   "gold": "FALSE",
+   "loai_gold": "quy_che",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      [
+       "CT182",
+       "CT176"
+      ]
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "dang_ky"
+  },
+  {
+   "id": "QN-DK-04-V2",
+   "goc": "DK-04",
+   "bien_the": "V2",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "duoc_dang_ky(\"CT182\")",
+   "claim_ky_vong": [
+    "duoc_dang_ky(\"CT182\")"
+   ],
+   "cau_hoi": "kì này e đk hp ct182 dc k?",
+   "gold": "FALSE",
+   "loai_gold": "quy_che",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      [
+       "CT182",
+       "CT176"
+      ]
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "dang_ky"
+  },
+  {
+   "id": "QN-DK-04-V3",
+   "goc": "DK-04",
+   "bien_the": "V3",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "duoc_dang_ky(\"CT182\")",
+   "claim_ky_vong": [
+    "duoc_dang_ky(\"CT182\")"
+   ],
+   "cau_hoi": "anh chị ơi kỳ này em dang ký học phần ct182 được không ?",
+   "gold": "FALSE",
+   "loai_gold": "quy_che",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      [
+       "CT182",
+       "CT176"
+      ]
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "dang_ky"
+  },
+  {
+   "id": "QN-DK-04-V4",
+   "goc": "DK-04",
+   "bien_the": "V4",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "duoc_dang_ky(\"CT182\")",
+   "claim_ky_vong": [
+    "duoc_dang_ky(\"CT182\")"
+   ],
+   "cau_hoi": "ki nay e dk hp ct182 dc k?",
+   "gold": "FALSE",
+   "loai_gold": "quy_che",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      [
+       "CT182",
+       "CT176"
+      ]
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "dang_ky"
+  },
+  {
+   "id": "QN-DK-05-V0",
+   "goc": "DK-05",
+   "bien_the": "V0",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "duoc_dang_ky(\"CT182\")",
+   "claim_ky_vong": [
+    "duoc_dang_ky(\"CT182\")"
+   ],
+   "cau_hoi": "Kỳ này em đăng ký học phần CT182 được không?",
+   "gold": "TRUE",
+   "loai_gold": "quy_che",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      "CT182"
+     ],
+     [
+      "diem",
+      "CT180",
+      30
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "dang_ky"
+  },
+  {
+   "id": "QN-DK-05-V1",
+   "goc": "DK-05",
+   "bien_the": "V1",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "duoc_dang_ky(\"CT182\")",
+   "claim_ky_vong": [
+    "duoc_dang_ky(\"CT182\")"
+   ],
+   "cau_hoi": "Ky nay em dang ky hoc phan ct182 duoc khong?",
+   "gold": "TRUE",
+   "loai_gold": "quy_che",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      "CT182"
+     ],
+     [
+      "diem",
+      "CT180",
+      30
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "dang_ky"
+  },
+  {
+   "id": "QN-DK-05-V2",
+   "goc": "DK-05",
+   "bien_the": "V2",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "duoc_dang_ky(\"CT182\")",
+   "claim_ky_vong": [
+    "duoc_dang_ky(\"CT182\")"
+   ],
+   "cau_hoi": "kì này e đki hp ct182 dc ko?",
+   "gold": "TRUE",
+   "loai_gold": "quy_che",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      "CT182"
+     ],
+     [
+      "diem",
+      "CT180",
+      30
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "dang_ky"
+  },
+  {
+   "id": "QN-DK-05-V3",
+   "goc": "DK-05",
+   "bien_the": "V3",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "duoc_dang_ky(\"CT182\")",
+   "claim_ky_vong": [
+    "duoc_dang_ky(\"CT182\")"
+   ],
+   "cau_hoi": "mn ơi kỳ này em dang ký học phần ct182 được không ?",
+   "gold": "TRUE",
+   "loai_gold": "quy_che",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      "CT182"
+     ],
+     [
+      "diem",
+      "CT180",
+      30
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "dang_ky"
+  },
+  {
+   "id": "QN-DK-05-V4",
+   "goc": "DK-05",
+   "bien_the": "V4",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "duoc_dang_ky(\"CT182\")",
+   "claim_ky_vong": [
+    "duoc_dang_ky(\"CT182\")"
+   ],
+   "cau_hoi": "ki nay e dki hp ct182 dc ko?",
+   "gold": "TRUE",
+   "loai_gold": "quy_che",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      "CT182"
+     ],
+     [
+      "diem",
+      "CT180",
+      30
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "dang_ky"
+  },
+  {
+   "id": "QN-DK-06-V0",
+   "goc": "DK-06",
+   "bien_the": "V0",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "duoc_dang_ky(\"CT182\")",
+   "claim_ky_vong": [
+    "duoc_dang_ky(\"CT182\")"
+   ],
+   "cau_hoi": "Kỳ này em đăng ký học phần CT182 được không?",
+   "gold": "TRUE",
+   "loai_gold": "quy_che",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      "CT182"
+     ],
+     [
+      "diem_dac_biet",
+      "CT180",
+      "W"
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "dang_ky"
+  },
+  {
+   "id": "QN-DK-06-V1",
+   "goc": "DK-06",
+   "bien_the": "V1",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "duoc_dang_ky(\"CT182\")",
+   "claim_ky_vong": [
+    "duoc_dang_ky(\"CT182\")"
+   ],
+   "cau_hoi": "Ky nay em dang ky hoc phan ct182 duoc khong?",
+   "gold": "TRUE",
+   "loai_gold": "quy_che",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      "CT182"
+     ],
+     [
+      "diem_dac_biet",
+      "CT180",
+      "W"
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "dang_ky"
+  },
+  {
+   "id": "QN-DK-06-V2",
+   "goc": "DK-06",
+   "bien_the": "V2",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "duoc_dang_ky(\"CT182\")",
+   "claim_ky_vong": [
+    "duoc_dang_ky(\"CT182\")"
+   ],
+   "cau_hoi": "kì này e dky hp ct182 đc k?",
+   "gold": "TRUE",
+   "loai_gold": "quy_che",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      "CT182"
+     ],
+     [
+      "diem_dac_biet",
+      "CT180",
+      "W"
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "dang_ky"
+  },
+  {
+   "id": "QN-DK-06-V3",
+   "goc": "DK-06",
+   "bien_the": "V3",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "duoc_dang_ky(\"CT182\")",
+   "claim_ky_vong": [
+    "duoc_dang_ky(\"CT182\")"
+   ],
+   "cau_hoi": "ad ơi cho e hỏi kỳ này em đăng ký học phan ct182 được không",
+   "gold": "TRUE",
+   "loai_gold": "quy_che",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      "CT182"
+     ],
+     [
+      "diem_dac_biet",
+      "CT180",
+      "W"
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "dang_ky"
+  },
+  {
+   "id": "QN-DK-06-V4",
+   "goc": "DK-06",
+   "bien_the": "V4",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "duoc_dang_ky(\"CT182\")",
+   "claim_ky_vong": [
+    "duoc_dang_ky(\"CT182\")"
+   ],
+   "cau_hoi": "ki nay e dky hp ct182 dc k?",
+   "gold": "TRUE",
+   "loai_gold": "quy_che",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      "CT182"
+     ],
+     [
+      "diem_dac_biet",
+      "CT180",
+      "W"
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "dang_ky"
+  },
+  {
+   "id": "QN-DK-07-V0",
+   "goc": "DK-07",
+   "bien_the": "V0",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "duoc_dang_ky(\"CT182\")",
+   "claim_ky_vong": [
+    "duoc_dang_ky(\"CT182\")"
+   ],
+   "cau_hoi": "Kỳ này em đăng ký học phần CT182 được không?",
+   "gold": "FALSE",
+   "loai_gold": "quy_che",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      "CT182"
+     ],
+     [
+      "diem",
+      "CT176",
+      35
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "dang_ky"
+  },
+  {
+   "id": "QN-DK-07-V1",
+   "goc": "DK-07",
+   "bien_the": "V1",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "duoc_dang_ky(\"CT182\")",
+   "claim_ky_vong": [
+    "duoc_dang_ky(\"CT182\")"
+   ],
+   "cau_hoi": "Ky nay em dang ky hoc phan ct182 duoc khong?",
+   "gold": "FALSE",
+   "loai_gold": "quy_che",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      "CT182"
+     ],
+     [
+      "diem",
+      "CT176",
+      35
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "dang_ky"
+  },
+  {
+   "id": "QN-DK-07-V2",
+   "goc": "DK-07",
+   "bien_the": "V2",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "duoc_dang_ky(\"CT182\")",
+   "claim_ky_vong": [
+    "duoc_dang_ky(\"CT182\")"
+   ],
+   "cau_hoi": "kì này e đk hp ct182 đc ko?",
+   "gold": "FALSE",
+   "loai_gold": "quy_che",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      "CT182"
+     ],
+     [
+      "diem",
+      "CT176",
+      35
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "dang_ky"
+  },
+  {
+   "id": "QN-DK-07-V3",
+   "goc": "DK-07",
+   "bien_the": "V3",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "duoc_dang_ky(\"CT182\")",
+   "claim_ky_vong": [
+    "duoc_dang_ky(\"CT182\")"
+   ],
+   "cau_hoi": "mn ơi kỳ này em đăng ky học phần ct182 được không ?",
+   "gold": "FALSE",
+   "loai_gold": "quy_che",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      "CT182"
+     ],
+     [
+      "diem",
+      "CT176",
+      35
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "dang_ky"
+  },
+  {
+   "id": "QN-DK-07-V4",
+   "goc": "DK-07",
+   "bien_the": "V4",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "duoc_dang_ky(\"CT182\")",
+   "claim_ky_vong": [
+    "duoc_dang_ky(\"CT182\")"
+   ],
+   "cau_hoi": "ki nay e dk hp ct182 dc ko?",
+   "gold": "FALSE",
+   "loai_gold": "quy_che",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      "CT182"
+     ],
+     [
+      "diem",
+      "CT176",
+      35
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "dang_ky"
+  },
+  {
+   "id": "QN-DK-08-V0",
+   "goc": "DK-08",
+   "bien_the": "V0",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "duoc_dang_ky(\"CT182\")",
+   "claim_ky_vong": [
+    "duoc_dang_ky(\"CT182\")"
+   ],
+   "cau_hoi": "Kỳ này em đăng ký học phần CT182 được không?",
+   "gold": "TRUE",
+   "loai_gold": "quy_che",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      "CT182"
+     ],
+     [
+      "diem",
+      "CT176",
+      40
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "dang_ky"
+  },
+  {
+   "id": "QN-DK-08-V1",
+   "goc": "DK-08",
+   "bien_the": "V1",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "duoc_dang_ky(\"CT182\")",
+   "claim_ky_vong": [
+    "duoc_dang_ky(\"CT182\")"
+   ],
+   "cau_hoi": "Ky nay em dang ky hoc phan ct182 duoc khong?",
+   "gold": "TRUE",
+   "loai_gold": "quy_che",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      "CT182"
+     ],
+     [
+      "diem",
+      "CT176",
+      40
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "dang_ky"
+  },
+  {
+   "id": "QN-DK-08-V2",
+   "goc": "DK-08",
+   "bien_the": "V2",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "duoc_dang_ky(\"CT182\")",
+   "claim_ky_vong": [
+    "duoc_dang_ky(\"CT182\")"
+   ],
+   "cau_hoi": "kì này e dky hp ct182 dc ko?",
+   "gold": "TRUE",
+   "loai_gold": "quy_che",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      "CT182"
+     ],
+     [
+      "diem",
+      "CT176",
+      40
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "dang_ky"
+  },
+  {
+   "id": "QN-DK-08-V3",
+   "goc": "DK-08",
+   "bien_the": "V3",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "duoc_dang_ky(\"CT182\")",
+   "claim_ky_vong": [
+    "duoc_dang_ky(\"CT182\")"
+   ],
+   "cau_hoi": "cho em hỏi xíu ky này em đăng ký học phần ct182 được không",
+   "gold": "TRUE",
+   "loai_gold": "quy_che",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      "CT182"
+     ],
+     [
+      "diem",
+      "CT176",
+      40
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "dang_ky"
+  },
+  {
+   "id": "QN-DK-08-V4",
+   "goc": "DK-08",
+   "bien_the": "V4",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "duoc_dang_ky(\"CT182\")",
+   "claim_ky_vong": [
+    "duoc_dang_ky(\"CT182\")"
+   ],
+   "cau_hoi": "ki nay e dky hp ct182 dc ko?",
+   "gold": "TRUE",
+   "loai_gold": "quy_che",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      "CT182"
+     ],
+     [
+      "diem",
+      "CT176",
+      40
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "dang_ky"
+  },
+  {
+   "id": "QN-DK-10-V0",
+   "goc": "DK-10",
+   "bien_the": "V0",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "duoc_dang_ky(\"CT550E\")",
+   "claim_ky_vong": [
+    "duoc_dang_ky(\"CT550E\")"
+   ],
+   "cau_hoi": "Kỳ này em đăng ký học phần CT550E được không?",
+   "gold": "FALSE",
+   "loai_gold": "quy_che",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      [
+       "CT550E",
+       "CT223",
+       "CT222",
+       "CT467",
+       "CT293",
+       "CT275",
+       "CT300",
+       "CT202",
+       "CT294",
+       "CT273"
+      ]
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "dang_ky"
+  },
+  {
+   "id": "QN-DK-10-V1",
+   "goc": "DK-10",
+   "bien_the": "V1",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "duoc_dang_ky(\"CT550E\")",
+   "claim_ky_vong": [
+    "duoc_dang_ky(\"CT550E\")"
+   ],
+   "cau_hoi": "Ky nay em dang ky hoc phan ct550e duoc khong?",
+   "gold": "FALSE",
+   "loai_gold": "quy_che",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      [
+       "CT550E",
+       "CT223",
+       "CT222",
+       "CT467",
+       "CT293",
+       "CT275",
+       "CT300",
+       "CT202",
+       "CT294",
+       "CT273"
+      ]
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "dang_ky"
+  },
+  {
+   "id": "QN-DK-10-V2",
+   "goc": "DK-10",
+   "bien_the": "V2",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "duoc_dang_ky(\"CT550E\")",
+   "claim_ky_vong": [
+    "duoc_dang_ky(\"CT550E\")"
+   ],
+   "cau_hoi": "kì này e đk hp ct550e đc k?",
+   "gold": "FALSE",
+   "loai_gold": "quy_che",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      [
+       "CT550E",
+       "CT223",
+       "CT222",
+       "CT467",
+       "CT293",
+       "CT275",
+       "CT300",
+       "CT202",
+       "CT294",
+       "CT273"
+      ]
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "dang_ky"
+  },
+  {
+   "id": "QN-DK-10-V3",
+   "goc": "DK-10",
+   "bien_the": "V3",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "duoc_dang_ky(\"CT550E\")",
+   "claim_ky_vong": [
+    "duoc_dang_ky(\"CT550E\")"
+   ],
+   "cau_hoi": "cho em hỏi xíu kỳ này em dang ký học phần ct550e được không??",
+   "gold": "FALSE",
+   "loai_gold": "quy_che",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      [
+       "CT550E",
+       "CT223",
+       "CT222",
+       "CT467",
+       "CT293",
+       "CT275",
+       "CT300",
+       "CT202",
+       "CT294",
+       "CT273"
+      ]
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "dang_ky"
+  },
+  {
+   "id": "QN-DK-10-V4",
+   "goc": "DK-10",
+   "bien_the": "V4",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "duoc_dang_ky(\"CT550E\")",
+   "claim_ky_vong": [
+    "duoc_dang_ky(\"CT550E\")"
+   ],
+   "cau_hoi": "ki nay e dk hp ct550e dc k?",
+   "gold": "FALSE",
+   "loai_gold": "quy_che",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      [
+       "CT550E",
+       "CT223",
+       "CT222",
+       "CT467",
+       "CT293",
+       "CT275",
+       "CT300",
+       "CT202",
+       "CT294",
+       "CT273"
+      ]
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "dang_ky"
+  },
+  {
+   "id": "QN-DK-11-V0",
+   "goc": "DK-11",
+   "bien_the": "V0",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "duoc_dang_ky(\"CT550E\")",
+   "claim_ky_vong": [
+    "duoc_dang_ky(\"CT550E\")"
+   ],
+   "cau_hoi": "Kỳ này em đăng ký học phần CT550E được không?",
+   "gold": "TRUE",
+   "loai_gold": "quy_che",
+   "split": "test",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      [
+       "CT550E",
+       "CT223",
+       "CT222",
+       "CT467",
+       "CT293",
+       "CT275",
+       "CT300",
+       "CT202",
+       "CT294",
+       "CT190"
+      ]
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "dang_ky"
+  },
+  {
+   "id": "QN-DK-11-V1",
+   "goc": "DK-11",
+   "bien_the": "V1",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "duoc_dang_ky(\"CT550E\")",
+   "claim_ky_vong": [
+    "duoc_dang_ky(\"CT550E\")"
+   ],
+   "cau_hoi": "Ky nay em dang ky hoc phan ct550e duoc khong?",
+   "gold": "TRUE",
+   "loai_gold": "quy_che",
+   "split": "test",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      [
+       "CT550E",
+       "CT223",
+       "CT222",
+       "CT467",
+       "CT293",
+       "CT275",
+       "CT300",
+       "CT202",
+       "CT294",
+       "CT190"
+      ]
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "dang_ky"
+  },
+  {
+   "id": "QN-DK-11-V2",
+   "goc": "DK-11",
+   "bien_the": "V2",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "duoc_dang_ky(\"CT550E\")",
+   "claim_ky_vong": [
+    "duoc_dang_ky(\"CT550E\")"
+   ],
+   "cau_hoi": "kì này e dky hp ct550e đc k?",
+   "gold": "TRUE",
+   "loai_gold": "quy_che",
+   "split": "test",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      [
+       "CT550E",
+       "CT223",
+       "CT222",
+       "CT467",
+       "CT293",
+       "CT275",
+       "CT300",
+       "CT202",
+       "CT294",
+       "CT190"
+      ]
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "dang_ky"
+  },
+  {
+   "id": "QN-DK-11-V3",
+   "goc": "DK-11",
+   "bien_the": "V3",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "duoc_dang_ky(\"CT550E\")",
+   "claim_ky_vong": [
+    "duoc_dang_ky(\"CT550E\")"
+   ],
+   "cau_hoi": "anh chị ơi kỳ này em đăng ký học phần ct550e được khong??",
+   "gold": "TRUE",
+   "loai_gold": "quy_che",
+   "split": "test",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      [
+       "CT550E",
+       "CT223",
+       "CT222",
+       "CT467",
+       "CT293",
+       "CT275",
+       "CT300",
+       "CT202",
+       "CT294",
+       "CT190"
+      ]
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "dang_ky"
+  },
+  {
+   "id": "QN-DK-11-V4",
+   "goc": "DK-11",
+   "bien_the": "V4",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "duoc_dang_ky(\"CT550E\")",
+   "claim_ky_vong": [
+    "duoc_dang_ky(\"CT550E\")"
+   ],
+   "cau_hoi": "ki nay e dky hp ct550e dc k?",
+   "gold": "TRUE",
+   "loai_gold": "quy_che",
+   "split": "test",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      [
+       "CT550E",
+       "CT223",
+       "CT222",
+       "CT467",
+       "CT293",
+       "CT275",
+       "CT300",
+       "CT202",
+       "CT294",
+       "CT190"
+      ]
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "dang_ky"
+  },
+  {
+   "id": "QN-DK-12-V0",
+   "goc": "DK-12",
+   "bien_the": "V0",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "duoc_dang_ky(\"XH025\")",
+   "claim_ky_vong": [
+    "duoc_dang_ky(\"XH025\")"
+   ],
+   "cau_hoi": "Kỳ này em đăng ký học phần XH025 được không?",
+   "gold": "TRUE",
+   "loai_gold": "quy_che",
+   "split": "test",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      "XH025"
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "dang_ky"
+  },
+  {
+   "id": "QN-DK-12-V1",
+   "goc": "DK-12",
+   "bien_the": "V1",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "duoc_dang_ky(\"XH025\")",
+   "claim_ky_vong": [
+    "duoc_dang_ky(\"XH025\")"
+   ],
+   "cau_hoi": "Ky nay em dang ky hoc phan xh025 duoc khong?",
+   "gold": "TRUE",
+   "loai_gold": "quy_che",
+   "split": "test",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      "XH025"
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "dang_ky"
+  },
+  {
+   "id": "QN-DK-12-V2",
+   "goc": "DK-12",
+   "bien_the": "V2",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "duoc_dang_ky(\"XH025\")",
+   "claim_ky_vong": [
+    "duoc_dang_ky(\"XH025\")"
+   ],
+   "cau_hoi": "kì này e dky hp xh025 dc k?",
+   "gold": "TRUE",
+   "loai_gold": "quy_che",
+   "split": "test",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      "XH025"
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "dang_ky"
+  },
+  {
+   "id": "QN-DK-12-V3",
+   "goc": "DK-12",
+   "bien_the": "V3",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "duoc_dang_ky(\"XH025\")",
+   "claim_ky_vong": [
+    "duoc_dang_ky(\"XH025\")"
+   ],
+   "cau_hoi": "cho em hỏi xíu kỳ này em dang ký học phần xh025 được không",
+   "gold": "TRUE",
+   "loai_gold": "quy_che",
+   "split": "test",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      "XH025"
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "dang_ky"
+  },
+  {
+   "id": "QN-DK-12-V4",
+   "goc": "DK-12",
+   "bien_the": "V4",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "duoc_dang_ky(\"XH025\")",
+   "claim_ky_vong": [
+    "duoc_dang_ky(\"XH025\")"
+   ],
+   "cau_hoi": "ki nay e dky hp xh025 dc k?",
+   "gold": "TRUE",
+   "loai_gold": "quy_che",
+   "split": "test",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      "XH025"
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "dang_ky"
+  },
+  {
+   "id": "QN-DK-13-V0",
+   "goc": "DK-13",
+   "bien_the": "V0",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "duoc_dang_ky(\"XH025\")",
+   "claim_ky_vong": [
+    "duoc_dang_ky(\"XH025\")"
+   ],
+   "cau_hoi": "Kỳ này em đăng ký học phần XH025 được không?",
+   "gold": "TRUE",
+   "loai_gold": "quy_che",
+   "split": "test",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      [
+       "XH023",
+       "XH024",
+       "XH025"
+      ]
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "dang_ky"
+  },
+  {
+   "id": "QN-DK-13-V1",
+   "goc": "DK-13",
+   "bien_the": "V1",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "duoc_dang_ky(\"XH025\")",
+   "claim_ky_vong": [
+    "duoc_dang_ky(\"XH025\")"
+   ],
+   "cau_hoi": "Ky nay em dang ky hoc phan xh025 duoc khong?",
+   "gold": "TRUE",
+   "loai_gold": "quy_che",
+   "split": "test",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      [
+       "XH023",
+       "XH024",
+       "XH025"
+      ]
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "dang_ky"
+  },
+  {
+   "id": "QN-DK-13-V2",
+   "goc": "DK-13",
+   "bien_the": "V2",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "duoc_dang_ky(\"XH025\")",
+   "claim_ky_vong": [
+    "duoc_dang_ky(\"XH025\")"
+   ],
+   "cau_hoi": "kì này e dky hp xh025 đc ko?",
+   "gold": "TRUE",
+   "loai_gold": "quy_che",
+   "split": "test",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      [
+       "XH023",
+       "XH024",
+       "XH025"
+      ]
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "dang_ky"
+  },
+  {
+   "id": "QN-DK-13-V3",
+   "goc": "DK-13",
+   "bien_the": "V3",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "duoc_dang_ky(\"XH025\")",
+   "claim_ky_vong": [
+    "duoc_dang_ky(\"XH025\")"
+   ],
+   "cau_hoi": "ad ơi cho e hỏi kỳ này em đăng ký hoc phần xh025 được không",
+   "gold": "TRUE",
+   "loai_gold": "quy_che",
+   "split": "test",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      [
+       "XH023",
+       "XH024",
+       "XH025"
+      ]
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "dang_ky"
+  },
+  {
+   "id": "QN-DK-13-V4",
+   "goc": "DK-13",
+   "bien_the": "V4",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "duoc_dang_ky(\"XH025\")",
+   "claim_ky_vong": [
+    "duoc_dang_ky(\"XH025\")"
+   ],
+   "cau_hoi": "ki nay e dky hp xh025 dc ko?",
+   "gold": "TRUE",
+   "loai_gold": "quy_che",
+   "split": "test",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      [
+       "XH023",
+       "XH024",
+       "XH025"
+      ]
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "dang_ky"
+  },
+  {
+   "id": "QN-DK-14-V0",
+   "goc": "DK-14",
+   "bien_the": "V0",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "duoc_dang_ky(\"CT271E\")",
+   "claim_ky_vong": [
+    "duoc_dang_ky(\"CT271E\")"
+   ],
+   "cau_hoi": "Kỳ này em đăng ký học phần CT271E được không?",
+   "gold": "FALSE",
+   "loai_gold": "quy_che",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      "CT271E"
+     ],
+     [
+      "diem",
+      "CT174",
+      20
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "dang_ky"
+  },
+  {
+   "id": "QN-DK-14-V1",
+   "goc": "DK-14",
+   "bien_the": "V1",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "duoc_dang_ky(\"CT271E\")",
+   "claim_ky_vong": [
+    "duoc_dang_ky(\"CT271E\")"
+   ],
+   "cau_hoi": "Ky nay em dang ky hoc phan ct271e duoc khong?",
+   "gold": "FALSE",
+   "loai_gold": "quy_che",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      "CT271E"
+     ],
+     [
+      "diem",
+      "CT174",
+      20
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "dang_ky"
+  },
+  {
+   "id": "QN-DK-14-V2",
+   "goc": "DK-14",
+   "bien_the": "V2",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "duoc_dang_ky(\"CT271E\")",
+   "claim_ky_vong": [
+    "duoc_dang_ky(\"CT271E\")"
+   ],
+   "cau_hoi": "kì này e đk hp ct271e dc k?",
+   "gold": "FALSE",
+   "loai_gold": "quy_che",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      "CT271E"
+     ],
+     [
+      "diem",
+      "CT174",
+      20
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "dang_ky"
+  },
+  {
+   "id": "QN-DK-14-V3",
+   "goc": "DK-14",
+   "bien_the": "V3",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "duoc_dang_ky(\"CT271E\")",
+   "claim_ky_vong": [
+    "duoc_dang_ky(\"CT271E\")"
+   ],
+   "cau_hoi": "anh chị ơi ky này em đăng ký học phần ct271e được không ?",
+   "gold": "FALSE",
+   "loai_gold": "quy_che",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      "CT271E"
+     ],
+     [
+      "diem",
+      "CT174",
+      20
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "dang_ky"
+  },
+  {
+   "id": "QN-DK-14-V4",
+   "goc": "DK-14",
+   "bien_the": "V4",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "duoc_dang_ky(\"CT271E\")",
+   "claim_ky_vong": [
+    "duoc_dang_ky(\"CT271E\")"
+   ],
+   "cau_hoi": "ki nay e dk hp ct271e dc k?",
+   "gold": "FALSE",
+   "loai_gold": "quy_che",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      "CT271E"
+     ],
+     [
+      "diem",
+      "CT174",
+      20
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "dang_ky"
+  },
+  {
+   "id": "QN-DK-15-V0",
+   "goc": "DK-15",
+   "bien_the": "V0",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "duoc_dang_ky(\"CT271E\")",
+   "claim_ky_vong": [
+    "duoc_dang_ky(\"CT271E\")"
+   ],
+   "cau_hoi": "Kỳ này em đăng ký học phần CT271E được không?",
+   "gold": "TRUE",
+   "loai_gold": "quy_che",
+   "split": "test",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      "CT271E"
+     ],
+     [
+      "diem",
+      "CT174",
+      45
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "dang_ky"
+  },
+  {
+   "id": "QN-DK-15-V1",
+   "goc": "DK-15",
+   "bien_the": "V1",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "duoc_dang_ky(\"CT271E\")",
+   "claim_ky_vong": [
+    "duoc_dang_ky(\"CT271E\")"
+   ],
+   "cau_hoi": "Ky nay em dang ky hoc phan ct271e duoc khong?",
+   "gold": "TRUE",
+   "loai_gold": "quy_che",
+   "split": "test",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      "CT271E"
+     ],
+     [
+      "diem",
+      "CT174",
+      45
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "dang_ky"
+  },
+  {
+   "id": "QN-DK-15-V2",
+   "goc": "DK-15",
+   "bien_the": "V2",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "duoc_dang_ky(\"CT271E\")",
+   "claim_ky_vong": [
+    "duoc_dang_ky(\"CT271E\")"
+   ],
+   "cau_hoi": "kì này e đk hp ct271e đc ko?",
+   "gold": "TRUE",
+   "loai_gold": "quy_che",
+   "split": "test",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      "CT271E"
+     ],
+     [
+      "diem",
+      "CT174",
+      45
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "dang_ky"
+  },
+  {
+   "id": "QN-DK-15-V3",
+   "goc": "DK-15",
+   "bien_the": "V3",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "duoc_dang_ky(\"CT271E\")",
+   "claim_ky_vong": [
+    "duoc_dang_ky(\"CT271E\")"
+   ],
+   "cau_hoi": "ad ơi cho e hỏi kỳ này em đăng ký học phan ct271e được không",
+   "gold": "TRUE",
+   "loai_gold": "quy_che",
+   "split": "test",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      "CT271E"
+     ],
+     [
+      "diem",
+      "CT174",
+      45
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "dang_ky"
+  },
+  {
+   "id": "QN-DK-15-V4",
+   "goc": "DK-15",
+   "bien_the": "V4",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "duoc_dang_ky(\"CT271E\")",
+   "claim_ky_vong": [
+    "duoc_dang_ky(\"CT271E\")"
+   ],
+   "cau_hoi": "ki nay e dk hp ct271e dc ko?",
+   "gold": "TRUE",
+   "loai_gold": "quy_che",
+   "split": "test",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      "CT271E"
+     ],
+     [
+      "diem",
+      "CT174",
+      45
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "dang_ky"
+  },
+  {
+   "id": "QN-DK-16-V0",
+   "goc": "DK-16",
+   "bien_the": "V0",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "duoc_dang_ky(\"CT466E\")",
+   "claim_ky_vong": [
+    "duoc_dang_ky(\"CT466E\")"
+   ],
+   "cau_hoi": "Kỳ này em đăng ký học phần CT466E được không?",
+   "gold": "TRUE",
+   "loai_gold": "quy_che",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      [
+       "CT466E",
+       "CT223",
+       "CT222",
+       "CT467",
+       "CT293",
+       "CT275",
+       "CT300",
+       "CT202",
+       "CT294",
+       "CT273",
+       "CT179",
+       "CT188",
+       "CT112",
+       "CT178",
+       "CT173",
+       "CT296",
+       "CT175",
+       "CT190",
+       "CT172",
+       "CT200",
+       "CT100",
+       "TN012",
+       "TN010",
+       "TN002",
+       "TN001",
+       "ML007",
+       "KL001E"
+      ]
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "dang_ky"
+  },
+  {
+   "id": "QN-DK-16-V1",
+   "goc": "DK-16",
+   "bien_the": "V1",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "duoc_dang_ky(\"CT466E\")",
+   "claim_ky_vong": [
+    "duoc_dang_ky(\"CT466E\")"
+   ],
+   "cau_hoi": "Ky nay em dang ky hoc phan ct466e duoc khong?",
+   "gold": "TRUE",
+   "loai_gold": "quy_che",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      [
+       "CT466E",
+       "CT223",
+       "CT222",
+       "CT467",
+       "CT293",
+       "CT275",
+       "CT300",
+       "CT202",
+       "CT294",
+       "CT273",
+       "CT179",
+       "CT188",
+       "CT112",
+       "CT178",
+       "CT173",
+       "CT296",
+       "CT175",
+       "CT190",
+       "CT172",
+       "CT200",
+       "CT100",
+       "TN012",
+       "TN010",
+       "TN002",
+       "TN001",
+       "ML007",
+       "KL001E"
+      ]
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "dang_ky"
+  },
+  {
+   "id": "QN-DK-16-V2",
+   "goc": "DK-16",
+   "bien_the": "V2",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "duoc_dang_ky(\"CT466E\")",
+   "claim_ky_vong": [
+    "duoc_dang_ky(\"CT466E\")"
+   ],
+   "cau_hoi": "kì này e đki hp ct466e đc ko?",
+   "gold": "TRUE",
+   "loai_gold": "quy_che",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      [
+       "CT466E",
+       "CT223",
+       "CT222",
+       "CT467",
+       "CT293",
+       "CT275",
+       "CT300",
+       "CT202",
+       "CT294",
+       "CT273",
+       "CT179",
+       "CT188",
+       "CT112",
+       "CT178",
+       "CT173",
+       "CT296",
+       "CT175",
+       "CT190",
+       "CT172",
+       "CT200",
+       "CT100",
+       "TN012",
+       "TN010",
+       "TN002",
+       "TN001",
+       "ML007",
+       "KL001E"
+      ]
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "dang_ky"
+  },
+  {
+   "id": "QN-DK-16-V3",
+   "goc": "DK-16",
+   "bien_the": "V3",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "duoc_dang_ky(\"CT466E\")",
+   "claim_ky_vong": [
+    "duoc_dang_ky(\"CT466E\")"
+   ],
+   "cau_hoi": "mn ơi kỳ này em đăng ký học phan ct466e được không ?",
+   "gold": "TRUE",
+   "loai_gold": "quy_che",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      [
+       "CT466E",
+       "CT223",
+       "CT222",
+       "CT467",
+       "CT293",
+       "CT275",
+       "CT300",
+       "CT202",
+       "CT294",
+       "CT273",
+       "CT179",
+       "CT188",
+       "CT112",
+       "CT178",
+       "CT173",
+       "CT296",
+       "CT175",
+       "CT190",
+       "CT172",
+       "CT200",
+       "CT100",
+       "TN012",
+       "TN010",
+       "TN002",
+       "TN001",
+       "ML007",
+       "KL001E"
+      ]
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "dang_ky"
+  },
+  {
+   "id": "QN-DK-16-V4",
+   "goc": "DK-16",
+   "bien_the": "V4",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "duoc_dang_ky(\"CT466E\")",
+   "claim_ky_vong": [
+    "duoc_dang_ky(\"CT466E\")"
+   ],
+   "cau_hoi": "ki nay e dki hp ct466e dc ko?",
+   "gold": "TRUE",
+   "loai_gold": "quy_che",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      [
+       "CT466E",
+       "CT223",
+       "CT222",
+       "CT467",
+       "CT293",
+       "CT275",
+       "CT300",
+       "CT202",
+       "CT294",
+       "CT273",
+       "CT179",
+       "CT188",
+       "CT112",
+       "CT178",
+       "CT173",
+       "CT296",
+       "CT175",
+       "CT190",
+       "CT172",
+       "CT200",
+       "CT100",
+       "TN012",
+       "TN010",
+       "TN002",
+       "TN001",
+       "ML007",
+       "KL001E"
+      ]
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "dang_ky"
+  },
+  {
+   "id": "QN-DK-17-V0",
+   "goc": "DK-17",
+   "bien_the": "V0",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "duoc_dang_ky(\"CT466E\")",
+   "claim_ky_vong": [
+    "duoc_dang_ky(\"CT466E\")"
+   ],
+   "cau_hoi": "Kỳ này em đăng ký học phần CT466E được không?",
+   "gold": "FALSE",
+   "loai_gold": "quy_che",
+   "split": "test",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      [
+       "CT466E",
+       "CT223",
+       "CT222",
+       "CT467",
+       "CT293",
+       "CT275",
+       "CT300",
+       "CT202",
+       "CT294",
+       "CT273",
+       "CT179",
+       "CT188",
+       "CT112",
+       "CT178",
+       "CT173",
+       "CT296",
+       "CT175",
+       "CT190",
+       "CT172",
+       "CT200",
+       "CT100",
+       "TN012",
+       "TN010",
+       "TN002",
+       "TN001",
+       "ML007",
+       "CT449"
+      ]
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "dang_ky"
+  },
+  {
+   "id": "QN-DK-17-V1",
+   "goc": "DK-17",
+   "bien_the": "V1",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "duoc_dang_ky(\"CT466E\")",
+   "claim_ky_vong": [
+    "duoc_dang_ky(\"CT466E\")"
+   ],
+   "cau_hoi": "Ky nay em dang ky hoc phan ct466e duoc khong?",
+   "gold": "FALSE",
+   "loai_gold": "quy_che",
+   "split": "test",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      [
+       "CT466E",
+       "CT223",
+       "CT222",
+       "CT467",
+       "CT293",
+       "CT275",
+       "CT300",
+       "CT202",
+       "CT294",
+       "CT273",
+       "CT179",
+       "CT188",
+       "CT112",
+       "CT178",
+       "CT173",
+       "CT296",
+       "CT175",
+       "CT190",
+       "CT172",
+       "CT200",
+       "CT100",
+       "TN012",
+       "TN010",
+       "TN002",
+       "TN001",
+       "ML007",
+       "CT449"
+      ]
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "dang_ky"
+  },
+  {
+   "id": "QN-DK-17-V2",
+   "goc": "DK-17",
+   "bien_the": "V2",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "duoc_dang_ky(\"CT466E\")",
+   "claim_ky_vong": [
+    "duoc_dang_ky(\"CT466E\")"
+   ],
+   "cau_hoi": "kì này e đki hp ct466e đc ko?",
+   "gold": "FALSE",
+   "loai_gold": "quy_che",
+   "split": "test",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      [
+       "CT466E",
+       "CT223",
+       "CT222",
+       "CT467",
+       "CT293",
+       "CT275",
+       "CT300",
+       "CT202",
+       "CT294",
+       "CT273",
+       "CT179",
+       "CT188",
+       "CT112",
+       "CT178",
+       "CT173",
+       "CT296",
+       "CT175",
+       "CT190",
+       "CT172",
+       "CT200",
+       "CT100",
+       "TN012",
+       "TN010",
+       "TN002",
+       "TN001",
+       "ML007",
+       "CT449"
+      ]
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "dang_ky"
+  },
+  {
+   "id": "QN-DK-17-V3",
+   "goc": "DK-17",
+   "bien_the": "V3",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "duoc_dang_ky(\"CT466E\")",
+   "claim_ky_vong": [
+    "duoc_dang_ky(\"CT466E\")"
+   ],
+   "cau_hoi": "cho em hỏi xíu kỳ này em dang ký học phần ct466e được không",
+   "gold": "FALSE",
+   "loai_gold": "quy_che",
+   "split": "test",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      [
+       "CT466E",
+       "CT223",
+       "CT222",
+       "CT467",
+       "CT293",
+       "CT275",
+       "CT300",
+       "CT202",
+       "CT294",
+       "CT273",
+       "CT179",
+       "CT188",
+       "CT112",
+       "CT178",
+       "CT173",
+       "CT296",
+       "CT175",
+       "CT190",
+       "CT172",
+       "CT200",
+       "CT100",
+       "TN012",
+       "TN010",
+       "TN002",
+       "TN001",
+       "ML007",
+       "CT449"
+      ]
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "dang_ky"
+  },
+  {
+   "id": "QN-DK-17-V4",
+   "goc": "DK-17",
+   "bien_the": "V4",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "duoc_dang_ky(\"CT466E\")",
+   "claim_ky_vong": [
+    "duoc_dang_ky(\"CT466E\")"
+   ],
+   "cau_hoi": "ki nay e dki hp ct466e dc ko?",
+   "gold": "FALSE",
+   "loai_gold": "quy_che",
+   "split": "test",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      [
+       "CT466E",
+       "CT223",
+       "CT222",
+       "CT467",
+       "CT293",
+       "CT275",
+       "CT300",
+       "CT202",
+       "CT294",
+       "CT273",
+       "CT179",
+       "CT188",
+       "CT112",
+       "CT178",
+       "CT173",
+       "CT296",
+       "CT175",
+       "CT190",
+       "CT172",
+       "CT200",
+       "CT100",
+       "TN012",
+       "TN010",
+       "TN002",
+       "TN001",
+       "ML007",
+       "CT449"
+      ]
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "dang_ky"
+  },
+  {
+   "id": "QN-DK-18-V0",
+   "goc": "DK-18",
+   "bien_the": "V0",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "duoc_dang_ky(\"CT518E\")",
+   "claim_ky_vong": [
+    "duoc_dang_ky(\"CT518E\")"
+   ],
+   "cau_hoi": "Kỳ này em đăng ký học phần CT518E được không?",
+   "gold": "TRUE",
+   "loai_gold": "quy_che",
+   "split": "test",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      [
+       "CT518E",
+       "CT223",
+       "CT222",
+       "CT467",
+       "CT293",
+       "CT275",
+       "CT300",
+       "CT202",
+       "CT294",
+       "CT273",
+       "CT190",
+       "CT100"
+      ]
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "dang_ky"
+  },
+  {
+   "id": "QN-DK-18-V1",
+   "goc": "DK-18",
+   "bien_the": "V1",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "duoc_dang_ky(\"CT518E\")",
+   "claim_ky_vong": [
+    "duoc_dang_ky(\"CT518E\")"
+   ],
+   "cau_hoi": "Ky nay em dang ky hoc phan ct518e duoc khong?",
+   "gold": "TRUE",
+   "loai_gold": "quy_che",
+   "split": "test",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      [
+       "CT518E",
+       "CT223",
+       "CT222",
+       "CT467",
+       "CT293",
+       "CT275",
+       "CT300",
+       "CT202",
+       "CT294",
+       "CT273",
+       "CT190",
+       "CT100"
+      ]
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "dang_ky"
+  },
+  {
+   "id": "QN-DK-18-V2",
+   "goc": "DK-18",
+   "bien_the": "V2",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "duoc_dang_ky(\"CT518E\")",
+   "claim_ky_vong": [
+    "duoc_dang_ky(\"CT518E\")"
+   ],
+   "cau_hoi": "kì này e đk hp ct518e đc ko?",
+   "gold": "TRUE",
+   "loai_gold": "quy_che",
+   "split": "test",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      [
+       "CT518E",
+       "CT223",
+       "CT222",
+       "CT467",
+       "CT293",
+       "CT275",
+       "CT300",
+       "CT202",
+       "CT294",
+       "CT273",
+       "CT190",
+       "CT100"
+      ]
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "dang_ky"
+  },
+  {
+   "id": "QN-DK-18-V3",
+   "goc": "DK-18",
+   "bien_the": "V3",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "duoc_dang_ky(\"CT518E\")",
+   "claim_ky_vong": [
+    "duoc_dang_ky(\"CT518E\")"
+   ],
+   "cau_hoi": "anh chị ơi kỳ này em đăng ký hoc phần ct518e được không",
+   "gold": "TRUE",
+   "loai_gold": "quy_che",
+   "split": "test",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      [
+       "CT518E",
+       "CT223",
+       "CT222",
+       "CT467",
+       "CT293",
+       "CT275",
+       "CT300",
+       "CT202",
+       "CT294",
+       "CT273",
+       "CT190",
+       "CT100"
+      ]
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "dang_ky"
+  },
+  {
+   "id": "QN-DK-18-V4",
+   "goc": "DK-18",
+   "bien_the": "V4",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "duoc_dang_ky(\"CT518E\")",
+   "claim_ky_vong": [
+    "duoc_dang_ky(\"CT518E\")"
+   ],
+   "cau_hoi": "ki nay e dk hp ct518e dc ko?",
+   "gold": "TRUE",
+   "loai_gold": "quy_che",
+   "split": "test",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      [
+       "CT518E",
+       "CT223",
+       "CT222",
+       "CT467",
+       "CT293",
+       "CT275",
+       "CT300",
+       "CT202",
+       "CT294",
+       "CT273",
+       "CT190",
+       "CT100"
+      ]
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "dang_ky"
+  },
+  {
+   "id": "QN-DK-19-V0",
+   "goc": "DK-19",
+   "bien_the": "V0",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "duoc_dang_ky(\"CT518E\")",
+   "claim_ky_vong": [
+    "duoc_dang_ky(\"CT518E\")"
+   ],
+   "cau_hoi": "Kỳ này em đăng ký học phần CT518E được không?",
+   "gold": "FALSE",
+   "loai_gold": "quy_che",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      [
+       "CT518E",
+       "CT223",
+       "CT222",
+       "CT467",
+       "CT293",
+       "CT275",
+       "CT300",
+       "CT202",
+       "CT294",
+       "CT273",
+       "CT179",
+       "CT190"
+      ]
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "dang_ky"
+  },
+  {
+   "id": "QN-DK-19-V1",
+   "goc": "DK-19",
+   "bien_the": "V1",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "duoc_dang_ky(\"CT518E\")",
+   "claim_ky_vong": [
+    "duoc_dang_ky(\"CT518E\")"
+   ],
+   "cau_hoi": "Ky nay em dang ky hoc phan ct518e duoc khong?",
+   "gold": "FALSE",
+   "loai_gold": "quy_che",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      [
+       "CT518E",
+       "CT223",
+       "CT222",
+       "CT467",
+       "CT293",
+       "CT275",
+       "CT300",
+       "CT202",
+       "CT294",
+       "CT273",
+       "CT179",
+       "CT190"
+      ]
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "dang_ky"
+  },
+  {
+   "id": "QN-DK-19-V2",
+   "goc": "DK-19",
+   "bien_the": "V2",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "duoc_dang_ky(\"CT518E\")",
+   "claim_ky_vong": [
+    "duoc_dang_ky(\"CT518E\")"
+   ],
+   "cau_hoi": "kì này e dky hp ct518e dc k?",
+   "gold": "FALSE",
+   "loai_gold": "quy_che",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      [
+       "CT518E",
+       "CT223",
+       "CT222",
+       "CT467",
+       "CT293",
+       "CT275",
+       "CT300",
+       "CT202",
+       "CT294",
+       "CT273",
+       "CT179",
+       "CT190"
+      ]
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "dang_ky"
+  },
+  {
+   "id": "QN-DK-19-V3",
+   "goc": "DK-19",
+   "bien_the": "V3",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "duoc_dang_ky(\"CT518E\")",
+   "claim_ky_vong": [
+    "duoc_dang_ky(\"CT518E\")"
+   ],
+   "cau_hoi": "anh chị ơi kỳ này em đăng ký học phần ct518e được khong ?",
+   "gold": "FALSE",
+   "loai_gold": "quy_che",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      [
+       "CT518E",
+       "CT223",
+       "CT222",
+       "CT467",
+       "CT293",
+       "CT275",
+       "CT300",
+       "CT202",
+       "CT294",
+       "CT273",
+       "CT179",
+       "CT190"
+      ]
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "dang_ky"
+  },
+  {
+   "id": "QN-DK-19-V4",
+   "goc": "DK-19",
+   "bien_the": "V4",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "duoc_dang_ky(\"CT518E\")",
+   "claim_ky_vong": [
+    "duoc_dang_ky(\"CT518E\")"
+   ],
+   "cau_hoi": "ki nay e dky hp ct518e dc k?",
+   "gold": "FALSE",
+   "loai_gold": "quy_che",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      [
+       "CT518E",
+       "CT223",
+       "CT222",
+       "CT467",
+       "CT293",
+       "CT275",
+       "CT300",
+       "CT202",
+       "CT294",
+       "CT273",
+       "CT179",
+       "CT190"
+      ]
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "dang_ky"
+  },
+  {
+   "id": "QN-DK-20-V0",
+   "goc": "DK-20",
+   "bien_the": "V0",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "duoc_dang_ky(\"ML019\")",
+   "claim_ky_vong": [
+    "duoc_dang_ky(\"ML019\")"
+   ],
+   "cau_hoi": "Kỳ này em đăng ký học phần ML019 được không?",
+   "gold": "FALSE",
+   "loai_gold": "quy_che",
+   "split": "test",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      [
+       "ML019",
+       "ML018"
+      ]
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "dang_ky"
+  },
+  {
+   "id": "QN-DK-20-V1",
+   "goc": "DK-20",
+   "bien_the": "V1",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "duoc_dang_ky(\"ML019\")",
+   "claim_ky_vong": [
+    "duoc_dang_ky(\"ML019\")"
+   ],
+   "cau_hoi": "Ky nay em dang ky hoc phan ml019 duoc khong?",
+   "gold": "FALSE",
+   "loai_gold": "quy_che",
+   "split": "test",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      [
+       "ML019",
+       "ML018"
+      ]
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "dang_ky"
+  },
+  {
+   "id": "QN-DK-20-V2",
+   "goc": "DK-20",
+   "bien_the": "V2",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "duoc_dang_ky(\"ML019\")",
+   "claim_ky_vong": [
+    "duoc_dang_ky(\"ML019\")"
+   ],
+   "cau_hoi": "kì này e dky hp ml019 dc k?",
+   "gold": "FALSE",
+   "loai_gold": "quy_che",
+   "split": "test",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      [
+       "ML019",
+       "ML018"
+      ]
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "dang_ky"
+  },
+  {
+   "id": "QN-DK-20-V3",
+   "goc": "DK-20",
+   "bien_the": "V3",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "duoc_dang_ky(\"ML019\")",
+   "claim_ky_vong": [
+    "duoc_dang_ky(\"ML019\")"
+   ],
+   "cau_hoi": "anh chị ơi kỳ này em đăng ký học phan ml019 được không ?",
+   "gold": "FALSE",
+   "loai_gold": "quy_che",
+   "split": "test",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      [
+       "ML019",
+       "ML018"
+      ]
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "dang_ky"
+  },
+  {
+   "id": "QN-DK-20-V4",
+   "goc": "DK-20",
+   "bien_the": "V4",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "duoc_dang_ky(\"ML019\")",
+   "claim_ky_vong": [
+    "duoc_dang_ky(\"ML019\")"
+   ],
+   "cau_hoi": "ki nay e dky hp ml019 dc k?",
+   "gold": "FALSE",
+   "loai_gold": "quy_che",
+   "split": "test",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      [
+       "ML019",
+       "ML018"
+      ]
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "dang_ky"
+  },
+  {
+   "id": "QN-DK-21-V0",
+   "goc": "DK-21",
+   "bien_the": "V0",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "duoc_dang_ky(\"ML019\")",
+   "claim_ky_vong": [
+    "duoc_dang_ky(\"ML019\")"
+   ],
+   "cau_hoi": "Kỳ này em đăng ký học phần ML019 được không?",
+   "gold": "FALSE",
+   "loai_gold": "quy_che",
+   "split": "test",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      [
+       "ML019",
+       "ML018",
+       "ML016"
+      ]
+     ],
+     [
+      "diem_tho",
+      "ML010",
+      {
+       "credits": 3,
+       "thang10": 80,
+       "letter": "B+",
+       "status": "passed"
+      }
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "dang_ky"
+  },
+  {
+   "id": "QN-DK-21-V1",
+   "goc": "DK-21",
+   "bien_the": "V1",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "duoc_dang_ky(\"ML019\")",
+   "claim_ky_vong": [
+    "duoc_dang_ky(\"ML019\")"
+   ],
+   "cau_hoi": "Ky nay em dang ky hoc phan ml019 duoc khong?",
+   "gold": "FALSE",
+   "loai_gold": "quy_che",
+   "split": "test",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      [
+       "ML019",
+       "ML018",
+       "ML016"
+      ]
+     ],
+     [
+      "diem_tho",
+      "ML010",
+      {
+       "credits": 3,
+       "thang10": 80,
+       "letter": "B+",
+       "status": "passed"
+      }
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "dang_ky"
+  },
+  {
+   "id": "QN-DK-21-V2",
+   "goc": "DK-21",
+   "bien_the": "V2",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "duoc_dang_ky(\"ML019\")",
+   "claim_ky_vong": [
+    "duoc_dang_ky(\"ML019\")"
+   ],
+   "cau_hoi": "kì này e dky hp ml019 đc ko?",
+   "gold": "FALSE",
+   "loai_gold": "quy_che",
+   "split": "test",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      [
+       "ML019",
+       "ML018",
+       "ML016"
+      ]
+     ],
+     [
+      "diem_tho",
+      "ML010",
+      {
+       "credits": 3,
+       "thang10": 80,
+       "letter": "B+",
+       "status": "passed"
+      }
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "dang_ky"
+  },
+  {
+   "id": "QN-DK-21-V3",
+   "goc": "DK-21",
+   "bien_the": "V3",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "duoc_dang_ky(\"ML019\")",
+   "claim_ky_vong": [
+    "duoc_dang_ky(\"ML019\")"
+   ],
+   "cau_hoi": "mn ơi kỳ nay em đăng ký học phần ml019 được không",
+   "gold": "FALSE",
+   "loai_gold": "quy_che",
+   "split": "test",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      [
+       "ML019",
+       "ML018",
+       "ML016"
+      ]
+     ],
+     [
+      "diem_tho",
+      "ML010",
+      {
+       "credits": 3,
+       "thang10": 80,
+       "letter": "B+",
+       "status": "passed"
+      }
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "dang_ky"
+  },
+  {
+   "id": "QN-DK-21-V4",
+   "goc": "DK-21",
+   "bien_the": "V4",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "duoc_dang_ky(\"ML019\")",
+   "claim_ky_vong": [
+    "duoc_dang_ky(\"ML019\")"
+   ],
+   "cau_hoi": "ki nay e dky hp ml019 dc ko?",
+   "gold": "FALSE",
+   "loai_gold": "quy_che",
+   "split": "test",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      [
+       "ML019",
+       "ML018",
+       "ML016"
+      ]
+     ],
+     [
+      "diem_tho",
+      "ML010",
+      {
+       "credits": 3,
+       "thang10": 80,
+       "letter": "B+",
+       "status": "passed"
+      }
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "dang_ky"
+  },
+  {
+   "id": "QN-DK-22-V0",
+   "goc": "DK-22",
+   "bien_the": "V0",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "duoc_dang_ky(\"CT999\")",
+   "claim_ky_vong": [
+    "duoc_dang_ky(\"CT999\")"
+   ],
+   "cau_hoi": "Kỳ này em đăng ký học phần CT999 được không?",
+   "gold": "UNKNOWN",
+   "loai_gold": "thiet_ke",
+   "split": "test",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": []
+   },
+   "su_that": null,
+   "can_hoi": [],
+   "cham_diem": true,
+   "nhom": "dang_ky"
+  },
+  {
+   "id": "QN-DK-22-V1",
+   "goc": "DK-22",
+   "bien_the": "V1",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "duoc_dang_ky(\"CT999\")",
+   "claim_ky_vong": [
+    "duoc_dang_ky(\"CT999\")"
+   ],
+   "cau_hoi": "Ky nay em dang ky hoc phan ct999 duoc khong?",
+   "gold": "UNKNOWN",
+   "loai_gold": "thiet_ke",
+   "split": "test",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": []
+   },
+   "su_that": null,
+   "can_hoi": [],
+   "cham_diem": true,
+   "nhom": "dang_ky"
+  },
+  {
+   "id": "QN-DK-22-V2",
+   "goc": "DK-22",
+   "bien_the": "V2",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "duoc_dang_ky(\"CT999\")",
+   "claim_ky_vong": [
+    "duoc_dang_ky(\"CT999\")"
+   ],
+   "cau_hoi": "kì này e đki hp ct999 đc ko?",
+   "gold": "UNKNOWN",
+   "loai_gold": "thiet_ke",
+   "split": "test",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": []
+   },
+   "su_that": null,
+   "can_hoi": [],
+   "cham_diem": true,
+   "nhom": "dang_ky"
+  },
+  {
+   "id": "QN-DK-22-V3",
+   "goc": "DK-22",
+   "bien_the": "V3",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "duoc_dang_ky(\"CT999\")",
+   "claim_ky_vong": [
+    "duoc_dang_ky(\"CT999\")"
+   ],
+   "cau_hoi": "mn ơi kỳ này em đăng ky học phần ct999 được không",
+   "gold": "UNKNOWN",
+   "loai_gold": "thiet_ke",
+   "split": "test",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": []
+   },
+   "su_that": null,
+   "can_hoi": [],
+   "cham_diem": true,
+   "nhom": "dang_ky"
+  },
+  {
+   "id": "QN-DK-22-V4",
+   "goc": "DK-22",
+   "bien_the": "V4",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "duoc_dang_ky(\"CT999\")",
+   "claim_ky_vong": [
+    "duoc_dang_ky(\"CT999\")"
+   ],
+   "cau_hoi": "ki nay e dki hp ct999 dc ko?",
+   "gold": "UNKNOWN",
+   "loai_gold": "thiet_ke",
+   "split": "test",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": []
+   },
+   "su_that": null,
+   "can_hoi": [],
+   "cham_diem": true,
+   "nhom": "dang_ky"
+  },
+  {
+   "id": "QN-EL-01-V0",
+   "goc": "EL-01",
+   "bien_the": "V0",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "lvtn",
+   "claim_ky_vong": [
+    "du_dk(lvtn)"
+   ],
+   "cau_hoi": "Em có đủ điều kiện làm luận văn tốt nghiệp không?",
+   "gold": "TRUE",
+   "loai_gold": "quy_che",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      "CT550E"
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "du_dieu_kien"
+  },
+  {
+   "id": "QN-EL-01-V1",
+   "goc": "EL-01",
+   "bien_the": "V1",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "lvtn",
+   "claim_ky_vong": [
+    "du_dk(lvtn)"
+   ],
+   "cau_hoi": "Em co du dieu kien lam luan van tot nghiep khong?",
+   "gold": "TRUE",
+   "loai_gold": "quy_che",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      "CT550E"
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "du_dieu_kien"
+  },
+  {
+   "id": "QN-EL-01-V2",
+   "goc": "EL-01",
+   "bien_the": "V2",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "lvtn",
+   "claim_ky_vong": [
+    "du_dk(lvtn)"
+   ],
+   "cau_hoi": "e có đủ đk làm lv tn ko?",
+   "gold": "TRUE",
+   "loai_gold": "quy_che",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      "CT550E"
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "du_dieu_kien"
+  },
+  {
+   "id": "QN-EL-01-V3",
+   "goc": "EL-01",
+   "bien_the": "V3",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "lvtn",
+   "claim_ky_vong": [
+    "du_dk(lvtn)"
+   ],
+   "cau_hoi": "anh chị ơi em có đủ điều kiện làm luận văn tốt nghiệp khong??",
+   "gold": "TRUE",
+   "loai_gold": "quy_che",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      "CT550E"
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "du_dieu_kien"
+  },
+  {
+   "id": "QN-EL-01-V4",
+   "goc": "EL-01",
+   "bien_the": "V4",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "lvtn",
+   "claim_ky_vong": [
+    "du_dk(lvtn)"
+   ],
+   "cau_hoi": "e co du dk lam lv tn ko?",
+   "gold": "TRUE",
+   "loai_gold": "quy_che",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      "CT550E"
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "du_dieu_kien"
+  },
+  {
+   "id": "QN-EL-02-V0",
+   "goc": "EL-02",
+   "bien_the": "V0",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "lvtn",
+   "claim_ky_vong": [
+    "du_dk(lvtn)"
+   ],
+   "cau_hoi": "Em có đủ điều kiện làm luận văn tốt nghiệp không?",
+   "gold": "FALSE",
+   "loai_gold": "quy_che",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      "CT550E"
+     ],
+     [
+      "dat",
+      "hinh_thuc_cuoi_khoa",
+      "tltn"
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "du_dieu_kien"
+  },
+  {
+   "id": "QN-EL-02-V1",
+   "goc": "EL-02",
+   "bien_the": "V1",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "lvtn",
+   "claim_ky_vong": [
+    "du_dk(lvtn)"
+   ],
+   "cau_hoi": "Em co du dieu kien lam luan van tot nghiep khong?",
+   "gold": "FALSE",
+   "loai_gold": "quy_che",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      "CT550E"
+     ],
+     [
+      "dat",
+      "hinh_thuc_cuoi_khoa",
+      "tltn"
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "du_dieu_kien"
+  },
+  {
+   "id": "QN-EL-02-V2",
+   "goc": "EL-02",
+   "bien_the": "V2",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "lvtn",
+   "claim_ky_vong": [
+    "du_dk(lvtn)"
+   ],
+   "cau_hoi": "e có đủ đk làm lv tn k?",
+   "gold": "FALSE",
+   "loai_gold": "quy_che",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      "CT550E"
+     ],
+     [
+      "dat",
+      "hinh_thuc_cuoi_khoa",
+      "tltn"
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "du_dieu_kien"
+  },
+  {
+   "id": "QN-EL-02-V3",
+   "goc": "EL-02",
+   "bien_the": "V3",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "lvtn",
+   "claim_ky_vong": [
+    "du_dk(lvtn)"
+   ],
+   "cau_hoi": "mn ơi em có đủ điều kiện làm luận văn tot nghiệp không ?",
+   "gold": "FALSE",
+   "loai_gold": "quy_che",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      "CT550E"
+     ],
+     [
+      "dat",
+      "hinh_thuc_cuoi_khoa",
+      "tltn"
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "du_dieu_kien"
+  },
+  {
+   "id": "QN-EL-02-V4",
+   "goc": "EL-02",
+   "bien_the": "V4",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "lvtn",
+   "claim_ky_vong": [
+    "du_dk(lvtn)"
+   ],
+   "cau_hoi": "e co du dk lam lv tn k?",
+   "gold": "FALSE",
+   "loai_gold": "quy_che",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      "CT550E"
+     ],
+     [
+      "dat",
+      "hinh_thuc_cuoi_khoa",
+      "tltn"
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "du_dieu_kien"
+  },
+  {
+   "id": "QN-EL-03-V0",
+   "goc": "EL-03",
+   "bien_the": "V0",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "tltn",
+   "claim_ky_vong": [
+    "du_dk(tltn)"
+   ],
+   "cau_hoi": "Em có đủ điều kiện làm tiểu luận tốt nghiệp không?",
+   "gold": "TRUE",
+   "loai_gold": "quy_che",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      "CT550E"
+     ],
+     [
+      "dat",
+      "hinh_thuc_cuoi_khoa",
+      "tltn"
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "du_dieu_kien"
+  },
+  {
+   "id": "QN-EL-03-V1",
+   "goc": "EL-03",
+   "bien_the": "V1",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "tltn",
+   "claim_ky_vong": [
+    "du_dk(tltn)"
+   ],
+   "cau_hoi": "Em co du dieu kien lam tieu luan tot nghiep khong?",
+   "gold": "TRUE",
+   "loai_gold": "quy_che",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      "CT550E"
+     ],
+     [
+      "dat",
+      "hinh_thuc_cuoi_khoa",
+      "tltn"
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "du_dieu_kien"
+  },
+  {
+   "id": "QN-EL-03-V2",
+   "goc": "EL-03",
+   "bien_the": "V2",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "tltn",
+   "claim_ky_vong": [
+    "du_dk(tltn)"
+   ],
+   "cau_hoi": "e có đủ đk làm tl tn ko?",
+   "gold": "TRUE",
+   "loai_gold": "quy_che",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      "CT550E"
+     ],
+     [
+      "dat",
+      "hinh_thuc_cuoi_khoa",
+      "tltn"
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "du_dieu_kien"
+  },
+  {
+   "id": "QN-EL-03-V3",
+   "goc": "EL-03",
+   "bien_the": "V3",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "tltn",
+   "claim_ky_vong": [
+    "du_dk(tltn)"
+   ],
+   "cau_hoi": "ad ơi cho e hỏi em có đủ điều kiện làm tiểu luận tot nghiệp không ?",
+   "gold": "TRUE",
+   "loai_gold": "quy_che",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      "CT550E"
+     ],
+     [
+      "dat",
+      "hinh_thuc_cuoi_khoa",
+      "tltn"
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "du_dieu_kien"
+  },
+  {
+   "id": "QN-EL-03-V4",
+   "goc": "EL-03",
+   "bien_the": "V4",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "tltn",
+   "claim_ky_vong": [
+    "du_dk(tltn)"
+   ],
+   "cau_hoi": "e co du dk lam tl tn ko?",
+   "gold": "TRUE",
+   "loai_gold": "quy_che",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      "CT550E"
+     ],
+     [
+      "dat",
+      "hinh_thuc_cuoi_khoa",
+      "tltn"
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "du_dieu_kien"
+  },
+  {
+   "id": "QN-EL-04-V0",
+   "goc": "EL-04",
+   "bien_the": "V0",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "lvtn",
+   "claim_ky_vong": [
+    "du_dk(lvtn)"
+   ],
+   "cau_hoi": "Em có đủ điều kiện làm luận văn tốt nghiệp không?",
+   "gold": "FALSE",
+   "loai_gold": "quy_che",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      [
+       "CT550E",
+       "CT223",
+       "CT222",
+       "CT467",
+       "CT293",
+       "CT275",
+       "CT300",
+       "CT202",
+       "CT294",
+       "CT273"
+      ]
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "du_dieu_kien"
+  },
+  {
+   "id": "QN-EL-04-V1",
+   "goc": "EL-04",
+   "bien_the": "V1",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "lvtn",
+   "claim_ky_vong": [
+    "du_dk(lvtn)"
+   ],
+   "cau_hoi": "Em co du dieu kien lam luan van tot nghiep khong?",
+   "gold": "FALSE",
+   "loai_gold": "quy_che",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      [
+       "CT550E",
+       "CT223",
+       "CT222",
+       "CT467",
+       "CT293",
+       "CT275",
+       "CT300",
+       "CT202",
+       "CT294",
+       "CT273"
+      ]
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "du_dieu_kien"
+  },
+  {
+   "id": "QN-EL-04-V2",
+   "goc": "EL-04",
+   "bien_the": "V2",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "lvtn",
+   "claim_ky_vong": [
+    "du_dk(lvtn)"
+   ],
+   "cau_hoi": "e có đủ dk làm lv tn ko?",
+   "gold": "FALSE",
+   "loai_gold": "quy_che",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      [
+       "CT550E",
+       "CT223",
+       "CT222",
+       "CT467",
+       "CT293",
+       "CT275",
+       "CT300",
+       "CT202",
+       "CT294",
+       "CT273"
+      ]
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "du_dieu_kien"
+  },
+  {
+   "id": "QN-EL-04-V3",
+   "goc": "EL-04",
+   "bien_the": "V3",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "lvtn",
+   "claim_ky_vong": [
+    "du_dk(lvtn)"
+   ],
+   "cau_hoi": "ad ơi cho e hỏi em có đủ điều kiện làm luận văn tot nghiệp không ?",
+   "gold": "FALSE",
+   "loai_gold": "quy_che",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      [
+       "CT550E",
+       "CT223",
+       "CT222",
+       "CT467",
+       "CT293",
+       "CT275",
+       "CT300",
+       "CT202",
+       "CT294",
+       "CT273"
+      ]
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "du_dieu_kien"
+  },
+  {
+   "id": "QN-EL-04-V4",
+   "goc": "EL-04",
+   "bien_the": "V4",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "lvtn",
+   "claim_ky_vong": [
+    "du_dk(lvtn)"
+   ],
+   "cau_hoi": "e co du dk lam lv tn ko?",
+   "gold": "FALSE",
+   "loai_gold": "quy_che",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      [
+       "CT550E",
+       "CT223",
+       "CT222",
+       "CT467",
+       "CT293",
+       "CT275",
+       "CT300",
+       "CT202",
+       "CT294",
+       "CT273"
+      ]
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "du_dieu_kien"
+  },
+  {
+   "id": "QN-EL-05-V0",
+   "goc": "EL-05",
+   "bien_the": "V0",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "tltn",
+   "claim_ky_vong": [
+    "du_dk(tltn)"
+   ],
+   "cau_hoi": "Em có đủ điều kiện làm tiểu luận tốt nghiệp không?",
+   "gold": "TRUE",
+   "loai_gold": "quy_che",
+   "split": "test",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      [
+       "CT550E",
+       "CT223",
+       "CT222",
+       "CT467",
+       "CT293",
+       "CT275",
+       "CT300",
+       "CT202",
+       "CT294",
+       "CT190"
+      ]
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "du_dieu_kien"
+  },
+  {
+   "id": "QN-EL-05-V1",
+   "goc": "EL-05",
+   "bien_the": "V1",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "tltn",
+   "claim_ky_vong": [
+    "du_dk(tltn)"
+   ],
+   "cau_hoi": "Em co du dieu kien lam tieu luan tot nghiep khong?",
+   "gold": "TRUE",
+   "loai_gold": "quy_che",
+   "split": "test",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      [
+       "CT550E",
+       "CT223",
+       "CT222",
+       "CT467",
+       "CT293",
+       "CT275",
+       "CT300",
+       "CT202",
+       "CT294",
+       "CT190"
+      ]
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "du_dieu_kien"
+  },
+  {
+   "id": "QN-EL-05-V2",
+   "goc": "EL-05",
+   "bien_the": "V2",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "tltn",
+   "claim_ky_vong": [
+    "du_dk(tltn)"
+   ],
+   "cau_hoi": "e có đủ đk làm tl tn k?",
+   "gold": "TRUE",
+   "loai_gold": "quy_che",
+   "split": "test",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      [
+       "CT550E",
+       "CT223",
+       "CT222",
+       "CT467",
+       "CT293",
+       "CT275",
+       "CT300",
+       "CT202",
+       "CT294",
+       "CT190"
+      ]
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "du_dieu_kien"
+  },
+  {
+   "id": "QN-EL-05-V3",
+   "goc": "EL-05",
+   "bien_the": "V3",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "tltn",
+   "claim_ky_vong": [
+    "du_dk(tltn)"
+   ],
+   "cau_hoi": "mn ơi em có đủ điều kiện làm tieu luận tốt nghiệp không",
+   "gold": "TRUE",
+   "loai_gold": "quy_che",
+   "split": "test",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      [
+       "CT550E",
+       "CT223",
+       "CT222",
+       "CT467",
+       "CT293",
+       "CT275",
+       "CT300",
+       "CT202",
+       "CT294",
+       "CT190"
+      ]
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "du_dieu_kien"
+  },
+  {
+   "id": "QN-EL-05-V4",
+   "goc": "EL-05",
+   "bien_the": "V4",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "tltn",
+   "claim_ky_vong": [
+    "du_dk(tltn)"
+   ],
+   "cau_hoi": "e co du dk lam tl tn k?",
+   "gold": "TRUE",
+   "loai_gold": "quy_che",
+   "split": "test",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      [
+       "CT550E",
+       "CT223",
+       "CT222",
+       "CT467",
+       "CT293",
+       "CT275",
+       "CT300",
+       "CT202",
+       "CT294",
+       "CT190"
+      ]
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "du_dieu_kien"
+  },
+  {
+   "id": "QN-EL-06-V0",
+   "goc": "EL-06",
+   "bien_the": "V0",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "lvtn",
+   "claim_ky_vong": [
+    "du_dk(lvtn)"
+   ],
+   "cau_hoi": "Em bị F luận văn, em có được làm lại luận văn không?",
+   "gold": "TRUE",
+   "loai_gold": "quy_che",
+   "split": "test",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "diem",
+      "CT550E",
+      30
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "du_dieu_kien"
+  },
+  {
+   "id": "QN-EL-06-V1",
+   "goc": "EL-06",
+   "bien_the": "V1",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "lvtn",
+   "claim_ky_vong": [
+    "du_dk(lvtn)"
+   ],
+   "cau_hoi": "Em bi F luan van, em co duoc lam lai luan van khong?",
+   "gold": "TRUE",
+   "loai_gold": "quy_che",
+   "split": "test",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "diem",
+      "CT550E",
+      30
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "du_dieu_kien"
+  },
+  {
+   "id": "QN-EL-06-V2",
+   "goc": "EL-06",
+   "bien_the": "V2",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "lvtn",
+   "claim_ky_vong": [
+    "du_dk(lvtn)"
+   ],
+   "cau_hoi": "e bị F lv, e có dc làm lại lv ko?",
+   "gold": "TRUE",
+   "loai_gold": "quy_che",
+   "split": "test",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "diem",
+      "CT550E",
+      30
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "du_dieu_kien"
+  },
+  {
+   "id": "QN-EL-06-V3",
+   "goc": "EL-06",
+   "bien_the": "V3",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "lvtn",
+   "claim_ky_vong": [
+    "du_dk(lvtn)"
+   ],
+   "cau_hoi": "anh chị ơi em bị f luận văn, em có được làm lại luan văn không ?",
+   "gold": "TRUE",
+   "loai_gold": "quy_che",
+   "split": "test",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "diem",
+      "CT550E",
+      30
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "du_dieu_kien"
+  },
+  {
+   "id": "QN-EL-06-V4",
+   "goc": "EL-06",
+   "bien_the": "V4",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "lvtn",
+   "claim_ky_vong": [
+    "du_dk(lvtn)"
+   ],
+   "cau_hoi": "e bi F lv, e co dc lam lai lv ko?",
+   "gold": "TRUE",
+   "loai_gold": "quy_che",
+   "split": "test",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "diem",
+      "CT550E",
+      30
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "du_dieu_kien"
+  },
+  {
+   "id": "QN-NL-01-V0",
+   "goc": "NL-01",
+   "bien_the": "V0",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "nl",
+   "claim_ky_vong": [
+    "duoc_dang_ky(\"CT182\")"
+   ],
+   "cau_hoi": "Kỳ này em đăng ký CT182 được không ạ?",
+   "gold": "TRUE",
+   "loai_gold": "quy_che",
+   "split": "test",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      [
+       "CT182",
+       "CT180"
+      ]
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "cau_tu_nhien"
+  },
+  {
+   "id": "QN-NL-01-V1",
+   "goc": "NL-01",
+   "bien_the": "V1",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "nl",
+   "claim_ky_vong": [
+    "duoc_dang_ky(\"CT182\")"
+   ],
+   "cau_hoi": "Ky nay em dang ky ct182 duoc khong a?",
+   "gold": "TRUE",
+   "loai_gold": "quy_che",
+   "split": "test",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      [
+       "CT182",
+       "CT180"
+      ]
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "cau_tu_nhien"
+  },
+  {
+   "id": "QN-NL-01-V2",
+   "goc": "NL-01",
+   "bien_the": "V2",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "nl",
+   "claim_ky_vong": [
+    "duoc_dang_ky(\"CT182\")"
+   ],
+   "cau_hoi": "kì này e đk ct182 đc k ạ?",
+   "gold": "TRUE",
+   "loai_gold": "quy_che",
+   "split": "test",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      [
+       "CT182",
+       "CT180"
+      ]
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "cau_tu_nhien"
+  },
+  {
+   "id": "QN-NL-01-V3",
+   "goc": "NL-01",
+   "bien_the": "V3",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "nl",
+   "claim_ky_vong": [
+    "duoc_dang_ky(\"CT182\")"
+   ],
+   "cau_hoi": "cho em hỏi xíu kỳ này em đăng ký ct182 được không a ?",
+   "gold": "TRUE",
+   "loai_gold": "quy_che",
+   "split": "test",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      [
+       "CT182",
+       "CT180"
+      ]
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "cau_tu_nhien"
+  },
+  {
+   "id": "QN-NL-01-V4",
+   "goc": "NL-01",
+   "bien_the": "V4",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "nl",
+   "claim_ky_vong": [
+    "duoc_dang_ky(\"CT182\")"
+   ],
+   "cau_hoi": "ki nay e dk ct182 dc k a?",
+   "gold": "TRUE",
+   "loai_gold": "quy_che",
+   "split": "test",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      [
+       "CT182",
+       "CT180"
+      ]
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "cau_tu_nhien"
+  },
+  {
+   "id": "QN-NL-02-V0",
+   "goc": "NL-02",
+   "bien_the": "V0",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "nl",
+   "claim_ky_vong": [
+    "duoc_dang_ky(\"CT182\")"
+   ],
+   "cau_hoi": "Cho em hỏi em học CT182 được chưa?",
+   "gold": "FALSE",
+   "loai_gold": "quy_che",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      [
+       "CT182",
+       "CT180",
+       "CT177"
+      ]
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "cau_tu_nhien"
+  },
+  {
+   "id": "QN-NL-02-V1",
+   "goc": "NL-02",
+   "bien_the": "V1",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "nl",
+   "claim_ky_vong": [
+    "duoc_dang_ky(\"CT182\")"
+   ],
+   "cau_hoi": "Cho em hoi em hoc ct182 duoc chua?",
+   "gold": "FALSE",
+   "loai_gold": "quy_che",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      [
+       "CT182",
+       "CT180",
+       "CT177"
+      ]
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "cau_tu_nhien"
+  },
+  {
+   "id": "QN-NL-02-V2",
+   "goc": "NL-02",
+   "bien_the": "V2",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "nl",
+   "claim_ky_vong": [
+    "duoc_dang_ky(\"CT182\")"
+   ],
+   "cau_hoi": "Cho e hỏi e học ct182 dc chưa?",
+   "gold": "FALSE",
+   "loai_gold": "quy_che",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      [
+       "CT182",
+       "CT180",
+       "CT177"
+      ]
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "cau_tu_nhien"
+  },
+  {
+   "id": "QN-NL-02-V3",
+   "goc": "NL-02",
+   "bien_the": "V3",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "nl",
+   "claim_ky_vong": [
+    "duoc_dang_ky(\"CT182\")"
+   ],
+   "cau_hoi": "ad ơi cho e hỏi cho em hỏi em học ct182 được chua??",
+   "gold": "FALSE",
+   "loai_gold": "quy_che",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      [
+       "CT182",
+       "CT180",
+       "CT177"
+      ]
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "cau_tu_nhien"
+  },
+  {
+   "id": "QN-NL-02-V4",
+   "goc": "NL-02",
+   "bien_the": "V4",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "nl",
+   "claim_ky_vong": [
+    "duoc_dang_ky(\"CT182\")"
+   ],
+   "cau_hoi": "Cho e hoi e hoc ct182 dc chua?",
+   "gold": "FALSE",
+   "loai_gold": "quy_che",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      [
+       "CT182",
+       "CT180",
+       "CT177"
+      ]
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "cau_tu_nhien"
+  },
+  {
+   "id": "QN-NL-03-V0",
+   "goc": "NL-03",
+   "bien_the": "V0",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "nl",
+   "claim_ky_vong": [
+    "du_dk(lvtn)"
+   ],
+   "cau_hoi": "Em đủ điều kiện làm luận văn chưa ạ?",
+   "gold": "TRUE",
+   "loai_gold": "quy_che",
+   "split": "test",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      "CT550E"
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "cau_tu_nhien"
+  },
+  {
+   "id": "QN-NL-03-V1",
+   "goc": "NL-03",
+   "bien_the": "V1",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "nl",
+   "claim_ky_vong": [
+    "du_dk(lvtn)"
+   ],
+   "cau_hoi": "Em du dieu kien lam luan van chua a?",
+   "gold": "TRUE",
+   "loai_gold": "quy_che",
+   "split": "test",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      "CT550E"
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "cau_tu_nhien"
+  },
+  {
+   "id": "QN-NL-03-V2",
+   "goc": "NL-03",
+   "bien_the": "V2",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "nl",
+   "claim_ky_vong": [
+    "du_dk(lvtn)"
+   ],
+   "cau_hoi": "e đủ dk làm lv chưa ạ?",
+   "gold": "TRUE",
+   "loai_gold": "quy_che",
+   "split": "test",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      "CT550E"
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "cau_tu_nhien"
+  },
+  {
+   "id": "QN-NL-03-V3",
+   "goc": "NL-03",
+   "bien_the": "V3",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "nl",
+   "claim_ky_vong": [
+    "du_dk(lvtn)"
+   ],
+   "cau_hoi": "mn ơi em du điều kiện làm luận văn chưa ạ ?",
+   "gold": "TRUE",
+   "loai_gold": "quy_che",
+   "split": "test",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      "CT550E"
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "cau_tu_nhien"
+  },
+  {
+   "id": "QN-NL-03-V4",
+   "goc": "NL-03",
+   "bien_the": "V4",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "nl",
+   "claim_ky_vong": [
+    "du_dk(lvtn)"
+   ],
+   "cau_hoi": "e du dk lam lv chua a?",
+   "gold": "TRUE",
+   "loai_gold": "quy_che",
+   "split": "test",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      "CT550E"
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "cau_tu_nhien"
+  },
+  {
+   "id": "QN-NL-04-V0",
+   "goc": "NL-04",
+   "bien_the": "V0",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "nl",
+   "claim_ky_vong": [
+    "tot_nghiep"
+   ],
+   "cau_hoi": "Cho em hỏi em đủ điều kiện tốt nghiệp chưa ạ?",
+   "gold": "TRUE",
+   "loai_gold": "quy_che",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_tltn",
+    "bien_doi": []
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "cau_tu_nhien"
+  },
+  {
+   "id": "QN-NL-04-V1",
+   "goc": "NL-04",
+   "bien_the": "V1",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "nl",
+   "claim_ky_vong": [
+    "tot_nghiep"
+   ],
+   "cau_hoi": "Cho em hoi em du dieu kien tot nghiep chua a?",
+   "gold": "TRUE",
+   "loai_gold": "quy_che",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_tltn",
+    "bien_doi": []
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "cau_tu_nhien"
+  },
+  {
+   "id": "QN-NL-04-V2",
+   "goc": "NL-04",
+   "bien_the": "V2",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "nl",
+   "claim_ky_vong": [
+    "tot_nghiep"
+   ],
+   "cau_hoi": "Cho e hỏi e đủ dk tn chưa ạ?",
+   "gold": "TRUE",
+   "loai_gold": "quy_che",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_tltn",
+    "bien_doi": []
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "cau_tu_nhien"
+  },
+  {
+   "id": "QN-NL-04-V3",
+   "goc": "NL-04",
+   "bien_the": "V3",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "nl",
+   "claim_ky_vong": [
+    "tot_nghiep"
+   ],
+   "cau_hoi": "anh chị ơi cho em hỏi em đủ điều kiện tốt nghiệp chua??",
+   "gold": "TRUE",
+   "loai_gold": "quy_che",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_tltn",
+    "bien_doi": []
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "cau_tu_nhien"
+  },
+  {
+   "id": "QN-NL-04-V4",
+   "goc": "NL-04",
+   "bien_the": "V4",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "nl",
+   "claim_ky_vong": [
+    "tot_nghiep"
+   ],
+   "cau_hoi": "Cho e hoi e du dk tn chua a?",
+   "gold": "TRUE",
+   "loai_gold": "quy_che",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_tltn",
+    "bien_doi": []
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "cau_tu_nhien"
+  },
+  {
+   "id": "QN-NL-05-V0",
+   "goc": "NL-05",
+   "bien_the": "V0",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "nl",
+   "claim_ky_vong": [],
+   "cau_hoi": "Nếu em rớt CT296 thì em tốt nghiệp trễ mấy học kỳ?",
+   "gold": "UNKNOWN",
+   "loai_gold": "thiet_ke",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": []
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "cau_tu_nhien"
+  },
+  {
+   "id": "QN-NL-05-V1",
+   "goc": "NL-05",
+   "bien_the": "V1",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "nl",
+   "claim_ky_vong": [],
+   "cau_hoi": "Neu em rot ct296 thi em tot nghiep tre may hoc ky?",
+   "gold": "UNKNOWN",
+   "loai_gold": "thiet_ke",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": []
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "cau_tu_nhien"
+  },
+  {
+   "id": "QN-NL-05-V2",
+   "goc": "NL-05",
+   "bien_the": "V2",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "nl",
+   "claim_ky_vong": [],
+   "cau_hoi": "Nếu e rớt ct296 thì e tn trễ mấy hk?",
+   "gold": "UNKNOWN",
+   "loai_gold": "thiet_ke",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": []
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "cau_tu_nhien"
+  },
+  {
+   "id": "QN-NL-05-V3",
+   "goc": "NL-05",
+   "bien_the": "V3",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "nl",
+   "claim_ky_vong": [],
+   "cau_hoi": "anh chị ơi nếu em rot ct296 thì em tốt nghiệp trễ mấy học kỳ??",
+   "gold": "UNKNOWN",
+   "loai_gold": "thiet_ke",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": []
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "cau_tu_nhien"
+  },
+  {
+   "id": "QN-NL-05-V4",
+   "goc": "NL-05",
+   "bien_the": "V4",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "nl",
+   "claim_ky_vong": [],
+   "cau_hoi": "Neu e rot ct296 thi e tn tre may hk?",
+   "gold": "UNKNOWN",
+   "loai_gold": "thiet_ke",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": []
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "cau_tu_nhien"
+  },
+  {
+   "id": "QN-NL-06-V0",
+   "goc": "NL-06",
+   "bien_the": "V0",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "nl",
+   "claim_ky_vong": [],
+   "cau_hoi": "Học phí học kỳ này của em là bao nhiêu?",
+   "gold": "UNKNOWN",
+   "loai_gold": "thiet_ke",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": []
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "cau_tu_nhien"
+  },
+  {
+   "id": "QN-NL-06-V1",
+   "goc": "NL-06",
+   "bien_the": "V1",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "nl",
+   "claim_ky_vong": [],
+   "cau_hoi": "Hoc phi hoc ky nay cua em la bao nhieu?",
+   "gold": "UNKNOWN",
+   "loai_gold": "thiet_ke",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": []
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "cau_tu_nhien"
+  },
+  {
+   "id": "QN-NL-06-V2",
+   "goc": "NL-06",
+   "bien_the": "V2",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "nl",
+   "claim_ky_vong": [],
+   "cau_hoi": "Học phí hk này của e là bao nhiêu?",
+   "gold": "UNKNOWN",
+   "loai_gold": "thiet_ke",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": []
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "cau_tu_nhien"
+  },
+  {
+   "id": "QN-NL-06-V3",
+   "goc": "NL-06",
+   "bien_the": "V3",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "nl",
+   "claim_ky_vong": [],
+   "cau_hoi": "anh chị ơi học phi học kỳ này của em là bao nhiêu ?",
+   "gold": "UNKNOWN",
+   "loai_gold": "thiet_ke",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": []
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "cau_tu_nhien"
+  },
+  {
+   "id": "QN-NL-06-V4",
+   "goc": "NL-06",
+   "bien_the": "V4",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "nl",
+   "claim_ky_vong": [],
+   "cau_hoi": "Hoc phi hk nay cua e la bao nhieu?",
+   "gold": "UNKNOWN",
+   "loai_gold": "thiet_ke",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": []
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "cau_tu_nhien"
+  },
+  {
+   "id": "QN-NL-07-V0",
+   "goc": "NL-07",
+   "bien_the": "V0",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "nl",
+   "claim_ky_vong": [],
+   "cau_hoi": "Em có được xét học bổng khuyến khích học tập không?",
+   "gold": "UNKNOWN",
+   "loai_gold": "thiet_ke",
+   "split": "test",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": []
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "cau_tu_nhien"
+  },
+  {
+   "id": "QN-NL-07-V1",
+   "goc": "NL-07",
+   "bien_the": "V1",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "nl",
+   "claim_ky_vong": [],
+   "cau_hoi": "Em co duoc xet hoc bong khuyen khich hoc tap khong?",
+   "gold": "UNKNOWN",
+   "loai_gold": "thiet_ke",
+   "split": "test",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": []
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "cau_tu_nhien"
+  },
+  {
+   "id": "QN-NL-07-V2",
+   "goc": "NL-07",
+   "bien_the": "V2",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "nl",
+   "claim_ky_vong": [],
+   "cau_hoi": "e có dc xét học bổng khuyến khích học tập k?",
+   "gold": "UNKNOWN",
+   "loai_gold": "thiet_ke",
+   "split": "test",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": []
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "cau_tu_nhien"
+  },
+  {
+   "id": "QN-NL-07-V3",
+   "goc": "NL-07",
+   "bien_the": "V3",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "nl",
+   "claim_ky_vong": [],
+   "cau_hoi": "mn ơi em có được xét hoc bổng khuyến khích học tập không??",
+   "gold": "UNKNOWN",
+   "loai_gold": "thiet_ke",
+   "split": "test",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": []
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "cau_tu_nhien"
+  },
+  {
+   "id": "QN-NL-07-V4",
+   "goc": "NL-07",
+   "bien_the": "V4",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "nl",
+   "claim_ky_vong": [],
+   "cau_hoi": "e co dc xet hoc bong khuyen khich hoc tap k?",
+   "gold": "UNKNOWN",
+   "loai_gold": "thiet_ke",
+   "split": "test",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": []
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "cau_tu_nhien"
+  },
+  {
+   "id": "QN-NL-08-V0",
+   "goc": "NL-08",
+   "bien_the": "V0",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "nl",
+   "claim_ky_vong": [],
+   "cau_hoi": "Em có bị cảnh báo học vụ không?",
+   "gold": "UNKNOWN",
+   "loai_gold": "quy_che",
+   "split": "test",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": []
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "cau_tu_nhien"
+  },
+  {
+   "id": "QN-NL-08-V1",
+   "goc": "NL-08",
+   "bien_the": "V1",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "nl",
+   "claim_ky_vong": [],
+   "cau_hoi": "Em co bi canh bao hoc vu khong?",
+   "gold": "UNKNOWN",
+   "loai_gold": "quy_che",
+   "split": "test",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": []
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "cau_tu_nhien"
+  },
+  {
+   "id": "QN-NL-08-V2",
+   "goc": "NL-08",
+   "bien_the": "V2",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "nl",
+   "claim_ky_vong": [],
+   "cau_hoi": "e có bị cảnh báo học vụ k?",
+   "gold": "UNKNOWN",
+   "loai_gold": "quy_che",
+   "split": "test",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": []
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "cau_tu_nhien"
+  },
+  {
+   "id": "QN-NL-08-V3",
+   "goc": "NL-08",
+   "bien_the": "V3",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "nl",
+   "claim_ky_vong": [],
+   "cau_hoi": "mn ơi em có bị cảnh bao học vụ không ?",
+   "gold": "UNKNOWN",
+   "loai_gold": "quy_che",
+   "split": "test",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": []
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "cau_tu_nhien"
+  },
+  {
+   "id": "QN-NL-08-V4",
+   "goc": "NL-08",
+   "bien_the": "V4",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "nl",
+   "claim_ky_vong": [],
+   "cau_hoi": "e co bi canh bao hoc vu k?",
+   "gold": "UNKNOWN",
+   "loai_gold": "quy_che",
+   "split": "test",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": []
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "cau_tu_nhien"
+  },
+  {
+   "id": "QN-NL-09-V0",
+   "goc": "NL-09",
+   "bien_the": "V0",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "nl",
+   "claim_ky_vong": [],
+   "cau_hoi": "ĐTBCTL của em có đủ xếp loại giỏi khi tốt nghiệp không?",
+   "gold": "FALSE",
+   "loai_gold": "quy_che",
+   "split": "test",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": []
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "cau_tu_nhien"
+  },
+  {
+   "id": "QN-NL-09-V1",
+   "goc": "NL-09",
+   "bien_the": "V1",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "nl",
+   "claim_ky_vong": [],
+   "cau_hoi": "DTBCTL cua em co du xep loai gioi khi tot nghiep khong?",
+   "gold": "FALSE",
+   "loai_gold": "quy_che",
+   "split": "test",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": []
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "cau_tu_nhien"
+  },
+  {
+   "id": "QN-NL-09-V2",
+   "goc": "NL-09",
+   "bien_the": "V2",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "nl",
+   "claim_ky_vong": [],
+   "cau_hoi": "ĐTBCTL của e có đủ xếp loại giỏi khi tn ko?",
+   "gold": "FALSE",
+   "loai_gold": "quy_che",
+   "split": "test",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": []
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "cau_tu_nhien"
+  },
+  {
+   "id": "QN-NL-09-V3",
+   "goc": "NL-09",
+   "bien_the": "V3",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "nl",
+   "claim_ky_vong": [],
+   "cau_hoi": "mn ơi đtbctl của em có du xếp loại giỏi khi tốt nghiệp không ?",
+   "gold": "FALSE",
+   "loai_gold": "quy_che",
+   "split": "test",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": []
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "cau_tu_nhien"
+  },
+  {
+   "id": "QN-NL-09-V4",
+   "goc": "NL-09",
+   "bien_the": "V4",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "nl",
+   "claim_ky_vong": [],
+   "cau_hoi": "DTBCTL cua e co du xep loai gioi khi tn ko?",
+   "gold": "FALSE",
+   "loai_gold": "quy_che",
+   "split": "test",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": []
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "cau_tu_nhien"
+  },
+  {
+   "id": "QN-NL-10-V0",
+   "goc": "NL-10",
+   "bien_the": "V0",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "nl",
+   "claim_ky_vong": [],
+   "cau_hoi": "Em muốn chuyển ngành thì cần điều kiện gì?",
+   "gold": "UNKNOWN",
+   "loai_gold": "thiet_ke",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": []
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "cau_tu_nhien"
+  },
+  {
+   "id": "QN-NL-10-V1",
+   "goc": "NL-10",
+   "bien_the": "V1",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "nl",
+   "claim_ky_vong": [],
+   "cau_hoi": "Em muon chuyen nganh thi can dieu kien gi?",
+   "gold": "UNKNOWN",
+   "loai_gold": "thiet_ke",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": []
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "cau_tu_nhien"
+  },
+  {
+   "id": "QN-NL-10-V2",
+   "goc": "NL-10",
+   "bien_the": "V2",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "nl",
+   "claim_ky_vong": [],
+   "cau_hoi": "e muốn chuyển ngành thì cần đk gì?",
+   "gold": "UNKNOWN",
+   "loai_gold": "thiet_ke",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": []
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "cau_tu_nhien"
+  },
+  {
+   "id": "QN-NL-10-V3",
+   "goc": "NL-10",
+   "bien_the": "V3",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "nl",
+   "claim_ky_vong": [],
+   "cau_hoi": "ad ơi cho e hỏi em muốn chuyen ngành thì cần điều kiện gì",
+   "gold": "UNKNOWN",
+   "loai_gold": "thiet_ke",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": []
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "cau_tu_nhien"
+  },
+  {
+   "id": "QN-NL-10-V4",
+   "goc": "NL-10",
+   "bien_the": "V4",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "nl",
+   "claim_ky_vong": [],
+   "cau_hoi": "e muon chuyen nganh thi can dk gi?",
+   "gold": "UNKNOWN",
+   "loai_gold": "thiet_ke",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": []
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "cau_tu_nhien"
+  },
+  {
+   "id": "QN-NL-11-V0",
+   "goc": "NL-11",
+   "bien_the": "V0",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "nl",
+   "claim_ky_vong": [
+    "duoc_dang_ky(\"CT466E\")"
+   ],
+   "cau_hoi": "Kỳ này em đăng ký niên luận CT466E được không?",
+   "gold": "TRUE",
+   "loai_gold": "quy_che",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      "CT466E"
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "cau_tu_nhien"
+  },
+  {
+   "id": "QN-NL-11-V1",
+   "goc": "NL-11",
+   "bien_the": "V1",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "nl",
+   "claim_ky_vong": [
+    "duoc_dang_ky(\"CT466E\")"
+   ],
+   "cau_hoi": "Ky nay em dang ky nien luan ct466e duoc khong?",
+   "gold": "TRUE",
+   "loai_gold": "quy_che",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      "CT466E"
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "cau_tu_nhien"
+  },
+  {
+   "id": "QN-NL-11-V2",
+   "goc": "NL-11",
+   "bien_the": "V2",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "nl",
+   "claim_ky_vong": [
+    "duoc_dang_ky(\"CT466E\")"
+   ],
+   "cau_hoi": "kì này e dky niên luận ct466e đc ko?",
+   "gold": "TRUE",
+   "loai_gold": "quy_che",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      "CT466E"
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "cau_tu_nhien"
+  },
+  {
+   "id": "QN-NL-11-V3",
+   "goc": "NL-11",
+   "bien_the": "V3",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "nl",
+   "claim_ky_vong": [
+    "duoc_dang_ky(\"CT466E\")"
+   ],
+   "cau_hoi": "anh chị ơi kỳ này em dang ký niên luận ct466e được không??",
+   "gold": "TRUE",
+   "loai_gold": "quy_che",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      "CT466E"
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "cau_tu_nhien"
+  },
+  {
+   "id": "QN-NL-11-V4",
+   "goc": "NL-11",
+   "bien_the": "V4",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "nl",
+   "claim_ky_vong": [
+    "duoc_dang_ky(\"CT466E\")"
+   ],
+   "cau_hoi": "ki nay e dky nien luan ct466e dc ko?",
+   "gold": "TRUE",
+   "loai_gold": "quy_che",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      "CT466E"
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "cau_tu_nhien"
+  },
+  {
+   "id": "QN-NL-12-V0",
+   "goc": "NL-12",
+   "bien_the": "V0",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "nl",
+   "claim_ky_vong": [
+    "tot_nghiep"
+   ],
+   "cau_hoi": "Em ra trường được chưa ạ?",
+   "gold": "FALSE",
+   "loai_gold": "quy_che",
+   "split": "test",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      "CT484"
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "cau_tu_nhien"
+  },
+  {
+   "id": "QN-NL-12-V1",
+   "goc": "NL-12",
+   "bien_the": "V1",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "nl",
+   "claim_ky_vong": [
+    "tot_nghiep"
+   ],
+   "cau_hoi": "Em ra truong duoc chua a?",
+   "gold": "FALSE",
+   "loai_gold": "quy_che",
+   "split": "test",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      "CT484"
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "cau_tu_nhien"
+  },
+  {
+   "id": "QN-NL-12-V2",
+   "goc": "NL-12",
+   "bien_the": "V2",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "nl",
+   "claim_ky_vong": [
+    "tot_nghiep"
+   ],
+   "cau_hoi": "e ra trường đc chưa ạ?",
+   "gold": "FALSE",
+   "loai_gold": "quy_che",
+   "split": "test",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      "CT484"
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "cau_tu_nhien"
+  },
+  {
+   "id": "QN-NL-12-V3",
+   "goc": "NL-12",
+   "bien_the": "V3",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "nl",
+   "claim_ky_vong": [
+    "tot_nghiep"
+   ],
+   "cau_hoi": "cho em hỏi xíu em ra truong được chưa ?",
+   "gold": "FALSE",
+   "loai_gold": "quy_che",
+   "split": "test",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      "CT484"
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "cau_tu_nhien"
+  },
+  {
+   "id": "QN-NL-12-V4",
+   "goc": "NL-12",
+   "bien_the": "V4",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "nl",
+   "claim_ky_vong": [
+    "tot_nghiep"
+   ],
+   "cau_hoi": "e ra truong dc chua a?",
+   "gold": "FALSE",
+   "loai_gold": "quy_che",
+   "split": "test",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      "CT484"
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "cau_tu_nhien"
+  },
+  {
+   "id": "QN-TN-01-V0",
+   "goc": "TN-01",
+   "bien_the": "V0",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "tot_nghiep",
+   "claim_ky_vong": [
+    "tot_nghiep"
+   ],
+   "cau_hoi": "Em đã đủ điều kiện xét tốt nghiệp chưa?",
+   "gold": "TRUE",
+   "loai_gold": "quy_che",
+   "split": "test",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_tltn",
+    "bien_doi": [
+     [
+      "diem",
+      "CT182",
+      40
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "tot_nghiep"
+  },
+  {
+   "id": "QN-TN-01-V1",
+   "goc": "TN-01",
+   "bien_the": "V1",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "tot_nghiep",
+   "claim_ky_vong": [
+    "tot_nghiep"
+   ],
+   "cau_hoi": "Em da du dieu kien xet tot nghiep chua?",
+   "gold": "TRUE",
+   "loai_gold": "quy_che",
+   "split": "test",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_tltn",
+    "bien_doi": [
+     [
+      "diem",
+      "CT182",
+      40
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "tot_nghiep"
+  },
+  {
+   "id": "QN-TN-01-V2",
+   "goc": "TN-01",
+   "bien_the": "V2",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "tot_nghiep",
+   "claim_ky_vong": [
+    "tot_nghiep"
+   ],
+   "cau_hoi": "e đã đủ dk xét tn chưa?",
+   "gold": "TRUE",
+   "loai_gold": "quy_che",
+   "split": "test",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_tltn",
+    "bien_doi": [
+     [
+      "diem",
+      "CT182",
+      40
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "tot_nghiep"
+  },
+  {
+   "id": "QN-TN-01-V3",
+   "goc": "TN-01",
+   "bien_the": "V3",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "tot_nghiep",
+   "claim_ky_vong": [
+    "tot_nghiep"
+   ],
+   "cau_hoi": "anh chị ơi em đã đủ dieu kiện xét tốt nghiệp chưa",
+   "gold": "TRUE",
+   "loai_gold": "quy_che",
+   "split": "test",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_tltn",
+    "bien_doi": [
+     [
+      "diem",
+      "CT182",
+      40
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "tot_nghiep"
+  },
+  {
+   "id": "QN-TN-01-V4",
+   "goc": "TN-01",
+   "bien_the": "V4",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "tot_nghiep",
+   "claim_ky_vong": [
+    "tot_nghiep"
+   ],
+   "cau_hoi": "e da du dk xet tn chua?",
+   "gold": "TRUE",
+   "loai_gold": "quy_che",
+   "split": "test",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_tltn",
+    "bien_doi": [
+     [
+      "diem",
+      "CT182",
+      40
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "tot_nghiep"
+  },
+  {
+   "id": "QN-TN-02-V0",
+   "goc": "TN-02",
+   "bien_the": "V0",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "tot_nghiep",
+   "claim_ky_vong": [
+    "tot_nghiep"
+   ],
+   "cau_hoi": "Em đã đủ điều kiện xét tốt nghiệp chưa?",
+   "gold": "TRUE",
+   "loai_gold": "quy_che",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_5hp",
+    "bien_doi": [
+     [
+      "diem",
+      "CT478",
+      45
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "tot_nghiep"
+  },
+  {
+   "id": "QN-TN-02-V1",
+   "goc": "TN-02",
+   "bien_the": "V1",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "tot_nghiep",
+   "claim_ky_vong": [
+    "tot_nghiep"
+   ],
+   "cau_hoi": "Em da du dieu kien xet tot nghiep chua?",
+   "gold": "TRUE",
+   "loai_gold": "quy_che",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_5hp",
+    "bien_doi": [
+     [
+      "diem",
+      "CT478",
+      45
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "tot_nghiep"
+  },
+  {
+   "id": "QN-TN-02-V2",
+   "goc": "TN-02",
+   "bien_the": "V2",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "tot_nghiep",
+   "claim_ky_vong": [
+    "tot_nghiep"
+   ],
+   "cau_hoi": "e đã đủ dk xét tn chưa?",
+   "gold": "TRUE",
+   "loai_gold": "quy_che",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_5hp",
+    "bien_doi": [
+     [
+      "diem",
+      "CT478",
+      45
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "tot_nghiep"
+  },
+  {
+   "id": "QN-TN-02-V3",
+   "goc": "TN-02",
+   "bien_the": "V3",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "tot_nghiep",
+   "claim_ky_vong": [
+    "tot_nghiep"
+   ],
+   "cau_hoi": "ad ơi cho e hỏi em da đủ điều kiện xét tốt nghiệp chưa",
+   "gold": "TRUE",
+   "loai_gold": "quy_che",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_5hp",
+    "bien_doi": [
+     [
+      "diem",
+      "CT478",
+      45
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "tot_nghiep"
+  },
+  {
+   "id": "QN-TN-02-V4",
+   "goc": "TN-02",
+   "bien_the": "V4",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "tot_nghiep",
+   "claim_ky_vong": [
+    "tot_nghiep"
+   ],
+   "cau_hoi": "e da du dk xet tn chua?",
+   "gold": "TRUE",
+   "loai_gold": "quy_che",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_5hp",
+    "bien_doi": [
+     [
+      "diem",
+      "CT478",
+      45
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "tot_nghiep"
+  },
+  {
+   "id": "QN-TN-03-V0",
+   "goc": "TN-03",
+   "bien_the": "V0",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "tot_nghiep",
+   "claim_ky_vong": [
+    "tot_nghiep"
+   ],
+   "cau_hoi": "Em đã đủ điều kiện xét tốt nghiệp chưa?",
+   "gold": "TRUE",
+   "loai_gold": "quy_che",
+   "split": "test",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "diem",
+      "CT180",
+      40
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "tot_nghiep"
+  },
+  {
+   "id": "QN-TN-03-V1",
+   "goc": "TN-03",
+   "bien_the": "V1",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "tot_nghiep",
+   "claim_ky_vong": [
+    "tot_nghiep"
+   ],
+   "cau_hoi": "Em da du dieu kien xet tot nghiep chua?",
+   "gold": "TRUE",
+   "loai_gold": "quy_che",
+   "split": "test",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "diem",
+      "CT180",
+      40
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "tot_nghiep"
+  },
+  {
+   "id": "QN-TN-03-V2",
+   "goc": "TN-03",
+   "bien_the": "V2",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "tot_nghiep",
+   "claim_ky_vong": [
+    "tot_nghiep"
+   ],
+   "cau_hoi": "e đã đủ đk xét tn chưa?",
+   "gold": "TRUE",
+   "loai_gold": "quy_che",
+   "split": "test",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "diem",
+      "CT180",
+      40
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "tot_nghiep"
+  },
+  {
+   "id": "QN-TN-03-V3",
+   "goc": "TN-03",
+   "bien_the": "V3",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "tot_nghiep",
+   "claim_ky_vong": [
+    "tot_nghiep"
+   ],
+   "cau_hoi": "mn ơi em da đủ điều kiện xét tốt nghiệp chưa??",
+   "gold": "TRUE",
+   "loai_gold": "quy_che",
+   "split": "test",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "diem",
+      "CT180",
+      40
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "tot_nghiep"
+  },
+  {
+   "id": "QN-TN-03-V4",
+   "goc": "TN-03",
+   "bien_the": "V4",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "tot_nghiep",
+   "claim_ky_vong": [
+    "tot_nghiep"
+   ],
+   "cau_hoi": "e da du dk xet tn chua?",
+   "gold": "TRUE",
+   "loai_gold": "quy_che",
+   "split": "test",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "diem",
+      "CT180",
+      40
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "tot_nghiep"
+  },
+  {
+   "id": "QN-TN-04-V0",
+   "goc": "TN-04",
+   "bien_the": "V0",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "tot_nghiep",
+   "claim_ky_vong": [
+    "tot_nghiep"
+   ],
+   "cau_hoi": "Em đã đủ điều kiện xét tốt nghiệp chưa?",
+   "gold": "FALSE",
+   "loai_gold": "quy_che",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "diem",
+      "CT180",
+      39
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "tot_nghiep"
+  },
+  {
+   "id": "QN-TN-04-V1",
+   "goc": "TN-04",
+   "bien_the": "V1",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "tot_nghiep",
+   "claim_ky_vong": [
+    "tot_nghiep"
+   ],
+   "cau_hoi": "Em da du dieu kien xet tot nghiep chua?",
+   "gold": "FALSE",
+   "loai_gold": "quy_che",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "diem",
+      "CT180",
+      39
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "tot_nghiep"
+  },
+  {
+   "id": "QN-TN-04-V2",
+   "goc": "TN-04",
+   "bien_the": "V2",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "tot_nghiep",
+   "claim_ky_vong": [
+    "tot_nghiep"
+   ],
+   "cau_hoi": "e đã đủ đk xét tn chưa?",
+   "gold": "FALSE",
+   "loai_gold": "quy_che",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "diem",
+      "CT180",
+      39
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "tot_nghiep"
+  },
+  {
+   "id": "QN-TN-04-V3",
+   "goc": "TN-04",
+   "bien_the": "V3",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "tot_nghiep",
+   "claim_ky_vong": [
+    "tot_nghiep"
+   ],
+   "cau_hoi": "anh chị ơi em đã đủ điều kiện xét tốt nghiệp chua ?",
+   "gold": "FALSE",
+   "loai_gold": "quy_che",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "diem",
+      "CT180",
+      39
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "tot_nghiep"
+  },
+  {
+   "id": "QN-TN-04-V4",
+   "goc": "TN-04",
+   "bien_the": "V4",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "tot_nghiep",
+   "claim_ky_vong": [
+    "tot_nghiep"
+   ],
+   "cau_hoi": "e da du dk xet tn chua?",
+   "gold": "FALSE",
+   "loai_gold": "quy_che",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "diem",
+      "CT180",
+      39
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "tot_nghiep"
+  },
+  {
+   "id": "QN-TN-05-V0",
+   "goc": "TN-05",
+   "bien_the": "V0",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "tot_nghiep",
+   "claim_ky_vong": [
+    "tot_nghiep"
+   ],
+   "cau_hoi": "Em đã đủ điều kiện xét tốt nghiệp chưa?",
+   "gold": "FALSE",
+   "loai_gold": "quy_che",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "diem",
+      "QP012",
+      30
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "tot_nghiep"
+  },
+  {
+   "id": "QN-TN-05-V1",
+   "goc": "TN-05",
+   "bien_the": "V1",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "tot_nghiep",
+   "claim_ky_vong": [
+    "tot_nghiep"
+   ],
+   "cau_hoi": "Em da du dieu kien xet tot nghiep chua?",
+   "gold": "FALSE",
+   "loai_gold": "quy_che",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "diem",
+      "QP012",
+      30
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "tot_nghiep"
+  },
+  {
+   "id": "QN-TN-05-V2",
+   "goc": "TN-05",
+   "bien_the": "V2",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "tot_nghiep",
+   "claim_ky_vong": [
+    "tot_nghiep"
+   ],
+   "cau_hoi": "e đã đủ dk xét tn chưa?",
+   "gold": "FALSE",
+   "loai_gold": "quy_che",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "diem",
+      "QP012",
+      30
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "tot_nghiep"
+  },
+  {
+   "id": "QN-TN-05-V3",
+   "goc": "TN-05",
+   "bien_the": "V3",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "tot_nghiep",
+   "claim_ky_vong": [
+    "tot_nghiep"
+   ],
+   "cau_hoi": "ad ơi cho e hỏi em đã đủ dieu kiện xét tốt nghiệp chưa",
+   "gold": "FALSE",
+   "loai_gold": "quy_che",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "diem",
+      "QP012",
+      30
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "tot_nghiep"
+  },
+  {
+   "id": "QN-TN-05-V4",
+   "goc": "TN-05",
+   "bien_the": "V4",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "tot_nghiep",
+   "claim_ky_vong": [
+    "tot_nghiep"
+   ],
+   "cau_hoi": "e da du dk xet tn chua?",
+   "gold": "FALSE",
+   "loai_gold": "quy_che",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "diem",
+      "QP012",
+      30
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "tot_nghiep"
+  },
+  {
+   "id": "QN-TN-15-V0",
+   "goc": "TN-15",
+   "bien_the": "V0",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "tot_nghiep",
+   "claim_ky_vong": [
+    "tot_nghiep"
+   ],
+   "cau_hoi": "Em đã đủ điều kiện xét tốt nghiệp chưa?",
+   "gold": "FALSE",
+   "loai_gold": "quy_che",
+   "split": "test",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      "CT484"
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "tot_nghiep"
+  },
+  {
+   "id": "QN-TN-15-V1",
+   "goc": "TN-15",
+   "bien_the": "V1",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "tot_nghiep",
+   "claim_ky_vong": [
+    "tot_nghiep"
+   ],
+   "cau_hoi": "Em da du dieu kien xet tot nghiep chua?",
+   "gold": "FALSE",
+   "loai_gold": "quy_che",
+   "split": "test",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      "CT484"
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "tot_nghiep"
+  },
+  {
+   "id": "QN-TN-15-V2",
+   "goc": "TN-15",
+   "bien_the": "V2",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "tot_nghiep",
+   "claim_ky_vong": [
+    "tot_nghiep"
+   ],
+   "cau_hoi": "e đã đủ đk xét tn chưa?",
+   "gold": "FALSE",
+   "loai_gold": "quy_che",
+   "split": "test",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      "CT484"
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "tot_nghiep"
+  },
+  {
+   "id": "QN-TN-15-V3",
+   "goc": "TN-15",
+   "bien_the": "V3",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "tot_nghiep",
+   "claim_ky_vong": [
+    "tot_nghiep"
+   ],
+   "cau_hoi": "cho em hỏi xíu em đã đủ điều kiện xet tốt nghiệp chưa",
+   "gold": "FALSE",
+   "loai_gold": "quy_che",
+   "split": "test",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      "CT484"
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "tot_nghiep"
+  },
+  {
+   "id": "QN-TN-15-V4",
+   "goc": "TN-15",
+   "bien_the": "V4",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "tot_nghiep",
+   "claim_ky_vong": [
+    "tot_nghiep"
+   ],
+   "cau_hoi": "e da du dk xet tn chua?",
+   "gold": "FALSE",
+   "loai_gold": "quy_che",
+   "split": "test",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "xoa_diem",
+      "CT484"
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "tot_nghiep"
+  },
+  {
+   "id": "QN-TN-16-V0",
+   "goc": "TN-16",
+   "bien_the": "V0",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "tot_nghiep",
+   "claim_ky_vong": [
+    "tot_nghiep"
+   ],
+   "cau_hoi": "Em đã đủ điều kiện xét tốt nghiệp chưa?",
+   "gold": "FALSE",
+   "loai_gold": "quy_che",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "dat",
+      "xac_nhan_ky_luat_sach",
+      null
+     ],
+     [
+      "xoa_diem",
+      "CT484"
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "tot_nghiep"
+  },
+  {
+   "id": "QN-TN-16-V1",
+   "goc": "TN-16",
+   "bien_the": "V1",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "tot_nghiep",
+   "claim_ky_vong": [
+    "tot_nghiep"
+   ],
+   "cau_hoi": "Em da du dieu kien xet tot nghiep chua?",
+   "gold": "FALSE",
+   "loai_gold": "quy_che",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "dat",
+      "xac_nhan_ky_luat_sach",
+      null
+     ],
+     [
+      "xoa_diem",
+      "CT484"
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "tot_nghiep"
+  },
+  {
+   "id": "QN-TN-16-V2",
+   "goc": "TN-16",
+   "bien_the": "V2",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "tot_nghiep",
+   "claim_ky_vong": [
+    "tot_nghiep"
+   ],
+   "cau_hoi": "e đã đủ đk xét tn chưa?",
+   "gold": "FALSE",
+   "loai_gold": "quy_che",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "dat",
+      "xac_nhan_ky_luat_sach",
+      null
+     ],
+     [
+      "xoa_diem",
+      "CT484"
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "tot_nghiep"
+  },
+  {
+   "id": "QN-TN-16-V3",
+   "goc": "TN-16",
+   "bien_the": "V3",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "tot_nghiep",
+   "claim_ky_vong": [
+    "tot_nghiep"
+   ],
+   "cau_hoi": "mn ơi em đã đủ dieu kiện xét tốt nghiệp chưa??",
+   "gold": "FALSE",
+   "loai_gold": "quy_che",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "dat",
+      "xac_nhan_ky_luat_sach",
+      null
+     ],
+     [
+      "xoa_diem",
+      "CT484"
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "tot_nghiep"
+  },
+  {
+   "id": "QN-TN-16-V4",
+   "goc": "TN-16",
+   "bien_the": "V4",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "tot_nghiep",
+   "claim_ky_vong": [
+    "tot_nghiep"
+   ],
+   "cau_hoi": "e da du dk xet tn chua?",
+   "gold": "FALSE",
+   "loai_gold": "quy_che",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "dat",
+      "xac_nhan_ky_luat_sach",
+      null
+     ],
+     [
+      "xoa_diem",
+      "CT484"
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "tot_nghiep"
+  },
+  {
+   "id": "QN-TN-17-V0",
+   "goc": "TN-17",
+   "bien_the": "V0",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "tot_nghiep",
+   "claim_ky_vong": [
+    "tot_nghiep"
+   ],
+   "cau_hoi": "Em đã đủ điều kiện xét tốt nghiệp chưa?",
+   "gold": "FALSE",
+   "loai_gold": "quy_che",
+   "split": "test",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "diem_dac_biet",
+      "CT484",
+      "W"
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "tot_nghiep"
+  },
+  {
+   "id": "QN-TN-17-V1",
+   "goc": "TN-17",
+   "bien_the": "V1",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "tot_nghiep",
+   "claim_ky_vong": [
+    "tot_nghiep"
+   ],
+   "cau_hoi": "Em da du dieu kien xet tot nghiep chua?",
+   "gold": "FALSE",
+   "loai_gold": "quy_che",
+   "split": "test",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "diem_dac_biet",
+      "CT484",
+      "W"
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "tot_nghiep"
+  },
+  {
+   "id": "QN-TN-17-V2",
+   "goc": "TN-17",
+   "bien_the": "V2",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "tot_nghiep",
+   "claim_ky_vong": [
+    "tot_nghiep"
+   ],
+   "cau_hoi": "e đã đủ đk xét tn chưa?",
+   "gold": "FALSE",
+   "loai_gold": "quy_che",
+   "split": "test",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "diem_dac_biet",
+      "CT484",
+      "W"
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "tot_nghiep"
+  },
+  {
+   "id": "QN-TN-17-V3",
+   "goc": "TN-17",
+   "bien_the": "V3",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "tot_nghiep",
+   "claim_ky_vong": [
+    "tot_nghiep"
+   ],
+   "cau_hoi": "ad ơi cho e hỏi em đã đủ điều kien xét tốt nghiệp chưa??",
+   "gold": "FALSE",
+   "loai_gold": "quy_che",
+   "split": "test",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "diem_dac_biet",
+      "CT484",
+      "W"
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "tot_nghiep"
+  },
+  {
+   "id": "QN-TN-17-V4",
+   "goc": "TN-17",
+   "bien_the": "V4",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "tot_nghiep",
+   "claim_ky_vong": [
+    "tot_nghiep"
+   ],
+   "cau_hoi": "e da du dk xet tn chua?",
+   "gold": "FALSE",
+   "loai_gold": "quy_che",
+   "split": "test",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "diem_dac_biet",
+      "CT484",
+      "W"
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "tot_nghiep"
+  },
+  {
+   "id": "QN-TN-21-V0",
+   "goc": "TN-21",
+   "bien_the": "V0",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "tot_nghiep",
+   "claim_ky_vong": [
+    "tot_nghiep"
+   ],
+   "cau_hoi": "Em đã đủ điều kiện xét tốt nghiệp chưa?",
+   "gold": "FALSE",
+   "loai_gold": "quy_che",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "dat",
+      "da_hoc_nam2",
+      20
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "tot_nghiep"
+  },
+  {
+   "id": "QN-TN-21-V1",
+   "goc": "TN-21",
+   "bien_the": "V1",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "tot_nghiep",
+   "claim_ky_vong": [
+    "tot_nghiep"
+   ],
+   "cau_hoi": "Em da du dieu kien xet tot nghiep chua?",
+   "gold": "FALSE",
+   "loai_gold": "quy_che",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "dat",
+      "da_hoc_nam2",
+      20
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "tot_nghiep"
+  },
+  {
+   "id": "QN-TN-21-V2",
+   "goc": "TN-21",
+   "bien_the": "V2",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "tot_nghiep",
+   "claim_ky_vong": [
+    "tot_nghiep"
+   ],
+   "cau_hoi": "e đã đủ đk xét tn chưa?",
+   "gold": "FALSE",
+   "loai_gold": "quy_che",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "dat",
+      "da_hoc_nam2",
+      20
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "tot_nghiep"
+  },
+  {
+   "id": "QN-TN-21-V3",
+   "goc": "TN-21",
+   "bien_the": "V3",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "tot_nghiep",
+   "claim_ky_vong": [
+    "tot_nghiep"
+   ],
+   "cau_hoi": "ad ơi cho e hỏi em đã du điều kiện xét tốt nghiệp chưa??",
+   "gold": "FALSE",
+   "loai_gold": "quy_che",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "dat",
+      "da_hoc_nam2",
+      20
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "tot_nghiep"
+  },
+  {
+   "id": "QN-TN-21-V4",
+   "goc": "TN-21",
+   "bien_the": "V4",
+   "he": "nl",
+   "claim": "nl",
+   "claim_goc": "tot_nghiep",
+   "claim_ky_vong": [
+    "tot_nghiep"
+   ],
+   "cau_hoi": "e da du dk xet tn chua?",
+   "gold": "FALSE",
+   "loai_gold": "quy_che",
+   "split": "dev",
+   "dau_vao": {
+    "loai": "ho_so",
+    "goc": "sv_lvtn",
+    "bien_doi": [
+     [
+      "dat",
+      "da_hoc_nam2",
+      20
+     ]
+    ]
+   },
+   "su_that": null,
+   "can_hoi": null,
+   "cham_diem": true,
+   "nhom": "tot_nghiep"
+  }
+ ]
+}

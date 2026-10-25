@@ -126,7 +126,7 @@ KẾT LUẬN: ĐẠT — phân biệt đúng 4 trạng thái
 
 - [ ] **Prerequisite & Graduation (T4/T7):** ngưỡng tín chỉ T4b (≥80/120/125 TC) + đồ thị tiên quyết đã có, cần test `du_dk_dang_ky` qua `passed/substituted/exempted_M`
 - [ ] Chuẩn đầu ra ngoại ngữ/CNTT (R-F01b, N) — vẫn `UNKNOWN`
-- [ ] Thời gian học tập tối đa (R-E01, 9 năm) + `tc_cong_nhan` giảm trần
+- [x] Thời gian học tập tối đa (R-E01, 9 năm) + `tc_cong_nhan` giảm trần — ✅ đã xong: R-Formal v1.7 (Tuần 16) + v1.8 (sau Tuần 17, P17-3)
 
 ---
 

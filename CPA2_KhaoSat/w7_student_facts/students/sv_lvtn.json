@@ -366,6 +366,7 @@
   "exemptions": [],
   "khong_tinh_tich_luy": [],
   "xac_nhan_ky_luat_sach": true,
+  "da_hoc_nam2": 9,
   "meta": {
     "nguon": "gia_lap",
     "ghi_chu": "I1 — đủ 161 TC hình thức LVTN, ngoại ngữ AV, chuyên ngành CN2, ĐTBCTL ~3.0, dự kiến tot_nghiep=TRUE"

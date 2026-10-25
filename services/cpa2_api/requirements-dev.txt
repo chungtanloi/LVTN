@@ -1,0 +1,3 @@
+-r requirements.txt
+# Test client của Starlette (bản mới dùng httpx2; httpx cũ gây cảnh báo deprecation)
+httpx2==2.13.0

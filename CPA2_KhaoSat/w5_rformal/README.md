@@ -111,6 +111,9 @@ cho trang 20 của QĐ3266 (chứa Điều 33–35 và bảng hạng tốt nghi�
 cả ba bảng của QĐ5339, và bỏ mất đúng hai dòng C⁺ và C trong bảng quy đổi điểm. Đừng tin
 `source/*.txt`.
 
+Trang 20 của QĐ3266 nay có bản **chép tay từ PDF gốc** (`source/QD3266_tr20_chep_tay.txt`, 18/10/2026) —
+corpus RAG dùng bản này (`nguon=chep_tay`) thay cho trích R-Formal.
+
 ## Hạn chế đã biết
 
 - Nhãn F/P/N do **một người** gán — chưa có kappa. Dùng bộ soát chéo ở trên để đóng.

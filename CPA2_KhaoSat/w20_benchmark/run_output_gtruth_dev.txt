@@ -1,0 +1,73 @@
+CPA² trên gtruth — split dev (58 ca)
+
+  DK-02    dang_ky        gold=TRUE    → TRUE      ✓
+  DK-03    dang_ky        gold=FALSE   → FALSE     ✓
+  DK-04    dang_ky        gold=FALSE   → FALSE     ✓
+  DK-05    dang_ky        gold=TRUE    → TRUE      ✓
+  DK-06    dang_ky        gold=TRUE    → TRUE      ✓
+  DK-07    dang_ky        gold=FALSE   → FALSE     ✓
+  DK-08    dang_ky        gold=TRUE    → TRUE      ✓
+  DK-10    dang_ky        gold=FALSE   → FALSE     ✓
+  DK-14    dang_ky        gold=FALSE   → FALSE     ✓
+  DK-16    dang_ky        gold=TRUE    → TRUE      ✓
+  DK-19    dang_ky        gold=FALSE   → FALSE     ✓
+  EL-01    du_dieu_kien   gold=TRUE    → TRUE      ✓
+  EL-02    du_dieu_kien   gold=FALSE   → FALSE     ✓
+  EL-03    du_dieu_kien   gold=TRUE    → TRUE      ✓
+  EL-04    du_dieu_kien   gold=FALSE   → FALSE     ✓
+  EL-07    du_dieu_kien   gold=TRUE    → TRUE      ✓
+  EL-09    du_dieu_kien   gold=FALSE   → FALSE     ✓
+  EL-11    du_dieu_kien   gold=FALSE   → FALSE     ✓
+  EL-12    du_dieu_kien   gold=FALSE   → FALSE     ✓
+  EL-16    du_dieu_kien   gold=FALSE   → FALSE     ✓
+  RC-02    de_xuat        gold=TRUE    → TRUE      ✓
+  RC-04    de_xuat        gold=TRUE    → TRUE      ✓
+  RC-05    de_xuat        gold=TRUE    → TRUE      ✓
+  RC-06    de_xuat        gold=TRUE    → TRUE      ✓
+  RC-09    de_xuat        gold=TRUE    → TRUE      ✓
+  RC-10    de_xuat        gold=TRUE    → TRUE      ✓
+  TN-02    tot_nghiep     gold=TRUE    → TRUE      ✓
+  TN-04    tot_nghiep     gold=FALSE   → FALSE     ✓
+  TN-05    tot_nghiep     gold=FALSE   → FALSE     ✓
+  TN-06    tot_nghiep     gold=TRUE    → TRUE      ✓
+  TN-10    tot_nghiep     gold=TRUE    → TRUE      ✓
+  TN-14    tot_nghiep     gold=TRUE    → TRUE      ✓
+  TN-16    tot_nghiep     gold=FALSE   → FALSE     ✓
+  TN-18    tot_nghiep     gold=UNKNOWN → UNKNOWN   ✓
+  TN-19    tot_nghiep     gold=TRUE    → TRUE      ✓
+  TN-21    tot_nghiep     gold=FALSE   → FALSE     ✓
+  TN-22    tot_nghiep     gold=FALSE   → FALSE     ✓
+  TN-23    tot_nghiep     gold=TRUE    → TRUE      ✓
+  NH-01    nhom           gold=FALSE   → FALSE     ✓
+  NH-03    nhom           gold=TRUE    → TRUE      ✓
+  NH-06    nhom           gold=FALSE   → FALSE     ✓
+  NH-08    nhom           gold=FALSE   → FALSE     ✓
+  MT-01    mien_thay_the  gold=TRUE    → TRUE      ✓
+  MT-02    mien_thay_the  gold=FALSE   → FALSE     ✓
+  MT-03    mien_thay_the  gold=TRUE    → TRUE      ✓
+  MT-04    mien_thay_the  gold=FALSE   → FALSE     ✓
+  MT-05    mien_thay_the  gold=TRUE    → TRUE      ✓
+  MT-12    mien_thay_the  gold=FALSE   → FALSE     ✓
+  HG-01    hang           gold=TRUE    → FALSE     ✗ UNSOUND
+  HG-03    hang           gold=TRUE    → TRUE      ✓
+  HG-05    hang           gold=TRUE    → FALSE     ✗ UNSOUND
+  HG-07    hang           gold=TRUE    → FALSE     ✗ UNSOUND
+  NL-02    cau_tu_nhien   gold=FALSE   → FALSE     ✓   ['claim_parser=duoc_dang_ky("CT182")', 'verdict_goc=FALSE']
+  NL-04    cau_tu_nhien   gold=TRUE    → TRUE      ✓   ['claim_parser=tot_nghiep', 'verdict_goc=TRUE']
+  NL-05    cau_tu_nhien   gold=UNKNOWN → UNKNOWN   ✓   ['claim_parser=counterfactual', 'verdict_goc=UNKNOWN']
+  NL-06    cau_tu_nhien   gold=UNKNOWN → TRUE      ✗ UNSOUND   ['claim_parser=tot_nghiep', 'verdict_goc=TRUE']
+  NL-10    cau_tu_nhien   gold=UNKNOWN → TRUE      ✗ UNSOUND   ['claim_parser=tot_nghiep', 'verdict_goc=TRUE']
+  NL-11    cau_tu_nhien   gold=TRUE    → FALSE     ✗ UNSOUND   ['claim_parser=tot_nghiep', 'verdict_goc=FALSE']
+
+nhóm              n   Sound   Cover  SelAcc  đúng  unsound  từ chối thừa  hỏi đúng
+tong             58   89.7%   96.6%   89.3%    52        6             0       1/1
+[quy_che]        55   92.7%   98.2%   92.6%    51        4             0       1/1
+[thiet_ke]        3   33.3%   66.7%    0.0%     1        2             0       0/0
+cau_tu_nhien      6   50.0%   83.3%   40.0%     3        3             0       0/0
+dang_ky          11  100.0%  100.0%  100.0%    11        0             0       0/0
+de_xuat           6  100.0%  100.0%  100.0%     6        0             0       0/0
+du_dieu_kien      9  100.0%  100.0%  100.0%     9        0             0       0/0
+hang              4   25.0%  100.0%   25.0%     1        3             0       0/0
+mien_thay_the     6  100.0%  100.0%  100.0%     6        0             0       0/0
+nhom              4  100.0%  100.0%  100.0%     4        0             0       0/0
+tot_nghiep       12  100.0%   91.7%  100.0%    12        0             0       1/1

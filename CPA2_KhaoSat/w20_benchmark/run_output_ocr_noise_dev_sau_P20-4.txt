@@ -1,0 +1,31 @@
+CPA² trên ocr_noise — split dev (20 ca)
+
+  ON-01M1  M1             gold=TRUE    → TRUE      ✓
+  ON-01M3  M3             gold=UNKNOWN → UNKNOWN   ✓
+  ON-02M2  M2             gold=TRUE    → UNKNOWN   · từ chối thừa
+  ON-02M3  M3             gold=UNKNOWN → UNKNOWN   ✓
+  ON-02M4  M4             gold=UNKNOWN → UNKNOWN   ✓
+  ON-03M3  M3             gold=UNKNOWN → UNKNOWN   ✓
+  ON-04M2  M2             gold=TRUE    → UNKNOWN   · từ chối thừa
+  ON-05M1  M1             gold=TRUE    → TRUE      ✓
+  ON-05M4  M4             gold=UNKNOWN → UNKNOWN   ✓
+  ON-06M1  M1             gold=TRUE    → TRUE      ✓
+  ON-06M2  M2             gold=TRUE    → UNKNOWN   · từ chối thừa
+  ON-06M3  M3             gold=UNKNOWN → UNKNOWN   ✓
+  ON-06M4  M4             gold=UNKNOWN → UNKNOWN   ✓
+  ON-07M1  M1             gold=TRUE    → TRUE      ✓
+  ON-07M3  M3             gold=UNKNOWN → UNKNOWN   ✓
+  ON-08M2  M2             gold=TRUE    → UNKNOWN   · từ chối thừa
+  ON-09M1  M1             gold=TRUE    → TRUE      ✓
+  ON-09M4  M4             gold=UNKNOWN → UNKNOWN   ✓
+  ON-10M2  M2             gold=TRUE    → UNKNOWN   · từ chối thừa
+  ON-10M4  M4             gold=UNKNOWN → UNKNOWN   ✓
+
+nhóm              n   Sound   Cover  SelAcc  đúng  unsound  từ chối thừa  hỏi đúng
+tong             20  100.0%   25.0%  100.0%    15        0             5       0/0
+[quy_che]        10  100.0%   50.0%  100.0%     5        0             5       0/0
+[thiet_ke]       10  100.0%    0.0%       —    10        0             0       0/0
+M1                5  100.0%  100.0%  100.0%     5        0             0       0/0
+M2                5  100.0%    0.0%       —     0        0             5       0/0
+M3                5  100.0%    0.0%       —     5        0             0       0/0
+M4                5  100.0%    0.0%       —     5        0             0       0/0

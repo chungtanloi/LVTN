@@ -363,6 +363,7 @@
     }
   },
   "xac_nhan_ky_luat_sach": true,
+  "da_hoc_nam2": 9,
   "meta": {
     "nguon": "gia_lap",
     "ghi_chu": "I5 — trộn AV 4TC + PV 7TC =11TC, nhóm ngoại ngữ một nhánh không cộng dồn → thieu_nhom(g_ngoai_ngu,3), QD CQ-02"

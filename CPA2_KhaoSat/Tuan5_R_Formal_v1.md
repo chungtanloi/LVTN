@@ -239,6 +239,8 @@ làm luận văn chưa?"* trong ma trận độ phủ Tuần 2 **không trả l�
 
 ### P-4 · LỖI PIPELINE OCR — trang 20 trắng hoàn toàn
 
+> ✅ **Đã lấp 18/10/2026 (sau Tuần 19):** Loi gửi PDF gốc QĐ3266; trang 20 được chép tay đúng chữ vào `w5_rformal/source/QD3266_tr20_chep_tay.txt` (Điều 32 k4–6, Điều 33 k1–4, Điều 34 k1–2, Điều 35). Đối chiếu: các trích R-Formal đọc từ ảnh ở Tuần 5 (R-F06…F10) **đúng nội dung** (R-F07–F09 nguyên văn; R-F06, R-F10 diễn đạt lại/rút gọn — nguyên văn ở bản chép tay); thêm R-X20, R-X21 (Đ33 k3, k4 — thủ tục, lớp X). Tiêu đề: Điều 33 "Xử lý sinh viên quá hạn thời gian học tập", Điều 34 "Bằng tốt nghiệp và hạng tốt nghiệp".
+
 Tesseract trả về **chuỗi rỗng** cho trang 20, đúng trang chứa Điều 33 (xử lý SV quá hạn),
 Điều 34 (**bảng hạng tốt nghiệp** + điều khoản giảm một mức) và Điều 35. Không có cảnh báo,
 không có lỗi — chỉ là một trang trắng lặng lẽ giữa 21 trang. Nếu tin OCR, R-Formal sẽ **thiếu
@@ -416,7 +418,7 @@ Tuần 6 phải xây **Curriculum KB v1** với tiêu chí *"solver đọc đư�
 - [x] Formalization Coverage và Executable Coverage được tính từ danh mục bằng mã, không đếm tay
 - [ ] **Chưa đối chiếu với con người.** QD-03 (*"TC nợ đọng"*) và QD-08 (*"tương đương"*) là
       suy đoán của tác giả, phải xác nhận với Phòng Đào tạo hoặc GVHD trước khi vào luận văn
-- [ ] Chưa thu thập *Quy định xét miễn và công nhận điểm học phần* — **chặn toàn bộ loại T5**
+- [x] Chưa thu thập *Quy định xét miễn và công nhận điểm học phần* — **chặn toàn bộ loại T5** — ✅ đã xong: QĐ5339 — R-Formal v1.1
 - [ ] Chưa kiểm quy tắc trên bảng điểm thật (mới chỉ hồ sơ thử tổng hợp); dự kiến Tuần 7
 - [ ] Danh mục chưa được người thứ hai soát độc lập — phân loại F/P/N hiện là **đánh giá đơn
       người**, cần nêu như hạn chế của RQ1 hoặc bổ sung một vòng soát chéo với GVHD

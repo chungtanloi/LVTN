@@ -122,9 +122,9 @@ Chú thích trong `graduation_solver.lp` ghi "dk_ky_luat … luôn UNKNOWN nếu
 
 ## 6. Việc còn lại → Tuần 16+
 
-- [ ] **Tuần 16:** sửa giả định thế giới đóng cho dữ kiện ngoài trong KB (P15-2); "missing evidence" = danh sách HP không chắc + khai báo thiếu
+- [x] **Tuần 16:** sửa giả định thế giới đóng cho dữ kiện ngoài trong KB (P15-2); "missing evidence" = danh sách HP không chắc + khai báo thiếu — ✅ đã xong: Tuần 16 (graduation_solver.lp mục 0 + w16_abstention)
 - [ ] Xác minh với CTĐT/Phòng Đào tạo: GDTC TC025–027 ↔ TC100; CC004 ↔ nhánh Anh văn
-- [ ] Đưa các ca OCR (mất dòng, đọc nhầm, nghiêng) vào bộ Adversarial ở Tuần 17
+- [x] Đưa các ca OCR (mất dòng, đọc nhầm, nghiêng) vào bộ Adversarial ở Tuần 17 — ✅ đã xong: Tuần 17 nhóm ocr_sai (18 ca mức tài liệu + 2 ca mức ảnh)
 - [ ] Đối chiếu tay 3 trang còn lại của bảng điểm thật
 
 ### Ghi chú kiểm chứng

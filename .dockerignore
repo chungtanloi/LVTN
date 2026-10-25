@@ -1,0 +1,21 @@
+# Ngữ cảnh build của services/cpa2_api/Dockerfile là GỐC repo. Dockerfile chỉ COPY các thư mục liệt kê, nhưng giữ ngữ cảnh gọn và
+# chắc chắn không có dữ liệu cá nhân / khoá lọt vào (bộ dựng cũ không đọc Dockerfile.dockerignore).
+.git
+**/.env
+**/.env.*
+.env
+.env.*
+!.env.example
+!**/.env.example
+**/__pycache__
+**/*.pyc
+**/_rieng
+**/_anh
+**/_tho
+NiênLuan
+ctu
+LVTN
+*.xlsx
+*.zip
+**/ket_qua_*.json
+**/run_output_*.txt

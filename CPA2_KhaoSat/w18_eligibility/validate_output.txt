@@ -1,0 +1,61 @@
+==============================================================================
+VALIDATE ELIGIBILITY MODULE v1 — Tuần 18 (CPA2)
+==============================================================================
+
+A. LUẬN VĂN / TIỂU LUẬN (CTĐT ≥ 120 TC — Đ31 R-F04 + QD-12)
+  [OK]   A1 146 TC, không khai báo hình thức → ELIGIBLE, không hỏi thêm (ELIGIBLE, [])
+          ↳ HỒI QUY QD-12: bản trước (chưa có xác nhận) cho UNKNOWN + hỏi đơn vị đã công bố chưa
+  [OK]   A2 146 TC + đơn vị công bố hình thức LVTN → ELIGIBLE (ELIGIBLE)
+  [OK]   A3 chứng chỉ trích cả R-A03 (tiên quyết TC) và R-F04 (đơn vị xét) (['r_a03', 'r_f04'])
+  [OK]   A4 đơn vị công bố hình thức TLTN → LVTN NOT_ELIGIBLE (NOT_ELIGIBLE)
+  [OK]   A5 … → TLTN ELIGIBLE (ELIGIBLE)
+  [OK]   A6 đúng 120 TC + công bố LVTN → ELIGIBLE (ELIGIBLE)
+  [OK]   A7 119 TC → NOT_ELIGIBLE, lý do thiếu 1 TC (NOT_ELIGIBLE, ['thieu_tc("CT550E",1)'])
+  [OK]   A8 119 TC, không khai báo hình thức → NOT_ELIGIBLE (NOT_ELIGIBLE)
+  [OK]   A9 LVTN đã đạt → DA_HOAN_THANH, không báo Eligible (DA_HOAN_THANH)
+  [OK]   A10 LVTN bị F, đơn vị cho làm lại → ELIGIBLE (Đ31: đăng ký làm lại) (ELIGIBLE)
+
+B. TÍCH LŨY TC THAY LVTN/TLTN (Đ31 k3 — SV tự chọn)
+  [OK]   B1 chưa làm LVTN → được chọn tích lũy TC, không cần đơn vị công bố (ELIGIBLE)
+  [OK]   B2 LVTN bị F → được học HP thay thế (Đ31) (ELIGIBLE)
+  [OK]   B3 nhóm tốt nghiệp đã đủ → DA_HOAN_THANH (DA_HOAN_THANH)
+
+C. NIÊN LUẬN / THỰC TẬP (ngưỡng TC của CTĐT)
+  [OK]   C1 đúng 80 TC → Niên luận CT466E ELIGIBLE (ELIGIBLE)
+  [OK]   C2 79 TC → NOT_ELIGIBLE, thiếu 1 TC (NOT_ELIGIBLE, ['thieu_tc("CT466E",1)'])
+  [OK]   C3 đúng 125 TC → Thực tập CT518E ELIGIBLE (ELIGIBLE)
+  [OK]   C4 124 TC → Thực tập NOT_ELIGIBLE (NOT_ELIGIBLE)
+
+D. NIÊN LUẬN CƠ SỞ (tiên quyết CT174, CT176)
+  [OK]   D1 đã đạt CT174, CT176 → ELIGIBLE (ELIGIBLE)
+  [OK]   D2 chưa học CT176 → NOT_ELIGIBLE, nêu tiên quyết thiếu (NOT_ELIGIBLE, ['thieu_tien_quyet("CT271E","CT176")'])
+  [OK]   D3 CT176 bị F (tiên quyết = đã tích lũy) → NOT_ELIGIBLE (NOT_ELIGIBLE)
+  [OK]   D4 điểm CT176 chưa rõ (8,0 / 3,0) → UNKNOWN + hỏi CT176 (UNKNOWN)
+  [OK]   D5 bản ghi CT174 mâu thuẫn (8,0 ghi F) → UNKNOWN (UNKNOWN)
+
+E. HỌC PHẦN THAY THẾ (QĐ5339 Đ3 k9)
+  [OK]   E1 đạt ML009 → được công nhận thay ML014 (ELIGIBLE)
+  [OK]   E2 ML009 bị F → không thay được ML014 (NOT_ELIGIBLE)
+  [OK]   E3 ML010 → cả ML016 và ML018 (một → nhiều): ML018 ELIGIBLE (ELIGIBLE)
+
+F. TÍCH HỢP PROTOTYPE (Tuần 12): câu hỏi 'đủ điều kiện làm luận văn'
+  [OK]   F1 146 TC → TRUE (TRUE)
+          ↳ HỒI QUY P18-1: prototype ánh xạ sang claim 'du_dk_tc' không đối số → luôn FALSE
+  [OK]   F2 … + đơn vị công bố LVTN → TRUE (TRUE)
+
+H. HỒI QUY REVIEW
+  [OK]   H1 đã đạt TLTN (hình thức khác, Đ31 'một trong ba') → LVTN DA_HOAN_THANH (DA_HOAN_THANH)
+  [OK]   H2 đã đạt LVTN → hỏi TLTN: DA_HOAN_THANH, không hỏi đơn vị (DA_HOAN_THANH)
+  [OK]   H3 ML014 đã đạt bằng điểm của chính nó → DA_HOAN_THANH (DA_HOAN_THANH)
+  [OK]   H4 mã HP thay thế không có trong CTĐT → báo lỗi, không im lặng NOT_ELIGIBLE
+  [OK]   H6 giá trị hình thức sai ('LVTN' hoa) → báo mâu thuẫn, coi như chưa khai báo → xét theo TC: ELIGIBLE (ELIGIBLE)
+  [OK]   H7 câu hỏi 'tiểu luận' → nhánh TLTN (du_dk(tltn), TRUE)
+  [OK]   H8 không có hồ sơ → UNKNOWN, không kết luận về SV (UNKNOWN)
+
+G. SCHEMA
+  [OK]   G1 schema có trường hinh_thuc_cuoi_khoa ∈ {lvtn, tltn, tich_luy_tc, null}
+  [OK]   G2 R-F04 lớp F với quyết định QD-12 (xác nhận ngoài văn bản) (F, QD-12 ĐÓNG (xác nhận)
+
+==============================================================================
+KẾT LUẬN: ĐẠT — Eligible / Not Eligible / Unknown có chứng chỉ và câu hỏi bổ sung
+==============================================================================

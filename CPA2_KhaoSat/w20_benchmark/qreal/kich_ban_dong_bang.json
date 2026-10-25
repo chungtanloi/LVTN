@@ -1,0 +1,7 @@
+{
+ "kich_ban": "c7b1fae18326f041b5ae309255577d901aa3b4f82feb4a2d22959bc1bcf6858e",
+ "phien_ban": "v2",
+ "kich_ban_v1": "48f07e6ee809d996e0c3570adb8562a1d6c53fb7bfe8ca381ee75bf9d8a32699",
+ "ngay": "2026-10-19",
+ "ghi_chu": "Kịch bản Q-Elicit ĐÓNG BĂNG trước khi mở biểu mẫu. v1 (commit e727448) → v2 trước khi thu bất kỳ câu nào: KB-05 chứa mẫu của ý định xếp loại mới (C12). Sửa kịch bản sau khi đã thu = phiên bản mới, không sửa phiên bản cũ."
+}

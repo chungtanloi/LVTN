@@ -1,0 +1,25 @@
+# QĐ3266/QĐ-ĐHCT (15/8/2024) — TRANG 20 của file PDF (số in ở đầu trang: 18)
+# CHÉP TAY TỪ ẢNH PDF GỐC, KHÔNG QUA OCR — Tesseract trả chuỗi rỗng cho trang này (Tuần 5, P-4).
+# Nguồn: QD3266_QD_cong_tac_hoc_vu_danh_cho_SV_trinh_do_dai_hoc_hinh_thuc_chinh_quy_V3.pdf (Loi gửi 18/10/2026).
+# Chép đúng chữ; chỉ thêm dòng đánh dấu "@@ văn bản | điều | khoản | trang | tiêu đề điều" để tách passage.
+# Trang bắt đầu giữa Điều 32 (khoản 1–3 ở trang 19, OCR đọc được).
+@@ qd3266 | 32 | 4 | 20 | Điều kiện tốt nghiệp và công nhận tốt nghiệp
+4. Hội đồng xét tốt nghiệp chịu trách nhiệm xét tốt nghiệp đúng thời hạn, đúng đối tượng và đề nghị Hiệu trưởng công nhận những SV đủ điều kiện tốt nghiệp.
+@@ qd3266 | 32 | 5 | 20 | Điều kiện tốt nghiệp và công nhận tốt nghiệp
+5. Phòng Đào tạo và Phòng Công tác Sinh viên chịu trách nhiệm thẩm định và trình Hiệu trưởng ký quyết định công nhận tốt nghiệp.
+@@ qd3266 | 32 | 6 | 20 | Điều kiện tốt nghiệp và công nhận tốt nghiệp
+6. Sinh viên đủ điều kiện tốt nghiệp được nhận quyết định công nhận tốt nghiệp, bằng tốt nghiệp và phụ lục văn bằng tốt nghiệp. Sinh viên phải nộp chi phí thực hiện bản sao bằng tốt nghiệp do Trường ĐHCT quy định (nếu có yêu cầu).
+@@ qd3266 | 33 | 1 | 20 | Xử lý sinh viên quá hạn thời gian học tập
+1. Khi hết thời gian học tập tối đa theo quy định (xem Điều 5), những SV không đủ điều kiện tốt nghiệp sẽ bị xóa tên.
+@@ qd3266 | 33 | 2 | 20 | Xử lý sinh viên quá hạn thời gian học tập
+2. Sinh viên đã hết thời gian học tập tối đa theo quy định nhưng chưa đủ điều kiện tốt nghiệp do chưa hoàn thành những học phần GDQP&AN hoặc GDTC, trong thời hạn 5 năm tính từ khi thôi học SV được phép trở về Trường ĐHCT để hoàn thiện các điều kiện còn thiếu và đề nghị xét công nhận tốt nghiệp. Đối với SV từ Khóa 47 trở về sau, SV đã hết thời gian học tập tối đa theo quy định nhưng chưa đủ điều kiện tốt nghiệp do chưa hoàn thành những học phần GDQP&AN hoặc GDTC hoặc chưa đạt chuẩn đầu ra về ngoại ngữ, công nghệ thông tin, trong thời hạn 3 năm tính từ khi thôi học SV được phép trở về Trường ĐHCT để hoàn thiện các điều kiện còn thiếu và đề nghị xét công nhận tốt nghiệp.
+@@ qd3266 | 33 | 3 | 20 | Xử lý sinh viên quá hạn thời gian học tập
+3. Sinh viên không đủ điều kiện tốt nghiệp sẽ được Trường bảo lưu, công nhận kết quả học tập đã tích lũy và cấp bảng điểm các học phần đã tích lũy (nếu có yêu cầu).
+@@ qd3266 | 33 | 4 | 20 | Xử lý sinh viên quá hạn thời gian học tập
+4. Sinh viên hết thời gian học hình thức chính quy được chuyển qua học hình thức vừa làm vừa học, hình thức đào tạo từ xa tương ứng (nếu có) của Trường ĐHCT nếu còn trong thời gian học tập theo quy định đối với hình thức đào tạo chuyển đến.
+@@ qd3266 | 34 | 1 | 20 | Bằng tốt nghiệp và hạng tốt nghiệp
+1. Bằng tốt nghiệp được cấp theo ngành đào tạo.
+@@ qd3266 | 34 | 2 | 20 | Bằng tốt nghiệp và hạng tốt nghiệp
+2. Hạng tốt nghiệp được xác định căn cứ vào ĐTBCTL theo các mức trong bảng sau: Hạng tốt nghiệp | ĐTBCTL — Loại xuất sắc: từ 3,60 đến 4,00 — Loại giỏi: từ 3,20 đến 3,59 — Loại khá: từ 2,50 đến 3,19 — Loại trung bình: từ 2,00 đến 2,49. Hạng tốt nghiệp loại xuất sắc và giỏi sẽ bị giảm một mức nếu thuộc một trong các trường hợp sau: a) Có khối lượng các học phần bị điểm F vượt quá 5% so với tổng số TC quy định của CTĐT (không tính khối lượng học phần học cải thiện điểm bị điểm F). b) Đã bị kỷ luật từ mức cảnh cáo cấp Trường trong thời gian học.
+@@ qd3266 | 35 | 0 | 20 | Thủ tục ra trường
+Sau khi có quyết định tốt nghiệp, SV liên hệ đơn vị đào tạo quản lý ngành để thực hiện thủ tục thanh toán ra trường.
