@@ -22,9 +22,10 @@ Các bộ khảo sát chạy trên bản sao tạm. Không sửa quy tắc, gold
 ## Chưa nghiệm thu online
 
 - Đã push mã ứng dụng lên nhánh `codex/cpa2-web-deploy`, commit `49d37f5`.
-- Render: `cpa2-api` đã live tại https://cpa2-api.onrender.com; `/health` trả 200 và KB `2e7757765cfa09ae`. Đường suy luận còn khóa vì chưa cấu hình service key; không coi health thành nghiệm thu tư vấn online.
+- Render: `cpa2-api` đã live tại https://cpa2-api.onrender.com; `/health` trả 200 và KB `2e7757765cfa09ae`. Đã cấu hình khóa dịch vụ: câu xét tốt nghiệp trên hồ sơ giả lập trả TRUE với 20 bước chứng minh; câu học phí trả UNKNOWN/khong_ro; yêu cầu không có khóa trả 401.
 - Vercel: đã tạo dự án `cpa2-web` trong workspace `loi5`, chưa phát hành giao diện có đăng nhập.
-- Convex và Clerk: đang chờ xác nhận team Convex và hoàn tất đăng nhập/provisioning trước khi cấu hình môi trường.
+- Convex: đã tạo dự án `cpa2` trong team PandaCore (`loiphat123456`), dev `nautical-fox-575`, prod `exciting-cheetah-606`; đã đặt URL API và khóa dịch vụ ở cả hai deployment. Backend chưa đồng bộ vì thiếu Clerk issuer.
+- Clerk: đã chọn gói Hobby miễn phí, nhưng Vercel yêu cầu người dùng chấp thuận điều khoản Marketplace trước khi provisioning. Đây là bước hiện đang chờ người dùng.
 - Kiểm thử Convex là kiểm thử chức năng backend trong bộ nhớ, chưa thay cho kiểm tra hai tài khoản Clerk thật trên cloud.
 - Container Docker đã build và khởi động thành công trên Render Linux. Chưa kiểm thử suy luận/OCR có xác thực qua cloud.
 - Trước khi công bố demo online: tạo/kết nối các dự án, cấu hình môi trường theo README, build Docker, thử đăng nhập hai tài khoản, upload/OCR, xóa dữ liệu và kiểm tra lại health.
