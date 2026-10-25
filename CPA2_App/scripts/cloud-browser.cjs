@@ -52,6 +52,7 @@ async function ticket(user) {
     console.log('PASS browser: authenticated session and history survive reload.');
     await page.getByRole('button', { name: 'Hồ sơ & bảng điểm', exact: true }).click();
     await page.getByRole('spinbutton', { name: 'Điểm CT101', exact: true }).fill('8.6');
+    await page.getByRole('spinbutton', { name: 'Tín chỉ được công nhận/chuyển đổi', exact: true }).fill('0');
     await page.getByRole('checkbox', { name: /Tôi đồng ý lưu hồ sơ/ }).check();
     await page.getByRole('button', { name: 'Lưu hồ sơ', exact: true }).click();
     await page.getByRole('status').filter({ hasText: 'Đã lưu hồ sơ.' }).waitFor({ timeout: 40000 });
