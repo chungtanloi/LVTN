@@ -34,6 +34,8 @@
 !CPA2_KhaoSat/w14_rag/grounded_answer.py
 !CPA2_KhaoSat/w14_rag/retriever.py
 !CPA2_KhaoSat/w14_rag/corpus.jsonl
+!CPA2_KhaoSat/w14_rag/retrieval_model_v1.json
+!CPA2_KhaoSat/w14_rag/rag_survey_train_sources_v1.json
 !CPA2_KhaoSat/w15_ocr/
 !CPA2_KhaoSat/w15_ocr/ocr_transcript.py
 !CPA2_KhaoSat/w16_abstention/

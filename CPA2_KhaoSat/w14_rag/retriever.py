@@ -18,8 +18,13 @@ Cấu hình chốt trên tập DEV (rag_queries.json), không nhìn tập TEST:
 TF-IDF n-gram ký tự làm GIẢM kết quả ở mọi cấu hình nên đã bỏ.
 
 Chạy: python retriever.py "sinh viên được đăng ký tối đa bao nhiêu tín chỉ"
+
+26/10/2026: search mặc định dùng mô hình kết hợp đặc trưng từ vựng đóng băng
+trong retrieval_model_v1.json, bổ sung câu hỏi TRAIN tổng hợp đã gán nguồn.
+Retriever(ranked=False) giữ BM25 cũ và luôn dùng cho grounding chứng chỉ.
+Không cần embedding/LLM hoặc thư viện ML trong runtime; điểm xếp hạng không phải xác suất.
 """
-import json, math, re, sys, unicodedata
+import hashlib, json, math, re, sys, unicodedata
 from collections import Counter
 from pathlib import Path
 
@@ -83,20 +88,140 @@ class BM25:
         return out
 
 
+def canonical_hash(value):
+    return hashlib.sha256(json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(',', ':')).encode('utf-8')).hexdigest()
+
+
+RETRIEVAL_ALIASES = [
+    (r'\bcanh bao hoc vu\b', 'canh bao hoc tap'),
+    (r'\b(?:rot|truot)\b', 'diem f'),
+    (r'\bra truong\b', 'tot nghiep'),
+    (r'\bduoi hoc\b', 'buoc thoi hoc'),
+    (r'\bsong nganh\b', 'hoc cung luc hai chuong trinh'),
+]
+
+
+def retrieval_words(text):
+    text = bo_dau(chuan_hoa(text))
+    for pattern, replacement in RETRIEVAL_ALIASES:
+        text = re.sub(pattern, replacement, text)
+    return re.findall(r'\w+', text)
+
+
+def retrieval_tokens(text):
+    words = retrieval_words(text)
+    return words + ['_'.join(words[i:i + 2]) for i in range(len(words) - 1)]
+
+
+def passage_body(doc):
+    text, title = doc['text'], doc.get('tieu_de', '')
+    position = text.find(title)
+    return text[position + len(title):] if title and position >= 0 else text
+
+
+def unit_scores(values):
+    denominator = max(values, default=0) or 1
+    return [value / denominator for value in values]
+
+
+class RetrievalRanker:
+    """Small, frozen lexical model. Training examples only rank original sources.
+
+    Runtime uses the standard library, not an embedding service or an LLM.
+    No query IDs, evaluation gold or student profiles are read by this class.
+    """
+    FEATURE_NAMES = ('full', 'canonical', 'body', 'lead', 'title', 'window',
+                     'example_max', 'example_top2', 'coverage', 'course_entity',
+                     'document_entity', 'condition_lead', 'threshold_body')
+
+    def __init__(self, docs, legacy):
+        self.docs, self.legacy = docs, legacy
+        config = json.loads((HERE / 'retrieval_model_v1.json').read_text(encoding='utf-8'))
+        training = json.loads((HERE / 'rag_survey_train_sources_v1.json').read_text(encoding='utf-8'))
+        if config['examples_sha256'] != canonical_hash(training):
+            raise ValueError('Retrieval training examples differ from the frozen model.')
+        if config['corpus_sha256'] != canonical_hash(sorted(docs, key=lambda d: d['id'])):
+            raise ValueError('Retrieval corpus differs from the frozen model.')
+        self.weights = config['weights']
+        if (config['features'] != list(self.FEATURE_NAMES) or len(self.weights) != len(self.FEATURE_NAMES)
+                or any(not isinstance(w, (int, float)) or not math.isfinite(w) or w < 0 for w in self.weights)):
+            raise ValueError('Invalid retrieval model configuration.')
+        self.canonical = BM25([retrieval_tokens(d['text']) for d in docs])
+        bodies = [passage_body(d) for d in docs]
+        self.bodies = BM25([retrieval_tokens(text) for text in bodies], b=.2)
+        self.leads = BM25([retrieval_tokens(' '.join(text.split()[:12])) for text in bodies], b=.2)
+        self.titles = BM25([retrieval_tokens(d.get('tieu_de', '')) for d in docs])
+        chunks, self.chunk_owners = [], []
+        for i, text in enumerate(bodies):
+            words = text.split()
+            for start in range(0, max(len(words), 1), 32):
+                chunks.append(retrieval_tokens(' '.join(words[start:start + 64])))
+                self.chunk_owners.append(i)
+        self.chunks = BM25(chunks, b=.2)
+        self.body_tokens = [Counter(retrieval_tokens(text)) for text in bodies]
+        self.lead_texts = [' '.join(retrieval_words(' '.join(text.split()[:20]))) for text in bodies]
+        self.thresholds = [bool(re.search(r'(?:tu|duoi|tren|vuot qua).{0,35}(?:tro len|tro xuong|[0-9]|diem [a-f])', ' '.join(retrieval_words(text)))) for text in bodies]
+        by_id = {doc['id']: i for i, doc in enumerate(docs)}
+        self.examples = [q for q in training['queries'] if q['gold']]
+        if not self.examples or any(q['split'] != 'train' or not set(q['gold']) <= set(by_id) for q in self.examples):
+            raise ValueError('Retrieval examples must be train-only and point to existing sources.')
+        self.example_index = BM25([retrieval_tokens(q['q']) for q in self.examples])
+        self.example_owners = [[by_id[pid] for pid in q['gold']] for q in self.examples]
+
+    def features(self, question, excluded_group=None):
+        tokens = retrieval_tokens(question)
+        scores = [unit_scores(self.legacy.scores(tach_tu(question))),
+                  unit_scores(self.canonical.scores(tokens)), unit_scores(self.bodies.scores(tokens)),
+                  unit_scores(self.leads.scores(tokens)), unit_scores(self.titles.scores(tokens))]
+        windows = [0.0] * len(self.docs)
+        for owner, score in zip(self.chunk_owners, self.chunks.scores(tokens)):
+            windows[owner] = max(windows[owner], score)
+        scores.append(unit_scores(windows))
+        examples = [[] for _ in self.docs]
+        for q, owners, score in zip(self.examples, self.example_owners, self.example_index.scores(tokens)):
+            if excluded_group is not None and q['group'] == excluded_group:
+                continue
+            for owner in owners:
+                examples[owner].append(score)
+        scores.append(unit_scores([max(values, default=0) for values in examples]))
+        scores.append(unit_scores([sum(sorted(values, reverse=True)[:2]) for values in examples]))
+        codes = set(re.findall(r'\b[A-Z]{2}\d{3}E?\b', question.upper()))
+        requested = set(re.findall(r'(?:qd|quyet dinh)\s*(\d{3,4})', bo_dau(question.lower())))
+        words = ' '.join(retrieval_words(question))
+        condition = bool(re.search(r'\b(?:dieu kien|khi nao|truong hop)\b', words))
+        bound = bool(re.search(r'bao nhieu|toi da|toi thieu|duoi|vuot', words))
+        denominator = sum(self.canonical.idf.get(t, 0) for t in set(tokens)) or 1
+        rows = []
+        for i, doc in enumerate(self.docs):
+            coverage = sum(self.canonical.idf.get(t, 0) for t in set(tokens) if t in self.body_tokens[i]) / denominator
+            condition_lead = float(condition and bool(re.search(r'dieu kien|truong hop|chi duoc', self.lead_texts[i]))) * scores[3][i]
+            rows.append([channel[i] for channel in scores] + [coverage,
+                        float(bool(codes) and doc.get('ma_hp') in codes),
+                        float(bool(requested) and any(code in doc['van_ban'] for code in requested)),
+                        condition_lead, float(bound and self.thresholds[i]) * scores[2][i]])
+        return rows
+
+    def scores(self, question):
+        return [float(sum(weight * value for weight, value in zip(self.weights, row))) for row in self.features(question)]
+
+
 class Retriever:
-    def __init__(self, corpus_path=CORPUS):
+    def __init__(self, corpus_path=CORPUS, *, ranked=True):
         self.docs = [json.loads(l) for l in Path(corpus_path).read_text(encoding="utf-8").splitlines() if l.strip()]
         self.by_id = {d["id"]: d for d in self.docs}
         self.by_asp = {a: d for d in self.docs for a in d.get("asp", [])}
         self.by_rule = {r: d for d in self.docs for r in d.get("rules", [])}
         self.bm25 = BM25([tach_tu(d["text"]) for d in self.docs])
+        self.ranker = RetrievalRanker(self.docs, self.bm25) if ranked else None
 
     def search(self, q, k=5, loai=None, van_ban=None):
-        """Trả về [(passage, điểm BM25)] — điểm chỉ dùng để xếp hạng, không phải độ tin cậy."""
-        sc = self.bm25.scores(tach_tu(q))
+        """Original source passages and ranking scores; scores are not confidence."""
+        sc = self.ranker.scores(q) if self.ranker else self.bm25.scores(tach_tu(q))
+        explicit_documents = set(re.findall(r'(?:qd|quyet dinh)\s*(\d{3,4})', bo_dau(q.lower())))
         idx = [i for i in sorted(range(len(self.docs)), key=lambda i: -sc[i])
                if (loai is None or self.docs[i]["loai"] == loai)
-               and (van_ban is None or self.docs[i]["van_ban"] == van_ban)]
+               and (van_ban is None or self.docs[i]["van_ban"] == van_ban)
+               and (not self.ranker or not explicit_documents or any(code in self.docs[i]['van_ban'] for code in explicit_documents))]
         return [(self.docs[i], sc[i]) for i in idx[:k]]
 
     # ---------- grounding ----------

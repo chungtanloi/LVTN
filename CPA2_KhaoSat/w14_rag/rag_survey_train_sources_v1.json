@@ -1,0 +1,936 @@
+{
+  "meta": {
+    "name": "Source-labeled synthetic training questions v1",
+    "annotators": 1,
+    "source_sha256": "6be81e7e96811feea6324c2d5cfd8909182f16283cd79fb7cb54fdfea785e163",
+    "not_regulation_text": true,
+    "used_for": "retrieval examples only, never conclusions"
+  },
+  "queries": [
+    {
+      "id": "QS-d544feef47fc",
+      "split": "train",
+      "q": "Có được chuyển từ ngành Công nghệ thông tin sang Kỹ thuật phần mềm giữa chừng không?",
+      "gold": [
+        "qd3266:D12:K2"
+      ],
+      "source": "synthetic_survey_train",
+      "group": "2954b23d6a02feb1",
+      "label_scope": "relevant policy only; profiles/decisions may still be required",
+      "status": "source_relevance"
+    },
+    {
+      "id": "QS-1c732bef2194",
+      "split": "train",
+      "q": "sao em không đăng ký được môn này",
+      "gold": [],
+      "source": "synthetic_survey_train",
+      "group": "2954b23d6a02feb1",
+      "label_scope": "relevant policy only; profiles/decisions may still be required",
+      "status": "unsupported_or_insufficient_context"
+    },
+    {
+      "id": "QS-a475eb6fcda4",
+      "split": "train",
+      "q": "số tín chỉ học lại vượt bao nhiêu % thì bị hạ bằng ạ",
+      "gold": [
+        "qd3266:D34:K2"
+      ],
+      "source": "synthetic_survey_train",
+      "group": "2954b23d6a02feb1",
+      "label_scope": "relevant policy only; profiles/decisions may still be required",
+      "status": "source_relevance"
+    },
+    {
+      "id": "QS-a57c508b8b85",
+      "split": "train",
+      "q": "Thời gian tạm dừng học có bị tính vào thời gian đào tạo tối đa không?",
+      "gold": [
+        "qd3266:D18:K1",
+        "qd3266:D5:K0"
+      ],
+      "source": "synthetic_survey_train",
+      "group": "50e50054747067b4",
+      "label_scope": "relevant policy only; profiles/decisions may still be required",
+      "status": "source_relevance"
+    },
+    {
+      "id": "QS-17df0b00c269",
+      "split": "train",
+      "q": "Học kỳ hè có bắt buộc không?",
+      "gold": [
+        "qd3266:D6:K1"
+      ],
+      "source": "synthetic_survey_train",
+      "group": "50e50054747067b4",
+      "label_scope": "relevant policy only; profiles/decisions may still be required",
+      "status": "source_relevance"
+    },
+    {
+      "id": "QS-49d833c0de2b",
+      "split": "train",
+      "q": "Thôi học tự nguyện và buộc thôi học khác nhau thế nào?",
+      "gold": [
+        "qd3266:D18:K5"
+      ],
+      "source": "synthetic_survey_train",
+      "group": "50e50054747067b4",
+      "label_scope": "relevant policy only; profiles/decisions may still be required",
+      "status": "source_relevance"
+    },
+    {
+      "id": "QS-baf10d915595",
+      "split": "train",
+      "q": "Kế hoạch học tập chuẩn là mấy học kỳ?",
+      "gold": [
+        "qd3266:D5:K0",
+        "qd3266:D6:K1"
+      ],
+      "source": "synthetic_survey_train",
+      "group": "dcea34592c3f1391",
+      "label_scope": "relevant policy only; profiles/decisions may still be required",
+      "status": "source_relevance"
+    },
+    {
+      "id": "QS-f5eebb77ed66",
+      "split": "train",
+      "q": "Rút học phần có được hoàn lại học phí không?",
+      "gold": [
+        "qd3266:D15:K0",
+        "qd3266:D10:K1"
+      ],
+      "source": "synthetic_survey_train",
+      "group": "dcea34592c3f1391",
+      "label_scope": "relevant policy only; profiles/decisions may still be required",
+      "status": "source_relevance"
+    },
+    {
+      "id": "QS-df3b3963c249",
+      "split": "train",
+      "q": "bị cảnh báo học vụ có bị thông báo về gia đình không ạ",
+      "gold": [],
+      "source": "synthetic_survey_train",
+      "group": "dcea34592c3f1391",
+      "label_scope": "relevant policy only; profiles/decisions may still be required",
+      "status": "unsupported_or_insufficient_context"
+    },
+    {
+      "id": "QS-e73383925ef0",
+      "split": "train",
+      "q": "nếu e trượt thực tập thì có ra trg đúng hạn k",
+      "gold": [
+        "qd3266:D32:K1"
+      ],
+      "source": "synthetic_survey_train",
+      "group": "dcea34592c3f1391",
+      "label_scope": "relevant policy only; profiles/decisions may still be required",
+      "status": "source_relevance"
+    },
+    {
+      "id": "QS-df9e5f306801",
+      "split": "train",
+      "q": "bl kq ht cần giấy tờ gì ạ",
+      "gold": [
+        "qd3266:D18:K1"
+      ],
+      "source": "synthetic_survey_train",
+      "group": "5e66d01597252753",
+      "label_scope": "relevant policy only; profiles/decisions may still be required",
+      "status": "source_relevance"
+    },
+    {
+      "id": "QS-928ee3f18361",
+      "split": "train",
+      "q": "miễn học thì điểm ghi là gì ạ",
+      "gold": [
+        "qd5339:D3:K4"
+      ],
+      "source": "synthetic_survey_train",
+      "group": "5e66d01597252753",
+      "label_scope": "relevant policy only; profiles/decisions may still be required",
+      "status": "source_relevance"
+    },
+    {
+      "id": "QS-d59b9c8295ec",
+      "split": "train",
+      "q": "Em có môn phải học lại thì có bị hạ một mức xếp loại tốt nghiệp không?",
+      "gold": [
+        "qd3266:D34:K2"
+      ],
+      "source": "synthetic_survey_train",
+      "group": "5e66d01597252753",
+      "label_scope": "relevant policy only; profiles/decisions may still be required",
+      "status": "source_relevance"
+    },
+    {
+      "id": "QS-84ad47d1b0be",
+      "split": "train",
+      "q": "giải giúp em bài tập lập trình này với",
+      "gold": [],
+      "source": "synthetic_survey_train",
+      "group": "5e66d01597252753",
+      "label_scope": "relevant policy only; profiles/decisions may still be required",
+      "status": "unsupported_or_insufficient_context"
+    },
+    {
+      "id": "QS-6f0f813b2aca",
+      "split": "train",
+      "q": "co the tot nghiep som hon 4 nam khong",
+      "gold": [
+        "qd3266:D5:K0"
+      ],
+      "source": "synthetic_survey_train",
+      "group": "ddf0373c44939c96",
+      "label_scope": "relevant policy only; profiles/decisions may still be required",
+      "status": "source_relevance"
+    },
+    {
+      "id": "QS-d0f80ee216f7",
+      "split": "train",
+      "q": "hè này học gì",
+      "gold": [],
+      "source": "synthetic_survey_train",
+      "group": "ddf0373c44939c96",
+      "label_scope": "relevant policy only; profiles/decisions may still be required",
+      "status": "unsupported_or_insufficient_context"
+    },
+    {
+      "id": "QS-69a0066ce8b7",
+      "split": "train",
+      "q": "Bị buộc thôi học rồi có được chuyển sang hình thức vừa làm vừa học không?",
+      "gold": [
+        "qd3266:D33:K4"
+      ],
+      "source": "synthetic_survey_train",
+      "group": "ddf0373c44939c96",
+      "label_scope": "relevant policy only; profiles/decisions may still be required",
+      "status": "source_relevance"
+    },
+    {
+      "id": "QS-70f7649489e6",
+      "split": "train",
+      "q": "Căn tin trường mấy giờ đóng cửa?",
+      "gold": [],
+      "source": "synthetic_survey_train",
+      "group": "ddf0373c44939c96",
+      "label_scope": "relevant policy only; profiles/decisions may still be required",
+      "status": "unsupported_or_insufficient_context"
+    },
+    {
+      "id": "QS-f8d95ce83388",
+      "split": "train",
+      "q": "chuyển ngành rồi thì các môn đã học có được công nhận không",
+      "gold": [
+        "qd5339:D3:K1",
+        "qd3266:D12:K2"
+      ],
+      "source": "synthetic_survey_train",
+      "group": "52d4f69c64345914",
+      "label_scope": "relevant policy only; profiles/decisions may still be required",
+      "status": "source_relevance"
+    },
+    {
+      "id": "QS-7857bfe7f74d",
+      "split": "train",
+      "q": "e hc lại mà vẫn rớt thì điểm nào được tính v",
+      "gold": [
+        "qd3266:D17:K2"
+      ],
+      "source": "synthetic_survey_train",
+      "group": "52d4f69c64345914",
+      "label_scope": "relevant policy only; profiles/decisions may still be required",
+      "status": "source_relevance"
+    },
+    {
+      "id": "QS-7657d5f6ded7",
+      "split": "train",
+      "q": "làm sao để được xóa cảnh báo học vụ",
+      "gold": [
+        "qd3266:D18:K2"
+      ],
+      "source": "synthetic_survey_train",
+      "group": "52d4f69c64345914",
+      "label_scope": "relevant policy only; profiles/decisions may still be required",
+      "status": "source_relevance"
+    },
+    {
+      "id": "QS-5b981ab61628",
+      "split": "train",
+      "q": "Em còn 2 môn rớt, muốn học hè để kịp tốt nghiệp tháng 12 thì có được không?",
+      "gold": [
+        "qd3266:D14:K1",
+        "qd3266:D32:K1"
+      ],
+      "source": "synthetic_survey_train",
+      "group": "52d4f69c64345914",
+      "label_scope": "relevant policy only; profiles/decisions may still be required",
+      "status": "source_relevance"
+    },
+    {
+      "id": "QS-c8b17ea8ded2",
+      "split": "train",
+      "q": "đang học ngành 2 mà bị cảnh báo ở ngành 1 thì sao",
+      "gold": [
+        "qd3266:D20:K7"
+      ],
+      "source": "synthetic_survey_train",
+      "group": "e530ee6af1e2306c",
+      "label_scope": "relevant policy only; profiles/decisions may still be required",
+      "status": "source_relevance"
+    },
+    {
+      "id": "QS-6073d790c115",
+      "split": "train",
+      "q": "phúc khảo mà điểm bị giảm thì lấy điểm nào ạ",
+      "gold": [
+        "qd3266:D29:K1"
+      ],
+      "source": "synthetic_survey_train",
+      "group": "e530ee6af1e2306c",
+      "label_scope": "relevant policy only; profiles/decisions may still be required",
+      "status": "source_relevance"
+    },
+    {
+      "id": "QS-67bfb9c1b79c",
+      "split": "train",
+      "q": "GPA bao nhiêu thì được xếp loại giỏi khi tốt nghiệp?",
+      "gold": [
+        "qd3266:D34:K2"
+      ],
+      "source": "synthetic_survey_train",
+      "group": "e530ee6af1e2306c",
+      "label_scope": "relevant policy only; profiles/decisions may still be required",
+      "status": "source_relevance"
+    },
+    {
+      "id": "QS-e6076a84ce94",
+      "split": "train",
+      "q": "tháng này có học bổng doanh nghiệp nào không",
+      "gold": [],
+      "source": "synthetic_survey_train",
+      "group": "e530ee6af1e2306c",
+      "label_scope": "relevant policy only; profiles/decisions may still be required",
+      "status": "unsupported_or_insufficient_context"
+    },
+    {
+      "id": "QS-9feaa1a80e06",
+      "split": "train",
+      "q": "đi nghĩa vụ quân sự thì việc học xử lý sao",
+      "gold": [
+        "qd3266:D18:K1"
+      ],
+      "source": "synthetic_survey_train",
+      "group": "f85a141743e72875",
+      "label_scope": "relevant policy only; profiles/decisions may still be required",
+      "status": "source_relevance"
+    },
+    {
+      "id": "QS-e5118b6612dc",
+      "split": "train",
+      "q": "Không dự thi cuối kỳ có lý do chính đáng thì được xử lý thế nào?",
+      "gold": [
+        "qd3266:D23:K3"
+      ],
+      "source": "synthetic_survey_train",
+      "group": "f85a141743e72875",
+      "label_scope": "relevant policy only; profiles/decisions may still be required",
+      "status": "source_relevance"
+    },
+    {
+      "id": "QS-09cf7d201d99",
+      "split": "train",
+      "q": "e bị cbhv lần 1 rồi, lần 2 là bị gì ạ",
+      "gold": [
+        "qd3266:D18:K5",
+        "qd3266:D18:K2"
+      ],
+      "source": "synthetic_survey_train",
+      "group": "f85a141743e72875",
+      "label_scope": "relevant policy only; profiles/decisions may still be required",
+      "status": "source_relevance"
+    },
+    {
+      "id": "QS-58c8f7163ca7",
+      "split": "train",
+      "q": "lịch nghỉ Tết năm nay thế nào",
+      "gold": [],
+      "source": "synthetic_survey_train",
+      "group": "f85a141743e72875",
+      "label_scope": "relevant policy only; profiles/decisions may still be required",
+      "status": "unsupported_or_insufficient_context"
+    },
+    {
+      "id": "QS-9342c7b6f7e8",
+      "split": "train",
+      "q": "Thủ tục xin tạm dừng học tập như thế nào?",
+      "gold": [
+        "qd3266:D18:K1"
+      ],
+      "source": "synthetic_survey_train",
+      "group": "df54167a2e570383",
+      "label_scope": "relevant policy only; profiles/decisions may still be required",
+      "status": "source_relevance"
+    },
+    {
+      "id": "QS-8cc8f7914faa",
+      "split": "train",
+      "q": "GPA tích lũy em đang 2.45 với 90 tín chỉ, kỳ này 18 tín muốn lên 2.5 thì cần trung bình kỳ bao nhiêu?",
+      "gold": [
+        "qd3266:D24:K4",
+        "qd3266:D24:K2"
+      ],
+      "source": "synthetic_survey_train",
+      "group": "df54167a2e570383",
+      "label_scope": "relevant policy only; profiles/decisions may still be required",
+      "status": "source_relevance"
+    },
+    {
+      "id": "QS-259c793f82c3",
+      "split": "train",
+      "q": "chua co chung chi ngoai ngu thi co duoc xet tot nghiep khong",
+      "gold": [
+        "qd3266:D32:K1"
+      ],
+      "source": "synthetic_survey_train",
+      "group": "df54167a2e570383",
+      "label_scope": "relevant policy only; profiles/decisions may still be required",
+      "status": "source_relevance"
+    },
+    {
+      "id": "QS-83e6fa022af7",
+      "split": "train",
+      "q": "nghỉ học tạm thời tối đa được bao lâu",
+      "gold": [
+        "qd3266:D18:K1"
+      ],
+      "source": "synthetic_survey_train",
+      "group": "3dd8a8f0aa6f494e",
+      "label_scope": "relevant policy only; profiles/decisions may still be required",
+      "status": "source_relevance"
+    },
+    {
+      "id": "QS-d1ab4c826564",
+      "split": "train",
+      "q": "em muốn vừa đi làm vừa học thì mỗi kỳ đăng ký bao nhiêu là hợp lý",
+      "gold": [
+        "qd3266:D14:K1"
+      ],
+      "source": "synthetic_survey_train",
+      "group": "3dd8a8f0aa6f494e",
+      "label_scope": "relevant policy only; profiles/decisions may still be required",
+      "status": "source_relevance"
+    },
+    {
+      "id": "QS-e29499b81aee",
+      "split": "train",
+      "q": "e nghỉ học 1 kỳ không xin phép thì có bị xóa tên ko",
+      "gold": [
+        "qd3266:D18:K5"
+      ],
+      "source": "synthetic_survey_train",
+      "group": "3dd8a8f0aa6f494e",
+      "label_scope": "relevant policy only; profiles/decisions may still be required",
+      "status": "source_relevance"
+    },
+    {
+      "id": "QS-1df7df9d49d0",
+      "split": "train",
+      "q": "Em GPA 2.8 năm 2, có đủ điều kiện học song ngành không?",
+      "gold": [
+        "qd3266:D20:K1"
+      ],
+      "source": "synthetic_survey_train",
+      "group": "4e10ff61a1923abd",
+      "label_scope": "relevant policy only; profiles/decisions may still be required",
+      "status": "source_relevance"
+    },
+    {
+      "id": "QS-d93a40d5d18e",
+      "split": "train",
+      "q": "co chung chi IELTS thi co duoc mien hoc tieng Anh khong",
+      "gold": [
+        "qd5339:D3:K5"
+      ],
+      "source": "synthetic_survey_train",
+      "group": "4e10ff61a1923abd",
+      "label_scope": "relevant policy only; profiles/decisions may still be required",
+      "status": "source_relevance"
+    },
+    {
+      "id": "QS-24d92f276297",
+      "split": "train",
+      "q": "Kỳ này điểm trung bình học kỳ của em là 0.9, em có bị cảnh báo học vụ không?",
+      "gold": [
+        "qd3266:D18:K2"
+      ],
+      "source": "synthetic_survey_train",
+      "group": "4e10ff61a1923abd",
+      "label_scope": "relevant policy only; profiles/decisions may still be required",
+      "status": "source_relevance"
+    },
+    {
+      "id": "QS-3b93ded00953",
+      "split": "train",
+      "q": "Em rớt Lập trình căn bản, kỳ này có được đăng ký Cấu trúc dữ liệu không?",
+      "gold": [
+        "ctdt_k49:CT177",
+        "qd3266:D7:K4"
+      ],
+      "source": "synthetic_survey_train",
+      "group": "4e10ff61a1923abd",
+      "label_scope": "relevant policy only; profiles/decisions may still be required",
+      "status": "source_relevance"
+    },
+    {
+      "id": "QS-f99f2607350f",
+      "split": "train",
+      "q": "học 2 chương trình thì thời gian tối đa tính theo chương trình nào",
+      "gold": [
+        "qd3266:D20:K5"
+      ],
+      "source": "synthetic_survey_train",
+      "group": "a93ef0dd3514f61d",
+      "label_scope": "relevant policy only; profiles/decisions may still be required",
+      "status": "source_relevance"
+    },
+    {
+      "id": "QS-0dc5cc6e628c",
+      "split": "train",
+      "q": "Em đang 2.95, cần bao nhiêu điểm A nữa để ra trường loại giỏi?",
+      "gold": [
+        "qd3266:D34:K2",
+        "qd3266:D24:K4"
+      ],
+      "source": "synthetic_survey_train",
+      "group": "a93ef0dd3514f61d",
+      "label_scope": "relevant policy only; profiles/decisions may still be required",
+      "status": "source_relevance"
+    },
+    {
+      "id": "QS-3dceaf7ba9e5",
+      "split": "train",
+      "q": "gpa 3.2 thì bằng gì v mn",
+      "gold": [
+        "qd3266:D34:K2"
+      ],
+      "source": "synthetic_survey_train",
+      "group": "a93ef0dd3514f61d",
+      "label_scope": "relevant policy only; profiles/decisions may still be required",
+      "status": "source_relevance"
+    },
+    {
+      "id": "QS-c7758ff8c092",
+      "split": "train",
+      "q": "Thời hạn phúc khảo là bao nhiêu ngày sau khi có điểm?",
+      "gold": [
+        "qd3266:D29:K1"
+      ],
+      "source": "synthetic_survey_train",
+      "group": "a93ef0dd3514f61d",
+      "label_scope": "relevant policy only; profiles/decisions may still be required",
+      "status": "source_relevance"
+    },
+    {
+      "id": "QS-48b98e3afc1e",
+      "split": "train",
+      "q": "nghi om dai ngay thi co duoc bao luu ket qua khong",
+      "gold": [
+        "qd3266:D18:K1"
+      ],
+      "source": "synthetic_survey_train",
+      "group": "8e17f22c33b3e0b6",
+      "label_scope": "relevant policy only; profiles/decisions may still be required",
+      "status": "source_relevance"
+    },
+    {
+      "id": "QS-2202c4efffb0",
+      "split": "train",
+      "q": "Học phần học ở trường khác trong chương trình trao đổi có được tính vào điểm trung bình không?",
+      "gold": [
+        "qd5339:D3:K1"
+      ],
+      "source": "synthetic_survey_train",
+      "group": "8e17f22c33b3e0b6",
+      "label_scope": "relevant policy only; profiles/decisions may still be required",
+      "status": "source_relevance"
+    },
+    {
+      "id": "QS-b5f71934eb73",
+      "split": "train",
+      "q": "Em GPA 3.62 nhưng từng bị cảnh báo học vụ 1 lần, xếp loại tốt nghiệp có bị ảnh hưởng không?",
+      "gold": [
+        "qd3266:D34:K2"
+      ],
+      "source": "synthetic_survey_train",
+      "group": "8e17f22c33b3e0b6",
+      "label_scope": "relevant policy only; profiles/decisions may still be required",
+      "status": "source_relevance"
+    },
+    {
+      "id": "QS-a502f04c1e53",
+      "split": "train",
+      "q": "Điều kiện để đăng ký học cùng lúc hai chương trình là gì?",
+      "gold": [
+        "qd3266:D20:K1"
+      ],
+      "source": "synthetic_survey_train",
+      "group": "e3d65f9d10071a63",
+      "label_scope": "relevant policy only; profiles/decisions may still be required",
+      "status": "source_relevance"
+    },
+    {
+      "id": "QS-890aaee9e44d",
+      "split": "train",
+      "q": "Em rớt 2 môn kỳ trước, kỳ này học lại cả 2 thì có vượt số tín chỉ tối đa không và có được học ở học kỳ hè không?",
+      "gold": [
+        "qd3266:D14:K1",
+        "qd3266:D6:K1"
+      ],
+      "source": "synthetic_survey_train",
+      "group": "e3d65f9d10071a63",
+      "label_scope": "relevant policy only; profiles/decisions may still be required",
+      "status": "source_relevance"
+    },
+    {
+      "id": "QS-d1cc8fedee27",
+      "split": "train",
+      "q": "Bị cảnh báo học vụ thì kỳ sau có bị giới hạn số tín chỉ đăng ký không?",
+      "gold": [
+        "qd3266:D14:K1"
+      ],
+      "source": "synthetic_survey_train",
+      "group": "e3d65f9d10071a63",
+      "label_scope": "relevant policy only; profiles/decisions may still be required",
+      "status": "source_relevance"
+    },
+    {
+      "id": "QS-84ec4482743a",
+      "split": "train",
+      "q": "chuyen chuyen nganh trong cung nganh co can xet diem khong",
+      "gold": [
+        "qd3266:D12:K2"
+      ],
+      "source": "synthetic_survey_train",
+      "group": "4d3617cb593435af",
+      "label_scope": "relevant policy only; profiles/decisions may still be required",
+      "status": "source_relevance"
+    },
+    {
+      "id": "QS-345d031aba1e",
+      "split": "train",
+      "q": "môn đã đạt C+ rồi còn được học lại cho điểm cao hơn ko",
+      "gold": [
+        "qd3266:D17:K2"
+      ],
+      "source": "synthetic_survey_train",
+      "group": "4d3617cb593435af",
+      "label_scope": "relevant policy only; profiles/decisions may still be required",
+      "status": "source_relevance"
+    },
+    {
+      "id": "QS-055415b19fc6",
+      "split": "train",
+      "q": "chuẩn đầu ra tin học cần chứng chỉ gì",
+      "gold": [
+        "qd3266:D32:K1",
+        "qd5339:D3:K6"
+      ],
+      "source": "synthetic_survey_train",
+      "group": "4d3617cb593435af",
+      "label_scope": "relevant policy only; profiles/decisions may still be required",
+      "status": "source_relevance"
+    },
+    {
+      "id": "QS-88fd860cfb1f",
+      "split": "train",
+      "q": "đk ngành 2 hạn chót khi nào v ạ",
+      "gold": [
+        "qd3266:D20:K2"
+      ],
+      "source": "synthetic_survey_train",
+      "group": "46c66fe583071b74",
+      "label_scope": "relevant policy only; profiles/decisions may still be required",
+      "status": "source_relevance"
+    },
+    {
+      "id": "QS-e78f2a69cf58",
+      "split": "train",
+      "q": "học lại môn tự chọn bị F thì có thể chọn môn tự chọn khác thay thế không ạ",
+      "gold": [
+        "qd3266:D17:K1"
+      ],
+      "source": "synthetic_survey_train",
+      "group": "46c66fe583071b74",
+      "label_scope": "relevant policy only; profiles/decisions may still be required",
+      "status": "source_relevance"
+    },
+    {
+      "id": "QS-aa22c54cb5a5",
+      "split": "train",
+      "q": "không đóng học phí thì có bị buộc thôi học không ạ",
+      "gold": [
+        "qd3266:D10:K2",
+        "qd3266:D18:K5"
+      ],
+      "source": "synthetic_survey_train",
+      "group": "46c66fe583071b74",
+      "label_scope": "relevant policy only; profiles/decisions may still be required",
+      "status": "source_relevance"
+    },
+    {
+      "id": "QS-58b01a7f330d",
+      "split": "train",
+      "q": "Em mới học xong năm nhất, giờ xin nghỉ 1 kỳ có được không?",
+      "gold": [
+        "qd3266:D18:K1"
+      ],
+      "source": "synthetic_survey_train",
+      "group": "4f6c73d81a311a15",
+      "label_scope": "relevant policy only; profiles/decisions may still be required",
+      "status": "source_relevance"
+    },
+    {
+      "id": "QS-c048052dd014",
+      "split": "train",
+      "q": "đăng ký môn sao vậy",
+      "gold": [
+        "qd3266:D15:K0"
+      ],
+      "source": "synthetic_survey_train",
+      "group": "4f6c73d81a311a15",
+      "label_scope": "relevant policy only; profiles/decisions may still be required",
+      "status": "source_relevance"
+    },
+    {
+      "id": "QS-2ca571ab10a2",
+      "split": "train",
+      "q": "bị buộc thôi hoc rồi thi lại đại học vào trường có được miển môn không",
+      "gold": [
+        "qd5339:D3:K1",
+        "qd3266:D33:K3"
+      ],
+      "source": "synthetic_survey_train",
+      "group": "4f6c73d81a311a15",
+      "label_scope": "relevant policy only; profiles/decisions may still be required",
+      "status": "source_relevance"
+    },
+    {
+      "id": "QS-38bf66c6282d",
+      "split": "train",
+      "q": "GPA em 1.9, muốn lên 2.0 để không bị cảnh báo thì kỳ sau cần đạt bao nhiêu?",
+      "gold": [
+        "qd3266:D24:K4",
+        "qd3266:D18:K2"
+      ],
+      "source": "synthetic_survey_train",
+      "group": "373b939519f0c281",
+      "label_scope": "relevant policy only; profiles/decisions may still be required",
+      "status": "source_relevance"
+    },
+    {
+      "id": "QS-ee870474b10b",
+      "split": "train",
+      "q": "học hè có được học môn mới chưa học bao giờ không hay chỉ học lại",
+      "gold": [
+        "qd3266:D6:K1",
+        "qd3266:D14:K1"
+      ],
+      "source": "synthetic_survey_train",
+      "group": "373b939519f0c281",
+      "label_scope": "relevant policy only; profiles/decisions may still be required",
+      "status": "source_relevance"
+    },
+    {
+      "id": "QS-b8b48cf6c681",
+      "split": "train",
+      "q": "Khi nào sinh viên bị cảnh báo học vụ?",
+      "gold": [
+        "qd3266:D18:K2"
+      ],
+      "source": "synthetic_survey_train",
+      "group": "373b939519f0c281",
+      "label_scope": "relevant policy only; profiles/decisions may still be required",
+      "status": "source_relevance"
+    },
+    {
+      "id": "QS-31a19266e713",
+      "split": "train",
+      "q": "gui xe o truong bao nhieu tien 1 thang",
+      "gold": [],
+      "source": "synthetic_survey_train",
+      "group": "373b939519f0c281",
+      "label_scope": "relevant policy only; profiles/decisions may still be required",
+      "status": "unsupported_or_insufficient_context"
+    },
+    {
+      "id": "QS-8a071ffe8a1f",
+      "split": "train",
+      "q": "kì hè có tính vào xếp loại học bổng hông",
+      "gold": [
+        "qd3266:D26:K1",
+        "qd3266:D24:K2"
+      ],
+      "source": "synthetic_survey_train",
+      "group": "1905c7f9681f1a9e",
+      "label_scope": "relevant policy only; profiles/decisions may still be required",
+      "status": "source_relevance"
+    },
+    {
+      "id": "QS-b51c10db8832",
+      "split": "train",
+      "q": "Điểm học kỳ hè có được tính vào điểm trung bình học kỳ để xét cảnh báo học vụ không?",
+      "gold": [
+        "qd3266:D24:K2",
+        "qd3266:D18:K2"
+      ],
+      "source": "synthetic_survey_train",
+      "group": "1905c7f9681f1a9e",
+      "label_scope": "relevant policy only; profiles/decisions may still be required",
+      "status": "source_relevance"
+    },
+    {
+      "id": "QS-4ebe2ee3cb9e",
+      "split": "train",
+      "q": "Em bị cảnh báo 2 kỳ liền, kỳ này mà điểm thấp nữa thì có bị đuổi học không?",
+      "gold": [
+        "qd3266:D18:K5"
+      ],
+      "source": "synthetic_survey_train",
+      "group": "1905c7f9681f1a9e",
+      "label_scope": "relevant policy only; profiles/decisions may still be required",
+      "status": "source_relevance"
+    },
+    {
+      "id": "QS-cc825a711f72",
+      "split": "train",
+      "q": "Wifi thư viện mật khẩu là gì vậy?",
+      "gold": [],
+      "source": "synthetic_survey_train",
+      "group": "1905c7f9681f1a9e",
+      "label_scope": "relevant policy only; profiles/decisions may still be required",
+      "status": "unsupported_or_insufficient_context"
+    },
+    {
+      "id": "QS-c140297fb854",
+      "split": "train",
+      "q": "Học phần tiên quyết là gì, khác gì học phần học trước?",
+      "gold": [
+        "qd3266:D7:K4",
+        "qd3266:D7:K5"
+      ],
+      "source": "synthetic_survey_train",
+      "group": "cda534842e38504a",
+      "label_scope": "relevant policy only; profiles/decisions may still be required",
+      "status": "source_relevance"
+    },
+    {
+      "id": "QS-058f1073f345",
+      "split": "train",
+      "q": "Thủ tục xin công nhận kết quả học tập nộp ở đâu?",
+      "gold": [
+        "qd5339:D2:K6"
+      ],
+      "source": "synthetic_survey_train",
+      "group": "cda534842e38504a",
+      "label_scope": "relevant policy only; profiles/decisions may still be required",
+      "status": "source_relevance"
+    },
+    {
+      "id": "QS-93458bf6dd2e",
+      "split": "train",
+      "q": "Em bị cảnh báo học vụ thì có được đi học kỳ hè để kéo điểm lên và có được xét học bổng không?",
+      "gold": [
+        "qd3266:D14:K1",
+        "qd3266:D26:K1"
+      ],
+      "source": "synthetic_survey_train",
+      "group": "cda534842e38504a",
+      "label_scope": "relevant policy only; profiles/decisions may still be required",
+      "status": "source_relevance"
+    },
+    {
+      "id": "QS-9fafd90b3454",
+      "split": "train",
+      "q": "ký túc xá còn chỗ không ạ",
+      "gold": [],
+      "source": "synthetic_survey_train",
+      "group": "cda534842e38504a",
+      "label_scope": "relevant policy only; profiles/decisions may still be required",
+      "status": "unsupported_or_insufficient_context"
+    },
+    {
+      "id": "QS-238efca5ef2b",
+      "split": "train",
+      "q": "Em còn 38 tín chỉ, mỗi kỳ đăng ký 20 tín thì bao lâu nữa em tốt nghiệp được?",
+      "gold": [
+        "qd3266:D14:K1",
+        "qd3266:D5:K0"
+      ],
+      "source": "synthetic_survey_train",
+      "group": "2954ba1baa6dec7d",
+      "label_scope": "relevant policy only; profiles/decisions may still be required",
+      "status": "source_relevance"
+    },
+    {
+      "id": "QS-13c4891aec53",
+      "split": "train",
+      "q": "Thủ tục phúc khảo bài thi cuối kỳ như thế nào?",
+      "gold": [
+        "qd3266:D29:K1"
+      ],
+      "source": "synthetic_survey_train",
+      "group": "2954ba1baa6dec7d",
+      "label_scope": "relevant policy only; profiles/decisions may still be required",
+      "status": "source_relevance"
+    },
+    {
+      "id": "QS-02cb6195accb",
+      "split": "train",
+      "q": "bị đuổi học thì điểm các môn đã học có được bảo lưu không",
+      "gold": [
+        "qd3266:D33:K3"
+      ],
+      "source": "synthetic_survey_train",
+      "group": "2954ba1baa6dec7d",
+      "label_scope": "relevant policy only; profiles/decisions may still be required",
+      "status": "source_relevance"
+    },
+    {
+      "id": "QS-a97c9c994ac2",
+      "split": "train",
+      "q": "hoc ky he duoc dang ky toi da bao nhieu tin chi",
+      "gold": [
+        "qd3266:D14:K1"
+      ],
+      "source": "synthetic_survey_train",
+      "group": "bc788ed2cc53e8ee",
+      "label_scope": "relevant policy only; profiles/decisions may still be required",
+      "status": "source_relevance"
+    },
+    {
+      "id": "QS-3dd146fe4042",
+      "split": "train",
+      "q": "có xin miễn điều kiện tiên quyết được không",
+      "gold": [
+        "qd3266:D7:K4"
+      ],
+      "source": "synthetic_survey_train",
+      "group": "bc788ed2cc53e8ee",
+      "label_scope": "relevant policy only; profiles/decisions may still be required",
+      "status": "source_relevance"
+    },
+    {
+      "id": "QS-457eb6d24c1a",
+      "split": "train",
+      "q": "xêp loại khá thì gpa từ bao nhiu",
+      "gold": [
+        "qd3266:D34:K2",
+        "qd3266:D24:K5"
+      ],
+      "source": "synthetic_survey_train",
+      "group": "bc788ed2cc53e8ee",
+      "label_scope": "relevant policy only; profiles/decisions may still be required",
+      "status": "source_relevance"
+    }
+  ]
+}

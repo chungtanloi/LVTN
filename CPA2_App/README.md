@@ -79,6 +79,10 @@ Người dùng đã phê duyệt commit/push phần ứng dụng và cấu hình
 
 ## Kiểm tra
 
+RAG mặc định dùng mô hình xếp hạng từ vựng nhẹ, kèm ví dụ tổng hợp train đã gán nguồn. Grounding chứng chỉ vẫn lấy nguồn trực tiếp từ quy tắc và không dùng mô hình này. Mô hình được đóng gói cùng KB, không cần gọi API AI. Kết quả chi tiết và giới hạn nghiệm thu nằm trong `VALIDATION.md`.
+
+Từ gốc repo, có thể tái tạo trọng số bằng `python CPA2_KhaoSat/w14_rag/train_retrieval.py --output <tệp-mới.json>` và kiểm tra bằng `python CPA2_KhaoSat/w14_rag/validate_retrieval_ranker.py`. Huấn luyện chỉ đọc 24 dev và các ví dụ train; không đọc nhãn holdout. `evaluate_retrieval.py` chỉ báo cáo mô hình đã đóng băng, từ chối ghi đè báo cáo cũ. Không dùng bộ test đã xem để chọn tham số rồi coi đó là đánh giá mù.
+
 ```powershell
 cd CPA2_App/api
 ./.venv/Scripts/python.exe -m unittest discover -s tests -v

@@ -1,0 +1,17 @@
+{
+  "created_before_first_prediction": true,
+  "reason": "Source review: semester academic classification is in Article 24(5), not the scholarship criteria in Article 26(1).",
+  "changes": [
+    {
+      "id": "QS-dd899f859acb",
+      "original_gold": [
+        "qd3266:D26:K1",
+        "qd3266:D34:K2"
+      ],
+      "corrected_gold": [
+        "qd3266:D24:K5",
+        "qd3266:D34:K2"
+      ]
+    }
+  ]
+}

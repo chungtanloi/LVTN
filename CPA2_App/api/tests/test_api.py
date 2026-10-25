@@ -94,6 +94,17 @@ class ApiTests(unittest.TestCase):
             self.assertEqual(response.status_code, 200, response.text)
             self.assertEqual(response.json()['verdict'], expected)
 
+    def test_lookup_preserves_the_requested_course(self):
+        response = self.client.post('/v1/lookup', json={'question': 'Môn CT177 có tiên quyết là gì?'}, headers=HEADERS)
+        self.assertEqual(response.status_code, 200, response.text)
+        self.assertEqual(response.json()['passages'][0]['passage_id'], 'ctdt_k49:CT177')
+
+    def test_lookup_honors_the_explicit_regulation(self):
+        response = self.client.post('/v1/lookup', json={'question': 'Theo QĐ5339, công nhận điểm học phần ở trường khác như thế nào?'}, headers=HEADERS)
+        self.assertEqual(response.status_code, 200, response.text)
+        self.assertTrue(response.json()['passages'])
+        self.assertTrue(all(p['passage_id'].startswith('qd5339:') for p in response.json()['passages']))
+
 
 if __name__ == '__main__':
     unittest.main()

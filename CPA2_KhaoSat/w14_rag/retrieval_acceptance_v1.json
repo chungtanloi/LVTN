@@ -1,0 +1,42 @@
+{
+  "criteria_source": {
+    "workbook": "Ke_hoach_nghien_cuu_CPA2_24_tuan.xlsx",
+    "sheet": "Kế hoạch 24 tuần",
+    "range": "F15:H15"
+  },
+  "criteria": {
+    "recall_at_1": 0.8,
+    "recall_at_5": 0.95
+  },
+  "model_sha256": "7a3f1d7e195e511141873c69710d76ce7d49ddbdaac07662d243059e05cf08ec",
+  "fresh_synthetic_holdout": {
+    "n": 29,
+    "hits_at_1": 14,
+    "hits_at_5": 23,
+    "recall_at_1": 0.4827586206896552,
+    "recall_at_5": 0.7931034482758621,
+    "meets_recall_at_1": false,
+    "meets_recall_at_5": false
+  },
+  "previously_seen_diagnostic": {
+    "n": 24,
+    "hits_at_1": 17,
+    "hits_at_5": 23,
+    "recall_at_1": 0.7083333333333334,
+    "recall_at_5": 0.9583333333333334,
+    "meets_recall_at_1": false,
+    "meets_recall_at_5": true
+  },
+  "acceptance_complete": false,
+  "limitations": [
+    "Fresh evaluation is synthetic with one source annotator, not real student queries.",
+    "Original test is previously seen and is diagnostic only.",
+    "Source relevance does not establish answer correctness or certified academic conclusions."
+  ],
+  "annotation_provenance": {
+    "source_labels": "AI-assisted source-relevance annotation against corpus text before retrieval predictions; not independently reviewed by a human.",
+    "original_data": "Handcrafted questions, not real student logs. The synthetic=false field in the first diagnostic report distinguishes it from the synthetic survey only and must not be interpreted as real-user evidence.",
+    "survey_data": "All 40 input responses explicitly declare SYNTHETIC.",
+    "provided_labels": "The CSV provided intent labels; source passage labels were added in this session."
+  }
+}

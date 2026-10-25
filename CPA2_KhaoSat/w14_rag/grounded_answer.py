@@ -19,7 +19,7 @@ import prototype
 
 
 def tra_loi(question, student_path, r=None):
-    r = r or Retriever()
+    r = r or Retriever(ranked=False)  # certificate grounding never depends on the trained search ranker
     res = prototype.answer(question, student_path)
     cert = r.ground_certificate(res["certificate"])
     trich = r.trich_dan(cert)

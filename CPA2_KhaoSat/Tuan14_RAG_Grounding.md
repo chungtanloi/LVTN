@@ -103,3 +103,17 @@ Khoảng cách dev → test (0,79 → 0,67) cho thấy cấu hình đã khớp m
 - [x] Hậu kiểm chặn trích dẫn ngoài chứng minh (D)
 - [x] Đáp án truy hồi gán trước khi chạy; tách dev/test; test chạy một lần
 - [ ] Recall@1 ≥ 0,80 và Recall@5 ≥ 0,95 trên test: **chưa đạt**
+
+## 6. Cập nhật 26/10/2026 — RAG nhẹ có huấn luyện trọng số
+
+Đã bổ sung xếp hạng kết hợp nội dung đoạn, câu mở đầu, cửa sổ từ, IDF coverage, mã học phần và ví dụ truy hồi được gán nguồn từ 67 câu train tổng hợp. Trọng số chọn trên dev; runtime chỉ dùng thư viện chuẩn Python. Grounding nguồn chứng chỉ giữ độc lập với mô hình xếp hạng.
+
+| Bộ | BM25 cũ R@1 / R@5 | Mới R@1 / R@5 |
+|---|---|---|
+| Dev 24 câu | 19/24 / 21/24 | 23/24 / 24/24 |
+| Test cũ, đã xem; chỉ đối chiếu | 16/24 / 22/24 | 17/24 / 23/24 |
+| 29 câu tổng hợp giữ lại trước khi chọn mô hình | 10/29 / 17/29 | 14/29 / 23/29 |
+
+R@5 của tập cũ đạt 95,8%; R@1 mới 70,8%, chưa đạt 80%. Bộ giữ lại mới cũng chưa đạt ngưỡng. Nhãn nguồn mới do trợ lý gán từ corpus trước dự đoán, chưa có người thứ hai kiểm tra; có errata nguồn học lực học kỳ ghi trước dự đoán. Không coi đây là Q-Real thật hoặc kết quả đánh giá kết luận học vụ. Giữ nguyên ô nghiệm thu chưa đạt.
+
+Bằng chứng: `w14_rag/evaluation_ranked_v1_fresh_20261026.json`, `evaluation_ranked_v1_diagnostic_20261026.json`, `retrieval_acceptance_v1.json`. Trọng số `retrieval_model_v1.json` tái tạo bằng `train_retrieval.py`; `validate_retrieval_ranker.py` kiểm tra tách tập, đúng nguồn/mã học phần và grounding độc lập. Không sửa gold, split hoặc hồ sơ benchmark cũ.

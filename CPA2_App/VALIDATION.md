@@ -1,4 +1,22 @@
-# Trạng thái triển khai CPA² — 25/10/2026
+# Trạng thái triển khai CPA² — cập nhật 26/10/2026
+
+## Cải thiện RAG theo kế hoạch — 26/10/2026
+
+Chỉ tiêu giữ nguyên theo `Ke_hoach_nghien_cuu_CPA2_24_tuan.xlsx`, sheet `Kế hoạch 24 tuần`, F15:H15: truy hồi đúng nguồn; Recall@1 ≥ 0,80, Recall@5 ≥ 0,95 trên test. **Chưa đủ điều kiện ghi hoàn tất nghiệm thu.**
+
+| Bộ đánh giá | BM25 cũ R@1 / R@5 | RAG mới R@1 / R@5 | Diễn giải |
+|---|---|---|---|
+| Dev RAG 24 câu | 19/24 / 21/24 | 23/24 / 24/24 | Dùng để chọn trọng số, không phải kết quả test |
+| Test cũ 24 câu | 16/24 / 22/24 | 17/24 / 23/24 | 70,8% / 95,8%; chỉ R@5 đạt ngưỡng; tập đã được xem, chỉ dùng đối chiếu |
+| 29 câu survey giữ lại | 10/29 / 17/29 | 14/29 / 23/29 | 48,3% / 79,3%; cả hai chỉ tiêu còn chưa đạt |
+
+RAG mới kết hợp BM25 toàn đoạn, phần nội dung bỏ tiêu đề lặp, phần mở đầu, cửa sổ từ, độ phủ từ theo IDF và thực thể mã học phần. 67/77 câu **train tổng hợp** được gán đoạn nguồn liên quan để làm ví dụ truy hồi; 10 câu ngoài phạm vi/thiếu ngữ cảnh không được dùng ép nguồn. Trọng số chọn trên 24 dev (10.000 cấu hình không âm, seed 21). Lệnh huấn luyện lại tái tạo đúng hash model `7a3f1d7e195e511141873c69710d76ce7d49ddbdaac07662d243059e05cf08ec`.
+
+Production chỉ dùng thư viện chuẩn Python; không thêm API AI hoặc encoder nặng. Đo cục bộ: lượng cấp phát Python tăng tối đa khoảng 19,6 MiB khi dựng chỉ mục, trung bình khoảng 6,8 ms/lượt tìm của ba câu mẫu (không phải cam kết độ trễ/RAM toàn dịch vụ). Câu ví dụ tổng hợp chỉ phục vụ xếp hạng, không được trả ra như văn bản quy chế. Grounding chứng chỉ dùng `Retriever(ranked=False)`, độc lập hoàn toàn với trọng số tìm kiếm.
+
+Các câu/nguồn tham chiếu của holdout được lưu và đóng băng trước dự đoán; có một errata gán nguồn học lực học kỳ (Điều 24 khoản 5 thay Điều 26 khoản 1), cũng được ghi trước dự đoán. Nhãn nguồn do trợ lý gán từ corpus, chưa được người thứ hai kiểm tra; dữ liệu survey đều tự khai SYNTHETIC. Không coi các số này là kết quả Q-Real thật hoặc độ đúng của kết luận học vụ. Tệp `retrieval_acceptance_v1.json` ghi rõ `acceptance_complete=false`; không sửa ô nghiệm thu trong Excel.
+
+Đã kiểm tra: 19/19 bộ hồi quy nghiên cứu, 6/6 kiểm thử riêng cho ranker, API 15/15. Có kiểm tra đúng mã CT177, ràng buộc nguồn QĐ5339, nguồn trả ra chỉ lấy từ corpus, tách train/holdout theo nhóm và grounding không đổi. Runtime đóng gói đạt, KB `909ea81282ee3339`; OSV 29 gói Python không ghi nhận advisory. Bằng chứng số đo và tập dữ liệu nằm ở `CPA2_KhaoSat/w14_rag/evaluation_ranked_v1_*.json`, `rag_survey_*_v1.json`, `retrieval_model_v1.json`.
 
 ## Bản sửa sau rà soát
 

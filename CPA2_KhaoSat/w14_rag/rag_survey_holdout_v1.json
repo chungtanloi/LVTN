@@ -1,0 +1,311 @@
+{
+  "meta": {
+    "name": "RAG fresh synthetic holdout v1",
+    "created_utc": "2026-10-25T16:49:24.281121+00:00",
+    "gold_assigned_before_predictions": true,
+    "annotators": 1,
+    "independent_second_annotation": false,
+    "meaning": "Relevant source retrieval only; a relevant policy does not imply that the question is fully answerable or that an academic conclusion is justified.",
+    "partial_questions": "Fees need the applicable fee decision; timing/planning needs a personal profile; MOS exemption is not inferred from a missing certificate type. Vague questions require clarification.",
+    "source_sha256": "2994b62e08dc95905d312114e5aa39961f1281fba9019393394518dbb4df27ce",
+    "corpus_sha256": "d7e1dc5313764fbe196b1423184ec8e9c5d4d8e28c55ad4f41d26d02e12a70ad",
+    "training_forbidden": true
+  },
+  "queries": [
+    {
+      "id": "QS-f4f907d610f6",
+      "split": "test",
+      "q": "em muốn bảo lưu 1 năm để đi làm có được không ạ",
+      "gold": [
+        "qd3266:D18:K1"
+      ],
+      "source": "synthetic_survey_test",
+      "group": "cea3b8fb7e39f61f"
+    },
+    {
+      "id": "QS-a426fdb5353e",
+      "split": "test",
+      "q": "em thấy điểm quá trình bị nhập sai thì báo ai",
+      "gold": [
+        "qd3266:D29:K1"
+      ],
+      "source": "synthetic_survey_test",
+      "group": "cea3b8fb7e39f61f"
+    },
+    {
+      "id": "QS-dd899f859acb",
+      "split": "test",
+      "q": "xếp loại học lực theo học kỳ với xếp loại tốt nghiệp có giống nhau ko",
+      "gold": [
+        "qd3266:D26:K1",
+        "qd3266:D34:K2"
+      ],
+      "source": "synthetic_survey_test",
+      "group": "cea3b8fb7e39f61f"
+    },
+    {
+      "id": "QS-3438c71bb80a",
+      "split": "test",
+      "q": "e muốn rút ngắn còn 3.5 năm thì mỗi kỳ phải đk bao nhiêu tín",
+      "gold": [
+        "qd3266:D14:K1",
+        "qd3266:D5:K0"
+      ],
+      "source": "synthetic_survey_test",
+      "group": "d11e5a35d5e2a7be"
+    },
+    {
+      "id": "QS-392724057187",
+      "split": "test",
+      "q": "bị đình chỉ thi thì môn đó bị 0 điểm hả",
+      "gold": [
+        "qd3266:D28:K3"
+      ],
+      "source": "synthetic_survey_test",
+      "group": "d11e5a35d5e2a7be"
+    },
+    {
+      "id": "QS-94aa47f9d4af",
+      "split": "test",
+      "q": "khi nào em ra trường được",
+      "gold": [
+        "qd3266:D32:K1"
+      ],
+      "source": "synthetic_survey_test",
+      "group": "d11e5a35d5e2a7be"
+    },
+    {
+      "id": "QS-dec383d647a2",
+      "split": "test",
+      "q": "tg đt tối đa của hệ chính quy là bn năm",
+      "gold": [
+        "qd3266:D5:K0"
+      ],
+      "source": "synthetic_survey_test",
+      "group": "cac8ed5ebe2b7eb1"
+    },
+    {
+      "id": "QS-6f9323f796a1",
+      "split": "test",
+      "q": "học phí học kỳ hè tính khác kỳ chính không ạ",
+      "gold": [
+        "qd3266:D10:K1"
+      ],
+      "source": "synthetic_survey_test",
+      "group": "cac8ed5ebe2b7eb1"
+    },
+    {
+      "id": "QS-9ff5709e5868",
+      "split": "test",
+      "q": "Em còn thiếu 4 tín chỉ tự chọn và chưa có chứng chỉ tiếng Anh, học kỳ hè học bù thì có kịp xét tốt nghiệp đợt tháng 9 không?",
+      "gold": [
+        "qd3266:D32:K1"
+      ],
+      "source": "synthetic_survey_test",
+      "group": "cac8ed5ebe2b7eb1"
+    },
+    {
+      "id": "QS-a08c1d348cc5",
+      "split": "test",
+      "q": "chuyển trường từ trường khác về có được không ạ",
+      "gold": [
+        "qd3266:D12:K1"
+      ],
+      "source": "synthetic_survey_test",
+      "group": "185805a80cc875f4"
+    },
+    {
+      "id": "QS-cbc6a575a5c4",
+      "split": "test",
+      "q": "học lại thì có phải đóng tiền học phí lại hông",
+      "gold": [
+        "qd3266:D10:K1"
+      ],
+      "source": "synthetic_survey_test",
+      "group": "185805a80cc875f4"
+    },
+    {
+      "id": "QS-9d40a2877daf",
+      "split": "test",
+      "q": "canh bao hoc vu co may muc",
+      "gold": [
+        "qd3266:D18:K2"
+      ],
+      "source": "synthetic_survey_test",
+      "group": "185805a80cc875f4"
+    },
+    {
+      "id": "QS-f3004f607c4e",
+      "split": "test",
+      "q": "Thời gian tối đa để hoàn thành chương trình đào tạo là bao lâu?",
+      "gold": [
+        "qd3266:D5:K0"
+      ],
+      "source": "synthetic_survey_test",
+      "group": "00cd1a8e095ff010"
+    },
+    {
+      "id": "QS-bb4b9ac8654d",
+      "split": "test",
+      "q": "Học cải thiện thì có giới hạn số lần không?",
+      "gold": [
+        "qd3266:D17:K2"
+      ],
+      "source": "synthetic_survey_test",
+      "group": "00cd1a8e095ff010"
+    },
+    {
+      "id": "QS-e608597ff89e",
+      "split": "test",
+      "q": "tot nghiep loai xuat sac can dieu kien gi",
+      "gold": [
+        "qd3266:D34:K2"
+      ],
+      "source": "synthetic_survey_test",
+      "group": "00cd1a8e095ff010"
+    },
+    {
+      "id": "QS-d5d23d84cccd",
+      "split": "test",
+      "q": "muon chuyen nganh thi can lam thu tuc gi",
+      "gold": [
+        "qd3266:D12:K2"
+      ],
+      "source": "synthetic_survey_test",
+      "group": "23b08cb2f1d68e3e"
+    },
+    {
+      "id": "QS-cad2d419839a",
+      "split": "test",
+      "q": "Em được điểm D môn Giải tích, có đăng ký học cải thiện được không?",
+      "gold": [
+        "qd3266:D17:K2"
+      ],
+      "source": "synthetic_survey_test",
+      "group": "23b08cb2f1d68e3e"
+    },
+    {
+      "id": "QS-383378a5d0f1",
+      "split": "test",
+      "q": "Học cải thiện nâng điểm có bị coi như học lại khi xét hạ mức xếp loại tốt nghiệp không?",
+      "gold": [
+        "qd3266:D17:K2",
+        "qd3266:D34:K2"
+      ],
+      "source": "synthetic_survey_test",
+      "group": "23b08cb2f1d68e3e"
+    },
+    {
+      "id": "QS-f455656d9e33",
+      "split": "test",
+      "q": "em có kịp ra trường không",
+      "gold": [
+        "qd3266:D32:K1"
+      ],
+      "source": "synthetic_survey_test",
+      "group": "8877005d7e4fef2f"
+    },
+    {
+      "id": "QS-ce7a05066b6c",
+      "split": "test",
+      "q": "môn tiên quyết bị D thì có tính là đạt không ạ",
+      "gold": [
+        "qd3266:D22:K3",
+        "qd3266:D7:K4"
+      ],
+      "source": "synthetic_survey_test",
+      "group": "8877005d7e4fef2f"
+    },
+    {
+      "id": "QS-22098d6a92c7",
+      "split": "test",
+      "q": "bi canh bao hoc vu bao nhieu lan lien tiep thi bi buoc thoi hoc",
+      "gold": [
+        "qd3266:D18:K5"
+      ],
+      "source": "synthetic_survey_test",
+      "group": "8877005d7e4fef2f"
+    },
+    {
+      "id": "QS-0325208bbcd9",
+      "split": "test",
+      "q": "kỳ hè không mở lớp môn em cần thì làm sao",
+      "gold": [
+        "qd3266:D16:K2"
+      ],
+      "source": "synthetic_survey_test",
+      "group": "d7fd0f41f844c5d4"
+    },
+    {
+      "id": "QS-fe5957d03c7f",
+      "split": "test",
+      "q": "điểm em tính sai thì sao",
+      "gold": [
+        "qd3266:D29:K1"
+      ],
+      "source": "synthetic_survey_test",
+      "group": "d7fd0f41f844c5d4"
+    },
+    {
+      "id": "QS-3d04ed906571",
+      "split": "test",
+      "q": "quá thời gian đào tạo tối đa mà chưa tốt nghiệp thì bị sao",
+      "gold": [
+        "qd3266:D33:K1"
+      ],
+      "source": "synthetic_survey_test",
+      "group": "d7fd0f41f844c5d4"
+    },
+    {
+      "id": "QS-fb3e0259f256",
+      "split": "test",
+      "q": "Em có chứng chỉ MOS, có được miễn học phần Tin học căn bản không?",
+      "gold": [
+        "qd5339:D3:K6"
+      ],
+      "source": "synthetic_survey_test",
+      "group": "d7fd0f41f844c5d4"
+    },
+    {
+      "id": "QS-173b129b2d6d",
+      "split": "test",
+      "q": "hk hè đk ở đâu v mn",
+      "gold": [
+        "qd3266:D15:K0"
+      ],
+      "source": "synthetic_survey_test",
+      "group": "09c2b69ace7f5fb1"
+    },
+    {
+      "id": "QS-b20674317000",
+      "split": "test",
+      "q": "nen dang ky mon nao truoc de khong bi tre tien do",
+      "gold": [
+        "qd3266:D7:K4",
+        "qd3266:D14:K1"
+      ],
+      "source": "synthetic_survey_test",
+      "group": "09c2b69ace7f5fb1"
+    },
+    {
+      "id": "QS-9990864ac711",
+      "split": "test",
+      "q": "Điều kiện để được xét tốt nghiệp gồm những gì?",
+      "gold": [
+        "qd3266:D32:K1"
+      ],
+      "source": "synthetic_survey_test",
+      "group": "09c2b69ace7f5fb1"
+    },
+    {
+      "id": "QS-b92ee5c426a3",
+      "split": "test",
+      "q": "Học phần bị điểm F thì có bắt buộc phải học lại không?",
+      "gold": [
+        "qd3266:D17:K1"
+      ],
+      "source": "synthetic_survey_test",
+      "group": "09c2b69ace7f5fb1"
+    }
+  ]
+}
