@@ -21,6 +21,7 @@ COPY CPA2_KhaoSat/w15_ocr/ocr_transcript.py /app/CPA2_KhaoSat/w15_ocr/
 COPY CPA2_KhaoSat/w16_abstention/abstention.py /app/CPA2_KhaoSat/w16_abstention/
 COPY CPA2_KhaoSat/w18_eligibility/eligibility.py CPA2_KhaoSat/w18_eligibility/*.lp /app/CPA2_KhaoSat/w18_eligibility/
 COPY CPA2_KhaoSat/w19_recommendation/recommendation.py CPA2_KhaoSat/w19_recommendation/*.lp /app/CPA2_KhaoSat/w19_recommendation/
+RUN cd /app/CPA2_App/api && python -c "from cpa2_api.profiles import kb_version; print('CPA2 packaged KB:', kb_version(), flush=True)"
 RUN useradd --create-home cpa2
 USER cpa2
 WORKDIR /app/CPA2_App/api
