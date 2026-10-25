@@ -13,3 +13,10 @@ CPA2_KhaoSat/w15_ocr/_rieng/
 CPA2_KhaoSat/w15_ocr/_anh/
 # Tuần 20: câu hỏi Q-Real THÔ (chưa ẩn danh) — chỉ commit qreal/qreal.json sau khi rà tay
 CPA2_KhaoSat/w20_benchmark/qreal/_tho/
+# Khoá API (Tuần 21): chỉ .env.example (không có giá trị) được commit
+.env
+.env.*
+!.env.example
+# Tuần 21: checkpoint chạy dở + sổ chi phí (cục bộ)
+CPA2_KhaoSat/w21_baseline/.*.dang_chay.jsonl
+CPA2_KhaoSat/w21_baseline/chi_phi_nhat_ky.jsonl

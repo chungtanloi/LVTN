@@ -24,6 +24,8 @@ Gom mọi mục `- [ ]` còn mở trong báo cáo Tuần 1–17. Các mục đã
 | A16 | **Câu hỏi thật cho Q-Real** (≥ 400) — đã có Google Form (`w20_benchmark/qreal/bieu_mau.md`): Loi điền `<<ĐIỀN>>` (họ tên, email liên hệ, ngày xoá bản thô), tạo form, phát cho SV, xuất CSV vào `qreal/_tho/`, chạy `nhap_qreal.py`, rà tay | Tuần 20 §3, §3b | Đánh giá parser/độ phủ trên câu thật (RQ, H2) |
 | A17 | **Đ34 k2 a:** học phần ĐIỀU KIỆN (GDQP, GDTC, NN/TH căn bản) có tính vào "khối lượng các HP bị điểm F … so với tổng số TC quy định của CTĐT" không? Hiện KB mở nhánh (UNKNOWN) khi chỉ tính cả HP điều kiện ĐANG điểm F mới vượt 5%. **Giới hạn:** HP điều kiện TỪNG F rồi học lại đạt chưa được hỏi (`tc_diem_f` chỉ gồm HP không điều kiện) — nếu câu trả lời là "có tính" thì cần thêm một trường khai báo (hỏi Loi trước) | Tuần 20 §5f | Hạng tốt nghiệp xuất sắc/giỏi |
 | A18 | **C14 trên bảng điểm thật** (Windows, ảnh ở máy): chạy `validate_ocr` phần D → xem `_rieng/ket_qua_that.json` có đọc được `tc_tich_luy`/`dtbctl` mỗi học kỳ không; xác nhận TC tích lũy in **có cộng TC dòng miễn** (CC004) không → đặt `MIEN_TRONG_TC_TICH_LUY`, và có gồm HP điều kiện không. Không đưa ảnh/kết quả thật vào repo | Tuần 20 §5g | Độ phủ OCR thật (C8); khi có dòng miễn, cứu học kỳ bằng số tích lũy đang tắt |
+| A19 | **Khoá API cho baseline Tuần 21** (OpenAI, Gemini; Loi nói kế thừa từ niên luận, nhưng `NiênLuan/` và `.env` ở máy Windows, không có trong container cloud): đặt `OPENAI_API_KEY`, `GEMINI_API_KEY`, `BASELINE_OPENAI_MODEL`, `BASELINE_GEMINI_MODEL`, `BASELINE_*_PRICE_IN/OUT` (USD/triệu token) vào **biến môi trường của phiên cloud** (Edit environment), không dán vào chat; cân nhắc `BASELINE_TEMPERATURE=none` nếu model từ chối nhiệt độ; rồi `python run_baseline.py --ghi-bang --ghi-de`, commit, chạy dev | Tuần 21 §8 | Mọi con số baseline; tiêu chí 'Có bảng kết quả' Tuần 21 |
+| A20 | **Câu hỏi của benchmark cho baseline** (29/78 ca dev, 26/76 test không phải câu hỏi đúng/sai rõ nghĩa: rỗng, ký hiệu ASP, đề xuất đảo chiều, 'xếp hạng gì?', 'công nhận'): viết câu hỏi tự nhiên đúng chiều cho các claim đó (đóng băng + soát độc lập như gold) HAY chỉ báo cáo hai dòng `tong` / `[cau_hoi_ro]` | Tuần 21 §3 | So sánh CPA² vs baseline công bằng |
 | ~~A15~~ | ✅ **Đóng 18/10/2026:** trang 20 QĐ3266 (OCR trắng — Điều 33–35, tiêu đề Điều 33/34) chép tay từ PDF gốc Loi gửi; trích R-Formal khớp, thêm R-X20/R-X21 | Tuần 5 P-4, Tuần 14 | corpus RAG Điều 33–35 |
 | ~~A12~~ | ✅ **Đóng 18/10/2026 — QD-12** (Loi xác nhận): điều kiện nhận đề tài LVTN/TLTN chỉ là ngưỡng TC của CTĐT | Tuần 18 | R-F04 N → F |
 
@@ -34,7 +36,7 @@ Gom mọi mục `- [ ]` còn mở trong báo cáo Tuần 1–17. Các mục đã
 | ~~B1~~ | ✅ **Tuần 20:** G-Truth v1 (115 ca) + OCR-Noise v1 (40 ca), gold đóng băng `312b7ff` — test chạy Tuần 22 | 20 |
 | B2 | **Q-Real** (400–600 câu thật) — pipeline + biểu mẫu xong, **chưa đạt 0/400**: chờ Loi phát form (A16). Q-Elicit (20 kịch bản, đóng băng) báo RIÊNG, không tính vào 400 | 20–22 |
 | B3 | Đưa test10 (bẫy QD-09) và test13 (tiên quyết ngược chiều) của w14 vào bộ đánh giá RAG | 20–21 |
-| B4 | Baseline LLM / RAG thuần (`retriever.search`) / tool-calling trên cùng bộ ca (`dau_vao_baseline()`) | 21 |
+| B4 | Baseline LLM / RAG thuần / tool-calling trên cùng bộ ca: **đường ống xong** (`w21_baseline/`, 148 kiểm tra), **chưa chạy thật** — chờ A19; câu hỏi chưa công bằng cho 29/78 ca — A20 | 21 |
 | B5 | Parser và Verbalizer **LLM thật** (cần API key, `.env`) + đo Verbalization Faithfulness (RQ4) | 21–22 |
 | B6 | Recall@1 ≥ 0,80 / Recall@5 ≥ 0,95 của RAG trên test — **chưa đạt**; chỉ tinh chỉnh trên dev | 21–22 |
 | B7 | Thử embedding (cần mạng một lần) và so trên cùng tập test | 21 |
@@ -58,6 +60,7 @@ Gom mọi mục `- [ ]` còn mở trong báo cáo Tuần 1–17. Các mục đã
 | C13 | ~~P20-5~~ đã sửa (parser chuẩn hoá: bỏ dấu từ khoá + viết tắt theo ngữ cảnh + chặn câu hỏi mở; E17–E28). **Còn:** từ gõ không dấu vốn mơ hồ ("the", "du", "thi") — chốt chặn chỉ giảm rủi ro; bảng viết tắt trùng bảng sinh Q-Noise → cần Q-Real để đo cách gõ thật | Tuần 20 §5c |
 | C14 | ~~P20-4 phương án B~~ — đã làm: kiểm chéo bằng TC tích lũy + ĐTBCTL in sau mỗi học kỳ (cứu học kỳ mất ĐTBCHK khi đủ độ phân giải; luôn kiểm TC tích lũy → bịt lỗ GDTC F→D cho TRUE sai). OCR-Noise dev M2 0/5 → 4/5. Kiểm trên ảnh thật chuyển sang A18 | Tuần 20 §5g |
 | C15 | ~~KB hạng tốt nghiệp chưa đủ (R-F07, Đ34 k2)~~ — đã sửa R-Formal v1.11: HP điểm cuối F tính chắc chắn, `tc_diem_f` + kỷ luật cảnh cáo cấp Trường là khai báo (schema + loader), chưa khai báo → mở nhánh; R-F07b; errata G-Truth HG-02/03/04/08 (`gtruth_errata.json`) | Tuần 20 §5f |
+| C16 | **Kiểm adapter OpenAI/Gemini với API thật** (chưa từng gọi): tên trường/tham số, gọi công cụ b3, chữ ký suy nghĩ Gemini 3, phản hồi rỗng do `MAX_TOKENS`/`SAFETY` (hiện tính thiếu nhãn → UNKNOWN); hàm so CPA² vs baseline trên cùng tập ca | Tuần 21 §7–8 |
 | C8 | Độ phủ OCR thấp (Linux 7/18; Windows 1/18) | Tuần 15 |
 
 ## D. Thuộc phạm vi "không hình thức hoá được" (kết quả RQ1, không phải nợ)
