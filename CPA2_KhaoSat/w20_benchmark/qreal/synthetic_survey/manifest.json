@@ -1,0 +1,13 @@
+{
+  "raw_rows": 40,
+  "consenting_rows": 40,
+  "raw_questions": 138,
+  "unique_questions": 138,
+  "counts": {
+    "train": 77,
+    "test": 29,
+    "dev": 32
+  },
+  "source_sha256": "0be5e1a2a1363273c8bed2caf88e20bde06585770c93061c160d4fa6e4e68088",
+  "real_question_count": 0
+}

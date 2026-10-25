@@ -1,10 +1,36 @@
 # Trạng thái triển khai CPA² — 25/10/2026
 
+## Bản sửa sau rà soát
+
+- Đã sửa cơ chế dữ kiện thiếu: thời gian học chỉ được coi là đã khai báo khi có cả `da_hoc_nam2` và `tc_cong_nhan`. Ca 8,5 năm: thiếu/null TC công nhận → UNKNOWN kèm câu hỏi bổ sung; 0 → TRUE; 27 → FALSE. API có ca hồi quy tương ứng. Giao diện thêm ô TC công nhận/chuyển đổi, phân biệt để trống và số 0. Chỉ hồ sơ demo giả lập mới khai báo sẵn 0, không áp mặc định cho hồ sơ nhập của người dùng.
+- OCR chỉ cần verdict nay dùng hai phép kiểm tra tồn tại answer set thay vì liệt kê/lưu mọi answer set. Đã kiểm tra tương đương TRUE/FALSE/UNKNOWN/UNSAT và ca 2^25 thế giới tiềm năng. Đường tạo chứng chỉ và missing evidence vẫn giữ nguyên.
+- Sửa đọc ô TC tích lũy: dùng crop theo nhãn trên ảnh và một lượt OCR chữ số, có ngưỡng confidence, không suy số in từ tổng điểm/môn. Ca sạch đã đọc lại đúng các giá trị 111/161 bị lỗi trước đây; kiểm tra G11 cả hai hồ sơ đạt.
+- RAG bổ sung các viết tắt CBHV/CBHT/KHHT/đk/dk từ ngôn ngữ của tập train tổng hợp. Các thử nghiệm BM25 chỉ dùng dev; chưa có bằng chứng đạt mục tiêu Recall, chưa thay chỉ tiêu bằng số của tập train.
+- `Q-real.csv` do người dùng cung cấp có 40 dòng, 138 câu; cả 40 dòng ghi rõ nguồn SYNTHETIC. Bộ đã ẩn danh, khử trùng và chia theo nhóm người trả lời/câu trùng: train 77, dev 32, test 29. Không nhập vào Q-Real thật, không cộng vào chỉ tiêu 400; nhãn ý định giữ từ CSV trước khi chạy mô hình.
+- Đã huấn luyện baseline ý định Naive Bayes cục bộ: 77 train, chọn alpha trên 32 dev; đúng 10/32 (31,25%). Chưa chạy test, chưa tích hợp mô hình yếu này vào production. Không fine-tune LLM, không gọi API, không để mô hình tự kết luận học vụ. Tệp dữ liệu, manifest và trọng số ở `CPA2_KhaoSat/w20_benchmark/qreal/synthetic_survey/`.
+- API 13/13, Convex 7/7, TypeScript và production build đạt; audit web không ghi nhận lỗ hổng, OSV 29 gói Python không có advisory. Runtime đóng gói đạt, KB `ec1200bb64cca6b6`.
+- Hồi quy đầy đủ trên bản sao ổn định: **18/18 bộ đạt**; OCR đầy đủ hoàn tất trong 202,6 giây, giữ nguyên cổng đúng fact ≥99% và không kết luận sai. Log riêng từng script ở `CPA2_App/web/.vercel/research-fix-final/` (không commit). Sau đó kiểm thêm toàn bộ 4 test xử lý survey/không rò tập, đều đạt. 18/18 không có nghĩa Recall RAG đã đạt: dev vẫn 19/24 và 21/24.
+
+Gold, split benchmark và sáu hồ sơ gốc đã đóng băng được giữ nguyên. Các ca dương tính cần biết TC chuyển đổi dùng bản sao khai báo rõ 0 trong helper kiểm thử; không sửa gold để ép kết quả. Vì nguồn hồ sơ benchmark cũ thiếu trường này, kết quả benchmark sau bản sửa có thể từ chối nhiều hơn và phải được báo đúng theo dữ liệu gốc.
+
+## Rà soát lại lõi CPA² — 25/10/2026
+
+**Chưa đủ điều kiện kết luận lõi đã hoàn tất.** Các bộ kiểm thử hiện có đạt không có nghĩa đã bao phủ mọi tình huống thiếu dữ kiện.
+
+- Phát hiện đã tái hiện: `tc_cong_nhan` bị bỏ trống được KB xem như 0 (`qd3266_r_formal_v1.lp`, quy tắc `giam_hk(0) :- not tc_cong_nhan(_).`). Trên bản sao hồ sơ giả lập `sv_lvtn`, đặt `da_hoc_nam2=17` (8,5 năm): bỏ trường `tc_cong_nhan` cho TRUE và không yêu cầu bổ sung; khai báo 0 cho TRUE; khai báo 27 cho FALSE. Thiếu thông tin có khả năng đổi kết luận nhưng hệ thống không trả UNKNOWN. Lỗi có ở cả mã khảo sát và mã đóng gói; hai trường hợp thiếu/27 đã được tái hiện thêm trên API Render live với cùng kết quả. Lượt rà soát này chưa sửa luật hoặc phát hành bản vá.
+- RAG chạy lại trên dev: Recall@1 = 19/24 (0,79), Recall@5 = 21/24 (0,88); chưa đạt mục tiêu 0,80 / 0,95 dù bộ kiểm tra grounding kết thúc với exit 0. Hậu kiểm nguồn đạt và chất lượng truy hồi tự do là hai tiêu chí khác nhau.
+- Benchmark G-Truth dev chạy lại, không chỉnh gold/test: 58 ca, không có TRUE/FALSE sai, coverage 91,4%; đúng gold đóng băng 57/58, đúng theo errata có sẵn 58/58. Đây là số dev, không phải kết quả test độc lập.
+- Kiểm tra mới: API 12/12, Convex 7/7, TypeScript đạt; runtime đóng gói chạy được tốt nghiệp, điều kiện luận văn, đăng ký, đề xuất và tra cứu, hash KB `2e7757765cfa09ae`. Các file lõi Python được đối chiếu giữa thư mục làm việc và nhánh triển khai đều trùng.
+- Website trả HTTP 200; API cloud trả TRUE với 20 bước chứng minh cho hồ sơ giả lập và UNKNOWN cho câu học phí; API demo production bị chặn 403.
+- Bộ hồi quy mới chạy trên bản sao tạm, đặt `OMP_THREAD_LIMIT=1`: 16/17 bộ đạt (tuần 5–14 và 16–21); tuần 15 OCR vẫn timeout sau 600 giây. Tiến trình OCR có thời điểm dùng khoảng 4,8 GB RAM; chưa khoanh vùng được hàm gây chậm, nên chưa quy nguyên nhân chỉ cho Tesseract. Log lượt chạy: `C:/Users/ASUSPC~1/AppData/Local/Temp/cpa2-research-check-s3azdacq`. Không sửa dữ liệu/gold/báo cáo khảo sát gốc.
+
+Các việc nghiên cứu còn mở nằm trong `CPA2_KhaoSat/Viec_ton_dong.md`: đối chiếu bảng điểm thật/mã miễn, xác nhận nguồn và cách hiểu quy chế, nhãn độc lập, đánh giá test/benchmark, parser LLM và kế hoạch nhiều học kỳ. Không đồng nhất việc website chạy được với việc toàn bộ luận văn đã nghiệm thu.
+
 ## Đã kiểm tra
 
 | Hạng mục | Kết quả |
 |---|---|
-| API Python trong môi trường riêng | 12/12 kiểm thử đạt |
+| API Python trong môi trường riêng | 13/13 kiểm thử đạt sau bản sửa |
 | Convex: phân quyền, phiên bản, consent, xóa và giới hạn yêu cầu | 7/7 kiểm thử trong môi trường giả lập đạt |
 | TypeScript và Next.js production build | Đạt |
 | Trình duyệt Edge/Playwright | Dashboard → hỏi đáp thật → chứng chỉ → sửa/lưu điểm → đề xuất → tra cứu → lịch sử → xóa đạt; không có lỗi JavaScript trong lượt kiểm tra |
@@ -15,9 +41,9 @@
 | OCR qua HTTP trong môi trường riêng | Đọc bảng điểm giả lập 4 trang, 55 dòng; giữ trạng thái chờ rà soát |
 | Audit phụ thuộc web production | `pnpm audit --prod`: không ghi nhận cảnh báo |
 | Audit Python, gồm phụ thuộc gián tiếp/dev | OSV: 29 gói được kiểm tra, không ghi nhận cảnh báo sau khi cập nhật Pillow và python-multipart |
-| Hồi quy khảo sát | 16/17 bộ validate đạt; bộ w15 OCR đầy đủ vượt giới hạn 600 giây, chưa đạt điều kiện hoàn tất kiểm tra toàn bộ |
+| Hồi quy khảo sát | 18/18 bộ validate đạt sau bản sửa; OCR đầy đủ 202,6 giây |
 
-Các bộ khảo sát chạy trên bản sao tạm. Không sửa quy tắc, gold hoặc báo cáo khảo sát gốc để làm cho kiểm tra đạt. Timeout không được tính là pass. Chế độ OCR nhanh được chạy bổ sung: các ca sạch và các ca đã in kết quả qua F8 đều đạt, nhưng tiến trình tiếp tục xử lý quá 10 phút nên đã dừng; chưa có kết luận cuối cho lượt này. Kết quả từng phần không thay cho bộ OCR đầy đủ.
+Các bộ khảo sát chạy trên bản sao riêng. Không sửa gold hoặc báo cáo khảo sát gốc để làm cho kiểm tra đạt. Các lượt trước bản sửa đã timeout và không được tính là pass; lượt mới hoàn tất đầy đủ sau khi sửa đường giải ba trị và đọc ô TC tích lũy.
 
 ## Đã triển khai và kiểm tra online
 

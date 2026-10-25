@@ -582,6 +582,7 @@ function Shell({
   const missing = [
     "xac_nhan_ky_luat_sach",
     "da_hoc_nam2",
+    "tc_cong_nhan",
     "tc_diem_f",
     "ky_luat_canh_cao_cap_truong",
   ].filter((key) => profile?.[key] == null);
@@ -1072,6 +1073,22 @@ function Shell({
                               event.target.value === ""
                                 ? null
                                 : Number(event.target.value) * 2,
+                          })
+                        }
+                      />
+                    </label>
+                    <label>
+                      Tín chỉ được công nhận/chuyển đổi
+                      <input
+                        type="number"
+                        min="0"
+                        step="1"
+                        placeholder="Chưa khai báo; nhập 0 nếu không có"
+                        value={draft.tc_cong_nhan == null ? "" : Number(draft.tc_cong_nhan)}
+                        onChange={(event) =>
+                          updateDraft({
+                            ...draft,
+                            tc_cong_nhan: event.target.value === "" ? null : Number(event.target.value),
                           })
                         }
                       />

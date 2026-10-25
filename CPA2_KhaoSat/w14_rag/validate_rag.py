@@ -127,6 +127,9 @@ def phan_D(r, cert):
 
 
 def main():
+    from retriever import chuan_hoa
+    check('cảnh báo học tập' in chuan_hoa('e bị cbhv lần 1'), 'viết tắt CBHV của survey train được mở rộng cho truy hồi')
+    check('đăng ký' in chuan_hoa('dk học phần'), 'viết tắt dk được mở rộng cho truy hồi')
     split = "test" if "--test" in sys.argv else "dev"
     build_corpus.build()
     print()

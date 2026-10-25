@@ -219,6 +219,25 @@ def load_student(path):
 def kb(extra):
     return "\n".join([txt(p) for p in RULES] + [txt(SCHEMA), txt(ELECTIVE), txt(EXEMPT), txt(FACTS), txt(GRAD)]) + "\n" + extra
 
+def solve_truth(claim, extra):
+    """Exact three-valued verdict with two existence checks, without enumerating worlds.
+
+    Callers needing certificates/missing evidence still use solve_verdict. OCR only
+    needs the verdict; irrelevant choices must not multiply its memory usage.
+    """
+    ctl = clingo.Control(["--warn=none", "--models=1"])
+    ctl.add("base", [], kb(extra))
+    ctl.ground([("base", [])])
+    symbol = clingo.parse_term(claim)
+    if ctl.symbolic_atoms[symbol] is None:
+        return "FALSE" if ctl.solve().satisfiable else "UNSAT"
+    positive = ctl.solve(assumptions=[(symbol, True)]).satisfiable
+    negative = ctl.solve(assumptions=[(symbol, False)]).satisfiable
+    if positive and negative:
+        return "UNKNOWN"
+    return "TRUE" if positive else ("FALSE" if negative else "UNSAT")
+
+
 def solve_verdict(claim, extra):
     prog=kb(extra)
     ctl=clingo.Control(["--warn=none","--models=0"])

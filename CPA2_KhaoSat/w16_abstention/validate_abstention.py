@@ -37,6 +37,7 @@ def check(cond, msg, note=""):
 def hs(ten, **sua):
     """Hồ sơ giả lập + chỉnh sửa. Giá trị A.BO = xoá hẳn trường."""
     j = json.loads((STUDENTS / f"{ten}.json").read_text(encoding="utf-8"))
+    j['tc_cong_nhan'] = 0  # explicit input for these synthetic positive scenarios; frozen fixtures stay intact
     for k, v in sua.items():
         if v is A.BO:
             j.pop(k, None)
@@ -208,6 +209,16 @@ def test_mau_thuan():
     check(ok, f"E12 điểm 80.0 (số thực, trái schema) → mâu thuẫn, không crash ({r['verdict']})")
 
 
+def test_missing_recognized_credits():
+    for value in (A.BO, None):
+        r = A.tra_loi('tot_nghiep', hs('sv_lvtn', da_hoc_nam2=17, tc_cong_nhan=value))
+        check(r['verdict'] == 'UNKNOWN', f'R21 thiếu/null TC công nhận ở 8,5 năm → UNKNOWN ({r["verdict"]})')
+        check(bien(r, 'qua_thoi_gian_toi_da') is not None, 'R21 yêu cầu bổ sung dữ kiện thời gian/TC công nhận')
+    for credits, expected in ((0, 'TRUE'), (27, 'FALSE')):
+        r = A.tra_loi('tot_nghiep', hs('sv_lvtn', da_hoc_nam2=17, tc_cong_nhan=credits))
+        check(r['verdict'] == expected, f'R21 TC công nhận={credits} → {expected} ({r["verdict"]})')
+
+
 def main():
     print("=" * 78)
     print("VALIDATE ABSTENTION ENGINE v1 — Tuần 16 (CPA2)")
@@ -218,6 +229,7 @@ def main():
     test_policy()
     test_integration()
     test_mau_thuan()
+    test_missing_recognized_credits()
     print("\n" + "=" * 78)
     if errors:
         print(f"KẾT LUẬN: CÓ {len(errors)} LỖI")

@@ -42,7 +42,8 @@ BIEN_BOOL = {
         "R-F03 · QĐ3266 Điều 32 khoản 1"),
     "qua_thoi_gian_toi_da": (
         "Bạn đã học bao lâu kể từ khi nhập học (tính theo nửa năm, ví dụ 4,5 năm = 9), và có được công nhận/chuyển đổi "
-        "tín chỉ nào không? (lưu ý: một năm học có 3 học kỳ — không đếm số học kỳ)",
+        "tín chỉ nào không? Hãy khai báo số TC được công nhận/chuyển đổi, kể cả 0 nếu không có. "
+        "(lưu ý: một năm học có 3 học kỳ — không đếm số học kỳ)",
         "R-E01, R-E02 · QĐ3266 Điều 5"),
     # C15 (Tuần 20): hạ một mức hạng xuất sắc/giỏi — QĐ3266 Đ34 k2 (graduation_solver.lp mục 0)
     "f_ngoai_ho_so_vuot_5": (

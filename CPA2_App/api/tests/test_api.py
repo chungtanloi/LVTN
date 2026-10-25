@@ -87,6 +87,13 @@ class ApiTests(unittest.TestCase):
         response = self.client.post('/v1/recommendations', json={'profile': SAMPLE, 'semester': 4}, headers=HEADERS)
         self.assertEqual(response.status_code, 422)
 
+    def test_missing_transferred_credits_do_not_mean_zero(self):
+        for value, expected in ((None, 'UNKNOWN'), (0, 'TRUE'), (27, 'FALSE')):
+            profile = {**SAMPLE, 'da_hoc_nam2': 17, 'tc_cong_nhan': value}
+            response = self.client.post('/v1/advice', json={'question': 'Em đủ điều kiện tốt nghiệp chưa?', 'profile': profile}, headers=HEADERS)
+            self.assertEqual(response.status_code, 200, response.text)
+            self.assertEqual(response.json()['verdict'], expected)
+
 
 if __name__ == '__main__':
     unittest.main()

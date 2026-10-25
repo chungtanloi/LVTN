@@ -59,6 +59,9 @@ def tri(atom, extra):
 BB = [h["ma"] for h in __import__("json").loads((W6 / "curriculum_cntt_k49.json").read_text(encoding="utf-8"))["hoc_phan"] if h["cot"]=="BB"]
 def sv(chon, diem=80, bo=(), them=""):
     ds=[c for c in BB if c not in bo] + list(chon)
+    # Các ca tổng hợp này giả định không có TC chuyển đổi; khai báo rõ thay vì dựa vào thiếu = 0.
+    if 'tc_cong_nhan(' not in them:
+        them += '\ntc_cong_nhan(0).\n'
     return "\n".join(f'g10("{c}",{diem}).' for c in ds) + "\n" + them
 CHUAN = ["TC100","XH023","XH024","XH025","ML007","CT449","CT484"]
 KY_LUAT = "xac_nhan_ky_luat_sach.\nda_hoc_nam2(9).\n"   # hồ sơ khai báo đủ (Tuần 16)

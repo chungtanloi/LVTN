@@ -232,6 +232,33 @@ WHITELIST = {"ma": "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789", "tc": "0123456789",
 LA_DONG_HP = re.compile(r"^[A-Z][A-Za-z0-9§|$_]{3,7}$")
 
 
+def _tc_tich_luy_in(g, line):
+    """Read the printed integer in its own crop; never infer it from course totals.
+
+    The Vietnamese pass can read 111 as Iil and 161 as 16. Use the actual label
+    and following heading to locate the numeric cell, with an English digit pass.
+    Missing/low-confidence readings stay missing for the existing cross-checks.
+    """
+    words = line['tu']
+    end = next((i for i, w in enumerate(words) if bo_dau(w['t']) == 'luy'), None)
+    if end is None:
+        return None
+    following = next((w for w in words[end + 1:] if bo_dau(w['t']).startswith('diem')), None)
+    if following is None:
+        return None
+    left = words[end]['x'] + words[end]['w'] + 3
+    right = following['x'] - 3
+    top = max(0, min(w['y'] for w in words) - 5)
+    bottom = min(g.height, max(w['y'] + w['h'] for w in words) + 5)
+    if right <= left:
+        return None
+    numeric = _tu(g.crop((left, top, right, bottom)), '--psm 7 -c tessedit_char_whitelist=0123456789', 'eng')
+    text = ''.join(w['t'] for w in numeric)
+    if re.fullmatch(r'\d{1,3}', text) and min((w['c'] for w in numeric), default=0) >= TAU:
+        return int(text)
+    return None
+
+
 def doc_trang(img, st):
     g = img.convert("L")
     if g.width < 2000:
@@ -261,9 +288,7 @@ def doc_trang(img, st):
             continue
         # C14: "Tổng Số Tín Chỉ Tích Lũy <n>  Điểm T.Bình chung tích lũy (hệ 4) <x.xx>" (khác dòng "… Tích Lũy Học Kỳ")
         if "tich luy" in b and "hoc ky" not in b and "chung h" not in b and ("tong so" in b or "chung tich luy" in b):
-            m = re.search(r"tong so tin chi tich luy\W{0,3}(\d{1,3})\b", b)
-            if m:
-                hk["tc_tich_luy"] = int(m.group(1))
+            hk["tc_tich_luy"] = _tc_tich_luy_in(g, l)
             so = re.findall(r"\d[.,]\d{2}", l["text"])
             if "chung tich luy" in b and so:
                 hk["dtbctl"] = float(so[-1].replace(",", "."))
@@ -601,12 +626,12 @@ def ket_luan(hs, extra, bc, claim="tot_nghiep"):
     if bc["dong_an"] or len(bc["khong_chac"]) > MAX_KHONG_CHAC:
         return "UNKNOWN"
     import prototype
-    return prototype.solve_verdict(claim, _w7().load_facts(hs) + "\n" + extra)[0]   # load_facts đã rà soát (P17-1)
+    return prototype.solve_truth(claim, _w7().load_facts(hs) + "\n" + extra)   # load_facts đã rà soát (P17-1)
 
 
 def ket_luan_tu_json(j, claim="tot_nghiep"):
     import prototype
-    return prototype.solve_verdict(claim, _w7().load_facts(j))[0]
+    return prototype.solve_truth(claim, _w7().load_facts(j))
 
 
 def khai_bao_tu_json(j):

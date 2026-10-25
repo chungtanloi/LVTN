@@ -16,6 +16,17 @@ spec.loader.exec_module(proto)
 
 errors=[]
 OK, FAIL = "  [OK]  ", "  [FAIL]"
+_declared_directory = __import__('tempfile').TemporaryDirectory(prefix='cpa2-declared-fixtures-')
+
+def declared_student(name):
+    original = HERE.parent / 'w7_student_facts/students' / (name + '.json')
+    profile = json.loads(original.read_text(encoding='utf-8'))
+    profile['tc_cong_nhan'] = 0
+    path = Path(_declared_directory.name) / (name + '.json')
+    path.write_text(json.dumps(profile, ensure_ascii=False), encoding='utf-8')
+    return str(path)
+
+
 def check(cond, msg, note=""):
     print((OK if cond else FAIL) + " " + msg)
     if note: print("          ↳ " + note)
@@ -24,7 +35,7 @@ def check(cond, msg, note=""):
 
 def test_true():
     print("\nA. TRUE — sv_lvtn đủ 161 TC")
-    res=proto.answer("em đủ điều kiện tốt nghiệp chưa?", str(HERE.parent / "w7_student_facts" / "students" / "sv_lvtn.json"))
+    res=proto.answer("em đủ điều kiện tốt nghiệp chưa?", declared_student("sv_lvtn"))
     check(res["verdict"]=="TRUE", f"A1 verdict TRUE (got {res['verdict']})")
     check(len(res["certificate"]["proof"]["steps"])>0, f"A2 certificate có {len(res['certificate']['proof']['steps'])} steps")
     check("tot_nghiep" in res["explanation_vi"], "A3 explanation chứa claim")
@@ -41,7 +52,7 @@ def test_false():
 def test_unknown():
     print("\nC. UNKNOWN — thiếu điểm LVTN (2 thế giới)")
     # tạo hồ sơ tạm thiếu CT550E
-    extra = proto.load_student(str(HERE.parent / "w7_student_facts" / "students" / "sv_lvtn.json"))[0]
+    extra = proto.load_student(declared_student("sv_lvtn"))[0]
     # bỏ CT550E ra, thêm choice
     extra = "\n".join([l for l in extra.split("\n") if "CT550E" not in l])
     extra += '\n{ g10("CT550E",80); g10("CT550E",30) } = 1.\n'
@@ -68,7 +79,7 @@ def test_postcheck():
     blocked = any(c not in cert_text for c in codes)
     check(blocked, "D1 hậu kiểm phát hiện CT999 không trong certificate → chặn")
     # test thật qua prototype: không có mã lạ nên không chặn
-    res=proto.answer("em đủ điều kiện tốt nghiệp chưa?", str(HERE.parent / "w7_student_facts" / "students" / "sv_lvtn.json"))
+    res=proto.answer("em đủ điều kiện tốt nghiệp chưa?", declared_student("sv_lvtn"))
     check(res["verdict"]!="BLOCKED", "D2 case thật không bị chặn")
 
 def test_dang_ky():
@@ -113,7 +124,7 @@ def test_dang_ky():
     # P20-2 (Tuần 20): câu ngoài phạm vi / không nhận ra ý định KHÔNG được rơi về tot_nghiep (trả lời nhầm TRUE)
     for q in ("Mức học phí một tín chỉ năm nay là bao nhiêu ạ?", "Em muốn chuyển sang học ngành khác thì làm sao?",
               "Thầy cô nào dạy môn này hay vậy?"):
-        r = proto.answer(q, str(HERE.parent / "w7_student_facts" / "students" / "sv_lvtn.json"))
+        r = proto.answer(q, declared_student("sv_lvtn"))
         check(r.get("claim") != "tot_nghiep" and r["verdict"] == "UNKNOWN",
               f"E10 '{q[:32]}…' → UNKNOWN 'chưa hỗ trợ', không rơi về tot_nghiep ({r.get('claim')}, {r['verdict']})")
     check(proto.parse_question("Em ra trường được chưa ạ?") == "tot_nghiep", "E11 'ra trường được chưa' vẫn là câu tốt nghiệp")
@@ -185,7 +196,7 @@ def test_dang_ky():
          "hoc phan nen ct180 co bao nhieu tin chi", "e duoc lam tl nhom khong", "kien thuc nen hoc o dau",
          "em được làm luận văn nhóm không", "em được làm tiểu luận thay luận văn không", "em du dk lam luan van chua neu rot ct177")}
     check(all(v_ not in ("de_xuat", "du_dk_tc") for v_ in k.values()), f"E27 nền/nén, 'tl' (thảo luận) không thành đề xuất/tiểu luận ({k})")
-    sv = str(HERE.parent / "w7_student_facts" / "students" / "sv_lvtn.json")
+    sv = declared_student("sv_lvtn")
     k = {q: (proto.parse_question(q), proto.answer(q, sv)["explanation_vi"]) for q in (
          "ky 2 e nen dang ky gi", "hoc ki 3 em nen hoc gi", "ky 2 em he clc nen dang ky gi", "hè này em nên đăng ký gì")}
     check(all(p_ == "de_xuat" for p_, _ in k.values()) and "HK2" in k["ky 2 e nen dang ky gi"][1]
@@ -206,7 +217,7 @@ def test_dang_ky():
          "em xếp loại gì")}
     check(not any(v_ == "xep_loai" or v_.startswith("hang_cuoi") for v_ in k.values()),
           f"E31 khá (trạng từ) / nếu rớt…thì / rèn luyện / làm sao để / học lực học kỳ / học bổng / ĐTB bao nhiêu / thiếu ngữ cảnh tốt nghiệp → KHÔNG phải xếp loại ({k})")
-    sv = str(HERE.parent / "w7_student_facts" / "students" / "sv_lvtn.json")
+    sv = declared_student("sv_lvtn")
     r = proto.answer("Nếu tốt nghiệp, em xếp hạng gì?", sv)
     check(r["verdict"] == "TRUE" and r.get("claim") == "hang_cuoi(kha)" and "khá" in r["explanation_vi"]
           and "dự kiến" in r["explanation_vi"] and any(s_["rule_id"] in ("r_f06", "r_f07") for s_ in r["certificate"]["proof"]["steps"]),
@@ -256,7 +267,7 @@ def test_dang_ky():
                                               "tôi có đạt loại giỏi khi ra trường không")}
     check(list(k.values()) == ["xep_loai", "xep_loai", "hang_cuoi(gioi)"],
           f"E40 lời gọi / trợ từ / chủ ngữ mình, tôi vẫn nhận ({k})")
-    r = proto.answer("Nếu tốt nghiệp, em xếp hạng gì?", str(HERE.parent / "w7_student_facts" / "students" / "sv_du_hp.json"))
+    r = proto.answer("Nếu tốt nghiệp, em xếp hạng gì?", declared_student("sv_du_hp"))
     check(r["verdict"] in ("FALSE", "UNKNOWN") and any(s_["rule_id"] == "r_f06" for s_ in r["certificate"]["proof"]["steps"]),
           f"E41 không đạt mức nào → chứng chỉ vẫn có nguồn R-F06 (ngưỡng hạng) ({r['verdict']}, {[s_['rule_id'] for s_ in r['certificate']['proof']['steps']][:4]})")
     import tempfile

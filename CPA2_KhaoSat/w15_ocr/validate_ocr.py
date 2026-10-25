@@ -68,7 +68,9 @@ def phan_A():
 
 
 def ho_so(ten):
-    return json.loads((STUDENTS / f"{ten}.json").read_text(encoding="utf-8"))
+    profile = json.loads((STUDENTS / f"{ten}.json").read_text(encoding="utf-8"))
+    profile['tc_cong_nhan'] = 0  # declared only in this synthetic OCR scenario
+    return profile
 
 
 def phan_B(nhanh):
@@ -486,6 +488,16 @@ def phan_G_anh():
               f"G11 {ten}/sach: đọc đủ TC tích lũy {tl} (không giảm) + ĐTBCTL mọi học kỳ, khớp số tính lại ({lech})")
 
 
+def phan_H():
+    import prototype
+    for extra, claim in [('', 'tot_nghiep'), ('{audit_choice}.', 'audit_choice'), ('', 'audit_absent'), (':-.', 'tot_nghiep')]:
+        old = prototype.solve_verdict(claim, extra)[0]
+        check(prototype.solve_truth(claim, extra) == old, f'H verdict-only tương đương liệt kê: {claim} / {old}')
+    # 2^25 thế giới độc lập: vẫn chỉ cần tìm một thế giới có claim và một thế giới không có claim.
+    check(prototype.solve_truth('audit_choice(1)', '{audit_choice(1..25)}.') == 'UNKNOWN',
+          'H 33 triệu thế giới tiềm năng → UNKNOWN mà không liệt kê/lưu toàn bộ')
+
+
 def main():
     nhanh = "--nhanh" in sys.argv
     try:   # số liệu OCR phụ thuộc font + phiên bản Tesseract → ghi lại để chỉ so trên CÙNG môi trường
@@ -494,6 +506,7 @@ def main():
         tv = f"không chạy được ({type(e).__name__})"
     print(f"Môi trường: font={RT.font()} · tesseract={O.pytesseract.pytesseract.tesseract_cmd} {tv}\n")
     phan_A()
+    phan_H()
     phan_B(nhanh)
     phan_C()
     phan_E()

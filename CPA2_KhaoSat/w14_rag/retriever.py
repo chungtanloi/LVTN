@@ -34,6 +34,9 @@ VIET_TAT = {
     "lvtn": "luận văn tốt nghiệp", "tltn": "tiểu luận tốt nghiệp",
     "ctđt": "chương trình đào tạo", "gdqp": "giáo dục quốc phòng", "gdtc": "giáo dục thể chất",
     "đhct": "đại học cần thơ", "cvht": "cố vấn học tập", "cntt": "công nghệ thông tin", "gpa": "điểm trung bình chung tích lũy",
+    # Vocabulary observed in the synthetic survey training split; retrieval only.
+    "cbhv": "cảnh báo học tập", "cbht": "cảnh báo học tập", "khht": "kế hoạch học tập",
+    "đk": "đăng ký", "dk": "đăng ký",
 }
 
 

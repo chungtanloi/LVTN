@@ -112,7 +112,9 @@ def catalog():
 @app.get('/v1/demo-profiles', dependencies=[Depends(authorized)])
 def demos():
     names = {'sv_lvtn': 'Hồ sơ xét luận văn', 'sv_tltn': 'Hồ sơ tiểu luận', 'sv_mien_ielts': 'Hồ sơ có IELTS', 'sv_du_hp': 'Hồ sơ đủ học phần', 'sv_5hp': 'Hồ sơ đầu khóa'}
-    return [{'id': sid, 'name': name, 'profile': json.loads((KB / f'w7_student_facts/students/{sid}.json').read_text(encoding='utf-8'))} for sid, name in names.items()]
+    # These are synthetic demo scenarios, explicitly declaring no transferred credits.
+    # Raw imported profiles do not receive this default.
+    return [{'id': sid, 'name': name, 'profile': {**json.loads((KB / f'w7_student_facts/students/{sid}.json').read_text(encoding='utf-8')), 'tc_cong_nhan': 0}} for sid, name in names.items()]
 
 
 @app.post('/v1/profiles/validate', dependencies=[Depends(authorized)])

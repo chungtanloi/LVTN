@@ -25,7 +25,9 @@
 %%    tiêu điều kiện "not khai_bao" của chính nó (không ổn định) → thế giới đóng lại.
 %%    Khi hồ sơ có xac_nhan_ky_luat_sach. thì lựa chọn bên dưới thừa nhưng vô hại.
 %% ---------------------------------------------------------------------------
-khai_bao(thoi_gian) :- da_hoc_nam2(_).
+%% R21: thiếu TC công nhận không có nghĩa là 0. giam_hk(0) trong R-Formal chỉ là trần
+%% lạc quan khi chưa biết TC; phải mở nhánh quá hạn nếu chưa khai báo đủ cả hai dữ kiện.
+khai_bao(thoi_gian) :- da_hoc_nam2(_), tc_cong_nhan(_).
 { xac_nhan_ky_luat_sach } :- not khai_bao(ky_luat).
 { qua_thoi_gian_toi_da }  :- not khai_bao(thoi_gian).
 %% C15 (Tuần 20, Đ34 k2 — R-F07/R-F07b): hạ một mức hạng xuất sắc/giỏi. Hồ sơ chỉ giữ điểm CUỐI → không biết HP từng F

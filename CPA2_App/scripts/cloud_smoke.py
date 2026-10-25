@@ -145,7 +145,7 @@ def main():
     if anonymous.get('status') == 'success':
         raise RuntimeError('Anonymous access unexpectedly succeeded.')
     print('PASS: anonymous profile access rejected.')
-    profile = json.loads((ROOT / 'CPA2_KhaoSat/w7_student_facts/students/sv_lvtn.json').read_text(encoding='utf-8'))
+    profile = {**json.loads((ROOT / 'CPA2_KhaoSat/w7_student_facts/students/sv_lvtn.json').read_text(encoding='utf-8')), 'tc_cong_nhan': 0}
     refused = call('action', 'saveProfile', {'profile': profile, 'consent': False}, alice)
     if refused.get('status') == 'success':
         raise RuntimeError('Profile was saved without consent.')

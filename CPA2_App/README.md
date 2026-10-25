@@ -103,6 +103,14 @@ python CPA2_App/scripts/verify_research.py
 
 ## Giới hạn và giai đoạn tiếp theo
 
+File `CPA2_KhaoSat/Q-real.csv` được xác nhận là khảo sát **tổng hợp** (138 câu), chưa phải phản hồi thật. Pipeline `CPA2_KhaoSat/w20_benchmark/survey_training.py` tạo train/dev/test theo nhóm để tránh cùng người/câu trùng lọt qua nhiều tập, rồi huấn luyện baseline phân loại ý định ngoại tuyến. Chạy từ gốc repo:
+
+```powershell
+python CPA2_KhaoSat/w20_benchmark/survey_training.py --input CPA2_KhaoSat/Q-real.csv
+```
+
+Bản đã xử lý nằm ở `CPA2_KhaoSat/w20_benchmark/qreal/synthetic_survey/`. Baseline mới đạt 31,25% trên dev nên chưa được dùng trong website; test vẫn giữ riêng. Đây không phải fine-tune LLM và không thay thế bộ câu hỏi thật cần thu thập.
+
 - Phạm vi CNTT K49; không tích hợp hệ thống Phòng Đào tạo, không nhập SQL dump hoặc hồ sơ thật từ niên luận.
 - OCR có độ phủ giới hạn; mẫu sai hoặc dữ kiện chưa chắc cần được bổ sung thủ công từ bảng điểm gốc. Xác nhận của người dùng không tự làm các dòng thiếu trở thành chắc chắn.
 - Các ảnh tải thành công nhưng chưa đăng ký tác vụ có thể còn trong Convex Storage nếu mạng gián đoạn; cần rà soát Storage khi vận hành thử nghiệm. Chức năng xóa dữ liệu xử lý các ảnh đã đăng ký dưới tài khoản.
