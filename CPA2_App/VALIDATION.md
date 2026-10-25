@@ -18,6 +18,8 @@ Các câu/nguồn tham chiếu của holdout được lưu và đóng băng trư
 
 Đã kiểm tra: 19/19 bộ hồi quy nghiên cứu, 6/6 kiểm thử riêng cho ranker, API 15/15. Có kiểm tra đúng mã CT177, ràng buộc nguồn QĐ5339, nguồn trả ra chỉ lấy từ corpus, tách train/holdout theo nhóm và grounding không đổi. Runtime đóng gói đạt, KB `909ea81282ee3339`; OSV 29 gói Python không ghi nhận advisory. Bằng chứng số đo và tập dữ liệu nằm ở `CPA2_KhaoSat/w14_rag/evaluation_ranked_v1_*.json`, `rag_survey_*_v1.json`, `retrieval_model_v1.json`.
 
+Đã phát hành API trên Render: commit `ca3c7285c622b037fa2a58905ee3ae33532f093d`, deploy `dep-dbf3je0473hc73bnp8tg`, live; HTTP health và từng kết quả thử đều xác nhận KB `909ea81282ee3339`. Endpoint lookup trả đúng `ctdt_k49:CT177` với tiên quyết CT101; câu chỉ định QĐ5339 chỉ trả passage QĐ5339. Kiểm lại ca TC công nhận thiếu/0/27 cho UNKNOWN/TRUE/FALSE như trước. Browser trên website công khai kiểm qua Clerk → Convex → Render, chứng chỉ, lịch sử, lưu hồ sơ và tra cứu CT177 đạt; ảnh `cloud-rag.png` đã được xem để xác minh. Đã xóa dữ liệu cùng hai tài khoản Clerk thử nghiệm và kiểm tra state rỗng. Frontend không cần thay đổi cho lần phát hành backend này.
+
 ## Bản sửa sau rà soát
 
 - Đã sửa cơ chế dữ kiện thiếu: thời gian học chỉ được coi là đã khai báo khi có cả `da_hoc_nam2` và `tc_cong_nhan`. Ca 8,5 năm: thiếu/null TC công nhận → UNKNOWN kèm câu hỏi bổ sung; 0 → TRUE; 27 → FALSE. API có ca hồi quy tương ứng. Giao diện thêm ô TC công nhận/chuyển đổi, phân biệt để trống và số 0. Chỉ hồ sơ demo giả lập mới khai báo sẵn 0, không áp mặc định cho hồ sơ nhập của người dùng.

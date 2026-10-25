@@ -61,6 +61,12 @@ async function ticket(user) {
     await page.getByRole('textbox', { name: 'Tìm trong quy chế' }).fill('điểm W');
     await page.getByRole('button', { name: 'Tra cứu', exact: true }).click();
     await page.locator('.passage').first().waitFor({ timeout: 40000 });
+    await page.getByRole('textbox', { name: 'Tìm trong quy chế' }).fill('Môn CT177 có tiên quyết là gì?');
+    await page.getByRole('button', { name: 'Tra cứu', exact: true }).click();
+    await page.waitForFunction(() => document.querySelector('.passage')?.textContent.includes('— CT177'), undefined, { timeout: 40000 });
+    assert.ok((await page.locator('.passage').first().innerText()).includes('CT101'));
+    await page.screenshot({ path: path.join(app, 'cloud-rag.png'), fullPage: true });
+    console.log('PASS browser: ranked lookup keeps CT177 and its actual CT101 prerequisite.');
     await page.getByRole('button', { name: 'Tổng quan', exact: true }).click();
     await page.screenshot({ path: path.join(app, 'cloud-dashboard.png'), fullPage: true });
     await page.setViewportSize({ width: 390, height: 844 });

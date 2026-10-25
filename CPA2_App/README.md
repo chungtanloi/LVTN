@@ -113,7 +113,7 @@ File `CPA2_KhaoSat/Q-real.csv` được xác nhận là khảo sát **tổng h�
 python CPA2_KhaoSat/w20_benchmark/survey_training.py --input CPA2_KhaoSat/Q-real.csv
 ```
 
-Bản đã xử lý nằm ở `CPA2_KhaoSat/w20_benchmark/qreal/synthetic_survey/`. Baseline mới đạt 31,25% trên dev nên chưa được dùng trong website; test vẫn giữ riêng. Đây không phải fine-tune LLM và không thay thế bộ câu hỏi thật cần thu thập.
+Bản đã xử lý nằm ở `CPA2_KhaoSat/w20_benchmark/qreal/synthetic_survey/`. Baseline phân loại ý định đạt 31,25% trên dev nên chưa được dùng trong website; chưa chạy test cho baseline này. Riêng 29 câu test đã được gán đoạn nguồn tham chiếu và dùng một lần để báo cáo phiên bản RAG xếp hạng nguồn, sau khi chốt trọng số trên dev. Vì vậy không coi chúng là tập hoàn toàn chưa từng xem cho các phiên bản tiếp theo. Đây không phải fine-tune LLM và không thay thế bộ câu hỏi thật cần thu thập.
 
 - Phạm vi CNTT K49; không tích hợp hệ thống Phòng Đào tạo, không nhập SQL dump hoặc hồ sơ thật từ niên luận.
 - OCR có độ phủ giới hạn; mẫu sai hoặc dữ kiện chưa chắc cần được bổ sung thủ công từ bảng điểm gốc. Xác nhận của người dùng không tự làm các dòng thiếu trở thành chắc chắn.
