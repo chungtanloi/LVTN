@@ -2,6 +2,10 @@
 
 Ứng dụng luận văn **CPA²**. Kế thừa luồng hồ sơ, nhập bảng điểm và trải nghiệm tư vấn từ niên luận AcademiQ; các kết luận học vụ sử dụng lõi CPA² trong `CPA2_KhaoSat`.
 
+Bản demo online: **https://cpa2-web.vercel.app**. Đăng ký/đăng nhập, chọn hồ sơ giả lập hoặc nhập bảng điểm, đồng ý lưu rồi sử dụng tư vấn, chứng chỉ và lịch sử cá nhân. Frontend dùng Vercel; Clerk xác thực; Convex lưu dữ liệu và gọi solver Python trên Render.
+
+Đây là bản demo luận văn dùng Clerk test instance; chưa chuyển sang Clerk production hoặc domain riêng. Render dùng gói miễn phí nên lần gọi đầu sau thời gian không hoạt động có thể chậm. Không nhập bảng điểm thật khi chỉ đang thử nghiệm. Kết quả kiểm tra cloud được ghi trong [VALIDATION.md](VALIDATION.md).
+
 ## Chạy thử trên Windows
 
 Yêu cầu: Python 3.12 trở lên, Node.js 20.9 trở lên, pnpm. OCR cần Tesseract với ngôn ngữ `vie` và `eng`; có thể đặt `TESSERACT_EXE` nếu dùng đường dẫn khác.
@@ -45,6 +49,8 @@ Next.js + Tailwind (Vercel)
 ```
 
 Python dùng một tiến trình con cho mỗi tác vụ để cách ly các import cũ và cưỡng chế thời gian xử lý. Tối đa hai tác vụ đang xử lý trong một tiến trình API; suy luận/tra cứu tối đa 30 giây, OCR tối đa 120 giây. Lỗi kỹ thuật, quá thời gian, `BLOCKED` và hồ sơ mâu thuẫn được giữ riêng với kết luận ba trị.
+
+Container đặt `OMP_THREAD_LIMIT=1` để Tesseract không tạo nhiều luồng trên máy chủ ít CPU, theo [FAQ chính thức của Tesseract](https://tesseract-ocr.github.io/tessdoc/FAQ.html). Cấu hình này cũng được đặt trên dịch vụ Render đang chạy.
 
 Các endpoint `/v1/*` yêu cầu `Authorization: Bearer <CPA2_SERVICE_KEY>`. `/health` không chứa dữ liệu sinh viên.
 
@@ -93,10 +99,12 @@ python CPA2_App/scripts/verify_research.py
 
 `scripts/browser-check.cjs` kiểm tra dashboard → hỏi đáp → chứng chỉ → sửa/lưu bảng điểm → đề xuất → tra cứu → lịch sử → mobile → xóa, gồm kiểm tra CSRF. Cần sẵn Playwright và trình duyệt; đặt `CPA2_RUNTIME_MODULES` nếu dùng thư viện từ runtime bên ngoài, `CPA2_BROWSER_EXE` nếu dùng Edge/Chrome có sẵn. Chạy trong khi phiên demo đang mở.
 
+`scripts/cloud_smoke.py` kiểm tra Clerk → Convex production → Render bằng hai tài khoản giả lập, yêu cầu Clerk test key trong file môi trường riêng. Chạy script trước, sau đó `scripts/cloud-browser.cjs`, tùy chọn `cloud_smoke.py --ocr`, và luôn kết thúc bằng `cloud_smoke.py --cleanup`. State kiểm tra chỉ nằm trong `.vercel/` bị Git bỏ qua; cleanup xác minh email tài khoản kiểm tra, xóa dữ liệu thuộc tài khoản, kiểm tra dữ liệu đã hết rồi xóa tài khoản Clerk. Không chạy các script này với tài khoản thật.
+
 ## Giới hạn và giai đoạn tiếp theo
 
 - Phạm vi CNTT K49; không tích hợp hệ thống Phòng Đào tạo, không nhập SQL dump hoặc hồ sơ thật từ niên luận.
 - OCR có độ phủ giới hạn; mẫu sai hoặc dữ kiện chưa chắc cần được bổ sung thủ công từ bảng điểm gốc. Xác nhận của người dùng không tự làm các dòng thiếu trở thành chắc chắn.
 - Các ảnh tải thành công nhưng chưa đăng ký tác vụ có thể còn trong Convex Storage nếu mạng gián đoạn; cần rà soát Storage khi vận hành thử nghiệm. Chức năng xóa dữ liệu xử lý các ảnh đã đăng ký dưới tài khoản.
 - Chưa tích hợp dự báo điểm, AI API, Stripe, Resend hoặc Supabase. Terra/Sol/Gemini Flash là định hướng sau khi luồng cơ bản ổn định; cần xác minh model API trước khi thêm. LLM chỉ tham gia parser/verbalizer, kết luận vẫn do solver và hậu kiểm.
-- Docker và đăng nhập cloud cần kiểm thử thực tế trên tài khoản triển khai trước khi coi là nghiệm thu online.
+- Đã kiểm tra đăng nhập, phân quyền hai tài khoản và tư vấn qua cloud; xem giới hạn OCR và phạm vi nghiệm thu trong `VALIDATION.md`. Cần cấu hình Clerk production trước khi vận hành với người dùng thật.

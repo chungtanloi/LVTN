@@ -1,5 +1,5 @@
 FROM python:3.12-slim
-ENV PYTHONUNBUFFERED=1 PYTHONIOENCODING=utf-8 PIP_NO_CACHE_DIR=1
+ENV PYTHONUNBUFFERED=1 PYTHONIOENCODING=utf-8 PIP_NO_CACHE_DIR=1 OMP_THREAD_LIMIT=1
 RUN apt-get update && apt-get install -y --no-install-recommends tesseract-ocr tesseract-ocr-vie tesseract-ocr-eng \
     && rm -rf /var/lib/apt/lists/*
 WORKDIR /app

@@ -6,5 +6,7 @@ services:
     dockerContext: .
     healthCheckPath: /health
     envVars:
+      - key: OMP_THREAD_LIMIT
+        value: "1"
       - key: CPA2_SERVICE_KEY
         generateValue: true

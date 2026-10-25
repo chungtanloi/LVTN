@@ -19,15 +19,17 @@
 
 Các bộ khảo sát chạy trên bản sao tạm. Không sửa quy tắc, gold hoặc báo cáo khảo sát gốc để làm cho kiểm tra đạt. Timeout không được tính là pass. Chế độ OCR nhanh được chạy bổ sung: các ca sạch và các ca đã in kết quả qua F8 đều đạt, nhưng tiến trình tiếp tục xử lý quá 10 phút nên đã dừng; chưa có kết luận cuối cho lượt này. Kết quả từng phần không thay cho bộ OCR đầy đủ.
 
-## Chưa nghiệm thu online
+## Đã triển khai và kiểm tra online
 
-- Đã push mã ứng dụng lên nhánh `codex/cpa2-web-deploy`, commit `49d37f5`.
-- Render: `cpa2-api` đã live tại https://cpa2-api.onrender.com; `/health` trả 200 và KB `2e7757765cfa09ae`. Đã cấu hình khóa dịch vụ: câu xét tốt nghiệp trên hồ sơ giả lập trả TRUE với 20 bước chứng minh; câu học phí trả UNKNOWN/khong_ro; yêu cầu không có khóa trả 401.
-- Vercel: đã tạo dự án `cpa2-web` trong workspace `loi5`, chưa phát hành giao diện có đăng nhập.
-- Convex: đã tạo dự án `cpa2` trong team PandaCore (`loiphat123456`), dev `nautical-fox-575`, prod `exciting-cheetah-606`; đã đặt URL API và khóa dịch vụ ở cả hai deployment. Backend chưa đồng bộ vì thiếu Clerk issuer.
-- Clerk: đã chọn gói Hobby miễn phí, nhưng Vercel yêu cầu người dùng chấp thuận điều khoản Marketplace trước khi provisioning. Đây là bước hiện đang chờ người dùng.
-- Kiểm thử Convex là kiểm thử chức năng backend trong bộ nhớ, chưa thay cho kiểm tra hai tài khoản Clerk thật trên cloud.
-- Container Docker đã build và khởi động thành công trên Render Linux. Chưa kiểm thử suy luận/OCR có xác thực qua cloud.
-- Trước khi công bố demo online: tạo/kết nối các dự án, cấu hình môi trường theo README, build Docker, thử đăng nhập hai tài khoản, upload/OCR, xóa dữ liệu và kiểm tra lại health.
+- Mã ứng dụng trên nhánh `codex/cpa2-web-deploy`. Vercel production đã READY tại **https://cpa2-web.vercel.app**, deployment `dpl_2x9UHaUd8eyeBijhuWFuJXeHS5WR`, mã ứng dụng `5954726`. Trang đăng nhập công khai trả 200, API demo production trả 403.
+- Render: `cpa2-api` live tại https://cpa2-api.onrender.com, workspace My Workspace, gói free. Container Docker build/chạy trên Linux; `/health` trả 200 và KB `2e7757765cfa09ae`. Câu xét tốt nghiệp trên hồ sơ giả lập trả TRUE với 20 bước chứng minh; câu học phí trả UNKNOWN/khong_ro; yêu cầu không có khóa trả 401.
+- Convex: dự án `cpa2`, team PandaCore (`loiphat123456`), dev `nautical-fox-575`, prod `exciting-cheetah-606`; schema, indexes, functions, URL API, khóa dịch vụ và Clerk issuer đã đồng bộ ở cả hai deployment.
+- Clerk: đã provisioning qua Vercel Marketplace, gói Hobby miễn phí; JWT template `convex` có audience `convex`. Bản demo dùng Clerk test instance, chưa phải cấu hình Clerk production/domain riêng.
+- Hai tài khoản Clerk giả lập được tạo riêng để thử JWT thật: truy cập ẩn danh bị chặn; lưu cần consent; mỗi tài khoản không đọc/xóa được dữ liệu tài khoản kia; cập nhật hồ sơ tạo phiên bản mới, không đổi phiên bản của câu trả lời cũ. Luồng JWT → Convex → Render → chứng chỉ → lịch sử đạt; câu ngoài phạm vi giữ UNKNOWN.
+- Kiểm tra Edge/Playwright trên URL công khai: đăng nhập → dashboard có dữ liệu → hỏi tốt nghiệp → mở chứng chỉ và nguồn → tải lại vẫn có phiên/lịch sử → sửa điểm và lưu → tra cứu quy chế đạt. Không có lỗi JavaScript; desktop 1440 px và mobile 390 px không tràn ngang. Đã xem ảnh chụp để xác nhận bố cục.
+- OCR cloud lần đầu vượt giới hạn 120 giây. Sau khi đặt `OMP_THREAD_LIMIT=1` trên Render để tránh Tesseract tạo nhiều luồng trên máy chủ ít CPU, lượt thử lại đạt: upload một trang bảng điểm giả lập → Convex Storage → scheduled action → Render → bản nháp 17 dòng, giữ `needs_review` và `ocr_pending`. Docker/Blueprint cũng lưu cấu hình này cho các lần triển khai tiếp theo. Kết quả một ảnh không bảo đảm mọi bộ ảnh 4 trang hoàn tất trên gói free.
+- Tài khoản/dữ liệu kiểm tra chỉ dùng hồ sơ tổng hợp; cleanup được chạy sau khi hoàn tất các lượt thử.
+
+Các ảnh `cloud-login.png`, `cloud-dashboard.png`, `cloud-proof.png`, `cloud-mobile.png` là bằng chứng giao diện của lượt kiểm tra cloud. Các kiểm thử cloud này bổ sung cho bộ giả lập Convex, không thay kết quả hồi quy khảo sát 16/17 ở trên.
 
 Chưa tích hợp AI API, thanh toán hoặc email, theo phạm vi bản đầu đã chốt. Website và tài liệu sản phẩm sử dụng tên CPA²; AcademiQ chỉ là nguồn kế thừa của niên luận.
