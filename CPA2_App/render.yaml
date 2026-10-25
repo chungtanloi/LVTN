@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: cpa2-api
+    runtime: docker
+    dockerfilePath: ./CPA2_App/Dockerfile
+    dockerContext: .
+    healthCheckPath: /health
+    envVars:
+      - key: CPA2_SERVICE_KEY
+        generateValue: true

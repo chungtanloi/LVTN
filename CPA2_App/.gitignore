@@ -1,0 +1,11 @@
+node_modules/
+.next/
+.vercel/
+.env*
+!.env.example
+__pycache__/
+.pytest_cache/
+*.tsbuildinfo
+test-results/
+playwright-report/
+.venv/

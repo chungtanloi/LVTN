@@ -1,0 +1,27 @@
+# Resolved runtime dependencies, verified with the CPA2 API virtual environment.
+annotated-doc==0.0.5
+annotated-types==0.8.0
+anyio==4.15.1
+attrs==26.1.0
+cffi==2.1.1
+click==8.5.0
+clingo==5.8.2
+fastapi==0.134.0
+h11==0.16.0
+idna==3.20
+jsonschema==4.26.0
+jsonschema-specifications==2025.9.1
+numpy==2.3.5
+packaging==26.3
+pillow==13.0.0
+pycparser==3.12
+pydantic==2.14.1
+pydantic_core==2.50.1
+pytesseract==0.3.13
+python-multipart==0.0.32
+referencing==0.37.0
+rpds-py==2026.9.1
+starlette==1.10.0
+typing_extensions==4.16.0
+typing-inspection==0.4.4
+uvicorn==0.41.0

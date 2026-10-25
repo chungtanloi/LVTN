@@ -1,0 +1,8 @@
+fastapi==0.134.0
+uvicorn==0.41.0
+clingo==5.8.2
+jsonschema==4.26.0
+Pillow==13.0.0
+pytesseract==0.3.13
+numpy==2.3.5
+python-multipart==0.0.32
