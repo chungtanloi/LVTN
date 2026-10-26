@@ -12,6 +12,10 @@ Kiểm thử riêng source/ranker: 15/15; API: 18/18; runtime đóng gói đạt
 
 Hồi quy cuối trên bản sao độc lập: **19/19 bộ đạt**, gồm OCR đầy đủ 558,8 giây và đề xuất 155,1 giây; log ở `web/.vercel/rag-source-final-20261026/` (không commit). Lượt đang chạy trước khi hoàn tất bản sửa đã dừng, không tính vào kết quả này. Các giới hạn kiểm thử và điều kiện nghiệm thu nghiên cứu giữ nguyên.
 
+Đã phát hành API: commit `c88891be841a6775b7c39752a32f9e60f093717d`, Render deploy `dep-dbfa59ks728c73elpsug`, live. Docker build và HTTP `/health` đều xác nhận KB `bc22650d280a402b`. HTTP cloud kiểm qua QĐ326/QĐ53390/câu vô nghĩa → không nguồn; CT177 → CT101; QĐ5339 chỉ trả đúng văn bản; tốt nghiệp TRUE có 350 bước được grounding đầy đủ, kết luận ở đầu; ranh giới TC công nhận null/0/27 → UNKNOWN/TRUE/FALSE.
+
+Luồng Clerk → Convex → Render đạt với hai tài khoản giả lập: từ chối truy cập ẩn danh/lưu không consent; giữ đủ source trace trong câu trả lời đã lưu; cách ly tài khoản; giữ phiên bản lịch sử; câu ngoài phạm vi UNKNOWN. Browser trên website công khai kiểm qua dashboard, hỏi đáp, hơn 20 bước chứng chỉ với `tot_nghiep` ở đầu, lịch sử sau reload, sửa/lưu điểm, CT177/CT101, desktop/mobile; không có lỗi JavaScript. Đã xem ảnh chứng chỉ và mobile. Lượt browser đầu timeout khi chờ sự kiện `load`; script nay chờ DOM rồi kiểm các điều khiển ứng dụng, lượt chạy đầy đủ sau đó đạt. Không tính lượt timeout là pass. Ảnh `cloud-proof.png`, `cloud-rag.png`, `cloud-dashboard.png`, `cloud-mobile.png` được cập nhật. Đã xóa dữ liệu Convex, xác nhận state rỗng, xóa cả hai tài khoản Clerk và tệp QA riêng. Frontend không thay đổi trong lần sửa backend này.
+
 ## Cải thiện RAG theo kế hoạch — 26/10/2026
 
 Chỉ tiêu giữ nguyên theo `Ke_hoach_nghien_cuu_CPA2_24_tuan.xlsx`, sheet `Kế hoạch 24 tuần`, F15:H15: truy hồi đúng nguồn; Recall@1 ≥ 0,80, Recall@5 ≥ 0,95 trên test. **Chưa đủ điều kiện ghi hoàn tất nghiệm thu.**

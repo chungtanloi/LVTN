@@ -22,7 +22,8 @@ async function ticket(user) {
   try {
     const page = await browser.newPage({ viewport: { width: 1440, height: 1050 } });
     page.on('pageerror', error => errors.push(error.message));
-    await page.goto('https://cpa2-web.vercel.app');
+    // Readiness is checked by the app controls below, independently of slow assets.
+    await page.goto('https://cpa2-web.vercel.app', { waitUntil: 'domcontentloaded', timeout: 45000 });
     await page.getByRole('button', { name: /Đăng nhập để bắt đầu/ }).waitFor({ timeout: 30000 });
     await page.waitForFunction(() => window.Clerk?.loaded);
     const token = await ticket(state.users[0]);
@@ -45,7 +46,7 @@ async function ticket(user) {
     await page.screenshot({ path: path.join(app, 'cloud-proof.png'), fullPage: true });
     await page.getByRole('button', { name: 'Đóng chứng chỉ' }).click();
     console.log('PASS browser: question -> Convex action -> Render -> visible proof and citations.');
-    await page.reload();
+    await page.reload({ waitUntil: 'domcontentloaded', timeout: 45000 });
     await page.getByRole('heading', { name: /Học tập có định hướng/ }).waitFor({ timeout: 30000 });
     await page.getByRole('button', { name: 'Lịch sử tư vấn', exact: true }).click();
     await page.locator('.history-card').first().waitFor();
