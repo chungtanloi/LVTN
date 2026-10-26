@@ -256,23 +256,34 @@ def solve_verdict(claim, extra):
     return verdict, models, cautious, brave
 
 def build_certificate(claim, verdict, models, cautious, brave):
-    # thu thập why trong 1 model đại diện (hoặc cautious nếu TRUE)
-    rep = list(cautious) if verdict=="TRUE" else (models[0] if models else set())
-    # nhưng why chỉ có trong model cụ thể, lấy từ models[0]
+    # Source trace: TRUE uses facts common to all worlds; other verdicts show
+    # actual facts of one representative world. A why annotation alone is not
+    # evidence that its annotated atom holds (e.g. one graduation prerequisite).
     rep = models[0] if models else set()
+    supported = cautious if verdict == "TRUE" else rep
     whys=[a for a in rep if a.startswith("why(")]
     cat=json.loads(CATALOG.read_text(encoding="utf-8"))
     by_asp={r["asp"]: r for r in cat["rules"] if r.get("asp")}
     import re
     steps=[]
+    first_source_step={}
     qd_set=set()
-    for w in sorted(whys)[:20]:
+    # Do not silently truncate the stored trace. Put the actual target first.
+    for w in sorted(whys, key=lambda w: (not (verdict == 'TRUE' and w.startswith(f'why({claim},')), w)):
         m=re.match(r"why\((.+),\s*(\w+)\)", w)
         if not m: continue
         atom, rid=m.group(1), m.group(2)
+        if atom not in supported: continue
         if rid not in by_asp: continue
         rec=by_asp[rid]
-        steps.append({"atom": atom, "rule_id": rid, "source": {"van_ban": rec["van_ban"], "dieu": rec["dieu"], "khoan": rec["khoan"], "trich": rec["trich"][:150]}})
+        source={"van_ban": rec["van_ban"], "dieu": rec["dieu"], "khoan": rec["khoan"]}
+        step={"atom": atom, "rule_id": rid, "source": source}
+        if rid not in first_source_step:
+            source['trich']=rec['trich'][:150]
+            first_source_step[rid]=len(steps)+1
+        else:
+            step['source_ref_step']=first_source_step[rid]
+        steps.append(step)
         if rec.get("quyet_dinh"): qd_set.add(rec["quyet_dinh"].split()[0])
     missing=[]
     can_bo_sung=[]
@@ -282,7 +293,9 @@ def build_certificate(claim, verdict, models, cautious, brave):
         missing=[b["bien"] for b in can_bo_sung]
         if not missing:   # UNKNOWN do lựa chọn của SV (tích luỹ, tự chọn) — không phải dữ kiện thiếu
             missing=sorted(a for a in brave - cautious if "tich_luy" in a)[:10]
-    return {"claim": claim, "verdict": verdict, "proof": {"steps": steps}, "missing_facts": missing,
+    return {"claim": claim, "verdict": verdict, "proof": {"steps": steps, "kind": "source_trace",
+            "model_scope": "cautious" if verdict == "TRUE" else "representative", "truncated": False,
+            "source_excerpt_policy": "first_step_per_rule"}, "missing_facts": missing,
             "can_bo_sung": can_bo_sung, "meta": {"qd_dien_giai": sorted(qd_set)}}
 
 # ---------- Tầng 4: Verbalizer + Hậu kiểm ----------

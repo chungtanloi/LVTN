@@ -156,6 +156,12 @@ def main():
     answer = success('action', 'advise', {'question': 'Em đủ điều kiện tốt nghiệp chưa?'}, alice)
     if answer['result']['verdict'] != 'TRUE' or not answer['result']['certificate']['proof']['steps']:
         raise RuntimeError('Expected a proved graduation answer.')
+    certificate = answer['result']['certificate']
+    proof = certificate['proof']
+    if (len(proof['steps']) <= 20 or proof['steps'][0]['atom'] != certificate['claim']
+            or proof.get('truncated') is not False or certificate['grounding']['khong_nguon']
+            or any(not step.get('passage_id') for step in proof['steps'])):
+        raise RuntimeError('Expected the full claim-first source trace with every step grounded.')
     print('PASS: Clerk JWT -> Convex action -> Render solver -> proof -> stored answer.')
     other = success('query', 'state', {}, bob)
     if other['profile'] is not None or other['messages']:

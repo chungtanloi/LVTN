@@ -1,5 +1,17 @@
 # Trạng thái triển khai CPA² — cập nhật 26/10/2026
 
+## Rà soát nguồn và chứng chỉ — 26/10/2026
+
+Đã tái hiện và sửa: số quyết định không có trong corpus (`QĐ326`, `QĐ53390`) bị ghép nhầm sang văn bản khác; câu không có bằng chứng vẫn nhận ba nguồn điểm 0; chứng chỉ thiếu ánh xạ nguồn vẫn qua hậu kiểm; giới hạn 20 bước bỏ mất kết luận cần giải thích; và annotation `why` có thể được hiển thị dù atom tương ứng không đúng trong mô hình.
+
+Tra cứu nay khớp nguyên số quyết định, bỏ nguồn điểm 0. Grounding kiểm tra passage thực sự có trong corpus, đúng rule và địa chỉ văn bản; xóa dữ liệu grounding cũ khi chạy lại. Thiếu nguồn trả `BLOCKED/GROUNDING_SOURCE_INVALID`. Chứng chỉ giữ toàn bộ source trace, đưa kết luận TRUE lên đầu, chỉ giữ atom đúng trong cautious model (TRUE) hoặc mô hình đại diện (verdict khác). Đây là trace nguồn, chưa phải bộ kiểm chứng chứng minh độc lập.
+
+Trích đoạn lặp được dẫn về bước đầu cùng rule, vẫn giữ địa chỉ nguồn cho từng bước. Hồ sơ tổng hợp `sv_lvtn` có 350 bước, khoảng 81,8 KB; ca giả lập gồm 78 môn có 389 bước, khoảng 90,1 KB. Kiểm thử đặt ngân sách 96 KiB/chứng chỉ; 100 chứng chỉ mẫu lớn khoảng 8,59 MiB, dưới giới hạn đọc/trả 16 MiB của Convex ([tài liệu chính thức](https://docs.convex.dev/production/state/limits)). Không cắt ngầm trace để đạt giới hạn.
+
+Kiểm thử riêng source/ranker: 15/15; API: 18/18; runtime đóng gói đạt, KB `bc22650d280a402b`; OSV kiểm 29 gói, không ghi nhận advisory. Huấn luyện lại trên train/dev vẫn tái tạo hash model `7a3f1d7e195e511141873c69710d76ce7d49ddbdaac07662d243059e05cf08ec`. Không thay trọng số, luật ASP, nhãn nguồn, gold hoặc split; không dùng lại holdout để điều chỉnh. Các số Recall ở mục tiếp theo vẫn giữ nguyên và chưa đạt điều kiện nghiệm thu đầy đủ.
+
+Hồi quy cuối trên bản sao độc lập: **19/19 bộ đạt**, gồm OCR đầy đủ 558,8 giây và đề xuất 155,1 giây; log ở `web/.vercel/rag-source-final-20261026/` (không commit). Lượt đang chạy trước khi hoàn tất bản sửa đã dừng, không tính vào kết quả này. Các giới hạn kiểm thử và điều kiện nghiệm thu nghiên cứu giữ nguyên.
+
 ## Cải thiện RAG theo kế hoạch — 26/10/2026
 
 Chỉ tiêu giữ nguyên theo `Ke_hoach_nghien_cuu_CPA2_24_tuan.xlsx`, sheet `Kế hoạch 24 tuần`, F15:H15: truy hồi đúng nguồn; Recall@1 ≥ 0,80, Recall@5 ≥ 0,95 trên test. **Chưa đủ điều kiện ghi hoàn tất nghiệm thu.**

@@ -40,7 +40,8 @@ async function ticket(user) {
     await page.waitForFunction(() => document.querySelector('.user-message p')?.textContent === 'Em đủ điều kiện tốt nghiệp chưa?' && !document.querySelector('.thinking'), undefined, { timeout: 50000 });
     await page.getByRole('button', { name: /Xem chứng chỉ & nguồn quy chế/ }).click();
     await page.getByRole('heading', { name: 'Chứng chỉ kết luận', exact: true }).waitFor();
-    assert.ok(await page.locator('.proof-step').count() > 0);
+    assert.ok(await page.locator('.proof-step').count() > 20);
+    assert.match(await page.locator('.proof-step').first().innerText(), /tot_nghiep/);
     await page.screenshot({ path: path.join(app, 'cloud-proof.png'), fullPage: true });
     await page.getByRole('button', { name: 'Đóng chứng chỉ' }).click();
     console.log('PASS browser: question -> Convex action -> Render -> visible proof and citations.');

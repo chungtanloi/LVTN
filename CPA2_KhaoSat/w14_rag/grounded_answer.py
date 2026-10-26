@@ -25,7 +25,9 @@ def tra_loi(question, student_path, r=None):
     trich = r.trich_dan(cert)
     ok, sai = kiem_trich_dan(cert, [t["passage_id"] for t in trich])
     if not ok:
-        return {"verdict": "BLOCKED", "ly_do": f"trích passage ngoài chứng minh: {sai}"}
+        return {"verdict": "BLOCKED", "reason": "GROUNDING_SOURCE_INVALID",
+                "ly_do": "Chưa thể xác nhận kết luận vì chứng chỉ thiếu nguồn hợp lệ.",
+                "grounding_errors": sai}
     res["nguon"] = trich
     return res
 

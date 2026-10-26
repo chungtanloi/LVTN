@@ -124,6 +124,16 @@ def unit_scores(values):
     return [value / denominator for value in values]
 
 
+def requested_decisions(question):
+    """Keep the complete reference token; never truncate an unknown decision."""
+    return set(re.findall(r'(?<!\w)(?:qd|quyet\s+dinh)\s*(\d\w*)', bo_dau(question.lower())))
+
+
+def decision_number(document):
+    match = re.fullmatch(r'qd(\d+)(?:_.*)?', document)
+    return match.group(1) if match else None
+
+
 class RetrievalRanker:
     """Small, frozen lexical model. Training examples only rank original sources.
 
@@ -186,7 +196,7 @@ class RetrievalRanker:
         scores.append(unit_scores([max(values, default=0) for values in examples]))
         scores.append(unit_scores([sum(sorted(values, reverse=True)[:2]) for values in examples]))
         codes = set(re.findall(r'\b[A-Z]{2}\d{3}E?\b', question.upper()))
-        requested = set(re.findall(r'(?:qd|quyet dinh)\s*(\d{3,4})', bo_dau(question.lower())))
+        requested = requested_decisions(question)
         words = ' '.join(retrieval_words(question))
         condition = bool(re.search(r'\b(?:dieu kien|khi nao|truong hop)\b', words))
         bound = bool(re.search(r'bao nhieu|toi da|toi thieu|duoi|vuot', words))
@@ -197,7 +207,7 @@ class RetrievalRanker:
             condition_lead = float(condition and bool(re.search(r'dieu kien|truong hop|chi duoc', self.lead_texts[i]))) * scores[3][i]
             rows.append([channel[i] for channel in scores] + [coverage,
                         float(bool(codes) and doc.get('ma_hp') in codes),
-                        float(bool(requested) and any(code in doc['van_ban'] for code in requested)),
+                        float(bool(requested) and decision_number(doc['van_ban']) in requested),
                         condition_lead, float(bound and self.thresholds[i]) * scores[2][i]])
         return rows
 
@@ -217,11 +227,11 @@ class Retriever:
     def search(self, q, k=5, loai=None, van_ban=None):
         """Original source passages and ranking scores; scores are not confidence."""
         sc = self.ranker.scores(q) if self.ranker else self.bm25.scores(tach_tu(q))
-        explicit_documents = set(re.findall(r'(?:qd|quyet dinh)\s*(\d{3,4})', bo_dau(q.lower())))
+        explicit_documents = requested_decisions(q)
         idx = [i for i in sorted(range(len(self.docs)), key=lambda i: -sc[i])
-               if (loai is None or self.docs[i]["loai"] == loai)
+               if sc[i] > 0 and (loai is None or self.docs[i]["loai"] == loai)
                and (van_ban is None or self.docs[i]["van_ban"] == van_ban)
-               and (not self.ranker or not explicit_documents or any(code in self.docs[i]['van_ban'] for code in explicit_documents))]
+               and (not self.ranker or not explicit_documents or decision_number(self.docs[i]['van_ban']) in explicit_documents)]
         return [(self.docs[i], sc[i]) for i in idx[:k]]
 
     # ---------- grounding ----------
@@ -233,8 +243,14 @@ class Retriever:
         ghi vào 'khong_nguon' (không được im lặng bỏ qua)."""
         nguon, khong_nguon = [], []
         for s in cert["proof"]["steps"]:
+            # A certificate may be grounded again after the source index changes.
+            for derived in ('passage_id', 'dia_chi', 'trang'):
+                s.pop(derived, None)
             p = self.ground_rule(s["rule_id"])
-            if p is None:
+            expected = s.get('source') or {}
+            if (p is None or self.by_id.get(p['id']) != p or s['rule_id'] not in p.get('asp', [])
+                    or any(expected.get(field) is not None and str(expected[field]) != str(p.get(field))
+                           for field in ('van_ban', 'dieu', 'khoan'))):
                 khong_nguon.append(s["rule_id"])
                 continue
             s["passage_id"] = p["id"]
@@ -259,7 +275,12 @@ def kiem_trich_dan(cert, cited_ids):
     """Hậu kiểm grounding: trích một passage KHÔNG nằm trong nguồn của certificate → chặn.
     Trả về (ok, danh sách passage trích sai)."""
     hop_le = set(cert.get("grounding", {}).get("passages", []))
-    sai = [c for c in cited_ids if c not in hop_le]
+    sai = list(cert.get('grounding', {}).get('khong_nguon', []))
+    for step in cert.get('proof', {}).get('steps', []):
+        if not step.get('passage_id') or step['passage_id'] not in hop_le:
+            sai.append(step.get('rule_id') or 'proof_step_without_source')
+    sai.extend(c for c in cited_ids if c not in hop_le)
+    sai = list(dict.fromkeys(sai))
     return (not sai), sai
 
 

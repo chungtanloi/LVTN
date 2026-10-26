@@ -105,6 +105,28 @@ class ApiTests(unittest.TestCase):
         self.assertTrue(response.json()['passages'])
         self.assertTrue(all(p['passage_id'].startswith('qd5339:') for p in response.json()['passages']))
 
+    def test_lookup_does_not_rename_unknown_regulations(self):
+        for number in ('326', '53390'):
+            response = self.client.post('/v1/lookup', json={'question': f'Theo QĐ{number}, công nhận điểm thế nào?'}, headers=HEADERS)
+            self.assertEqual(response.status_code, 200, response.text)
+            self.assertEqual(response.json()['passages'], [])
+
+    def test_lookup_without_evidence_returns_no_sources(self):
+        response = self.client.post('/v1/lookup', json={'question': 'zzzxqv_kgjh'}, headers=HEADERS)
+        self.assertEqual(response.status_code, 200, response.text)
+        self.assertEqual(response.json()['passages'], [])
+
+    def test_graduation_trace_keeps_the_claim(self):
+        response = self.client.post('/v1/advice', json={'question': 'Em đủ điều kiện tốt nghiệp chưa?',
+            'profile': {**SAMPLE, 'tc_cong_nhan': 0}}, headers=HEADERS)
+        self.assertEqual(response.status_code, 200, response.text)
+        result = response.json()
+        self.assertEqual(result['verdict'], 'TRUE')
+        proof = result['certificate']['proof']
+        self.assertEqual(proof['steps'][0]['atom'], result['claim'])
+        self.assertGreater(len(proof['steps']), 20)
+        self.assertFalse(proof['truncated'])
+
 
 if __name__ == '__main__':
     unittest.main()
