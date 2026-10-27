@@ -62,6 +62,12 @@ def phan_A(r):
           f"tiêu đề Điều 33, 34 theo PDF gốc ({td.get('qd3266:D33:K1')!r}, {td.get('qd3266:D34:K2')!r})")
     check({"qd3266:D32:K4", "qd3266:D33:K3", "qd3266:D33:K4"} <= {d["id"] for d in r.docs},
           "có passage Điều 32 k4 và Điều 33 k3, k4 (trước đây mất cùng trang OCR trắng)")
+    # QĐ3266 Đ22 k4 (PDF tr.14): OCR đọc "4." thành "+," → nội dung k4 lẫn vào passage k3.
+    # Chưa sửa: corpus đổi thì ranker v1 (khoá corpus_sha256) không nạp được → hoãn tới ranker v2 (Viec_ton_dong C).
+    d22 = {d["id"]: d for d in r.docs if d["id"] in ("qd3266:D22:K3", "qd3266:D22:K4")}
+    k3, k4 = (d22.get(k, {}).get("text", "") for k in ("qd3266:D22:K3", "qd3266:D22:K4"))
+    check("công bố" in k4 and d22["qd3266:D22:K4"].get("trang") == 14 and "công bố" not in k3,
+          "QĐ3266 Điều 22 k4 tách khỏi k3 (dòng '+,' là số khoản OCR hỏng)", cong=False)
     trich = [d["id"] for d in r.docs if d.get("nguon") == "trich_r_formal"]
     print(f"     ghi nhận: {len(trich)} passage dựng từ trích R-Formal vì OCR hỏng/trắng: {trich}")
 

@@ -117,3 +117,30 @@ Khoảng cách dev → test (0,79 → 0,67) cho thấy cấu hình đã khớp m
 R@5 của tập cũ đạt 95,8%; R@1 mới 70,8%, chưa đạt 80%. Bộ giữ lại mới cũng chưa đạt ngưỡng. Nhãn nguồn mới do trợ lý gán từ corpus trước dự đoán, chưa có người thứ hai kiểm tra; có errata nguồn học lực học kỳ ghi trước dự đoán. Không coi đây là Q-Real thật hoặc kết quả đánh giá kết luận học vụ. Giữ nguyên ô nghiệm thu chưa đạt.
 
 Bằng chứng: `w14_rag/evaluation_ranked_v1_fresh_20261026.json`, `evaluation_ranked_v1_diagnostic_20261026.json`, `retrieval_acceptance_v1.json`. Trọng số `retrieval_model_v1.json` tái tạo bằng `train_retrieval.py`; `validate_retrieval_ranker.py` kiểm tra tách tập, đúng nguồn/mã học phần và grounding độc lập. Không sửa gold, split hoặc hồ sơ benchmark cũ.
+
+## 7. Cập nhật 27/10/2026 — soát gold ca trượt (errata, không sửa gold)
+
+Thử nghiệm exp2 ngày 26/10 (bge-m3 + đặc trưng từ vựng + điểm theo Điều, kiểm định chéo 5 nhóm trên 24 dev + 67 train; **không** đụng holdout/test, **không** đưa vào hệ thống) cho R@1 57/91, R@5 82/91. Người dùng soát toàn bộ 34 ca trượt R@1 và 15 ca trúng chọn ngẫu nhiên (seed 2026), đối chiếu 7 PDF nguồn (`soat_gold_ca_truot_v1_da_ra_soat.xlsx`). Kết quả ghi thành `w14_rag/rag_soat_gold_errata_v1.json` (kèm sha256 workbook); gold đóng băng giữ nguyên.
+
+| Nhóm soát | Gold đúng | Gold sai | Chưa đủ nguồn |
+|---|---|---|---|
+| 34 ca trượt (3 dev, 31 train) | 27 | 7 | — |
+| 15 ca trúng mẫu (5 dev, 10 train) | 12 | 2 | 1 (CT177, thiếu CTĐT K49/đề cương) |
+
+Phân loại errata: 30 xác nhận gold · 9 thêm nguồn thay thế · 3 gold sai có mã thay (hạng hệ thống được chấp nhận) · 6 gold sai **chưa có mã nguồn** (căn cứ đúng chỉ nêu bằng điều/khoản ở ghi chú, hoặc câu ngoài văn bản: phúc khảo điểm giảm, trần nghỉ tạm thời, chuyển chuyên ngành) · 1 thiếu tài liệu (không chấm). Mọi gold sai đều thuộc **train**; gold dev đúng 8/8.
+
+| Đo trên | Gold gốc R@1 / R@5 | Theo errata R@1 / R@5 |
+|---|---|---|
+| exp2, 91 câu dev + train (CV) | 57/91 / 82/91 | 61/90 / 80/90 |
+| exp2, dev | 21/24 / 24/24 | 21/24 / 24/24 |
+| exp2, train | 36/67 / 58/67 | 40/66 / 56/66 |
+| Ranker v1 đã commit, dev | 23/24 / 24/24 | 23/24 / 24/24 |
+| BM25 cũ, dev | 19/24 / 21/24 | 20/24 / 22/24 |
+
+Đọc số: errata **không** đổi số dev của ranker v1, và không đụng holdout/test → ô nghiệm thu Recall giữ **chưa đạt**. R@5 theo errata giảm vì 6 câu gold sai chưa có mã nguồn không thể trúng. Errata soát sau khi đã thấy dự đoán, ca trượt soát hết còn ca trúng chỉ 15/57 (42 ca trúng chưa soát vẫn chấm theo gold gốc; ở mẫu, 2/14 gold sai) → số theo errata thiên về tăng, chỉ báo kèm, không thay số chính thức. Một người soát.
+
+Phát hiện phụ:
+- **Nhãn train nhiễu** (9/48 ca soát được có gold sai) — ranker v1 dùng chính các nhãn này làm ví dụ truy hồi. Chưa huấn luyện lại: đổi nhãn train đổi `examples_sha256`, tức là model mới, cần holdout mới (Viec_ton_dong C18).
+- **Phân đoạn Đ22 k3/k4 sai** (dev23): OCR đọc "4." thành "+," nên nội dung k4 (công bố điểm, PDF tr.14 — đã đối chiếu ảnh trang) nằm trong `D22:K3`. Sửa generator đúng nhưng đổi corpus → ranker v1 khoá `corpus_sha256` không nạp được (và app deploy dùng corpus này). **Hoãn** tới ranker v2; validate_rag thêm kiểm tra báo CHƯA ĐẠT, không chặn (Viec_ton_dong C17).
+- 2 ca trúng có "hạng 1 khác gold" (QS-09cf7d201d99, QS-b51c10db8832) không phải lỗi xuất dữ liệu: gold có 2 mã, sheet chỉ in mã đầu, hạng 1 trùng mã thứ hai.
+- Cần thêm tài liệu: CTĐT K49 và đề cương CT177, hướng dẫn phúc khảo, quy định chuyển chuyên ngành, chuẩn đầu ra theo ngành/khoá.

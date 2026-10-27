@@ -1,0 +1,1703 @@
+{
+  "meta": {
+    "name": "Errata soát gold truy hồi v1 (ca trượt R@1 + mẫu ca trúng)",
+    "created_before_first_prediction": false,
+    "review_date": "2026-10-27",
+    "reviewer": "người dùng (chủ đề tài), đối chiếu 7 PDF nguồn; 1 người soát",
+    "workbook": "soat_gold_ca_truot_v1_da_ra_soat.xlsx",
+    "workbook_sha256": "1e622801823a9cd81e6749c8e1c5ef86759f4585d026cdc7abb5b7afe45f7144",
+    "selection": "Ca trượt R@1 (34) và 15 ca trúng ngẫu nhiên (seed 2026) của cấu hình thử nghiệm exp2 (bge-m3 + từ vựng, kiểm định chéo 24 dev + 67 train); KHÔNG gồm holdout/test.",
+    "bias_warning": "Soát sau khi đã thấy dự đoán. Ca trượt soát toàn bộ, ca trúng chỉ soát 15/57 → errata thiên về làm tăng điểm; không dùng làm số chính thức, chỉ báo kèm dòng [theo errata].",
+    "rules": {
+      "gold_dung=true": "corrected_gold = gold gốc + mã hạng 1–3 được chấp nhận",
+      "gold_dung=false": "corrected_gold = chỉ mã hạng 1–3 được chấp nhận; rỗng → loai=gold_sai_chua_co_ma_nguon (căn cứ đúng chỉ nêu bằng điều/khoản ở ghi chú, chưa gán mã corpus)",
+      "gold_dung=null": "thiếu tài liệu để kiểm (CTĐT K49/đề cương) → corrected_gold = null, không chấm"
+    },
+    "not_applied_to_model": "retrieval_model_v1 vẫn dùng rag_survey_train_sources_v1.json gốc (examples_sha256); errata chưa dùng để huấn luyện lại."
+  },
+  "changes": [
+    {
+      "id": "dev08",
+      "dataset": "rag_queries",
+      "split": "dev",
+      "nhom_soat": "truot_r1",
+      "q": "dieu kien xet tot nghiep gom nhung gi",
+      "original_gold": [
+        "qd3266:D32:K1"
+      ],
+      "gold_dung": true,
+      "loai": "xac_nhan_gold",
+      "corrected_gold": [
+        "qd3266:D32:K1"
+      ],
+      "danh_gia_top3": [
+        {
+          "hang": 1,
+          "id": "ctdt_k49:nhom:g_tot_nghiep",
+          "chap_nhan": null
+        },
+        {
+          "hang": 2,
+          "id": "qd3266:D32:K1",
+          "chap_nhan": true
+        },
+        {
+          "hang": 3,
+          "id": "qd3266:D32:K4",
+          "chap_nhan": false
+        }
+      ],
+      "cau_hoi_mo_ho": false,
+      "ghi_chu_nguoi_soat": "QĐ3266 Đ32.1, PDF tr.19: đủ học phần/TC, ĐTBCTL ≥2,00, chuẩn đầu ra; hoàn thành học phần điều kiện và điều kiện pháp lý. H2 đúng. H3 chỉ quy định trách nhiệm hội đồng, không nêu điều kiện. H1 là CTĐT K49 không có trong 7 PDF: để trống vì chưa kiểm chứng, không coi là đúng chỉ vì cùng chủ đề. Sửa các nhãn C điền sẵn ở H3 và mơ hồ; giữ gold đóng băng."
+    },
+    {
+      "id": "dev09",
+      "dataset": "rag_queries",
+      "split": "dev",
+      "nhom_soat": "truot_r1",
+      "q": "Điểm M là gì, có tính vào điểm trung bình không?",
+      "original_gold": [
+        "qd3266:D22:K5"
+      ],
+      "gold_dung": true,
+      "loai": "xac_nhan_gold",
+      "corrected_gold": [
+        "qd3266:D22:K5"
+      ],
+      "danh_gia_top3": [
+        {
+          "hang": 1,
+          "id": "qd3266:D24:K2",
+          "chap_nhan": false
+        },
+        {
+          "hang": 2,
+          "id": "qd3266:D22:K5",
+          "chap_nhan": true
+        },
+        {
+          "hang": 3,
+          "id": "qd3266:D24:K4",
+          "chap_nhan": false
+        }
+      ],
+      "cau_hoi_mo_ho": false,
+      "ghi_chu_nguoi_soat": "QĐ3266 Đ22.5(a), PDF tr.14: M xác nhận học phần được miễn do đã tích lũy bằng hình thức khác; không tính ĐTBCHK/ĐTBCTL, TC vẫn tích lũy. H1 Đ24.2 và H3 Đ24.4 không định nghĩa hoặc nêu riêng điểm M. Gold và H2 đúng."
+    },
+    {
+      "id": "dev23",
+      "dataset": "rag_queries",
+      "split": "dev",
+      "nhom_soat": "truot_r1",
+      "q": "Điểm học phần dưới bao nhiêu thì không được tích lũy?",
+      "original_gold": [
+        "qd3266:D22:K3"
+      ],
+      "gold_dung": true,
+      "loai": "them_nguon_thay_the",
+      "corrected_gold": [
+        "qd3266:D22:K3",
+        "qd3266:D17:K1"
+      ],
+      "danh_gia_top3": [
+        {
+          "hang": 1,
+          "id": "qd3266:D22:K5",
+          "chap_nhan": false
+        },
+        {
+          "hang": 2,
+          "id": "qd3266:D17:K1",
+          "chap_nhan": true
+        },
+        {
+          "hang": 3,
+          "id": "qd3266:D22:K3",
+          "chap_nhan": true
+        }
+      ],
+      "cau_hoi_mo_ho": false,
+      "ghi_chu_nguoi_soat": "QĐ3266 Đ22.2–3, PDF tr.14: từ D trở lên mới tích lũy; dưới 4,0/10 là F. Đ17.1, tr.9, cũng nói F không tích lũy nên chấp nhận H2 làm gold thay thế. H1 nói M/I/W không trả lời ngưỡng điểm. Đ22.3 trong trích đoạn Excel đang lẫn nội dung khoản 4; cần kiểm tra phân đoạn, không sửa gold gốc."
+    },
+    {
+      "id": "QS-d544feef47fc",
+      "dataset": "rag_survey_train_sources_v1",
+      "split": "train",
+      "nhom_soat": "truot_r1",
+      "q": "Có được chuyển từ ngành Công nghệ thông tin sang Kỹ thuật phần mềm giữa chừng không?",
+      "original_gold": [
+        "qd3266:D12:K2"
+      ],
+      "gold_dung": true,
+      "loai": "xac_nhan_gold",
+      "corrected_gold": [
+        "qd3266:D12:K2"
+      ],
+      "danh_gia_top3": [
+        {
+          "hang": 1,
+          "id": "qd5339:D3:K6",
+          "chap_nhan": false
+        },
+        {
+          "hang": 2,
+          "id": "qd3266:D12:K2",
+          "chap_nhan": true
+        },
+        {
+          "hang": 3,
+          "id": "ctdt_k49:nhom:g_chuyen_nganh",
+          "chap_nhan": false
+        }
+      ],
+      "cau_hoi_mo_ho": false,
+      "ghi_chu_nguoi_soat": "QĐ3266 Đ12.2(a–d), PDF tr.7–8: từ K47 trở về sau, không năm đầu/cuối, không thuộc diện buộc thôi học, đủ thời gian; đạt điều kiện trúng tuyển cùng khóa; ngành còn năng lực, có chấp thuận. Có thể được xem xét, không tự động được chuyển. H1 miễn tin học và H3 nhóm tự chọn không trả lời việc chuyển ngành."
+    },
+    {
+      "id": "QS-17df0b00c269",
+      "dataset": "rag_survey_train_sources_v1",
+      "split": "train",
+      "nhom_soat": "truot_r1",
+      "q": "Học kỳ hè có bắt buộc không?",
+      "original_gold": [
+        "qd3266:D6:K1"
+      ],
+      "gold_dung": false,
+      "loai": "gold_sai_chua_co_ma_nguon",
+      "corrected_gold": [],
+      "danh_gia_top3": [
+        {
+          "hang": 1,
+          "id": "qd3266:D18:K2",
+          "chap_nhan": false
+        },
+        {
+          "hang": 2,
+          "id": "ctdt_k49:CT222",
+          "chap_nhan": false
+        },
+        {
+          "hang": 3,
+          "id": "ctdt_k49:CT179",
+          "chap_nhan": false
+        }
+      ],
+      "cau_hoi_mo_ho": true,
+      "ghi_chu_nguoi_soat": "QĐ3266 Đ6.1, tr.5 chỉ nêu 3 HK; chưa đủ kết luận “hè bắt buộc”. Công văn 2753/ĐHCT-VPT, PDF tr.1–2: từ HK2 2024–2025 có 3 HK chính. Cần hỏi năm học và “hè” có nghĩa HK3 hay học kỳ phụ cũ. Kết hợp Đ13.2 (tr.8), Đ18.1–2(b) (tr.10) về đăng ký/nghỉ có phép. Gold hiện tại thiếu căn cứ về nghĩa vụ; H1 chỉ là hậu quả không đăng ký, không giải quyết tiền đề thời gian."
+    },
+    {
+      "id": "QS-baf10d915595",
+      "dataset": "rag_survey_train_sources_v1",
+      "split": "train",
+      "nhom_soat": "truot_r1",
+      "q": "Kế hoạch học tập chuẩn là mấy học kỳ?",
+      "original_gold": [
+        "qd3266:D5:K0",
+        "qd3266:D6:K1"
+      ],
+      "gold_dung": true,
+      "loai": "xac_nhan_gold",
+      "corrected_gold": [
+        "qd3266:D5:K0",
+        "qd3266:D6:K1"
+      ],
+      "danh_gia_top3": [
+        {
+          "hang": 1,
+          "id": "qd3266:D4:K0",
+          "chap_nhan": false
+        },
+        {
+          "hang": 2,
+          "id": "qd3266:D5:K0",
+          "chap_nhan": true
+        },
+        {
+          "hang": 3,
+          "id": "qd3266:D6:K1",
+          "chap_nhan": true
+        }
+      ],
+      "cau_hoi_mo_ho": true,
+      "ghi_chu_nguoi_soat": "QĐ3266 Đ5, tr.4–5: thời gian thiết kế tùy ngành (4; 4,5; 5 năm); Đ6.1, tr.5: 3 HK/năm. Gold có cả hai đoạn, phù hợp làm nguồn có điều kiện; H2/H3 mỗi đoạn chỉ hỗ trợ một phần. Không chốt số HK toàn khóa khi chưa có ngành, khóa và KHHT chuẩn. H1 Đ4 nói cách lập KHHT, không xác định thời lượng."
+    },
+    {
+      "id": "QS-f5eebb77ed66",
+      "dataset": "rag_survey_train_sources_v1",
+      "split": "train",
+      "nhom_soat": "truot_r1",
+      "q": "Rút học phần có được hoàn lại học phí không?",
+      "original_gold": [
+        "qd3266:D15:K0",
+        "qd3266:D10:K1"
+      ],
+      "gold_dung": true,
+      "loai": "xac_nhan_gold",
+      "corrected_gold": [
+        "qd3266:D15:K0",
+        "qd3266:D10:K1"
+      ],
+      "danh_gia_top3": [
+        {
+          "hang": 1,
+          "id": "qd3266:D10:K2",
+          "chap_nhan": false
+        },
+        {
+          "hang": 2,
+          "id": "qd3266:D17:K1",
+          "chap_nhan": false
+        },
+        {
+          "hang": 3,
+          "id": "qd3266:D15:K0",
+          "chap_nhan": true
+        }
+      ],
+      "cau_hoi_mo_ho": false,
+      "ghi_chu_nguoi_soat": "QĐ3266 Đ15, PDF tr.9: rút bớt chậm nhất tuần 6, không được trả lại học phí, nhận W. Gold Đ15 đúng; Đ10.1 chỉ bổ trợ cách tính học phí, không đủ thay thế. H3 đúng, H1 miễn giảm và H2 học lại không trả lời hoàn học phí. Phân biệt rút học phần với xóa/điều chỉnh đăng ký trong tuần đầu."
+    },
+    {
+      "id": "QS-e73383925ef0",
+      "dataset": "rag_survey_train_sources_v1",
+      "split": "train",
+      "nhom_soat": "truot_r1",
+      "q": "nếu e trượt thực tập thì có ra trg đúng hạn k",
+      "original_gold": [
+        "qd3266:D32:K1"
+      ],
+      "gold_dung": true,
+      "loai": "xac_nhan_gold",
+      "corrected_gold": [
+        "qd3266:D32:K1"
+      ],
+      "danh_gia_top3": [
+        {
+          "hang": 1,
+          "id": "qd3266:D18:K5",
+          "chap_nhan": false
+        },
+        {
+          "hang": 2,
+          "id": "qd3266:D27:K1",
+          "chap_nhan": false
+        },
+        {
+          "hang": 3,
+          "id": "qd3266:D19:K0",
+          "chap_nhan": false
+        }
+      ],
+      "cau_hoi_mo_ho": true,
+      "ghi_chu_nguoi_soat": "QĐ3266 Đ32.1(a), PDF tr.19: cần tích lũy đủ học phần/TC. Đ17.1, tr.9: học phần bắt buộc F phải học lại. Gold đúng cho điều kiện chung; cần biết thực tập bắt buộc hay tự chọn, lịch mở lại và đợt xét Đ32.2 để kết luận đúng hạn. Đ19 về chuyên cần không giải quyết kết quả thực tập F; H1/H2 cũng không đúng trọng tâm."
+    },
+    {
+      "id": "QS-df9e5f306801",
+      "dataset": "rag_survey_train_sources_v1",
+      "split": "train",
+      "nhom_soat": "truot_r1",
+      "q": "bl kq ht cần giấy tờ gì ạ",
+      "original_gold": [
+        "qd3266:D18:K1"
+      ],
+      "gold_dung": true,
+      "loai": "xac_nhan_gold",
+      "corrected_gold": [
+        "qd3266:D18:K1"
+      ],
+      "danh_gia_top3": [
+        {
+          "hang": 1,
+          "id": "qd3266:D27:K2",
+          "chap_nhan": false
+        },
+        {
+          "hang": 2,
+          "id": "qd3266:D18:K5",
+          "chap_nhan": false
+        },
+        {
+          "hang": 3,
+          "id": "qd3266:D27:K4",
+          "chap_nhan": false
+        }
+      ],
+      "cau_hoi_mo_ho": true,
+      "ghi_chu_nguoi_soat": "“bl kq ht” có thể là nghỉ tạm thời hoặc bảo lưu khi thôi học. Nếu nghỉ tạm thời: QĐ3266 Đ18.1, PDF tr.10: làm đơn; nghỉ ốm/thai sản/tai nạn dài ngày cần chứng nhận cơ sở khám chữa bệnh có thẩm quyền. Gold C theo cách hiểu này, chưa đủ danh mục hồ sơ cho mọi lý do. Nếu đã thôi học dùng Đ18.5, tr.11 hoặc Đ33.3, tr.20. Ba hạng hiện tại không chỉ ra hồ sơ xin nghỉ."
+    },
+    {
+      "id": "QS-928ee3f18361",
+      "dataset": "rag_survey_train_sources_v1",
+      "split": "train",
+      "nhom_soat": "truot_r1",
+      "q": "miễn học thì điểm ghi là gì ạ",
+      "original_gold": [
+        "qd5339:D3:K4"
+      ],
+      "gold_dung": true,
+      "loai": "xac_nhan_gold",
+      "corrected_gold": [
+        "qd5339:D3:K4"
+      ],
+      "danh_gia_top3": [
+        {
+          "hang": 1,
+          "id": "qd5339:D3:K3",
+          "chap_nhan": false
+        },
+        {
+          "hang": 2,
+          "id": "qd5339:D3:K5",
+          "chap_nhan": false
+        },
+        {
+          "hang": 3,
+          "id": "qd5339:D3:K10",
+          "chap_nhan": false
+        }
+      ],
+      "cau_hoi_mo_ho": true,
+      "ghi_chu_nguoi_soat": "QĐ5339 Đ3.4, PDF tr.5: học phần điều kiện được xét miễn ghi M. QĐ3266 Đ22.5(a), tr.14 là nguồn bổ sung trực tiếp. Miễn/công nhận điểm từ học phần tương đương có thể giữ điểm quy đổi theo QĐ5339 Đ3.2–3, không phải mọi “miễn học” đều M. Gold C theo phạm vi miễn học phần điều kiện; cần hỏi loại miễn. H1 chỉ công thức ghép điểm, H2 điều kiện ngoại ngữ, H3 Olympic, không xác định chung ký hiệu M."
+    },
+    {
+      "id": "QS-6f0f813b2aca",
+      "dataset": "rag_survey_train_sources_v1",
+      "split": "train",
+      "nhom_soat": "truot_r1",
+      "q": "co the tot nghiep som hon 4 nam khong",
+      "original_gold": [
+        "qd3266:D5:K0"
+      ],
+      "gold_dung": false,
+      "loai": "gold_sai_chua_co_ma_nguon",
+      "corrected_gold": [],
+      "danh_gia_top3": [
+        {
+          "hang": 1,
+          "id": "qd3266:D4:K0",
+          "chap_nhan": false
+        },
+        {
+          "hang": 2,
+          "id": "qd3266:D5:K0",
+          "chap_nhan": false
+        },
+        {
+          "hang": 3,
+          "id": "qd3266:D31:K3",
+          "chap_nhan": false
+        }
+      ],
+      "cau_hoi_mo_ho": false,
+      "ghi_chu_nguoi_soat": "QĐ3266 Đ5, PDF tr.4–5 chỉ nêu thời gian thiết kế/tối đa, không trực tiếp xác nhận tốt nghiệp sớm. Nguồn phù hợp hơn: Đ26.2(b), tr.16 có trường hợp tốt nghiệp đúng hoặc sớm hơn thời gian thiết kế, kết hợp Đ32.1–2, tr.19 về đủ điều kiện và đợt xét. H1 lập KHHT và H3 lựa chọn hình thức tốt nghiệp không đủ trả lời quyền tốt nghiệp sớm. Không suy ra một thời gian tối thiểu từ Đ5."
+    },
+    {
+      "id": "QS-69a0066ce8b7",
+      "dataset": "rag_survey_train_sources_v1",
+      "split": "train",
+      "nhom_soat": "truot_r1",
+      "q": "Bị buộc thôi học rồi có được chuyển sang hình thức vừa làm vừa học không?",
+      "original_gold": [
+        "qd3266:D33:K4"
+      ],
+      "gold_dung": false,
+      "loai": "gold_sai",
+      "corrected_gold": [
+        "qd3266:D18:K5"
+      ],
+      "danh_gia_top3": [
+        {
+          "hang": 1,
+          "id": "qd3266:D18:K5",
+          "chap_nhan": true
+        },
+        {
+          "hang": 2,
+          "id": "qd3266:D33:K4",
+          "chap_nhan": false
+        },
+        {
+          "hang": 3,
+          "id": "qd3266:D12:K3",
+          "chap_nhan": false
+        }
+      ],
+      "cau_hoi_mo_ho": true,
+      "ghi_chu_nguoi_soat": "QĐ3266 Đ18.5, PDF tr.10–11: buộc thôi học theo điểm b (đã cảnh báo, HK kế tiếp ĐTBCHK <1,00) hoặc g (quá hạn) có thể xin xét chương trình giáo dục thường xuyên tương ứng nếu có. H1 là căn cứ trực tiếp. Gold Đ33.4, tr.20 chỉ dành cho hết thời gian chính quy, không bao quát mọi lý do buộc thôi học. H3 Đ12.3 nói chuyển hình thức chung khi còn đang học. Cần hỏi nguyên nhân, thời gian và chương trình nhận."
+    },
+    {
+      "id": "QS-7857bfe7f74d",
+      "dataset": "rag_survey_train_sources_v1",
+      "split": "train",
+      "nhom_soat": "truot_r1",
+      "q": "e hc lại mà vẫn rớt thì điểm nào được tính v",
+      "original_gold": [
+        "qd3266:D17:K2"
+      ],
+      "gold_dung": true,
+      "loai": "xac_nhan_gold",
+      "corrected_gold": [
+        "qd3266:D17:K2"
+      ],
+      "danh_gia_top3": [
+        {
+          "hang": 1,
+          "id": "qd3266:D22:K5",
+          "chap_nhan": false
+        },
+        {
+          "hang": 2,
+          "id": "qd3266:D18:K2",
+          "chap_nhan": false
+        },
+        {
+          "hang": 3,
+          "id": "qd3266:D17:K2",
+          "chap_nhan": true
+        }
+      ],
+      "cau_hoi_mo_ho": true,
+      "ghi_chu_nguoi_soat": "QĐ3266 Đ17.2, PDF tr.9: điểm học phần là điểm cao nhất trong các lần học; áp dụng trực tiếp cho học cải thiện. Nếu trước đây có điểm đạt thì lần sau F không thay điểm cao hơn; nếu mọi lần đều F thì chưa tích lũy (Đ17.1). Gold/H3 đúng; cần làm rõ học lại môn chưa đạt hay cải thiện để giải thích đúng tình huống. M/I/W và quy định cảnh báo không thay quy tắc chọn điểm."
+    },
+    {
+      "id": "QS-5b981ab61628",
+      "dataset": "rag_survey_train_sources_v1",
+      "split": "train",
+      "nhom_soat": "truot_r1",
+      "q": "Em còn 2 môn rớt, muốn học hè để kịp tốt nghiệp tháng 12 thì có được không?",
+      "original_gold": [
+        "qd3266:D14:K1",
+        "qd3266:D32:K1"
+      ],
+      "gold_dung": true,
+      "loai": "xac_nhan_gold",
+      "corrected_gold": [
+        "qd3266:D14:K1",
+        "qd3266:D32:K1"
+      ],
+      "danh_gia_top3": [
+        {
+          "hang": 1,
+          "id": "qd3266:D34:K2",
+          "chap_nhan": false
+        },
+        {
+          "hang": 2,
+          "id": "qd3266:D20:K8",
+          "chap_nhan": false
+        },
+        {
+          "hang": 3,
+          "id": "qd3266:D32:K1",
+          "chap_nhan": true
+        }
+      ],
+      "cau_hoi_mo_ho": true,
+      "ghi_chu_nguoi_soat": "Gold gồm Đ14.1 + Đ32.1: phù hợp một phần về tối đa 20 TC/HK và đủ điều kiện tốt nghiệp (QĐ3266 PDF tr.8,19). Bổ sung Đ17.1 (tr.9), Đ13.1(c) và Đ6.1: phải có lớp mở, phù hợp KHHT và lịch mới 3 HK chính. Đ32.2, tr.19 quy định xét tháng 01, 5, 9; không có đợt tháng 12 trong tài liệu này. H3 hỗ trợ điều kiện, không xác nhận kịp tháng 12; H1/H2 không giải quyết đăng ký học lại. Cần sửa tiền đề câu hỏi."
+    },
+    {
+      "id": "QS-c8b17ea8ded2",
+      "dataset": "rag_survey_train_sources_v1",
+      "split": "train",
+      "nhom_soat": "truot_r1",
+      "q": "đang học ngành 2 mà bị cảnh báo ở ngành 1 thì sao",
+      "original_gold": [
+        "qd3266:D20:K7"
+      ],
+      "gold_dung": true,
+      "loai": "xac_nhan_gold",
+      "corrected_gold": [
+        "qd3266:D20:K7"
+      ],
+      "danh_gia_top3": [
+        {
+          "hang": 1,
+          "id": "qd3266:D18:K2",
+          "chap_nhan": false
+        },
+        {
+          "hang": 2,
+          "id": "qd3266:D18:K5",
+          "chap_nhan": false
+        },
+        {
+          "hang": 3,
+          "id": "qd3266:D20:K7",
+          "chap_nhan": true
+        }
+      ],
+      "cau_hoi_mo_ho": true,
+      "ghi_chu_nguoi_soat": "QĐ3266 Đ20.7, PDF tr.12: quy tắc khác nhau theo khóa. Trước K47 xét ĐTBCHK <2,00; từ K47, ĐTBCTL <2,00 hoặc bị cảnh báo thì dừng chương trình 2 ở HK kế tiếp, bị loại khỏi danh sách và được đăng ký lại nếu đủ Đ20.1. Gold/H3 đúng. H1 chỉ định nghĩa cảnh báo, H2 buộc thôi học không nêu xử lý ngành 2. Hỏi khóa để chọn nhánh áp dụng."
+    },
+    {
+      "id": "QS-6073d790c115",
+      "dataset": "rag_survey_train_sources_v1",
+      "split": "train",
+      "nhom_soat": "truot_r1",
+      "q": "phúc khảo mà điểm bị giảm thì lấy điểm nào ạ",
+      "original_gold": [
+        "qd3266:D29:K1"
+      ],
+      "gold_dung": false,
+      "loai": "gold_sai_chua_co_ma_nguon",
+      "corrected_gold": [],
+      "danh_gia_top3": [
+        {
+          "hang": 1,
+          "id": "qd3266:D34:K2",
+          "chap_nhan": false
+        },
+        {
+          "hang": 2,
+          "id": "qd3266:D17:K2",
+          "chap_nhan": false
+        },
+        {
+          "hang": 3,
+          "id": "qd3266:D22:K5",
+          "chap_nhan": false
+        }
+      ],
+      "cau_hoi_mo_ho": false,
+      "ghi_chu_nguoi_soat": "QĐ3266 Đ29.1, PDF tr.18 chỉ nêu thẩm quyền giải quyết khiếu nại và hạn 1 tuần từ công bố điểm; không quy định khi phúc khảo giảm thì lấy điểm nào. Không dùng Đ17.2 (điểm cao nhất các lần HỌC) cho phúc khảo cùng một bài thi. Gold chưa đủ căn cứ; cần quy trình phúc khảo/đánh giá của trường hoặc đơn vị. Các PDF còn lại cũng không cung cấp quy tắc chọn điểm sau phúc khảo."
+    },
+    {
+      "id": "QS-9feaa1a80e06",
+      "dataset": "rag_survey_train_sources_v1",
+      "split": "train",
+      "nhom_soat": "truot_r1",
+      "q": "đi nghĩa vụ quân sự thì việc học xử lý sao",
+      "original_gold": [
+        "qd3266:D18:K1"
+      ],
+      "gold_dung": true,
+      "loai": "xac_nhan_gold",
+      "corrected_gold": [
+        "qd3266:D18:K1"
+      ],
+      "danh_gia_top3": [
+        {
+          "hang": 1,
+          "id": "qd5339:D3:K7",
+          "chap_nhan": false
+        },
+        {
+          "hang": 2,
+          "id": "qd3266:D33:K3",
+          "chap_nhan": false
+        },
+        {
+          "hang": 3,
+          "id": "qd3266:D28:K4",
+          "chap_nhan": false
+        }
+      ],
+      "cau_hoi_mo_ho": false,
+      "ghi_chu_nguoi_soat": "QĐ3266 Đ18.1(a), PDF tr.10: được điều động vào lực lượng vũ trang là lý do xin nghỉ học tạm thời; cần làm đơn, được Hiệu trưởng chấp thuận và làm thủ tục trở lại chậm nhất 2 tuần trước HK mới theo khoản này. Gold đúng. H1 Đ5339.3.7 nói miễn GDQP&AN khi có điều kiện tương ứng, không thay thủ tục nghỉ đi nghĩa vụ; H2/H3 không trả lời việc học trong thời gian nhập ngũ."
+    },
+    {
+      "id": "QS-259c793f82c3",
+      "dataset": "rag_survey_train_sources_v1",
+      "split": "train",
+      "nhom_soat": "truot_r1",
+      "q": "chua co chung chi ngoai ngu thi co duoc xet tot nghiep khong",
+      "original_gold": [
+        "qd3266:D32:K1"
+      ],
+      "gold_dung": true,
+      "loai": "xac_nhan_gold",
+      "corrected_gold": [
+        "qd3266:D32:K1"
+      ],
+      "danh_gia_top3": [
+        {
+          "hang": 1,
+          "id": "qd5339:D3:K5",
+          "chap_nhan": false
+        },
+        {
+          "hang": 2,
+          "id": "qd3266:D32:K1",
+          "chap_nhan": true
+        },
+        {
+          "hang": 3,
+          "id": "qd5339:DPL1:K1",
+          "chap_nhan": false
+        }
+      ],
+      "cau_hoi_mo_ho": true,
+      "ghi_chu_nguoi_soat": "QĐ3266 Đ32.1(a), PDF tr.19: phải đạt chuẩn đầu ra ngoại ngữ, không đồng nhất “chưa có chứng chỉ” với “chưa đạt chuẩn”. Gold/H2 đúng để trả lời có điều kiện; cần CTĐT, khóa và hình thức chứng minh chuẩn đầu ra. QĐ5339 Đ3.5/PL1, PDF tr.5–6,11 chỉ xét miễn ngoại ngữ căn bản/quy đổi, không tự động là chuẩn tốt nghiệp. Không kết luận mọi SV thiếu chứng chỉ đều không được xét."
+    },
+    {
+      "id": "QS-e29499b81aee",
+      "dataset": "rag_survey_train_sources_v1",
+      "split": "train",
+      "nhom_soat": "truot_r1",
+      "q": "e nghỉ học 1 kỳ không xin phép thì có bị xóa tên ko",
+      "original_gold": [
+        "qd3266:D18:K5"
+      ],
+      "gold_dung": true,
+      "loai": "xac_nhan_gold",
+      "corrected_gold": [
+        "qd3266:D18:K5"
+      ],
+      "danh_gia_top3": [
+        {
+          "hang": 1,
+          "id": "qd3266:D18:K1",
+          "chap_nhan": false
+        },
+        {
+          "hang": 2,
+          "id": "qd3266:D18:K5",
+          "chap_nhan": true
+        },
+        {
+          "hang": 3,
+          "id": "qd3266:D33:K1",
+          "chap_nhan": false
+        }
+      ],
+      "cau_hoi_mo_ho": true,
+      "ghi_chu_nguoi_soat": "QĐ3266 Đ18.2(b), PDF tr.10: không đăng ký HK không có phép là diện cảnh báo. Đ18.5(d), tr.10: không đăng ký 2 HK liên tiếp không phép mới là căn cứ buộc thôi học theo điểm này. Gold/H2 đúng cho đối chiếu ngưỡng; cần bổ sung qd3266:D18:K2 để trả lời trực tiếp 1 kỳ. Nếu đã cảnh báo trước và HK kế tiếp ĐTBCHK <1,00 thì xét Đ18.5(b). H1 nghỉ có phép và H3 quá hạn là tình huống khác."
+    },
+    {
+      "id": "QS-d93a40d5d18e",
+      "dataset": "rag_survey_train_sources_v1",
+      "split": "train",
+      "nhom_soat": "truot_r1",
+      "q": "co chung chi IELTS thi co duoc mien hoc tieng Anh khong",
+      "original_gold": [
+        "qd5339:D3:K5"
+      ],
+      "gold_dung": true,
+      "loai": "them_nguon_thay_the",
+      "corrected_gold": [
+        "qd5339:D3:K5",
+        "qd5339:DPL1:K1",
+        "qd5339:DPL1:K0"
+      ],
+      "danh_gia_top3": [
+        {
+          "hang": 1,
+          "id": "qd5339:DPL1:K1",
+          "chap_nhan": true
+        },
+        {
+          "hang": 2,
+          "id": "qd5339:D3:K5",
+          "chap_nhan": true
+        },
+        {
+          "hang": 3,
+          "id": "qd5339:DPL1:K0",
+          "chap_nhan": true
+        }
+      ],
+      "cau_hoi_mo_ho": true,
+      "ghi_chu_nguoi_soat": "QĐ5339 Đ3.5(a), PDF tr.5–6 + PL1 mục 1, tr.11: có thể xét miễn Anh văn căn bản theo khóa và mức tương đương. Bảng: IELTS 3,0 tương đương bậc 2; 4,5 bậc 3. K44 trở về trước dùng ngưỡng bậc 2; K45 trở về sau bậc 3 theo văn bản này. H1/H3 chỉ hỗ trợ chứng chỉ/quy đổi; H2 quy định quyền xét miễn, cần kết hợp. Hỏi điểm IELTS, khóa, học phần; không suy rộng sang toàn bộ môn tiếng Anh chuyên ngành hoặc chuẩn đầu ra."
+    },
+    {
+      "id": "QS-f99f2607350f",
+      "dataset": "rag_survey_train_sources_v1",
+      "split": "train",
+      "nhom_soat": "truot_r1",
+      "q": "học 2 chương trình thì thời gian tối đa tính theo chương trình nào",
+      "original_gold": [
+        "qd3266:D20:K5"
+      ],
+      "gold_dung": true,
+      "loai": "them_nguon_thay_the",
+      "corrected_gold": [
+        "qd3266:D20:K5",
+        "qd3266:D5:K0"
+      ],
+      "danh_gia_top3": [
+        {
+          "hang": 1,
+          "id": "qd3266:D5:K0",
+          "chap_nhan": true
+        },
+        {
+          "hang": 2,
+          "id": "qd3266:D20:K1",
+          "chap_nhan": false
+        },
+        {
+          "hang": 3,
+          "id": "qd3266:D20:K5",
+          "chap_nhan": true
+        }
+      ],
+      "cau_hoi_mo_ho": false,
+      "ghi_chu_nguoi_soat": "QĐ3266 Đ20.5, PDF tr.12: thời gian tối đa theo chương trình thứ nhất, dẫn chiếu Đ5 tr.4–5. Gold/H3 trực tiếp; H1 Đ5 là nguồn bổ trợ xác định thời hạn của chương trình thứ nhất, chưa tự nêu nguyên tắc chọn chương trình. H2 chỉ điều kiện đăng ký hai chương trình. Không cộng hai thời gian tối đa."
+    },
+    {
+      "id": "QS-48b98e3afc1e",
+      "dataset": "rag_survey_train_sources_v1",
+      "split": "train",
+      "nhom_soat": "truot_r1",
+      "q": "nghi om dai ngay thi co duoc bao luu ket qua khong",
+      "original_gold": [
+        "qd3266:D18:K1"
+      ],
+      "gold_dung": true,
+      "loai": "xac_nhan_gold",
+      "corrected_gold": [
+        "qd3266:D18:K1"
+      ],
+      "danh_gia_top3": [
+        {
+          "hang": 1,
+          "id": "qd3266:D18:K5",
+          "chap_nhan": false
+        },
+        {
+          "hang": 2,
+          "id": "qd3266:D33:K3",
+          "chap_nhan": false
+        },
+        {
+          "hang": 3,
+          "id": "qd3266:D18:K1",
+          "chap_nhan": true
+        }
+      ],
+      "cau_hoi_mo_ho": false,
+      "ghi_chu_nguoi_soat": "QĐ3266 Đ18.1(c), PDF tr.10: ốm điều trị dài ngày có chứng nhận của cơ sở khám chữa bệnh có thẩm quyền là trường hợp được xin nghỉ tạm thời. Gold/H3 đúng cho thủ tục nghỉ; cần chấp thuận, không mặc nhiên được nghỉ chỉ vì ốm. H1 buộc thôi học/H2 trường hợp không đủ điều kiện tốt nghiệp không phải căn cứ chính của nghỉ ốm."
+    },
+    {
+      "id": "QS-2202c4efffb0",
+      "dataset": "rag_survey_train_sources_v1",
+      "split": "train",
+      "nhom_soat": "truot_r1",
+      "q": "Học phần học ở trường khác trong chương trình trao đổi có được tính vào điểm trung bình không?",
+      "original_gold": [
+        "qd5339:D3:K1"
+      ],
+      "gold_dung": false,
+      "loai": "gold_sai",
+      "corrected_gold": [
+        "qd3266:D24:K2",
+        "qd3266:D22:K5"
+      ],
+      "danh_gia_top3": [
+        {
+          "hang": 1,
+          "id": "qd3266:D24:K2",
+          "chap_nhan": true
+        },
+        {
+          "hang": 2,
+          "id": "qd3266:D22:K5",
+          "chap_nhan": true
+        },
+        {
+          "hang": 3,
+          "id": "qd3266:D20:K1",
+          "chap_nhan": false
+        }
+      ],
+      "cau_hoi_mo_ho": true,
+      "ghi_chu_nguoi_soat": "Gold QĐ5339 Đ3.1, PDF tr.5 chỉ điều kiện công nhận tương đương, chưa trả lời tính điểm trung bình. Cần phối hợp QĐ3266 Đ12.4 (tr.8), Đ22.5(a) (tr.14), Đ24.2/4 (tr.15), QĐ5339 Đ3.2–4. Nếu ghi M thì không tính ĐTB; nếu công nhận điểm số thì xét loại học phần và phạm vi ĐTB. H1/H2 là căn cứ trực tiếp cho từng nhánh, không đủ riêng lẻ để khẳng định mọi học phần trao đổi đều tính/không tính. Cần quyết định công nhận và loại học phần."
+    },
+    {
+      "id": "QS-890aaee9e44d",
+      "dataset": "rag_survey_train_sources_v1",
+      "split": "train",
+      "nhom_soat": "truot_r1",
+      "q": "Em rớt 2 môn kỳ trước, kỳ này học lại cả 2 thì có vượt số tín chỉ tối đa không và có được học ở học kỳ hè không?",
+      "original_gold": [
+        "qd3266:D14:K1",
+        "qd3266:D6:K1"
+      ],
+      "gold_dung": true,
+      "loai": "xac_nhan_gold",
+      "corrected_gold": [
+        "qd3266:D14:K1",
+        "qd3266:D6:K1"
+      ],
+      "danh_gia_top3": [
+        {
+          "hang": 1,
+          "id": "qd3266:D17:K2",
+          "chap_nhan": false
+        },
+        {
+          "hang": 2,
+          "id": "qd3266:D14:K1",
+          "chap_nhan": true
+        },
+        {
+          "hang": 3,
+          "id": "qd3266:D34:K2",
+          "chap_nhan": false
+        }
+      ],
+      "cau_hoi_mo_ho": true,
+      "ghi_chu_nguoi_soat": "Gold Đ14.1 + Đ6.1 đúng một phần: QĐ3266 PDF tr.8,5 quy định tối đa 20 TC/HK và 3 HK. H2 chỉ trả lời trần TC. Cần tổng TC của tất cả môn dự kiến (không chỉ số môn rớt), lớp được mở Đ13.1(c), KHHT, tiên quyết và Đ17.1. H1 Đ17.2 nói cải thiện điểm, không trả lời số TC/học hè. Làm rõ “hè” và năm học theo công văn 2753, tr.1; không thể kết luận vượt trần từ dữ kiện 2 môn."
+    },
+    {
+      "id": "QS-d1cc8fedee27",
+      "dataset": "rag_survey_train_sources_v1",
+      "split": "train",
+      "nhom_soat": "truot_r1",
+      "q": "Bị cảnh báo học vụ thì kỳ sau có bị giới hạn số tín chỉ đăng ký không?",
+      "original_gold": [
+        "qd3266:D14:K1"
+      ],
+      "gold_dung": true,
+      "loai": "xac_nhan_gold",
+      "corrected_gold": [
+        "qd3266:D14:K1"
+      ],
+      "danh_gia_top3": [
+        {
+          "hang": 1,
+          "id": "qd3266:D18:K2",
+          "chap_nhan": false
+        },
+        {
+          "hang": 2,
+          "id": "qd3266:D20:K7",
+          "chap_nhan": false
+        },
+        {
+          "hang": 3,
+          "id": "qd3266:D18:K5",
+          "chap_nhan": false
+        }
+      ],
+      "cau_hoi_mo_ho": false,
+      "ghi_chu_nguoi_soat": "QĐ3266 Đ14.1, PDF tr.8: tối đa 20 TC/HK, không nêu trần thấp hơn riêng cho SV cảnh báo. Gold đúng. Không tự tạo mức 12/14/16 TC vì cảnh báo. Đ18.2/5 chỉ quy định cảnh báo/buộc thôi học; Đ20.7 chỉ hạn chế chương trình thứ hai. Ba hạng hiện tại không trả lời trần TC đăng ký."
+    },
+    {
+      "id": "QS-345d031aba1e",
+      "dataset": "rag_survey_train_sources_v1",
+      "split": "train",
+      "nhom_soat": "truot_r1",
+      "q": "môn đã đạt C+ rồi còn được học lại cho điểm cao hơn ko",
+      "original_gold": [
+        "qd3266:D17:K2"
+      ],
+      "gold_dung": true,
+      "loai": "xac_nhan_gold",
+      "corrected_gold": [
+        "qd3266:D17:K2"
+      ],
+      "danh_gia_top3": [
+        {
+          "hang": 1,
+          "id": "qd3266:D17:K1",
+          "chap_nhan": false
+        },
+        {
+          "hang": 2,
+          "id": "qd3266:D17:K2",
+          "chap_nhan": true
+        },
+        {
+          "hang": 3,
+          "id": "qd5339:D3:K1",
+          "chap_nhan": false
+        }
+      ],
+      "cau_hoi_mo_ho": false,
+      "ghi_chu_nguoi_soat": "QĐ3266 Đ17.2, PDF tr.9: SV có thể đăng ký cải thiện kết quả, không giới hạn chỉ môn dưới C+; lấy điểm cao nhất các lần học. Gold/H2 đúng. H1 chỉ xử lý F; H3 công nhận điểm tương đương không phải học cải thiện. Còn cần đáp ứng điều kiện mở lớp/đăng ký chung."
+    },
+    {
+      "id": "QS-88fd860cfb1f",
+      "dataset": "rag_survey_train_sources_v1",
+      "split": "train",
+      "nhom_soat": "truot_r1",
+      "q": "đk ngành 2 hạn chót khi nào v ạ",
+      "original_gold": [
+        "qd3266:D20:K2"
+      ],
+      "gold_dung": true,
+      "loai": "them_nguon_thay_the",
+      "corrected_gold": [
+        "qd3266:D20:K2",
+        "qd3266:D20:K8"
+      ],
+      "danh_gia_top3": [
+        {
+          "hang": 1,
+          "id": "qd3266:D20:K1",
+          "chap_nhan": false
+        },
+        {
+          "hang": 2,
+          "id": "qd3266:D20:K7",
+          "chap_nhan": false
+        },
+        {
+          "hang": 3,
+          "id": "qd3266:D20:K8",
+          "chap_nhan": true
+        }
+      ],
+      "cau_hoi_mo_ho": true,
+      "ghi_chu_nguoi_soat": "QĐ3266 Đ20.2(a), PDF tr.12: đăng ký chương trình 2 vào đầu mỗi HK theo thông báo của trường. Gold đúng cho mốc chung, không có ngày hạn chót cụ thể. H3 Đ20.8, tr.13 hỗ trợ hạn tương đối: K47 trở về sau phải đăng ký muộn nhất 2 năm trước xét tốt nghiệp chương trình 2; đây không phải ngày đóng cổng đăng ký. Cần hỏi HK/năm học và lấy thông báo kỳ đó. H1 điều kiện, H2 dừng ngành 2 không trả lời hạn đăng ký."
+    },
+    {
+      "id": "QS-c048052dd014",
+      "dataset": "rag_survey_train_sources_v1",
+      "split": "train",
+      "nhom_soat": "truot_r1",
+      "q": "đăng ký môn sao vậy",
+      "original_gold": [
+        "qd3266:D15:K0"
+      ],
+      "gold_dung": true,
+      "loai": "them_nguon_thay_the",
+      "corrected_gold": [
+        "qd3266:D15:K0",
+        "qd3266:D14:K1"
+      ],
+      "danh_gia_top3": [
+        {
+          "hang": 1,
+          "id": "qd3266:D14:K1",
+          "chap_nhan": true
+        },
+        {
+          "hang": 2,
+          "id": "qd3266:D17:K1",
+          "chap_nhan": false
+        },
+        {
+          "hang": 3,
+          "id": "qd3266:D17:K2",
+          "chap_nhan": false
+        }
+      ],
+      "cau_hoi_mo_ho": true,
+      "ghi_chu_nguoi_soat": "QĐ3266 Đ15, PDF tr.9: theo KHHTTK và TKB, đăng ký trên hệ thống trực tuyến theo kế hoạch chung; kết hợp Đ13.2/Đ14, tr.8 về trách nhiệm, trần 20 TC và ngoại lệ HK đầu. Gold đúng; H1 hỗ trợ một bước kiểm tra số TC, không thay hướng dẫn quy trình. H2/H3 chỉ học lại/cải thiện. Câu rộng: cần hỏi đăng ký lần đầu, bổ sung, học lại hay lỗi hệ thống."
+    },
+    {
+      "id": "QS-2ca571ab10a2",
+      "dataset": "rag_survey_train_sources_v1",
+      "split": "train",
+      "nhom_soat": "truot_r1",
+      "q": "bị buộc thôi hoc rồi thi lại đại học vào trường có được miển môn không",
+      "original_gold": [
+        "qd5339:D3:K1",
+        "qd3266:D33:K3"
+      ],
+      "gold_dung": true,
+      "loai": "them_nguon_thay_the",
+      "corrected_gold": [
+        "qd5339:D3:K1",
+        "qd3266:D33:K3",
+        "qd3266:D18:K5"
+      ],
+      "danh_gia_top3": [
+        {
+          "hang": 1,
+          "id": "qd3266:D18:K5",
+          "chap_nhan": true
+        },
+        {
+          "hang": 2,
+          "id": "qd3266:D18:K1",
+          "chap_nhan": false
+        },
+        {
+          "hang": 3,
+          "id": "qd3266:D10:K2",
+          "chap_nhan": false
+        }
+      ],
+      "cau_hoi_mo_ho": false,
+      "ghi_chu_nguoi_soat": "Gold gồm QĐ5339 Đ3.1, PDF tr.5 + QĐ3266 Đ33.3, tr.20, phù hợp một phần: có thể xét tương đương, không tự động miễn tất cả. Nguồn trực tiếp hơn cho buộc thôi học là Đ18.5, tr.11 (bảo lưu); H1 chấp nhận phần bảo lưu. Bổ sung Đ5, tr.4–5: K47 trở về sau công nhận không quá 50% khối lượng tối thiểu và điều chỉnh thời gian tối đa. Phải có hồ sơ, nội dung/khối lượng tương đương, phê duyệt theo QĐ5339 Đ2."
+    },
+    {
+      "id": "QS-ee870474b10b",
+      "dataset": "rag_survey_train_sources_v1",
+      "split": "train",
+      "nhom_soat": "truot_r1",
+      "q": "học hè có được học môn mới chưa học bao giờ không hay chỉ học lại",
+      "original_gold": [
+        "qd3266:D6:K1",
+        "qd3266:D14:K1"
+      ],
+      "gold_dung": false,
+      "loai": "gold_sai_chua_co_ma_nguon",
+      "corrected_gold": [],
+      "danh_gia_top3": [
+        {
+          "hang": 1,
+          "id": "qd3266:D17:K1",
+          "chap_nhan": false
+        },
+        {
+          "hang": 2,
+          "id": "qd3266:D18:K1",
+          "chap_nhan": false
+        },
+        {
+          "hang": 3,
+          "id": "qd3266:D17:K2",
+          "chap_nhan": false
+        }
+      ],
+      "cau_hoi_mo_ho": true,
+      "ghi_chu_nguoi_soat": "Gold Đ6.1 + Đ14.1 chỉ cho biết 3 HK và trần 20 TC, chưa xác lập được học môn mới hay chỉ học lại. Dùng QĐ3266 Đ13.1(c), Đ13.2, Đ15 (PDF tr.8–9): học phần trường mở, phù hợp KHHTTK/điều kiện đăng ký; không thấy quy tắc HK3 chỉ dành cho môn học lại. Đ17 chỉ xử lý học lại, không chứng minh cấm môn mới. Cần xác định “hè” theo chế độ nào; từ HK2 2024–2025 là 3 HK chính theo công văn 2753 tr.1."
+    },
+    {
+      "id": "QS-93458bf6dd2e",
+      "dataset": "rag_survey_train_sources_v1",
+      "split": "train",
+      "nhom_soat": "truot_r1",
+      "q": "Em bị cảnh báo học vụ thì có được đi học kỳ hè để kéo điểm lên và có được xét học bổng không?",
+      "original_gold": [
+        "qd3266:D14:K1",
+        "qd3266:D26:K1"
+      ],
+      "gold_dung": false,
+      "loai": "gold_sai",
+      "corrected_gold": [
+        "qd3266:D9:K1"
+      ],
+      "danh_gia_top3": [
+        {
+          "hang": 1,
+          "id": "qd3266:D18:K2",
+          "chap_nhan": false
+        },
+        {
+          "hang": 2,
+          "id": "qd3266:D18:K5",
+          "chap_nhan": false
+        },
+        {
+          "hang": 3,
+          "id": "qd3266:D9:K1",
+          "chap_nhan": true
+        }
+      ],
+      "cau_hoi_mo_ho": true,
+      "ghi_chu_nguoi_soat": "Gold Đ14.1 + Đ26.1 chưa đủ: trần đăng ký và xếp loại/khen thưởng không thay điều kiện HBKKHT. Nguồn cần có QĐ3266 Đ9.1, PDF tr.6: tối thiểu 12 TC HK trước (trừ trường hợp trường bố trí), học tập/rèn luyện từ khá, không học phần dưới D, không kỷ luật từ khiển trách cấp trường; cùng Đ17.2 tr.9, Đ24.2 tr.15. H3 Đ9.1 đúng phần học bổng; không đủ trả lời cả học cải thiện. H1/H2 chỉ tình trạng học vụ. Làm rõ HK/năm và HK dùng xét học bổng."
+    },
+    {
+      "id": "QS-13c4891aec53",
+      "dataset": "rag_survey_train_sources_v1",
+      "split": "train",
+      "nhom_soat": "truot_r1",
+      "q": "Thủ tục phúc khảo bài thi cuối kỳ như thế nào?",
+      "original_gold": [
+        "qd3266:D29:K1"
+      ],
+      "gold_dung": true,
+      "loai": "xac_nhan_gold",
+      "corrected_gold": [
+        "qd3266:D29:K1"
+      ],
+      "danh_gia_top3": [
+        {
+          "hang": 1,
+          "id": "qd3266:D23:K3",
+          "chap_nhan": false
+        },
+        {
+          "hang": 2,
+          "id": "qd3266:D27:K6",
+          "chap_nhan": false
+        },
+        {
+          "hang": 3,
+          "id": "qd3266:D21:K1",
+          "chap_nhan": false
+        }
+      ],
+      "cau_hoi_mo_ho": false,
+      "ghi_chu_nguoi_soat": "QĐ3266 Đ29.1, PDF tr.18: GV giải đáp thắc mắc; trưởng đơn vị quản lý học phần xử lý khiếu nại trong 1 tuần từ công bố điểm. Gold đúng một phần về nơi xử lý/thời hạn; 7 PDF không nêu đầy đủ mẫu đơn, phí, kênh nộp hay quy trình phúc khảo riêng. Cần bổ sung hướng dẫn phúc khảo của đơn vị; không tự suy ra hạn 10 ngày (đó là hạn gửi bảng điểm). H1 vắng thi, H2 thi, H3 đánh giá không nêu thủ tục này."
+    },
+    {
+      "id": "QS-02cb6195accb",
+      "dataset": "rag_survey_train_sources_v1",
+      "split": "train",
+      "nhom_soat": "truot_r1",
+      "q": "bị đuổi học thì điểm các môn đã học có được bảo lưu không",
+      "original_gold": [
+        "qd3266:D33:K3"
+      ],
+      "gold_dung": true,
+      "loai": "them_nguon_thay_the",
+      "corrected_gold": [
+        "qd3266:D33:K3",
+        "qd3266:D18:K5",
+        "qd5339:D3:K1"
+      ],
+      "danh_gia_top3": [
+        {
+          "hang": 1,
+          "id": "qd3266:D18:K5",
+          "chap_nhan": true
+        },
+        {
+          "hang": 2,
+          "id": "qd3266:D33:K3",
+          "chap_nhan": true
+        },
+        {
+          "hang": 3,
+          "id": "qd5339:D3:K1",
+          "chap_nhan": true
+        }
+      ],
+      "cau_hoi_mo_ho": false,
+      "ghi_chu_nguoi_soat": "QĐ3266 Đ18.5, PDF tr.11 nói trực tiếp được bảo lưu kết quả đã tích lũy khi bị buộc thôi học; H1 đúng. Gold/H2 Đ33.3, tr.20 cũng bảo lưu cho SV không đủ điều kiện tốt nghiệp nhưng thuộc mục quá hạn, nên nên bổ sung Đ18.5 làm căn cứ chính. H3 QĐ5339 Đ3.1, tr.5 đúng phần xét công nhận khi học lại chương trình mới, không có nghĩa tự động chuyển hết điểm. Chỉ kết quả đã tích lũy, không biến điểm F thành đạt."
+    },
+    {
+      "id": "QS-3dd146fe4042",
+      "dataset": "rag_survey_train_sources_v1",
+      "split": "train",
+      "nhom_soat": "truot_r1",
+      "q": "có xin miễn điều kiện tiên quyết được không",
+      "original_gold": [
+        "qd3266:D7:K4"
+      ],
+      "gold_dung": true,
+      "loai": "xac_nhan_gold",
+      "corrected_gold": [
+        "qd3266:D7:K4"
+      ],
+      "danh_gia_top3": [
+        {
+          "hang": 1,
+          "id": "qd5339:D3:K4",
+          "chap_nhan": false
+        },
+        {
+          "hang": 2,
+          "id": "qd5339:D3:K5",
+          "chap_nhan": false
+        },
+        {
+          "hang": 3,
+          "id": "qd5339:D3:K11",
+          "chap_nhan": false
+        }
+      ],
+      "cau_hoi_mo_ho": false,
+      "ghi_chu_nguoi_soat": "QĐ3266 Đ7.4, PDF tr.5: phải tích lũy học phần tiên quyết mới được đăng ký học phần sau. Gold đúng để nêu điều kiện bắt buộc chung; 7 PDF không nêu cơ chế/ngoại lệ xin miễn tiên quyết, nên chỉ kết luận chưa có căn cứ chấp thuận, không khẳng định không bao giờ có ngoại lệ ở văn bản khác. H1/H2/H3 miễn/công nhận học phần không tự động là miễn điều kiện tiên quyết."
+    },
+    {
+      "id": "dev02",
+      "dataset": "rag_queries",
+      "split": "dev",
+      "nhom_soat": "trung_r1_mau",
+      "q": "Học kỳ đầu tiên em có phải tự đăng ký môn không?",
+      "original_gold": [
+        "qd3266:D14:K2"
+      ],
+      "gold_dung": true,
+      "loai": "xac_nhan_gold",
+      "corrected_gold": [
+        "qd3266:D14:K2"
+      ],
+      "danh_gia_top3": [
+        {
+          "hang": 1,
+          "id": "qd3266:D14:K2",
+          "chap_nhan": true
+        },
+        {
+          "hang": 2,
+          "id": "qd3266:D15:K0",
+          "chap_nhan": false
+        },
+        {
+          "hang": 3,
+          "id": "qd3266:D17:K1",
+          "chap_nhan": false
+        }
+      ],
+      "cau_hoi_mo_ho": false,
+      "ghi_chu_nguoi_soat": "QĐ3266 Đ14.2 và Đ13.2, PDF tr.8: HK đầu do trường bố trí, SV mới trúng tuyển không tự đăng ký. Gold/H1 đúng. H2 quy trình đăng ký chung không nêu ngoại lệ HK đầu; H3 học lại không liên quan."
+    },
+    {
+      "id": "dev04",
+      "dataset": "rag_queries",
+      "split": "dev",
+      "nhom_soat": "trung_r1_mau",
+      "q": "Học cải thiện điểm thì lấy điểm lần nào?",
+      "original_gold": [
+        "qd3266:D17:K2"
+      ],
+      "gold_dung": true,
+      "loai": "xac_nhan_gold",
+      "corrected_gold": [
+        "qd3266:D17:K2"
+      ],
+      "danh_gia_top3": [
+        {
+          "hang": 1,
+          "id": "qd3266:D17:K2",
+          "chap_nhan": true
+        },
+        {
+          "hang": 2,
+          "id": "qd3266:D34:K2",
+          "chap_nhan": false
+        },
+        {
+          "hang": 3,
+          "id": "qd3266:D29:K1",
+          "chap_nhan": false
+        }
+      ],
+      "cau_hoi_mo_ho": false,
+      "ghi_chu_nguoi_soat": "QĐ3266 Đ17.2, PDF tr.9: lấy điểm cao nhất trong các lần học cải thiện. H2 Đ34.2 chỉ hạng tốt nghiệp; H3 Đ29.1 khiếu nại điểm không thay quy tắc cải thiện."
+    },
+    {
+      "id": "dev10",
+      "dataset": "rag_queries",
+      "split": "dev",
+      "nhom_soat": "trung_r1_mau",
+      "q": "Xếp hạng tốt nghiệp loại giỏi cần GPA bao nhiêu?",
+      "original_gold": [
+        "qd3266:D34:K2"
+      ],
+      "gold_dung": true,
+      "loai": "xac_nhan_gold",
+      "corrected_gold": [
+        "qd3266:D34:K2"
+      ],
+      "danh_gia_top3": [
+        {
+          "hang": 1,
+          "id": "qd3266:D34:K2",
+          "chap_nhan": true
+        },
+        {
+          "hang": 2,
+          "id": "qd3266:D24:K4",
+          "chap_nhan": false
+        },
+        {
+          "hang": 3,
+          "id": "qd3266:D24:K2",
+          "chap_nhan": false
+        }
+      ],
+      "cau_hoi_mo_ho": false,
+      "ghi_chu_nguoi_soat": "QĐ3266 Đ34.2, PDF tr.20: loại giỏi ĐTBCTL 3,20–3,59; loại giỏi/xuất sắc có thể giảm một mức nếu khối lượng F >5% TC CTĐT (loại trừ F khi học cải thiện) hoặc kỷ luật từ cảnh cáo cấp trường. Gold đúng. H2/H3 chỉ cách tính ĐTB, không chứa bảng ngưỡng hạng tốt nghiệp."
+    },
+    {
+      "id": "dev20",
+      "dataset": "rag_queries",
+      "split": "dev",
+      "nhom_soat": "trung_r1_mau",
+      "q": "rut hoc phan han chot tuan thu may",
+      "original_gold": [
+        "qd3266:D15:K0"
+      ],
+      "gold_dung": true,
+      "loai": "xac_nhan_gold",
+      "corrected_gold": [
+        "qd3266:D15:K0"
+      ],
+      "danh_gia_top3": [
+        {
+          "hang": 1,
+          "id": "qd3266:D15:K0",
+          "chap_nhan": true
+        },
+        {
+          "hang": 2,
+          "id": "qd3266:D6:K3",
+          "chap_nhan": false
+        },
+        {
+          "hang": 3,
+          "id": "qd3266:D31:K3",
+          "chap_nhan": false
+        }
+      ],
+      "cau_hoi_mo_ho": false,
+      "ghi_chu_nguoi_soat": "QĐ3266 Đ15, PDF tr.9: chậm nhất tuần lễ thứ 6 của HK được rút bớt, không hoàn học phí, nhận W. Gold đúng. H2 lịch HK, H3 tích lũy TC tốt nghiệp không nêu hạn rút. Phân biệt xóa/đăng ký bổ sung trong tuần đầu với rút học phần."
+    },
+    {
+      "id": "dev21",
+      "dataset": "rag_queries",
+      "split": "dev",
+      "nhom_soat": "trung_r1_mau",
+      "q": "Xếp trình độ năm học dựa vào đâu?",
+      "original_gold": [
+        "qd3266:D30:K0"
+      ],
+      "gold_dung": true,
+      "loai": "xac_nhan_gold",
+      "corrected_gold": [
+        "qd3266:D30:K0"
+      ],
+      "danh_gia_top3": [
+        {
+          "hang": 1,
+          "id": "qd3266:D30:K0",
+          "chap_nhan": true
+        },
+        {
+          "hang": 2,
+          "id": "qd3266:D24:K2",
+          "chap_nhan": false
+        },
+        {
+          "hang": 3,
+          "id": "qd3266:D26:K1",
+          "chap_nhan": false
+        }
+      ],
+      "cau_hoi_mo_ho": false,
+      "ghi_chu_nguoi_soat": "QĐ3266 Đ30, PDF tr.18: theo tổng TC đã tích lũy, không theo thời gian vào trường; ngưỡng chi tiết tùy khóa. Gold đúng. H2 ĐTBCHK và H3 xếp loại/khen thưởng là khái niệm khác."
+    },
+    {
+      "id": "QS-a57c508b8b85",
+      "dataset": "rag_survey_train_sources_v1",
+      "split": "train",
+      "nhom_soat": "trung_r1_mau",
+      "q": "Thời gian tạm dừng học có bị tính vào thời gian đào tạo tối đa không?",
+      "original_gold": [
+        "qd3266:D18:K1",
+        "qd3266:D5:K0"
+      ],
+      "gold_dung": true,
+      "loai": "xac_nhan_gold",
+      "corrected_gold": [
+        "qd3266:D18:K1",
+        "qd3266:D5:K0"
+      ],
+      "danh_gia_top3": [
+        {
+          "hang": 1,
+          "id": "qd3266:D18:K1",
+          "chap_nhan": true
+        },
+        {
+          "hang": 2,
+          "id": "qd3266:D5:K0",
+          "chap_nhan": true
+        },
+        {
+          "hang": 3,
+          "id": "qd3266:D18:K5",
+          "chap_nhan": false
+        }
+      ],
+      "cau_hoi_mo_ho": true,
+      "ghi_chu_nguoi_soat": "QĐ3266 Đ18.1(d), PDF tr.10: nghỉ vì lý do cá nhân tính vào thời gian tối đa; khoản này không phát biểu một quy tắc loại trừ chung cho mọi lý do nghỉ khác. Gold đúng theo nhánh cá nhân, cần hỏi lý do nghỉ. H2 Đ5, tr.4–5 bổ trợ xác định thời gian tối đa, không tự trả lời cách tính nghỉ. H3 buộc thôi học không trực tiếp quy định việc cộng thời gian."
+    },
+    {
+      "id": "QS-09cf7d201d99",
+      "dataset": "rag_survey_train_sources_v1",
+      "split": "train",
+      "nhom_soat": "trung_r1_mau",
+      "q": "e bị cbhv lần 1 rồi, lần 2 là bị gì ạ",
+      "original_gold": [
+        "qd3266:D18:K5",
+        "qd3266:D18:K2"
+      ],
+      "gold_dung": true,
+      "loai": "xac_nhan_gold",
+      "corrected_gold": [
+        "qd3266:D18:K5",
+        "qd3266:D18:K2"
+      ],
+      "danh_gia_top3": [
+        {
+          "hang": 1,
+          "id": "qd3266:D18:K2",
+          "chap_nhan": true
+        },
+        {
+          "hang": 2,
+          "id": "qd3266:D18:K5",
+          "chap_nhan": true
+        },
+        {
+          "hang": 3,
+          "id": "qd3266:D20:K7",
+          "chap_nhan": false
+        }
+      ],
+      "cau_hoi_mo_ho": true,
+      "ghi_chu_nguoi_soat": "QĐ3266 Đ18.5(b), PDF tr.10: đã cảnh báo và HK kế tiếp ĐTBCHK <1,00 thì buộc thôi học; không phải mọi cảnh báo lần 2 đều tự động buộc thôi học, nhất là K47 có nhiều căn cứ cảnh báo Đ18.2. H1 Đ18.2 hỗ trợ xác định điều kiện cảnh báo, H2 trực tiếp ngưỡng thôi học. LỖI MẪU: gold Đ18.5 khác H1 Đ18.2, trái mô tả “H1 chính là gold”; không coi mặc nhiên đây là ca trúng exact-gold."
+    },
+    {
+      "id": "QS-83e6fa022af7",
+      "dataset": "rag_survey_train_sources_v1",
+      "split": "train",
+      "nhom_soat": "trung_r1_mau",
+      "q": "nghỉ học tạm thời tối đa được bao lâu",
+      "original_gold": [
+        "qd3266:D18:K1"
+      ],
+      "gold_dung": false,
+      "loai": "gold_sai_chua_co_ma_nguon",
+      "corrected_gold": [],
+      "danh_gia_top3": [
+        {
+          "hang": 1,
+          "id": "qd3266:D18:K1",
+          "chap_nhan": false
+        },
+        {
+          "hang": 2,
+          "id": "qd3266:D18:K5",
+          "chap_nhan": false
+        },
+        {
+          "hang": 3,
+          "id": "qd3266:D5:K0",
+          "chap_nhan": false
+        }
+      ],
+      "cau_hoi_mo_ho": false,
+      "ghi_chu_nguoi_soat": "QĐ3266 Đ18.1, PDF tr.10 không ấn định số HK/năm nghỉ tạm thời tối đa chung; chỉ thủ tục, lý do và hạn nộp hồ sơ trở lại. Đ18.5(c) nói quá thời hạn cho phép bị buộc thôi học; Đ5 là thời gian đào tạo tối đa, không phải trần nghỉ. Cả gold và các hạng chưa trả lời con số hỏi. Cần quyết định cho nghỉ cụ thể hoặc quy định bổ sung; không tự điền 1 năm/2 năm."
+    },
+    {
+      "id": "QS-3b93ded00953",
+      "dataset": "rag_survey_train_sources_v1",
+      "split": "train",
+      "nhom_soat": "trung_r1_mau",
+      "q": "Em rớt Lập trình căn bản, kỳ này có được đăng ký Cấu trúc dữ liệu không?",
+      "original_gold": [
+        "ctdt_k49:CT177",
+        "qd3266:D7:K4"
+      ],
+      "gold_dung": null,
+      "loai": "thieu_tai_lieu",
+      "corrected_gold": null,
+      "danh_gia_top3": [
+        {
+          "hang": 1,
+          "id": "ctdt_k49:CT177",
+          "chap_nhan": null
+        },
+        {
+          "hang": 2,
+          "id": "qd3266:D15:K0",
+          "chap_nhan": false
+        },
+        {
+          "hang": 3,
+          "id": "qd3266:D20:K2",
+          "chap_nhan": false
+        }
+      ],
+      "cau_hoi_mo_ho": true,
+      "ghi_chu_nguoi_soat": "THIẾU NGUỒN: gold/H1 ctdt_k49:CT177 cần CTĐT hoặc đề cương môn CT177 đúng ngành/khóa để kiểm chứng chuỗi tiên quyết. 7 PDF không có bảng quan hệ CT101/CT177. QĐ3266 Đ7.4, PDF tr.5 chỉ quy tắc chung phải tích lũy tiên quyết; không chứng minh CT177 yêu cầu môn nào. Để trống nhãn gold, không chấm K vì thiếu tài liệu. H2 Đ15, H3 ngành 2 không trả lời tiên quyết cụ thể. Hỏi khóa/CTĐT và bổ sung tài liệu."
+    },
+    {
+      "id": "QS-3dceaf7ba9e5",
+      "dataset": "rag_survey_train_sources_v1",
+      "split": "train",
+      "nhom_soat": "trung_r1_mau",
+      "q": "gpa 3.2 thì bằng gì v mn",
+      "original_gold": [
+        "qd3266:D34:K2"
+      ],
+      "gold_dung": true,
+      "loai": "xac_nhan_gold",
+      "corrected_gold": [
+        "qd3266:D34:K2"
+      ],
+      "danh_gia_top3": [
+        {
+          "hang": 1,
+          "id": "qd3266:D34:K2",
+          "chap_nhan": true
+        },
+        {
+          "hang": 2,
+          "id": "qd3266:D24:K4",
+          "chap_nhan": false
+        },
+        {
+          "hang": 3,
+          "id": "qd3266:D24:K2",
+          "chap_nhan": false
+        }
+      ],
+      "cau_hoi_mo_ho": true,
+      "ghi_chu_nguoi_soat": "QĐ3266 Đ34.2, PDF tr.20: ĐTBCTL 3,20 nằm ngưỡng giỏi, nhưng có thể hạ xuống khá theo hai điều kiện giảm hạng. Cần xác định GPA tích lũy hay học kỳ và tình trạng giảm hạng; không chốt “bằng giỏi” chỉ từ 3,2. H2/H3 định nghĩa ĐTB không cho bảng hạng tốt nghiệp."
+    },
+    {
+      "id": "QS-a502f04c1e53",
+      "dataset": "rag_survey_train_sources_v1",
+      "split": "train",
+      "nhom_soat": "trung_r1_mau",
+      "q": "Điều kiện để đăng ký học cùng lúc hai chương trình là gì?",
+      "original_gold": [
+        "qd3266:D20:K1"
+      ],
+      "gold_dung": true,
+      "loai": "them_nguon_thay_the",
+      "corrected_gold": [
+        "qd3266:D20:K1",
+        "qd3266:D20:K2"
+      ],
+      "danh_gia_top3": [
+        {
+          "hang": 1,
+          "id": "qd3266:D20:K1",
+          "chap_nhan": true
+        },
+        {
+          "hang": 2,
+          "id": "qd3266:D20:K2",
+          "chap_nhan": true
+        },
+        {
+          "hang": 3,
+          "id": "qd3266:D20:K7",
+          "chap_nhan": false
+        }
+      ],
+      "cau_hoi_mo_ho": false,
+      "ghi_chu_nguoi_soat": "QĐ3266 Đ20.1, PDF tr.12 nêu điều kiện ngành khác, ngưỡng học lực/đầu vào theo khóa và khả năng tiếp nhận. Gold đúng; H2 Đ20.2 hỗ trợ thủ tục, chưa thay thế điều kiện; chấp nhận nguồn bổ sung theo quy ước một phần. H3 Đ20.7 là điều kiện dừng học sau khi đã học 2 chương trình. Phải áp dụng nhánh K46 trở về trước/K47 trở về sau."
+    },
+    {
+      "id": "QS-84ec4482743a",
+      "dataset": "rag_survey_train_sources_v1",
+      "split": "train",
+      "nhom_soat": "trung_r1_mau",
+      "q": "chuyen chuyen nganh trong cung nganh co can xet diem khong",
+      "original_gold": [
+        "qd3266:D12:K2"
+      ],
+      "gold_dung": false,
+      "loai": "gold_sai_chua_co_ma_nguon",
+      "corrected_gold": [],
+      "danh_gia_top3": [
+        {
+          "hang": 1,
+          "id": "qd3266:D12:K2",
+          "chap_nhan": false
+        },
+        {
+          "hang": 2,
+          "id": "qd5339:D3:K1",
+          "chap_nhan": false
+        },
+        {
+          "hang": 3,
+          "id": "qd3266:D7:K8",
+          "chap_nhan": false
+        }
+      ],
+      "cau_hoi_mo_ho": false,
+      "ghi_chu_nguoi_soat": "QĐ3266 Đ12.2, PDF tr.7–8 nói chuyển chương trình hoặc ngành đào tạo khác, không quy định riêng chuyển chuyên ngành trong cùng ngành. Gold/H1 gán sai phạm vi nếu dùng để kết luận bắt buộc xét điểm khi đổi chuyên ngành. H2 miễn tương đương và H3 lớp chuyên ngành không trả lời tiêu chí chuyển chuyên ngành. Cần quy định của đơn vị/CTĐT; chưa có căn cứ cho câu trả lời có/không."
+    },
+    {
+      "id": "QS-e78f2a69cf58",
+      "dataset": "rag_survey_train_sources_v1",
+      "split": "train",
+      "nhom_soat": "trung_r1_mau",
+      "q": "học lại môn tự chọn bị F thì có thể chọn môn tự chọn khác thay thế không ạ",
+      "original_gold": [
+        "qd3266:D17:K1"
+      ],
+      "gold_dung": true,
+      "loai": "xac_nhan_gold",
+      "corrected_gold": [
+        "qd3266:D17:K1"
+      ],
+      "danh_gia_top3": [
+        {
+          "hang": 1,
+          "id": "qd3266:D17:K1",
+          "chap_nhan": true
+        },
+        {
+          "hang": 2,
+          "id": "qd3266:D17:K2",
+          "chap_nhan": false
+        },
+        {
+          "hang": 3,
+          "id": "qd3266:D17:K3",
+          "chap_nhan": false
+        }
+      ],
+      "cau_hoi_mo_ho": false,
+      "ghi_chu_nguoi_soat": "QĐ3266 Đ17.1, PDF tr.9: tự chọn bị F có thể học lại hoặc chọn học phần tự chọn khác. Gold/H1 đúng, nhưng môn thay phải đáp ứng đúng yêu cầu nhóm/CTĐT. H2 cải thiện điểm và H3 chọn điểm khi tích lũy dư không thay quy tắc thay môn tự chọn F."
+    },
+    {
+      "id": "QS-b51c10db8832",
+      "dataset": "rag_survey_train_sources_v1",
+      "split": "train",
+      "nhom_soat": "trung_r1_mau",
+      "q": "Điểm học kỳ hè có được tính vào điểm trung bình học kỳ để xét cảnh báo học vụ không?",
+      "original_gold": [
+        "qd3266:D24:K2",
+        "qd3266:D18:K2"
+      ],
+      "gold_dung": true,
+      "loai": "xac_nhan_gold",
+      "corrected_gold": [
+        "qd3266:D24:K2",
+        "qd3266:D18:K2"
+      ],
+      "danh_gia_top3": [
+        {
+          "hang": 1,
+          "id": "qd3266:D18:K2",
+          "chap_nhan": true
+        },
+        {
+          "hang": 2,
+          "id": "qd3266:D24:K2",
+          "chap_nhan": true
+        },
+        {
+          "hang": 3,
+          "id": "qd3266:D22:K5",
+          "chap_nhan": false
+        }
+      ],
+      "cau_hoi_mo_ho": true,
+      "ghi_chu_nguoi_soat": "QĐ3266 Đ24.2, PDF tr.15: ĐTBCHK là cơ sở cảnh báo sau mỗi HK, gồm F và học phần điều kiện trừ GDTC; Đ22.5 tr.14 còn loại M/I/W theo quy định. Kết hợp Đ6.1 tr.5 và công văn 2753 tr.1: HK3 là HK chính từ HK2 2024–2025. Gold đúng trong chế độ này; H1 Đ18.2 đúng phần tiêu chí cảnh báo, H3 hỗ trợ ngoại lệ điểm, đều chưa xác định chế độ hè. LỖI MẪU: gold Đ24.2 khác H1 Đ18.2. Cần hỏi thời điểm/“hè”."
+    },
+    {
+      "id": "QS-4ebe2ee3cb9e",
+      "dataset": "rag_survey_train_sources_v1",
+      "split": "train",
+      "nhom_soat": "trung_r1_mau",
+      "q": "Em bị cảnh báo 2 kỳ liền, kỳ này mà điểm thấp nữa thì có bị đuổi học không?",
+      "original_gold": [
+        "qd3266:D18:K5"
+      ],
+      "gold_dung": true,
+      "loai": "them_nguon_thay_the",
+      "corrected_gold": [
+        "qd3266:D18:K5",
+        "qd3266:D18:K2"
+      ],
+      "danh_gia_top3": [
+        {
+          "hang": 1,
+          "id": "qd3266:D18:K5",
+          "chap_nhan": true
+        },
+        {
+          "hang": 2,
+          "id": "qd3266:D18:K2",
+          "chap_nhan": true
+        },
+        {
+          "hang": 3,
+          "id": "qd3266:D20:K7",
+          "chap_nhan": false
+        }
+      ],
+      "cau_hoi_mo_ho": true,
+      "ghi_chu_nguoi_soat": "QĐ3266 Đ18.5(b), PDF tr.10: đã cảnh báo và HK kế tiếp ĐTBCHK <1,00 thì buộc thôi học, trường hợp đặc biệt do Hiệu trưởng quyết định. Không đợi bắt buộc cảnh báo 3 lần và không dùng chung từ “thấp” thay ngưỡng 1,00. Gold đúng; H2 Đ18.2 hỗ trợ tiêu chí cảnh báo, không đủ tự quyết định thôi học; H3 chỉ xử lý ngành 2. Cần điểm thực tế, chuỗi HK và quyết định trước đó."
+    }
+  ]
+}

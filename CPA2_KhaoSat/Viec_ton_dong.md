@@ -61,6 +61,8 @@ Gom mọi mục `- [ ]` còn mở trong báo cáo Tuần 1–17. Các mục đã
 | C14 | ~~P20-4 phương án B~~ — đã làm: kiểm chéo bằng TC tích lũy + ĐTBCTL in sau mỗi học kỳ (cứu học kỳ mất ĐTBCHK khi đủ độ phân giải; luôn kiểm TC tích lũy → bịt lỗ GDTC F→D cho TRUE sai). OCR-Noise dev M2 0/5 → 4/5. Kiểm trên ảnh thật chuyển sang A18 | Tuần 20 §5g |
 | C15 | ~~KB hạng tốt nghiệp chưa đủ (R-F07, Đ34 k2)~~ — đã sửa R-Formal v1.11: HP điểm cuối F tính chắc chắn, `tc_diem_f` + kỷ luật cảnh cáo cấp Trường là khai báo (schema + loader), chưa khai báo → mở nhánh; R-F07b; errata G-Truth HG-02/03/04/08 (`gtruth_errata.json`) | Tuần 20 §5f |
 | C16 | **Kiểm adapter OpenAI/Gemini với API thật** (chưa từng gọi): tên trường/tham số, gọi công cụ b3, chữ ký suy nghĩ Gemini 3, phản hồi rỗng do `MAX_TOKENS`/`SAFETY` (hiện tính thiếu nhãn → UNKNOWN); hàm so CPA² vs baseline trên cùng tập ca | Tuần 21 §7–8 |
+| C17 | **Phân đoạn QĐ3266 Đ22 k3/k4** (PDF tr.14): OCR đọc "4." thành "+," → nội dung k4 nằm trong passage `D22:K3`, không có `D22:K4` (phát hiện khi soát gold dev23, 27/10/2026). Đã thử sửa `build_corpus.py` (nhận "+," là khoản kế tiếp) — đúng, chỉ đổi 1 passage + thêm 1, nhưng ranker v1 khoá `corpus_sha256` → **hoãn** tới ranker v2 (cần holdout mới). validate_rag báo CHƯA ĐẠT (không chặn) | Tuần 14, `rag_soat_gold_errata_v1.json` |
+| C18 | **Errata soát gold truy hồi** (`w14_rag/rag_soat_gold_errata_v1.json`, 49 ca): 6 câu gold sai chưa có mã nguồn (căn cứ chỉ nêu điều/khoản ở ghi chú), 1 ca thiếu CTĐT K49/đề cương CT177. Nhãn train sai 9/48 ca đã soát → chưa đưa vào ranker (vẫn dùng `rag_survey_train_sources_v1.json` gốc) | Tuần 14 |
 | C8 | Độ phủ OCR thấp (Linux 7/18; Windows 1/18) | Tuần 15 |
 
 ## D. Thuộc phạm vi "không hình thức hoá được" (kết quả RQ1, không phải nợ)
