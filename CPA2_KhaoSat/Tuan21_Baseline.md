@@ -115,3 +115,7 @@ Toàn bộ 17 bộ validate (tuần 5–21): **17/17 `KẾT LUẬN: ĐẠT`**, k
 - [ ] **C16:** kiểm adapter OpenAI/Gemini với API thật; xử lý phản hồi rỗng do `MAX_TOKENS`/`SAFETY` (hiện tính là thiếu nhãn → UNKNOWN).
 - [ ] So sánh CPA² và baseline trên **cùng tập ca**: CPA² hiện báo riêng từng bộ (58 + 20 ca dev); cần hàm gộp, làm khi đã có số baseline.
 - [ ] Tuần 22: chạy test một lần cho CPA² và baseline, báo cả số gold và số theo errata.
+
+## Cập nhật 27/10/2026 — đóng băng lại prompt (chưa có lần chạy thật nào)
+
+`validate_baseline` M2 báo `prompt_dong_bang.json` lệch: mẫu prompt (`sha256` be0fd8eb…) không đổi, nhưng `sha256_dau_vao` (prompt đã dựng cho mọi ca, gồm đoạn truy hồi của baseline RAG) đổi 1c5687d0… → b06a364a… vì `w14_rag/retriever.py` đổi sau khi đóng băng (ca3c728, c88891b — ranker có huấn luyện, 26/10). Chưa có file kết quả chạy thật nào nên đóng băng lại bằng `run_baseline.py --ghi-bang --ghi-de` là hợp lệ theo quy trình (đóng băng TRƯỚC lần chạy thật đầu tiên). Baseline RAG nay dùng cùng ranker v1 với hệ thống.

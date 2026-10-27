@@ -20,3 +20,6 @@ CPA2_KhaoSat/w20_benchmark/qreal/_tho/
 # Tuần 21: checkpoint chạy dở + sổ chi phí (cục bộ)
 CPA2_KhaoSat/w21_baseline/.*.dang_chay.jsonl
 CPA2_KhaoSat/w21_baseline/chi_phi_nhat_ky.jsonl
+# Tuần 14: bản soát gold trống + sao lưu (bản đã rà soát soat_gold_ca_truot_v1_da_ra_soat.xlsx được commit)
+CPA2_KhaoSat/w14_rag/soat_gold_ca_truot_v1.xlsx
+CPA2_KhaoSat/w14_rag/soat_gold_ca_truot_v1.bak.xlsx
