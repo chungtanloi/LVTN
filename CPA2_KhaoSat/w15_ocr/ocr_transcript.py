@@ -132,17 +132,20 @@ def anh_xa_dac_biet(d):
     return None
 
 
-def _conf_dong(d):
+def _conf_dong(d, so_chinh_xac=False):
     """Confidence của dòng = min(mã, TC, điểm). Điểm có tới 3 lần đọc riêng: T.Hợp, điểm chữ (khi khớp
     R-B02) và cột Thi (khi bằng T.Hợp — không có L2). Các lần đọc khớp nhau dưới ràng buộc tất định
-    → gộp 1 − Π(1 − cᵢ). Giả định: lỗi OCR giữa các cột gần độc lập (cùng ảnh nên chỉ là xấp xỉ)."""
+    → gộp 1 − Π(1 − cᵢ). Giả định: lỗi OCR giữa các cột gần độc lập (cùng ảnh nên chỉ là xấp xỉ).
+    C19: điểm chữ chỉ xác nhận KHOẢNG điểm (7,5 và 7,9 cùng là B) → `so_chinh_xac` (HP mà KB dùng chính con số,
+    như GDQP trong dk_gdqp) thì không gộp lần đọc điểm chữ."""
     c = d.get("conf") or {}
     if not c:
         return 0.0
     phan = [c.get("ma", 0.0)] + ([c.get("tc", 0.0)] if "tc" in c else [])
     if "thop" in c:
         doc = [c["thop"]]
-        if d.get("chu") and d.get("thop") is not None and chu_tu_diem(d["thop"]) == d["chu"]:
+        if (not so_chinh_xac and d.get("chu") and d.get("thop") is not None
+                and chu_tu_diem(d["thop"]) == d["chu"]):
             doc.append(c.get("chu", 0.0))
         if d.get("thi") is not None and d.get("thi") == d.get("thop"):
             doc.append(c.get("thi", 0.0))
@@ -167,7 +170,7 @@ def kiem_dong(d, ct, tau=None):
                 ly_do.append("thiếu điểm")
             elif chu_tu_diem(d["thop"]) != d["chu"]:
                 ly_do.append(f"điểm chữ {d['chu']} ≠ R-B02({d['thop']}) = {chu_tu_diem(d['thop'])}")
-    conf = _conf_dong(d)
+    conf = _conf_dong(d, so_chinh_xac=(ct.get(ma) or {}).get("dieu_kien") == "gdqp")
     if conf < tau:
         ly_do.append(f"confidence {conf:.2f} < {tau}")
     return {"hop_le": not ly_do, "ly_do": ly_do, "conf": conf}

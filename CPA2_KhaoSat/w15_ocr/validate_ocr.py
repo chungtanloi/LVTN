@@ -119,6 +119,18 @@ def phan_C():
     hs, extra, bc = O.sang_ho_so(d2, khai_bao=O.khai_bao_tu_json(j))
     check(hk["ten"] in bc["hoc_ky_lech"], f"mất dòng {mat['ma']} → học kỳ '{hk['ten']}' lệch tổng TC")
     check(O.ket_luan(hs, extra, bc) == "UNKNOWN", "mất dòng → UNKNOWN (không phải FALSE vì 'thiếu môn')")
+    # 4) C19: T.Hợp đọc nhầm trong CÙNG khoảng điểm chữ (7,5 → 7,9, thấy thật ở ảnh JPEG q95). Điểm chữ chỉ xác nhận
+    #    khoảng, không xác nhận con số → không được nâng độ tin của điểm số. GDQP dùng ĐIỂM SỐ (dk_gdqp, Đ32: ĐTB
+    #    GDQP ≥ 5,0) → phải thành không chắc; HP khác KB chỉ dùng khoảng → vẫn nhận.
+    d4 = copy.deepcopy(doc)
+    for r in (r for k in d4["hoc_ky"] for r in k["dong"] if r.get("ma") in ("QP011E", "ML021")):
+        r["thop"] = round(r["thop"] + 0.4, 1)
+        r["conf"].update(thop=0.53, thi=0.54, chu=0.9)
+    hs, extra, bc = O.sang_ho_so(d4, khai_bao=O.khai_bao_tu_json(j))
+    check("QP011E" not in hs["grades"] and "QP011E" in bc["khong_chac"],
+          f"GDQP QP011E đọc nhầm số trong cùng điểm chữ, độ tin số 0,53 → không chắc "
+          f"(grades: {hs['grades'].get('QP011E', {}).get('thang10')})")
+    check("ML021" in hs["grades"], "HP thường ML021 đọc nhầm trong cùng điểm chữ → vẫn nhận (KB chỉ dùng khoảng điểm)")
     # 3) không có khai báo kỷ luật (bảng điểm không ghi) → không thể TRUE
     hs, extra, bc = O.sang_ho_so(doc, khai_bao={})
     check(O.ket_luan(hs, extra, bc) == "UNKNOWN", "thiếu xác nhận kỷ luật (R-F03, không có trên bảng điểm) → UNKNOWN")
