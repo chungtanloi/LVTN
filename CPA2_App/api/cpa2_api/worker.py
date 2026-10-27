@@ -7,6 +7,40 @@ import tempfile
 from .profiles import KB, normalize
 
 
+# Trang bảng điểm ĐHCT mà OCR w15 chỉnh theo: 1105 × 1430 px = khổ Letter dựng ở 130 DPI
+PDF_DPI = 130
+MAX_PDF_PAGES = 4
+MAX_PAGE_PIXELS = 20_000_000
+
+
+class InputRejected(ValueError):
+    """Đầu vào không hợp lệ; main trả 422 thay vì 502."""
+
+
+def pdf_pages(path):
+    import pypdfium2 as pdfium
+    try:
+        document = pdfium.PdfDocument(path)        # PDF hỏng hoặc có mật khẩu → PdfiumError
+    except pdfium.PdfiumError:
+        raise InputRejected() from None
+    try:
+        if not 1 <= len(document) <= MAX_PDF_PAGES:
+            raise InputRejected()
+        scale, images = PDF_DPI / 72, []
+        for index in range(len(document)):
+            page = document[index]
+            try:
+                width, height = page.get_size()
+                if width * scale * height * scale > MAX_PAGE_PIXELS:
+                    raise InputRejected()
+                images.append(page.render(scale=scale, grayscale=True).to_pil().convert('RGB'))
+            finally:
+                page.close()
+        return images
+    finally:
+        document.close()
+
+
 def execute(operation, payload):
     sys.path.insert(0, str(KB / 'w14_rag'))
     from grounded_answer import tra_loi, tra_cuu
@@ -16,7 +50,7 @@ def execute(operation, payload):
         sys.path.insert(0, str(KB / 'w15_ocr'))
         from ocr_transcript import doc_bang_diem, sang_ho_so
         from PIL import Image
-        images = [Image.open(p).convert('RGB') for p in payload['paths']]
+        images = pdf_pages(payload['pdf']) if 'pdf' in payload else [Image.open(p).convert('RGB') for p in payload['paths']]
         try:
             document = doc_bang_diem(images)
             if not document['hoc_ky']:

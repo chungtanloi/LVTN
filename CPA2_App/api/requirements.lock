@@ -17,6 +17,7 @@ pillow==13.0.0
 pycparser==3.12
 pydantic==2.14.1
 pydantic_core==2.50.1
+pypdfium2==5.9.0
 pytesseract==0.3.13
 python-multipart==0.0.32
 referencing==0.37.0

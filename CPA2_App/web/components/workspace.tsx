@@ -365,7 +365,9 @@ function CloudWorkspace() {
         files.length > 4 ||
         files.reduce((total, file) => total + file.size, 0) > 20 * 1024 * 1024
       )
-        throw new Error("Chọn 1–4 ảnh, tổng dung lượng tối đa 20 MB.");
+        throw new Error(
+          "Chọn 1 file PDF hoặc 1–4 ảnh, tổng dung lượng tối đa 20 MB.",
+        );
       const storageIds = [];
       for (const file of files) {
         const url = await uploadUrl({ consent });
@@ -374,7 +376,7 @@ function CloudWorkspace() {
           headers: { "Content-Type": file.type },
           body: file,
         });
-        if (!response.ok) throw new Error("Tải ảnh chưa thành công.");
+        if (!response.ok) throw new Error("Tải bảng điểm chưa thành công.");
         const { storageId } = await response.json();
         storageIds.push(storageId);
       }
@@ -1200,10 +1202,10 @@ function Shell({
                     <Upload size={16} />
                     {busy === "ocr"
                       ? "Đang nhận diện…"
-                      : "Nhận diện từ ảnh (OCR)"}
+                      : "Nhận diện từ ảnh hoặc PDF (OCR)"}
                     <input
                       type="file"
-                      accept="image/png,image/jpeg"
+                      accept="image/png,image/jpeg,application/pdf"
                       multiple
                       disabled={!!busy || (!demo && !profile)}
                       hidden
@@ -1213,12 +1215,21 @@ function Shell({
                         void run("ocr", async () => {
                           if (!consent)
                             throw new Error(
-                              "Hãy tích đồng ý xử lý dữ liệu trước khi tải ảnh.",
+                              "Hãy tích đồng ý xử lý dữ liệu trước khi tải bảng điểm.",
                             );
                           if (
                             files.some((file) => file.size > 10 * 1024 * 1024)
                           )
-                            throw new Error("Mỗi ảnh tối đa 10 MB.");
+                            throw new Error("Mỗi file tối đa 10 MB.");
+                          if (
+                            files.length > 1 &&
+                            files.some(
+                              (file) => file.type === "application/pdf",
+                            )
+                          )
+                            throw new Error(
+                              "Chỉ chọn một file PDF, không kèm ảnh.",
+                            );
                           const result = await ops.ocr(files, consent);
                           if (result) {
                             setOcrResult(result);
@@ -1226,7 +1237,7 @@ function Shell({
                             setReviewed(false);
                           } else
                             setNotice(
-                              "Ảnh đang được xử lý. Kết quả sẽ tự xuất hiện khi hoàn tất.",
+                              "Bảng điểm đang được xử lý. Kết quả sẽ tự xuất hiện khi hoàn tất.",
                             );
                         });
                         event.target.value = "";
@@ -1234,7 +1245,7 @@ function Shell({
                     />
                   </label>
                   <small className="muted">
-                    PNG/JPEG · tối đa 10 MB/ảnh ·{" "}
+                    1 PDF hoặc PNG/JPEG · tối đa 10 MB/file ·{" "}
                     {demo ? "1–4 trang" : "1–4 trang, cần lưu hồ sơ trước"}
                   </small>
                 </section>

@@ -1,7 +1,12 @@
+import io
 import json
 import os
 from pathlib import Path
+import sys
+import tempfile
 import unittest
+
+from PIL import Image
 
 os.environ['CPA2_SERVICE_KEY'] = 'test-only-service-key'
 from fastapi.testclient import TestClient
@@ -126,6 +131,97 @@ class ApiTests(unittest.TestCase):
         self.assertEqual(proof['steps'][0]['atom'], result['claim'])
         self.assertGreater(len(proof['steps']), 20)
         self.assertFalse(proof['truncated'])
+
+
+def synthetic_pdf(pages, resolution=130.0):
+    """PDF ảnh từ trang bảng điểm GIẢ LẬP (không dùng bảng điểm thật)."""
+    buffer = io.BytesIO()
+    pages[0].save(buffer, 'PDF', resolution=resolution, save_all=True, append_images=pages[1:], quality=95)
+    return buffer.getvalue()
+
+
+def synthetic_pages():
+    sys.path.insert(0, str(ROOT / 'CPA2_KhaoSat/w15_ocr'))
+    from render_transcript import render
+    return render(SAMPLE)
+
+
+def has_tesseract():
+    sys.path.insert(0, str(ROOT / 'CPA2_KhaoSat/w15_ocr'))
+    try:
+        import ocr_transcript  # noqa: F401  (cấu hình đường dẫn Tesseract)
+        import pytesseract
+        pytesseract.get_tesseract_version()
+        return True
+    except Exception:
+        return False
+
+
+class PdfTranscriptTests(unittest.TestCase):
+    def setUp(self):
+        self.client = TestClient(app)
+
+    def post(self, *files):
+        return self.client.post('/v1/ocr', files=[('files', f) for f in files], headers=HEADERS)
+
+    def test_pdf_pages_render_pixel_exact_at_transcript_resolution(self):
+        from cpa2_api.worker import pdf_pages
+        pages = synthetic_pages()
+        buffer = io.BytesIO()   # chế độ P: Pillow lưu không nén mất dữ liệu (L thì thành JPEG)
+        pages[0].convert('P').save(buffer, 'PDF', resolution=130.0, save_all=True,
+                                   append_images=[page.convert('P') for page in pages[1:]])
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / 'transcript.pdf'
+            path.write_bytes(buffer.getvalue())
+            images = pdf_pages(path)
+        self.assertEqual(len(images), len(pages))
+        for page, image in zip(pages, images):
+            self.assertEqual(image.size, (1105, 1430))
+            self.assertEqual(image.convert('L').tobytes(), page.convert('L').tobytes())
+
+    def test_pdf_with_more_than_four_pages_is_rejected(self):
+        page = Image.new('L', (1105, 1430), 255)
+        response = self.post(('bang_diem.pdf', synthetic_pdf([page] * 5), 'application/pdf'))
+        self.assertEqual(response.status_code, 422, response.text)
+
+    def test_fake_pdf_is_rejected(self):
+        response = self.post(('bang_diem.pdf', b'%PDF-1.7\nkhong phai pdf', 'application/pdf'))
+        self.assertEqual(response.status_code, 422, response.text)
+
+    def test_oversized_pdf_page_is_rejected_before_rendering(self):
+        # trang 200 × 200 inch → 26 000 × 26 000 điểm ảnh ở 130 DPI
+        page = Image.new('L', (20, 20), 255)
+        response = self.post(('bang_diem.pdf', synthetic_pdf([page], resolution=0.1), 'application/pdf'))
+        self.assertEqual(response.status_code, 422, response.text)
+
+    def test_pdf_cannot_be_mixed_with_images(self):
+        page = Image.new('L', (1105, 1430), 255)
+        png = io.BytesIO()
+        page.save(png, 'PNG')
+        response = self.post(('bang_diem.pdf', synthetic_pdf([page]), 'application/pdf'),
+                             ('page.png', png.getvalue(), 'image/png'))
+        self.assertEqual(response.status_code, 422, response.text)
+
+    def test_encrypted_pdf_is_rejected(self):
+        try:
+            from pypdf import PdfReader, PdfWriter
+        except ImportError:
+            self.skipTest('cần pypdf để dựng PDF có mật khẩu')
+        writer = PdfWriter(clone_from=PdfReader(io.BytesIO(synthetic_pdf([Image.new('L', (1105, 1430), 255)]))))
+        writer.encrypt('mat-khau')
+        buffer = io.BytesIO()
+        writer.write(buffer)
+        response = self.post(('bang_diem.pdf', buffer.getvalue(), 'application/pdf'))
+        self.assertEqual(response.status_code, 422, response.text)
+
+    @unittest.skipUnless(has_tesseract(), 'cần Tesseract (vie) để chạy OCR')
+    def test_pdf_upload_reaches_ocr_and_requires_review(self):
+        # Độ chính xác OCR với ảnh nén JPEG trong PDF là việc của w15 (Viec_ton_dong C19), không kiểm ở đây
+        response = self.post(('bang_diem.pdf', synthetic_pdf(synthetic_pages()), 'application/pdf'))
+        self.assertEqual(response.status_code, 200, response.text)
+        self.assertTrue(response.json()['needs_review'])
+        self.assertTrue(response.json()['profile']['meta']['ocr_pending'])
+        self.assertGreater(response.json()['report']['tong_dong'], 0)
 
 
 if __name__ == '__main__':

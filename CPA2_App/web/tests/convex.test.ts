@@ -116,6 +116,28 @@ describe("CPA² data ownership and history", () => {
     ).rejects.toThrow("bị xóa");
   });
 
+  test("a PDF transcript is accepted only on its own", async () => {
+    const t = createTest();
+    await t.mutation(internal.cpa2.persistProfile, { owner: "alice", profile });
+    const [pdf, png, other] = await t.run(async (ctx) => [
+      await ctx.storage.store(
+        new Blob(["%PDF-1.7"], { type: "application/pdf" }),
+      ),
+      await ctx.storage.store(new Blob(["png"], { type: "image/png" })),
+      await ctx.storage.store(new Blob(["x"], { type: "text/plain" })),
+    ]);
+    const alice = t.withIdentity({ subject: "alice" });
+    await expect(
+      alice.mutation(api.cpa2.startOcr, { storageIds: [pdf, png] }),
+    ).rejects.toThrow("một file PDF");
+    await expect(
+      alice.mutation(api.cpa2.startOcr, { storageIds: [other] }),
+    ).rejects.toThrow("PDF");
+    await expect(
+      alice.mutation(api.cpa2.startOcr, { storageIds: [pdf] }),
+    ).resolves.toBeTruthy();
+  });
+
   test("per-user request limits are enforced independently", async () => {
     const t = createTest();
     for (let index = 0; index < 10; index++)

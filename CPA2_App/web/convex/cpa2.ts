@@ -267,16 +267,22 @@ export const startOcr = mutation({
       storageIds.length > 4 ||
       new Set(storageIds).size !== storageIds.length
     )
-      throw new ConvexError("Chọn từ 1 đến 4 ảnh khác nhau theo thứ tự trang.");
+      throw new ConvexError(
+        "Chọn 1 file PDF hoặc từ 1 đến 4 ảnh khác nhau theo thứ tự trang.",
+      );
     let size = 0;
     for (const storageId of storageIds) {
       const file = await ctx.db.system.get(storageId);
       if (
         !file ||
         file.size > 10 * 1024 * 1024 ||
-        !["image/png", "image/jpeg"].includes(file.contentType ?? "")
+        !["image/png", "image/jpeg", "application/pdf"].includes(
+          file.contentType ?? "",
+        )
       )
-        throw new ConvexError("Chỉ nhận ảnh PNG/JPEG tối đa 10 MB.");
+        throw new ConvexError("Chỉ nhận ảnh PNG/JPEG hoặc PDF tối đa 10 MB.");
+      if (file.contentType === "application/pdf" && storageIds.length !== 1)
+        throw new ConvexError("Chỉ tải một file PDF, không kèm ảnh.");
       size += file.size;
       const existing = await ctx.db
         .query("files")
@@ -345,7 +351,14 @@ export const processOcr = internalAction({
         if (!url) throw new Error("Không tìm thấy ảnh.");
         const file = await fetch(url, { signal: AbortSignal.timeout(15000) });
         if (!file.ok) throw new Error("Không đọc được ảnh.");
-        form.append("files", await file.blob(), `page-${index}.png`);
+        const blob = await file.blob();
+        form.append(
+          "files",
+          blob,
+          blob.type === "application/pdf"
+            ? "transcript.pdf"
+            : `page-${index}.png`,
+        );
       }
       const result = await python("/v1/ocr", form, 130000);
       await ctx.runMutation(anyApi.cpa2.finishOcr, {
