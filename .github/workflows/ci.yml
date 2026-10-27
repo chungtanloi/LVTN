@@ -37,7 +37,8 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y --no-install-recommends tesseract-ocr tesseract-ocr-vie tesseract-ocr-eng fonts-liberation
       - name: Thư viện Python
-        run: pip install clingo==5.8.2 jsonschema==4.26.0 openpyxl==3.1.5 numpy==2.3.5 pillow==13.0.0 pytesseract==0.3.13
+        # ortools: P2 của w6 (CP-SAT đối chiếu); thiếu thì validate_curriculum thoát 2 ("bỏ qua")
+        run: pip install clingo==5.8.2 ortools==9.15.6755 jsonschema==4.26.0 openpyxl==3.1.5 numpy==2.3.5 pillow==13.0.0 pytesseract==0.3.13
       - name: validate_* (tất cả phải in KẾT LUẬN ĐẠT, exit 0)
         working-directory: CPA2_KhaoSat
         run: |
