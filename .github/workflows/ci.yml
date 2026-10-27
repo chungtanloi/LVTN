@@ -1,0 +1,117 @@
+# CI/CD CPA²: kiểm KB nghiên cứu (validate_* mọi tuần), API Python, web (Convex + Next) — rồi mới deploy.
+# Deploy chỉ chạy khi push lên nhánh triển khai VÀ có secret tương ứng (không có secret → bỏ qua, không lỗi).
+#   CONVEX_DEPLOY_KEY        : khoá deploy production của Convex (dashboard → Settings → Deploy key)
+#   RENDER_DEPLOY_HOOK_URL   : Deploy Hook của dịch vụ cpa2-api trên Render (Settings → Deploy Hook)
+# Vercel tự build từ Git nếu project đã nối repo; không cần bước riêng ở đây.
+name: ci
+
+on:
+  push:
+    branches: [master, codex/cpa2-web-deploy]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  PYTHONIOENCODING: utf-8
+  OMP_THREAD_LIMIT: "1"
+
+jobs:
+  research-kb:
+    name: KB nghiên cứu (validate_* mọi tuần)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Tesseract (vie, eng) + font Liberation (cùng số đo Times)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends tesseract-ocr tesseract-ocr-vie tesseract-ocr-eng fonts-liberation
+      - name: Thư viện Python
+        run: pip install clingo==5.8.2 jsonschema==4.26.0 openpyxl==3.1.5 numpy==2.3.5 pillow==13.0.0 pytesseract==0.3.13
+      - name: validate_* (tất cả phải in KẾT LUẬN ĐẠT, exit 0)
+        working-directory: CPA2_KhaoSat
+        run: |
+          status=0
+          for f in w*/validate_*.py; do
+            echo "::group::$f"
+            (cd "$(dirname "$f")" && python "$(basename "$f")") || { echo "::error file=CPA2_KhaoSat/$f::$f thất bại"; status=1; }
+            echo "::endgroup::"
+          done
+          exit $status
+
+  api:
+    name: API Python
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Tesseract (vie, eng) + font Liberation
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends tesseract-ocr tesseract-ocr-vie tesseract-ocr-eng fonts-liberation
+      - name: Thư viện (lockfile)
+        working-directory: CPA2_App/api
+        run: pip install -r requirements-dev.txt
+      - name: unittest
+        working-directory: CPA2_App/api
+        run: python -m unittest discover -s tests -v
+
+  web:
+    name: Web (typecheck + Convex test)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: CPA2_App/web
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+      - run: corepack enable
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm typecheck
+      - run: pnpm test
+
+  deploy:
+    name: Deploy (Convex + Render)
+    needs: [research-kb, api, web]
+    if: github.event_name == 'push' && github.ref == 'refs/heads/codex/cpa2-web-deploy'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    environment: production
+    env:
+      CONVEX_DEPLOY_KEY: ${{ secrets.CONVEX_DEPLOY_KEY }}
+      RENDER_DEPLOY_HOOK_URL: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        if: env.CONVEX_DEPLOY_KEY != ''
+        with:
+          node-version: "24"
+      - name: Convex deploy
+        if: env.CONVEX_DEPLOY_KEY != ''
+        working-directory: CPA2_App/web
+        run: |
+          corepack enable
+          pnpm install --frozen-lockfile
+          pnpm convex deploy -y
+      - name: Render deploy hook
+        if: env.RENDER_DEPLOY_HOOK_URL != ''
+        run: curl -fsS -X POST "$RENDER_DEPLOY_HOOK_URL" -o /dev/null
+      - name: Thiếu secret
+        if: env.CONVEX_DEPLOY_KEY == '' || env.RENDER_DEPLOY_HOOK_URL == ''
+        run: echo "::warning::Thiếu CONVEX_DEPLOY_KEY hoặc RENDER_DEPLOY_HOOK_URL — bước deploy tương ứng đã bỏ qua."
