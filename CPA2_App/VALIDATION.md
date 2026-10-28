@@ -1,6 +1,20 @@
 # Trạng thái triển khai CPA² — cập nhật 28/10/2026
 
-## PDF bảng điểm và cải thiện OCR — 28/10/2026 (cục bộ, chưa phát hành)
+## Đã phát hành PDF/OCR — 28/10/2026
+
+Website production: https://cpa2-web.vercel.app. Mã phát hành `69be40fe79aa261d6f0bf241c7d04adbbb45fc27`, nhánh `codex/cpa2-web-deploy`. Render deploy `dep-dbgr2vei0phs738p9t5g` live; Vercel `dpl_5S6xnPnYFBr6rQco6rGEJbgDBiD7` READY và gắn domain chính. Convex production `exciting-cheetah-606` đã cập nhật. Health và kết quả OCR xác nhận KB `6b0e182eb2c27f5c`.
+
+Lượt cloud đầu trên mã `b9cd336` trả HTTP 504 vì PDF 4 trang vượt giới hạn 120 giây; không tính là đạt. Bản sửa tăng riêng thời hạn OCR lên 240 giây, thời gian chờ Convex/API demo lên 250 giây; giới hạn 4 trang, 10 MB/tệp, tổng 20 MB và chặn dữ kiện chưa chắc giữ nguyên. Không nâng gói Render hoặc thay nguồn/quy tắc học vụ.
+
+Đã kiểm tra trên trình duyệt website công khai bằng hai tài khoản Clerk giả lập: đăng nhập, tư vấn và chứng chỉ, lịch sử sau reload, sửa/lưu hồ sơ có consent, chọn PDF tổng hợp 4 trang → Convex Storage → scheduled action → Render → bản nháp OCR hiển thị. Tác vụ hoàn tất sau khoảng 142,7 giây tính từ lúc đăng ký đến log HTTP 200; nhận diện 51 dòng và đưa 30 điểm học phần vào hồ sơ, cả 30 khớp gold tổng hợp. Các dòng còn lại vẫn cần rà soát; đây là một ca kiểm thử, không phải độ đúng 100% cho mọi bảng điểm. `needs_review` và `ocr_pending` đều true. Đã xem ảnh `web/.vercel/cloud-pdf-review.png` để xác nhận giao diện thực tế.
+
+Browser còn kiểm tra tra cứu CT177/CT101, desktop/mobile, không có lỗi JavaScript. Vercel không ghi nhận runtime error trong cửa sổ 15 phút sau phát hành; chưa cấu hình log drain riêng. Đã xóa dữ liệu Convex của tài khoản kiểm thử, kiểm tra state rỗng và xóa cả hai tài khoản Clerk. Chỉ PDF tổng hợp được tải lên cloud; PDF thật do người dùng cung cấp chỉ được xử lý cục bộ.
+
+Kiểm tra nhánh đã ghép giữ bản sửa C19: API 29 đạt / 1 bỏ qua (thiếu pypdf cho fixture PDF có mật khẩu); Convex 9/9; TypeScript và build đạt; runtime đóng gói đạt; hồi quy OCR đầy đủ trên bản sao độc lập đạt trong 383,5 giây (833/834 fact được chấp nhận đúng, còn một lỗi điểm ở ảnh nghiêng, độ phủ kết luận 1/18). Log tại `C:/Users/ASUSPC~1/AppData/Local/Temp/cpa2-deploy-ocr-regression-tg9tdcg4/ocr.log`. Sau thay thời hạn, 5 kiểm thử biên PDF, Convex 9/9 và TypeScript tiếp tục đạt. GitHub Actions cho mã 69be40f: API và web đã success; job nghiên cứu toàn bộ tuần còn chạy lúc ghi nhận này, không báo toàn bộ CI đã hoàn tất.
+
+Người dùng vào **Hồ sơ & bảng điểm → Nhận diện PDF / ảnh (OCR)** để tải tệp. Render free có thể cần vài phút; kết quả vẫn là bản nháp cần rà soát. Chưa tự đồng bộ điểm từ cổng trường. Các giới hạn nghiệm thu RAG ở dưới giữ nguyên.
+
+## PDF bảng điểm và cải thiện OCR — kiểm tra cục bộ trước phát hành 28/10/2026
 
 Đã thêm PDF vào giao diện tải bảng điểm, kiểm tra Convex Storage và API OCR. PDF được nhận diện bằng chữ ký tệp, dựng ảnh bằng pypdfium2 5.9.0 trong tiến trình worker có thời hạn 120 giây. Tổng PDF và ảnh không quá 4 trang; mỗi tệp tối đa 10 MB, tổng 20 MB; trang PDF dựng rộng 2448 px, tối đa 20 triệu điểm ảnh. PDF hỏng, cần mật khẩu hoặc quá giới hạn bị từ chối. Kiểm tra dung lượng và ảnh hiện có được giữ nguyên.
 
@@ -17,7 +31,7 @@ Kiểm tra đã hoàn tất:
 - Hồi quy OCR đầy đủ trên bản sao tạm đạt: 833/834 fact được chấp nhận đúng (99,88%, cổng ≥99%). Vẫn có một sai lệch CT179 ở ảnh nghiêng tổng hợp (7,3 thay vì 7,5); không coi đạt ngưỡng là hoàn toàn không có lỗi. Chỉ 1/18 ca có kết luận xác định, còn lại UNKNOWN. Không thay báo cáo/gold khảo sát gốc. Log: `C:/Users/ASUSPC~1/AppData/Local/Temp/cpa2-pdf-ocr-regression-rx4dlfcs/ocr.log`.
 - OSV: 30 gói trong môi trường Python, không ghi nhận advisory tại lượt kiểm tra.
 
-Chưa triển khai thay đổi này lên Vercel/Convex/Render; chưa thử PDF trên cloud hoặc kiểm tra thao tác chọn PDF bằng trình duyệt. RAG giữ nguyên, chưa đạt các điều kiện nghiệm thu nghiên cứu ở mục dưới.
+Các số ở mục này ghi nhận trước phát hành. Kết quả cloud và kiểm tra trình duyệt sau phát hành nằm ở mục đầu; RAG giữ nguyên và chưa đạt các điều kiện nghiệm thu nghiên cứu ở mục dưới.
 
 ## Rà soát nguồn và chứng chỉ — 26/10/2026
 
