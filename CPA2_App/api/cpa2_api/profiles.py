@@ -94,4 +94,7 @@ def kb_version() -> str:
         path = KB / relative
         digest.update(path.relative_to(KB).as_posix().encode())
         digest.update(path.read_text(encoding='utf-8').encode('utf-8'))
+    for name in ('ocr_review.py', 'ocr_input.py', 'worker.py'):
+        digest.update(('api/' + name).encode())
+        digest.update(Path(__file__).with_name(name).read_text(encoding='utf-8').encode('utf-8'))
     return digest.hexdigest()[:16]

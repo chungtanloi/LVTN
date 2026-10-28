@@ -85,6 +85,16 @@ export type OcrResult = {
   };
   needs_review: boolean;
 };
+export type OcrReviewChange = {
+  action: "approve" | "add" | "exclude" | "semester";
+  row_id?: string;
+  code?: string;
+  credits?: number;
+  thang10?: number;
+  letter?: string;
+  semester_index?: number;
+  totals?: Record<string, number>;
+};
 export type Tab =
   | "overview"
   | "transcript"

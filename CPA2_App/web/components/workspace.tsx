@@ -41,11 +41,13 @@ import type {
   Grade,
   Message,
   OcrResult,
+  OcrReviewChange,
   Profile,
   Recommendation,
   Tab,
 } from "@/lib/types";
-import { transcriptRows } from "@/lib/transcript-review";
+import { transcriptRows, ocrSemesters } from "@/lib/transcript-review";
+import { OcrRowEditor, OcrSemesterEditor } from "./ocr-review-editor";
 
 type Data = {
   profile: Profile | null;
@@ -64,6 +66,7 @@ type Operations = {
   ) => Promise<{ passages: Record<string, unknown>[] }>;
   recommend: (semester: number) => Promise<Recommendation>;
   ocr: (files: File[], consent: boolean) => Promise<OcrResult | null>;
+  reviewOcr: (profile: Profile, change: OcrReviewChange, consent: boolean) => Promise<OcrResult>;
   erase: () => Promise<void>;
 };
 const nav: { id: Tab; label: string; icon: typeof LayoutDashboard }[] = [
@@ -294,6 +297,7 @@ function DemoWorkspace() {
       files.forEach((file) => form.append("files", file));
       return await demoRequest("ocr", form);
     },
+    reviewOcr: (profile, change) => demoRequest("review", { profile, ...change }),
     erase: async () =>
       setData((current) => ({
         ...current,
@@ -317,6 +321,7 @@ function DemoWorkspace() {
 function CloudWorkspace() {
   const state = useQuery(anyApi.cpa2.state, {});
   const configure = useAction(anyApi.cpa2.configuration);
+  const reviewOcr = useAction(anyApi.cpa2.reviewOcr);
   const save = useAction(anyApi.cpa2.saveProfile),
     ask = useAction(anyApi.cpa2.advise),
     lookup = useAction(anyApi.cpa2.lookup),
@@ -343,9 +348,11 @@ function CloudWorkspace() {
     void initialize();
   }, [initialize]);
   if (state === undefined) return <Loading />;
-  const upload = state.uploads.find(
-    (item: { _id: string }) => item._id === ocrId,
-  );
+  const latestUpload = state.uploads[0];
+  const upload = ocrId
+    ? state.uploads.find((item: { _id: string }) => item._id === ocrId)
+    : latestUpload && Math.max(latestUpload.createdAt,
+      Number(latestUpload.result?.profile?.meta?.ocr_review_updated_at) || 0) > state.profileUpdatedAt ? latestUpload : undefined;
   const data: Data = {
     profile: state.profile,
     revision: state.revision,
@@ -361,6 +368,8 @@ function CloudWorkspace() {
     ask: async (question) => await ask({ question }),
     lookup: async (question) => await lookup({ question }),
     recommend: async (semester) => await recommend({ semester }),
+    reviewOcr: (profile, change, consent) => reviewOcr({ profile, change, consent,
+      uploadId: upload?._id ?? profile.meta?.ocr_upload_id }),
     ocr: async (files, consent) => {
       if (
         !files.length ||
@@ -400,6 +409,8 @@ function CloudWorkspace() {
 }
 
 function message(error: unknown) {
+  if (error && typeof error === "object" && "data" in error && typeof error.data === "string")
+    return error.data;
   return error instanceof Error
     ? error.message
     : "Có lỗi xảy ra. Vui lòng thử lại.";
@@ -465,6 +476,7 @@ function Shell({
   const [filter, setFilter] = useState(""),
     [courseCode, setCourseCode] = useState(""),
     [score, setScore] = useState("");
+  const [courseSemester, setCourseSemester] = useState("");
   const [semester, setSemester] = useState(1),
     [plan, setPlan] = useState<Recommendation | null>(null);
   const [sourceQuestion, setSourceQuestion] = useState(""),
@@ -525,6 +537,21 @@ function Shell({
   function updateDraft(next: Profile) {
     setDraft(next);
     setRaw(pretty(next));
+  }
+  async function applyOcrReview(change: OcrReviewChange) {
+    if (busy) return;
+    setBusy("review"); setError("");
+    try {
+      if (!consent) throw new Error("Hãy đồng ý xử lý dữ liệu trước khi duyệt.");
+      const result = await ops.reviewOcr(draft, change, consent);
+      setOcrResult(result);
+      updateDraft(result.profile);
+      setReviewed(false);
+      setNotice(result.needs_review
+        ? "Đã lưu rà soát và kiểm tra lại. Các cảnh báo còn lại được hiển thị bên dưới."
+        : "Đã kiểm tra lại, không còn lỗi OCR. Đối chiếu lần cuối rồi bấm Lưu hồ sơ.");
+    } catch (e) { setError(message(e)); throw new Error(message(e)); }
+    finally { setBusy(""); }
   }
   async function save() {
     await run("save", async () => {
@@ -592,6 +619,8 @@ function Shell({
     draft.grades,
     ocrResult?.report ?? draft.meta?.ocr_report,
   );
+  const reviewSemesters = ocrSemesters(ocrResult?.report ?? draft.meta?.ocr_report);
+  const hasReviewContext = reviewSemesters.length > 0;
   const reviewCount = allTranscriptRows.filter((row) => row.needsReview).length;
   const shownGrades = allTranscriptRows.filter((row) =>
     `${row.code ?? ""} ${courseMap.get(row.code ?? "")?.ten ?? ""} ${row.semester} ${row.raw}`
@@ -1286,7 +1315,7 @@ function Shell({
               )}
               {ocrResult && (
                 <section className="panel ocr-review">
-                  <h2>Bản nháp OCR — cần rà soát</h2>
+                  <h2>{ocrResult.needs_review ? "Bản nháp OCR — cần rà soát" : "Bảng điểm đã kiểm tra — chờ lưu"}</h2>
                   <p>
                     Đã nhận diện {ocrResult.report.tong_dong ?? "—"} dòng học phần;
                     {" "}{Object.keys(ocrResult.profile.grades).length} môn đã qua
@@ -1309,6 +1338,8 @@ function Shell({
                     <summary>Xem báo cáo OCR</summary>
                     <pre>{pretty(ocrResult.report)}</pre>
                   </details>
+                  {hasReviewContext ? <OcrSemesterEditor semesters={reviewSemesters} busy={!!busy} onReview={applyOcrReview} />
+                    : <p>Bản OCR cũ thiếu dữ liệu kiểm tra lại. Hãy OCR lại PDF một lần để sửa và duyệt từng dòng.</p>}
                   <label className="checkbox">
                     <input
                       type="checkbox"
@@ -1318,8 +1349,9 @@ function Shell({
                     Tôi đã đối chiếu các dữ kiện được nhận với bảng điểm gốc.
                   </label>
                   <p className="muted small">
-                    Nếu còn dòng thiếu hoặc chưa chắc, hãy nhập hồ sơ đầy đủ thủ
-                    công. Xác nhận này không tự xác minh các dòng còn thiếu.
+                    Mở “Sửa & duyệt” tại từng dòng, bổ sung môn thiếu vào đúng học kỳ
+                    và đối chiếu các số tổng. Khi hết cảnh báo, đối chiếu lần cuối
+                    rồi lưu hồ sơ để dùng cho tư vấn.
                   </p>
                 </section>
               )}
@@ -1387,6 +1419,13 @@ function Shell({
                       }
                       const course = courseMap.get(courseCode)!;
                       const thang10 = Math.round(Number(score) * 10);
+                      if (hasReviewContext) {
+                        if (courseSemester === "") { setError("Chọn học kỳ của môn cần bổ sung."); return; }
+                        void applyOcrReview({ action: "add", semester_index: Number(courseSemester),
+                          code: courseCode, credits: course.tin_chi, thang10, letter: gradeLetter({ code: courseCode, thang10 }) })
+                          .catch(() => {});
+                        setScore(""); setCourseCode(""); return;
+                      }
                       const grade = {
                         code: courseCode,
                         credits: course.tin_chi,
@@ -1408,6 +1447,11 @@ function Shell({
                   >
                     <Plus size={16} /> Thêm
                   </button>
+                  {hasReviewContext && <select aria-label="Học kỳ của môn bổ sung" value={courseSemester}
+                    onChange={(e) => setCourseSemester(e.target.value)}>
+                    <option value="">Chọn học kỳ bổ sung…</option>
+                    {reviewSemesters.map((s) => <option key={s.index} value={s.index}>{s.name}</option>)}
+                  </select>}
                 </div>
                 <div className="table-scroll">
                   <table>
@@ -1435,6 +1479,7 @@ function Shell({
                           </td>
                           <td>
                             {courseMap.get(code)?.ten ?? "Chưa ánh xạ CTĐT"}
+                            {row.reviewed && <span className="ocr-approved"><Check size={14} /> Đã duyệt dòng</span>}
                             {row.needsReview && (
                               <details className="ocr-row-review">
                                 <summary><AlertTriangle size={14} aria-hidden="true" /> Cần xem lại</summary>
@@ -1444,10 +1489,12 @@ function Shell({
                                 <p className="muted small">Giá trị OCR tạm thời; cần đối chiếu bảng điểm gốc.</p>
                               </details>
                             )}
+                            <OcrRowEditor row={row} courses={data.courses} busy={!!busy}
+                              available={hasReviewContext} onReview={applyOcrReview} />
                           </td>
                           <td>{grade.credits ?? "—"}</td>
                           <td>
-                            {!row.stored ? (
+                            {!row.stored || hasReviewContext ? (
                               <span aria-label={`Điểm OCR ${code || "chưa rõ mã"}`}>
                                 {grade.thang10 == null ? "—" : grade.thang10 / 10}
                               </span>
@@ -1496,7 +1543,7 @@ function Shell({
                             </span>
                           </td>
                           <td>
-                            {row.stored && (
+                            {row.stored && !hasReviewContext && (
                             <button
                               className="icon-button danger-hover"
                               aria-label={`Xóa ${code}`}

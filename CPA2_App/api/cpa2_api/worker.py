@@ -12,6 +12,10 @@ def execute(operation, payload):
     from grounded_answer import tra_loi, tra_cuu
     if operation == 'lookup':
         return {'passages': tra_cuu(payload['question'])}
+    if operation == 'review_ocr':
+        sys.path.insert(0, str(KB / 'w15_ocr'))
+        from .ocr_review import review
+        return review(payload)
     if operation == 'ocr':
         sys.path.insert(0, str(KB / 'w15_ocr'))
         from ocr_transcript import doc_bang_diem, sang_ho_so
@@ -60,5 +64,6 @@ if __name__ == '__main__':
         print(json.dumps({'ok': True, 'result': result}, ensure_ascii=False))
     except Exception as error:
         # Never include student data in exception messages returned to logs.
-        print(json.dumps({'ok': False, 'error_type': type(error).__name__}))
+        print(json.dumps({'ok': False, 'error_type': type(error).__name__,
+                          'error_code': error.code if type(error).__name__ == 'OcrReviewError' else None}))
         sys.exit(1)

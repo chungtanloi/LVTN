@@ -49,3 +49,12 @@ test("invalid imported report values cannot crash the table or become scores", (
   expect(transcriptRows({}, { dong_can_ra_soat: [null, "bad", { thang10: 900, ly_do: 7 }] })[0].grade.thang10).toBeNull();
   expect(transcriptRows({}, { dong_can_ra_soat: "bad" })).toEqual([]);
 });
+
+test("approved and pending rows retain stable IDs for server review", () => {
+  const rows = transcriptRows({ CT101: { code: "CT101", thang10: 97, reviewed_by_user: true } }, {
+    tai_lieu_ocr: { hoc_ky: [{ ten: "HK1", dong: [{ ma: "CT101", thop: 9.7, row_id: "kept-id" }] }] },
+    dong_can_ra_soat: [{ ma: "CT100", id: "other-id", da_duyet: true }],
+  });
+  expect(rows.find((r) => r.code === "CT101")?.reviewId).toBe("kept-id");
+  expect(rows.find((r) => r.code === "CT100")?.reviewed).toBe(true);
+});

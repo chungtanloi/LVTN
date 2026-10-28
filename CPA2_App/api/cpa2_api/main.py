@@ -8,6 +8,7 @@ import sys
 import tempfile
 import warnings
 from typing import Annotated
+from typing import Literal
 
 from fastapi import Depends, FastAPI, File, HTTPException, UploadFile
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
@@ -55,6 +56,17 @@ class ProfileRequest(BaseModel):
     profile: dict
 
 
+class OcrReviewRequest(ProfileRequest):
+    action: Literal['approve', 'add', 'exclude', 'semester']
+    row_id: str | None = Field(default=None, max_length=80)
+    code: str | None = Field(default=None, max_length=20)
+    credits: int | None = Field(default=None, strict=True, ge=1, le=15)
+    thang10: int | None = Field(default=None, strict=True, ge=0, le=100)
+    letter: str | None = Field(default=None, max_length=2)
+    semester_index: int | None = Field(default=None, strict=True, ge=0, le=29)
+    totals: dict | None = None
+
+
 class AdviceRequest(ProfileRequest):
     question: str = Field(min_length=1, max_length=2000)
 
@@ -95,6 +107,19 @@ async def run(operation, payload, timeout=30):
         except (ValueError, UnicodeError):
             raise HTTPException(502, 'Dịch vụ suy luận trả dữ liệu không hợp lệ.') from None
         if not message.get('ok'):
+            if message.get('error_type') == 'OcrReviewError':
+                reasons = {
+                    'OCR_REUPLOAD_REQUIRED': 'Báo cáo OCR cũ chưa có dữ liệu để kiểm tra lại. Hãy OCR lại PDF một lần.',
+                    'BAD_CODE': 'Chọn mã học phần thuộc CTĐT CNTT K49.',
+                    'CREDITS_MISMATCH': 'Tín chỉ chưa khớp học phần trong CTĐT.',
+                    'BAD_SCORE': 'Điểm phải từ 0 đến 10, chính xác đến một chữ số thập phân.',
+                    'LETTER_MISMATCH': 'Điểm chữ chưa khớp điểm thang 10.',
+                    'OFFICIAL_CONFIRMATION_REQUIRED': 'Dòng miễn học cần chứng nhận hoặc xác nhận từ Phòng Đào tạo.',
+                    'UNKNOWN_ROW': 'Dòng OCR đã thay đổi. Hãy mở lại dòng cần sửa.',
+                    'UNKNOWN_SEMESTER': 'Chọn đúng học kỳ trên bảng điểm.',
+                    'BAD_TOTALS': 'Số tổng tín chỉ hoặc điểm trung bình học kỳ không hợp lệ.',
+                }
+                raise HTTPException(422, reasons.get(message.get('error_code'), 'Dữ liệu rà soát OCR không hợp lệ.'))
             if message.get('error_type') == 'OcrInputError':
                 raise HTTPException(422, 'PDF không hợp lệ, bị khóa hoặc vượt giới hạn tổng 4 trang / 20 triệu điểm ảnh mỗi trang.')
             raise HTTPException(502, 'Không thể hoàn tất xử lý. Hãy kiểm tra đầu vào hoặc môi trường OCR.')
@@ -127,6 +152,11 @@ def validate_profile(request: ProfileRequest):
 @app.post('/v1/advice', dependencies=[Depends(authorized)])
 async def advice(request: AdviceRequest):
     return await run('advice', {'question': request.question, 'profile': validate(request.profile)})
+
+
+@app.post('/v1/ocr/review', dependencies=[Depends(authorized)])
+async def review_ocr(request: OcrReviewRequest):
+    return await run('review_ocr', request.model_dump(), timeout=30)
 
 
 @app.post('/v1/lookup', dependencies=[Depends(authorized)])

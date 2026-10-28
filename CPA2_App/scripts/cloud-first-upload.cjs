@@ -58,6 +58,23 @@ const state = JSON.parse(fs.readFileSync(path.join(app, 'web/.vercel/cloud-qa.js
     await pendingRows.first().locator('summary').click();
     assert.equal(await pendingRows.first().locator('details').getAttribute('open'), '');
     console.log(`PASS review list: ${pendingCount} warning rows visible first, details open, provisional scores kept out of editable facts.`);
+    if (process.env.CPA2_CHECK_APPROVAL === '1') {
+      const code = await pendingRows.first().locator('td strong').innerText();
+      const sample = JSON.parse(fs.readFileSync(path.join(app, '../CPA2_KhaoSat/w7_student_facts/students/sv_lvtn.json'), 'utf8'));
+      const gold = sample.grades[code];
+      assert.ok(gold, 'The synthetic warning row must have known gold.');
+      const row = page.locator('tbody tr').filter({ has: page.locator('td strong', { hasText: new RegExp(`^${code}$`) }) });
+      await row.locator('.ocr-row-editor > summary').click();
+      await row.getByRole('spinbutton', { name: /^Tín chỉ rà soát/ }).fill(String(gold.credits));
+      await row.getByRole('spinbutton', { name: /^Điểm rà soát/ }).fill(String(gold.thang10 / 10));
+      await row.getByRole('combobox', { name: /^Điểm chữ rà soát/ }).selectOption(gold.letter);
+      await row.getByRole('button', { name: 'Duyệt dòng này', exact: true }).click();
+      await row.locator('.ocr-approved').waitFor({ timeout: 40000 });
+      await page.reload({ waitUntil: 'domcontentloaded', timeout: 45000 });
+      await page.getByRole('heading', { name: /Hồ sơ & bảng điểm/ }).waitFor({ timeout: 45000 });
+      await row.locator('.ocr-approved').waitFor({ timeout: 30000 });
+      console.log('PASS row approval: corrected values checked on server, approval survives reload.');
+    }
     await page.screenshot({ path: path.join(app, 'web/.vercel/cloud-first-upload.png'), fullPage: true });
     assert.deepEqual(errors, []);
     console.log('PASS first upload: PDF -> Convex -> OCR draft without saving a profile; no JavaScript errors.');

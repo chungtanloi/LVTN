@@ -171,7 +171,7 @@ def kiem_dong(d, ct, tau=None):
             elif chu_tu_diem(d["thop"]) != d["chu"]:
                 ly_do.append(f"điểm chữ {d['chu']} ≠ R-B02({d['thop']}) = {chu_tu_diem(d['thop'])}")
     conf = _conf_dong(d, so_chinh_xac=(ct.get(ma) or {}).get("dieu_kien") == "gdqp")
-    if conf < tau:
+    if conf < tau and not d.get('user_review'):
         ly_do.append(f"confidence {conf:.2f} < {tau}")
     return {"hop_le": not ly_do, "ly_do": ly_do, "conf": conf}
 
@@ -539,6 +539,8 @@ def sang_ho_so(doc, khai_bao=None, tau=None):
     kiem = [k for k in range(len(tl)) if tl[k] is not None and doc["hoc_ky"][k].get("tc_tich_luy") is not None]
 
     def gdtc_bi_che(i, d):
+        if d.get('user_review'):
+            return False
         sau = [k for k in kiem if k >= i]
         if _dieu_kien(d.get("ma"), ct) != "gdtc" or not sau:
             return False
@@ -622,6 +624,8 @@ def sang_ho_so(doc, khai_bao=None, tau=None):
                     g = {"code": ma, "credits": d["tc"], "thang10": round(d["thop"] * 10), "letter": d["chu"],
                          "status": "passed" if d["chu"] != "F" else "failed"}
                 g.update(confidence=round(kq["conf"], 3), ocr_raw=d.get("ocr_raw"))
+                if d.get('user_review'):
+                    g.update(reviewed_by_user=True, source='manual_review')
                 cu = grades.get(ma)
                 if cu is None or g.get("thang10", 0) > cu.get("thang10", 0):   # học lại: lấy điểm cao nhất (R-B13)
                     grades[ma] = g
@@ -650,6 +654,9 @@ def sang_ho_so(doc, khai_bao=None, tau=None):
         if not h["bb"] or m in grades or m in khong_chac or m in mien:
             continue
         for ma in list(grades):
+            observed = [d for hk in doc['hoc_ky'] for d in hk['dong'] if d.get('ma') == ma]
+            if observed and all(d.get('user_review') for d in observed):
+                continue
             if (ma != m and (not ct[ma]["bb"] or so_dong.get(ma, 0) > 1) and len(ma) == len(m) and sum(a != b for a, b in zip(m, ma)) == 1
                     and ct[ma]["tc"] == h["tc"]):
                 khong_chac += [x for x in (m, ma) if x not in khong_chac]
@@ -683,7 +690,8 @@ def sang_ho_so(doc, khai_bao=None, tau=None):
                 reasons.append('Mã học phần hoặc một lần học khác còn chưa chắc; cần đối chiếu bảng điểm gốc.')
             score = d.get('thop')
             bc['dong_can_ra_soat'].append({
-                'id': f'{hi + 1}:{ri + 1}', 'ma': ma, 'hoc_ky': hk['ten'],
+                'id': d.get('row_id', f'{hi + 1}:{ri + 1}'), 'ma': ma, 'hoc_ky': hk['ten'],
+                'da_duyet': bool(d.get('user_review')),
                 'tc': d.get('tc'), 'thang10': round(score * 10) if score is not None else None,
                 'diem_chu': 'M' if d.get('mien') else d.get('chu'),
                 'confidence': round(check['conf'], 3),
@@ -699,6 +707,7 @@ def sang_ho_so(doc, khai_bao=None, tau=None):
           "exemptions": [{"ma_hp": m, "chung_chi_ref": None, "quyet_dinh": True} for m in mien],
           "meta": {"nguon": "ocr", "tau": tau}}
     hs.update(khai_bao)
+    bc['tai_lieu_ocr'] = doc
     return hs, extra, bc
 
 

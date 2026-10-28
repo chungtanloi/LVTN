@@ -11,6 +11,7 @@ const paths: Record<string, string> = {
   lookup: "/v1/lookup",
   recommendations: "/v1/recommendations",
   ocr: "/v1/ocr",
+  review: "/v1/ocr/review",
 };
 const visits = new Map<string, { count: number; until: number }>();
 

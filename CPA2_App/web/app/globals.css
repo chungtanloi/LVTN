@@ -1252,6 +1252,21 @@ tr.ocr-pending-row > td:first-child { border-left: 3px solid #d7a13a; }
 .ocr-row-review p, .ocr-row-review ul { margin: 8px 0; font-size: 12px; }
 .ocr-row-review ul { padding-left: 18px; }
 .ocr-row-review pre { white-space: pre-wrap; overflow-wrap: anywhere; font-size: 11px; }
+.ocr-row-editor { margin-top: 8px; max-width: 56ch; white-space: normal; }
+.ocr-row-editor summary, .ocr-semester-editor > summary {
+  color: #176354; font-size: 12px; font-weight: 600; cursor: pointer;
+}
+.ocr-row-editor p, .ocr-semester-editor p { font-size: 12px; line-height: 1.6; margin: 10px 0; }
+.ocr-edit-fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin: 10px 0; }
+.ocr-edit-fields label { display: flex; flex-direction: column; gap: 4px; font-size: 12px; min-width: 0; }
+.ocr-edit-fields label:first-child { grid-column: 1 / -1; }
+.ocr-edit-fields input, .ocr-edit-fields select { width: 100%; min-width: 0; padding: 8px; }
+.ocr-edit-actions { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0; }
+.ocr-edit-actions .button { font-size: 12px; }
+.ocr-semester-editor { margin: 14px 0; }
+.ocr-semester-editor fieldset { border: 1px solid var(--line); border-radius: 8px; padding: 12px; margin: 12px 0; }
+.ocr-semester-editor legend { font-size: 12px; font-weight: 600; }
+.ocr-approved { display: inline-flex; align-items: center; gap: 3px; margin-left: 8px; color: #176354; font-size: 11px; }
 .chat-content {
   display: flex;
   flex-direction: column;

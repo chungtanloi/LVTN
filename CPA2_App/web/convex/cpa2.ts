@@ -45,6 +45,14 @@ async function python(path: string, body?: unknown, timeout = 35000) {
     );
   return result;
 }
+function hasOcrIssues(report: Record<string, unknown>) {
+  return ["khong_chac", "dong_an", "can_hoi", "hoc_ky_lech", "can_xac_nhan", "ngoai_ctdt", "khai_bao_loi", "dong_can_ra_soat"]
+    .some((key) => Array.isArray(report[key]) ? (report[key] as unknown[]).length > 0 : Boolean(report[key]));
+}
+function gradeValues(profile: any) {
+  return JSON.stringify(Object.entries(profile.grades ?? {}).sort(([a], [b]) => a.localeCompare(b))
+    .map(([code, grade]: [string, any]) => [code, grade.credits ?? null, grade.thang10 ?? null, grade.letter ?? null, grade.diem ?? null]));
+}
 
 export const state = query({
   args: {},
@@ -67,6 +75,7 @@ export const state = query({
     return {
       profile: profile?.profile ?? null,
       revision: profile?.revision ?? 0,
+      profileUpdatedAt: profile?.updatedAt ?? 0,
       messages: messages.map((m) => ({
         id: m._id,
         question: m.question,
@@ -150,9 +159,23 @@ export const saveProfile = action({
   handler: async (ctx, args) => {
     const owner = await user(ctx);
     if (!args.consent) throw new ConvexError("Cần đồng ý trước khi lưu hồ sơ.");
+    let profile = args.profile;
+    const uploadId = profile.meta?.nguon === "ocr" ? profile.meta?.ocr_upload_id : undefined;
+    if (uploadId) {
+      const upload = await ctx.runQuery(anyApi.cpa2.getUpload, { id: uploadId });
+      if (!upload || upload.owner !== owner || !upload.result)
+        throw new ConvexError("Không tìm thấy bản OCR của tài khoản này.");
+      const authoritative = upload.result;
+      if (hasOcrIssues(authoritative.report) || !profile.meta?.reviewed_by_user)
+        throw new ConvexError("Bảng điểm còn cảnh báo hoặc chưa được đối chiếu lần cuối.");
+      if (gradeValues(profile) !== gradeValues(authoritative.profile))
+        throw new ConvexError("Điểm đã thay đổi. Hãy dùng Sửa & duyệt trước khi lưu.");
+      profile = { ...profile, grades: authoritative.profile.grades, exemptions: authoritative.profile.exemptions,
+        meta: { ...authoritative.profile.meta, ocr_pending: false, reviewed_by_user: true } };
+    }
     const quotaId = await ctx.runMutation(anyApi.cpa2.takeQuota, { owner });
     const validated = await python("/v1/profiles/validate", {
-      profile: args.profile,
+      profile,
     });
     return await ctx.runMutation(anyApi.cpa2.persistProfile, {
       owner,
@@ -250,6 +273,42 @@ export const uploadUrl = mutation({
     return await ctx.storage.generateUploadUrl();
   },
 });
+export const saveOcrReview = internalMutation({
+  args: { id: v.id("uploads"), owner: v.string(), expected: v.number(), result: v.any() },
+  handler: async (ctx, { id, owner, expected, result }) => {
+    const upload = await ctx.db.get(id);
+    if (!upload || upload.owner !== owner) throw new ConvexError("Bản OCR đã bị xóa hoặc không thuộc tài khoản này.");
+    const revision = upload.result?.report?.tai_lieu_ocr?.lich_su_ra_soat?.length ?? 0;
+    if (revision !== expected) throw new ConvexError("Bản rà soát đã thay đổi. Hãy tải lại trang trước khi sửa tiếp.");
+    result.profile.meta = { ...result.profile.meta, ocr_review_updated_at: Date.now() };
+    await ctx.db.patch(id, { result, status: "done" });
+    return result;
+  },
+});
+export const reviewOcr = action({
+  args: { profile: v.any(), change: v.any(), consent: v.boolean(), uploadId: v.optional(v.id("uploads")) },
+  handler: async (ctx, { profile: suppliedProfile, change, consent, uploadId }) => {
+    const owner = await user(ctx);
+    if (!consent) throw new ConvexError("Cần đồng ý xử lý dữ liệu trước khi duyệt bảng điểm.");
+    let expected = 0;
+    let profile = suppliedProfile;
+    if (uploadId) {
+      const upload = await ctx.runQuery(anyApi.cpa2.getUpload, { id: uploadId });
+      if (!upload || upload.owner !== owner) throw new ConvexError("Không tìm thấy bản OCR của tài khoản này.");
+      expected = upload.result?.report?.tai_lieu_ocr?.lich_su_ra_soat?.length ?? 0;
+      if ((profile.meta?.ocr_report?.tai_lieu_ocr?.lich_su_ra_soat?.length ?? 0) !== expected)
+        throw new ConvexError("Bản rà soát đã thay đổi. Hãy tải lại trang trước khi sửa tiếp.");
+      profile = { ...profile, grades: upload.result.profile.grades, exemptions: upload.result.profile.exemptions,
+        meta: { ...upload.result.profile.meta, ocr_report: upload.result.report, nguon: "ocr", ocr_upload_id: uploadId } };
+    }
+    const result = await python("/v1/ocr/review", { ...change, profile });
+    if (uploadId) {
+      result.profile.meta = { ...result.profile.meta, ocr_upload_id: uploadId };
+      return await ctx.runMutation(anyApi.cpa2.saveOcrReview, { id: uploadId, owner, expected, result });
+    }
+    return result;
+  },
+});
 export const startOcr = mutation({
   args: {
     storageIds: v.array(v.id("_storage")),
@@ -335,6 +394,8 @@ export const finishOcr = internalMutation({
     error: v.optional(v.string()),
   },
   handler: async (ctx, { id, ...patch }) => {
+    if (patch.result?.profile)
+      patch.result.profile.meta = { ...patch.result.profile.meta, ocr_upload_id: id };
     if (await ctx.db.get(id)) await ctx.db.patch(id, patch);
   },
 });

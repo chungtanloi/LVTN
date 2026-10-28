@@ -19,6 +19,44 @@ afterEach(() => {
 });
 
 describe("CPA² data ownership and history", () => {
+  test("saving cannot hide unresolved OCR rows by changing client metadata", async () => {
+    const t = createTest();
+    const id = await t.run((ctx) => ctx.db.insert("uploads", {
+      owner: "alice", storageIds: [], status: "done", createdAt: Date.now(),
+      result: { profile, report: { dong_can_ra_soat: [{ ma: "CT101" }] }, needs_review: true },
+    }));
+    const fetch = vi.fn(); vi.stubGlobal("fetch", fetch);
+    await expect(t.withIdentity({ subject: "alice" }).action(api.cpa2.saveProfile, {
+      consent: true, profile: { ...profile, meta: { nguon: "ocr", ocr_upload_id: id,
+        reviewed_by_user: true, ocr_pending: false, ocr_report: {} } },
+    })).rejects.toThrow("cảnh báo");
+    expect(fetch).not.toHaveBeenCalled();
+  });
+  test("OCR review requires consent, isolates owners and prevents stale updates", async () => {
+    const t = createTest();
+    const original = { profile, report: { tai_lieu_ocr: { lich_su_ra_soat: [] } }, needs_review: true };
+    const id = await t.run((ctx) => ctx.db.insert("uploads", {
+      owner: "alice", storageIds: [], status: "done", result: original, createdAt: Date.now(),
+    }));
+    const alice = t.withIdentity({ subject: "alice" });
+    const bob = t.withIdentity({ subject: "bob" });
+    const fetch = vi.fn(); vi.stubGlobal("fetch", fetch);
+    await expect(alice.action(api.cpa2.reviewOcr, { profile, change: {}, consent: false, uploadId: id }))
+      .rejects.toThrow("đồng ý");
+    await expect(bob.action(api.cpa2.reviewOcr, { profile, change: {}, consent: true, uploadId: id }))
+      .rejects.toThrow("tài khoản");
+    expect(fetch).not.toHaveBeenCalled();
+    const result = { ...original, profile: { ...profile, meta: { ocr_upload_id: id } },
+      report: { tai_lieu_ocr: { lich_su_ra_soat: [{ action: "approve" }] } } };
+    await t.mutation(internal.cpa2.saveOcrReview, { id, owner: "alice", expected: 0, result });
+    await expect(t.mutation(internal.cpa2.saveOcrReview, { id, owner: "alice", expected: 0, result }))
+      .rejects.toThrow("thay đổi");
+    const saved = await t.query(internal.cpa2.getUpload, { id });
+    expect(saved!.result.profile.meta.ocr_review_updated_at).toBeTypeOf("number");
+    await alice.mutation(api.cpa2.eraseData, {});
+    await expect(t.mutation(internal.cpa2.saveOcrReview, { id, owner: "alice", expected: 1, result }))
+      .rejects.toThrow("bị xóa");
+  });
   test("new accounts can OCR their first PDF with consent and no saved profile", async () => {
     vi.useFakeTimers();
     vi.stubEnv("CPA2_API_URL", "https://python.test");
@@ -48,7 +86,7 @@ describe("CPA² data ownership and history", () => {
     await t.finishAllScheduledFunctions(vi.runAllTimers);
     const upload = await t.query(internal.cpa2.getUpload, { id });
     expect(upload!.status).toBe("done");
-    expect(upload!.result).toEqual(result);
+    expect(upload!.result).toEqual({ ...result, profile: { ...profile, meta: { ocr_upload_id: id } } });
     expect(fetch).toHaveBeenCalledTimes(2);
     expect((await alice.query(api.cpa2.state, {})).profile).toBeNull();
   });
