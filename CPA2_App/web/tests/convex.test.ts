@@ -19,12 +19,11 @@ afterEach(() => {
 });
 
 describe("CPA² data ownership and history", () => {
-  test("PDF uploads reach Python with their content type and keep review status", async () => {
+  test("new accounts can OCR their first PDF with consent and no saved profile", async () => {
     vi.useFakeTimers();
     vi.stubEnv("CPA2_API_URL", "https://python.test");
     vi.stubEnv("CPA2_SERVICE_KEY", "test-service-key");
     const t = createTest();
-    await t.mutation(internal.cpa2.persistProfile, { owner: "alice", profile });
     const pdf = new Blob(["%PDF-test"], { type: "application/pdf" });
     const storageId = await t.run(async (ctx) => ctx.storage.store(pdf));
     const result = { profile, report: {}, needs_review: true };
@@ -42,12 +41,32 @@ describe("CPA² data ownership and history", () => {
     });
     vi.stubGlobal("fetch", fetch);
     const alice = t.withIdentity({ subject: "alice" });
-    const id = await alice.mutation(api.cpa2.startOcr, { storageIds: [storageId] });
+    const id = await alice.mutation(api.cpa2.startOcr, {
+      storageIds: [storageId],
+      consent: true,
+    });
     await t.finishAllScheduledFunctions(vi.runAllTimers);
     const upload = await t.query(internal.cpa2.getUpload, { id });
     expect(upload!.status).toBe("done");
     expect(upload!.result).toEqual(result);
     expect(fetch).toHaveBeenCalledTimes(2);
+    expect((await alice.query(api.cpa2.state, {})).profile).toBeNull();
+  });
+
+  test("OCR requires consent for a new account and respects explicit refusal", async () => {
+    const t = createTest();
+    const storageId = await t.run((ctx) => ctx.storage.store(
+      new Blob(["%PDF-test"], { type: "application/pdf" }),
+    ));
+    const alice = t.withIdentity({ subject: "alice" });
+    for (const consent of [undefined, false]) {
+      await expect(alice.mutation(api.cpa2.startOcr, { storageIds: [storageId], consent }))
+        .rejects.toThrow("đồng ý");
+    }
+    expect((await alice.query(api.cpa2.state, {})).uploads).toHaveLength(0);
+    await t.mutation(internal.cpa2.persistProfile, { owner: "alice", profile });
+    await expect(alice.mutation(api.cpa2.startOcr, { storageIds: [storageId], consent: false }))
+      .rejects.toThrow("đồng ý");
   });
 
 

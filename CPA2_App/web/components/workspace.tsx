@@ -378,7 +378,7 @@ function CloudWorkspace() {
         const { storageId } = await response.json();
         storageIds.push(storageId);
       }
-      setOcrId(await startOcr({ storageIds }));
+      setOcrId(await startOcr({ storageIds, consent }));
       return null;
     },
     erase: async () => {
@@ -1194,6 +1194,14 @@ function Shell({
                       }}
                     />
                   </label>
+                  <label className="consent">
+                    <input
+                      type="checkbox"
+                      checked={consent}
+                      onChange={(event) => setConsent(event.target.checked)}
+                    />
+                    Tôi đồng ý xử lý và lưu bảng điểm để nhận diện.
+                  </label>
                   <label
                     className={`button outline full ${busy ? "disabled" : ""}`}
                   >
@@ -1205,7 +1213,7 @@ function Shell({
                       type="file"
                       accept="application/pdf,image/png,image/jpeg"
                       multiple
-                      disabled={!!busy || (!demo && !profile)}
+                      disabled={!!busy}
                       hidden
                       onChange={(event) => {
                         const files = Array.from(event.target.files ?? []);
@@ -1243,7 +1251,7 @@ function Shell({
                   </label>
                   <small className="muted">
                     PDF/PNG/JPEG · tối đa 10 MB/tệp · tổng 20 MB ·{" "}
-                    {demo ? "tổng 1–4 trang" : "tổng 1–4 trang, cần lưu hồ sơ trước"}
+                    tổng 1–4 trang. Có thể tải bảng điểm trước khi lưu hồ sơ.
                   </small>
                 </section>
               </div>

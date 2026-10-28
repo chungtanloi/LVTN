@@ -251,16 +251,21 @@ export const uploadUrl = mutation({
   },
 });
 export const startOcr = mutation({
-  args: { storageIds: v.array(v.id("_storage")) },
-  handler: async (ctx, { storageIds }) => {
+  args: {
+    storageIds: v.array(v.id("_storage")),
+    consent: v.optional(v.boolean()),
+  },
+  handler: async (ctx, { storageIds, consent }) => {
     const owner = await user(ctx);
     const profile = await ctx.db
       .query("profiles")
       .withIndex("by_owner", (q) => q.eq("owner", owner))
       .unique();
-    if (!profile)
+    // Existing clients may rely on consent recorded with their saved profile.
+    // New accounts can import their first transcript without creating a profile.
+    if (consent === false || (!profile && consent !== true))
       throw new ConvexError(
-        "Hãy lưu hồ sơ và đồng ý lưu dữ liệu trước khi OCR.",
+        "Cần đồng ý xử lý và lưu bảng điểm trước khi OCR.",
       );
     if (
       storageIds.length < 1 ||
