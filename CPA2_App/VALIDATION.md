@@ -1,5 +1,17 @@
 # Trạng thái triển khai CPA² — cập nhật 28/10/2026
 
+## Hiển thị dòng OCR chưa chắc trong danh sách — 28/10/2026
+
+Đã phát hành `20b257598d734187b822ef3146c3c423d26e775b` tại https://cpa2-web.vercel.app: Render `dep-dbgs15vlk1mc739bp21g` live; Vercel `dpl_GcA9JGBqfae6LTwhpMz9gCwdFPYn` READY, KB `3ba129435078c712`. Không thay schema Convex hoặc thuật toán chấp nhận điểm.
+
+Các dòng OCR quan sát được nhưng chưa vào grades nay vẫn hiện cùng danh sách: tô vàng, xếp lên đầu, có mục Cần xem lại để mở học kỳ, lý do và OCR gốc. Điểm/tín chỉ đọc được hiện dưới dạng giá trị tạm để đối chiếu; ô không đọc được để trống, không đổi thành 0/F. Bao gồm mã ngoài CTĐT, dòng miễn CC004, mã chưa rõ và các lần học lại chưa chắc; không tạo môn mới chỉ từ mã thay thế suy đoán. Phần bảng dùng hàm ghép dữ liệu hiển thị, không chèn các giá trị tạm vào profile.grades. Các dòng này chưa có thao tác tự xác nhận thành điểm tin cậy; cảnh báo và điều kiện chặn lưu/tư vấn vẫn được giữ.
+
+Backend thêm `report.dong_can_ra_soat`, tách biệt facts; worker và giao diện lưu hồ sơ cũng kiểm tra cờ này, nên đánh dấu reviewed không vượt qua bước rà soát. Báo cáo cũ vẫn hiển thị được các dòng từ chi_tiet, nhưng không suy điểm số bằng cách phân tích OCR raw. Ca PDF thật cục bộ có 29 môn trong grades và 9 dòng rà soát, tổng 38 dòng quan sát; không tải PDF thật lên cloud.
+
+Kiểm tra: API 35 ca (34 đạt, 1 bỏ qua fixture PDF mật khẩu thiếu pypdf); web 15/15 (10 Convex, 5 kiểm tra ghép dòng). Có ca điểm chưa chắc không thành fact, điểm thiếu không thành 0, học lại giữ các lần quan sát, JSON metadata lỗi không làm hỏng bảng và chỉnh tay không tự xóa cảnh báo. TypeScript, build và runtime đóng gói đạt. Phần thay đổi này bổ sung báo cáo/giao diện; không chạy lại toàn bộ benchmark nghiên cứu đã ghi ở mục trước.
+
+Browser production bằng tài khoản mới: mở hộp chọn PDF, tải một trang tổng hợp, nhận bản nháp → 17 dòng hiện trong bảng gồm 10 môn qua kiểm chéo và 7 dòng cảnh báo. Kiểm tra cảnh báo ở đầu bảng, mở details, điểm tạm không nằm trong input sửa facts và không nằm trong profile.grades; không có lỗi JavaScript. Đã xem ảnh `web/.vercel/cloud-first-upload.png`. Lượt khởi động browser đầu bị lỗi tiến trình máy cục bộ, không tính là đạt; lượt sau hoàn tất. Đã xóa tài khoản cùng dữ liệu kiểm thử. Cần tải lại trang và OCR lại PDF để nhận đầy đủ trường điểm tạm từ báo cáo mới.
+
 ## Sửa chặn dây chuyền khi thiếu dòng học kỳ cuối — 28/10/2026
 
 Người dùng báo chỉ thấy 5 môn học kỳ đầu dù báo cáo có `tong_dong=37`, `nhan=6`, và nghi ngờ TC tích lũy từ HK2 23–24 đến HK1 25–26. Đã tái hiện cục bộ đúng mẫu này: từ tài liệu OCR của PDF 4 trang, bỏ một dòng 3 TC ở học kỳ cuối nhưng giữ số tổng in trên giấy → 37 dòng, 5 môn vào grades, tất cả các học kỳ sau HK1 bị gắn cờ TC tích lũy. Đây là ca tiêm lỗi tái hiện cơ chế, không khẳng định đã biết chính xác dòng bị bỏ sót trong lượt OCR cloud của người dùng.
