@@ -1,5 +1,19 @@
 # Trạng thái triển khai CPA² — cập nhật 28/10/2026
 
+## Sửa chặn dây chuyền khi thiếu dòng học kỳ cuối — 28/10/2026
+
+Người dùng báo chỉ thấy 5 môn học kỳ đầu dù báo cáo có `tong_dong=37`, `nhan=6`, và nghi ngờ TC tích lũy từ HK2 23–24 đến HK1 25–26. Đã tái hiện cục bộ đúng mẫu này: từ tài liệu OCR của PDF 4 trang, bỏ một dòng 3 TC ở học kỳ cuối nhưng giữ số tổng in trên giấy → 37 dòng, 5 môn vào grades, tất cả các học kỳ sau HK1 bị gắn cờ TC tích lũy. Đây là ca tiêm lỗi tái hiện cơ chế, không khẳng định đã biết chính xác dòng bị bỏ sót trong lượt OCR cloud của người dùng.
+
+Nguyên nhân: `_tich_luy` so sánh tổng tính từ các dòng không đầy đủ với tổng in đầy đủ. Khi CC004 còn hai khả năng tính tín chỉ, không có mốc chắc chắn sau học kỳ đầu, nên sai lệch cuối kỳ bị quy ngược cho mọi học kỳ từ HK2. Bản sửa chỉ tính/so tổng tích lũy khi từng học kỳ trong prefix có đủ tín chỉ theo tổng đăng ký; nếu thiếu tổng, thiếu TC dòng hoặc lệch tổng đăng ký, trả trạng thái chưa đủ dữ liệu tính tích lũy. Học kỳ thiếu dòng vẫn có `dong_an`/`hoc_ky_lech`, vẫn UNKNOWN; các kiểm tra điểm/GDTC/GDQP và ngưỡng confidence giữ nguyên.
+
+Ca tái hiện sau sửa nhận 28 môn thay vì 5, vẫn 37 dòng và còn cờ HK1 25–26. Giao diện bổ sung tổng số dòng nhận diện, số môn qua kiểm chéo và học kỳ cần đối chiếu. Báo cáo thêm `doi_chieu_hoc_ky` với số tổng OCR, tổng từ các dòng và khả năng tính tổng tích lũy để khoanh vùng lỗi. Kết quả cũ không tự chạy lại; cần tải PDF lên để tạo bản OCR mới.
+
+Mã phát hành `7d2ec0d05a06b27c3bc70014ded7a98855ef84f0`: Render `dep-dbgrnh8ae00c73d8ea2g` live, Vercel `dpl_BnxWr9oCXzRHBWSdAd93ASJTRPPF` READY và domain chính. HTTP health và kết quả OCR cloud đều xác nhận KB `4514b749ea5b5243`. Không đổi schema Convex hoặc cấu hình dịch vụ.
+
+Đã kiểm tra: API 30 ca cũ đạt 29 / bỏ qua 1 fixture mật khẩu thiếu pypdf, thêm 1 ca hồi quy mới với hai biến thể tổng đã biết/mất; CI API và web cho mã này success. Convex 10/10, TypeScript và build đạt. Các nhóm OCR C/E/F/G, gồm lỗi GDTC/GDQP, miễn tín chỉ và đọc sai điểm, đạt. Hồi quy OCR đầy đủ trên bản sao riêng hoàn tất 361,6 giây, đạt cổng 833/834 fact được chấp nhận đúng và độ phủ kết luận 1/18; còn lỗi điểm ở ảnh nghiêng như trước. Log: `C:/Users/ASUSPC~1/AppData/Local/Temp/cpa2-partial-cumulative-final-of79r2zc/ocr.log`. Lượt thử ban đầu thất bại vì thiếu bộ nhớ khi chạy song song, không tính là đạt; lượt build sau giới hạn Go threads và lượt OCR chạy riêng mới là kết quả hoàn tất.
+
+Browser production: tài khoản mới chưa có hồ sơ → consent → bấm mở hộp chọn tệp → PDF tổng hợp một trang → OCR → hiển thị rõ 17 dòng / 10 môn, ba học kỳ trong báo cáo và dữ kiện từng học kỳ. `needs_review`/`ocr_pending` vẫn true, không có lỗi JavaScript; đã xem ảnh `web/.vercel/cloud-first-upload.png`. Kiểm tra này xác nhận luồng cloud và phần chẩn đoán; ca mất dòng cuối có miễn tín chỉ được kiểm tra ở mức dữ liệu tài liệu bằng fixture cục bộ và kiểm thử tự động. Đã xóa cả hai tài khoản giả lập và dữ liệu Convex. PDF thật vẫn chỉ xử lý cục bộ.
+
 ## Sửa nút chọn PDF cho tài khoản mới — 28/10/2026
 
 Đã tái hiện trên website bằng tài khoản giả lập chưa lưu hồ sơ: input PDF bị disabled do điều kiện `!profile`, khiến bấm nút không mở hộp chọn tệp. Các lượt kiểm tra trước dùng tài khoản đã lưu hồ sơ nên bỏ sót trường hợp này; việc gọi setInputFiles cũng không chứng minh thao tác bấm mở hộp chọn tệp hoạt động.

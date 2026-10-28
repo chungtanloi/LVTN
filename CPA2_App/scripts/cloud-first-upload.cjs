@@ -49,6 +49,7 @@ const state = JSON.parse(fs.readFileSync(path.join(app, 'web/.vercel/cloud-qa.js
     console.log('PASS first upload: fresh account opens the native file picker.');
     await chooser.setFiles(path.join(app, 'web/.vercel/first-upload.pdf'));
     await page.getByRole('heading', { name: 'Bản nháp OCR — cần rà soát' }).waitFor({ timeout: 270000 });
+    assert.match(await page.locator('.ocr-review').innerText(), /Đã nhận diện \d+ dòng học phần;\s*\d+ môn đã qua kiểm chéo/);
     await page.screenshot({ path: path.join(app, 'web/.vercel/cloud-first-upload.png'), fullPage: true });
     assert.deepEqual(errors, []);
     console.log('PASS first upload: PDF -> Convex -> OCR draft without saving a profile; no JavaScript errors.');
