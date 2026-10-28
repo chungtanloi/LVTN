@@ -167,4 +167,4 @@ async def ocr(files: Annotated[list[UploadFile], File()]):
             path = Path(directory) / f'page-{index}.png'
             path.write_bytes(data)
             paths.append(str(path))
-        return await run('ocr', {'paths': paths}, timeout=120)
+        return await run('ocr', {'paths': paths}, timeout=240)

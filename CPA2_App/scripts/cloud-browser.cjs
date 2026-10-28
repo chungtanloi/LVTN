@@ -62,7 +62,7 @@ async function ticket(user) {
     if (process.env.CPA2_CHECK_PDF === '1') {
       const input = page.locator('input[type="file"][accept*="application/pdf"]');
       await input.setInputFiles(path.join(app, 'web/.vercel/qa-transcript.pdf'));
-      await page.getByRole('heading', { name: 'Bản nháp OCR — cần rà soát' }).waitFor({ timeout: 150000 });
+      await page.getByRole('heading', { name: 'Bản nháp OCR — cần rà soát' }).waitFor({ timeout: 270000 });
       assert.ok(await page.getByText('Tôi đã đối chiếu các dữ kiện được nhận với bảng điểm gốc.').isVisible());
       await page.screenshot({ path: path.join(app, 'web/.vercel/cloud-pdf-review.png'), fullPage: true });
       console.log('PASS browser: PDF picker -> upload -> scheduled OCR -> visible review draft.');

@@ -48,7 +48,7 @@ Next.js + Tailwind (Vercel)
                               └─ loader chung → clingo → proof → grounding
 ```
 
-Python dùng một tiến trình con cho mỗi tác vụ để cách ly các import cũ và cưỡng chế thời gian xử lý. Tối đa hai tác vụ đang xử lý trong một tiến trình API; suy luận/tra cứu tối đa 30 giây, OCR tối đa 120 giây. Lỗi kỹ thuật, quá thời gian, `BLOCKED` và hồ sơ mâu thuẫn được giữ riêng với kết luận ba trị.
+Python dùng một tiến trình con cho mỗi tác vụ để cách ly các import cũ và cưỡng chế thời gian xử lý. Tối đa hai tác vụ đang xử lý trong một tiến trình API; suy luận/tra cứu tối đa 30 giây, OCR tối đa 240 giây. Lỗi kỹ thuật, quá thời gian, `BLOCKED` và hồ sơ mâu thuẫn được giữ riêng với kết luận ba trị.
 
 Container đặt `OMP_THREAD_LIMIT=1` để Tesseract không tạo nhiều luồng trên máy chủ ít CPU, theo [FAQ chính thức của Tesseract](https://tesseract-ocr.github.io/tessdoc/FAQ.html). Cấu hình này cũng được đặt trên dịch vụ Render đang chạy.
 

@@ -95,7 +95,7 @@ def main():
             storage_id = json.load(response)['storageId']
         job_id = success('mutation', 'startOcr', {'storageIds': [storage_id]}, alice)
         previous = None
-        for attempt in range(35):
+        for attempt in range(60):
             own = success('query', 'state', {}, alice)
             job = next((job for job in own['uploads'] if job['_id'] == job_id), None)
             status = job['status'] if job else 'missing'

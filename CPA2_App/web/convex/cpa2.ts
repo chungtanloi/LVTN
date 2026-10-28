@@ -349,7 +349,7 @@ export const processOcr = internalAction({
         const extension = blob.type === "application/pdf" ? "pdf" : "png";
         form.append("files", blob, `page-${index}.${extension}`);
       }
-      const result = await python("/v1/ocr", form, 130000);
+      const result = await python("/v1/ocr", form, 250000);
       await ctx.runMutation(anyApi.cpa2.finishOcr, {
         id,
         status: "done",
