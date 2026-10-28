@@ -1,5 +1,15 @@
 # Trạng thái triển khai CPA² — cập nhật 28/10/2026
 
+## Sửa nút chọn PDF cho tài khoản mới — 28/10/2026
+
+Đã tái hiện trên website bằng tài khoản giả lập chưa lưu hồ sơ: input PDF bị disabled do điều kiện `!profile`, khiến bấm nút không mở hộp chọn tệp. Các lượt kiểm tra trước dùng tài khoản đã lưu hồ sơ nên bỏ sót trường hợp này; việc gọi setInputFiles cũng không chứng minh thao tác bấm mở hộp chọn tệp hoạt động.
+
+Bản sửa `0224f12f041e5873fb9e2b93644a1c336df79811` bỏ điều kiện phải có hồ sơ khỏi nút tải tệp, thêm ô đồng ý xử lý dữ liệu ngay cạnh nút và gửi consent đến startOcr. Backend cho phép tài khoản mới OCR khi đồng ý rõ ràng, vẫn từ chối khi thiếu consent hoặc khai báo từ chối; các client cũ có hồ sơ đã consent tiếp tục dùng được. Không tự tạo hồ sơ giả để mở khóa OCR.
+
+Convex production đã cập nhật; Vercel production `dpl_7NdKEjtsAoGr81hPE1hSFAPZ6Xun` READY, domain https://cpa2-web.vercel.app. API Render giữ bản 69be40f đã kiểm tra ở mục dưới. Kiểm thử Convex 10/10, TypeScript và build đạt.
+
+Đã kiểm tra luồng người dùng mới trên website bằng script `scripts/cloud-first-upload.cjs`: đăng nhập tài khoản chưa có hồ sơ → tích consent → bấm nút và bắt sự kiện filechooser thật → chọn PDF tổng hợp một trang → Convex Storage → OCR → hiển thị bản nháp 17 dòng. Truy vấn lại xác nhận profile vẫn null, tác vụ done, `needs_review` và `ocr_pending` true; không có lỗi JavaScript. Đã xem ảnh `web/.vercel/cloud-first-upload.png`. Tài khoản và dữ liệu kiểm thử đã xóa, state rỗng. Cần tải lại trang đã mở để nhận giao diện mới.
+
 ## Đã phát hành PDF/OCR — 28/10/2026
 
 Website production: https://cpa2-web.vercel.app. Mã phát hành `69be40fe79aa261d6f0bf241c7d04adbbb45fc27`, nhánh `codex/cpa2-web-deploy`. Render deploy `dep-dbgr2vei0phs738p9t5g` live; Vercel `dpl_5S6xnPnYFBr6rQco6rGEJbgDBiD7` READY và gắn domain chính. Convex production `exciting-cheetah-606` đã cập nhật. Health và kết quả OCR xác nhận KB `6b0e182eb2c27f5c`.
