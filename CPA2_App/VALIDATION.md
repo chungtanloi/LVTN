@@ -1,4 +1,23 @@
-# Trạng thái triển khai CPA² — cập nhật 26/10/2026
+# Trạng thái triển khai CPA² — cập nhật 28/10/2026
+
+## PDF bảng điểm và cải thiện OCR — 28/10/2026 (cục bộ, chưa phát hành)
+
+Đã thêm PDF vào giao diện tải bảng điểm, kiểm tra Convex Storage và API OCR. PDF được nhận diện bằng chữ ký tệp, dựng ảnh bằng pypdfium2 5.9.0 trong tiến trình worker có thời hạn 120 giây. Tổng PDF và ảnh không quá 4 trang; mỗi tệp tối đa 10 MB, tổng 20 MB; trang PDF dựng rộng 2448 px, tối đa 20 triệu điểm ảnh. PDF hỏng, cần mật khẩu hoặc quá giới hạn bị từ chối. Kiểm tra dung lượng và ảnh hiện có được giữ nguyên.
+
+OCR bổ sung đọc riêng ô tổng tín chỉ đăng ký theo vị trí nhãn (kể cả tổng ở trang tiếp theo), đọc lại ô tín chỉ/điểm chưa chắc bằng crop một dòng và chuẩn hóa ký tự I/l thành 1 trong số học kỳ. Lượt đọc lại không thay một giá trị hợp lệ bằng giá trị khác chỉ để khớp điểm trung bình; bất đồng và dữ kiện chưa chắc vẫn bị giữ lại để rà soát. Không đổi ngưỡng confidence, luật ASP, CTĐT, gold hoặc ánh xạ CC004/GDTC. Khi ghép sang nhánh phát hành, giữ bản sửa C19 đã có: điểm chữ không được nâng độ tin cậy của điểm số chính xác GDQP.
+
+Thử cục bộ trên PDF 4 trang do người dùng cung cấp, chỉ lưu kết quả trong `_rieng/` bị Git bỏ qua: HTTP 200 sau khoảng 19,1 giây; nhận diện 38 dòng học phần (gồm dòng miễn), đưa 29 điểm học phần vào hồ sơ; không còn cờ học kỳ lệch tổng tín chỉ hoặc dòng ẩn. Đối chiếu điểm thang 10 của cả 29 môn được nhận với bốn trang render không thấy sai. Đây là đối chiếu một tệp, chưa phải đánh giá độc lập. Còn 5 mã có confidence thấp (QP013, KL001E, ML014, ML018, ML021), TC025–027 ngoài CTĐT và CC004 chờ xác minh. Hồ sơ tiếp tục có `needs_review`, `ocr_pending`; không dùng kết quả này kết luận tốt nghiệp.
+
+Kiểm tra đã hoàn tất:
+
+- API nhánh triển khai: 29 kiểm thử đạt, 1 bỏ qua vì thiếu pypdf để dựng tệp có mật khẩu (30 ca tổng cộng); gồm PDF hỏng, quá 4 trang, PDF trộn ảnh vượt số trang, trang có hình học quá lớn và nhận diện theo chữ ký thay vì tên tệp.
+- Convex 9/9, gồm tải PDF → scheduled action → multipart giữ nguyên nội dung/MIME → lưu bản nháp chờ rà soát (môi trường giả lập).
+- TypeScript và production build đạt; runtime đóng gói đạt, KB `6b0e182eb2c27f5c`.
+- HTTP OCR tổng hợp đủ 4 trang: PNG nhận đúng 50/50 fact được chấp nhận; PDF nhận đúng 35/35. Số dòng nhận diện đều 55. PDF vẫn có độ phủ thấp hơn ảnh gốc trong ca này.
+- Hồi quy OCR đầy đủ trên bản sao tạm đạt: 833/834 fact được chấp nhận đúng (99,88%, cổng ≥99%). Vẫn có một sai lệch CT179 ở ảnh nghiêng tổng hợp (7,3 thay vì 7,5); không coi đạt ngưỡng là hoàn toàn không có lỗi. Chỉ 1/18 ca có kết luận xác định, còn lại UNKNOWN. Không thay báo cáo/gold khảo sát gốc. Log: `C:/Users/ASUSPC~1/AppData/Local/Temp/cpa2-pdf-ocr-regression-rx4dlfcs/ocr.log`.
+- OSV: 30 gói trong môi trường Python, không ghi nhận advisory tại lượt kiểm tra.
+
+Chưa triển khai thay đổi này lên Vercel/Convex/Render; chưa thử PDF trên cloud hoặc kiểm tra thao tác chọn PDF bằng trình duyệt. RAG giữ nguyên, chưa đạt các điều kiện nghiệm thu nghiên cứu ở mục dưới.
 
 ## Rà soát nguồn và chứng chỉ — 26/10/2026
 

@@ -34,7 +34,7 @@ Chế độ cục bộ dùng hồ sơ giả lập. Hồ sơ và lịch sử trê
 - Chat xét tốt nghiệp, đăng ký học phần, điều kiện LVTN/TLTN, miễn học phần và xếp loại trong phạm vi parser hiện có.
 - Chứng chỉ, bước chứng minh, nguồn quy chế, dữ kiện thiếu và xuất kết quả JSON.
 - Đề xuất đăng ký một học kỳ, tra cứu đoạn quy chế và lịch sử gắn với phiên bản hồ sơ.
-- OCR 1–4 ảnh PNG/JPEG theo thứ tự trang; mỗi ảnh tối đa 10 MB, tổng tối đa 20 MB và 20 triệu điểm ảnh/ảnh. Dữ kiện không chắc tiếp tục bị chặn.
+- OCR PDF hoặc ảnh PNG/JPEG theo thứ tự, tổng 1–4 trang; mỗi tệp tối đa 10 MB, tổng tối đa 20 MB và 20 triệu điểm ảnh/trang. PDF được dựng ảnh trong tiến trình OCR có thời hạn; PDF hỏng, cần mật khẩu hoặc quá số trang bị từ chối. Dữ kiện không chắc tiếp tục bị chặn.
 - Backend Convex cho lưu hồ sơ có đồng ý, phiên bản bất biến, hội thoại riêng từng tài khoản, tác vụ OCR và xóa dữ liệu.
 
 Điểm chữ từ niên luận không được đổi thành một điểm số tùy ý. Nếu thiếu điểm thang 10, CPA² yêu cầu bổ sung trước khi suy luận. Số GPA/tín chỉ trên dashboard là thống kê mô tả, không thay thế kết luận tốt nghiệp của solver.
@@ -63,7 +63,7 @@ Các endpoint `/v1/*` yêu cầu `Authorization: Bearer <CPA2_SERVICE_KEY>`. `/h
 | `POST /v1/advice` | `{ profile, question }` → verdict, certificate, nguồn, missing facts |
 | `POST /v1/recommendations` | `{ profile, semester: 1..3 }` → học phần hợp lệ, chứng chỉ, mục cần xác minh |
 | `POST /v1/lookup` | `{ question }` → đoạn nguồn, không kết luận về sinh viên |
-| `POST /v1/ocr` | Multipart `files` → hồ sơ nháp và báo cáo kiểm chéo |
+| `POST /v1/ocr` | Multipart `files` (PDF/PNG/JPEG, tổng ≤4 trang) → hồ sơ nháp và báo cáo kiểm chéo |
 
 ## Đưa lên Vercel + Convex + Clerk + Render
 
@@ -116,7 +116,7 @@ python CPA2_KhaoSat/w20_benchmark/survey_training.py --input CPA2_KhaoSat/Q-real
 Bản đã xử lý nằm ở `CPA2_KhaoSat/w20_benchmark/qreal/synthetic_survey/`. Baseline phân loại ý định đạt 31,25% trên dev nên chưa được dùng trong website; chưa chạy test cho baseline này. Riêng 29 câu test đã được gán đoạn nguồn tham chiếu và dùng một lần để báo cáo phiên bản RAG xếp hạng nguồn, sau khi chốt trọng số trên dev. Vì vậy không coi chúng là tập hoàn toàn chưa từng xem cho các phiên bản tiếp theo. Đây không phải fine-tune LLM và không thay thế bộ câu hỏi thật cần thu thập.
 
 - Phạm vi CNTT K49; không tích hợp hệ thống Phòng Đào tạo, không nhập SQL dump hoặc hồ sơ thật từ niên luận.
-- OCR có độ phủ giới hạn; mẫu sai hoặc dữ kiện chưa chắc cần được bổ sung thủ công từ bảng điểm gốc. Xác nhận của người dùng không tự làm các dòng thiếu trở thành chắc chắn.
+- OCR PDF hoặc ảnh PNG/JPEG theo thứ tự, tổng 1–4 trang; mỗi tệp tối đa 10 MB, tổng tối đa 20 MB và 20 triệu điểm ảnh/trang. PDF được dựng ảnh trong tiến trình OCR có thời hạn; PDF hỏng, cần mật khẩu hoặc quá số trang bị từ chối. Dữ kiện không chắc tiếp tục bị chặn.
 - Các ảnh tải thành công nhưng chưa đăng ký tác vụ có thể còn trong Convex Storage nếu mạng gián đoạn; cần rà soát Storage khi vận hành thử nghiệm. Chức năng xóa dữ liệu xử lý các ảnh đã đăng ký dưới tài khoản.
 - Chưa tích hợp dự báo điểm, AI API, Stripe, Resend hoặc Supabase. Terra/Sol/Gemini Flash là định hướng sau khi luồng cơ bản ổn định; cần xác minh model API trước khi thêm. LLM chỉ tham gia parser/verbalizer, kết luận vẫn do solver và hậu kiểm.
 - Đã kiểm tra đăng nhập, phân quyền hai tài khoản và tư vấn qua cloud; xem giới hạn OCR và phạm vi nghiệm thu trong `VALIDATION.md`. Cần cấu hình Clerk production trước khi vận hành với người dùng thật.

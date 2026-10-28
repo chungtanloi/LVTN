@@ -59,6 +59,14 @@ async function ticket(user) {
     await page.getByRole('button', { name: 'Lưu hồ sơ', exact: true }).click();
     await page.getByRole('status').filter({ hasText: 'Đã lưu hồ sơ.' }).waitFor({ timeout: 40000 });
     console.log('PASS browser: consent + grade edit -> new persisted profile revision.');
+    if (process.env.CPA2_CHECK_PDF === '1') {
+      const input = page.locator('input[type="file"][accept*="application/pdf"]');
+      await input.setInputFiles(path.join(app, 'web/.vercel/qa-transcript.pdf'));
+      await page.getByRole('heading', { name: 'Bản nháp OCR — cần rà soát' }).waitFor({ timeout: 150000 });
+      assert.ok(await page.getByText('Tôi đã đối chiếu các dữ kiện được nhận với bảng điểm gốc.').isVisible());
+      await page.screenshot({ path: path.join(app, 'web/.vercel/cloud-pdf-review.png'), fullPage: true });
+      console.log('PASS browser: PDF picker -> upload -> scheduled OCR -> visible review draft.');
+    }
     await page.getByRole('button', { name: 'Kho quy chế', exact: true }).click();
     await page.getByRole('textbox', { name: 'Tìm trong quy chế' }).fill('điểm W');
     await page.getByRole('button', { name: 'Tra cứu', exact: true }).click();

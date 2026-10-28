@@ -262,6 +262,47 @@ def _tc_tich_luy_in(g, line):
     return None
 
 
+def _tong_dk_in(g, line):
+    """Read the printed registration total, including totals on a following page."""
+    label = [w for w in line['tu'] if w['x'] < g.width * .32]
+    if not label:
+        return None
+    left = max(w['x'] + w['w'] for w in label) + 3
+    top = max(0, line['y0'] - 5)
+    bottom = min(g.height, line['y1'] + 5)
+    right = int(g.width * .46)
+    if left >= right:
+        return None
+    words = _tu(g.crop((left, top, right, bottom)), '--psm 7 -c tessedit_char_whitelist=0123456789', 'eng')
+    value = ''.join(w['t'] for w in words)
+    if re.fullmatch(r'\d{1,3}', value) and min((w['c'] for w in words), default=0) >= TAU:
+        return int(value)
+    return None
+
+
+def _doc_lai_o(g, d, cot):
+    """Retry uncertain cells using a single-line crop; retain disagreement as uncertain."""
+    for key in ('tc', 'thop', 'chu'):
+        raw = d[f'{key}_raw']
+        valid = (raw.isdigit() if key == 'tc' else
+                 so_thang10(raw) is not None if key == 'thop' else raw in CHU_4)
+        if valid and d['conf'].get(key, 0) >= TAU:
+            continue
+        left, right = cot[key]
+        pad = max(5, d['cao'] * .25)
+        box = (max(0, int(left)), max(0, int(d['yc'] - d['cao'] / 2 - pad)),
+               min(g.width, int(right)), min(g.height, int(d['yc'] + d['cao'] / 2 + pad)))
+        words = _tu(g.crop(box), f'--psm 7 -c tessedit_char_whitelist={WHITELIST[key]}', 'eng')
+        value = ''.join(w['t'] for w in sorted(words, key=lambda w: w['x']))
+        confidence = min((w['c'] for w in words), default=0)
+        # A second pass must agree with any valid first reading. Do not select
+        # whichever grade happens to fit the semester average.
+        same = (so_thang10(value) == so_thang10(raw)) if key == 'thop' else value == raw
+        if confidence >= TAU and (not valid or same):
+            d[f'{key}_raw'] = value
+            d['conf'][key] = confidence
+
+
 def doc_trang(img, st):
     g = img.convert("L")
     if g.width < 2000:
@@ -272,7 +313,8 @@ def doc_trang(img, st):
         b = bo_dau(l["text"])
         if "hoc ky" in b and "nam hoc" in b:
             m = re.search(r"hoc ky\s*(\w)\W+nam hoc\s*(\d{2})\s*-\s*(\d{2})", b)
-            st["hk"].append({"ten": f"HK{m.group(1)} {m.group(2)}-{m.group(3)}" if m else f"HK? #{len(st['hk']) + 1}",
+            number = m.group(1).translate(str.maketrans({'i': '1', 'l': '1'})) if m else '?'
+            st["hk"].append({"ten": f"HK{number} {m.group(2)}-{m.group(3)}" if m else f"HK? #{len(st['hk']) + 1}",
                              "dong": [], "tong_dk": None, "dtbchk": None, "tc_tich_luy": None, "dtbctl": None})
             continue
         if "nhom" in b and ("hop" in b or "doi" in b):
@@ -283,7 +325,9 @@ def doc_trang(img, st):
         hk = st["hk"][-1]
         if "dang ky" in b and "tong" in b:
             so = re.findall(r"\b\d{1,3}\b", l["text"])
-            hk["tong_dk"] = int(so[-1]) if so else None
+            first = int(so[-1]) if so else None
+            numeric = _tong_dk_in(g, l)
+            hk["tong_dk"] = numeric if first is None else first if numeric in (None, first) else None
             continue
         if "chung hoc ky" in b:
             so = re.findall(r"\d[.,]\d{2}", l["text"])
@@ -322,6 +366,8 @@ def doc_trang(img, st):
             d[f"{cot}_raw"] = "".join(w["t"] for w in ws)
             d["conf"][cot] = min((w["c"] for w in ws), default=0.0)
     for d in dong_trang:
+        if not d['mien']:
+            _doc_lai_o(g, d, st['cot'])
         # mã có hai lần đọc: dải cột (whitelist) và token đầu dòng (lượt chính)
         ma_s, ma_d = sua_ma(d["ma_raw"]), sua_ma(d["ma_dong"])
         c_s, c_d = d["conf"].get("ma", 0.0), d.pop("c_ma_dong")

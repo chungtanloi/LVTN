@@ -20,10 +20,17 @@ for index, image in enumerate(images):
     buffer = io.BytesIO()
     image.save(buffer, format='PNG')
     files.append(('files', (f'page-{index}.png', buffer.getvalue(), 'image/png')))
-response = TestClient(app).post('/v1/ocr', files=files, headers={'Authorization': 'Bearer test-only-service-key'})
-if response.status_code != 200:
-    raise RuntimeError(f'OCR HTTP status: {response.status_code}: {response.text}')
-result = response.json()
-if not result['needs_review'] or not result['profile']['meta']['ocr_pending'] or not result['report'].get('tong_dong'):
-    raise RuntimeError('OCR must produce a nonempty draft requiring review.')
-print(f"PASS: OCR HTTP boundary, {len(files)} synthetic page(s), {result['report']['tong_dong']} rows; pending review preserved.")
+pdf = io.BytesIO()
+images[0].save(pdf, format='PDF', save_all=True, append_images=images[1:], resolution=144)
+from ocr_transcript import so_khop
+for label, inputs in [('PNG', files), ('PDF', [('files', ('transcript.pdf', pdf.getvalue(), 'application/pdf'))])]:
+    response = TestClient(app).post('/v1/ocr', files=inputs, headers={'Authorization': 'Bearer test-only-service-key'})
+    if response.status_code != 200:
+        raise RuntimeError(f'{label} OCR HTTP status: {response.status_code}: {response.text}')
+    result = response.json()
+    if not result['needs_review'] or not result['profile']['meta']['ocr_pending'] or not result['report'].get('tong_dong'):
+        raise RuntimeError('OCR must produce a nonempty draft requiring review.')
+    correct, accepted, wrong = so_khop(result['profile'], profile)
+    if not accepted or correct / accepted < .99:
+        raise RuntimeError(f'{label}: accepted facts below the 99% correctness gate: {wrong}')
+    print(f"PASS: {label} OCR HTTP, {len(images)} synthetic page(s), {result['report']['tong_dong']} rows, {correct}/{accepted} accepted facts correct; pending review preserved.")

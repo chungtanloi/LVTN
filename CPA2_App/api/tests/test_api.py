@@ -164,8 +164,8 @@ class PdfTranscriptTests(unittest.TestCase):
     def post(self, *files):
         return self.client.post('/v1/ocr', files=[('files', f) for f in files], headers=HEADERS)
 
-    def test_pdf_pages_render_pixel_exact_at_transcript_resolution(self):
-        from cpa2_api.worker import pdf_pages
+    def test_pdf_pages_render_at_bounded_transcript_resolution(self):
+        from cpa2_api.ocr_input import read_pages
         pages = synthetic_pages()
         buffer = io.BytesIO()   # chế độ P: Pillow lưu không nén mất dữ liệu (L thì thành JPEG)
         pages[0].convert('P').save(buffer, 'PDF', resolution=130.0, save_all=True,
@@ -173,11 +173,12 @@ class PdfTranscriptTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / 'transcript.pdf'
             path.write_bytes(buffer.getvalue())
-            images = pdf_pages(path)
+            images = read_pages([path])
         self.assertEqual(len(images), len(pages))
         for page, image in zip(pages, images):
-            self.assertEqual(image.size, (1105, 1430))
-            self.assertEqual(image.convert('L').tobytes(), page.convert('L').tobytes())
+            self.assertEqual(image.width, 2448)
+            self.assertAlmostEqual(image.height / image.width, page.height / page.width, places=3)
+            image.close()
 
     def test_pdf_with_more_than_four_pages_is_rejected(self):
         page = Image.new('L', (1105, 1430), 255)
@@ -194,11 +195,11 @@ class PdfTranscriptTests(unittest.TestCase):
         response = self.post(('bang_diem.pdf', synthetic_pdf([page], resolution=0.1), 'application/pdf'))
         self.assertEqual(response.status_code, 422, response.text)
 
-    def test_pdf_cannot_be_mixed_with_images(self):
+    def test_pdf_and_images_cannot_exceed_four_pages(self):
         page = Image.new('L', (1105, 1430), 255)
         png = io.BytesIO()
         page.save(png, 'PNG')
-        response = self.post(('bang_diem.pdf', synthetic_pdf([page]), 'application/pdf'),
+        response = self.post(('bang_diem.pdf', synthetic_pdf([page] * 4), 'application/pdf'),
                              ('page.png', png.getvalue(), 'image/png'))
         self.assertEqual(response.status_code, 422, response.text)
 

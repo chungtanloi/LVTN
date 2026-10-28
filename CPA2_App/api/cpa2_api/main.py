@@ -21,7 +21,6 @@ security = HTTPBearer(auto_error=False)
 VERSION = kb_version()
 CAPACITY = asyncio.Semaphore(2)
 Image.MAX_IMAGE_PIXELS = 20_000_000
-PDF_REJECTED = 'PDF bảng điểm không hợp lệ: cần 1–4 trang, không đặt mật khẩu, khổ giấy thông thường.'
 
 
 async def authorized(credentials: Annotated[HTTPAuthorizationCredentials | None, Depends(security)]):
@@ -75,7 +74,7 @@ def validate(profile):
         raise HTTPException(422, str(error)) from None
 
 
-async def run(operation, payload, timeout=30, rejected=None):
+async def run(operation, payload, timeout=30):
     async with CAPACITY:
         env = {**os.environ, 'PYTHONIOENCODING': 'utf-8'}
         process = await asyncio.create_subprocess_exec(
@@ -96,8 +95,8 @@ async def run(operation, payload, timeout=30, rejected=None):
         except (ValueError, UnicodeError):
             raise HTTPException(502, 'Dịch vụ suy luận trả dữ liệu không hợp lệ.') from None
         if not message.get('ok'):
-            if rejected and message.get('error_type') == 'InputRejected':
-                raise HTTPException(422, rejected)
+            if message.get('error_type') == 'OcrInputError':
+                raise HTTPException(422, 'PDF không hợp lệ, bị khóa hoặc vượt giới hạn tổng 4 trang / 20 triệu điểm ảnh mỗi trang.')
             raise HTTPException(502, 'Không thể hoàn tất xử lý. Hãy kiểm tra đầu vào hoặc môi trường OCR.')
         return {**message['result'], 'kb_version': VERSION}
 
@@ -143,21 +142,19 @@ async def recommend(request: RecommendationRequest):
 @app.post('/v1/ocr', dependencies=[Depends(authorized)])
 async def ocr(files: Annotated[list[UploadFile], File()]):
     if not 1 <= len(files) <= 4:
-        raise HTTPException(422, 'Chọn 1 file PDF hoặc từ 1 đến 4 ảnh PNG/JPEG theo thứ tự trang.')
+        raise HTTPException(422, 'Chọn PDF hoặc ảnh PNG/JPEG, tổng tối đa 4 trang theo thứ tự.')
     with tempfile.TemporaryDirectory(prefix='cpa2-ocr-') as directory:
         paths, total = [], 0
         for index, upload in enumerate(files):
             data = await upload.read(10 * 1024 * 1024 + 1)
             total += len(data)
             if len(data) > 10 * 1024 * 1024 or total > 20 * 1024 * 1024:
-                raise HTTPException(413, 'Mỗi file tối đa 10 MB, tổng tối đa 20 MB.')
+                raise HTTPException(413, 'Mỗi tệp tối đa 10 MB, tổng tối đa 20 MB.')
             if data.startswith(b'%PDF-'):
-                # PDF được mở và dựng thành ảnh trong worker (tiến trình riêng, có timeout), không ở đây
-                if len(files) != 1:
-                    raise HTTPException(422, 'Chỉ gửi một file PDF, không kèm ảnh.')
-                path = Path(directory) / 'transcript.pdf'
+                path = Path(directory) / f'input-{index}.pdf'
                 path.write_bytes(data)
-                return await run('ocr', {'pdf': str(path)}, timeout=120, rejected=PDF_REJECTED)
+                paths.append(str(path))
+                continue
             try:
                 with warnings.catch_warnings():
                     warnings.simplefilter('error', Image.DecompressionBombWarning)

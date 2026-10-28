@@ -55,6 +55,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--cleanup', action='store_true')
     parser.add_argument('--ocr', action='store_true')
+    parser.add_argument('--pdf', action='store_true', help='Verify a full synthetic PDF through cloud OCR.')
     parser.add_argument('--env-file', default=str(WEB / '.env.clerk.production'))
     args = parser.parse_args()
     key = env_values(args.env_file)['CLERK_SECRET_KEY']
@@ -74,17 +75,22 @@ def main():
             raise RuntimeError(f'{function} failed: {result.get("errorMessage", "unknown error")[:500]}')
         return result.get('value')
 
-    if args.ocr:
+    if args.ocr or args.pdf:
         state = json.loads(STATE.read_text())
         alice = state['users'][0]
         sys.path.insert(0, str(ROOT / 'CPA2_KhaoSat/w15_ocr'))
         from render_transcript import render
         sample = json.loads((ROOT / 'CPA2_KhaoSat/w7_student_facts/students/sv_lvtn.json').read_text(encoding='utf-8'))
-        image = render(sample)[0]
+        pages = render(sample)
         buffer = io.BytesIO()
-        image.save(buffer, format='PNG')
+        if args.pdf:
+            pages[0].save(buffer, format='PDF', save_all=True, append_images=pages[1:], resolution=144)
+            (WEB / '.vercel/qa-transcript.pdf').write_bytes(buffer.getvalue())
+        else:
+            pages[0].save(buffer, format='PNG')
+        content_type = 'application/pdf' if args.pdf else 'image/png'
         upload_url = success('mutation', 'uploadUrl', {'consent': True}, alice)
-        request = urllib.request.Request(upload_url, data=buffer.getvalue(), headers={'Content-Type': 'image/png'}, method='POST')
+        request = urllib.request.Request(upload_url, data=buffer.getvalue(), headers={'Content-Type': content_type}, method='POST')
         with urllib.request.urlopen(request, timeout=30) as response:
             storage_id = json.load(response)['storageId']
         job_id = success('mutation', 'startOcr', {'storageIds': [storage_id]}, alice)
@@ -102,7 +108,11 @@ def main():
                 result = job['result']
                 if not result['needs_review'] or not result['profile']['meta']['ocr_pending'] or not result['report']['tong_dong']:
                     raise RuntimeError('Cloud OCR did not preserve a nonempty draft for review.')
-                print('PASS: Convex Storage -> scheduled OCR -> Render -> draft requiring review; rows:', result['report']['tong_dong'])
+                from ocr_transcript import so_khop
+                correct, accepted, wrong = so_khop(result['profile'], sample)
+                if not accepted or correct / accepted < .99:
+                    raise RuntimeError(f'Cloud OCR accepted facts below 99% correctness: {wrong}')
+                print(f'PASS: {content_type}, {len(pages) if args.pdf else 1} page(s), Convex Storage -> scheduled OCR -> Render -> review draft; rows: {result["report"]["tong_dong"]}, correct facts: {correct}/{accepted}, KB: {result.get("kb_version")}')
                 return
             time.sleep(5)
         raise RuntimeError('Cloud OCR did not complete in the verification window.')

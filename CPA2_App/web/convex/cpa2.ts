@@ -267,22 +267,16 @@ export const startOcr = mutation({
       storageIds.length > 4 ||
       new Set(storageIds).size !== storageIds.length
     )
-      throw new ConvexError(
-        "Chọn 1 file PDF hoặc từ 1 đến 4 ảnh khác nhau theo thứ tự trang.",
-      );
+      throw new ConvexError("Chọn PDF hoặc ảnh khác nhau, tổng tối đa 4 trang.");
     let size = 0;
     for (const storageId of storageIds) {
       const file = await ctx.db.system.get(storageId);
       if (
         !file ||
         file.size > 10 * 1024 * 1024 ||
-        !["image/png", "image/jpeg", "application/pdf"].includes(
-          file.contentType ?? "",
-        )
+        !["image/png", "image/jpeg", "application/pdf"].includes(file.contentType ?? "")
       )
-        throw new ConvexError("Chỉ nhận ảnh PNG/JPEG hoặc PDF tối đa 10 MB.");
-      if (file.contentType === "application/pdf" && storageIds.length !== 1)
-        throw new ConvexError("Chỉ tải một file PDF, không kèm ảnh.");
+        throw new ConvexError("Chỉ nhận PDF hoặc ảnh PNG/JPEG tối đa 10 MB/tệp.");
       size += file.size;
       const existing = await ctx.db
         .query("files")
@@ -292,7 +286,7 @@ export const startOcr = mutation({
       await ctx.db.insert("files", { owner, storageId });
     }
     if (size > 20 * 1024 * 1024)
-      throw new ConvexError("Tổng dung lượng ảnh tối đa 20 MB.");
+      throw new ConvexError("Tổng dung lượng tệp tối đa 20 MB.");
     const recent = await ctx.db
       .query("uploads")
       .withIndex("by_owner", (q) => q.eq("owner", owner))
@@ -352,13 +346,8 @@ export const processOcr = internalAction({
         const file = await fetch(url, { signal: AbortSignal.timeout(15000) });
         if (!file.ok) throw new Error("Không đọc được ảnh.");
         const blob = await file.blob();
-        form.append(
-          "files",
-          blob,
-          blob.type === "application/pdf"
-            ? "transcript.pdf"
-            : `page-${index}.png`,
-        );
+        const extension = blob.type === "application/pdf" ? "pdf" : "png";
+        form.append("files", blob, `page-${index}.${extension}`);
       }
       const result = await python("/v1/ocr", form, 130000);
       await ctx.runMutation(anyApi.cpa2.finishOcr, {
@@ -370,7 +359,7 @@ export const processOcr = internalAction({
       await ctx.runMutation(anyApi.cpa2.finishOcr, {
         id,
         status: "error",
-        error: "OCR chưa thành công. Hãy thử ảnh rõ hơn hoặc nhập JSON.",
+        error: "OCR chưa thành công. Kiểm tra tệp PDF/ảnh (tổng tối đa 4 trang), thử ảnh rõ hơn hoặc nhập JSON.",
       });
     }
   },

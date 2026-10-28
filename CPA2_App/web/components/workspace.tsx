@@ -365,9 +365,7 @@ function CloudWorkspace() {
         files.length > 4 ||
         files.reduce((total, file) => total + file.size, 0) > 20 * 1024 * 1024
       )
-        throw new Error(
-          "Chọn 1 file PDF hoặc 1–4 ảnh, tổng dung lượng tối đa 20 MB.",
-        );
+        throw new Error("Chọn PDF hoặc ảnh, tổng tối đa 4 trang và 20 MB.");
       const storageIds = [];
       for (const file of files) {
         const url = await uploadUrl({ consent });
@@ -1202,10 +1200,10 @@ function Shell({
                     <Upload size={16} />
                     {busy === "ocr"
                       ? "Đang nhận diện…"
-                      : "Nhận diện từ ảnh hoặc PDF (OCR)"}
+                      : "Nhận diện PDF / ảnh (OCR)"}
                     <input
                       type="file"
-                      accept="image/png,image/jpeg,application/pdf"
+                      accept="application/pdf,image/png,image/jpeg"
                       multiple
                       disabled={!!busy || (!demo && !profile)}
                       hidden
@@ -1220,15 +1218,14 @@ function Shell({
                           if (
                             files.some((file) => file.size > 10 * 1024 * 1024)
                           )
-                            throw new Error("Mỗi file tối đa 10 MB.");
+                            throw new Error("Mỗi tệp tối đa 10 MB.");
                           if (
-                            files.length > 1 &&
-                            files.some(
-                              (file) => file.type === "application/pdf",
-                            )
+                            files.length > 4 ||
+                            files.reduce((sum, file) => sum + file.size, 0) >
+                              20 * 1024 * 1024
                           )
                             throw new Error(
-                              "Chỉ chọn một file PDF, không kèm ảnh.",
+                              "Tối đa 4 tệp, tổng dung lượng 20 MB và tổng 4 trang.",
                             );
                           const result = await ops.ocr(files, consent);
                           if (result) {
@@ -1245,8 +1242,8 @@ function Shell({
                     />
                   </label>
                   <small className="muted">
-                    1 PDF hoặc PNG/JPEG · tối đa 10 MB/file ·{" "}
-                    {demo ? "1–4 trang" : "1–4 trang, cần lưu hồ sơ trước"}
+                    PDF/PNG/JPEG · tối đa 10 MB/tệp · tổng 20 MB ·{" "}
+                    {demo ? "tổng 1–4 trang" : "tổng 1–4 trang, cần lưu hồ sơ trước"}
                   </small>
                 </section>
               </div>

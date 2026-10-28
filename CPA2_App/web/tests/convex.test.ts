@@ -12,9 +12,45 @@ const profile = {
   cohort: "K49",
   grades: {},
 };
-afterEach(() => vi.unstubAllGlobals());
+afterEach(() => {
+  vi.unstubAllGlobals();
+  vi.unstubAllEnvs();
+  vi.useRealTimers();
+});
 
 describe("CPA² data ownership and history", () => {
+  test("PDF uploads reach Python with their content type and keep review status", async () => {
+    vi.useFakeTimers();
+    vi.stubEnv("CPA2_API_URL", "https://python.test");
+    vi.stubEnv("CPA2_SERVICE_KEY", "test-service-key");
+    const t = createTest();
+    await t.mutation(internal.cpa2.persistProfile, { owner: "alice", profile });
+    const pdf = new Blob(["%PDF-test"], { type: "application/pdf" });
+    const storageId = await t.run(async (ctx) => ctx.storage.store(pdf));
+    const result = { profile, report: {}, needs_review: true };
+    const fetch = vi.fn(async (url: string, init?: RequestInit) => {
+      if (url === "https://python.test/v1/ocr") {
+        const file = (init!.body as FormData).get("files") as File;
+        expect(file.type).toBe("application/pdf");
+        expect(file.name).toBe("page-0.pdf");
+        expect(await file.text()).toBe("%PDF-test");
+        return new Response(JSON.stringify(result), {
+          headers: { "Content-Type": "application/json" },
+        });
+      }
+      return new Response(pdf);
+    });
+    vi.stubGlobal("fetch", fetch);
+    const alice = t.withIdentity({ subject: "alice" });
+    const id = await alice.mutation(api.cpa2.startOcr, { storageIds: [storageId] });
+    await t.finishAllScheduledFunctions(vi.runAllTimers);
+    const upload = await t.query(internal.cpa2.getUpload, { id });
+    expect(upload!.status).toBe("done");
+    expect(upload!.result).toEqual(result);
+    expect(fetch).toHaveBeenCalledTimes(2);
+  });
+
+
   test("unauthenticated reads and deletion are rejected", async () => {
     const t = createTest();
     await expect(t.query(api.cpa2.state, {})).rejects.toThrow("đăng nhập");
@@ -116,7 +152,7 @@ describe("CPA² data ownership and history", () => {
     ).rejects.toThrow("bị xóa");
   });
 
-  test("a PDF transcript is accepted only on its own", async () => {
+  test("PDF uploads reject unsupported MIME types and accept standalone PDFs", async () => {
     const t = createTest();
     await t.mutation(internal.cpa2.persistProfile, { owner: "alice", profile });
     const [pdf, png, other] = await t.run(async (ctx) => [
@@ -127,9 +163,6 @@ describe("CPA² data ownership and history", () => {
       await ctx.storage.store(new Blob(["x"], { type: "text/plain" })),
     ]);
     const alice = t.withIdentity({ subject: "alice" });
-    await expect(
-      alice.mutation(api.cpa2.startOcr, { storageIds: [pdf, png] }),
-    ).rejects.toThrow("một file PDF");
     await expect(
       alice.mutation(api.cpa2.startOcr, { storageIds: [other] }),
     ).rejects.toThrow("PDF");
