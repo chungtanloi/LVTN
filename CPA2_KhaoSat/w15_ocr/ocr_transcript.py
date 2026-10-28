@@ -658,6 +658,37 @@ def sang_ho_so(doc, khai_bao=None, tau=None):
     # một lần học khác đọc chắc: điểm cuối là điểm cao nhất (R-B13) mà ta không biết
     for m in khong_chac:
         grades.pop(m, None)
+    # Keep observed, rejected rows available for review without admitting their
+    # provisional scores into student facts. Do not invent rows for alternative
+    # course codes inferred by the ambiguity checks above.
+    bc['dong_can_ra_soat'] = []
+    for hi, hk in enumerate(doc['hoc_ky']):
+        for ri, d in enumerate(hk['dong']):
+            ma = d.get('ma')
+            if ma == 'SHCVHT' or ma in grades:
+                continue
+            check = kiem_dong(d, ct, tau)
+            special = anh_xa_dac_biet(d)
+            reasons = (['Dòng miễn học cần xác nhận từ Phòng Đào tạo trước khi quy đổi sang học phần.']
+                       if special and 'duoc_mien' in special else [
+                           f"Độ tin cậy OCR thấp ({check['conf']:.0%}); cần đối chiếu dữ liệu gốc."
+                           if reason.startswith('confidence ') else
+                           'Điểm chữ chưa khớp điểm tổng hợp OCR.' if 'R-B02' in reason else
+                           'Chưa đối chiếu được mã này với CTĐT hiện tại.' if reason == 'mã ngoài CTĐT' else
+                           'Chưa đọc đủ điểm tổng hợp và điểm chữ.' if reason == 'thiếu điểm' else reason
+                           for reason in check['ly_do']])
+            reasons += [f'Học kỳ cần đối chiếu: {issue}' for issue in bc['hoc_ky_lech']
+                        if issue == hk['ten'] or issue.startswith(hk['ten'] + ' (')]
+            if not reasons:
+                reasons.append('Mã học phần hoặc một lần học khác còn chưa chắc; cần đối chiếu bảng điểm gốc.')
+            score = d.get('thop')
+            bc['dong_can_ra_soat'].append({
+                'id': f'{hi + 1}:{ri + 1}', 'ma': ma, 'hoc_ky': hk['ten'],
+                'tc': d.get('tc'), 'thang10': round(score * 10) if score is not None else None,
+                'diem_chu': 'M' if d.get('mien') else d.get('chu'),
+                'confidence': round(check['conf'], 3),
+                'ly_do': list(dict.fromkeys(reasons)), 'ocr_raw': d.get('ocr_raw'),
+            })
     # câu hỏi bổ sung: một số ĐTBCHK cho mỗi học kỳ mất số (thay cho cả học kỳ) + HP không chắc vì lý do khác
     bc["can_hoi"] = hoi_dtb + [m for m in khong_chac if m in ly_do_khac or m not in chi_do_dtb]
     extra = lua_chon(khong_chac)

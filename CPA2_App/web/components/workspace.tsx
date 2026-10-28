@@ -8,6 +8,7 @@ import {
   ArrowDownToLine,
   ArrowRight,
   ArrowUpRight,
+  AlertTriangle,
   BookOpen,
   Check,
   CheckCheck,
@@ -44,6 +45,7 @@ import type {
   Recommendation,
   Tab,
 } from "@/lib/types";
+import { transcriptRows } from "@/lib/transcript-review";
 
 type Data = {
   profile: Profile | null;
@@ -537,7 +539,7 @@ function Shell({
           (report.khong_chac?.length ?? 0) > 0 ||
           (report.dong_an ?? 0) > 0 ||
           (report.can_hoi?.length ?? 0) > 0 ||
-          ["hoc_ky_lech", "can_xac_nhan", "ngoai_ctdt", "khai_bao_loi"].some(
+          ["hoc_ky_lech", "can_xac_nhan", "ngoai_ctdt", "khai_bao_loi", "dong_can_ra_soat"].some(
             (key) => Array.isArray(report[key]) && report[key].length > 0,
           )
         )
@@ -586,8 +588,13 @@ function Shell({
     "tc_diem_f",
     "ky_luat_canh_cao_cap_truong",
   ].filter((key) => profile?.[key] == null);
-  const shownGrades = Object.entries(draft.grades).filter(([code]) =>
-    `${code} ${courseMap.get(code)?.ten ?? ""}`
+  const allTranscriptRows = transcriptRows(
+    draft.grades,
+    ocrResult?.report ?? draft.meta?.ocr_report,
+  );
+  const reviewCount = allTranscriptRows.filter((row) => row.needsReview).length;
+  const shownGrades = allTranscriptRows.filter((row) =>
+    `${row.code ?? ""} ${courseMap.get(row.code ?? "")?.ten ?? ""} ${row.semester} ${row.raw}`
       .toLocaleLowerCase("vi")
       .includes(filter.toLocaleLowerCase("vi")),
   );
@@ -1283,7 +1290,8 @@ function Shell({
                   <p>
                     Đã nhận diện {ocrResult.report.tong_dong ?? "—"} dòng học phần;
                     {" "}{Object.keys(ocrResult.profile.grades).length} môn đã qua
-                    kiểm chéo và được đưa vào danh sách bên dưới.
+                    kiểm chéo. Các dòng chưa chắc cũng có trong danh sách, kèm
+                    cảnh báo để đối chiếu.
                   </p>
                   {!!ocrResult.report.hoc_ky_lech?.length && (
                     <p>
@@ -1320,7 +1328,7 @@ function Shell({
                   <h2>
                     Danh sách học phần{" "}
                     <span className="count">
-                      {Object.keys(draft.grades).length}
+                      {allTranscriptRows.length}
                     </span>
                   </h2>
                   <div className="search-field">
@@ -1333,6 +1341,14 @@ function Shell({
                     />
                   </div>
                 </div>
+                {reviewCount > 0 && (
+                  <p className="ocr-list-warning" role="status">
+                    <AlertTriangle size={17} aria-hidden="true" />
+                    {reviewCount} dòng cần xem lại được tô vàng và xếp lên đầu.
+                    Mở cảnh báo ở từng dòng để xem lý do và dữ liệu OCR gốc.
+                    Điểm chưa chắc chưa được dùng để tư vấn.
+                  </p>
+                )}
                 <div className="add-course">
                   <select
                     aria-label="Học phần cần thêm"
@@ -1408,16 +1424,34 @@ function Shell({
                       </tr>
                     </thead>
                     <tbody>
-                      {shownGrades.map(([code, grade]) => (
-                        <tr key={code}>
+                      {shownGrades.map((row) => {
+                        const { grade } = row;
+                        const code = row.code ?? "";
+                        return (
+                        <tr key={row.key} className={row.needsReview ? "ocr-pending-row" : undefined}
+                          data-review-status={row.needsReview ? "needs_review" : "accepted"}>
                           <td>
-                            <strong>{code}</strong>
+                            <strong>{code || "Chưa rõ mã"}</strong>
                           </td>
                           <td>
                             {courseMap.get(code)?.ten ?? "Chưa ánh xạ CTĐT"}
+                            {row.needsReview && (
+                              <details className="ocr-row-review">
+                                <summary><AlertTriangle size={14} aria-hidden="true" /> Cần xem lại</summary>
+                                {row.semester && <p>Học kỳ: {row.semester}</p>}
+                                <ul>{row.reasons.map((reason, index) => <li key={index}>{reason}</li>)}</ul>
+                                {row.raw && <pre>{row.raw}</pre>}
+                                <p className="muted small">Giá trị OCR tạm thời; cần đối chiếu bảng điểm gốc.</p>
+                              </details>
+                            )}
                           </td>
                           <td>{grade.credits ?? "—"}</td>
                           <td>
+                            {!row.stored ? (
+                              <span aria-label={`Điểm OCR ${code || "chưa rõ mã"}`}>
+                                {grade.thang10 == null ? "—" : grade.thang10 / 10}
+                              </span>
+                            ) : (
                             <input
                               aria-label={`Điểm ${code}`}
                               className="score-input"
@@ -1452,15 +1486,17 @@ function Shell({
                                 });
                               }}
                             />
+                            )}
                           </td>
                           <td>
                             <span
-                              className={`grade-pill ${gradeLetter(grade) === "F" ? "fail" : ""}`}
+                              className={`grade-pill ${!row.needsReview && gradeLetter(grade) === "F" ? "fail" : ""}`}
                             >
-                              {gradeLetter(grade)}
+                              {row.needsReview ? grade.letter ?? grade.diem ?? "—" : gradeLetter(grade)}
                             </span>
                           </td>
                           <td>
+                            {row.stored && (
                             <button
                               className="icon-button danger-hover"
                               aria-label={`Xóa ${code}`}
@@ -1472,9 +1508,11 @@ function Shell({
                             >
                               <Trash2 size={15} />
                             </button>
+                            )}
                           </td>
                         </tr>
-                      ))}
+                        );
+                      })}
                     </tbody>
                   </table>
                   {!shownGrades.length && (

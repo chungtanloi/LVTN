@@ -1226,6 +1226,32 @@ td .score-input {
   font-size: 12px;
   margin: 12px 0;
 }
+.ocr-list-warning {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin: 12px 0;
+  color: #86590d;
+  font-size: 12px;
+  line-height: 1.6;
+}
+.ocr-list-warning svg { flex-shrink: 0; margin-top: 2px; }
+tr.ocr-pending-row > td { background: #fff8e7; }
+tr.ocr-pending-row > td:first-child { border-left: 3px solid #d7a13a; }
+.ocr-row-review { margin-top: 6px; max-width: 48ch; white-space: normal; }
+.ocr-row-review summary {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  width: fit-content;
+  color: #86590d;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.ocr-row-review p, .ocr-row-review ul { margin: 8px 0; font-size: 12px; }
+.ocr-row-review ul { padding-left: 18px; }
+.ocr-row-review pre { white-space: pre-wrap; overflow-wrap: anywhere; font-size: 11px; }
 .chat-content {
   display: flex;
   flex-direction: column;

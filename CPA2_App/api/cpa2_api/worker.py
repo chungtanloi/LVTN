@@ -30,7 +30,7 @@ def execute(operation, payload):
     profile = normalize(payload['profile'])
     metadata = profile.get('meta', {})
     report = metadata.get('ocr_report') or {}
-    unresolved_ocr = any(report.get(key) for key in ('khong_chac', 'dong_an', 'can_hoi', 'hoc_ky_lech', 'can_xac_nhan', 'ngoai_ctdt', 'khai_bao_loi'))
+    unresolved_ocr = any(report.get(key) for key in ('khong_chac', 'dong_an', 'can_hoi', 'hoc_ky_lech', 'can_xac_nhan', 'ngoai_ctdt', 'khai_bao_loi', 'dong_can_ra_soat'))
     if metadata.get('nguon') == 'ocr' and (metadata.get('ocr_pending', True) or not metadata.get('reviewed_by_user') or unresolved_ocr):
         return {'verdict': 'UNKNOWN', 'reason': 'OCR_REVIEW_REQUIRED', 'claim': 'input_incomplete',
                 'explanation_vi': 'Bảng điểm OCR còn chờ kiểm tra. Hãy bổ sung các dòng và dữ kiện chưa chắc trước khi tư vấn.',

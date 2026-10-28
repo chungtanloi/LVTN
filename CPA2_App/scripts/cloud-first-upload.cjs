@@ -50,6 +50,14 @@ const state = JSON.parse(fs.readFileSync(path.join(app, 'web/.vercel/cloud-qa.js
     await chooser.setFiles(path.join(app, 'web/.vercel/first-upload.pdf'));
     await page.getByRole('heading', { name: 'Bản nháp OCR — cần rà soát' }).waitFor({ timeout: 270000 });
     assert.match(await page.locator('.ocr-review').innerText(), /Đã nhận diện \d+ dòng học phần;\s*\d+ môn đã qua kiểm chéo/);
+    const pendingRows = page.locator('tr[data-review-status="needs_review"]');
+    const pendingCount = await pendingRows.count();
+    assert.ok(pendingCount > 0, 'Uncertain observed rows must remain visible.');
+    assert.equal(await page.locator('tbody tr').first().getAttribute('data-review-status'), 'needs_review');
+    assert.equal(await pendingRows.locator('input.score-input').count(), 0);
+    await pendingRows.first().locator('summary').click();
+    assert.equal(await pendingRows.first().locator('details').getAttribute('open'), '');
+    console.log(`PASS review list: ${pendingCount} warning rows visible first, details open, provisional scores kept out of editable facts.`);
     await page.screenshot({ path: path.join(app, 'web/.vercel/cloud-first-upload.png'), fullPage: true });
     assert.deepEqual(errors, []);
     console.log('PASS first upload: PDF -> Convex -> OCR draft without saving a profile; no JavaScript errors.');
