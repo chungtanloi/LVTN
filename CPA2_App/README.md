@@ -35,6 +35,7 @@ Chế độ cục bộ dùng hồ sơ giả lập. Hồ sơ và lịch sử trê
 - Chứng chỉ, bước chứng minh, nguồn quy chế, dữ kiện thiếu và xuất kết quả JSON.
 - Đề xuất đăng ký một học kỳ, tra cứu đoạn quy chế và lịch sử gắn với phiên bản hồ sơ.
 - OCR PDF hoặc ảnh PNG/JPEG theo thứ tự, tổng 1–4 trang; mỗi tệp tối đa 10 MB, tổng tối đa 20 MB và 20 triệu điểm ảnh/trang. PDF được dựng ảnh trong tiến trình OCR có thời hạn; PDF hỏng, cần mật khẩu hoặc quá số trang bị từ chối. Dữ kiện không chắc tiếp tục bị chặn.
+- Sửa và duyệt từng dòng OCR; kiểm tra lại học kỳ, bổ sung môn thiếu, sửa số tổng và lưu tiến trình rà soát theo tài khoản.
 - Backend Convex cho lưu hồ sơ có đồng ý, phiên bản bất biến, hội thoại riêng từng tài khoản, tác vụ OCR và xóa dữ liệu.
 
 Điểm chữ từ niên luận không được đổi thành một điểm số tùy ý. Nếu thiếu điểm thang 10, CPA² yêu cầu bổ sung trước khi suy luận. Số GPA/tín chỉ trên dashboard là thống kê mô tả, không thay thế kết luận tốt nghiệp của solver.
@@ -63,6 +64,7 @@ Các endpoint `/v1/*` yêu cầu `Authorization: Bearer <CPA2_SERVICE_KEY>`. `/h
 | `POST /v1/advice` | `{ profile, question }` → verdict, certificate, nguồn, missing facts |
 | `POST /v1/recommendations` | `{ profile, semester: 1..3 }` → học phần hợp lệ, chứng chỉ, mục cần xác minh |
 | `POST /v1/lookup` | `{ question }` → đoạn nguồn, không kết luận về sinh viên |
+| `POST /v1/ocr/review` | `{ profile, action, ... }` → sửa/duyệt dòng, thêm/loại dòng hoặc sửa số tổng; kiểm tra lại hồ sơ |
 | `POST /v1/ocr` | Multipart `files` (PDF/PNG/JPEG, tổng ≤4 trang) → hồ sơ nháp và báo cáo kiểm chéo |
 
 ## Đưa lên Vercel + Convex + Clerk + Render

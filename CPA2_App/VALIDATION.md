@@ -1,5 +1,23 @@
 # Trạng thái triển khai CPA² — cập nhật 28/10/2026
 
+## Sửa, duyệt và lưu tiến trình rà soát OCR — 28/10/2026
+
+Đã phát hành `d2c3a7b17b67dc4f5b7ea3017e30ae63ee705b04`: Render `dep-dbgsjaec6qcc73chq9p0` live; Convex production cập nhật; Vercel `dpl_ApSGgPwRbGE3CqTC2PvbZwEJhh96` READY tại https://cpa2-web.vercel.app. Health và runtime đóng gói xác nhận KB `541d234241cb14f6`. Hash runtime nay gồm bộ đọc PDF, worker và bộ kiểm tra rà soát OCR để phản ánh đường nhập dữ kiện đã sửa.
+
+Từng dòng có Sửa & duyệt: sửa mã học phần, tín chỉ, điểm thang 10 và điểm chữ, rồi bấm Duyệt dòng này. Server kiểm tra mã/TC theo CTĐT, miền điểm và đối chiếu điểm chữ, sau đó dựng lại hồ sơ và chạy lại kiểm chéo học kỳ/tích lũy. Dòng đạt được đánh dấu Đã duyệt; nếu vẫn có lỗi học kỳ hoặc một lần học khác chưa chắc, cảnh báo liên quan còn giữ. Có bổ sung môn thiếu vào học kỳ được chọn, loại dòng nhận nhầm (giữ bản trước trong lịch sử), sửa/duyệt số tổng theo bảng điểm gốc và xác nhận cuối cùng trước khi lưu hồ sơ. Dòng miễn CC004 cần xác nhận Phòng Đào tạo; mã ngoài CTĐT chưa được duyệt như một môn đã ánh xạ.
+
+Điểm đã duyệt ghi source=manual_review và reviewed_by_user; độ tin cậy OCR gốc không bị nâng giả lên 100%. Dữ liệu nhận diện gốc và các lần sửa được giữ trong ngữ cảnh rà soát. Nút đối chiếu toàn bảng không thay thế kiểm tra các dòng còn lỗi. Các hồ sơ OCR cũ thiếu ngữ cảnh cần chạy OCR lại một lần. Không suy lại điểm số từ chuỗi raw.
+
+Tiến trình trên tác vụ OCR được lưu theo tài khoản, tiếp tục sau reload; kiểm tra phiên bản ngăn hai tab ghi đè âm thầm và ngăn tác vụ đang chạy khôi phục dữ liệu đã xóa. Với bản OCR có uploadId, review và save dùng báo cáo server đang lưu, không tin việc client xóa cờ cảnh báo. Muốn lưu điểm đã chỉnh phải qua Sửa & duyệt; không thể đổi metadata để bỏ qua các dòng chưa giải quyết. Hồ sơ sau lưu vẫn có phiên bản riêng.
+
+Kiểm tra: 44 ca API (43 đạt, 1 bỏ qua fixture mật khẩu thiếu pypdf), gồm 9 ca sửa/duyệt; chạy lại 9 ca sau kiểm tra cuối đạt. Web 18/18, TypeScript và build đạt; runtime đóng gói đạt. Các nhóm lỗi OCR C/E/F/G đạt, gồm đọc sai GDQP/GDTC, thiếu dòng, miễn tín chỉ và sai số tổng. Không chạy lại toàn bộ benchmark nghiên cứu. Checklist React được áp dụng cho hooks, lỗi inline, nhãn biểu mẫu và chỉ dựng danh sách chọn môn khi mở editor.
+
+Browser production bằng dữ liệu tổng hợp:
+
+- Hồ sơ một dòng CT101 có OCR confidence thấp: sửa 9,7/B → server từ chối và hiển thị lỗi ngay trong editor; đổi thành 9,7/A → được duyệt, hết cảnh báo, xác nhận cuối bảng → lưu → reload giữ đúng điểm và nguồn manual_review. Đã xem ảnh `web/.vercel/cloud-approval-edit.png` và `cloud-approved-saved.png`.
+- Tài khoản chưa có hồ sơ tải PDF tổng hợp, nhận 17 dòng/7 cảnh báo; sửa và duyệt một dòng theo gold, reload tự mở bản rà soát còn dang dở, giữ dấu đã duyệt và lịch sử sửa. Các cảnh báo khác vẫn tồn tại. Lượt kiểm tra đầu dừng vì selector summary khớp cả cảnh báo và editor; đã sửa selector, kiểm tra lại trên cùng tác vụ OCR thành công, không tính lượt đầu là đạt.
+- Truy vấn lại xác nhận hồ sơ đã lưu có CT101=97/A, ocr_pending=false, reviewed_by_user=true; tác vụ chưa hoàn tất của tài khoản kia có lịch sử một lần duyệt và thời điểm cập nhật để tiếp tục. Không có lỗi JavaScript. Đã xóa cả hai tài khoản kiểm thử và dữ liệu Convex, kiểm tra state rỗng. Chỉ dùng hồ sơ tổng hợp trên cloud.
+
 ## Hiển thị dòng OCR chưa chắc trong danh sách — 28/10/2026
 
 Đã phát hành `20b257598d734187b822ef3146c3c423d26e775b` tại https://cpa2-web.vercel.app: Render `dep-dbgs15vlk1mc739bp21g` live; Vercel `dpl_GcA9JGBqfae6LTwhpMz9gCwdFPYn` READY, KB `3ba129435078c712`. Không thay schema Convex hoặc thuật toán chấp nhận điểm.
