@@ -431,9 +431,20 @@ def _tich_luy(hoc_ky, ct):
     học lại lấy điểm cao nhất; TC tích lũy gồm HP điều kiện. Dòng không có điểm chữ khớp T.Hợp → đạt/rớt chưa biết.
     Trả {'tc': tập các TC tích lũy có thể (có/không cộng TC dòng miễn — theo MIEN_TRONG_TC_TICH_LUY — × mọi khả năng
          đạt của HP chưa biết), 'chac': mọi dòng đều biết điểm, 'mien': tổng TC dòng miễn, 'dtb': ĐTBCTL (None nếu chưa
-         chắc hoặc chưa có HP tính), 'mau': TC tính ĐTBCTL} hoặc None nếu có dòng không đọc được TC."""
+         chắc hoặc chưa có HP tính), 'mau': TC tính ĐTBCTL} hoặc None nếu chưa đối chiếu đủ dòng theo tổng TC đăng ký hoặc có dòng không đọc được TC."""
     tot, chua_ro, mien = {}, {}, 0
     for hk in hoc_ky:
+        # Printed cumulative credits cover every registration row. A prefix
+        # with missing rows is not a complete sum to compare against them.
+        # Comparing that partial sum used to blame all earlier semesters back
+        # to the last unambiguous anchor (especially with CC004 exemptions).
+        rows = [d for d in hk['dong'] if d.get('ma') != 'SHCVHT']
+        if any(d.get('tc') is None for d in rows):
+            return None
+        totals = (sum(d['tc'] for d in rows),
+                  sum(d['tc'] for d in rows if not d.get('mien')))
+        if hk.get('tong_dk') is None or hk['tong_dk'] not in totals:
+            return None
         for d in hk["dong"]:
             ma = d.get("ma")
             if ma == "SHCVHT":
@@ -505,7 +516,7 @@ def sang_ho_so(doc, khai_bao=None, tau=None):
     hoi_dtb, chi_do_dtb, ly_do_khac = [], set(), set()          # P20-4: HP chỉ không chắc vì mất ĐTBCHK → hỏi 1 số
     bc = {"tong_dong": 0, "nhan": 0, "loai": 0, "khong_chac": khong_chac, "hoc_ky_lech": [], "dong_an": 0,
           "can_xac_nhan": [], "ngoai_ctdt": [], "chi_tiet": [], "dtbchk_khai_bao": [], "khai_bao_loi": [],
-          "tich_luy_kiem_cheo": []}
+          "tich_luy_kiem_cheo": [], "doi_chieu_hoc_ky": []}
     ten_doc = {_ten_hk(hk["ten"]) for hk in doc["hoc_ky"]}
     bc["khai_bao_loi"] += [f"dtbchk_khai_bao: không có học kỳ '{k}' trên bảng điểm ({sorted(ten_doc)})"
                            for k in dtb_khai if k not in ten_doc]
@@ -577,6 +588,13 @@ def sang_ho_so(doc, khai_bao=None, tau=None):
         if mat_dtb and not nghi and (lech_dtb or qp_mo):        # TC tích lũy lệch thì một số ĐTBCHK không cứu được
             hoi_dtb.append(f"dtbchk:{hk['ten']}")
         tin.append(not lech_tc and not lech_dtb and not nghi)
+        bc['doi_chieu_hoc_ky'].append({
+            'hoc_ky': hk['ten'], 'so_dong': len(dong),
+            'tong_tc_dang_ky_ocr': hk['tong_dk'], 'tong_tc_cac_dong': tc,
+            'du_dong_theo_tong_tc': not lech_tc,
+            'tc_tich_luy_ocr': hk.get('tc_tich_luy'),
+            'tc_tich_luy_tinh_lai': sorted(tl[i]['tc']) if tl[i] is not None else None,
+        })
         for d in dong:
             dac_biet = anh_xa_dac_biet(d)
             if dac_biet and "duoc_mien" in dac_biet:

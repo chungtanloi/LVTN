@@ -76,6 +76,8 @@ export type Demo = { id: string; name: string; profile: Profile };
 export type OcrResult = {
   profile: Profile;
   report: {
+    tong_dong?: number;
+    hoc_ky_lech?: string[];
     khong_chac?: string[];
     dong_an?: number;
     can_hoi?: string[];

@@ -1270,7 +1270,7 @@ function Shell({
                     {(
                       {
                         pending: "Đang chờ xử lý",
-                        processing: "Đang nhận diện ảnh",
+                        processing: "Đang nhận diện bảng điểm",
                         done: "Đã có bản nháp, cần rà soát",
                       } as Record<string, string>
                     )[data.ocrStatus] ?? data.ocrStatus}
@@ -1280,6 +1280,16 @@ function Shell({
               {ocrResult && (
                 <section className="panel ocr-review">
                   <h2>Bản nháp OCR — cần rà soát</h2>
+                  <p>
+                    Đã nhận diện {ocrResult.report.tong_dong ?? "—"} dòng học phần;
+                    {" "}{Object.keys(ocrResult.profile.grades).length} môn đã qua
+                    kiểm chéo và được đưa vào danh sách bên dưới.
+                  </p>
+                  {!!ocrResult.report.hoc_ky_lech?.length && (
+                    <p>
+                      Học kỳ cần đối chiếu: {ocrResult.report.hoc_ky_lech.join(", ")}.
+                    </p>
+                  )}
                   <p>
                     Hệ thống chưa dùng bản nháp này để kết luận. Dữ kiện chưa
                     chắc:{" "}

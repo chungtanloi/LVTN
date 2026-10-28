@@ -329,6 +329,25 @@ def phan_G():
     hs, bc, v = chay(_doc_hoan_hao(j, tich_luy=True))
     check(v == "TRUE" and not bc["hoc_ky_lech"] and not bc["khong_chac"] and not bc.get("tich_luy_kiem_cheo"),
           f"G0 bảng điểm sạch có số tích lũy → TRUE, không học kỳ nào bị nghi ({bc['hoc_ky_lech']})")
+    # A lost row in the final semester must not turn a partial cumulative sum
+    # into evidence against all earlier semesters with an exemption ambiguity.
+    for missing_total in (False, True):
+        doc = _doc_hoan_hao(j, tich_luy=True)
+        doc['hoc_ky'][1]['dong'].append({
+            'ma': 'CC004', 'tc': 10, 'mien': True,
+            'conf': {'ma': .99, 'tc': .99},
+        })
+        _ghi_tich_luy(doc)
+        last = doc['hoc_ky'][-1]
+        last['dong'].pop()
+        if missing_total:
+            last['tong_dk'] = None
+        hs, bc, v = chay(doc)
+        earlier = {h['ten'] for h in doc['hoc_ky'][:-1]}
+        check(O._tich_luy(doc['hoc_ky'], O.ctdt()) is None
+              and not any(h + ' (TC tích lũy)' in bc['hoc_ky_lech'] for h in earlier)
+              and 'CT100' in hs['grades'] and bc['dong_an'] > 0 and v == 'UNKNOWN',
+              f'G16 thiếu dòng HK cuối, tổng mất={missing_total}: không nghi ngược HK trước, vẫn UNKNOWN ({v})')
     # G1 (= OCR-Noise M2) mất ĐTBCHK, số tích lũy đọc được và khớp → tin học kỳ, không cần hỏi
     doc = _doc_hoan_hao(j, tich_luy=True)
     hk, _ = _dong(doc, "CT177")
