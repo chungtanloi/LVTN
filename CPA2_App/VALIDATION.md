@@ -10,6 +10,10 @@ Bộ kiểm tra mới tập trung các nguồn vừa sửa: 12 câu tìm nguồn
 
 Kiểm tra cục bộ: API 50 ca (49 đạt, 1 bỏ qua do thiếu pypdf tạo fixture mật khẩu), gồm 6 ca nguồn sạch/phân giải/hỏi lại; ranker/grounding 21/21. Web 18/18, TypeScript và build đạt. Runtime đóng gói đạt, KB `ca4c5987580ad591`. Không chạy lại benchmark OCR toàn bộ.
 
+Production code `f4e19243c5d3ea2acb5e5e673bf36ad57d702376`: Render `dep-dbhh6mo8v5cc738g0lg0` live; Vercel `dpl_DZwANGM37edLGifg6JEF3Eb3f4hs` READY, main domain đã gắn; health xác nhận `ca4c5987580ad591`. Không thay Convex. Kiểm tra bằng tài khoản tổng hợp: đăng nhập, kết luận/proof, lịch sử và sửa hồ sơ vẫn đạt; tra nguồn giữ CT177, lọc Điều 14; tra khoản 4 Điều 22 trả đúng nội dung công bố điểm và liên kết PDF trang 14; câu thiếu mã hiện yêu cầu bổ sung và nút điền câu mẫu. Tải lại hai PDF production và kiểm tra kích thước/SHA-256 khớp bản gốc. Đã xem ảnh `cloud-source-corrected.png` và `cloud-source-clarification.png` trong `web/.vercel`; desktop/mobile đạt, không có lỗi JavaScript.
+
+Hai lượt browser đầu dừng do selector của kịch bản cũ: Điều 14 sau làm sạch không còn dài để mở rộng; selector đoạn trích cũng khớp thêm đoạn chứa link PDF. Đã sửa selector, chuyển kiểm tra mở rộng sang điểm W, chạy lại riêng luồng nguồn và đạt (exit 0). Không tính hai lượt đầu là đạt. Đã xóa cả hai tài khoản thử và dữ liệu Convex của chúng; không dùng bảng điểm thật trên cloud.
+
 # Cải tiến RAG ngày 29/10/2026
 
 Runtime tra cứu chuyển sang `retrieval_model_v3.json` với `rag_survey_train_sources_v2.json`, áp dụng bản soát nguồn TRAIN đã có: 41 câu được đối chiếu với errata, bỏ 7 ví dụ chưa có nguồn xác nhận khỏi 67 ví dụ dương, còn 60 câu thuộc 22 nhóm. Chọn trọng số bằng DEV và TRAIN loại toàn bộ ví dụ cùng nhóm; không dùng nhãn TEST để chọn trọng số. Bản thử v2 dùng nhãn cũ được giữ riêng và không triển khai. Hai bộ TEST đều đã biết, chỉ là chẩn đoán, chưa phải đánh giá độc lập mới.
