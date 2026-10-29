@@ -89,7 +89,7 @@ async function ticket(user) {
     const full = await source.locator('details p').innerText();
     assert.ok(full.length > excerpt.length && full.includes(excerpt));
     assert.ok(excerpt.length <= 300);
-    await page.screenshot({ path: path.join(app, 'web/.vercel/cloud-rag-v2.png'), fullPage: true });
+    await page.screenshot({ path: path.join(app, 'web/.vercel/cloud-rag-v3.png'), fullPage: true });
     console.log('PASS browser: exact article reference -> query excerpt -> expandable original source.');
     await page.getByRole('button', { name: 'Tổng quan', exact: true }).click();
     await page.screenshot({ path: path.join(app, 'cloud-dashboard.png'), fullPage: true });

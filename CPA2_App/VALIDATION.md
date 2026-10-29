@@ -8,6 +8,10 @@ Thêm ràng buộc số điều chính xác, giữ mã môn khi tra CTĐT, mã k
 
 Kiểm tra cục bộ: 21/21 ca ranker/grounding; tái lập dữ liệu TRAIN từ errata trùng khớp; huấn luyện lại tái lập đúng hash mô hình `b27cde64fa4b06c5ac1bd77238a71c50e33c2343cbeac28be11e0fe04426a66c`. API 44 ca (43 đạt, 1 bỏ qua do thiếu pypdf dựng fixture mật khẩu) với bản thử v2; runtime đóng gói v3 đạt, KB `fd34e20b8fbf5fad`. Web 18/18, TypeScript và build đạt. Không chạy lại benchmark OCR toàn bộ.
 
+Production commit `333b59841d9bf44d2298bd6c3597897a623ff509`: Render `dep-dbhgmiu1egvs73fhb420` live; Vercel `dpl_128J5gucd5a5NEAJ1TqWUR15XDTy` READY và gắn https://cpa2-web.vercel.app. Health xác nhận KB `fd34e20b8fbf5fad`. Chạy lại 4 ca API tra cứu với v3 đạt. Không đổi Convex trong lần này.
+
+Browser production bằng hồ sơ tổng hợp: đăng nhập Clerk, Convex gọi Render, trả kết luận có chứng minh và lưu lịch sử; tra CT177 giữ đúng tiên quyết CT101; yêu cầu QĐ3266 Điều 14 chỉ trả các passage Điều 14; mở toàn bộ đoạn nguồn và kiểm tra đoạn trích là chuỗi con nguyên văn, không quá 300 ký tự. Đã xem ảnh `web/.vercel/cloud-rag-v3.png`; bố cục desktop/mobile đạt, không có lỗi JavaScript. Đã xóa cả hai tài khoản thử và toàn bộ dữ liệu Convex của chúng. Không đưa bảng điểm thật lên cloud.
+
 # Trạng thái triển khai CPA² — cập nhật 28/10/2026
 
 ## Sửa, duyệt và lưu tiến trình rà soát OCR — 28/10/2026
