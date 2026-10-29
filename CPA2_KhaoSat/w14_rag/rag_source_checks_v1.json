@@ -1,0 +1,26 @@
+{
+  "meta": {
+    "date": "2026-10-29",
+    "purpose": "Targeted source-delivery checks, not a representative independent RAG benchmark.",
+    "origin": "New synthetic wording and AI source labels against visually inspected PDFs; one annotator. Frozen before first prediction on this file. Do not tune on these results.",
+    "source_scope": "QD3266 PDF pages 8, 14, 15; QD5339 PDF page 7. No student logs."
+  },
+  "queries": [
+    {"id":"SRC01","q":"Trường giới hạn số tín chỉ sinh viên học mỗi kỳ ở mức nào?","gold":["qd3266:D14:K1"]},
+    {"id":"SRC02","q":"Tân sinh viên tự chọn các học phần học kỳ nhập học hay nhà trường bố trí?","gold":["qd3266:D14:K2","qd3266:D13:K2"]},
+    {"id":"SRC03","q":"Điểm M xác nhận điều gì và ảnh hưởng tổng tín chỉ tích lũy ra sao?","gold":["qd3266:D22:K5"]},
+    {"id":"SRC04","q":"Nếu học phần nhận W, điểm trung bình tích lũy có bị ảnh hưởng không?","gold":["qd3266:D22:K5"]},
+    {"id":"SRC05","q":"Trì hoãn thi vì ốm được nhận I trong thời gian bao lâu?","gold":["qd3266:D22:K5"]},
+    {"id":"SRC06","q":"Từ mức điểm chữ nào học phần được cộng tín chỉ tích lũy?","gold":["qd3266:D22:K3"]},
+    {"id":"SRC07","q":"Theo QĐ3266 Điều 22 khoản 4, hệ thống lưu điểm học phần bằng dạng nào?","gold":["qd3266:D22:K4"]},
+    {"id":"SRC08","q":"Tính điểm trung bình năm có đưa môn rớt vào không?","gold":["qd3266:D24:K3"]},
+    {"id":"SRC09","q":"Điểm tích lũy loại những học phần nào ra khỏi phép tính?","gold":["qd3266:D24:K4"]},
+    {"id":"SRC10","q":"Xếp loại học tập năm dùng chỉ số nào thay cho chỉ số học kỳ?","gold":["qd3266:D24:K5"]},
+    {"id":"SRC11","q":"Đã học giáo dục thể chất ở văn bằng thứ nhất thì văn bằng thứ hai có được miễn không?","gold":["qd5339:D3:K8"]},
+    {"id":"SRC12","q":"Không đủ sức khỏe học một số nội dung thể chất có môn cờ vua thay thế không?","gold":["qd5339:D3:K8"]},
+    {"id":"SRC13","q":"Cho hỏi tiên quyết của học phần đó?","expected":"clarification"},
+    {"id":"SRC14","q":"Em có được đăng ký môn này không?","expected":"clarification"},
+    {"id":"SRC15","q":"Em đã đủ điều kiện nhận bằng chưa?","expected":"clarification"},
+    {"id":"SRC16","q":"Theo QĐ3266 Điều 22 khoản 400 thì sao?","expected":"empty"}
+  ]
+}

@@ -63,7 +63,7 @@ type Operations = {
   ask: (question: string) => Promise<Message>;
   lookup: (
     question: string,
-  ) => Promise<{ passages: Record<string, unknown>[] }>;
+  ) => Promise<{ passages: Record<string, unknown>[]; clarification?: { message: string; examples: string[] } }>;
   recommend: (semester: number) => Promise<Recommendation>;
   ocr: (files: File[], consent: boolean) => Promise<OcrResult | null>;
   reviewOcr: (profile: Profile, change: OcrReviewChange, consent: boolean) => Promise<OcrResult>;
@@ -482,6 +482,7 @@ function Shell({
   const [sourceQuestion, setSourceQuestion] = useState(""),
     [passages, setPassages] = useState<Record<string, unknown>[]>([]),
     [searched, setSearched] = useState(false);
+  const [sourceClarification, setSourceClarification] = useState<{ message: string; examples: string[] } | null>(null);
   const [deleteOpen, setDeleteOpen] = useState(false);
   const end = useRef<HTMLDivElement>(null);
   useEffect(() => {
@@ -1904,8 +1905,12 @@ function Shell({
                   event.preventDefault();
                   if (sourceQuestion.trim())
                     void run("lookup", async () => {
+                      setPassages([]);
+                      setSourceClarification(null);
+                      setSearched(false);
                       const result = await ops.lookup(sourceQuestion);
                       setPassages(result.passages);
+                      setSourceClarification(result.clarification ?? null);
                       setSearched(true);
                     });
                 }}
@@ -1934,6 +1939,15 @@ function Shell({
                 Kết quả tra cứu là đoạn văn nguồn, không phải kết luận về hồ sơ
                 sinh viên. Nguồn của câu trả lời cá nhân được lấy từ chứng chỉ.
               </p>
+              {sourceClarification && (
+                <aside className="panel" aria-label="Bổ sung câu hỏi tra cứu">
+                  <h3>Cần thêm thông tin</h3>
+                  <p>{sourceClarification.message}</p>
+                  {sourceClarification.examples.map((example) => (
+                    <button className="button ghost" key={example} onClick={() => setSourceQuestion(example)}>{example}</button>
+                  ))}
+                </aside>
+              )}
               {passages.map((passage, index) => (
                 <article
                   className="panel passage"
@@ -1949,6 +1963,12 @@ function Shell({
                     )}
                   </h3>
                   <p>{String(passage.trich ?? "")}</p>
+                  {passage.source_quality === "ocr_unreviewed" && (
+                    <p className="muted small">Bản OCR. Bạn có thể đối chiếu với PDF gốc.</p>
+                  )}
+                  {/^qd(3266|5339):/.test(String(passage.passage_id)) && (
+                    <p><a href={`/quy-che/${String(passage.passage_id).split(":")[0]}.pdf#page=${Number(passage.trang) || 1}`} target="_blank" rel="noreferrer">Mở PDF gốc · trang {String(passage.trang ?? 1)}</a></p>
+                  )}
                   {typeof passage.text === "string" &&
                     passage.text !== passage.trich && (
                       <details>
@@ -1958,7 +1978,7 @@ function Shell({
                     )}
                 </article>
               ))}
-              {searched && !passages.length && (
+              {searched && !passages.length && !sourceClarification && (
                 <Empty
                   icon={Search}
                   title="Chưa tìm thấy đoạn phù hợp"

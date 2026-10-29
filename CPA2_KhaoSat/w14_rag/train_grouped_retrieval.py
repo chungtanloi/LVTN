@@ -15,18 +15,21 @@ import numpy as np
 from retriever import HERE, Retriever, canonical_hash
 
 
-def train(output, reviewed=False):
+def train(output, reviewed=False, corpus=None):
     if output.exists():
         raise ValueError('Refusing to overwrite a model artifact.')
     examples_file = 'rag_survey_train_sources_v2.json' if reviewed else 'rag_survey_train_sources_v1.json'
     training = json.loads((HERE / examples_file).read_text(encoding='utf-8'))
-    config = json.loads((HERE / 'retrieval_model_v1.json').read_text(encoding='utf-8'))
+    config = json.loads((HERE / ('retrieval_model_v3.json' if corpus else 'retrieval_model_v1.json')).read_text(encoding='utf-8'))
+    if corpus:
+        docs = [json.loads(line) for line in corpus.read_text(encoding='utf-8').splitlines() if line.strip()]
+        config.update(corpus_file=corpus.name, corpus_sha256=canonical_hash(sorted(docs, key=lambda d: d['id'])))
     if reviewed:
         config.update(examples_file=examples_file, examples_sha256=canonical_hash(training))
     with tempfile.TemporaryDirectory(prefix='cpa2-retrieval-seed-') as directory:
         seed = Path(directory) / 'seed.json'
         seed.write_text(json.dumps(config), encoding='utf-8')
-        engine = Retriever(model_path=seed)
+        engine = Retriever(model_path=seed, corpus_path=corpus)
     dev = [q for q in json.loads((HERE / 'rag_queries.json').read_text(encoding='utf-8'))['queries'] if q['split'] == 'dev']
     queries = [q for q in training['queries'] if q['gold']]
     features = np.asarray([engine.ranker.features(q['q'], excluded_group=q['group']) for q in queries]
@@ -57,7 +60,7 @@ def train(output, reviewed=False):
                    float(group_mrr[i]), float(group_r5[i]), float((1 / dev_ranks[i]).mean()))
             if best is None or key > best[0]:
                 best = (key, weights[i].tolist(), d1, d5)
-    config.update(version=3 if reviewed else 2, weights=best[1], selection_split='dev_and_train_leave_group_out',
+    config.update(version=4 if corpus else (3 if reviewed else 2), weights=best[1], selection_split='dev_and_train_leave_group_out',
                   holdout_used_for_selection=False, seed=29, selection_trials=10000,
                   dev_n=len(dev), dev_hits_at_1=best[2], dev_hits_at_5=best[3],
                   train_queries=len(queries), train_groups=len(groups),
@@ -75,5 +78,6 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--reviewed', action='store_true', help='Use source corrections from the existing human review.')
+    parser.add_argument('--corpus', type=Path, help='Select weights against a new versioned source corpus.')
     args = parser.parse_args()
-    train(args.output, args.reviewed)
+    train(args.output, args.reviewed, args.corpus)

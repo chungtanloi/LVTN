@@ -1,0 +1,12 @@
+{
+  "model": "intfloat/multilingual-e5-small",
+  "revision": "614241f622f53c4eeff9890bdc4f31cfecc418b3",
+  "corpus_sha256": "bc99ff3adb50bf3a7336b1a099ab3c81457c79861a602843b3a02941da437ba4",
+  "index_sha256": "27e2489a7c0f4daaf33de48117e03103ff92ce5eefa3fd2377e50a10c88251f7",
+  "passages": 228,
+  "chunks": 431,
+  "pooling": "masked_mean_l2",
+  "max_tokens": 256,
+  "window_words": 72,
+  "stride_words": 48
+}

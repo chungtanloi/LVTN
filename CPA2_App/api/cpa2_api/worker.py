@@ -9,9 +9,9 @@ from .profiles import KB, normalize
 
 def execute(operation, payload):
     sys.path.insert(0, str(KB / 'w14_rag'))
-    from grounded_answer import tra_loi, tra_cuu
+    from grounded_answer import tra_loi, lookup_response
     if operation == 'lookup':
-        return {'passages': tra_cuu(payload['question'])}
+        return lookup_response(payload['question'])
     if operation == 'review_ocr':
         sys.path.insert(0, str(KB / 'w15_ocr'))
         from .ocr_review import review

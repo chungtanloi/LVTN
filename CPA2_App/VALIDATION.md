@@ -1,3 +1,15 @@
+# Nguồn RAG và thử nghiệm hybrid — 29/10/2026
+
+Giữ ranker v3; thay nguồn hiển thị/trích dẫn bằng `corpus_source_v1.jsonl` (228 passage), tách 144 văn bản cũ sang tệp kiểm toán và không nối ghi chú R-Formal vào đoạn trích. Đối chiếu ảnh PDF và chép/sửa 10 passage; thêm Điều 22 khoản 4 bị OCR ghép vào khoản 3, có phân giải câu hỏi tự do và tra địa chỉ điều/khoản chính xác. Phần OCR chưa đối chiếu được gắn nhãn; có hai PDF gốc theo trang tại `web/public/quy-che`, đối chiếu SHA-256 trong `source_pdf_manifest_v1.json`. Chỉ là quy chế công khai, không phải bảng điểm sinh viên. Không đổi solver/ánh xạ chứng minh.
+
+Kho quy chế yêu cầu bổ sung khi nói “môn này/học phần đó” mà thiếu mã; câu hỏi cần kết luận cá nhân được hướng dẫn sang Tư vấn học vụ với hồ sơ. Có nút chọn cách hỏi mẫu. Không chuyển điểm xếp hạng thành xác suất đúng.
+
+Đã thử v4 (nguồn sạch + từ vựng) và v5 (từ vựng + E5 ONNX int8, RRF, reranker tuyến tính 15 đặc trưng). Hai thử nghiệm không được triển khai: trên 29 câu đã biết, v3/v4/v5 lần lượt R@1=15/15/15 và R@5=26/26/25; trên 24 câu đã biết, lần lượt 18/17/18 và 23/22/23. Giữ nguyên nhãn/báo cáo và không chọn lại trọng số sau TEST. Không cài thêm model, ONNX hoặc SentencePiece trên Render.
+
+Bộ kiểm tra mới tập trung các nguồn vừa sửa: 12 câu tìm nguồn + 4 ca xử lý thiếu thông tin/tham chiếu không có. Kết quả thật 5/12 tìm đúng trong top 3, 4/12 đúng hạng đầu; 4/4 ca kiểm soát đúng, tổng 9/16. Đây là câu tổng hợp, nguồn do AI gán trước dự đoán, một người gán; chưa phải tập nghiệm thu độc lập. Các ca trượt giữ nguyên. Xem `RAG_SOURCE_CLEANUP_20261029.md` để biết phương pháp, tái lập và giới hạn.
+
+Kiểm tra cục bộ: API 50 ca (49 đạt, 1 bỏ qua do thiếu pypdf tạo fixture mật khẩu), gồm 6 ca nguồn sạch/phân giải/hỏi lại; ranker/grounding 21/21. Web 18/18, TypeScript và build đạt. Runtime đóng gói đạt, KB `ca4c5987580ad591`. Không chạy lại benchmark OCR toàn bộ.
+
 # Cải tiến RAG ngày 29/10/2026
 
 Runtime tra cứu chuyển sang `retrieval_model_v3.json` với `rag_survey_train_sources_v2.json`, áp dụng bản soát nguồn TRAIN đã có: 41 câu được đối chiếu với errata, bỏ 7 ví dụ chưa có nguồn xác nhận khỏi 67 ví dụ dương, còn 60 câu thuộc 22 nhóm. Chọn trọng số bằng DEV và TRAIN loại toàn bộ ví dụ cùng nhóm; không dùng nhãn TEST để chọn trọng số. Bản thử v2 dùng nhãn cũ được giữ riêng và không triển khai. Hai bộ TEST đều đã biết, chỉ là chẩn đoán, chưa phải đánh giá độc lập mới.

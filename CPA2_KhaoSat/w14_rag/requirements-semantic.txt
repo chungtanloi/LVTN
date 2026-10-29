@@ -1,0 +1,4 @@
+# Offline experiment only; these are not installed on the production API.
+numpy==2.3.5
+onnxruntime==1.27.0
+sentencepiece==0.2.1

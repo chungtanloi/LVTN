@@ -14,7 +14,8 @@ HERE = Path(__file__).parent
 sys.path.insert(0, str(HERE))
 sys.path.insert(0, str(HERE.parent / "w12_integration"))
 
-from retriever import Retriever, kiem_trich_dan, source_excerpt
+from retriever import Retriever, kiem_trich_dan, source_excerpt, source_documents, requested_articles, requested_decisions, bo_dau, resolve_source_passage
+import re
 import prototype
 
 
@@ -35,11 +36,38 @@ def tra_loi(question, student_path, r=None):
 def tra_cuu(question, k=3, r=None):
     r = r or Retriever()
     passages = []
-    for p, _ in r.search(question, k=k):
+    sources = source_documents()
+    # An exact legal address is a deterministic source lookup, including the
+    # clause that was previously merged into another clause by OCR.
+    articles, decisions = requested_articles(question), requested_decisions(question)
+    clauses = set(re.findall(r'\bkhoan\s+(\d\w*)', bo_dau(question.lower())))
+    if articles and clauses:
+        matches = [p for p in sources.values() if str(p.get('dieu')) in articles
+                   and str(p.get('khoan')) in clauses
+                   and (not decisions or p['van_ban'].removeprefix('qd') in decisions)]
+    else:
+        matches = [resolve_source_passage(p, question) for p, _ in r.search(question, k=k)]
+    for p in matches[:k]:
         excerpt, start, end = source_excerpt(question, p)
         passages.append({"passage_id": p["id"], "dia_chi": p.get("dia_chi") or p["tieu_de"], "trang": p["trang"],
-                         "trich": excerpt, "text": p['text'], "excerpt_start": start, "excerpt_end": end})
+                         "trich": excerpt, "text": p['text'], "excerpt_start": start, "excerpt_end": end,
+                         'source_quality': p.get('source_quality')})
     return passages
+
+
+def lookup_response(question):
+    words = bo_dau(question.lower())
+    codes = re.findall(r'\b[A-Z]{2}\d{3}E?\b', question.upper())
+    if not codes and re.search(r'\b(?:mon|hoc phan) (?:nay|do)\b', words):
+        return {'passages': [], 'clarification': {
+            'message': 'Bạn đang hỏi học phần nào? Hãy bổ sung mã môn để tra đúng quy định hoặc tiên quyết.',
+            'examples': ['Môn CT177 có tiên quyết là gì?', 'Điểm F thì có phải học lại không?']}}
+    if (re.search(r'\b(?:em|minh|toi)\b', words)
+            and re.search(r'\b(?:chua|co duoc|duoc khong|hay khong)\b', words)):
+        return {'passages': [], 'clarification': {
+            'message': 'Để kiểm tra trường hợp của bạn, mở Tư vấn học vụ với hồ sơ đã xác nhận. Nếu chỉ tra văn bản, hãy nêu nội dung quy chế cần tìm.',
+            'examples': ['Điều kiện xét tốt nghiệp gồm những gì?', 'Quy định đăng ký học phần']}}
+    return {'passages': tra_cuu(question)}
 
 
 if __name__ == "__main__":

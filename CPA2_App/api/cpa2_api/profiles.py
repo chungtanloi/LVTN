@@ -86,6 +86,8 @@ def kb_version() -> str:
         'w8_elective/elective_solver.lp', 'w9_exemption/exemption_substitution_solver.lp', 'w10_graduation/graduation_solver.lp',
         'w12_integration/prototype.py', 'w14_rag/retriever.py', 'w14_rag/corpus.jsonl', 'w14_rag/grounded_answer.py',
         'w14_rag/retrieval_model_v3.json', 'w14_rag/rag_survey_train_sources_v2.json',
+        'w14_rag/corpus_source_v1.jsonl',
+        'w14_rag/source_bindings_v1.json',
         'w15_ocr/ocr_transcript.py', 'w16_abstention/abstention.py',
         'w18_eligibility/eligibility.py', 'w18_eligibility/eligibility.lp',
         'w19_recommendation/recommendation.py', 'w19_recommendation/recommendation.lp',

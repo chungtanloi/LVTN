@@ -26,12 +26,31 @@ Retriever(ranked=False) giữ BM25 cũ và luôn dùng cho grounding chứng ch�
 Không cần embedding/LLM hoặc thư viện ML trong runtime; điểm xếp hạng không phải xác suất.
 """
 import hashlib, json, math, re, sys, unicodedata
+from functools import lru_cache
 from collections import Counter
 from pathlib import Path
 
 HERE = Path(__file__).parent
 CORPUS = HERE / "corpus.jsonl"
 DEFAULT_MODEL = HERE / 'retrieval_model_v3.json'
+
+
+@lru_cache(maxsize=1)
+def source_documents():
+    """Source display is separate from legacy lexical retrieval hints."""
+    return {doc['id']: doc for doc in (json.loads(line) for line in
+            (HERE / 'corpus_source_v1.jsonl').read_text(encoding='utf-8').splitlines() if line.strip())}
+
+
+def resolve_source_passage(passage, question):
+    """Resolve a verified OCR clause split without returning its old mixed text."""
+    sources = source_documents()
+    bindings = json.loads((HERE / 'source_bindings_v1.json').read_text(encoding='utf-8'))
+    candidates = [sources[pid] for pid in bindings.get(passage['id'], [passage['id']])]
+    if len(candidates) == 1:
+        return candidates[0]
+    scores = BM25([tach_tu(doc['text']) for doc in candidates]).scores(tach_tu(question))
+    return candidates[max(range(len(candidates)), key=lambda i: scores[i])]
 
 # Viết tắt dùng trong QĐ3266/QĐ5339 và cách sinh viên hay hỏi
 VIET_TAT = {
@@ -138,6 +157,16 @@ def decision_number(document):
 
 def requested_articles(question):
     return set(re.findall(r'\bdieu\s+(\d\w*)', bo_dau(question.lower())))
+
+
+def eligible_indices(docs, question):
+    decisions, articles = requested_decisions(question), requested_articles(question)
+    codes = set(re.findall(r'\b[A-Z]{2}\d{3}E?\b', question.upper()))
+    curriculum = bool(codes) and bool(re.search(r'tien quyet|song hanh|hoc truoc|tin chi|thong tin (?:mon|hoc phan)', bo_dau(question.lower())))
+    return [i for i, doc in enumerate(docs)
+            if (not decisions or decision_number(doc['van_ban']) in decisions)
+            and (not articles or str(doc.get('dieu')) in articles)
+            and (not curriculum or doc.get('ma_hp') in codes)]
 
 
 def source_excerpt(question, doc, limit=300):
@@ -250,13 +279,28 @@ class RetrievalRanker:
 
 
 class Retriever:
-    def __init__(self, corpus_path=CORPUS, *, ranked=True, model_path=None):
+    def __init__(self, corpus_path=None, *, ranked=True, model_path=None):
+        config = json.loads(Path(model_path or DEFAULT_MODEL).read_text(encoding='utf-8')) if ranked else {}
+        if corpus_path is None:
+            corpus_file = config.get('corpus_file', 'corpus.jsonl')
+            if corpus_file not in ('corpus.jsonl', 'corpus_source_v1.jsonl'):
+                raise ValueError('Unknown retrieval corpus artifact.')
+            corpus_path = HERE / corpus_file
         self.docs = [json.loads(l) for l in Path(corpus_path).read_text(encoding="utf-8").splitlines() if l.strip()]
         self.by_id = {d["id"]: d for d in self.docs}
         self.by_asp = {a: d for d in self.docs for a in d.get("asp", [])}
         self.by_rule = {r: d for d in self.docs for r in d.get("rules", [])}
         self.bm25 = BM25([tach_tu(d["text"]) for d in self.docs])
-        self.ranker = RetrievalRanker(self.docs, self.bm25, model_path) if ranked else None
+        hybrid = config.get('kind') == 'hybrid_feature_reranker'
+        if hybrid and config.get('lexical_model') != 'retrieval_model_v4.json':
+            raise ValueError('Unknown lexical model dependency.')
+        lexical_path = HERE / config['lexical_model'] if hybrid else model_path
+        self.ranker = RetrievalRanker(self.docs, self.bm25, lexical_path) if ranked else None
+        if hybrid:
+            if canonical_hash(json.loads(lexical_path.read_text(encoding='utf-8'))) != config['lexical_model_sha256']:
+                raise ValueError('Hybrid lexical dependency changed.')
+            from semantic_retrieval import HybridRanker
+            self.ranker = HybridRanker(self.ranker, self.docs, config)
 
     def search(self, q, k=5, loai=None, van_ban=None):
         """Original source passages and ranking scores; scores are not confidence."""
@@ -307,6 +351,7 @@ class Retriever:
         out = []
         for pid in cert.get("grounding", {}).get("passages", [])[:toi_da]:
             p = self.by_id[pid]
+            p = source_documents().get(pid, p)
             out.append({"passage_id": pid, "dia_chi": p["dia_chi"], "trang": p["trang"],
                         "trich": p["text"][:300]})
         return out

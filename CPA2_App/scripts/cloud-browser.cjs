@@ -91,6 +91,29 @@ async function ticket(user) {
     assert.ok(excerpt.length <= 300);
     await page.screenshot({ path: path.join(app, 'web/.vercel/cloud-rag-v3.png'), fullPage: true });
     console.log('PASS browser: exact article reference -> query excerpt -> expandable original source.');
+    assert.ok(!(await page.locator('.passage').allTextContents()).join(' ').includes('PHÁT HIỆN ÂM TÍNH'));
+    await page.getByRole('textbox', { name: 'Tìm trong quy chế' }).fill('QĐ3266 Điều 22 khoản 4 quy định gì?');
+    await page.getByRole('button', { name: 'Tra cứu', exact: true }).click();
+    await page.waitForFunction(() => document.querySelector('.passage .subtle-tag')?.textContent === 'qd3266:D22:K4', undefined, { timeout: 40000 });
+    assert.ok((await page.locator('.passage').first().innerText()).includes('công bố'));
+    assert.equal(await page.getByRole('link', { name: 'Mở PDF gốc · trang 14', exact: true }).getAttribute('href'), '/quy-che/qd3266.pdf#page=14');
+    await page.screenshot({ path: path.join(app, 'web/.vercel/cloud-source-corrected.png'), fullPage: true });
+    await page.getByRole('textbox', { name: 'Tìm trong quy chế' }).fill('Môn này có tiên quyết không?');
+    await page.getByRole('button', { name: 'Tra cứu', exact: true }).click();
+    await page.getByRole('heading', { name: 'Cần thêm thông tin', exact: true }).waitFor({ timeout: 40000 });
+    assert.equal(await page.locator('.passage').count(), 0);
+    await page.getByRole('button', { name: 'Môn CT177 có tiên quyết là gì?', exact: true }).click();
+    assert.equal(await page.getByRole('textbox', { name: 'Tìm trong quy chế' }).inputValue(), 'Môn CT177 có tiên quyết là gì?');
+    await page.screenshot({ path: path.join(app, 'web/.vercel/cloud-source-clarification.png'), fullPage: true });
+    const manifest = JSON.parse(fs.readFileSync(path.join(app, '../CPA2_KhaoSat/w14_rag/source_pdf_manifest_v1.json'), 'utf8'));
+    for (const document of manifest) {
+      const response = await page.request.get('https://cpa2-web.vercel.app' + document.public_path, { timeout: 45000 });
+      assert.equal(response.status(), 200);
+      const bytes = await response.body();
+      assert.equal(bytes.length, document.size);
+      assert.equal(require('node:crypto').createHash('sha256').update(bytes).digest('hex'), document.sha256);
+    }
+    console.log('PASS browser: clean clause, matching original public PDF bytes, and clarification instead of guessing.');
     await page.getByRole('button', { name: 'Tổng quan', exact: true }).click();
     await page.screenshot({ path: path.join(app, 'cloud-dashboard.png'), fullPage: true });
     await page.setViewportSize({ width: 390, height: 844 });

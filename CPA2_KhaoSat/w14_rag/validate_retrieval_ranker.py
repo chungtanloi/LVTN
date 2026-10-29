@@ -9,7 +9,7 @@ import unittest
 import tempfile
 from unittest.mock import patch
 
-from retriever import Retriever, kiem_trich_dan, source_excerpt
+from retriever import Retriever, kiem_trich_dan, source_excerpt, source_documents
 import grounded_answer
 from build_reviewed_training import build as build_reviewed_training
 
@@ -51,7 +51,7 @@ class RankingTests(unittest.TestCase):
 
     def test_lookup_preserves_full_source_and_excerpt_offsets(self):
         for passage in grounded_answer.tra_cuu('điểm W rút học phần'):
-            original = self.ranked.by_id[passage['passage_id']]['text']
+            original = source_documents()[passage['passage_id']]['text']
             self.assertEqual(passage['text'], original)
             self.assertEqual(passage['trich'], original[passage['excerpt_start']:passage['excerpt_end']])
 

@@ -1,0 +1,162 @@
+{
+  "meta": {
+    "created_utc": "2026-10-29T09:29:04.623890+00:00",
+    "dataset_sha256": "214a909e3610675ff3363829eb8e5f68bafe572e796c9d3c555228b11b971a10",
+    "model_sha256": "b27cde64fa4b06c5ac1bd77238a71c50e33c2343cbeac28be11e0fe04426a66c",
+    "scope": {
+      "date": "2026-10-29",
+      "purpose": "Targeted source-delivery checks, not a representative independent RAG benchmark.",
+      "origin": "New synthetic wording and AI source labels against visually inspected PDFs; one annotator. Frozen before first prediction on this file. Do not tune on these results.",
+      "source_scope": "QD3266 PDF pages 8, 14, 15; QD5339 PDF page 7. No student logs."
+    },
+    "not_acceptance_benchmark": true
+  },
+  "passed": 9,
+  "n": 16,
+  "positive_n": 12,
+  "positive_hits_at_1": 4,
+  "rows": [
+    {
+      "id": "SRC01",
+      "returned": [
+        "qd3266:D14:K1",
+        "qd3266:D34:K2",
+        "qd3266:D18:K2"
+      ],
+      "first_relevant_rank": 1,
+      "passed": true
+    },
+    {
+      "id": "SRC02",
+      "returned": [
+        "qd3266:D15:K0",
+        "qd3266:D17:K1",
+        "qd3266:D24:K2"
+      ],
+      "first_relevant_rank": null,
+      "passed": false
+    },
+    {
+      "id": "SRC03",
+      "returned": [
+        "qd3266:D22:K5",
+        "qd3266:D34:K2",
+        "qd3266:D32:K1"
+      ],
+      "first_relevant_rank": 1,
+      "passed": true
+    },
+    {
+      "id": "SRC04",
+      "returned": [
+        "qd3266:D34:K2",
+        "qd3266:D24:K4",
+        "qd3266:D24:K2"
+      ],
+      "first_relevant_rank": null,
+      "passed": false
+    },
+    {
+      "id": "SRC05",
+      "returned": [
+        "qd3266:D18:K1",
+        "qd3266:D5:K0",
+        "qd3266:D20:K5"
+      ],
+      "first_relevant_rank": null,
+      "passed": false
+    },
+    {
+      "id": "SRC06",
+      "returned": [
+        "qd3266:D34:K2",
+        "qd3266:D22:K4",
+        "qd3266:D24:K4"
+      ],
+      "first_relevant_rank": null,
+      "passed": false
+    },
+    {
+      "id": "SRC07",
+      "returned": [
+        "qd3266:D22:K4"
+      ],
+      "first_relevant_rank": 1,
+      "passed": true
+    },
+    {
+      "id": "SRC08",
+      "returned": [
+        "qd3266:D24:K2",
+        "qd3266:D22:K5",
+        "qd3266:D24:K4"
+      ],
+      "first_relevant_rank": null,
+      "passed": false
+    },
+    {
+      "id": "SRC09",
+      "returned": [
+        "qd3266:D22:K5",
+        "qd3266:D34:K2",
+        "qd3266:D24:K4"
+      ],
+      "first_relevant_rank": 3,
+      "passed": true
+    },
+    {
+      "id": "SRC10",
+      "returned": [
+        "qd3266:D24:K2",
+        "qd3266:D26:K1",
+        "qd3266:D5:K0"
+      ],
+      "first_relevant_rank": null,
+      "passed": false
+    },
+    {
+      "id": "SRC11",
+      "returned": [
+        "qd5339:D3:K8",
+        "qd5339:D3:K7",
+        "qd3266:D18:K5"
+      ],
+      "first_relevant_rank": 1,
+      "passed": true
+    },
+    {
+      "id": "SRC12",
+      "returned": [
+        "qd5339:D3:K7",
+        "qd3266:D17:K1",
+        "qd3266:D33:K3"
+      ],
+      "first_relevant_rank": null,
+      "passed": false
+    },
+    {
+      "id": "SRC13",
+      "returned": [],
+      "first_relevant_rank": null,
+      "passed": true
+    },
+    {
+      "id": "SRC14",
+      "returned": [],
+      "first_relevant_rank": null,
+      "passed": true
+    },
+    {
+      "id": "SRC15",
+      "returned": [],
+      "first_relevant_rank": null,
+      "passed": true
+    },
+    {
+      "id": "SRC16",
+      "returned": [],
+      "first_relevant_rank": null,
+      "passed": true
+    }
+  ]
+}
