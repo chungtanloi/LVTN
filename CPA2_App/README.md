@@ -34,6 +34,7 @@ Chế độ cục bộ dùng hồ sơ giả lập. Hồ sơ và lịch sử trê
 - Chat xét tốt nghiệp, đăng ký học phần, điều kiện LVTN/TLTN, miễn học phần và xếp loại trong phạm vi parser hiện có.
 - Chứng chỉ, bước chứng minh, nguồn quy chế, dữ kiện thiếu và xuất kết quả JSON.
 - Đề xuất đăng ký một học kỳ, tra cứu đoạn quy chế và lịch sử gắn với phiên bản hồ sơ.
+- Tra cứu RAG dùng nhãn TRAIN đã rà soát, giữ đúng số điều/mã môn; đoạn trích theo câu hỏi và có thể mở toàn bộ đoạn nguồn. Xem phương pháp và giới hạn trong [RETRIEVAL_V3.md](../CPA2_KhaoSat/w14_rag/RETRIEVAL_V3.md).
 - OCR PDF hoặc ảnh PNG/JPEG theo thứ tự, tổng 1–4 trang; mỗi tệp tối đa 10 MB, tổng tối đa 20 MB và 20 triệu điểm ảnh/trang. PDF được dựng ảnh trong tiến trình OCR có thời hạn; PDF hỏng, cần mật khẩu hoặc quá số trang bị từ chối. Dữ kiện không chắc tiếp tục bị chặn.
 - Sửa và duyệt từng dòng OCR; kiểm tra lại học kỳ, bổ sung môn thiếu, sửa số tổng và lưu tiến trình rà soát theo tài khoản.
 - Backend Convex cho lưu hồ sơ có đồng ý, phiên bản bất biến, hội thoại riêng từng tài khoản, tác vụ OCR và xóa dữ liệu.

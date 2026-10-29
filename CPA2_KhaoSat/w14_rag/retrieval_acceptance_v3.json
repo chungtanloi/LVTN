@@ -1,0 +1,33 @@
+{
+  "active_model": "retrieval_model_v3.json",
+  "model_sha256": "b27cde64fa4b06c5ac1bd77238a71c50e33c2343cbeac28be11e0fe04426a66c",
+  "criteria": {
+    "recall_at_1": 0.8,
+    "recall_at_5": 0.95
+  },
+  "acceptance_complete": false,
+  "independent_fresh_evaluation_available": false,
+  "diagnostic_results": {
+    "survey_diagnostic": {
+      "n": 29,
+      "hits_at_1": 15,
+      "hits_at_5": 26,
+      "recall_at_1": 0.5172413793103449,
+      "recall_at_5": 0.896551724137931,
+      "mrr": 0.6561302681992337
+    },
+    "original_diagnostic": {
+      "n": 24,
+      "hits_at_1": 18,
+      "hits_at_5": 23,
+      "recall_at_1": 0.75,
+      "recall_at_5": 0.9583333333333334,
+      "mrr": 0.8270833333333334
+    }
+  },
+  "limitations": [
+    "Previously reported synthetic/handcrafted TEST sets; not independent new holdout.",
+    "TRAIN review is partial and prediction-aware; applied only to training source labels.",
+    "Relevant-source retrieval does not establish answer correctness."
+  ]
+}

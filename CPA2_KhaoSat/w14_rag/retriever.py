@@ -19,8 +19,9 @@ TF-IDF n-gram ký tự làm GIẢM kết quả ở mọi cấu hình nên đã b
 
 Chạy: python retriever.py "sinh viên được đăng ký tối đa bao nhiêu tín chỉ"
 
-26/10/2026: search mặc định dùng mô hình kết hợp đặc trưng từ vựng đóng băng
-trong retrieval_model_v1.json, bổ sung câu hỏi TRAIN tổng hợp đã gán nguồn.
+29/10/2026: search mặc định dùng mô hình kết hợp đặc trưng từ vựng đóng băng
+trong retrieval_model_v3.json, chọn trên DEV và TRAIN loại cùng nhóm người trả lời,
+áp dụng sửa nhãn nguồn TRAIN từ bản rà soát hiện có.
 Retriever(ranked=False) giữ BM25 cũ và luôn dùng cho grounding chứng chỉ.
 Không cần embedding/LLM hoặc thư viện ML trong runtime; điểm xếp hạng không phải xác suất.
 """
@@ -30,6 +31,7 @@ from pathlib import Path
 
 HERE = Path(__file__).parent
 CORPUS = HERE / "corpus.jsonl"
+DEFAULT_MODEL = HERE / 'retrieval_model_v3.json'
 
 # Viết tắt dùng trong QĐ3266/QĐ5339 và cách sinh viên hay hỏi
 VIET_TAT = {
@@ -134,6 +136,35 @@ def decision_number(document):
     return match.group(1) if match else None
 
 
+def requested_articles(question):
+    return set(re.findall(r'\bdieu\s+(\d\w*)', bo_dau(question.lower())))
+
+
+def source_excerpt(question, doc, limit=300):
+    """Return a contiguous original-text window, never generated regulation text."""
+    text = doc['text']
+    if len(text) <= limit:
+        return text, 0, len(text)
+    query = set(retrieval_tokens(question))
+    # Sentence starts and word boundaries keep the excerpt readable. Distinct
+    # bigrams reward phrases without letting repeated boilerplate win.
+    starts = [0] + [m.end() for m in re.finditer(r'\s+', text)]
+    best = None
+    for start in starts:
+        end = min(start + limit, len(text))
+        if end < len(text) and not text[end].isspace():
+            boundary = text.rfind(' ', start, end)
+            if boundary > start:
+                end = boundary
+        tokens = set(retrieval_tokens(text[start:end]))
+        overlap = query & tokens
+        score = sum(2 if '_' in token else 1 for token in overlap)
+        candidate = (score, -start, start, end)
+        if best is None or candidate[:2] > best[:2]:
+            best = candidate
+    return text[best[2]:best[3]], best[2], best[3]
+
+
 class RetrievalRanker:
     """Small, frozen lexical model. Training examples only rank original sources.
 
@@ -144,10 +175,13 @@ class RetrievalRanker:
                      'example_max', 'example_top2', 'coverage', 'course_entity',
                      'document_entity', 'condition_lead', 'threshold_body')
 
-    def __init__(self, docs, legacy):
+    def __init__(self, docs, legacy, model_path=None):
         self.docs, self.legacy = docs, legacy
-        config = json.loads((HERE / 'retrieval_model_v1.json').read_text(encoding='utf-8'))
-        training = json.loads((HERE / 'rag_survey_train_sources_v1.json').read_text(encoding='utf-8'))
+        config = json.loads(Path(model_path or DEFAULT_MODEL).read_text(encoding='utf-8'))
+        examples_file = config.get('examples_file', 'rag_survey_train_sources_v1.json')
+        if examples_file not in ('rag_survey_train_sources_v1.json', 'rag_survey_train_sources_v2.json'):
+            raise ValueError('Unknown retrieval training artifact.')
+        training = json.loads((HERE / examples_file).read_text(encoding='utf-8'))
         if config['examples_sha256'] != canonical_hash(training):
             raise ValueError('Retrieval training examples differ from the frozen model.')
         if config['corpus_sha256'] != canonical_hash(sorted(docs, key=lambda d: d['id'])):
@@ -216,22 +250,29 @@ class RetrievalRanker:
 
 
 class Retriever:
-    def __init__(self, corpus_path=CORPUS, *, ranked=True):
+    def __init__(self, corpus_path=CORPUS, *, ranked=True, model_path=None):
         self.docs = [json.loads(l) for l in Path(corpus_path).read_text(encoding="utf-8").splitlines() if l.strip()]
         self.by_id = {d["id"]: d for d in self.docs}
         self.by_asp = {a: d for d in self.docs for a in d.get("asp", [])}
         self.by_rule = {r: d for d in self.docs for r in d.get("rules", [])}
         self.bm25 = BM25([tach_tu(d["text"]) for d in self.docs])
-        self.ranker = RetrievalRanker(self.docs, self.bm25) if ranked else None
+        self.ranker = RetrievalRanker(self.docs, self.bm25, model_path) if ranked else None
 
     def search(self, q, k=5, loai=None, van_ban=None):
         """Original source passages and ranking scores; scores are not confidence."""
         sc = self.ranker.scores(q) if self.ranker else self.bm25.scores(tach_tu(q))
         explicit_documents = requested_decisions(q)
+        explicit_articles = requested_articles(q)
+        codes = set(re.findall(r'\b[A-Z]{2}\d{3}E?\b', q.upper()))
+        curriculum_query = bool(codes) and bool(re.search(
+            r'tien quyet|song hanh|hoc truoc|tin chi|thong tin (?:mon|hoc phan)',
+            bo_dau(q.lower())))
         idx = [i for i in sorted(range(len(self.docs)), key=lambda i: -sc[i])
                if sc[i] > 0 and (loai is None or self.docs[i]["loai"] == loai)
                and (van_ban is None or self.docs[i]["van_ban"] == van_ban)
-               and (not self.ranker or not explicit_documents or decision_number(self.docs[i]['van_ban']) in explicit_documents)]
+               and (not self.ranker or not explicit_documents or decision_number(self.docs[i]['van_ban']) in explicit_documents)
+               and (not self.ranker or not explicit_articles or str(self.docs[i].get('dieu')) in explicit_articles)
+               and (not self.ranker or not curriculum_query or self.docs[i].get('ma_hp') in codes)]
         return [(self.docs[i], sc[i]) for i in idx[:k]]
 
     # ---------- grounding ----------

@@ -1,10 +1,11 @@
 """Report frozen retrieval models. No training or parameter selection occurs here."""
 import argparse
 import datetime
+import hashlib
 import json
 from pathlib import Path
 
-from retriever import Retriever, canonical_hash
+from retriever import Retriever, canonical_hash, DEFAULT_MODEL
 
 HERE = Path(__file__).parent
 
@@ -34,6 +35,7 @@ def main():
     parser.add_argument('--dataset', choices=['original', 'survey-holdout'], default='original')
     parser.add_argument('--split', choices=['dev', 'test'], default='dev')
     parser.add_argument('--report', type=Path, required=True)
+    parser.add_argument('--model', type=Path, default=DEFAULT_MODEL)
     args = parser.parse_args()
     if args.report.exists():
         raise ValueError('Refusing to overwrite an evaluation report.')
@@ -45,18 +47,20 @@ def main():
     if args.dataset == 'survey-holdout':
         errata = json.loads((HERE / 'rag_survey_holdout_errata_v1.json').read_text(encoding='utf-8'))
         corrections = {q['id']: q['corrected_gold'] for q in errata['changes']}
-    config = json.loads((HERE / 'retrieval_model_v1.json').read_text(encoding='utf-8'))
+    config = json.loads(args.model.read_text(encoding='utf-8'))
     result = {'meta': {'created_utc': datetime.datetime.now(datetime.timezone.utc).isoformat(),
                        'dataset': args.dataset, 'split': args.split,
                        'dataset_sha256': canonical_hash(dataset), 'model_sha256': canonical_hash(config),
+                       'retriever_sha256': hashlib.sha256((HERE / 'retriever.py').read_text(encoding='utf-8').encode()).hexdigest(),
                        'errata_sha256': canonical_hash(errata) if errata else None,
-                       'previously_seen_diagnostic': args.dataset == 'original' and args.split == 'test',
+                       'previously_seen_diagnostic': args.split == 'test',
+                       'evaluation_status': 'previously reported; diagnostic after further development' if args.split == 'test' else 'development',
                        'synthetic': True,
                        'data_origin': 'synthetic_survey' if args.dataset == 'survey-holdout' else 'handcrafted_rag_queries',
                        'gold_annotators': 1,
                        'measurement': 'Relevant source retrieval, not answer accuracy or academic soundness.'}}
     for name, enabled in (('legacy_bm25', False), ('ranked', True)):
-        retriever = Retriever(ranked=enabled)
+        retriever = Retriever(ranked=enabled, model_path=args.model)
         result[name] = evaluate(retriever, queries, corrections)
         if corrections:
             result[name + '_original_gold'] = evaluate(retriever, queries)

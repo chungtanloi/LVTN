@@ -17,7 +17,7 @@ COPY CPA2_KhaoSat/w10_graduation/*.lp /app/CPA2_KhaoSat/w10_graduation/
 COPY CPA2_KhaoSat/w11_proof/*.py CPA2_KhaoSat/w11_proof/*.json /app/CPA2_KhaoSat/w11_proof/
 COPY CPA2_KhaoSat/w12_integration/prototype.py /app/CPA2_KhaoSat/w12_integration/
 COPY CPA2_KhaoSat/w14_rag/grounded_answer.py CPA2_KhaoSat/w14_rag/retriever.py CPA2_KhaoSat/w14_rag/corpus.jsonl /app/CPA2_KhaoSat/w14_rag/
-COPY CPA2_KhaoSat/w14_rag/retrieval_model_v1.json CPA2_KhaoSat/w14_rag/rag_survey_train_sources_v1.json /app/CPA2_KhaoSat/w14_rag/
+COPY CPA2_KhaoSat/w14_rag/retrieval_model_v3.json CPA2_KhaoSat/w14_rag/rag_survey_train_sources_v2.json /app/CPA2_KhaoSat/w14_rag/
 COPY CPA2_KhaoSat/w15_ocr/ocr_transcript.py /app/CPA2_KhaoSat/w15_ocr/
 COPY CPA2_KhaoSat/w16_abstention/abstention.py /app/CPA2_KhaoSat/w16_abstention/
 COPY CPA2_KhaoSat/w18_eligibility/eligibility.py CPA2_KhaoSat/w18_eligibility/*.lp /app/CPA2_KhaoSat/w18_eligibility/

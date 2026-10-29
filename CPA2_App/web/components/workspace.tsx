@@ -1949,6 +1949,13 @@ function Shell({
                     )}
                   </h3>
                   <p>{String(passage.trich ?? "")}</p>
+                  {typeof passage.text === "string" &&
+                    passage.text !== passage.trich && (
+                      <details>
+                        <summary>Xem toàn bộ đoạn nguồn</summary>
+                        <p>{passage.text}</p>
+                      </details>
+                    )}
                 </article>
               ))}
               {searched && !passages.length && (

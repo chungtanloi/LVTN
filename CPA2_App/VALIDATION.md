@@ -1,3 +1,13 @@
+# Cải tiến RAG ngày 29/10/2026
+
+Runtime tra cứu chuyển sang `retrieval_model_v3.json` với `rag_survey_train_sources_v2.json`, áp dụng bản soát nguồn TRAIN đã có: 41 câu được đối chiếu với errata, bỏ 7 ví dụ chưa có nguồn xác nhận khỏi 67 ví dụ dương, còn 60 câu thuộc 22 nhóm. Chọn trọng số bằng DEV và TRAIN loại toàn bộ ví dụ cùng nhóm; không dùng nhãn TEST để chọn trọng số. Bản thử v2 dùng nhãn cũ được giữ riêng và không triển khai. Hai bộ TEST đều đã biết, chỉ là chẩn đoán, chưa phải đánh giá độc lập mới.
+
+Trên 29 câu tổng hợp: R@1 14/29 → 15/29, R@5 23/29 → 26/29. Trên 24 câu TEST thủ công: 17/24 → 18/24 và 23/24 giữ nguyên. Tổng 53 câu: R@1 31 → 33, R@5 46 → 49. DEV của v3 đạt 20/24 và 23/24. Chưa đạt tiêu chí 80%/95% trên tập khảo sát; không tuyên bố RAG đã nghiệm thu hay dùng số này làm độ đúng câu trả lời. Nhãn TEST chưa có chuyên gia kiểm tra độc lập. Chi tiết ở `CPA2_KhaoSat/w14_rag/RETRIEVAL_V3.md` và các báo cáo JSON ngày 20261029; giữ nguyên số liệu và nhãn gốc v1.
+
+Thêm ràng buộc số điều chính xác, giữ mã môn khi tra CTĐT, mã không có không lấy tiên quyết của môn khác. Đoạn trích tra cứu là một lát cắt nguyên văn theo từ/cụm từ câu hỏi, tối đa 300 ký tự; trả chỉ số đầu/cuối và toàn passage, giao diện có Xem toàn bộ đoạn nguồn. Nguồn chứng minh cá nhân vẫn lấy từ certificate và hậu kiểm.
+
+Kiểm tra cục bộ: 21/21 ca ranker/grounding; tái lập dữ liệu TRAIN từ errata trùng khớp; huấn luyện lại tái lập đúng hash mô hình `b27cde64fa4b06c5ac1bd77238a71c50e33c2343cbeac28be11e0fe04426a66c`. API 44 ca (43 đạt, 1 bỏ qua do thiếu pypdf dựng fixture mật khẩu) với bản thử v2; runtime đóng gói v3 đạt, KB `fd34e20b8fbf5fad`. Web 18/18, TypeScript và build đạt. Không chạy lại benchmark OCR toàn bộ.
+
 # Trạng thái triển khai CPA² — cập nhật 28/10/2026
 
 ## Sửa, duyệt và lưu tiến trình rà soát OCR — 28/10/2026

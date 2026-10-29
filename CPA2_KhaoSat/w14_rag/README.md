@@ -16,6 +16,10 @@ python grounded_answer.py --tra-cuu "điểm W là gì"
 
 ## File
 
+Ngày 29/10/2026, runtime tra cứu chuyển sang mô hình v3; xem phương pháp,
+đánh đổi và số liệu trong [RETRIEVAL_V3.md](RETRIEVAL_V3.md). Các bộ TEST cũ
+chỉ còn dùng chẩn đoán, chưa có bộ kiểm tra độc lập mới.
+
 | File | Vai trò |
 |---|---|
 | `build_corpus.py` | OCR QĐ3266/QĐ5339 → passage theo (văn bản, điều, khoản); gắn trích R-Formal; trang OCR hỏng thì dựng từ trích; thêm passage CTĐT K49 |

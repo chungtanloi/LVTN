@@ -77,6 +77,20 @@ async function ticket(user) {
     assert.ok((await page.locator('.passage').first().innerText()).includes('CT101'));
     await page.screenshot({ path: path.join(app, 'cloud-rag.png'), fullPage: true });
     console.log('PASS browser: ranked lookup keeps CT177 and its actual CT101 prerequisite.');
+    await page.getByRole('textbox', { name: 'Tìm trong quy chế' }).fill('QĐ3266 Điều 14 đăng ký tín chỉ');
+    await page.getByRole('button', { name: 'Tra cứu', exact: true }).click();
+    await page.waitForFunction(() => {
+      const cards = [...document.querySelectorAll('.passage')];
+      return cards.length > 0 && cards.every(card => card.querySelector('.subtle-tag')?.textContent.startsWith('qd3266:D14:'));
+    }, undefined, { timeout: 40000 });
+    const source = page.locator('.passage').filter({ has: page.getByText('Xem toàn bộ đoạn nguồn', { exact: true }) }).first();
+    await source.locator('summary').click();
+    const excerpt = await source.locator(':scope > p').innerText();
+    const full = await source.locator('details p').innerText();
+    assert.ok(full.length > excerpt.length && full.includes(excerpt));
+    assert.ok(excerpt.length <= 300);
+    await page.screenshot({ path: path.join(app, 'web/.vercel/cloud-rag-v2.png'), fullPage: true });
+    console.log('PASS browser: exact article reference -> query excerpt -> expandable original source.');
     await page.getByRole('button', { name: 'Tổng quan', exact: true }).click();
     await page.screenshot({ path: path.join(app, 'cloud-dashboard.png'), fullPage: true });
     await page.setViewportSize({ width: 390, height: 844 });

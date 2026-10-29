@@ -7,9 +7,11 @@ import json
 from pathlib import Path
 import unittest
 import tempfile
+from unittest.mock import patch
 
-from retriever import Retriever, kiem_trich_dan
+from retriever import Retriever, kiem_trich_dan, source_excerpt
 import grounded_answer
+from build_reviewed_training import build as build_reviewed_training
 
 HERE = Path(__file__).parent
 
@@ -31,6 +33,28 @@ class RankingTests(unittest.TestCase):
         self.assertEqual(self.ranked.search('Điểm W', van_ban='not-in-corpus'), [])
         self.assertTrue(all(d['loai'] == 'ctdt' for d, _ in self.ranked.search('tiên quyết', loai='ctdt')))
 
+    def test_article_reference_filters_exactly(self):
+        for question in ('QĐ3266 Điều 14 đăng ký tín chỉ', 'qd3266 dieu 14 dang ky tin chi'):
+            results = self.ranked.search(question)
+            self.assertTrue(results)
+            self.assertTrue(all(d['van_ban'] == 'qd3266' and d['dieu'] == 14 for d, _ in results))
+        for article in ('140', '14abc'):
+            self.assertEqual(self.ranked.search(f'QĐ3266 Điều {article} đăng ký tín chỉ'), [])
+
+    def test_query_excerpt_is_original_and_can_reach_end_of_passage(self):
+        text = 'Phạm vi chung. ' * 45 + 'Sinh viên có điểm W được rút học phần theo quy định.'
+        excerpt, start, end = source_excerpt('điểm W rút học phần', {'text': text})
+        self.assertEqual(excerpt, text[start:end])
+        self.assertIn('điểm W', excerpt)
+        self.assertLessEqual(len(excerpt), 300)
+        self.assertGreater(start, 0)
+
+    def test_lookup_preserves_full_source_and_excerpt_offsets(self):
+        for passage in grounded_answer.tra_cuu('điểm W rút học phần'):
+            original = self.ranked.by_id[passage['passage_id']]['text']
+            self.assertEqual(passage['text'], original)
+            self.assertEqual(passage['trich'], original[passage['excerpt_start']:passage['excerpt_end']])
+
     def test_returns_only_original_source_text(self):
         for doc, score in self.ranked.search('số tín chỉ học lại vượt bao nhiêu thì bị hạ bằng?', 5):
             self.assertEqual(doc['text'], self.ranked.by_id[doc['id']]['text'])
@@ -42,7 +66,7 @@ class RankingTests(unittest.TestCase):
             self.assertEqual(self.ranked.ground_rule(rule), self.legacy.ground_rule(rule))
 
     def test_examples_are_train_only_and_disjoint_from_holdout(self):
-        training = json.loads((HERE / 'rag_survey_train_sources_v1.json').read_text(encoding='utf-8'))['queries']
+        training = json.loads((HERE / 'rag_survey_train_sources_v2.json').read_text(encoding='utf-8'))['queries']
         holdout = json.loads((HERE / 'rag_survey_holdout_v1.json').read_text(encoding='utf-8'))['queries']
         self.assertTrue(all(q['split'] == 'train' for q in training))
         self.assertFalse({q['id'] for q in training} & {q['id'] for q in holdout})
@@ -50,9 +74,18 @@ class RankingTests(unittest.TestCase):
         for q in training:
             self.assertTrue(set(q['gold']) <= set(self.ranked.by_id))
 
+    def test_reviewed_training_is_reproducible_and_drops_unverified_sources(self):
+        training = build_reviewed_training()
+        self.assertEqual(training, json.loads((HERE / 'rag_survey_train_sources_v2.json').read_text(encoding='utf-8')))
+        by_id = {q['id']: q for q in training['queries']}
+        self.assertEqual(by_id['QS-69a0066ce8b7']['gold'], ['qd3266:D18:K5'])
+        self.assertEqual(by_id['QS-17df0b00c269']['gold'], [])
+        self.assertNotIn('QS-17df0b00c269', {q['id'] for q in self.ranked.ranker.examples})
+
     def test_dev_targets_and_no_holdout_configuration(self):
-        config = json.loads((HERE / 'retrieval_model_v1.json').read_text(encoding='utf-8'))
-        self.assertEqual(config['selection_split'], 'dev')
+        config = json.loads((HERE / 'retrieval_model_v3.json').read_text(encoding='utf-8'))
+        self.assertEqual(config['selection_split'], 'dev_and_train_leave_group_out')
+        self.assertTrue(config['self_group_examples_excluded'])
         self.assertFalse(config['holdout_used_for_selection'])
         queries = [q for q in json.loads((HERE / 'rag_queries.json').read_text(encoding='utf-8'))['queries'] if q['split'] == 'dev']
         hits = []
@@ -68,6 +101,19 @@ class RankingTests(unittest.TestCase):
         result = self.ranked.search('Theo quyết định 5339, công nhận học phần thế nào?', 3)
         self.assertTrue(result)
         self.assertTrue(all(d['van_ban'] == 'qd5339' for d, _ in result))
+
+    def test_unknown_course_does_not_return_another_courses_prerequisites(self):
+        self.assertEqual(self.ranked.search('Môn ZZ999 có tiên quyết gì?'), [])
+        self.assertTrue(self.ranked.search('CT101 bị điểm F thì phải học lại không?'))
+
+    def test_own_survey_group_cannot_supply_its_example_features(self):
+        query = self.ranked.ranker.examples[0]
+        scores = [100.0 if q['group'] == query['group'] else 0.0 for q in self.ranked.ranker.examples]
+        with patch.object(self.ranked.ranker.example_index, 'scores', return_value=scores):
+            included = self.ranked.ranker.features(query['q'])
+            excluded = self.ranked.ranker.features(query['q'], excluded_group=query['group'])
+        self.assertTrue(any(row[6] > 0 and row[7] > 0 for row in included))
+        self.assertTrue(all(row[6] == row[7] == 0 for row in excluded))
 
     def test_no_lexical_evidence_returns_no_sources(self):
         for engine in (self.ranked, self.legacy):

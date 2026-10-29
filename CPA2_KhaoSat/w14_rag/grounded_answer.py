@@ -14,7 +14,7 @@ HERE = Path(__file__).parent
 sys.path.insert(0, str(HERE))
 sys.path.insert(0, str(HERE.parent / "w12_integration"))
 
-from retriever import Retriever, kiem_trich_dan
+from retriever import Retriever, kiem_trich_dan, source_excerpt
 import prototype
 
 
@@ -34,8 +34,12 @@ def tra_loi(question, student_path, r=None):
 
 def tra_cuu(question, k=3, r=None):
     r = r or Retriever()
-    return [{"passage_id": p["id"], "dia_chi": p.get("dia_chi") or p["tieu_de"], "trang": p["trang"],
-             "trich": p["text"][:300]} for p, _ in r.search(question, k=k)]
+    passages = []
+    for p, _ in r.search(question, k=k):
+        excerpt, start, end = source_excerpt(question, p)
+        passages.append({"passage_id": p["id"], "dia_chi": p.get("dia_chi") or p["tieu_de"], "trang": p["trang"],
+                         "trich": excerpt, "text": p['text'], "excerpt_start": start, "excerpt_end": end})
+    return passages
 
 
 if __name__ == "__main__":
