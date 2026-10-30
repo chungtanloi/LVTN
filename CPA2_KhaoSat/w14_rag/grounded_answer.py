@@ -59,6 +59,7 @@ def tra_cuu(question, k=5, r=None):
 
 def lookup_response(question, r=None):
     words = bo_dau(question.lower())
+    explicit_personal = bool(re.search(r'\b(?:em|mình|tôi)\b', question.lower()))
     # 'tối đa/tối thiểu' are quantities, not the personal pronoun 'tôi'.
     personal_words = re.sub(r'\btoi (?:da|thieu)\b|\bchung minh\b', '', words)
     codes = re.findall(r'\b[A-Z]{2}\d{3}E?\b', question.upper())
@@ -67,7 +68,7 @@ def lookup_response(question, r=None):
         return {'passages': [], 'clarification': {
             'message': 'Bạn đang hỏi học phần nào? Hãy bổ sung mã môn để tra đúng quy định hoặc tiên quyết.',
             'examples': ['Môn CT177 có tiên quyết là gì?', 'Điểm F thì có phải học lại không?']}}
-    if (re.search(r'\b(?:em|minh|toi)\b', personal_words)
+    if ((explicit_personal or re.search(r'\b(?:em|minh|toi)\b', personal_words))
             and re.search(r'\b(?:chua|co duoc|duoc khong|hay khong)\b', words)):
         return {'passages': [], 'clarification': {
             'message': 'Để kiểm tra trường hợp của bạn, mở Tư vấn học vụ với hồ sơ đã xác nhận. Nếu chỉ tra văn bản, hãy nêu nội dung quy chế cần tìm.',

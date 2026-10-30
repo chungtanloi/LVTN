@@ -5,6 +5,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends tesseract-ocr t
 WORKDIR /app
 COPY CPA2_App/api/requirements.lock /app/requirements.txt
 RUN pip install -r requirements.txt
+# Cache immutable model data independently from frequently edited app/KB code.
+COPY CPA2_KhaoSat/w14_rag/prepare_cross_encoder.py CPA2_KhaoSat/w14_rag/cross_encoder_assets_v1.json /app/CPA2_KhaoSat/w14_rag/
+RUN python /app/CPA2_KhaoSat/w14_rag/prepare_cross_encoder.py
 COPY CPA2_App/api/cpa2_api /app/CPA2_App/api/cpa2_api
 # Copy only runtime KB and code, never the legacy DB, transcripts or .env.
 COPY CPA2_KhaoSat/w5_rformal/*.lp CPA2_KhaoSat/w5_rformal/r_formal_v1.json /app/CPA2_KhaoSat/w5_rformal/
@@ -19,8 +22,7 @@ COPY CPA2_KhaoSat/w12_integration/prototype.py /app/CPA2_KhaoSat/w12_integration
 COPY CPA2_KhaoSat/w14_rag/grounded_answer.py CPA2_KhaoSat/w14_rag/retriever.py CPA2_KhaoSat/w14_rag/corpus.jsonl /app/CPA2_KhaoSat/w14_rag/
 COPY CPA2_KhaoSat/w14_rag/retrieval_model_v3.json CPA2_KhaoSat/w14_rag/rag_survey_train_sources_v2.json /app/CPA2_KhaoSat/w14_rag/
 COPY CPA2_KhaoSat/w14_rag/corpus_source_v1.jsonl CPA2_KhaoSat/w14_rag/source_bindings_v1.json /app/CPA2_KhaoSat/w14_rag/
-COPY CPA2_KhaoSat/w14_rag/cross_encoder.py CPA2_KhaoSat/w14_rag/prepare_cross_encoder.py CPA2_KhaoSat/w14_rag/cross_encoder_assets_v1.json CPA2_KhaoSat/w14_rag/retrieval_release_v6.json /app/CPA2_KhaoSat/w14_rag/
-RUN python /app/CPA2_KhaoSat/w14_rag/prepare_cross_encoder.py
+COPY CPA2_KhaoSat/w14_rag/cross_encoder.py CPA2_KhaoSat/w14_rag/retrieval_release_v6.json /app/CPA2_KhaoSat/w14_rag/
 COPY CPA2_KhaoSat/w15_ocr/ocr_transcript.py /app/CPA2_KhaoSat/w15_ocr/
 COPY CPA2_KhaoSat/w16_abstention/abstention.py /app/CPA2_KhaoSat/w16_abstention/
 COPY CPA2_KhaoSat/w18_eligibility/eligibility.py CPA2_KhaoSat/w18_eligibility/*.lp /app/CPA2_KhaoSat/w18_eligibility/

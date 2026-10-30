@@ -10,6 +10,10 @@ Tối ưu đồ thị CPU mỗi lần khởi động trên đúng máy phục v�
 
 Kiểm tra: API 55 ca (54 đạt, 1 bỏ qua fixture mật khẩu do thiếu pypdf); web 18/18, TypeScript/build đạt; runtime đóng gói gồm model data và startup tối ưu đạt, KB `04f9667cc6cc8c86`. Giới hạn một tác vụ đồng thời trên Render free; tra cứu có timeout 120 giây/caller 125 giây. Không tăng gói dịch vụ, không gọi API AI bên ngoài khi tra cứu. Không chạy lại benchmark OCR toàn bộ.
 
+Bản triển khai đầu `afddb9499415c078e4f0bc7cdfb6a5ebc5f1fb51`: Render `dep-dbi483om7kps73brkcb0` live, Vercel `dpl_6eZk6QEZxamgXBhTQw5v5HWpuqhR` READY, Convex production đã tăng timeout riêng lookup. Browser kiểm tra đăng nhập, hồ sơ, lịch sử, proof, CT177, nguồn Điều 14/22, hỏi lại, PDF đúng SHA, desktop/mobile đều đạt, không có lỗi JavaScript. Câu diễn đạt tai nạn/vắng thi trả Điều 22 khoản 5 ở hạng đầu, mất 64.520 ms trên Render free. Không mô tả bản này là truy hồi nhanh.
+
+Rà soát cuối bổ sung phân biệt “Tôi đã … chưa?” với “tối đa”; 7 ca nguồn/định tuyến chạy lại đạt, toàn bộ 46 nhánh cuối vẫn giữ nguyên. Runtime đóng gói chạy lại đạt KB `896b85a6179f1101`; TypeScript/build chạy lại đạt sau thêm thông báo chờ khoảng một phút trên giao diện. Trọng số và tập kiểm tra không đổi. Tối ưu cache Docker model-data được tách khỏi các file ứng dụng để không tải lại model mỗi khi sửa giao diện/guard.
+
 # Nguồn RAG và thử nghiệm hybrid — 29/10/2026
 
 Giữ ranker v3; thay nguồn hiển thị/trích dẫn bằng `corpus_source_v1.jsonl` (228 passage), tách 144 văn bản cũ sang tệp kiểm toán và không nối ghi chú R-Formal vào đoạn trích. Đối chiếu ảnh PDF và chép/sửa 10 passage; thêm Điều 22 khoản 4 bị OCR ghép vào khoản 3, có phân giải câu hỏi tự do và tra địa chỉ điều/khoản chính xác. Phần OCR chưa đối chiếu được gắn nhãn; có hai PDF gốc theo trang tại `web/public/quy-che`, đối chiếu SHA-256 trong `source_pdf_manifest_v1.json`. Chỉ là quy chế công khai, không phải bảng điểm sinh viên. Không đổi solver/ánh xạ chứng minh.

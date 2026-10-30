@@ -71,6 +71,8 @@ chỉnh kết quả kiểm tra sau dự đoán.
 Giữ dịch vụ miễn phí hiện có. Giới hạn một tác vụ để khống chế RAM khi neural
 và OCR dùng cùng máy. Timeout tra cứu 120 giây, caller 125 giây; không thay
 timeout solver. Câu hỏi phức tạp có thể mất nhiều thời gian hơn bản từ vựng.
+Browser production đo câu tai nạn/vắng thi khoảng 65 giây trên Render free;
+giao diện có thông báo chờ. Đây là hạn chế thực tế, không phải số đo Linux tải lớn.
 Nếu thiếu/sai model thì trả lỗi rõ, không âm thầm chạy ranker cũ rồi coi là v6.
 Nguồn vẫn là nguyên văn đã tách ghi chú; kết luận cá nhân vẫn do solver và
 chứng minh quyết định. Không thay điểm hoặc dữ kiện sinh viên để khớp kết quả.

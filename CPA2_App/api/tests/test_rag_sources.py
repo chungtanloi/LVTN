@@ -67,7 +67,8 @@ class SourceTests(unittest.TestCase):
         self.assertNotIn('PHÁT HIỆN ÂM TÍNH', citations[0]['trich'])
 
     def test_ambiguous_course_and_personal_verdict_ask_for_context(self):
-        for query in ('Môn này có tiên quyết không?', 'Em đủ điều kiện tốt nghiệp chưa?'):
+        for query in ('Môn này có tiên quyết không?', 'Em đủ điều kiện tốt nghiệp chưa?',
+                      'Tôi đã đủ điều kiện tốt nghiệp chưa?'):
             result = lookup_response(query, r=self.lookup)
             self.assertFalse(result['passages'])
             self.assertTrue(result['clarification']['message'])

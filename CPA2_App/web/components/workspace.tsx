@@ -1939,6 +1939,11 @@ function Shell({
                 Kết quả tra cứu là đoạn văn nguồn, không phải kết luận về hồ sơ
                 sinh viên. Nguồn của câu trả lời cá nhân được lấy từ chứng chỉ.
               </p>
+              {busy === "lookup" && (
+                <p className="muted small" role="status">
+                  Đang tìm và đối chiếu nguồn phù hợp. Truy vấn phức tạp có thể cần khoảng một phút.
+                </p>
+              )}
               {sourceClarification && (
                 <aside className="panel" aria-label="Bổ sung câu hỏi tra cứu">
                   <h3>Cần thêm thông tin</h3>

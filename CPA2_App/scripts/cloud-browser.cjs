@@ -104,6 +104,12 @@ async function ticket(user) {
     assert.ok((await page.locator('.passage').first().innerText()).includes('công bố'));
     assert.equal(await page.getByRole('link', { name: 'Mở PDF gốc · trang 14', exact: true }).getAttribute('href'), '/quy-che/qd3266.pdf#page=14');
     await page.screenshot({ path: path.join(app, 'web/.vercel/cloud-source-corrected.png'), fullPage: true });
+    const neuralStarted = Date.now();
+    await page.getByRole('textbox', { name: 'Tìm trong quy chế' }).fill('Sinh viên bị tai nạn nên vắng thi cuối kỳ thì dùng ký hiệu điểm nào và phải bổ sung trong hạn bao lâu?');
+    await page.getByRole('button', { name: 'Tra cứu', exact: true }).click();
+    await page.waitForFunction(() => document.querySelector('.passage .subtle-tag')?.textContent === 'qd3266:D22:K5', undefined, { timeout: 150000 });
+    await page.screenshot({ path: path.join(app, 'web/.vercel/cloud-rag-v6-neural.png'), fullPage: true });
+    console.log(`PASS browser: cross-encoder retrieves the I-grade source for an accident/missed-exam paraphrase (${Date.now() - neuralStarted} ms).`);
     await page.getByRole('textbox', { name: 'Tìm trong quy chế' }).fill('Môn này có tiên quyết không?');
     await page.getByRole('button', { name: 'Tra cứu', exact: true }).click();
     await page.getByRole('heading', { name: 'Cần thêm thông tin', exact: true }).waitFor({ timeout: 150000 });
