@@ -33,7 +33,7 @@ def tra_loi(question, student_path, r=None):
     return res
 
 
-def tra_cuu(question, k=3, r=None):
+def tra_cuu(question, k=5, r=None):
     r = r or Retriever()
     passages = []
     sources = source_documents()
@@ -46,7 +46,7 @@ def tra_cuu(question, k=3, r=None):
                    and str(p.get('khoan')) in clauses
                    and (not decisions or p['van_ban'].removeprefix('qd') in decisions)]
     else:
-        matches = [resolve_source_passage(p, question) for p, _ in r.search(question, k=k)]
+        matches = [p if p.get('source_quality') else resolve_source_passage(p, question) for p, _ in r.search(question, k=k)]
     for p in matches[:k]:
         excerpt, start, end = source_excerpt(question, p)
         passages.append({"passage_id": p["id"], "dia_chi": p.get("dia_chi") or p["tieu_de"], "trang": p["trang"],
@@ -55,7 +55,7 @@ def tra_cuu(question, k=3, r=None):
     return passages
 
 
-def lookup_response(question):
+def lookup_response(question, r=None):
     words = bo_dau(question.lower())
     codes = re.findall(r'\b[A-Z]{2}\d{3}E?\b', question.upper())
     if not codes and re.search(r'\b(?:mon|hoc phan) (?:nay|do)\b', words):
@@ -67,7 +67,7 @@ def lookup_response(question):
         return {'passages': [], 'clarification': {
             'message': 'Để kiểm tra trường hợp của bạn, mở Tư vấn học vụ với hồ sơ đã xác nhận. Nếu chỉ tra văn bản, hãy nêu nội dung quy chế cần tìm.',
             'examples': ['Điều kiện xét tốt nghiệp gồm những gì?', 'Quy định đăng ký học phần']}}
-    return {'passages': tra_cuu(question)}
+    return {'passages': tra_cuu(question, r=r)}
 
 
 if __name__ == "__main__":

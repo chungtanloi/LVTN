@@ -1,0 +1,16 @@
+{
+  "version": 6,
+  "kind": "cross_encoder_lexical_ensemble",
+  "lexical_model": "retrieval_model_v3.json",
+  "candidate_limit": 20,
+  "cross_weight": 0.5,
+  "selection_split": "dev_only",
+  "selection_method": "101 cross/lexical blend weights, candidate limits 20/30/40 on cached 24 DEV predictions; choose compact pool and midpoint blend among tied maxima. Source clause binding is applied before blending. Final and previously known TEST labels not used for selection.",
+  "dev_cached_hits_at_1": 23,
+  "dev_cached_hits_at_5": 24,
+  "runtime_graph_optimization": "all",
+  "final_test_used_for_selection": false,
+  "assets_sha256": "dc2f4a4481ec4682200fb2db664ca927e594e79cc64554a7b9afeadf1c6cd61d",
+  "source_corpus_sha256": "1bde151b16de40213ed1ea001ccdf2a30706431a17f830ab976e0ccaa891151a",
+  "source_bindings_sha256": "4f005d4f85f298b9a43145cc5877bbb1c90f40f5bdd1a2da357f6c48c67cfa35"
+}
