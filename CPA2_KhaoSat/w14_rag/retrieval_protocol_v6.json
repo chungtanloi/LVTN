@@ -1,0 +1,9 @@
+{
+  "date":"2026-10-30",
+  "targets":{"recall_at_1":0.8,"recall_at_5":0.95},
+  "training":"Original 24 DEV and reviewed TRAIN only; exclude same respondent group from example features.",
+  "diagnostic":"All previously reported TEST, survey-holdout-v1 and source-check-v1 sets are known diagnostics, never call them fresh.",
+  "final_test":"rag_acceptance_holdout_v2_20261030.json: frozen synthetic, AI-labelled, one annotator. Unread predictions until candidate configuration is frozen. Not human-independent real-user acceptance.",
+  "changes_after_final_test":"No weight selection or label edits using final-test outcomes. A further development round must retire this set to diagnostic status and collect a new final set.",
+  "runtime_gates":"Preserve proof grounding/auth/OCR guards. Test latency, memory and packaged runtime before release. Existing free services only."
+}
