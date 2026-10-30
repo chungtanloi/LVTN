@@ -1,3 +1,15 @@
+# Cross-encoder v6 — 30/10/2026
+
+Triển khai mô hình đọc cặp câu hỏi–nguồn bằng ONNX int8, trộn 0,5 với ranker v3; lấy tối đa 20 ứng viên mỗi kênh. File cấu hình, model revision, hash model/nguồn và tập kiểm tra đóng băng trước dự đoán cuối. Corpus/nguồn chứng minh và solver giữ nguyên. Chi tiết phương pháp, kiểm soát dữ liệu và giới hạn: `CPA2_KhaoSat/w14_rag/RETRIEVAL_V6.md`.
+
+Bộ 40 câu tổng hợp mới: R@1=33/40 (82,5%), R@5=38/40 (95%), 6/6 kiểm soát đúng. Bản v3 trên đúng bộ này đạt 25/40 và 38/40. DEV toàn luồng v6 đạt 22/24 và 24/24; không dùng số cache chọn tham số 23/24 làm số toàn luồng. Tập mới vẫn do AI soạn/gán nguồn, một người gán, chưa có kiểm tra chuyên gia hoặc câu hỏi sinh viên thực. Giữ cả hai ca trượt A202/A209, không sửa nhãn sau dự đoán.
+
+Bộ chẩn đoán cũ, đo chỉ tìm nguồn để so đúng với retriever cũ: TEST thủ công 20/24 và 24/24; khảo sát 15/29 và 26/29; gộp 35/53 và 50/53. Bộ khảo sát cũ chưa đạt mục tiêu. Báo cáo đo cả bước hỏi lại có số 30/53 và 42/53 vì 8 câu cần/ngỡ cần thông tin được chuyển sang hỏi lại; giữ riêng phạm vi này, không trộn số. File acceptance v6 không tuyên bố đã nghiệm thu độc lập.
+
+Tối ưu đồ thị CPU mỗi lần khởi động trên đúng máy phục vụ, kiểm SHA-256 trước dùng; thử local trước/sau cho logit trùng (độ lệch 0). Sửa nhầm “tối đa/tối thiểu” thành “tôi”, cho tra quy tắc điểm F/đình chỉ thi mà không bắt mã môn. Đã xác nhận nhánh xử lý của cả 46 câu cuối không đổi sau sửa guard. Chỉ trả nguồn, không biến điểm xếp hạng thành xác suất hoặc kết luận cá nhân.
+
+Kiểm tra: API 55 ca (54 đạt, 1 bỏ qua fixture mật khẩu do thiếu pypdf); web 18/18, TypeScript/build đạt; runtime đóng gói gồm model data và startup tối ưu đạt, KB `04f9667cc6cc8c86`. Giới hạn một tác vụ đồng thời trên Render free; tra cứu có timeout 120 giây/caller 125 giây. Không tăng gói dịch vụ, không gọi API AI bên ngoài khi tra cứu. Không chạy lại benchmark OCR toàn bộ.
+
 # Nguồn RAG và thử nghiệm hybrid — 29/10/2026
 
 Giữ ranker v3; thay nguồn hiển thị/trích dẫn bằng `corpus_source_v1.jsonl` (228 passage), tách 144 văn bản cũ sang tệp kiểm toán và không nối ghi chú R-Formal vào đoạn trích. Đối chiếu ảnh PDF và chép/sửa 10 passage; thêm Điều 22 khoản 4 bị OCR ghép vào khoản 3, có phân giải câu hỏi tự do và tra địa chỉ điều/khoản chính xác. Phần OCR chưa đối chiếu được gắn nhãn; có hai PDF gốc theo trang tại `web/public/quy-che`, đối chiếu SHA-256 trong `source_pdf_manifest_v1.json`. Chỉ là quy chế công khai, không phải bảng điểm sinh viên. Không đổi solver/ánh xạ chứng minh.

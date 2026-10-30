@@ -50,7 +50,7 @@ class RankingTests(unittest.TestCase):
         self.assertGreater(start, 0)
 
     def test_lookup_preserves_full_source_and_excerpt_offsets(self):
-        for passage in grounded_answer.tra_cuu('điểm W rút học phần'):
+        for passage in grounded_answer.tra_cuu('điểm W rút học phần', r=self.ranked):
             original = source_documents()[passage['passage_id']]['text']
             self.assertEqual(passage['text'], original)
             self.assertEqual(passage['trich'], original[passage['excerpt_start']:passage['excerpt_end']])

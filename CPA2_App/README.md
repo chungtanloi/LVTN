@@ -15,6 +15,7 @@ Từ thư mục gốc `D:\LVTN`:
 ```powershell
 python -m venv CPA2_App/api/.venv
 ./CPA2_App/api/.venv/Scripts/python.exe -m pip install -r CPA2_App/api/requirements-dev.txt
+./CPA2_App/api/.venv/Scripts/python.exe CPA2_KhaoSat/w14_rag/prepare_cross_encoder.py
 cd CPA2_App/web
 pnpm install --frozen-lockfile
 cd ../..
@@ -36,6 +37,7 @@ Chế độ cục bộ dùng hồ sơ giả lập. Hồ sơ và lịch sử trê
 - Đề xuất đăng ký một học kỳ, tra cứu đoạn quy chế và lịch sử gắn với phiên bản hồ sơ.
 - Tra cứu RAG dùng nhãn TRAIN đã rà soát, giữ đúng số điều/mã môn; đoạn trích theo câu hỏi và có thể mở toàn bộ đoạn nguồn. Xem phương pháp và giới hạn trong [RETRIEVAL_V3.md](../CPA2_KhaoSat/w14_rag/RETRIEVAL_V3.md).
 - Nguồn tra cứu tách khỏi ghi chú phân tích, có PDF gốc theo trang; hỏi lại khi thiếu mã môn hoặc cần kiểm tra hồ sơ cá nhân. Kết quả thử hybrid và các ca còn trượt được ghi trong [báo cáo nguồn RAG](../CPA2_KhaoSat/w14_rag/RAG_SOURCE_CLEANUP_20261029.md).
+- Tra cứu v6 kết hợp cross-encoder và từ vựng, trả tối đa 5 nguồn: đạt 82,5%/95% trên 40 câu tổng hợp mới. Bộ khảo sát cũ vẫn chưa đạt; xem [RETRIEVAL_V6.md](../CPA2_KhaoSat/w14_rag/RETRIEVAL_V6.md) để biết phạm vi, số liệu và cách tái lập.
 - OCR PDF hoặc ảnh PNG/JPEG theo thứ tự, tổng 1–4 trang; mỗi tệp tối đa 10 MB, tổng tối đa 20 MB và 20 triệu điểm ảnh/trang. PDF được dựng ảnh trong tiến trình OCR có thời hạn; PDF hỏng, cần mật khẩu hoặc quá số trang bị từ chối. Dữ kiện không chắc tiếp tục bị chặn.
 - Sửa và duyệt từng dòng OCR; kiểm tra lại học kỳ, bổ sung môn thiếu, sửa số tổng và lưu tiến trình rà soát theo tài khoản.
 - Backend Convex cho lưu hồ sơ có đồng ý, phiên bản bất biến, hội thoại riêng từng tài khoản, tác vụ OCR và xóa dữ liệu.

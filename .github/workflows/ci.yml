@@ -66,6 +66,8 @@ jobs:
       - name: Thư viện (lockfile)
         working-directory: CPA2_App/api
         run: pip install -r requirements-dev.txt
+      - name: Mô hình truy hồi cố định và đồ thị CPU trên máy CI
+        run: python CPA2_KhaoSat/w14_rag/prepare_cross_encoder.py --optimize /tmp/cpa2-cross-encoder
       - name: unittest
         working-directory: CPA2_App/api
         run: python -m unittest discover -s tests -v

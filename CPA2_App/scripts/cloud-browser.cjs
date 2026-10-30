@@ -72,10 +72,10 @@ async function ticket(user) {
     await page.getByRole('button', { name: 'Kho quy chế', exact: true }).click();
     await page.getByRole('textbox', { name: 'Tìm trong quy chế' }).fill('điểm W');
     await page.getByRole('button', { name: 'Tra cứu', exact: true }).click();
-    await page.locator('.passage').first().waitFor({ timeout: 40000 });
+    await page.locator('.passage').first().waitFor({ timeout: 150000 });
     await page.getByRole('textbox', { name: 'Tìm trong quy chế' }).fill('Môn CT177 có tiên quyết là gì?');
     await page.getByRole('button', { name: 'Tra cứu', exact: true }).click();
-    await page.waitForFunction(() => document.querySelector('.passage')?.textContent.includes('— CT177'), undefined, { timeout: 40000 });
+    await page.waitForFunction(() => document.querySelector('.passage')?.textContent.includes('— CT177'), undefined, { timeout: 150000 });
     assert.ok((await page.locator('.passage').first().innerText()).includes('CT101'));
     await page.screenshot({ path: path.join(app, 'cloud-rag.png'), fullPage: true });
     console.log('PASS browser: ranked lookup keeps CT177 and its actual CT101 prerequisite.');
@@ -84,11 +84,11 @@ async function ticket(user) {
     await page.waitForFunction(() => {
       const cards = [...document.querySelectorAll('.passage')];
       return cards.length > 0 && cards.every(card => card.querySelector('.subtle-tag')?.textContent.startsWith('qd3266:D14:'));
-    }, undefined, { timeout: 40000 });
+    }, undefined, { timeout: 150000 });
     // Clean Article 14 is now short enough to display without expansion.
     await page.getByRole('textbox', { name: 'Tìm trong quy chế' }).fill('điểm W');
     await page.getByRole('button', { name: 'Tra cứu', exact: true }).click();
-    await page.waitForFunction(() => document.querySelector('.passage .subtle-tag')?.textContent === 'qd3266:D22:K5', undefined, { timeout: 40000 });
+    await page.waitForFunction(() => document.querySelector('.passage .subtle-tag')?.textContent === 'qd3266:D22:K5', undefined, { timeout: 150000 });
     const source = page.locator('.passage').filter({ has: page.getByText('Xem toàn bộ đoạn nguồn', { exact: true }) }).first();
     await source.locator('summary').click();
     const excerpt = await source.locator(':scope > p').first().innerText();
@@ -100,13 +100,13 @@ async function ticket(user) {
     assert.ok(!(await page.locator('.passage').allTextContents()).join(' ').includes('PHÁT HIỆN ÂM TÍNH'));
     await page.getByRole('textbox', { name: 'Tìm trong quy chế' }).fill('QĐ3266 Điều 22 khoản 4 quy định gì?');
     await page.getByRole('button', { name: 'Tra cứu', exact: true }).click();
-    await page.waitForFunction(() => document.querySelector('.passage .subtle-tag')?.textContent === 'qd3266:D22:K4', undefined, { timeout: 40000 });
+    await page.waitForFunction(() => document.querySelector('.passage .subtle-tag')?.textContent === 'qd3266:D22:K4', undefined, { timeout: 150000 });
     assert.ok((await page.locator('.passage').first().innerText()).includes('công bố'));
     assert.equal(await page.getByRole('link', { name: 'Mở PDF gốc · trang 14', exact: true }).getAttribute('href'), '/quy-che/qd3266.pdf#page=14');
     await page.screenshot({ path: path.join(app, 'web/.vercel/cloud-source-corrected.png'), fullPage: true });
     await page.getByRole('textbox', { name: 'Tìm trong quy chế' }).fill('Môn này có tiên quyết không?');
     await page.getByRole('button', { name: 'Tra cứu', exact: true }).click();
-    await page.getByRole('heading', { name: 'Cần thêm thông tin', exact: true }).waitFor({ timeout: 40000 });
+    await page.getByRole('heading', { name: 'Cần thêm thông tin', exact: true }).waitFor({ timeout: 150000 });
     assert.equal(await page.locator('.passage').count(), 0);
     await page.getByRole('button', { name: 'Môn CT177 có tiên quyết là gì?', exact: true }).click();
     assert.equal(await page.getByRole('textbox', { name: 'Tìm trong quy chế' }).inputValue(), 'Môn CT177 có tiên quyết là gì?');

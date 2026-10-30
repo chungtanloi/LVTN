@@ -77,7 +77,7 @@ async function handle(
       await pythonRequest(
         paths[operation],
         body,
-        operation === "ocr" ? 250000 : 35000,
+        operation === "ocr" ? 250000 : operation === "lookup" ? 125000 : 35000,
       ),
     );
   } catch (error) {

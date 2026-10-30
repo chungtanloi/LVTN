@@ -6,7 +6,7 @@ from pathlib import Path
 import time
 
 from retriever import HERE, Retriever, canonical_hash
-from grounded_answer import lookup_response
+from grounded_answer import lookup_response, tra_cuu
 from cross_encoder import CrossEncoder, CrossRetriever
 
 
@@ -15,6 +15,7 @@ if __name__ == '__main__':
     parser.add_argument('--assets', type=Path, required=True)
     parser.add_argument('--dataset', choices=['dev', 'final', 'diagnostic'], required=True)
     parser.add_argument('--report', type=Path, required=True)
+    parser.add_argument('--retrieval-only', action='store_true', help='Bypass clarification for positive source-ranking measurement, not for controls.')
     args = parser.parse_args()
     if args.report.exists():
         raise ValueError('Refusing to overwrite an evaluation.')
@@ -37,7 +38,8 @@ if __name__ == '__main__':
     rows = []
     for query in queries:
         start = time.perf_counter()
-        response = lookup_response(query['q'], r=engine)
+        response = ({'passages': tra_cuu(query['q'], k=5, r=engine)}
+                    if args.retrieval_only and query.get('gold') else lookup_response(query['q'], r=engine))
         ids = [p['passage_id'] for p in response['passages']]
         rank = next((i+1 for i, pid in enumerate(ids) if pid in query.get('gold', [])), None)
         expected = query.get('expected')
@@ -51,6 +53,7 @@ if __name__ == '__main__':
     h5 = sum(r['first_relevant_rank'] is not None for r in rows)
     report = {'meta': {'created_utc': datetime.datetime.now(datetime.timezone.utc).isoformat(),
                        'dataset': args.dataset, 'dataset_sha256': canonical_hash(dataset),
+                       'measurement': 'source_retrieval' if args.retrieval_only else 'lookup_pipeline',
                        'configuration_sha256': canonical_hash(config), 'model_load_sec': load_sec,
                        'limitations': 'Synthetic/handcrafted source retrieval; one source annotator, no real student logs or independent human review.'},
               'n': n, 'hits_at_1': h1, 'hits_at_5': h5, 'recall_at_1': h1/n, 'recall_at_5': h5/n,

@@ -34,7 +34,9 @@ def tra_loi(question, student_path, r=None):
 
 
 def tra_cuu(question, k=5, r=None):
-    r = r or Retriever()
+    if r is None:
+        from cross_encoder import production_search
+        r = production_search()
     passages = []
     sources = source_documents()
     # An exact legal address is a deterministic source lookup, including the
@@ -57,12 +59,15 @@ def tra_cuu(question, k=5, r=None):
 
 def lookup_response(question, r=None):
     words = bo_dau(question.lower())
+    # 'tối đa/tối thiểu' are quantities, not the personal pronoun 'tôi'.
+    personal_words = re.sub(r'\btoi (?:da|thieu)\b|\bchung minh\b', '', words)
     codes = re.findall(r'\b[A-Z]{2}\d{3}E?\b', question.upper())
-    if not codes and re.search(r'\b(?:mon|hoc phan) (?:nay|do)\b', words):
+    generic_grade_rule = re.search(r'\bdiem [a-fimw]\b|dinh chi thi|vang thi', words)
+    if not codes and not generic_grade_rule and re.search(r'\b(?:mon|hoc phan) (?:nay|do)\b', words):
         return {'passages': [], 'clarification': {
             'message': 'Bạn đang hỏi học phần nào? Hãy bổ sung mã môn để tra đúng quy định hoặc tiên quyết.',
             'examples': ['Môn CT177 có tiên quyết là gì?', 'Điểm F thì có phải học lại không?']}}
-    if (re.search(r'\b(?:em|minh|toi)\b', words)
+    if (re.search(r'\b(?:em|minh|toi)\b', personal_words)
             and re.search(r'\b(?:chua|co duoc|duoc khong|hay khong)\b', words)):
         return {'passages': [], 'clarification': {
             'message': 'Để kiểm tra trường hợp của bạn, mở Tư vấn học vụ với hồ sơ đã xác nhận. Nếu chỉ tra văn bản, hãy nêu nội dung quy chế cần tìm.',

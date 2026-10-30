@@ -246,7 +246,7 @@ export const lookup = action({
   handler: async (ctx, args) => {
     const owner = await user(ctx);
     await ctx.runMutation(anyApi.cpa2.takeQuota, { owner });
-    return await python("/v1/lookup", args);
+    return await python("/v1/lookup", args, 125000);
   },
 });
 export const recommend = action({

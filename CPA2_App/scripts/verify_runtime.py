@@ -38,6 +38,17 @@ with tempfile.TemporaryDirectory(prefix='cpa2-runtime-') as directory:
             shutil.move(str(path), copied.parent / path.name)
         copied.rmdir()
     sample = json.loads((target / 'CPA2_KhaoSat/w7_student_facts/students/sv_lvtn.json').read_text(encoding='utf-8'))
+    # Simulate the model-data layer created by Docker RUN, without depending on
+    # the source checkout while the packaged worker executes.
+    assets = Path(os.environ.get('CPA2_CROSS_ENCODER_DIR', root / 'CPA2_KhaoSat/w14_rag/cross_encoder_assets'))
+    shutil.copytree(assets, target / 'CPA2_KhaoSat/w14_rag/cross_encoder_assets')
+    runtime_env = {**os.environ, 'PYTHONIOENCODING': 'utf-8'}
+    runtime_env.pop('CPA2_CROSS_ENCODER_DIR', None)
+    runtime_env['CPA2_CROSS_ENCODER_CACHE'] = str(target / 'cross-cache')
+    prepared = subprocess.run([sys.executable, str(target / 'CPA2_KhaoSat/w14_rag/prepare_cross_encoder.py'),
+                               '--optimize', str(target / 'cross-cache')], env=runtime_env, capture_output=True, timeout=90)
+    if prepared.returncode:
+        raise RuntimeError('Packaged cross-encoder startup preparation failed.')
     version = subprocess.check_output([sys.executable, '-c', 'from cpa2_api.profiles import kb_version; print(kb_version())'], cwd=target / 'CPA2_App/api', text=True).strip()
     if version != expected_version:
         raise RuntimeError('KB version differs between checkout and packaged runtime.')
@@ -49,7 +60,7 @@ with tempfile.TemporaryDirectory(prefix='cpa2-runtime-') as directory:
         ('recommendations', {'profile': sample, 'semester': 1}),
         ('lookup', {'question': 'điểm W'}),
     ]:
-        result = subprocess.run([sys.executable, '-m', 'cpa2_api.worker'], input=json.dumps({'operation': operation, 'payload': payload}), text=True, encoding='utf-8', capture_output=True, cwd=target / 'CPA2_App/api', env={**os.environ, 'PYTHONIOENCODING': 'utf-8'}, timeout=35)
+        result = subprocess.run([sys.executable, '-m', 'cpa2_api.worker'], input=json.dumps({'operation': operation, 'payload': payload}), text=True, encoding='utf-8', capture_output=True, cwd=target / 'CPA2_App/api', env=runtime_env, timeout=125 if operation == 'lookup' else 35)
         if result.returncode:
             raise RuntimeError(f'{operation}: {result.stdout} {result.stderr}')
         if not json.loads(result.stdout)['ok']:

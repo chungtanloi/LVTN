@@ -20,7 +20,7 @@ from .profiles import KB, CURRICULUM, kb_version, normalize
 
 security = HTTPBearer(auto_error=False)
 VERSION = kb_version()
-CAPACITY = asyncio.Semaphore(2)
+CAPACITY = asyncio.Semaphore(1)  # Bound combined neural/OCR memory on the existing free instance.
 Image.MAX_IMAGE_PIXELS = 20_000_000
 
 
@@ -107,6 +107,8 @@ async def run(operation, payload, timeout=30):
         except (ValueError, UnicodeError):
             raise HTTPException(502, 'Dịch vụ suy luận trả dữ liệu không hợp lệ.') from None
         if not message.get('ok'):
+            if operation == 'lookup':
+                raise HTTPException(503, 'Bộ tra cứu chưa sẵn sàng. Vui lòng thử lại sau.')
             if message.get('error_type') == 'OcrReviewError':
                 reasons = {
                     'OCR_REUPLOAD_REQUIRED': 'Báo cáo OCR cũ chưa có dữ liệu để kiểm tra lại. Hãy OCR lại PDF một lần.',
@@ -161,7 +163,7 @@ async def review_ocr(request: OcrReviewRequest):
 
 @app.post('/v1/lookup', dependencies=[Depends(authorized)])
 async def lookup(request: LookupRequest):
-    return await run('lookup', request.model_dump())
+    return await run('lookup', request.model_dump(), timeout=120)
 
 
 @app.post('/v1/recommendations', dependencies=[Depends(authorized)])

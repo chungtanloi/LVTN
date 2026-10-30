@@ -1,6 +1,6 @@
 FROM python:3.12-slim
 ENV PYTHONUNBUFFERED=1 PYTHONIOENCODING=utf-8 PIP_NO_CACHE_DIR=1 OMP_THREAD_LIMIT=1
-RUN apt-get update && apt-get install -y --no-install-recommends tesseract-ocr tesseract-ocr-vie tesseract-ocr-eng \
+RUN apt-get update && apt-get install -y --no-install-recommends tesseract-ocr tesseract-ocr-vie tesseract-ocr-eng libgomp1 \
     && rm -rf /var/lib/apt/lists/*
 WORKDIR /app
 COPY CPA2_App/api/requirements.lock /app/requirements.txt
@@ -19,6 +19,8 @@ COPY CPA2_KhaoSat/w12_integration/prototype.py /app/CPA2_KhaoSat/w12_integration
 COPY CPA2_KhaoSat/w14_rag/grounded_answer.py CPA2_KhaoSat/w14_rag/retriever.py CPA2_KhaoSat/w14_rag/corpus.jsonl /app/CPA2_KhaoSat/w14_rag/
 COPY CPA2_KhaoSat/w14_rag/retrieval_model_v3.json CPA2_KhaoSat/w14_rag/rag_survey_train_sources_v2.json /app/CPA2_KhaoSat/w14_rag/
 COPY CPA2_KhaoSat/w14_rag/corpus_source_v1.jsonl CPA2_KhaoSat/w14_rag/source_bindings_v1.json /app/CPA2_KhaoSat/w14_rag/
+COPY CPA2_KhaoSat/w14_rag/cross_encoder.py CPA2_KhaoSat/w14_rag/prepare_cross_encoder.py CPA2_KhaoSat/w14_rag/cross_encoder_assets_v1.json CPA2_KhaoSat/w14_rag/retrieval_release_v6.json /app/CPA2_KhaoSat/w14_rag/
+RUN python /app/CPA2_KhaoSat/w14_rag/prepare_cross_encoder.py
 COPY CPA2_KhaoSat/w15_ocr/ocr_transcript.py /app/CPA2_KhaoSat/w15_ocr/
 COPY CPA2_KhaoSat/w16_abstention/abstention.py /app/CPA2_KhaoSat/w16_abstention/
 COPY CPA2_KhaoSat/w18_eligibility/eligibility.py CPA2_KhaoSat/w18_eligibility/*.lp /app/CPA2_KhaoSat/w18_eligibility/
@@ -28,4 +30,4 @@ RUN useradd --create-home cpa2
 USER cpa2
 WORKDIR /app/CPA2_App/api
 EXPOSE 8000
-CMD ["sh", "-c", "uvicorn cpa2_api.main:app --host 0.0.0.0 --port ${PORT:-8000}"]
+CMD ["sh", "-c", "python /app/CPA2_KhaoSat/w14_rag/prepare_cross_encoder.py --optimize /tmp/cpa2-cross-encoder && exec uvicorn cpa2_api.main:app --host 0.0.0.0 --port ${PORT:-8000}"]

@@ -2,11 +2,12 @@
 import hashlib
 import json
 import os
+from functools import lru_cache
 from pathlib import Path
 
 import numpy as np
 
-from retriever import HERE, BM25, tach_tu, eligible_indices, source_documents, source_excerpt, resolve_source_passage
+from retriever import HERE, BM25, tach_tu, eligible_indices, source_documents, source_excerpt, resolve_source_passage, canonical_hash
 
 
 class CrossEncoder:
@@ -22,6 +23,16 @@ class CrossEncoder:
                     digest.update(block)
             if digest.hexdigest() != asset['sha256']:
                 raise ValueError('Cross-encoder asset checksum mismatch.')
+        optimized = Path(os.environ.get('CPA2_CROSS_ENCODER_CACHE', '/tmp/cpa2-cross-encoder'))
+        model = directory / 'model.onnx'
+        if (optimized / 'metadata.json').exists():
+            metadata = json.loads((optimized / 'metadata.json').read_text(encoding='utf-8'))
+            candidate = optimized / 'model.onnx'
+            if (metadata['original_sha256'] != manifest['files'][0]['sha256']
+                    or metadata['onnxruntime'] != ort.__version__
+                    or hashlib.sha256(candidate.read_bytes()).hexdigest() != metadata['optimized_sha256']):
+                raise ValueError('Optimized cross-encoder cache differs from pinned model.')
+            model = candidate
         options = ort.SessionOptions()
         options.intra_op_num_threads = 2
         options.inter_op_num_threads = 1
@@ -29,7 +40,9 @@ class CrossEncoder:
         options.enable_mem_pattern = False
         options.graph_optimization_level = (ort.GraphOptimizationLevel.ORT_ENABLE_ALL
             if os.environ.get('CPA2_CE_OPTIMIZE', 'all') == 'all' else ort.GraphOptimizationLevel.ORT_ENABLE_BASIC)
-        self.session = ort.InferenceSession(str(directory / 'model.onnx'), sess_options=options, providers=['CPUExecutionProvider'])
+        if model.parent == optimized:
+            options.graph_optimization_level = ort.GraphOptimizationLevel.ORT_DISABLE_ALL
+        self.session = ort.InferenceSession(str(model), sess_options=options, providers=['CPUExecutionProvider'])
         self.tokens = spm.SentencePieceProcessor(model_file=str(directory / 'sentencepiece.bpe.model'))
 
     def score(self, question, texts, batch_size=2):
@@ -47,6 +60,8 @@ class CrossEncoder:
             if any(i.name == 'token_type_ids' for i in self.session.get_inputs()):
                 inputs['token_type_ids'] = np.zeros_like(ids)
             logits = self.session.run(None, inputs)[0]
+            if not np.isfinite(logits).all():
+                raise ValueError('Cross-encoder produced invalid ranking values.')
             scores.extend(float(value) for value in logits.reshape(-1))
         return scores
 
@@ -54,13 +69,22 @@ class CrossEncoder:
 class CrossRetriever:
     def __init__(self, base, encoder=None, config=None):
         self.base = base
-        self.encoder = encoder or CrossEncoder()
+        self.encoder = encoder
         self.docs = list(source_documents().values())
         self.by_id = {d['id']: d for d in self.docs}
         self.clean = BM25([tach_tu(d['text']) for d in self.docs])
         self.config = config or {'candidate_limit': 20, 'cross_weight': .5}
         if not 1 <= self.config['candidate_limit'] <= 40 or not 0 <= self.config['cross_weight'] <= 1:
             raise ValueError('Invalid cross-encoder search configuration.')
+        if 'assets_sha256' in self.config:
+            manifest = json.loads((HERE / 'cross_encoder_assets_v1.json').read_text(encoding='utf-8'))
+            if canonical_hash(manifest) != self.config['assets_sha256']:
+                raise ValueError('Cross-encoder manifest differs from frozen release.')
+            if canonical_hash(self.docs) != self.config['source_corpus_sha256']:
+                raise ValueError('Cross-encoder source corpus differs from frozen release.')
+            bindings = json.loads((HERE / 'source_bindings_v1.json').read_text(encoding='utf-8'))
+            if canonical_hash(bindings) != self.config['source_bindings_sha256']:
+                raise ValueError('Cross-encoder source bindings differ from frozen release.')
 
     def lexical_scores(self, question):
         values = {}
@@ -83,6 +107,10 @@ class CrossRetriever:
         docs = self.candidates(question)
         if not docs:
             return []
+        if len(docs) == 1:
+            return [(docs[0], 1.0)]
+        if self.encoder is None:
+            self.encoder = CrossEncoder()
         # A query-aware original-text window preserves clauses at the end of a
         # long passage, without generating or modifying the source wording.
         texts = [source_excerpt(question, d, limit=1500)[0] for d in docs]
@@ -99,3 +127,10 @@ class CrossRetriever:
         return [(d, s) for d, s in self.scored(question)
                 if (filters.get('loai') is None or d['loai'] == filters['loai'])
                 and (filters.get('van_ban') is None or d['van_ban'] == filters['van_ban'])][:k]
+
+
+@lru_cache(maxsize=1)
+def production_search():
+    from retriever import Retriever
+    config = json.loads((HERE / 'retrieval_release_v6.json').read_text(encoding='utf-8'))
+    return CrossRetriever(Retriever(model_path=HERE / 'retrieval_model_v3.json'), config=config)
