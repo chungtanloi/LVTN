@@ -35,6 +35,21 @@ async function ticket(user) {
     await page.getByRole('heading', { name: /Học tập có định hướng/ }).waitFor({ timeout: 45000 });
     await page.waitForFunction(() => Number.parseInt(document.querySelector('.stat-value')?.textContent ?? '0') > 0);
     console.log('PASS browser: Clerk session -> Convex auth -> personal dashboard.');
+    if (process.env.CPA2_FINAL_GUARDS === '1') {
+      await page.getByRole('button', { name: 'Kho quy chế', exact: true }).click();
+      await page.getByRole('textbox', { name: 'Tìm trong quy chế' }).fill('Tôi đã đủ điều kiện tốt nghiệp chưa?');
+      await page.getByRole('button', { name: 'Tra cứu', exact: true }).click();
+      await page.getByRole('heading', { name: 'Cần thêm thông tin', exact: true }).waitFor({ timeout: 30000 });
+      assert.equal(await page.locator('.passage').count(), 0);
+      await page.getByRole('textbox', { name: 'Tìm trong quy chế' }).fill('điểm W');
+      await page.getByRole('button', { name: 'Tra cứu', exact: true }).click();
+      await page.getByRole('status').filter({ hasText: 'Đang tìm và đối chiếu nguồn phù hợp' }).waitFor({ timeout: 10000 });
+      await page.screenshot({ path: path.join(app, 'web/.vercel/cloud-rag-v6-wait.png'), fullPage: true });
+      await page.waitForFunction(() => document.querySelector('.passage .subtle-tag')?.textContent === 'qd3266:D22:K5', undefined, { timeout: 150000 });
+      assert.deepEqual(errors, []);
+      console.log('PASS browser: final personal-pronoun guard, visible wait status, and neural source retrieval.');
+      return;
+    }
     if (process.env.CPA2_SOURCES_ONLY !== '1') {
       await page.getByRole('button', { name: /^Tư vấn học vụ/ }).click();
       await page.getByRole('textbox', { name: 'Câu hỏi tư vấn' }).fill('Em đủ điều kiện tốt nghiệp chưa?');

@@ -1,3 +1,11 @@
+# Kiểm tra production cuối — 31/10/2026
+
+Bản ứng dụng `b307a3916cb441fdd9df6e7f042c57baad2176f5`: Render `dep-dbi4ep49v7es738lto60` live; Vercel `dpl_8K1u7sD7sj285vaKyBma21cx5Wjc` READY trên domain chính. HTTP health kiểm lại trả `status=ok`, KB `896b85a6179f1101`. Convex production đã phát hành timeout riêng lookup 125 giây.
+
+Lượt browser riêng trên bản cuối đạt (exit 0): đăng nhập Clerk/Convex; câu “Tôi đã đủ điều kiện tốt nghiệp chưa?” yêu cầu bổ sung thông tin, không trả passage; tra điểm W hiện thông báo chờ rồi trả `qd3266:D22:K5` ở hạng đầu; không có lỗi JavaScript. Đã xem ảnh kết quả diễn đạt tai nạn/vắng thi và ảnh thông báo chờ trong `web/.vercel`. Các lượt proof/lịch sử/desktop/mobile đầy đủ thuộc bản đầu v6 được ghi riêng bên dưới, không tính là chạy lại toàn bộ trên bản cuối. Đã xóa cả hai tài khoản Clerk tổng hợp và dữ liệu Convex của chúng, xác nhận state rỗng. Không dùng bảng điểm thật trong kiểm tra cloud.
+
+Không đổi cấu hình, mô hình hoặc nhãn sau đánh giá cuối: bộ mới 40 câu tổng hợp đạt mục tiêu số học, bộ khảo sát cũ vẫn chưa đạt; chưa nghiệm thu độc lập bằng câu hỏi sinh viên thực.
+
 # Cross-encoder v6 — 30/10/2026
 
 Triển khai mô hình đọc cặp câu hỏi–nguồn bằng ONNX int8, trộn 0,5 với ranker v3; lấy tối đa 20 ứng viên mỗi kênh. File cấu hình, model revision, hash model/nguồn và tập kiểm tra đóng băng trước dự đoán cuối. Corpus/nguồn chứng minh và solver giữ nguyên. Chi tiết phương pháp, kiểm soát dữ liệu và giới hạn: `CPA2_KhaoSat/w14_rag/RETRIEVAL_V6.md`.
