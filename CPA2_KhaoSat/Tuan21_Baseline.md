@@ -119,3 +119,7 @@ Toàn bộ 17 bộ validate (tuần 5–21): **17/17 `KẾT LUẬN: ĐẠT`**, k
 ## Cập nhật 27/10/2026 — đóng băng lại prompt (chưa có lần chạy thật nào)
 
 `validate_baseline` M2 báo `prompt_dong_bang.json` lệch: mẫu prompt (`sha256` be0fd8eb…) không đổi, nhưng `sha256_dau_vao` (prompt đã dựng cho mọi ca, gồm đoạn truy hồi của baseline RAG) đổi 1c5687d0… → b06a364a… vì `w14_rag/retriever.py` đổi sau khi đóng băng (ca3c728, c88891b — ranker có huấn luyện, 26/10). Chưa có file kết quả chạy thật nào nên đóng băng lại bằng `run_baseline.py --ghi-bang --ghi-de` là hợp lệ theo quy trình (đóng băng TRƯỚC lần chạy thật đầu tiên). Baseline RAG nay dùng cùng ranker v1 với hệ thống.
+
+## Cập nhật 02/11/2026 — đóng băng lại prompt lần hai (chưa có lần chạy thật nào)
+
+Bước kiểm tra trước Tuần 22: `validate_baseline` M2 lại báo lệch. `sha256` (mẫu prompt, be0fd8eb…) không đổi; `sha256_dau_vao` đổi b06a364a… → e75f9e39… vì các commit RAG trên nhánh `codex/cpa2-web-deploy` sau 27/10 (333b598 … b307a39) làm đổi đoạn truy hồi đưa vào prompt của baseline RAG. Vẫn chưa có file kết quả chạy thật nào nên đóng băng lại bằng `run_baseline.py --ghi-bang --ghi-de` (Loi duyệt 02/11/2026); `validate_baseline` ĐẠT sau đó.
