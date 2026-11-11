@@ -14,6 +14,25 @@ SCHEMA = json.loads((KB / 'w7_student_facts/student_fact_schema.json').read_text
 CURRICULUM = json.loads((KB / 'w6_curriculum/curriculum_cntt_k49.json').read_text(encoding='utf-8'))
 COURSES = {c['ma']: c for c in CURRICULUM['hoc_phan']}
 CODE = re.compile(r'[A-Z]{1,4}[0-9]{2,4}[A-Z]?\Z')
+
+# C26: HP Lý luận chính trị chương trình cũ — chỉ nhận để XÉT CÔNG NHẬN (R-M13, QĐ5339 Điều 3 khoản 9).
+# Tập mã phải trùng dữ kiện ml_thay của KB (kiểm khi khởi động); tên theo đoạn văn QĐ5339 tr.8. Số TC chỉ là gợi ý từ
+# bảng chuyển đổi tr.8 (OCR); ML006 không đọc được → None, không đoán. Người dùng phải tự nhập số TC. KB không cộng các
+# HP này vào TC tích lũy/ĐTBCTL (chỉ cộng HP có course/2); riêng phép kiểm hợp lý da_hoc_nam2 của loader (≤ 20 TC/HK,
+# QĐ3266 Đ14 k1) có cộng — đúng, vì SV đã thật sự đăng ký các HP đó.
+LLCT_CU_NGUON = 'QĐ5339 Điều 3 khoản 9, tr.8 (bảng chuyển đổi Lý luận chính trị)'
+LLCT_CU_TEN = {
+    'ML009': ('Những nguyên lý cơ bản của Chủ nghĩa Mác-Lênin 1', 2),
+    'ML010': ('Những nguyên lý cơ bản của Chủ nghĩa Mác-Lênin 2', 3),
+    'ML011': ('Đường lối Cách mạng của Đảng Cộng sản Việt Nam', 3),
+    'ML006': ('Tư tưởng Hồ Chí Minh', None),
+}
+LLCT_CU = frozenset(re.findall(r'^ml_thay\("([A-Z0-9]+)",',
+                               (KB / 'w5_rformal/qd5339_r_formal_v1.lp').read_text(encoding='utf-8'), re.M))
+if LLCT_CU != set(LLCT_CU_TEN) or LLCT_CU & set(COURSES):
+    raise RuntimeError('Danh sách HP LLCT cũ lệch với ml_thay của KB (qd5339_r_formal_v1.lp).')
+HOC_PHAN_CONG_NHAN = [{'ma': ma, 'ten': ten, 'tin_chi_van_ban': tc, 'nguon': LLCT_CU_NGUON}
+                      for ma, (ten, tc) in sorted(LLCT_CU_TEN.items())]
 SAFE_TEXT = re.compile(r'[a-zA-Z0-9_+.-]+\Z')
 
 
@@ -38,10 +57,15 @@ def normalize(raw: dict) -> dict:
         raise ValueError('Bảng điểm phải là danh sách theo mã học phần, tối đa 250 học phần.')
     profile['grades'] = grades
     for code, grade in grades.items():
-        if not CODE.fullmatch(code) or code not in COURSES:
+        if not CODE.fullmatch(code) or (code not in COURSES and code not in LLCT_CU):
             raise ValueError(f'Mã học phần không thuộc CTĐT CNTT K49: {code[:40]}')
         if not isinstance(grade, dict) or grade.get('code', code) != code:
             raise ValueError(f'Bản ghi {code} không hợp lệ hoặc không khớp mã học phần.')
+        if code in LLCT_CU:
+            credits = grade.get('credits')
+            if isinstance(credits, bool) or not isinstance(credits, int) or not 1 <= credits <= 10:
+                raise ValueError(f'{code} (Lý luận chính trị chương trình cũ, chỉ để xét công nhận): cần nhập số tín chỉ '
+                                 'là số nguyên 1–10 theo bảng điểm.')
         grade['code'] = code
         if 'letter_grade' in grade:
             grade['letter'] = grade.pop('letter_grade')

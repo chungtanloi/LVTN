@@ -121,6 +121,53 @@ class ApiTests(unittest.TestCase):
         self.assertEqual(response.status_code, 200, response.text)
         self.assertEqual(response.json()['passages'], [])
 
+    # C26: các HP Lý luận chính trị chương trình cũ (QĐ5339 Đ3 k9) chỉ được nhận để xét công nhận
+    def old_llct_profile(self, **ml010):
+        profile = json.loads(json.dumps(SAMPLE))
+        profile['tc_cong_nhan'] = 0
+        for code in ('ML016', 'ML018', 'ML019'):
+            profile['grades'].pop(code, None)
+        profile['grades']['ML010'] = {'code': 'ML010', 'credits': 3, 'thang10': 80, 'letter': 'B+', 'status': 'passed', **ml010}
+        return profile
+
+    def test_catalog_lists_old_llct_courses_for_recognition_only(self):
+        catalog = self.client.get('/v1/catalog', headers=HEADERS).json()
+        old = {c['ma']: c for c in catalog['hoc_phan_cong_nhan']}
+        self.assertEqual(set(old), {'ML006', 'ML009', 'ML010', 'ML011'})
+        self.assertTrue(all(c['nguon'] and c['ten'] for c in old.values()))
+        self.assertIsNone(old['ML006']['tin_chi_van_ban'])  # OCR QĐ5339 tr.8 không đọc được — không đoán
+        self.assertFalse(set(old) & {c['ma'] for c in catalog['courses']})
+
+    def test_old_llct_course_is_accepted_and_reaches_recognition(self):
+        profile = self.old_llct_profile()
+        response = self.client.post('/v1/profiles/validate', json={'profile': profile}, headers=HEADERS)
+        self.assertEqual(response.status_code, 200, response.text)
+        question = 'Kỳ này em đăng ký ML019 được không?'
+        response = self.client.post('/v1/advice', json={'question': question, 'profile': profile}, headers=HEADERS)
+        self.assertEqual(response.status_code, 200, response.text)
+        self.assertEqual(response.json()['verdict'], 'FALSE')  # chưa có quyết định công nhận ML018 (C20)
+        profile['exemptions'] = [{'ma_hp': 'ML016', 'quyet_dinh': True}, {'ma_hp': 'ML018', 'quyet_dinh': True}]
+        response = self.client.post('/v1/advice', json={'question': question, 'profile': profile}, headers=HEADERS)
+        self.assertEqual(response.json()['verdict'], 'TRUE')
+
+    def test_old_llct_course_requires_explicit_credits(self):
+        profile = self.old_llct_profile()
+        profile['grades']['ML010'].pop('credits')
+        response = self.client.post('/v1/profiles/validate', json={'profile': profile}, headers=HEADERS)
+        self.assertEqual(response.status_code, 422, response.text)
+        self.assertIn('ML010', response.json()['detail'])
+        self.assertIn('số tín chỉ', response.json()['detail'])
+        for bad in (True, 2.5, '3', 0, 11):
+            response = self.client.post('/v1/profiles/validate', json={'profile': self.old_llct_profile(credits=bad)}, headers=HEADERS)
+            self.assertEqual(response.status_code, 422, f'credits={bad!r}: {response.text}')
+
+    def test_other_out_of_curriculum_codes_stay_rejected(self):
+        for code in ('TC025', 'CT999'):
+            profile = {**SAMPLE, 'grades': {**SAMPLE['grades'], code: {'code': code, 'credits': 1, 'thang10': 90, 'letter': 'A', 'status': 'passed'}}}
+            response = self.client.post('/v1/profiles/validate', json={'profile': profile}, headers=HEADERS)
+            self.assertEqual(response.status_code, 422, response.text)
+            self.assertIn('không thuộc CTĐT', response.json()['detail'])
+
     def test_graduation_trace_keeps_the_claim(self):
         response = self.client.post('/v1/advice', json={'question': 'Em đủ điều kiện tốt nghiệp chưa?',
             'profile': {**SAMPLE, 'tc_cong_nhan': 0}}, headers=HEADERS)

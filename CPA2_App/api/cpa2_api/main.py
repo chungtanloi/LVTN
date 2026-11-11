@@ -16,7 +16,7 @@ from fastapi.responses import JSONResponse
 from PIL import Image, UnidentifiedImageError
 from pydantic import BaseModel, Field
 
-from .profiles import KB, CURRICULUM, kb_version, normalize
+from .profiles import HOC_PHAN_CONG_NHAN, KB, CURRICULUM, kb_version, normalize
 
 security = HTTPBearer(auto_error=False)
 VERSION = kb_version()
@@ -135,7 +135,8 @@ def health():
 
 @app.get('/v1/catalog', dependencies=[Depends(authorized)])
 def catalog():
-    return {'meta': CURRICULUM['meta'], 'courses': CURRICULUM['hoc_phan'], 'kb_version': VERSION}
+    return {'meta': CURRICULUM['meta'], 'courses': CURRICULUM['hoc_phan'], 'hoc_phan_cong_nhan': HOC_PHAN_CONG_NHAN,
+            'kb_version': VERSION}
 
 
 @app.get('/v1/demo-profiles', dependencies=[Depends(authorized)])

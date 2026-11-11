@@ -257,6 +257,19 @@ def test_ngoai_ctdt():
     check(r["verdict"] == "TRUE", f'C21 âm tính: CT180 (trong CTĐT) đủ điều kiện vẫn TRUE ({r["verdict"]})')
 
 
+def test_llct_cu_khong_vao_tich_luy():
+    """C26: web nhận điểm HP LLCT chương trình cũ (ML010 …) để xét công nhận — điểm đó KHÔNG được vào TC tích lũy /
+    ĐTBCTL (KB chỉ cộng HP có course/2, qd3266 R-B: tc_tich_luy, tl_tu, tl_mau)."""
+    print("\nH. HP LLCT CHƯƠNG TRÌNH CŨ KHÔNG VÀO TÍCH LŨY (C26)")
+    goc = A.giai(A.sang_asp(hs("sv_lvtn"))[0])
+    dau = lambda ms: sorted({a for m in ms for a in m if a.startswith(("tc_tich_luy(", "tl_tu(", "tl_mau(", "tc_tl_khong_dk("))})
+    for diem, chu in ((95, "A"), (20, "F")):
+        j = hs("sv_lvtn")
+        j["grades"]["ML010"] = {"code": "ML010", "credits": 3, "thang10": diem, "letter": chu,
+                                "status": "passed" if diem >= 40 else "failed"}
+        check(dau(A.giai(A.sang_asp(j)[0])) == dau(goc), f"C26 ML010 điểm {chu} không đổi TC tích lũy / ĐTBCTL")
+
+
 def main():
     print("=" * 78)
     print("VALIDATE ABSTENTION ENGINE v1 — Tuần 16 (CPA2)")
@@ -270,6 +283,7 @@ def main():
     test_missing_recognized_credits()
     test_cong_nhan_llct()
     test_ngoai_ctdt()
+    test_llct_cu_khong_vao_tich_luy()
     print("\n" + "=" * 78)
     if errors:
         print(f"KẾT LUẬN: CÓ {len(errors)} LỖI")

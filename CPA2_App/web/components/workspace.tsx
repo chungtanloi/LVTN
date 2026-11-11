@@ -48,12 +48,14 @@ import type {
 } from "@/lib/types";
 import { transcriptRows, ocrSemesters } from "@/lib/transcript-review";
 import { OcrRowEditor, OcrSemesterEditor } from "./ocr-review-editor";
+import { countsInStats, creditsForNewCourse, type RecognitionCourse } from "../lib/courses";
 
 type Data = {
   profile: Profile | null;
   revision: number;
   messages: Message[];
   courses: Course[];
+  recognitionCourses: RecognitionCourse[];
   demos: Demo[];
   ocr?: OcrResult;
   ocrStatus?: string;
@@ -238,6 +240,7 @@ function DemoWorkspace() {
     revision: 0,
     messages: [],
     courses: [],
+    recognitionCourses: [],
     demos: [],
   });
   const [error, setError] = useState("");
@@ -251,6 +254,7 @@ function DemoWorkspace() {
       setData((current) => ({
         ...current,
         courses: catalog.courses,
+        recognitionCourses: catalog.hoc_phan_cong_nhan ?? [],
         demos,
         profile: current.profile ?? demos[0]?.profile,
         revision: current.revision || 1,
@@ -329,8 +333,9 @@ function CloudWorkspace() {
   const uploadUrl = useMutation(anyApi.cpa2.uploadUrl),
     startOcr = useMutation(anyApi.cpa2.startOcr),
     erase = useMutation(anyApi.cpa2.eraseData);
-  const [catalog, setCatalog] = useState<{ courses: Course[]; demos: Demo[] }>({
+  const [catalog, setCatalog] = useState<{ courses: Course[]; recognitionCourses: RecognitionCourse[]; demos: Demo[] }>({
     courses: [],
+    recognitionCourses: [],
     demos: [],
   });
   const [error, setError] = useState("");
@@ -338,7 +343,7 @@ function CloudWorkspace() {
   const initialize = useCallback(async () => {
     try {
       const config = await configure({});
-      setCatalog({ courses: config.catalog.courses, demos: config.demos });
+      setCatalog({ courses: config.catalog.courses, recognitionCourses: config.catalog.hoc_phan_cong_nhan ?? [], demos: config.demos });
       setError("");
     } catch (e) {
       setError(message(e));
@@ -475,7 +480,8 @@ function Shell({
     [ocrResult, setOcrResult] = useState<OcrResult | null>(null);
   const [filter, setFilter] = useState(""),
     [courseCode, setCourseCode] = useState(""),
-    [score, setScore] = useState("");
+    [score, setScore] = useState(""),
+    [courseCredits, setCourseCredits] = useState("");
   const [courseSemester, setCourseSemester] = useState("");
   const [semester, setSemester] = useState(1),
     [plan, setPlan] = useState<Recommendation | null>(null);
@@ -588,9 +594,10 @@ function Shell({
   const profile = data.profile;
   const grades = Object.entries(profile?.grades ?? {});
   const courseMap = new Map(data.courses.map((course) => [course.ma, course]));
+  const recognitionMap = new Map(data.recognitionCourses.map((course) => [course.ma, course]));
   const counted = grades.filter(
     ([code, grade]) =>
-      !courseMap.get(code)?.dieu_kien &&
+      countsInStats(code, courseMap) &&
       points[gradeLetter(grade)] !== undefined,
   );
   const passedCredits = counted.reduce(
@@ -1394,7 +1401,30 @@ function Shell({
                         {course.ma} — {course.ten}
                       </option>
                     ))}
+                    {!hasReviewContext && data.recognitionCourses.length > 0 && (
+                      <optgroup label="LLCT chương trình cũ — chỉ để xét công nhận">
+                        {data.recognitionCourses.map((course) => (
+                          <option key={course.ma} value={course.ma}>
+                            {course.ma} — {course.ten}
+                          </option>
+                        ))}
+                      </optgroup>
+                    )}
                   </select>
+                  {recognitionMap.has(courseCode) && (
+                    <input
+                      aria-label="Số tín chỉ theo bảng điểm"
+                      type="number"
+                      min="1"
+                      max="10"
+                      step="1"
+                      placeholder={recognitionMap.get(courseCode)?.tin_chi_van_ban
+                        ? `Số TC (văn bản ghi ${recognitionMap.get(courseCode)!.tin_chi_van_ban})` : "Số TC theo bảng điểm"}
+                      title={recognitionMap.get(courseCode)?.nguon}
+                      value={courseCredits}
+                      onChange={(event) => setCourseCredits(event.target.value)}
+                    />
+                  )}
                   <input
                     aria-label="Điểm thang 10"
                     type="number"
@@ -1418,18 +1448,22 @@ function Shell({
                         setError("Chọn học phần và nhập điểm từ 0 đến 10.");
                         return;
                       }
-                      const course = courseMap.get(courseCode)!;
+                      const resolved = creditsForNewCourse(courseCode, data.courses, data.recognitionCourses, courseCredits);
+                      if ("error" in resolved) {
+                        setError(resolved.error);
+                        return;
+                      }
                       const thang10 = Math.round(Number(score) * 10);
                       if (hasReviewContext) {
                         if (courseSemester === "") { setError("Chọn học kỳ của môn cần bổ sung."); return; }
                         void applyOcrReview({ action: "add", semester_index: Number(courseSemester),
-                          code: courseCode, credits: course.tin_chi, thang10, letter: gradeLetter({ code: courseCode, thang10 }) })
+                          code: courseCode, credits: resolved.credits, thang10, letter: gradeLetter({ code: courseCode, thang10 }) })
                           .catch(() => {});
-                        setScore(""); setCourseCode(""); return;
+                        setScore(""); setCourseCode(""); setCourseCredits(""); return;
                       }
                       const grade = {
                         code: courseCode,
-                        credits: course.tin_chi,
+                        credits: resolved.credits,
                         thang10,
                       };
                       updateDraft({
@@ -1444,6 +1478,7 @@ function Shell({
                       });
                       setScore("");
                       setCourseCode("");
+                      setCourseCredits("");
                     }}
                   >
                     <Plus size={16} /> Thêm
@@ -1479,7 +1514,10 @@ function Shell({
                             <strong>{code || "Chưa rõ mã"}</strong>
                           </td>
                           <td>
-                            {courseMap.get(code)?.ten ?? "Chưa ánh xạ CTĐT"}
+                            {courseMap.get(code)?.ten ??
+                              (recognitionMap.has(code)
+                                ? `${recognitionMap.get(code)!.ten} (LLCT cũ — chỉ để xét công nhận, không tính vào tích lũy)`
+                                : "Chưa ánh xạ CTĐT")}
                             {row.reviewed && <span className="ocr-approved"><Check size={14} /> Đã duyệt dòng</span>}
                             {row.needsReview && (
                               <details className="ocr-row-review">

@@ -1,3 +1,17 @@
+# Phát hành C20 + C21 — 11/11/2026
+
+Bản `a22e238` (R-Formal v1.12 công nhận LLCT cần quyết định — C20; mã học phần ngoài CTĐT → UNKNOWN — C21): Render deploy thủ công (đẩy nhánh không tự build — hai lần push chờ 25 và 30 phút, KB không đổi); HTTP health trả `status=ok`, KB `0a5a57d389bc7771`, trùng runtime đóng gói cục bộ. Vercel và Convex không đổi (giao diện đã hiển thị `can_xac_minh`).
+
+- Trước phát hành: API 55 test (54 đạt, 1 bỏ qua — thiếu pypdf); 19/19 `validate_*.py` đạt; `verify_runtime.py` đạt; `security_check.py` 34 gói, 0 cảnh báo OSV; AgentShield B (80/100), mọi phát hiện ở `CLAUDE.md` (không đóng gói vào image).
+- `cloud_smoke.py` trên bản mới: 6/6 PASS (từ chối ẩn danh, cần đồng ý, Clerk → Convex → Render → proof, cách ly tài khoản, phiên bản lịch sử, câu ngoài phạm vi UNKNOWN).
+- **C21 trên cloud: ĐẠT** — "Kỳ này em đăng ký học phần CT999 được không?" → `duoc_dang_ky("CT999")` UNKNOWN, `missing_facts=[ma_hp_ngoai_ctdt]`, KB `0a5a57d389bc7771`.
+- **C20 trên cloud: KHÔNG KIỂM ĐƯỢC.** Lưu hồ sơ có ML010 (LLCT chương trình cũ) bị `profiles.py` từ chối ("Mã học phần không thuộc CTĐT CNTT K49" — giao diện hiện đúng thông báo này qua `ConvexError.data`; "Server Error" chỉ là `errorMessage` mà script kiểm tra HTTP đọc được). Tức là luồng công nhận LLCT (R-M13) không đi tới được từ web — C20 chỉ được kiểm cục bộ (validate w5/w9/w10/w16/w19). Ghi `Viec_ton_dong.md` C26.
+
+## C26 — nhận HP LLCT chương trình cũ để xét công nhận (chưa phát hành)
+
+API nhận đúng 4 mã cũ của bảng chuyển đổi QĐ5339 Đ3 k9 (tập mã kiểm khớp `ml_thay` của KB khi khởi động), bắt buộc nhập số TC nguyên 1–10 (ML006 không đọc được số TC trong OCR tr.8 — không đoán); `/v1/catalog` trả `hoc_phan_cong_nhan`. Web: nhóm "LLCT chương trình cũ — chỉ để xét công nhận" trong ô chọn môn (ẩn khi đang rà soát OCR), ô nhập số TC, nhãn "không tính vào tích lũy", loại khỏi thống kê mô tả. Mã ngoài CTĐT khác (TC025, CT999) vẫn bị từ chối. Kiểm tra cục bộ: API 59 test (58 đạt, 1 bỏ qua — thiếu pypdf); web 21/21, TypeScript + build đạt; 19/19 `validate_*.py`; runtime đóng gói đạt (KB `0a5a57d389bc7771` không đổi — `profiles.py` không thuộc hash KB). Chưa kiểm trên cloud.
+- Đã chạy `cloud_smoke.py --cleanup`: xoá hai tài khoản Clerk tổng hợp và dữ liệu Convex. Không dùng bảng điểm thật.
+
 # Kiểm tra production cuối — 31/10/2026
 
 Bản ứng dụng `b307a3916cb441fdd9df6e7f042c57baad2176f5`: Render `dep-dbi4ep49v7es738lto60` live; Vercel `dpl_8K1u7sD7sj285vaKyBma21cx5Wjc` READY trên domain chính. HTTP health kiểm lại trả `status=ok`, KB `896b85a6179f1101`. Convex production đã phát hành timeout riêng lookup 125 giây.
