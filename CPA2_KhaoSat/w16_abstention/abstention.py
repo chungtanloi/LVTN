@@ -60,6 +60,30 @@ BIEN_BOOL = {
 }
 G10 = re.compile(r'^g10\(("[^"]+"),(-?\d+)\)$')
 
+# C21 (Tuần 22, DK-22): claim về một mã HP KHÔNG có trong CTĐT → KB không có dữ kiện về HP đó. Thế giới đóng cho FALSE
+# (vd. du_dk_dang_ky cần course(C,_)) — sai nguyên tắc thiết kế "không kết luận điều KB không có". Chỉ hạ FALSE → UNKNOWN;
+# TRUE giữ nguyên (bảng điểm thật có HP ngoài CTĐT như TC025, passed vẫn đúng). Nguyên tắc thiết kế, KHÔNG phải quy chế.
+CURRICULUM = ROOT / "w6_curriculum" / "curriculum_cntt_k49.json"
+MA_CTDT = frozenset(h["ma"] for h in json.loads(CURRICULUM.read_text(encoding="utf-8"))["hoc_phan"])
+# Giả định: đối số đầu dạng chuỗi giống mã HP của MỌI vị từ hiện có là mã HP (duoc_dang_ky, du_dk_dang_ky, passed, …).
+# Thêm vị từ có đối số đầu là chuỗi khác (vd. mã chứng chỉ) thì phải loại trừ ở đây.
+_MA_DAU = re.compile(r'^[a-z_]\w*\("([A-Za-z]{1,3}\d{2,3}[A-Za-z]?)"[,)]')
+BIEN_NGOAI_CTDT = "ma_hp_ngoai_ctdt"
+
+
+def ngoai_ctdt(claim):
+    """Mã HP ở đối số đầu của claim nếu mã đó không có trong CTĐT K49; ngược lại None (so không phân biệt hoa/thường)."""
+    k = _MA_DAU.match(claim)
+    return k.group(1) if k and k.group(1).upper() not in MA_CTDT else None
+
+
+def hoi_ngoai_ctdt(ma):
+    return {"bien": BIEN_NGOAI_CTDT, "quyet_dinh": True, "theo_gia_tri": {}, "du_ket_luan": False,
+            "hoi": f"Mã học phần {ma} không có trong chương trình đào tạo ngành CNTT của hệ thống — hệ thống không có "
+                   "dữ kiện về học phần này. "
+                   "Bạn kiểm tra lại mã học phần (hoặc hỏi Phòng Đào tạo nếu là học phần ngoài CTĐT).",
+            "nguon": "Nguyên tắc thiết kế CPA² (không kết luận điều KB không có dữ kiện) · CTĐT CNTT K49"}
+
 
 def giai(asp):
     ctl = clingo.Control(["--warn=none", "--models=0"])
@@ -131,11 +155,16 @@ def tra_loi(claim, ho_so=None, them=""):
     asp += "\n" + them
     models = giai(asp)
     v = ba_tri(claim, models)
-    can = bang_chung_thieu(claim, models) if v == "UNKNOWN" else []
+    ma_ngoai = ngoai_ctdt(claim) if v == "FALSE" else None
+    if ma_ngoai:                                   # C21: thế giới đóng không được kết luận về HP ngoài KB
+        v = "UNKNOWN"
+    can = [hoi_ngoai_ctdt(ma_ngoai)] if ma_ngoai else (bang_chung_thieu(claim, models) if v == "UNKNOWN" else [])
     if v == "TRUE":
         gt = f"Kết luận: {claim} đúng trong mọi trường hợp dữ kiện hiện có."
     elif v == "FALSE":
         gt = f"Kết luận: {claim} không đạt trong mọi trường hợp dữ kiện hiện có."
+    elif v == "UNKNOWN" and ma_ngoai:
+        gt = "Chưa thể kết luận — " + can[0]["hoi"]
     elif v == "UNKNOWN":
         gt = ("Chưa đủ dữ kiện để kết luận — hệ thống không đoán. Cần bổ sung: "
               + " | ".join(b["hoi"] for b in can) if can else

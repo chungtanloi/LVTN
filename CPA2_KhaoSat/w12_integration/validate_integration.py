@@ -115,6 +115,16 @@ def test_dang_ky():
     r = hoi("Kỳ này em đăng ký CT182 được chưa?", xoa=["CT180", "CT182", "CT177"])
     check(any(s_["atom"].startswith('thieu_tien_quyet("CT180"') for s_ in r["certificate"]["proof"]["steps"]),
           "E7 bước 'thiếu tiên quyết' trong chứng chỉ lấy từ why/2 của KB (không dựng tay)")
+    # C21 (Tuần 22, DK-22): mã ngoài CTĐT → UNKNOWN, không "chưa đủ điều kiện" (thế giới đóng)
+    r = hoi("Kỳ này em đăng ký học phần CT999 được không?")
+    check(r.get("claim") == 'duoc_dang_ky("CT999")' and r["verdict"] == "UNKNOWN"
+          and "CT999" in r["explanation_vi"] and "chưa đủ điều kiện" not in r["explanation_vi"]
+          and "ma_hp_ngoai_ctdt" in r.get("missing_facts", []),
+          f"E7b CT999 ngoài CTĐT → UNKNOWN + hỏi lại mã ({r['verdict']}: {r['explanation_vi'][:120]})")
+    extra, _, _ = proto.load_student(str(HERE.parent / "w7_student_facts" / "students" / "sv_lvtn.json"))
+    check(proto.solve_truth('duoc_dang_ky("CT999")', extra) == "UNKNOWN"
+          and proto.solve_truth('duoc_dang_ky("CT180")', extra) != "UNKNOWN",
+          "E7c đường chỉ lấy verdict (OCR): CT999 → UNKNOWN; CT180 (trong CTĐT) không bị đổi")
     sai = {q: proto.parse_question(q) for q in (
         "nếu em học lại CT177 thì được bao nhiêu điểm", "Nếu em không đăng ký CT180 thì có tốt nghiệp được không",
         "em học xong ct180 thì được tốt nghiệp chưa", "em đã học ct180 được mấy điểm",

@@ -232,6 +232,31 @@ def test_cong_nhan_llct():
     check(r["verdict"] == "TRUE", f'C20 có quyết định công nhận ML016+ML018 → đăng ký được ML019 ({r["verdict"]})')
 
 
+def test_ngoai_ctdt():
+    """C21 (Tuần 22, DK-22): mã HP không có trong CTĐT → KB không có dữ kiện → UNKNOWN, không FALSE (thế giới đóng).
+    Chỉ hạ FALSE: TRUE/FALSE của HP CÓ trong CTĐT giữ nguyên (ca âm tính)."""
+    print("\nG. MÃ HỌC PHẦN NGOÀI CTĐT (C21)")
+    r = A.tra_loi('duoc_dang_ky("CT999")', hs("sv_lvtn"))
+    check(r["verdict"] == "UNKNOWN" and r["ket_luan"] is None,
+          f'C21 CT999 không có trong CTĐT K49 → UNKNOWN, không kết luận ({r["verdict"]})')
+    b = bien(r, "ma_hp_ngoai_ctdt")
+    check(b is not None and "CT999" in b["hoi"], f'C21 câu hỏi bổ sung nêu mã CT999 ({[x["bien"] for x in r["can_bo_sung"]]})')
+    nc = getattr(A, "ngoai_ctdt", lambda c: "thiếu hàm")
+    check(nc('du_dk_dang_ky("CT999")') == "CT999" and nc('duoc_dang_ky("CT180")') is None
+          and nc("tot_nghiep") is None and nc("hang_cuoi(gioi)") is None
+          and nc('duoc_dang_ky("ct999")') == "ct999" and nc('duoc_dang_ky("ct180")') is None,
+          "C21 ngoai_ctdt chỉ nhận mã HP ngoài CTĐT ở đối số đầu")
+    j = hs("sv_lvtn")
+    for m in ("CT180", "CT182", "CT177"):
+        j["grades"].pop(m, None)
+    r = A.tra_loi('duoc_dang_ky("CT182")', j)
+    check(r["verdict"] == "FALSE", f'C21 âm tính: CT182 (trong CTĐT) thiếu tiên quyết vẫn FALSE ({r["verdict"]})')
+    j = hs("sv_lvtn")
+    j["grades"].pop("CT180", None)
+    r = A.tra_loi('duoc_dang_ky("CT180")', j)
+    check(r["verdict"] == "TRUE", f'C21 âm tính: CT180 (trong CTĐT) đủ điều kiện vẫn TRUE ({r["verdict"]})')
+
+
 def main():
     print("=" * 78)
     print("VALIDATE ABSTENTION ENGINE v1 — Tuần 16 (CPA2)")
@@ -244,6 +269,7 @@ def main():
     test_mau_thuan()
     test_missing_recognized_credits()
     test_cong_nhan_llct()
+    test_ngoai_ctdt()
     print("\n" + "=" * 78)
     if errors:
         print(f"KẾT LUẬN: CÓ {len(errors)} LỖI")

@@ -154,3 +154,19 @@ Loi duyệt 02/11/2026 (phương án (a) cho recommendation). Tập test đã nh
 | Q-Noise test | 110 | 95,5% | 72,7% | 93,8% | 85 | 5 (DK-22 ×5) | 20 |
 
 Còn: DK-22 (C21, thiết kế), các từ chối thừa ở mục 3.2–3.3. Chưa deploy lại API/web với KB mới.
+
+## 6. Sau sửa C21 — mã học phần ngoài CTĐT (KHÔNG phải số chính thức)
+
+Loi duyệt 11/11/2026. Nguyên tắc thiết kế (gold DK-22 `loai_gold=thiet_ke`), **không** sửa R-Formal: `du_dk_dang_ky(C)` cần `course(C,_)` nên mã không có trong CTĐT (CT999) cho FALSE theo thế giới đóng.
+
+- **Sửa:** `w16_abstention/abstention.py` thêm `ngoai_ctdt(claim)` (mã HP ở đối số đầu, không có trong `curriculum_cntt_k49.json`, không phân biệt hoa/thường) + `hoi_ngoai_ctdt(ma)` (biến thiếu `ma_hp_ngoai_ctdt`, hỏi lại mã). CHỈ hạ FALSE → UNKNOWN; TRUE giữ nguyên (bảng điểm thật có HP ngoài CTĐT như TC025). Dùng ở `abstention.tra_loi`, `prototype.solve_truth` (đường OCR), `prototype.answer_dang_ky` (đường câu hỏi / web API — qua hậu kiểm như các nhánh khác).
+- **TDD:** ca mới FAIL với code cũ rồi ĐẠT — w16 C21 (×3), w12 E7b, E7c; ca âm tính (CT182 thiếu tiên quyết vẫn FALSE, CT180 đủ điều kiện vẫn TRUE) ĐẠT trước và sau. Review (ECC code-reviewer): không có mức cao; đã làm mục MEDIUM (không phân biệt hoa/thường).
+- **Verify:** 19/19 `validate_*.py` ĐẠT.
+
+| `--hau-to _sau_C21` | n | Soundness | Coverage | Sel. Acc | Đúng gold | Unsound | Từ chối thừa |
+|---|---|---|---|---|---|---|---|
+| G-Truth test | 56 | 100% | 75,0% | 100% | 48 | 0 | 8 |
+| G-Truth [quy_che] | 52 | 100% | 76,9% | 100% | 44 | 0 | 8 |
+| Q-Noise test | 110 | 100% | 68,2% | 100% | 90 | 0 | 20 |
+
+Coverage giảm (76,8% → 75,0%; 72,7% → 68,2%) vì DK-22 nay từ chối đúng gold thay vì kết luận sai. Tập test đã nhiễm (sửa sau khi thấy ca thất bại) — số chính thức vẫn là mục 2; cần bộ test mới để báo Soundness 100%.

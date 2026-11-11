@@ -230,12 +230,15 @@ def solve_truth(claim, extra):
     ctl.ground([("base", [])])
     symbol = clingo.parse_term(claim)
     if ctl.symbolic_atoms[symbol] is None:
-        return "FALSE" if ctl.solve().satisfiable else "UNSAT"
-    positive = ctl.solve(assumptions=[(symbol, True)]).satisfiable
-    negative = ctl.solve(assumptions=[(symbol, False)]).satisfiable
-    if positive and negative:
-        return "UNKNOWN"
-    return "TRUE" if positive else ("FALSE" if negative else "UNSAT")
+        verdict = "FALSE" if ctl.solve().satisfiable else "UNSAT"
+    else:
+        positive = ctl.solve(assumptions=[(symbol, True)]).satisfiable
+        negative = ctl.solve(assumptions=[(symbol, False)]).satisfiable
+        if positive and negative:
+            return "UNKNOWN"
+        verdict = "TRUE" if positive else ("FALSE" if negative else "UNSAT")
+    # C21: mã HP ngoài CTĐT — thế giới đóng không được kết luận FALSE
+    return "UNKNOWN" if verdict == "FALSE" and abstention.ngoai_ctdt(claim) else verdict
 
 
 def solve_verdict(claim, extra):
@@ -395,6 +398,9 @@ def answer_dang_ky(claim, student_path):
                 "missing_facts": ["ho_so"], "can_bo_sung": [], "certificate": {"claim": claim, "proof": {"steps": []}}}
     extra, sid, mt = load_student(student_path)
     verdict, models, cautious, brave = solve_verdict(claim, extra)
+    ma_ngoai = abstention.ngoai_ctdt(claim) if verdict == "FALSE" else None
+    if ma_ngoai:                      # C21 (DK-22): HP ngoài CTĐT → không có dữ kiện, không kết luận "chưa đủ điều kiện"
+        verdict = "UNKNOWN"
     cat = json.loads(CATALOG.read_text(encoding="utf-8"))
     by_asp = {r["asp"]: r for r in cat["rules"] if r.get("asp")}
     q = f'"{c}"'
@@ -429,6 +435,10 @@ def answer_dang_ky(claim, student_path):
             text = f"Kết luận: chưa đủ điều kiện đăng ký {c}" + (
                 f" — thiếu tiên quyết {', '.join(thieu_tq)} (QĐ3266 Điều 7 khoản 4)." if thieu_tq else
                 " (chưa đủ ngưỡng tín chỉ tích lũy hoặc không có trong CTĐT).")
+    elif verdict == "UNKNOWN" and ma_ngoai:
+        can = [abstention.hoi_ngoai_ctdt(ma_ngoai)]
+        steps = []                    # không có bước suy diễn nào về một HP ngoài KB
+        text = "Chưa thể kết luận — " + can[0]["hoi"]
     elif verdict == "UNKNOWN":
         can = abstention.bang_chung_thieu(claim, [frozenset(m) for m in models])
         text = "Chưa đủ dữ kiện để kết luận — cần bổ sung: " + " | ".join(b["hoi"] for b in can)
