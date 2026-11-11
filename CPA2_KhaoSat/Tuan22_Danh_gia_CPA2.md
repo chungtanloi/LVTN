@@ -145,7 +145,7 @@ Loi duyệt 02/11/2026 (phương án (a) cho recommendation). Tập test đã nh
 
 - **Luật:** `qd5339_r_formal_v1.lp` R-M13 tách `du_dk_cong_nhan_llct(New,Old)` (đạt học phần cũ → đủ điều kiện ĐƯỢC XÉT) khỏi `mien_tu(New,Old)` (chỉ khi có quyết định `duoc_mien(New)` từ hồ sơ `exemptions[].quyet_dinh`) — QĐ5339 Điều 3 khoản 9 (tr.7–8: "việc xét miễn và công nhận điểm học phần thực hiện như sau") + Điều 2 khoản 6 (tr.4: SV làm đơn; điểm d: căn cứ kết quả xét miễn được phê duyệt). `eligibility.lp`: `du_dk(thay_the(B))` dùng `du_dk_cong_nhan_llct`. `recommendation.py`: chưa có quyết định → `thay_the[].hanh_dong` "đủ điều kiện làm đơn xin công nhận …" + mục `can_xac_minh` (web hiển thị); không đề xuất học; đã có quyết định → không nhắc nữa.
 - **TDD:** ca hồi quy FAIL với luật cũ rồi ĐẠT với luật mới — w5 C26b; w9 C4, C5, C5c; w10 C2b; w16 C20 (qua loader, dạng DK-21); w19 E5, E5b, E5c. Ca cũ mã hoá hành vi tự động được sửa theo quy tắc mới (w9 C4b/C5b/C7c, w10 C2 thêm `duoc_mien`). Corpus sinh lại không đổi.
-- **Verify:** 19/19 `validate_*.py` ĐẠT (tuần 5–21). Test API `CPA2_App/api` chưa chạy (máy này chưa có `.venv` của app).
+- **Verify:** 19/19 `validate_*.py` ĐẠT (tuần 5–21). Test API `CPA2_App/api` (11/11/2026, sau commit `5535fa4`): 55 test, ĐẠT, 1 bỏ qua (`test_encrypted_pdf_is_rejected` — cần pypdf, không có trong requirements).
 
 | `--hau-to _sau_C20` | n | Soundness | Coverage | Sel. Acc | Đúng gold | Unsound | Từ chối thừa |
 |---|---|---|---|---|---|---|---|
