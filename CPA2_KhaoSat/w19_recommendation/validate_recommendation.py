@@ -121,8 +121,15 @@ def main():
     j = chi_giu([x for x in NAM2 if x != "ML014"] + ["ML009"])
     j["grades"]["ML009"] = {"code": "ML009", "credits": 2, "thang10": 80, "letter": "B+", "status": "passed"}
     r = R.de_xuat(j, hk=1)
-    check("ML014" in {x["ma"] for x in r["thay_the"]} and "ML014" not in ma(r),
-          f"E5 đạt ML009 → ML014 được công nhận thay thế, không đề xuất học ML014 ({ma(r)})")
+    tt = {x["ma"]: x for x in r["thay_the"]}
+    check("ML014" in tt and "ML014" not in ma(r) and "làm đơn" in tt["ML014"].get("hanh_dong", ""),
+          f"E5 đạt ML009, chưa có quyết định → gợi ý LÀM ĐƠN xin công nhận ML014, không đề xuất học ({ma(r)})")
+    check(any(x["ma"] == "ML014" and "công nhận" in x["ly_do"] for x in r["can_xac_minh"]),
+          "E5b ML014 vào can_xac_minh (web hiển thị) — chưa phải đã công nhận (C20, QĐ5339 Đ2 k6)")
+    j["exemptions"] = [{"ma_hp": "ML014", "quyet_dinh": True}]
+    r = R.de_xuat(j, hk=1)
+    check("ML014" not in ma(r) and "ML014" not in {x["ma"] for x in r["thay_the"] + r["can_xac_minh"]},
+          "E5c đã có quyết định công nhận ML014 → không đề xuất học, không nhắc làm đơn nữa")
 
     print("\nF. SONG HÀNH — QĐ3266 Đ7 k5: 'phải học trước hoặc học cùng lúc' (QD-13 rút lại; 'học' = có học, kể cả F)")
     j = chi_giu(NAM2 + ["CT176"])

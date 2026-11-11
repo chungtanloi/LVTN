@@ -162,13 +162,19 @@ def de_xuat(ho_so, hk, them=""):
     # --- R3 xin miễn (QD-11) và R4 thay thế: tách khỏi danh sách học ---
     tach = set()
     for ma in CT:
-        if any(a.startswith(f'mien_tu("{ma}",') for a in chung):
-            if E.xet(ho_so, f"thay_the:{ma}", them)["ket_qua"] == "ELIGIBLE":
-                tu = sorted(a.split(",")[1][:-1].strip('"') for a in chung if a.startswith(f'mien_tu("{ma}",'))
-                kq["thay_the"].append({"ma": ma, "tu": tu, "chung_chi": _chung_chi(f'mien_tu("{ma}","{tu[0]}")', chung)})
-                tach.add(ma)
-        elif tl[ma] == "TRUE":
+        if tl[ma] == "TRUE":                 # đã đạt (kể cả đã có quyết định công nhận) → không cần làm gì
             continue
+        if any(a.startswith(f'du_dk_cong_nhan_llct("{ma}",') for a in chung):
+            # C20: chỉ ĐỦ ĐIỀU KIỆN xét công nhận (QĐ5339 Đ3 k9); công nhận cần đơn + quyết định (Đ2 k6)
+            if E.xet(ho_so, f"thay_the:{ma}", them)["ket_qua"] == "ELIGIBLE":
+                tu = sorted(a.split(",")[1][:-1].strip('"') for a in chung if a.startswith(f'du_dk_cong_nhan_llct("{ma}",'))
+                kq["thay_the"].append({"ma": ma, "tu": tu,
+                                       "hanh_dong": f"đủ điều kiện làm đơn xin công nhận {ma} từ {', '.join(tu)} "
+                                                    "(chưa phải đã công nhận — chờ quyết định của Trường)",
+                                       "chung_chi": _chung_chi(f'du_dk_cong_nhan_llct("{ma}","{tu[0]}")', chung)})
+                kq["can_xac_minh"].append({"ma": ma, "ly_do": f"chưa có quyết định công nhận {ma} — làm đơn xin công nhận "
+                                           f"từ {', '.join(tu)} trước khi đăng ký học (QĐ5339 Đ3 k9, Đ2 k6)"})
+                tach.add(ma)
         elif _moi(models, f'duoc_mien("{ma}")') == "TRUE":
             tach.add(ma)
         elif _moi(models, f'duoc_mien("{ma}")') == "UNKNOWN":

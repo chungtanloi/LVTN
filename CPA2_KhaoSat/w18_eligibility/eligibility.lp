@@ -67,6 +67,6 @@ du_dk(tich_luy_tc) :- not da_hoan_thanh(tich_luy_tc).
 why(du_dk(tich_luy_tc), r_f05) :- du_dk(tich_luy_tc).
 
 %% Học phần thay thế — QĐ5339 Điều 3 khoản 9 (R-M13) và substitutes/2 (w9)
-du_dk(thay_the(B)) :- mien_tu(B,_).
+du_dk(thay_the(B)) :- du_dk_cong_nhan_llct(B,_).   % đủ điều kiện ĐƯỢC XÉT; công nhận cần quyết định (C20)
 du_dk(thay_the(B)) :- substitutes(A,B), passed(A).
 why(du_dk(thay_the(B)), r_m13) :- du_dk(thay_the(B)).

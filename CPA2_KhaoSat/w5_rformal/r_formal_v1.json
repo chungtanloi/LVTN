@@ -1423,7 +1423,7 @@
       ],
       "nhom": "mien_thay_the",
       "asp": "r_m13",
-      "ghi_chu": "BẢNG THAY THẾ THẬT đầu tiên tìm được — dùng làm ca kiểm thử cho quy tắc gộp điểm R-M04 (ML010 là ca một→nhiều).",
+      "ghi_chu": "BẢNG THAY THẾ THẬT đầu tiên tìm được — dùng làm ca kiểm thử cho quy tắc gộp điểm R-M04 (ML010 là ca một→nhiều). [C20, Tuần 22] KB cũ suy mien_tu (và passed qua w9) TỰ ĐỘNG khi đạt học phần cũ → 4/5 kết luận sai của G-Truth test. v1.12: đạt học phần cũ chỉ cho du_dk_cong_nhan_llct (đủ điều kiện ĐƯỢC XÉT); công nhận phải làm đơn, đơn vị xét duyệt (QĐ5339 Điều 2 khoản 6, tr.4) → mien_tu chỉ khi có quyết định (duoc_mien từ hồ sơ exemptions[].quyet_dinh).",
       "diem": null,
       "ly_do_PN": null,
       "quyet_dinh": null

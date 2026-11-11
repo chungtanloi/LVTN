@@ -110,12 +110,22 @@ def test_substitution():
     # C3: Niên luận chuyển ngành (giả)
     m=solve_one('substitutes("CT271E","CT201E").\ng10("CT271E",80).\n')
     check('passed("CT201E")' in m and 'substituted("CT201E")' in m, "C3 CT271E thay CT201E")
-    # C4: ML009 → ML014 (QĐ5339 Đ3 k.9)
+    # C4: ML009 → ML014 (QĐ5339 Đ3 k.9) — công nhận KHÔNG tự động: cần đơn + quyết định (Đ2 k6, C20)
     m=solve_one('course("ML009",2). g10("ML009",80).\n')
-    check('passed("ML014")' in m, "C4 ML009 → ML014 (bảng chuyển đổi LLCT)")
+    check('passed("ML014")' not in m and 'du_dk_cong_nhan_llct("ML014","ML009")' in m,
+          "C4 ML009 đạt, chưa có quyết định → ML014 chỉ ĐỦ ĐIỀU KIỆN xét công nhận, chưa passed (C20)")
+    m=solve_one('course("ML009",2). g10("ML009",80). duoc_mien("ML014").\n')
+    check('passed("ML014")' in m, "C4b có quyết định công nhận ML014 → passed")
     # C5: ML010 → ML016+ML018 (một→nhiều)
     m=solve_one('course("ML010",3). g10("ML010",80).\n')
-    check('passed("ML016")' in m and 'passed("ML018")' in m, "C5 ML010 → ML016+ML018 (một→nhiều, cho phép)")
+    check('passed("ML016")' not in m and 'passed("ML018")' not in m,
+          "C5 ML010 đạt, chưa có quyết định → ML016/ML018 chưa passed (C20, MT-08/09)")
+    m=solve_one('course("ML010",3). g10("ML010",80). duoc_mien("ML016"). duoc_mien("ML018").\n')
+    check('passed("ML016")' in m and 'passed("ML018")' in m, "C5b có quyết định → ML016+ML018 (một→nhiều, cho phép)")
+    # C5c: ML011 đạt D (4,0) → ML019 vẫn cần quyết định (MT-11)
+    m=solve_one('course("ML011",3). g10("ML011",40).\n')
+    check('passed("ML019")' not in m and 'du_dk_cong_nhan_llct("ML019","ML011")' in m,
+          "C5c ML011 đạt D, chưa có quyết định → ML019 chưa passed (C20, MT-11)")
     # C6: Chênh lệch TC — ML009 2TC → ML014 3TC
     m=solve_one('course("ML009",2). g10("ML009",80).\n')
     check('chenh_lech_tc("ML009","ML014",1)' in m, "C6 Chênh lệch TC 2→3 = +1 (QD-10)")
@@ -124,8 +134,9 @@ def test_substitution():
     check('trang_thai_hp("AV1",exempted_M)' in m, "C7 trang_thai_hp AV1 = exempted_M")
     m2=solve_one('g10("CT101",80).\n')
     check('trang_thai_hp("CT101",passed)' in m2, "C7b CT101 passed thường")
-    m3=solve_one('course("ML009",2). g10("ML009",80).\n')
-    check('trang_thai_hp("ML014",substituted)' in m3, "C7c ML014 substituted")
+    m3=solve_one('course("ML009",2). g10("ML009",80). duoc_mien("ML014").\n')
+    check('trang_thai_hp("ML014",recognized)' in m3,
+          "C7c ML014 có quyết định công nhận → recognized (ưu tiên recognized > substituted; C20)")
 
 # =============================================================
 # D. TÍCH HỢP TỐT NGHIỆP VỚI MIỄN/THAY THẾ

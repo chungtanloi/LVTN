@@ -178,7 +178,11 @@ ml_thay("ML010", "ML018").
 ml_thay("ML011", "ML019").
 ml_thay("ML006", "ML021").
 
-mien_tu(New, Old) :- ml_thay(Old, New), passed(Old).
+%% v1.12 (C20, Tuần 22): đạt học phần cũ chỉ cho ĐỦ ĐIỀU KIỆN xét công nhận. Công nhận phải làm đơn,
+%% đơn vị xét duyệt (Điều 2 khoản 6, tr.4) → chỉ khi có quyết định (duoc_mien, từ hồ sơ) mới có mien_tu.
+du_dk_cong_nhan_llct(New, Old) :- ml_thay(Old, New), passed(Old).
+why(du_dk_cong_nhan_llct(New,Old), r_m13) :- du_dk_cong_nhan_llct(New,Old).
+mien_tu(New, Old) :- du_dk_cong_nhan_llct(New, Old), duoc_mien(New).
 why(mien_tu(New,Old), r_m13) :- mien_tu(New,Old), ml_thay(Old,New).
 
 %% ---------------------------------------------------------------------------

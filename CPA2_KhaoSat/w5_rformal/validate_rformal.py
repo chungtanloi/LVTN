@@ -478,6 +478,13 @@ test("C26 ML010 → ML016 + ML018: một học phần đã học sinh hai học 
      note="QĐ5339 Điều 3 k.9 — bảng thay thế Lý luận chính trị, ca MỘT → NHIỀU: cả hai học "
           "phần được miễn đều nhận nguyên điểm của học phần đã học")
 
+test("C26b ML011 đạt D, CHƯA có quyết định công nhận → chỉ đủ điều kiện xét, không có mien_tu (C20)",
+     'khoa_tu_k45. course("ML011",3). g10("ML011",40). course("ML019",2).',
+     expect_true=['du_dk_cong_nhan_llct("ML019","ML011")'],
+     expect_false=['mien_tu("ML019","ML011")', 'recognized("ML019")'],
+     note="QĐ5339 Điều 3 k.9 (bảng chuyển đổi) + Điều 2 k.6 tr.4 (phải làm đơn, đơn vị xét duyệt) — "
+          "công nhận không tự động")
+
 
 # =============================================================================
 # C27–C31 — ĐỊNH NGHĨA VẬN HÀNH "TC NỢ ĐỌNG" (QD-03, chưa xác nhận nguồn)

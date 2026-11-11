@@ -158,8 +158,12 @@ xac_nhan_ky_luat_sach.
     check("tot_nghiep" in m, "C1 Miễn AV bằng IELTS vẫn tot_nghiep")
     # C2: Thay thế ML009→ML014, ML010→ML016+ML018 vẫn tốt nghiệp
     extra2 = 'course("ML009",2). course("ML010",3). g10("ML009",80). g10("ML010",80).\n' + sv(CHUAN+["CT550E"], them=KY_LUAT)
-    m=solve_one(extra2)
-    check("passed(\"ML014\")" in m, "C2 ML009→ML014 vẫn passed")
+    m=solve_one(extra2 + 'duoc_mien("ML014"). duoc_mien("ML016"). duoc_mien("ML018").\n')
+    check("passed(\"ML014\")" in m, "C2 ML009→ML014 có quyết định công nhận → passed")
+    # C2b: chưa có quyết định → ML014 không tự passed (C20, QĐ5339 Đ2 k6)
+    m=solve_one('course("ML009",2). g10("ML009",80).\n' + sv(CHUAN+["CT550E"], bo=("ML014",), them=KY_LUAT))
+    check("passed(\"ML014\")" not in m and "tot_nghiep" not in m,
+          "C2b ML009 đạt, chưa có quyết định, không học ML014 → ML014 chưa passed, chưa tốt nghiệp (C20)")
 
 def test_ha_bac():
     print("\nD. HẠ MỘT MỨC HẠNG XUẤT SẮC/GIỎI (C15, Đ34 k2) — dữ kiện ngoài: mở nhánh khi chưa khai báo")

@@ -219,6 +219,19 @@ def test_missing_recognized_credits():
         check(r['verdict'] == expected, f'R21 TC công nhận={credits} → {expected} ({r["verdict"]})')
 
 
+def test_cong_nhan_llct():
+    """C20 (Tuần 22, DK-21): ML010 đạt chỉ cho ĐỦ ĐIỀU KIỆN xét công nhận ML018 — QĐ5339 Đ3 k9 + Đ2 k6."""
+    j = hs("sv_lvtn")
+    for m in ("ML016", "ML018", "ML019"):
+        j["grades"].pop(m, None)
+    j["grades"]["ML010"] = {"code": "ML010", "credits": 3, "thang10": 80, "letter": "B+", "status": "passed"}
+    r = A.tra_loi('duoc_dang_ky("ML019")', j)
+    check(r["verdict"] == "FALSE", f'C20 ML018 chưa có quyết định công nhận → không đăng ký được ML019 ({r["verdict"]})')
+    j["exemptions"] = [{"ma_hp": "ML016", "quyet_dinh": True}, {"ma_hp": "ML018", "quyet_dinh": True}]
+    r = A.tra_loi('duoc_dang_ky("ML019")', j)
+    check(r["verdict"] == "TRUE", f'C20 có quyết định công nhận ML016+ML018 → đăng ký được ML019 ({r["verdict"]})')
+
+
 def main():
     print("=" * 78)
     print("VALIDATE ABSTENTION ENGINE v1 — Tuần 16 (CPA2)")
@@ -230,6 +243,7 @@ def main():
     test_integration()
     test_mau_thuan()
     test_missing_recognized_credits()
+    test_cong_nhan_llct()
     print("\n" + "=" * 78)
     if errors:
         print(f"KẾT LUẬN: CÓ {len(errors)} LỖI")

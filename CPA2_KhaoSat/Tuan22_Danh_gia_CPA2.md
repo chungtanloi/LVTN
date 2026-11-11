@@ -136,3 +136,21 @@ Lần chạy dev cuối là 19/10 (`b6eb10d`), **trước** các thay đổi lõ
 - Không sửa hệ thống hay gold trong Tuần 22. Sau khi sửa (nếu Loi duyệt) thì chạy `--hau-to _sau_<mã>`; số ở mục 2 là số chính thức, tập test coi như đã nhiễm.
 
 Việc mới ghi vào `Viec_ton_dong.md`: A21 (gold TN-01/03/08 vs R21), C20–C24.
+
+---
+
+## 5. Sau sửa C20 — R-Formal v1.12 (KHÔNG phải số chính thức)
+
+Loi duyệt 02/11/2026 (phương án (a) cho recommendation). Tập test đã nhiễm từ đây; số chính thức vẫn là mục 2.
+
+- **Luật:** `qd5339_r_formal_v1.lp` R-M13 tách `du_dk_cong_nhan_llct(New,Old)` (đạt học phần cũ → đủ điều kiện ĐƯỢC XÉT) khỏi `mien_tu(New,Old)` (chỉ khi có quyết định `duoc_mien(New)` từ hồ sơ `exemptions[].quyet_dinh`) — QĐ5339 Điều 3 khoản 9 (tr.7–8: "việc xét miễn và công nhận điểm học phần thực hiện như sau") + Điều 2 khoản 6 (tr.4: SV làm đơn; điểm d: căn cứ kết quả xét miễn được phê duyệt). `eligibility.lp`: `du_dk(thay_the(B))` dùng `du_dk_cong_nhan_llct`. `recommendation.py`: chưa có quyết định → `thay_the[].hanh_dong` "đủ điều kiện làm đơn xin công nhận …" + mục `can_xac_minh` (web hiển thị); không đề xuất học; đã có quyết định → không nhắc nữa.
+- **TDD:** ca hồi quy FAIL với luật cũ rồi ĐẠT với luật mới — w5 C26b; w9 C4, C5, C5c; w10 C2b; w16 C20 (qua loader, dạng DK-21); w19 E5, E5b, E5c. Ca cũ mã hoá hành vi tự động được sửa theo quy tắc mới (w9 C4b/C5b/C7c, w10 C2 thêm `duoc_mien`). Corpus sinh lại không đổi.
+- **Verify:** 19/19 `validate_*.py` ĐẠT (tuần 5–21). Test API `CPA2_App/api` chưa chạy (máy này chưa có `.venv` của app).
+
+| `--hau-to _sau_C20` | n | Soundness | Coverage | Sel. Acc | Đúng gold | Unsound | Từ chối thừa |
+|---|---|---|---|---|---|---|---|
+| G-Truth test | 56 | 98,2% | 76,8% | 97,7% | 47 | 1 (DK-22) | 8 |
+| G-Truth [quy_che] | 52 | 100% | 76,9% | 100% | 44 | 0 | 8 |
+| Q-Noise test | 110 | 95,5% | 72,7% | 93,8% | 85 | 5 (DK-22 ×5) | 20 |
+
+Còn: DK-22 (C21, thiết kế), các từ chối thừa ở mục 3.2–3.3. Chưa deploy lại API/web với KB mới.
