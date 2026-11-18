@@ -190,6 +190,27 @@ def main():
     if unknown['result']['verdict'] != 'UNKNOWN' or unknown['result']['claim'] != 'khong_ro':
         raise RuntimeError('Out-of-scope question incorrectly answered.')
     print('PASS: unsupported question stays UNKNOWN.')
+    # C26/C20: HP LLCT chương trình cũ (QĐ5339 Đ3 k9) chỉ để xét công nhận; cần quyết định (Đ2 k6)
+    old = json.loads(json.dumps(profile))
+    for code in ('ML016', 'ML018', 'ML019'):
+        old['grades'].pop(code, None)
+    old['grades']['ML010'] = {'code': 'ML010', 'credits': 3, 'thang10': 80, 'letter': 'B+', 'status': 'passed'}
+    success('action', 'saveProfile', {'profile': old, 'consent': True}, alice)
+    question = 'Kỳ này em đăng ký ML019 được không?'
+    answer = success('action', 'advise', {'question': question}, alice)
+    if answer['result']['verdict'] != 'FALSE':
+        raise RuntimeError(f'C20: recognition without a decision gave {answer["result"]["verdict"]}.')
+    decided = {**old, 'exemptions': [{'ma_hp': 'ML016', 'quyet_dinh': True}, {'ma_hp': 'ML018', 'quyet_dinh': True}]}
+    success('action', 'saveProfile', {'profile': decided, 'consent': True}, alice)
+    answer = success('action', 'advise', {'question': question}, alice)
+    if answer['result']['verdict'] != 'TRUE':
+        raise RuntimeError(f'C20: recognition with a decision gave {answer["result"]["verdict"]}.')
+    print('PASS: C26 old LLCT course saved; C20 recognition needs a decision (FALSE -> TRUE).')
+    for code in ('TC025', 'CT999'):
+        bad = {**profile, 'grades': {**profile['grades'], code: {'code': code, 'credits': 1, 'thang10': 90, 'letter': 'A', 'status': 'passed'}}}
+        if call('action', 'saveProfile', {'profile': bad, 'consent': True}, alice).get('status') == 'success':
+            raise RuntimeError(f'Out-of-curriculum code {code} was accepted.')
+    print('PASS: other out-of-curriculum codes (TC025, CT999) still rejected.')
     print('QA state retained privately for browser checks. Run --cleanup afterwards.')
 
 
