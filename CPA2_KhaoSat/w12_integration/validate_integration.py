@@ -319,8 +319,11 @@ def test_dang_ky():
         f_ = Path(d_) / "xs_dk.json"
         f_.write_text(json.dumps({**jd, "tc_diem_f": 0, "ky_luat_canh_cao_cap_truong": False}, ensure_ascii=False), encoding="utf-8")
         r = proto.answer("Nếu tốt nghiệp, em xếp hạng gì?", str(f_))
-    check(r["verdict"] == "UNKNOWN" and "?." not in r["explanation_vi"] and "hp_dk_tinh_vao_tong" in r.get("missing_facts", []),
-          f"E43 chỉ HP điều kiện điểm F mới vượt 5% → UNKNOWN, hỏi Phòng Đào tạo (không BLOCKED) ({r['verdict']}, {r.get('missing_facts')}, {r['explanation_vi'][:100]})")
+    check(r["verdict"] == "TRUE" and r.get("claim") == "hang_cuoi(gioi)" and "hp_dk_tinh_vao_tong" not in r.get("missing_facts", [])
+          and any(s_["rule_id"] == "r_f07" for s_ in r["certificate"]["proof"]["steps"])
+          and {"QD-15", "QD-16"} <= set(r["certificate"].get("meta", {}).get("qd_dien_giai", [])),
+          f"E43 A17/QD-16 (chứng chỉ nêu QD-16 {r['certificate'].get('meta', {}).get('qd_dien_giai')}): HP điều kiện điểm F 12 TC > 5% → TRUE giỏi kèm R-F07, không còn hỏi Phòng Đào tạo "
+          f"({r['verdict']}, {r.get('claim')}, {r.get('missing_facts')}, {r['explanation_vi'][:100]})")
     j["grades"] = {m: g for m, g in j["grades"].items() if g.get("letter") == "M"}
     with tempfile.TemporaryDirectory() as d_:
         f_ = Path(d_) / "rong.json"

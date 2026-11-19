@@ -177,13 +177,27 @@ def test_ha_bac():
     check(tri("hang_cuoi(gioi)", kl) == "TRUE", "D3 khai báo bị kỷ luật cảnh cáo cấp Trường → TRUE giỏi")
     kha = sv(CHUAN + ["CT550E"], diem=75, them=KY_LUAT)              # ĐTBCTL 3,0 → khá: không thuộc diện hạ
     check(tri("hang_cuoi(kha)", kha) == "TRUE", "D4 khá, chưa khai báo gì → vẫn TRUE khá (Đ34 k2 chỉ hạ xuất sắc, giỏi)")
-    # review C15: nhánh A17 (HP điều kiện có tính vào tổng TC CTĐT không) phải MỞ thật — bản đầu có vòng lặp lẻ nên nhánh
-    # không bao giờ mở (âm thầm chọn "có tính")
-    dk = ["QP010E", "QP011E", "QP012", "QP013", "XH023"]            # 12 TC HP điều kiện điểm F > 5% × 161
+    # A17 (QD-16, xác nhận bằng văn bản 19/11/2026): HP ĐIỀU KIỆN điểm F CÓ tính vào khối lượng F của Đ34 k2 a → hết nhánh
+    dk = ["QP010E", "QP011E", "QP012", "QP013", "XH023"]            # 12 TC HP điều kiện điểm F > 5% × 161 (8,05)
     xs_dk = sv(CHUAN + ["CT550E"], diem=95, bo=dk, them=KY_LUAT + "".join(f'g10("{c}",30).' for c in dk)
                + "\ntc_diem_f(0). khai_bao(ky_luat_cap_truong).\n")
     v = (tri("hang_cuoi(xuat_sac)", xs_dk), tri("hang_cuoi(gioi)", xs_dk))
-    check(v == ("UNKNOWN", "UNKNOWN"), f"D5 khai báo đủ, chỉ HP ĐIỀU KIỆN điểm F mới vượt 5% → UNKNOWN (A17 chưa rõ HP điều kiện có tính) {v}")
+    check(v == ("FALSE", "TRUE"), f"D5 khai báo đủ, HP ĐIỀU KIỆN điểm F 12 TC > 5% → hạ: FALSE xuất sắc, TRUE giỏi (A17/QD-16) {v}",
+          "HỒI QUY A17: luật cũ mở nhánh → UNKNOWN, UNKNOWN")
+    dk8 = ["QP010E", "QP011E", "QP012", "QP013"]                     # 8 TC ≤ 8,05 → không vượt
+    xs_dk8 = sv(CHUAN + ["CT550E"], diem=95, bo=dk8, them=KY_LUAT + "".join(f'g10("{c}",30).' for c in dk8)
+                + "\ntc_diem_f(0). khai_bao(ky_luat_cap_truong).\n")
+    v = (tri("hang_cuoi(xuat_sac)", xs_dk8), tri("hang_cuoi(gioi)", xs_dk8))
+    check(v == ("TRUE", "FALSE"), f"D5b ÂM TÍNH: HP điều kiện điểm F 8 TC (≤ 5% × 161) → giữ xuất sắc {v}")
+    dk_ct = ["QP010E", "QP011E", "CT177"]                            # 4 TC điều kiện + 3 TC thường = 7 TC ≤ 8,05
+    xs_mix = sv(CHUAN + ["CT550E"], diem=95, bo=dk_ct, them=KY_LUAT + "".join(f'g10("{c}",30).' for c in dk_ct)
+                + "\ntc_diem_f(0). khai_bao(ky_luat_cap_truong).\n")
+    check(tri("hang_cuoi(xuat_sac)", xs_mix) == "TRUE", "D5c ÂM TÍNH: 4 TC điều kiện + 3 TC thường điểm F = 7 TC → giữ xuất sắc")
+    dk_ct9 = ["QP010E", "QP011E", "QP012", "CT177"]                  # 6 + 3 = 9 TC > 8,05: chỉ vượt khi CỘNG hai loại
+    xs_mix9 = sv(CHUAN + ["CT550E"], diem=95, bo=dk_ct9, them=KY_LUAT + "".join(f'g10("{c}",30).' for c in dk_ct9)
+                 + "\ntc_diem_f(0). khai_bao(ky_luat_cap_truong).\n")
+    check(tri("hang_cuoi(gioi)", xs_mix9) == "TRUE", "D5d 6 TC điều kiện + 3 TC thường điểm F = 9 TC > 5% → CỘNG chung → TRUE giỏi",
+          "HỒI QUY A17: luật cũ UNKNOWN (mở nhánh)")
     ct_f = ["CT177", "CT174", "CT175"]                               # 9 TC HP không điều kiện điểm F > 5%
     xs_f = sv(CHUAN + ["CT550E"], diem=95, bo=ct_f, them=KY_LUAT + "".join(f'g10("{c}",30).' for c in ct_f))
     check(tri("hang_cuoi(gioi)", xs_f) == "TRUE", "D6 HP KHÔNG điều kiện đang điểm F > 5% → chắc chắn hạ: TRUE giỏi (kể cả chưa khai báo)")

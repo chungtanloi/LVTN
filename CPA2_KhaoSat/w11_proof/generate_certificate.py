@@ -8,7 +8,7 @@ Lược đồ: proof_schema.json
 Chạy:  python generate_certificate.py --claim tot_nghiep --student w7_student_facts/students/sv_lvtn.json
        python generate_certificate.py --claim thieu_nhom --student demo --extra 'g10("XH023",80).'
 """
-import json, sys, argparse
+import json, re, sys, argparse
 from pathlib import Path
 import clingo
 
@@ -99,7 +99,7 @@ def build_certificate(claim, extra, student_id="demo"):
             "facts": facts
         })
         if rec.get("quyet_dinh"):
-            qd_set.add(rec["quyet_dinh"].split()[0])
+            qd_set.update(re.findall(r"(?m)^(QD-\d+)", rec["quyet_dinh"]))   # nhiều quyết định/bản ghi (R-F07: QD-15, QD-16)
     # missing facts khi UNKNOWN: brave \ cautious
     missing=[]
     if verdict=="UNKNOWN":

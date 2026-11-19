@@ -4,7 +4,7 @@
 
 > **Vị trí trong luận văn:** phụ lục này thuộc phần **giả định và hạn chế**, không thuộc phần kết quả. Mỗi mục dưới đây là điều tác giả **quyết định**, không phải điều **tìm thấy** trong văn bản quy phạm. Trộn hai loại vào nhau là cách nhanh nhất để một luận văn hình thức hoá bị bác ở phần phương pháp.
 
-**Tổng: 15 quyết định** — 🔴 1 mở, 🔄 1 đã sửa, ✅ 11 đóng, 🟡 1 đóng một phần, 🟠 1 đóng tạm
+**Tổng: 16 quyết định** — 🔴 1 mở, 🔄 1 đã sửa, ✅ 12 đóng, 🟡 1 đóng một phần, 🟠 1 đóng tạm
 
 ---
 
@@ -27,6 +27,7 @@
 | **QD-13** | ✅ đóng | QD3266 Điều 7 k.5 (R-A04) | Câu chữ QĐ3266 Điều 7 k.5 (PDF gốc tr.5) — bản xác nhận cũ trái câu chữ (Loi 18/10/2026: học sau cũng được) ĐÃ RÚT; phần F vẫn thoả là diễn giải (Loi chọn (a), 18/10/2026) |
 | **QD-14** | ✅ đóng | QD3266 Điều 34 k.2 (R-F06) | Quyết định của tác giả (Tuần 20, P20-1): QĐ3266 không quy định làm tròn ĐTBCTL — xếp hạng theo cận dưới, so hữu tỉ; chưa hỏi Phòng Đào tạo |
 | **QD-15** | ✅ đóng | QD3266 Điều 34 k.2 đ.a (R-F07) | Loi chọn (a), 19/10/2026 (Tuần 20, C12): diễn giải câu hỏi của sinh viên — "có đạt loại X" = đúng hạng X (Đ34 ghi một hạng trên bằng); không phải nội dung quy chế |
+| **QD-16** | ✅ đóng | QD3266 Điều 34 k.2 đ.a (R-F07) | XÁC NHẬN BẰNG VĂN BẢN — Loi báo 19/11/2026 (việc tồn đọng A17); số hiệu, ngày và nơi ban hành văn bản: CHƯA GHI |
 
 ### Hai nhóm cần chú ý
 
@@ -230,6 +231,19 @@
 **Quyết định:** QD-15 ĐÓNG (Loi chọn (a), 19/10/2026 — Tuần 20, C12): câu hỏi "có đạt loại X không" hỏi ĐÚNG hạng X: Đ34 xếp hạng tốt nghiệp thành MỘT mức (xuất sắc/giỏi/khá/trung bình) ghi trên bằng → hạng thực xuất sắc thì "có đạt loại giỏi không" trả FALSE và nêu hạng thực (không hiểu là "ít nhất giỏi"). Hạng tính theo ĐTBCTL HIỆN TẠI (hang_cuoi không phụ thuộc tot_nghiep) → câu trả lời luôn ghi là hạng DỰ KIẾN, chưa xét đủ điều kiện tốt nghiệp.
 
 **Nguồn xác nhận:** Loi chọn (a), 19/10/2026 (Tuần 20, C12): diễn giải câu hỏi của sinh viên — "có đạt loại X" = đúng hạng X (Đ34 ghi một hạng trên bằng); không phải nội dung quy chế
+
+
+### ✅ QD-16 — đóng
+
+**Điều khoản:** QD3266 Điều 34 khoản 2 điểm a · bản ghi `R-F07` · lớp **F**
+
+**Trích nguyên văn:**
+
+> *Hạng tốt nghiệp loại xuất sắc và giỏi sẽ bị giảm một mức nếu ... Có khối lượng các học phần bị điểm F vượt quá 5% so với tổng số TC quy định của CTĐT (không tính khối lượng học phần học cải thiện điểm bị điểm F).*
+
+**Quyết định:** QD-16 ĐÓNG (xác nhận bằng văn bản, Loi báo 19/11/2026 — việc tồn đọng A17): Đ34 k2 a "khối lượng các học phần bị điểm F" GỒM CẢ học phần điều kiện (GDQP, GDTC, ngoại ngữ/tin học căn bản). KB: tc_f_chac cộng mọi HP đang điểm F; khai báo tc_diem_f là TC mọi HP từng bị F (kể cả HP điều kiện, không tính học cải thiện); mẫu số giữ tổng TC tối thiểu của CTĐT (tc_toi_thieu_ctdt). Trước v1.14 KB mở nhánh hp_dk_tinh_vao_tong (UNKNOWN) khi chỉ HP điều kiện làm vượt 5%.
+
+**Nguồn xác nhận:** XÁC NHẬN BẰNG VĂN BẢN — Loi báo 19/11/2026 (việc tồn đọng A17); số hiệu, ngày và nơi ban hành văn bản: CHƯA GHI
 
 
 ---

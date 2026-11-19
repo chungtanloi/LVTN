@@ -1161,7 +1161,8 @@ function Shell({
                       </select>
                     </label>
                     <label>
-                      TC học phần từng bị F
+                      TC học phần từng bị F (kể cả GDQP, GDTC, ngoại ngữ/tin học
+                      căn bản; không tính lần học cải thiện)
                       <input
                         type="number"
                         min="0"

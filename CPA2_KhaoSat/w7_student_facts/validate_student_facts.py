@@ -93,8 +93,8 @@ def kiem_loader_chung():
     good = good and l4
     # L5 (C15, Đ34 k2): khai báo hạ bậc — tc_diem_f (TC HP từng bị F, không tính học cải thiện) và kỷ luật từ mức cảnh cáo
     # cấp Trường. Có khai báo → dữ kiện + khai_bao(...) (đóng nhánh); thiếu → KB mở nhánh; khai báo sai kiểu/âm → mâu
-    # thuẫn, bỏ khai báo (để nhánh mở). tc_diem_f KHÔNG tính HP điều kiện (loader không biết HP nào là điều kiện) → không
-    # so với TC đang F ở loader; KB lấy giá trị LỚN HƠN giữa khai báo và TC HP không điều kiện đang F
+    # thuẫn, bỏ khai báo (để nhánh mở). tc_diem_f tính MỌI HP kể cả HP điều kiện (QD-16, A17) → không so với TC đang F ở
+    # loader; KB lấy giá trị LỚN HƠN giữa khai báo và TC HP đang F
     f5 = {"grades": {"AA001": {"code": "AA001", "credits": 4, "thang10": 30, "letter": "F", "status": "failed"}}}
     a1, m1 = __import__("loader").sang_asp({**f5, "tc_diem_f": 7, "ky_luat_canh_cao_cap_truong": True})
     a2, m2 = __import__("loader").sang_asp({**f5, "tc_diem_f": 4, "ky_luat_canh_cao_cap_truong": False})

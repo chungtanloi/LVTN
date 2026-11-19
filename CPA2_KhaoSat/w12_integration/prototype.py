@@ -287,7 +287,7 @@ def build_certificate(claim, verdict, models, cautious, brave):
         else:
             step['source_ref_step']=first_source_step[rid]
         steps.append(step)
-        if rec.get("quyet_dinh"): qd_set.add(rec["quyet_dinh"].split()[0])
+        if rec.get("quyet_dinh"): qd_set.update(re.findall(r"(?m)^(QD-\d+)", rec["quyet_dinh"]))   # nhiều quyết định/bản ghi
     missing=[]
     can_bo_sung=[]
     if verdict=="UNKNOWN":
@@ -527,7 +527,7 @@ def answer_xep_loai(claim, student_path):
         mo_ta = (f"Hạng tốt nghiệp dự kiến của bạn chưa chắc: có thể là {' hoặc '.join(TEN_HANG[h] for h in hang)}"
                  + (", hoặc chưa đạt mức nào" if any(not h for h in co_the) else ""))
     hoi_bo_sung = [b for b in cert["can_bo_sung"]
-                   if b.get("bien") in ("f_ngoai_ho_so_vuot_5", "hp_dk_tinh_vao_tong", "ky_luat_canh_cao_cap_truong")]
+                   if b.get("bien") in ("f_ngoai_ho_so_vuot_5", "ky_luat_canh_cao_cap_truong")]
     if hoi_bo_sung and goc:
         mo_ta += (f". Hạng gốc theo ĐTBCTL là {' / '.join(TEN_HANG[g] for g in goc)}; hạng xuất sắc và giỏi bị giảm một mức nếu "
                   "khối lượng học phần bị điểm F vượt quá năm phần trăm tổng TC của CTĐT (không tính học cải thiện) hoặc đã "

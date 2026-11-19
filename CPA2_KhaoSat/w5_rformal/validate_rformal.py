@@ -190,6 +190,15 @@ def section_b(cat):
     for r in inm:
         if r["quyet_dinh"]:
             print(f"    – {r['id']} (Điều {r['dieu']}): {r['quyet_dinh'][:100]}...")
+    # A17: một bản ghi có thể mang NHIỀU quyết định (R-F07: QD-15 + QD-16), mỗi quyết định một đoạn bắt đầu bằng mã.
+    # Phụ lục sinh tự động phải liệt kê ĐỦ — bản cũ chỉ đọc mã đầu tiên nên mã thứ hai biến mất im lặng.
+    phu_luc = (HERE / "PhuLuc_Quyet_dinh_dien_giai.md").read_text(encoding="utf-8")
+    ma_kb = sorted({m for r in cat["rules"] for m in re.findall(r"(?m)^(QD-\d+)", r.get("quyet_dinh") or "")})
+    thieu = [m for m in ma_kb if not re.search(rf"^### \S+ {m} — ", phu_luc, re.M)]
+    check(not thieu, f"B-QD mọi mã quyết định trong danh mục ({len(ma_kb)}) đều có mục trong phụ lục sinh tự động — thiếu {thieu}")
+    f07 = next((r for r in cat["rules"] if r["id"] == "R-F07"), {})
+    check(re.findall(r"(?m)^(QD-\d+)", f07.get("quyet_dinh") or "") == ["QD-15", "QD-16"],
+          "B-QD16 R-F07 mang QD-15 (đúng hạng) và QD-16 (A17: HP điều kiện điểm F có tính vào Đ34 k2 a)")
     return {"n": n, "F": len(f), "P": len(p), "N": len(nn), "Fco": len(fco)}
 
 
@@ -335,6 +344,22 @@ khoa_tu_k45. g10(a,95). tc_toi_thieu_ctdt(120). tc_diem_f(6).
 """,
      expect_true=["hang_cuoi(xuat_sac)"], expect_false=["vuot_5_phan_tram"],
      note="ca biên: 'vượt quá 5%' — đúng 5% thì KHÔNG giảm")
+
+test("C11b A17/QD-16: chỉ HP ĐIỀU KIỆN (GDQP) điểm F 7 TC > 5% × 120 → hạ còn GIỎI",
+     ctdt([("a", 10, "bat_buoc")]) + """
+course(q,7). loai_hp(q,gdqp). g10(q,30).
+khoa_tu_k45. g10(a,95). tc_toi_thieu_ctdt(120). tc_diem_f(0).
+""",
+     expect_true=["hp_dieu_kien(q)", "vuot_5_phan_tram", "hang_cuoi(gioi)"],
+     expect_false=["hang_cuoi(xuat_sac)"],
+     note="HỒI QUY A17: luật cũ chỉ đếm HP KHÔNG điều kiện → R-Formal không hạ (nhánh mở ở graduation_solver)")
+
+test("C11c ÂM TÍNH: HP điều kiện điểm F 6 TC (đúng 5%) → giữ XUẤT SẮC",
+     ctdt([("a", 10, "bat_buoc")]) + """
+course(q,6). loai_hp(q,gdqp). g10(q,30).
+khoa_tu_k45. g10(a,95). tc_toi_thieu_ctdt(120). tc_diem_f(0).
+""",
+     expect_true=["hang_cuoi(xuat_sac)"], expect_false=["vuot_5_phan_tram"])
 
 # --- C12. Trần 20 TC/HK (Điều 14 k.1) và phát hiện âm tính về sàn ----------
 test("C12 Đăng ký 21 TC → vượt trần 20 TC/HK",

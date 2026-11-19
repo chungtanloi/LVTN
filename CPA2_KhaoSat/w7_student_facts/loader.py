@@ -130,8 +130,8 @@ def sang_asp(j):
         if j.get(k) is not None:
             lines.append(f"{k}({j[k]}).")
     # C15 (Đ34 k2): khai báo hạ một mức hạng xuất sắc/giỏi. Có khai báo → dữ kiện + khai_bao(...) đóng nhánh; thiếu → KB
-    # mở nhánh (graduation_solver). tc_diem_f = TC HP KHÔNG điều kiện từng bị F; loader không biết HP nào là điều kiện →
-    # chỉ kiểm kiểu (số nguyên ≥ 0); KB dùng giá trị lớn hơn giữa khai báo và TC HP không điều kiện đang F.
+    # mở nhánh (graduation_solver). tc_diem_f = TC MỌI HP (kể cả HP điều kiện — QD-16) từng bị F; loader chỉ kiểm kiểu
+    # (số nguyên ≥ 0); KB dùng giá trị lớn hơn giữa khai báo và TC HP đang F.
     tf = j.get("tc_diem_f")
     if tf is not None:
         if isinstance(tf, bool) or not isinstance(tf, int) or tf < 0:

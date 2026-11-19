@@ -34,6 +34,7 @@ NGUON = {
     "QD-13": "Câu chữ QĐ3266 Điều 7 k.5 (PDF gốc tr.5) — bản xác nhận cũ trái câu chữ (Loi 18/10/2026: học sau cũng được) ĐÃ RÚT; phần F vẫn thoả là diễn giải (Loi chọn (a), 18/10/2026)",
     "QD-14": "Quyết định của tác giả (Tuần 20, P20-1): QĐ3266 không quy định làm tròn ĐTBCTL — xếp hạng theo cận dưới, so hữu tỉ; chưa hỏi Phòng Đào tạo",
     "QD-15": "Loi chọn (a), 19/10/2026 (Tuần 20, C12): diễn giải câu hỏi của sinh viên — \"có đạt loại X\" = đúng hạng X (Đ34 ghi một hạng trên bằng); không phải nội dung quy chế",
+    "QD-16": "XÁC NHẬN BẰNG VĂN BẢN — Loi báo 19/11/2026 (việc tồn đọng A17); số hiệu, ngày và nơi ban hành văn bản: CHƯA GHI",
 }
 
 TRANG_THAI = [
@@ -43,6 +44,12 @@ TRANG_THAI = [
 ]
 BIEU_TUONG = {"đóng": "✅", "đóng một phần": "🟡", "đã sửa": "🔄", "mở": "🔴",
               "đóng tạm": "🟠", "KHÔNG RÕ": "⚠️"}
+
+
+def tach_qd(text):
+    """Một bản ghi có thể mang nhiều quyết định (R-F07: QD-15 + QD-16): mỗi quyết định là một đoạn BẮT ĐẦU bằng mã,
+    các đoạn cách nhau một dòng trống. Bản cũ chỉ đọc mã đầu tiên → mã sau biến mất khỏi phụ lục mà không báo."""
+    return [d.strip() for d in re.split(r"\n\s*\n(?=QD-\d+)", text or "") if re.match(r"QD-\d+", d.strip())]
 
 
 def trang_thai(text):
@@ -59,18 +66,14 @@ def main():
     cat = json.loads((HERE / "r_formal_v1.json").read_text(encoding="utf-8"))
     muc = {}
     for r in cat["rules"]:
-        qd = r.get("quyet_dinh")
-        if not qd:
-            continue
-        m = re.match(r"(QD-\d+)", qd)
-        if not m:
-            continue
-        muc[m.group(1)] = {
-            "ma": m.group(1), "noi_dung": qd, "rule": r["id"],
-            "van_ban": r["van_ban"], "dieu": r["dieu"], "khoan": r["khoan"],
-            "diem": r["diem"], "lop": r["lop"], "trich": r["trich"],
-            "tt": trang_thai(qd),
-        }
+        for qd in tach_qd(r.get("quyet_dinh")):
+            m = re.match(r"(QD-\d+)", qd)
+            muc[m.group(1)] = {
+                "ma": m.group(1), "noi_dung": qd, "rule": r["id"],
+                "van_ban": r["van_ban"], "dieu": r["dieu"], "khoan": r["khoan"],
+                "diem": r["diem"], "lop": r["lop"], "trich": r["trich"],
+                "tt": trang_thai(qd),
+            }
 
     ds = [muc[k] for k in sorted(muc)]
     dem = {}

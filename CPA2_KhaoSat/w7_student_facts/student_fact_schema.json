@@ -263,7 +263,7 @@
         "null"
       ],
       "minimum": 0,
-      "description": "C15 (QĐ3266 Đ34 k2 a): tổng TC các học phần KHÔNG điều kiện TỪNG bị điểm F (gồm cả HP sau đó học lại đạt), KHÔNG tính HP học cải thiện bị F. Hồ sơ chỉ giữ điểm cuối nên SV khai báo. HP điều kiện xử lý riêng (A17). null/thiếu → KB mở nhánh."
+      "description": "C15 (QĐ3266 Đ34 k2 a): tổng TC MỌI học phần, KỂ CẢ học phần điều kiện (QD-16, A17), TỪNG bị điểm F (gồm cả HP sau đó học lại đạt), KHÔNG tính HP học cải thiện bị F. Hồ sơ chỉ giữ điểm cuối nên SV khai báo. null/thiếu → KB mở nhánh."
     },
     "ky_luat_canh_cao_cap_truong": {
       "type": [

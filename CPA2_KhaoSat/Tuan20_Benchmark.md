@@ -489,7 +489,7 @@ Theo quy tắc nhiễm dữ liệu (Bài học): đây là số **chính thức*
 - [ ] **A18 (cần Loi, Windows):** kiểm C14 trên ảnh bảng điểm thật — đọc được dòng tích lũy? TC tích lũy có cộng TC miễn / HP điều kiện?
 - [x] C12 ý định xếp loại tốt nghiệp (mục 5e, QD-15)
 - [x] **C15 (KB):** R-Formal v1.11 — hạ bậc Đ34 k2 a+b, mở nhánh khi chưa khai báo, errata HG (mục 5f)
-- [ ] **A17 (cần Loi / Phòng Đào tạo):** học phần điều kiện có tính vào "khối lượng HP bị điểm F … so với tổng số TC quy định của CTĐT" (Đ34 k2 a) không
+- [x] **A17 (cần Loi / Phòng Đào tạo):** học phần điều kiện có tính vào "khối lượng HP bị điểm F … so với tổng số TC quy định của CTĐT" (Đ34 k2 a) không — **đóng 19/11/2026 (QD-16, R-Formal v1.14): có tính**; nhánh `hp_dk_tinh_vao_tong` mô tả ở trên đã bỏ
 - [x] **P20-5** (an toàn) + parser chuẩn hoá bỏ dấu/viết tắt (mục 5c, E17–E28)
 - [x] Q-Elicit (20 kịch bản, đóng băng) + nội dung Google Form + nhập CSV/rút lại (§3b)
 - [ ] Tuần 21: chạy baseline (LLM thuần, RAG thuần, tool-calling) trên `baseline_dev/test.jsonl` (cần API key, `.env`)

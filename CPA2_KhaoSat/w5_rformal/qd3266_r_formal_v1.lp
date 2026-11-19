@@ -413,20 +413,17 @@ why(hang_goc(H), r_f06) :- hang_goc(H).
 %% Bản trước chỉ đọc tc_diem_f/1, mà KHÔNG nơi nào sinh dữ kiện này (chỉ có trong test) → không bao giờ hạ; điểm b thiếu;
 %% why(hang_cuoi, r_f07) sinh vô điều kiện.
 %% (a) HP có điểm CUỐI là F → chắc chắn bị tính (điểm cuối F thì không phải lần học cải thiện — R-B13 giữ điểm cao nhất).
-%%     HP ĐIỀU KIỆN (GDQP, GDTC, NN/TH căn bản) có thuộc "tổng TC quy định của CTĐT" không, văn bản không nói rõ →
-%%     chỉ HP không điều kiện là chắc chắn (vuot_5_chac); thêm HP điều kiện mới vượt thì graduation_solver MỞ NHÁNH (A17).
-%%     tc_diem_f/1 = khai báo của sinh viên: TC HP KHÔNG điều kiện từng bị F (gồm cả HP sau đó học lại đạt — hồ sơ chỉ giữ
-%%     điểm cuối), không tính học cải thiện. Dùng giá trị lớn hơn giữa khai báo và TC HP không điều kiện đang F.
-%%     review C15: vuot_5_chac KHÔNG phụ thuộc vuot_5_phan_tram (bản đầu có vòng lặp lẻ → nhánh A17 không bao giờ mở).
+%%     v1.14 (A17 → QD-16, xác nhận bằng văn bản 19/11/2026): HP ĐIỀU KIỆN (GDQP, GDTC, NN/TH căn bản) bị F CÓ tính vào
+%%     "khối lượng các HP bị điểm F" → đếm MỌI HP đang F; bỏ nhánh hp_dk_tinh_vao_tong. Mẫu số vẫn tc_toi_thieu_ctdt.
+%%     tc_diem_f/1 = khai báo của sinh viên: TC MỌI HP (kể cả HP điều kiện) từng bị F (gồm cả HP sau đó học lại đạt — hồ sơ
+%%     chỉ giữ điểm cuối), không tính học cải thiện. Dùng giá trị lớn hơn giữa khai báo và TC HP đang F.
+%%     review C15: vuot_5_chac KHÔNG phụ thuộc vuot_5_phan_tram (tránh vòng lặp lẻ với nhánh f_ngoai_ho_so_vuot_5).
 #defined tc_diem_f/1.
 #defined ky_luat_canh_cao_cap_truong/0.
-tc_f_chac(Y) :- Y = #sum{ CR,C : course(C,CR), letter(C,"F"), not hp_dieu_kien(C) }.
-tc_f_dk(Z)   :- Z = #sum{ CR,C : course(C,CR), letter(C,"F"), hp_dieu_kien(C) }.
+tc_f_chac(Y) :- Y = #sum{ CR,C : course(C,CR), letter(C,"F") }.
 vuot_5_chac :- tc_f_chac(Y), tc_toi_thieu_ctdt(M), 100*Y > 5*M.
 vuot_5_chac :- tc_diem_f(X), tc_toi_thieu_ctdt(M), 100*X > 5*M.
 vuot_5_phan_tram :- vuot_5_chac.
-co_the_vuot_5_do_hp_dk :- not vuot_5_chac, tc_f_dk(Z), Z > 0, tc_f_chac(Y), tc_toi_thieu_ctdt(M), 100*(Y+Z) > 5*M.
-co_the_vuot_5_do_hp_dk :- not vuot_5_chac, tc_f_dk(Z), Z > 0, tc_diem_f(X), tc_toi_thieu_ctdt(M), 100*(X+Z) > 5*M.
 why(vuot_5_phan_tram, r_f07) :- vuot_5_phan_tram.
 ha_mot_muc :- vuot_5_phan_tram.
 ha_mot_muc :- ky_luat_canh_cao_cap_truong.
