@@ -1,0 +1,3480 @@
+{
+ "meta": {
+  "bl": "b3",
+  "nha": "openai",
+  "qua": "openrouter",
+  "goc": "openrouter.ai",
+  "model": "openai/gpt-6.1-sol",
+  "split": "test",
+  "prompt_sha256": "fad02fb25b67ca6f353f265dd6d2ccf1c2a427ea95fd369b0efa4ea655a36846",
+  "dau_vao_sha256": "eff97ff7e5a52d36a8c11689881c2cd4538ed1b0d834352d4b0449dc79646bb8",
+  "dong_bang_khop": true,
+  "hau_to": "",
+  "nhiet_do": null,
+  "max_out": 16384,
+  "ngay": "2026-11-19",
+  "tran_usd": 4.0,
+  "git": {
+   "commit": "04bc0b919287bee39b54626eba05c4f09cea83c5",
+   "chua_commit": false
+  },
+  "usd": 1.9913,
+  "token_vao": 896066,
+  "token_ra": 19913,
+  "uoc_thay": 0
+ },
+ "tong_hop": {
+  "tong": {
+   "n": 76,
+   "soundness": 0.9473684210526316,
+   "unsound": 4,
+   "coverage": 0.3026315789473684,
+   "selective_acc": 0.8260869565217391,
+   "dung_gold": 34,
+   "tu_choi_thua": 38,
+   "hoi_dung": "0/0",
+   "nhan_thieu": 6,
+   "loi": 0
+  },
+  "[cau_hoi_ro]": {
+   "n": 50,
+   "soundness": 1.0,
+   "unsound": 0,
+   "coverage": 0.28,
+   "selective_acc": 1.0,
+   "dung_gold": 26,
+   "tu_choi_thua": 24,
+   "hoi_dung": "0/0",
+   "nhan_thieu": 6,
+   "loi": 0
+  },
+  "[quy_che]": {
+   "n": 62,
+   "soundness": 0.9516129032258065,
+   "unsound": 3,
+   "coverage": 0.3387096774193548,
+   "selective_acc": 0.8571428571428571,
+   "dung_gold": 22,
+   "tu_choi_thua": 37,
+   "hoi_dung": "0/0",
+   "nhan_thieu": 6,
+   "loi": 0
+  },
+  "[thiet_ke]": {
+   "n": 14,
+   "soundness": 0.9285714285714286,
+   "unsound": 1,
+   "coverage": 0.14285714285714285,
+   "selective_acc": 0.5,
+   "dung_gold": 12,
+   "tu_choi_thua": 1,
+   "hoi_dung": "0/0",
+   "nhan_thieu": 0,
+   "loi": 0
+  },
+  "[theo errata]": {
+   "n": 76,
+   "soundness": 0.9342105263157895,
+   "unsound": 5,
+   "coverage": 0.3026315789473684,
+   "selective_acc": 0.782608695652174,
+   "dung_gold": 38,
+   "tu_choi_thua": 33,
+   "hoi_dung": "0/0",
+   "nhan_thieu": 6,
+   "loi": 0
+  },
+  "[cau_hoi_ro theo errata]": {
+   "n": 50,
+   "soundness": 0.98,
+   "unsound": 1,
+   "coverage": 0.28,
+   "selective_acc": 0.9285714285714286,
+   "dung_gold": 30,
+   "tu_choi_thua": 19,
+   "hoi_dung": "0/0",
+   "nhan_thieu": 6,
+   "loi": 0
+  },
+  "M1": {
+   "n": 5,
+   "soundness": 1.0,
+   "unsound": 0,
+   "coverage": 0.4,
+   "selective_acc": 1.0,
+   "dung_gold": 2,
+   "tu_choi_thua": 3,
+   "hoi_dung": "0/0",
+   "nhan_thieu": 0,
+   "loi": 0
+  },
+  "M2": {
+   "n": 5,
+   "soundness": 1.0,
+   "unsound": 0,
+   "coverage": 0.4,
+   "selective_acc": 1.0,
+   "dung_gold": 2,
+   "tu_choi_thua": 3,
+   "hoi_dung": "0/0",
+   "nhan_thieu": 0,
+   "loi": 0
+  },
+  "M3": {
+   "n": 5,
+   "soundness": 1.0,
+   "unsound": 0,
+   "coverage": 0.0,
+   "selective_acc": null,
+   "dung_gold": 5,
+   "tu_choi_thua": 0,
+   "hoi_dung": "0/0",
+   "nhan_thieu": 0,
+   "loi": 0
+  },
+  "M4": {
+   "n": 5,
+   "soundness": 0.8,
+   "unsound": 1,
+   "coverage": 0.2,
+   "selective_acc": 0.0,
+   "dung_gold": 4,
+   "tu_choi_thua": 0,
+   "hoi_dung": "0/0",
+   "nhan_thieu": 0,
+   "loi": 0
+  },
+  "cau_tu_nhien": {
+   "n": 6,
+   "soundness": 1.0,
+   "unsound": 0,
+   "coverage": 0.16666666666666666,
+   "selective_acc": 1.0,
+   "dung_gold": 3,
+   "tu_choi_thua": 3,
+   "hoi_dung": "0/0",
+   "nhan_thieu": 1,
+   "loi": 0
+  },
+  "dang_ky": {
+   "n": 11,
+   "soundness": 1.0,
+   "unsound": 0,
+   "coverage": 0.5454545454545454,
+   "selective_acc": 1.0,
+   "dung_gold": 8,
+   "tu_choi_thua": 3,
+   "hoi_dung": "0/0",
+   "nhan_thieu": 2,
+   "loi": 0
+  },
+  "de_xuat": {
+   "n": 6,
+   "soundness": 0.5,
+   "unsound": 3,
+   "coverage": 0.6666666666666666,
+   "selective_acc": 0.25,
+   "dung_gold": 1,
+   "tu_choi_thua": 2,
+   "hoi_dung": "0/0",
+   "nhan_thieu": 0,
+   "loi": 0
+  },
+  "du_dieu_kien": {
+   "n": 8,
+   "soundness": 1.0,
+   "unsound": 0,
+   "coverage": 0.375,
+   "selective_acc": 1.0,
+   "dung_gold": 4,
+   "tu_choi_thua": 4,
+   "hoi_dung": "0/0",
+   "nhan_thieu": 3,
+   "loi": 0
+  },
+  "hang": {
+   "n": 4,
+   "soundness": 1.0,
+   "unsound": 0,
+   "coverage": 0.25,
+   "selective_acc": 1.0,
+   "dung_gold": 1,
+   "tu_choi_thua": 3,
+   "hoi_dung": "0/0",
+   "nhan_thieu": 0,
+   "loi": 0
+  },
+  "mien_thay_the": {
+   "n": 6,
+   "soundness": 1.0,
+   "unsound": 0,
+   "coverage": 0.0,
+   "selective_acc": null,
+   "dung_gold": 0,
+   "tu_choi_thua": 6,
+   "hoi_dung": "0/0",
+   "nhan_thieu": 0,
+   "loi": 0
+  },
+  "nhom": {
+   "n": 4,
+   "soundness": 1.0,
+   "unsound": 0,
+   "coverage": 0.0,
+   "selective_acc": null,
+   "dung_gold": 0,
+   "tu_choi_thua": 4,
+   "hoi_dung": "0/0",
+   "nhan_thieu": 0,
+   "loi": 0
+  },
+  "tot_nghiep": {
+   "n": 11,
+   "soundness": 1.0,
+   "unsound": 0,
+   "coverage": 0.2727272727272727,
+   "selective_acc": 1.0,
+   "dung_gold": 4,
+   "tu_choi_thua": 7,
+   "hoi_dung": "0/0",
+   "nhan_thieu": 0,
+   "loi": 0
+  }
+ },
+ "ca": [
+  {
+   "id": "B-dae3f5c9e9",
+   "id_goc": "DK-01",
+   "nhom": "dang_ky",
+   "he": "kb",
+   "gold": "TRUE",
+   "su_that": null,
+   "loai_gold": "quy_che",
+   "tra_loi": "TRUE",
+   "luot": 3,
+   "cau_hoi_kem": null,
+   "ket_luan": true,
+   "unsound": false,
+   "dung_gold": true,
+   "tu_choi_thua": false,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-1ec07153d1",
+   "id_goc": "DK-09",
+   "nhom": "dang_ky",
+   "he": "kb",
+   "gold": "UNKNOWN",
+   "su_that": null,
+   "loai_gold": "quy_che",
+   "tra_loi": "UNKNOWN",
+   "luot": 4,
+   "cau_hoi_kem": null,
+   "ket_luan": false,
+   "unsound": false,
+   "dung_gold": true,
+   "tu_choi_thua": false,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-61677fc960",
+   "id_goc": "DK-11",
+   "nhom": "dang_ky",
+   "he": "kb",
+   "gold": "TRUE",
+   "su_that": null,
+   "loai_gold": "quy_che",
+   "tra_loi": "UNKNOWN",
+   "luot": 6,
+   "cau_hoi_kem": null,
+   "ket_luan": false,
+   "unsound": false,
+   "dung_gold": false,
+   "tu_choi_thua": true,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-18ca6eb0a4",
+   "id_goc": "DK-12",
+   "nhom": "dang_ky",
+   "he": "kb",
+   "gold": "TRUE",
+   "su_that": null,
+   "loai_gold": "quy_che",
+   "tra_loi": "TRUE",
+   "luot": 4,
+   "cau_hoi_kem": null,
+   "ket_luan": true,
+   "unsound": false,
+   "dung_gold": true,
+   "tu_choi_thua": false,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-2a0af9a274",
+   "id_goc": "DK-13",
+   "nhom": "dang_ky",
+   "he": "kb",
+   "gold": "TRUE",
+   "su_that": null,
+   "loai_gold": "quy_che",
+   "tra_loi": "UNKNOWN",
+   "luot": 4,
+   "cau_hoi_kem": null,
+   "ket_luan": false,
+   "unsound": false,
+   "dung_gold": false,
+   "tu_choi_thua": true,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-954a7ef490",
+   "id_goc": "DK-15",
+   "nhom": "dang_ky",
+   "he": "kb",
+   "gold": "TRUE",
+   "su_that": null,
+   "loai_gold": "quy_che",
+   "tra_loi": "TRUE",
+   "luot": 3,
+   "cau_hoi_kem": null,
+   "ket_luan": true,
+   "unsound": false,
+   "dung_gold": true,
+   "tu_choi_thua": false,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-a1deb420f7",
+   "id_goc": "DK-17",
+   "nhom": "dang_ky",
+   "he": "kb",
+   "gold": "FALSE",
+   "su_that": null,
+   "loai_gold": "quy_che",
+   "tra_loi": "FALSE",
+   "luot": 4,
+   "cau_hoi_kem": null,
+   "ket_luan": true,
+   "unsound": false,
+   "dung_gold": true,
+   "tu_choi_thua": false,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-5de4850ad1",
+   "id_goc": "DK-18",
+   "nhom": "dang_ky",
+   "he": "kb",
+   "gold": "TRUE",
+   "su_that": null,
+   "loai_gold": "quy_che",
+   "tra_loi": "UNKNOWN",
+   "luot": 6,
+   "cau_hoi_kem": null,
+   "ket_luan": false,
+   "unsound": false,
+   "dung_gold": false,
+   "tu_choi_thua": true,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-28ec2d8926",
+   "id_goc": "DK-20",
+   "nhom": "dang_ky",
+   "he": "kb",
+   "gold": "FALSE",
+   "su_that": null,
+   "loai_gold": "quy_che",
+   "tra_loi": "FALSE",
+   "luot": 2,
+   "cau_hoi_kem": null,
+   "ket_luan": true,
+   "unsound": false,
+   "dung_gold": true,
+   "tu_choi_thua": false,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-f5c82fa589",
+   "id_goc": "DK-21",
+   "nhom": "dang_ky",
+   "he": "kb",
+   "gold": "FALSE",
+   "su_that": null,
+   "loai_gold": "quy_che",
+   "tra_loi": "FALSE",
+   "luot": 2,
+   "cau_hoi_kem": null,
+   "ket_luan": true,
+   "unsound": false,
+   "dung_gold": true,
+   "tu_choi_thua": false,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-e073b6ac23",
+   "id_goc": "DK-22",
+   "nhom": "dang_ky",
+   "he": "kb",
+   "gold": "UNKNOWN",
+   "su_that": null,
+   "loai_gold": "thiet_ke",
+   "tra_loi": "UNKNOWN",
+   "luot": 3,
+   "cau_hoi_kem": null,
+   "ket_luan": false,
+   "unsound": false,
+   "dung_gold": true,
+   "tu_choi_thua": false,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-1d90e3b4d8",
+   "id_goc": "EL-05",
+   "nhom": "du_dieu_kien",
+   "he": "elig",
+   "gold": "TRUE",
+   "su_that": null,
+   "loai_gold": "quy_che",
+   "tra_loi": "UNKNOWN",
+   "luot": 6,
+   "cau_hoi_kem": null,
+   "ket_luan": false,
+   "unsound": false,
+   "dung_gold": false,
+   "tu_choi_thua": true,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-c369f7d6a0",
+   "id_goc": "EL-06",
+   "nhom": "du_dieu_kien",
+   "he": "elig",
+   "gold": "TRUE",
+   "su_that": null,
+   "loai_gold": "quy_che",
+   "tra_loi": "TRUE",
+   "luot": 2,
+   "cau_hoi_kem": null,
+   "ket_luan": true,
+   "unsound": false,
+   "dung_gold": true,
+   "tu_choi_thua": false,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-bfd5f430a3",
+   "id_goc": "EL-08",
+   "nhom": "du_dieu_kien",
+   "he": "elig",
+   "gold": "TRUE",
+   "su_that": null,
+   "loai_gold": "quy_che",
+   "tra_loi": "UNKNOWN",
+   "luot": 6,
+   "cau_hoi_kem": null,
+   "ket_luan": false,
+   "unsound": false,
+   "dung_gold": false,
+   "tu_choi_thua": true,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-66975504e8",
+   "id_goc": "EL-10",
+   "nhom": "du_dieu_kien",
+   "he": "elig",
+   "gold": "TRUE",
+   "su_that": null,
+   "loai_gold": "quy_che",
+   "tra_loi": "UNKNOWN",
+   "luot": 6,
+   "cau_hoi_kem": null,
+   "ket_luan": false,
+   "unsound": false,
+   "dung_gold": false,
+   "tu_choi_thua": true,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-1c38630e1c",
+   "id_goc": "EL-13",
+   "nhom": "du_dieu_kien",
+   "he": "elig",
+   "gold": "UNKNOWN",
+   "su_that": null,
+   "loai_gold": "quy_che",
+   "tra_loi": "UNKNOWN",
+   "luot": 4,
+   "cau_hoi_kem": null,
+   "ket_luan": false,
+   "unsound": false,
+   "dung_gold": true,
+   "tu_choi_thua": false,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-f0afa073f2",
+   "id_goc": "EL-14",
+   "nhom": "du_dieu_kien",
+   "he": "elig",
+   "gold": "TRUE",
+   "su_that": null,
+   "loai_gold": "quy_che",
+   "tra_loi": "TRUE",
+   "luot": 4,
+   "cau_hoi_kem": null,
+   "ket_luan": true,
+   "unsound": false,
+   "dung_gold": true,
+   "tu_choi_thua": false,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-4505765b1f",
+   "id_goc": "EL-15",
+   "nhom": "du_dieu_kien",
+   "he": "elig",
+   "gold": "TRUE",
+   "su_that": null,
+   "loai_gold": "quy_che",
+   "tra_loi": "UNKNOWN",
+   "luot": 2,
+   "cau_hoi_kem": "thay_the_cong_nhan",
+   "ket_luan": false,
+   "unsound": false,
+   "dung_gold": false,
+   "tu_choi_thua": true,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-25cb26c62d",
+   "id_goc": "EL-17",
+   "nhom": "du_dieu_kien",
+   "he": "elig",
+   "gold": "TRUE",
+   "su_that": null,
+   "loai_gold": "quy_che",
+   "tra_loi": "TRUE",
+   "luot": 4,
+   "cau_hoi_kem": "thay_the_cong_nhan",
+   "ket_luan": true,
+   "unsound": false,
+   "dung_gold": true,
+   "tu_choi_thua": false,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-a2a7679c19",
+   "id_goc": "RC-01",
+   "nhom": "de_xuat",
+   "he": "rec",
+   "gold": "TRUE",
+   "su_that": null,
+   "loai_gold": "quy_che",
+   "tra_loi": "FALSE",
+   "luot": 2,
+   "cau_hoi_kem": "rec_dao_chieu",
+   "ket_luan": true,
+   "unsound": true,
+   "dung_gold": false,
+   "tu_choi_thua": false,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-8a39ce0bd8",
+   "id_goc": "RC-03",
+   "nhom": "de_xuat",
+   "he": "rec",
+   "gold": "TRUE",
+   "su_that": null,
+   "loai_gold": "thiet_ke",
+   "tra_loi": "TRUE",
+   "luot": 3,
+   "cau_hoi_kem": "rec_dao_chieu",
+   "ket_luan": true,
+   "unsound": false,
+   "dung_gold": true,
+   "tu_choi_thua": false,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-052cc2bf38",
+   "id_goc": "RC-07",
+   "nhom": "de_xuat",
+   "he": "rec",
+   "gold": "TRUE",
+   "su_that": null,
+   "loai_gold": "quy_che",
+   "tra_loi": "FALSE",
+   "luot": 2,
+   "cau_hoi_kem": "rec_dao_chieu",
+   "ket_luan": true,
+   "unsound": true,
+   "dung_gold": false,
+   "tu_choi_thua": false,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-adb5b498dd",
+   "id_goc": "RC-08",
+   "nhom": "de_xuat",
+   "he": "rec",
+   "gold": "TRUE",
+   "su_that": null,
+   "loai_gold": "thiet_ke",
+   "tra_loi": "UNKNOWN",
+   "luot": 5,
+   "cau_hoi_kem": "rec_dao_chieu",
+   "ket_luan": false,
+   "unsound": false,
+   "dung_gold": false,
+   "tu_choi_thua": true,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-d83598c2f6",
+   "id_goc": "RC-11",
+   "nhom": "de_xuat",
+   "he": "rec",
+   "gold": "TRUE",
+   "su_that": null,
+   "loai_gold": "quy_che",
+   "tra_loi": "UNKNOWN",
+   "luot": 3,
+   "cau_hoi_kem": "rec_dao_chieu",
+   "ket_luan": false,
+   "unsound": false,
+   "dung_gold": false,
+   "tu_choi_thua": true,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-e08f644c24",
+   "id_goc": "RC-12",
+   "nhom": "de_xuat",
+   "he": "rec",
+   "gold": "TRUE",
+   "su_that": null,
+   "loai_gold": "quy_che",
+   "tra_loi": "FALSE",
+   "luot": 3,
+   "cau_hoi_kem": "rec_dao_chieu",
+   "ket_luan": true,
+   "unsound": true,
+   "dung_gold": false,
+   "tu_choi_thua": false,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-fdb2d8f6d5",
+   "id_goc": "TN-01",
+   "nhom": "tot_nghiep",
+   "he": "kb",
+   "gold": "TRUE",
+   "su_that": null,
+   "loai_gold": "quy_che",
+   "tra_loi": "UNKNOWN",
+   "luot": 3,
+   "cau_hoi_kem": null,
+   "ket_luan": false,
+   "unsound": false,
+   "dung_gold": false,
+   "tu_choi_thua": true,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-28d55591e7",
+   "id_goc": "TN-03",
+   "nhom": "tot_nghiep",
+   "he": "kb",
+   "gold": "TRUE",
+   "su_that": null,
+   "loai_gold": "quy_che",
+   "tra_loi": "UNKNOWN",
+   "luot": 4,
+   "cau_hoi_kem": null,
+   "ket_luan": false,
+   "unsound": false,
+   "dung_gold": false,
+   "tu_choi_thua": true,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-df1932add8",
+   "id_goc": "TN-07",
+   "nhom": "tot_nghiep",
+   "he": "kb",
+   "gold": "FALSE",
+   "su_that": null,
+   "loai_gold": "quy_che",
+   "tra_loi": "UNKNOWN",
+   "luot": 1,
+   "cau_hoi_kem": null,
+   "ket_luan": false,
+   "unsound": false,
+   "dung_gold": false,
+   "tu_choi_thua": true,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-266d2568ee",
+   "id_goc": "TN-08",
+   "nhom": "tot_nghiep",
+   "he": "kb",
+   "gold": "FALSE",
+   "su_that": null,
+   "loai_gold": "quy_che",
+   "tra_loi": "UNKNOWN",
+   "luot": 2,
+   "cau_hoi_kem": null,
+   "ket_luan": false,
+   "unsound": false,
+   "dung_gold": false,
+   "tu_choi_thua": true,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-e6b45df792",
+   "id_goc": "TN-09",
+   "nhom": "tot_nghiep",
+   "he": "kb",
+   "gold": "TRUE",
+   "su_that": null,
+   "loai_gold": "quy_che",
+   "tra_loi": "UNKNOWN",
+   "luot": 2,
+   "cau_hoi_kem": null,
+   "ket_luan": false,
+   "unsound": false,
+   "dung_gold": false,
+   "tu_choi_thua": true,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-2e744ef45f",
+   "id_goc": "TN-12",
+   "nhom": "tot_nghiep",
+   "he": "kb",
+   "gold": "FALSE",
+   "su_that": null,
+   "loai_gold": "quy_che",
+   "tra_loi": "UNKNOWN",
+   "luot": 2,
+   "cau_hoi_kem": null,
+   "ket_luan": false,
+   "unsound": false,
+   "dung_gold": false,
+   "tu_choi_thua": true,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-6bbdb60949",
+   "id_goc": "TN-13",
+   "nhom": "tot_nghiep",
+   "he": "kb",
+   "gold": "FALSE",
+   "su_that": null,
+   "loai_gold": "quy_che",
+   "tra_loi": "FALSE",
+   "luot": 3,
+   "cau_hoi_kem": null,
+   "ket_luan": true,
+   "unsound": false,
+   "dung_gold": true,
+   "tu_choi_thua": false,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-17bbb16d0a",
+   "id_goc": "TN-15",
+   "nhom": "tot_nghiep",
+   "he": "kb",
+   "gold": "FALSE",
+   "su_that": null,
+   "loai_gold": "quy_che",
+   "tra_loi": "UNKNOWN",
+   "luot": 4,
+   "cau_hoi_kem": null,
+   "ket_luan": false,
+   "unsound": false,
+   "dung_gold": false,
+   "tu_choi_thua": true,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-52f6b8da9f",
+   "id_goc": "TN-17",
+   "nhom": "tot_nghiep",
+   "he": "kb",
+   "gold": "FALSE",
+   "su_that": null,
+   "loai_gold": "quy_che",
+   "tra_loi": "FALSE",
+   "luot": 5,
+   "cau_hoi_kem": null,
+   "ket_luan": true,
+   "unsound": false,
+   "dung_gold": true,
+   "tu_choi_thua": false,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-16911db426",
+   "id_goc": "TN-20",
+   "nhom": "tot_nghiep",
+   "he": "kb",
+   "gold": "UNKNOWN",
+   "su_that": null,
+   "loai_gold": "quy_che",
+   "tra_loi": "UNKNOWN",
+   "luot": 4,
+   "cau_hoi_kem": null,
+   "ket_luan": false,
+   "unsound": false,
+   "dung_gold": true,
+   "tu_choi_thua": false,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-1c2dd7f0b3",
+   "id_goc": "TN-24",
+   "nhom": "tot_nghiep",
+   "he": "kb",
+   "gold": "TRUE",
+   "su_that": null,
+   "loai_gold": "quy_che",
+   "tra_loi": "TRUE",
+   "luot": 3,
+   "cau_hoi_kem": null,
+   "ket_luan": true,
+   "unsound": false,
+   "dung_gold": true,
+   "tu_choi_thua": false,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-bdb171e164",
+   "id_goc": "NH-02",
+   "nhom": "nhom",
+   "he": "kb",
+   "gold": "TRUE",
+   "su_that": null,
+   "loai_gold": "quy_che",
+   "tra_loi": "UNKNOWN",
+   "luot": 1,
+   "cau_hoi_kem": "rong",
+   "ket_luan": false,
+   "unsound": false,
+   "dung_gold": false,
+   "tu_choi_thua": true,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-400c2fc99f",
+   "id_goc": "NH-04",
+   "nhom": "nhom",
+   "he": "kb",
+   "gold": "FALSE",
+   "su_that": null,
+   "loai_gold": "quy_che",
+   "tra_loi": "UNKNOWN",
+   "luot": 1,
+   "cau_hoi_kem": "rong",
+   "ket_luan": false,
+   "unsound": false,
+   "dung_gold": false,
+   "tu_choi_thua": true,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-cffe2e16d6",
+   "id_goc": "NH-05",
+   "nhom": "nhom",
+   "he": "kb",
+   "gold": "FALSE",
+   "su_that": null,
+   "loai_gold": "quy_che",
+   "tra_loi": "UNKNOWN",
+   "luot": 1,
+   "cau_hoi_kem": "rong",
+   "ket_luan": false,
+   "unsound": false,
+   "dung_gold": false,
+   "tu_choi_thua": true,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-e7fe7d0408",
+   "id_goc": "NH-07",
+   "nhom": "nhom",
+   "he": "kb",
+   "gold": "TRUE",
+   "su_that": null,
+   "loai_gold": "quy_che",
+   "tra_loi": "UNKNOWN",
+   "luot": 1,
+   "cau_hoi_kem": "rong",
+   "ket_luan": false,
+   "unsound": false,
+   "dung_gold": false,
+   "tu_choi_thua": true,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-428c8bb595",
+   "id_goc": "MT-06",
+   "nhom": "mien_thay_the",
+   "he": "kb",
+   "gold": "FALSE",
+   "su_that": null,
+   "loai_gold": "quy_che",
+   "tra_loi": "UNKNOWN",
+   "luot": 1,
+   "cau_hoi_kem": "rong",
+   "ket_luan": false,
+   "unsound": false,
+   "dung_gold": false,
+   "tu_choi_thua": true,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-63baea3dbe",
+   "id_goc": "MT-07",
+   "nhom": "mien_thay_the",
+   "he": "kb",
+   "gold": "FALSE",
+   "su_that": null,
+   "loai_gold": "quy_che",
+   "tra_loi": "UNKNOWN",
+   "luot": 1,
+   "cau_hoi_kem": "rong",
+   "ket_luan": false,
+   "unsound": false,
+   "dung_gold": false,
+   "tu_choi_thua": true,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-784b63ac77",
+   "id_goc": "MT-08",
+   "nhom": "mien_thay_the",
+   "he": "kb",
+   "gold": "FALSE",
+   "su_that": null,
+   "loai_gold": "quy_che",
+   "tra_loi": "UNKNOWN",
+   "luot": 1,
+   "cau_hoi_kem": "rong",
+   "ket_luan": false,
+   "unsound": false,
+   "dung_gold": false,
+   "tu_choi_thua": true,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-3da69b9814",
+   "id_goc": "MT-09",
+   "nhom": "mien_thay_the",
+   "he": "kb",
+   "gold": "FALSE",
+   "su_that": null,
+   "loai_gold": "quy_che",
+   "tra_loi": "UNKNOWN",
+   "luot": 1,
+   "cau_hoi_kem": "rong",
+   "ket_luan": false,
+   "unsound": false,
+   "dung_gold": false,
+   "tu_choi_thua": true,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-4a19200d64",
+   "id_goc": "MT-10",
+   "nhom": "mien_thay_the",
+   "he": "kb",
+   "gold": "FALSE",
+   "su_that": null,
+   "loai_gold": "quy_che",
+   "tra_loi": "UNKNOWN",
+   "luot": 1,
+   "cau_hoi_kem": "rong",
+   "ket_luan": false,
+   "unsound": false,
+   "dung_gold": false,
+   "tu_choi_thua": true,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-880f783866",
+   "id_goc": "MT-11",
+   "nhom": "mien_thay_the",
+   "he": "kb",
+   "gold": "FALSE",
+   "su_that": null,
+   "loai_gold": "quy_che",
+   "tra_loi": "UNKNOWN",
+   "luot": 1,
+   "cau_hoi_kem": "rong",
+   "ket_luan": false,
+   "unsound": false,
+   "dung_gold": false,
+   "tu_choi_thua": true,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-9cf953af10",
+   "id_goc": "HG-02",
+   "nhom": "hang",
+   "he": "kb",
+   "gold": "TRUE",
+   "su_that": null,
+   "loai_gold": "quy_che",
+   "tra_loi": "UNKNOWN",
+   "luot": 2,
+   "cau_hoi_kem": null,
+   "ket_luan": false,
+   "unsound": false,
+   "dung_gold": false,
+   "tu_choi_thua": true,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-b754a90d18",
+   "id_goc": "HG-04",
+   "nhom": "hang",
+   "he": "kb",
+   "gold": "TRUE",
+   "su_that": null,
+   "loai_gold": "quy_che",
+   "tra_loi": "TRUE",
+   "luot": 6,
+   "cau_hoi_kem": null,
+   "ket_luan": true,
+   "unsound": false,
+   "dung_gold": true,
+   "tu_choi_thua": false,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-76b7b8b08b",
+   "id_goc": "HG-06",
+   "nhom": "hang",
+   "he": "kb",
+   "gold": "TRUE",
+   "su_that": null,
+   "loai_gold": "quy_che",
+   "tra_loi": "UNKNOWN",
+   "luot": 3,
+   "cau_hoi_kem": "hang_khong_co_khong",
+   "ket_luan": false,
+   "unsound": false,
+   "dung_gold": false,
+   "tu_choi_thua": true,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-6e4990da62",
+   "id_goc": "HG-08",
+   "nhom": "hang",
+   "he": "kb",
+   "gold": "TRUE",
+   "su_that": null,
+   "loai_gold": "quy_che",
+   "tra_loi": "UNKNOWN",
+   "luot": 5,
+   "cau_hoi_kem": null,
+   "ket_luan": false,
+   "unsound": false,
+   "dung_gold": false,
+   "tu_choi_thua": true,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-cd236af39f",
+   "id_goc": "NL-01",
+   "nhom": "cau_tu_nhien",
+   "he": "nl",
+   "gold": "TRUE",
+   "su_that": null,
+   "loai_gold": "quy_che",
+   "tra_loi": "UNKNOWN",
+   "luot": 3,
+   "cau_hoi_kem": null,
+   "ket_luan": false,
+   "unsound": false,
+   "dung_gold": false,
+   "tu_choi_thua": true,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-89dc386f83",
+   "id_goc": "NL-03",
+   "nhom": "cau_tu_nhien",
+   "he": "nl",
+   "gold": "TRUE",
+   "su_that": null,
+   "loai_gold": "quy_che",
+   "tra_loi": "TRUE",
+   "luot": 4,
+   "cau_hoi_kem": null,
+   "ket_luan": true,
+   "unsound": false,
+   "dung_gold": true,
+   "tu_choi_thua": false,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-c50f0223f1",
+   "id_goc": "NL-07",
+   "nhom": "cau_tu_nhien",
+   "he": "nl",
+   "gold": "UNKNOWN",
+   "su_that": null,
+   "loai_gold": "thiet_ke",
+   "tra_loi": "UNKNOWN",
+   "luot": 2,
+   "cau_hoi_kem": null,
+   "ket_luan": false,
+   "unsound": false,
+   "dung_gold": true,
+   "tu_choi_thua": false,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-f9a26a3238",
+   "id_goc": "NL-08",
+   "nhom": "cau_tu_nhien",
+   "he": "nl",
+   "gold": "UNKNOWN",
+   "su_that": null,
+   "loai_gold": "quy_che",
+   "tra_loi": "UNKNOWN",
+   "luot": 2,
+   "cau_hoi_kem": null,
+   "ket_luan": false,
+   "unsound": false,
+   "dung_gold": true,
+   "tu_choi_thua": false,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-4ec1896002",
+   "id_goc": "NL-09",
+   "nhom": "cau_tu_nhien",
+   "he": "nl",
+   "gold": "FALSE",
+   "su_that": null,
+   "loai_gold": "quy_che",
+   "tra_loi": "UNKNOWN",
+   "luot": 6,
+   "cau_hoi_kem": null,
+   "ket_luan": false,
+   "unsound": false,
+   "dung_gold": false,
+   "tu_choi_thua": true,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-21c6df57a3",
+   "id_goc": "NL-12",
+   "nhom": "cau_tu_nhien",
+   "he": "nl",
+   "gold": "FALSE",
+   "su_that": null,
+   "loai_gold": "quy_che",
+   "tra_loi": "UNKNOWN",
+   "luot": 3,
+   "cau_hoi_kem": null,
+   "ket_luan": false,
+   "unsound": false,
+   "dung_gold": false,
+   "tu_choi_thua": true,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-61f5775e62",
+   "id_goc": "ON-01M2",
+   "nhom": "M2",
+   "he": "ocr",
+   "gold": "TRUE",
+   "su_that": "TRUE",
+   "loai_gold": "quy_che",
+   "tra_loi": "UNKNOWN",
+   "luot": 2,
+   "cau_hoi_kem": null,
+   "ket_luan": false,
+   "unsound": false,
+   "dung_gold": false,
+   "tu_choi_thua": true,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-3ff92b6db0",
+   "id_goc": "ON-01M4",
+   "nhom": "M4",
+   "he": "ocr",
+   "gold": "UNKNOWN",
+   "su_that": "TRUE",
+   "loai_gold": "thiet_ke",
+   "tra_loi": "UNKNOWN",
+   "luot": 3,
+   "cau_hoi_kem": null,
+   "ket_luan": false,
+   "unsound": false,
+   "dung_gold": true,
+   "tu_choi_thua": false,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-0fb1446c12",
+   "id_goc": "ON-02M1",
+   "nhom": "M1",
+   "he": "ocr",
+   "gold": "TRUE",
+   "su_that": "TRUE",
+   "loai_gold": "quy_che",
+   "tra_loi": "UNKNOWN",
+   "luot": 5,
+   "cau_hoi_kem": null,
+   "ket_luan": false,
+   "unsound": false,
+   "dung_gold": false,
+   "tu_choi_thua": true,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-68b345552d",
+   "id_goc": "ON-03M1",
+   "nhom": "M1",
+   "he": "ocr",
+   "gold": "TRUE",
+   "su_that": "TRUE",
+   "loai_gold": "quy_che",
+   "tra_loi": "UNKNOWN",
+   "luot": 2,
+   "cau_hoi_kem": null,
+   "ket_luan": false,
+   "unsound": false,
+   "dung_gold": false,
+   "tu_choi_thua": true,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-1725d3703c",
+   "id_goc": "ON-03M2",
+   "nhom": "M2",
+   "he": "ocr",
+   "gold": "TRUE",
+   "su_that": "TRUE",
+   "loai_gold": "quy_che",
+   "tra_loi": "UNKNOWN",
+   "luot": 2,
+   "cau_hoi_kem": null,
+   "ket_luan": false,
+   "unsound": false,
+   "dung_gold": false,
+   "tu_choi_thua": true,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-a16cf48629",
+   "id_goc": "ON-03M4",
+   "nhom": "M4",
+   "he": "ocr",
+   "gold": "UNKNOWN",
+   "su_that": "TRUE",
+   "loai_gold": "thiet_ke",
+   "tra_loi": "UNKNOWN",
+   "luot": 2,
+   "cau_hoi_kem": null,
+   "ket_luan": false,
+   "unsound": false,
+   "dung_gold": true,
+   "tu_choi_thua": false,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-eb82a443bb",
+   "id_goc": "ON-04M1",
+   "nhom": "M1",
+   "he": "ocr",
+   "gold": "TRUE",
+   "su_that": "TRUE",
+   "loai_gold": "quy_che",
+   "tra_loi": "UNKNOWN",
+   "luot": 2,
+   "cau_hoi_kem": null,
+   "ket_luan": false,
+   "unsound": false,
+   "dung_gold": false,
+   "tu_choi_thua": true,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-f32163f8dd",
+   "id_goc": "ON-04M3",
+   "nhom": "M3",
+   "he": "ocr",
+   "gold": "UNKNOWN",
+   "su_that": "TRUE",
+   "loai_gold": "thiet_ke",
+   "tra_loi": "UNKNOWN",
+   "luot": 4,
+   "cau_hoi_kem": null,
+   "ket_luan": false,
+   "unsound": false,
+   "dung_gold": true,
+   "tu_choi_thua": false,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-4e2b00073c",
+   "id_goc": "ON-04M4",
+   "nhom": "M4",
+   "he": "ocr",
+   "gold": "UNKNOWN",
+   "su_that": "TRUE",
+   "loai_gold": "thiet_ke",
+   "tra_loi": "UNKNOWN",
+   "luot": 3,
+   "cau_hoi_kem": null,
+   "ket_luan": false,
+   "unsound": false,
+   "dung_gold": true,
+   "tu_choi_thua": false,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-977dab57dc",
+   "id_goc": "ON-05M2",
+   "nhom": "M2",
+   "he": "ocr",
+   "gold": "TRUE",
+   "su_that": "TRUE",
+   "loai_gold": "quy_che",
+   "tra_loi": "TRUE",
+   "luot": 1,
+   "cau_hoi_kem": "atom",
+   "ket_luan": true,
+   "unsound": false,
+   "dung_gold": true,
+   "tu_choi_thua": false,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-4abc4488da",
+   "id_goc": "ON-05M3",
+   "nhom": "M3",
+   "he": "ocr",
+   "gold": "UNKNOWN",
+   "su_that": "TRUE",
+   "loai_gold": "thiet_ke",
+   "tra_loi": "UNKNOWN",
+   "luot": 1,
+   "cau_hoi_kem": "atom",
+   "ket_luan": false,
+   "unsound": false,
+   "dung_gold": true,
+   "tu_choi_thua": false,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-c99d288515",
+   "id_goc": "ON-07M2",
+   "nhom": "M2",
+   "he": "ocr",
+   "gold": "TRUE",
+   "su_that": "TRUE",
+   "loai_gold": "quy_che",
+   "tra_loi": "TRUE",
+   "luot": 1,
+   "cau_hoi_kem": "atom",
+   "ket_luan": true,
+   "unsound": false,
+   "dung_gold": true,
+   "tu_choi_thua": false,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-8b5be7b498",
+   "id_goc": "ON-07M4",
+   "nhom": "M4",
+   "he": "ocr",
+   "gold": "UNKNOWN",
+   "su_that": "TRUE",
+   "loai_gold": "thiet_ke",
+   "tra_loi": "FALSE",
+   "luot": 1,
+   "cau_hoi_kem": "atom",
+   "ket_luan": true,
+   "unsound": true,
+   "dung_gold": false,
+   "tu_choi_thua": false,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-a1a89ff558",
+   "id_goc": "ON-08M1",
+   "nhom": "M1",
+   "he": "ocr",
+   "gold": "TRUE",
+   "su_that": "TRUE",
+   "loai_gold": "quy_che",
+   "tra_loi": "TRUE",
+   "luot": 4,
+   "cau_hoi_kem": "atom",
+   "ket_luan": true,
+   "unsound": false,
+   "dung_gold": true,
+   "tu_choi_thua": false,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-63f23214e0",
+   "id_goc": "ON-08M3",
+   "nhom": "M3",
+   "he": "ocr",
+   "gold": "UNKNOWN",
+   "su_that": "TRUE",
+   "loai_gold": "thiet_ke",
+   "tra_loi": "UNKNOWN",
+   "luot": 1,
+   "cau_hoi_kem": "atom",
+   "ket_luan": false,
+   "unsound": false,
+   "dung_gold": true,
+   "tu_choi_thua": false,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-6125468456",
+   "id_goc": "ON-08M4",
+   "nhom": "M4",
+   "he": "ocr",
+   "gold": "UNKNOWN",
+   "su_that": "TRUE",
+   "loai_gold": "thiet_ke",
+   "tra_loi": "UNKNOWN",
+   "luot": 1,
+   "cau_hoi_kem": "atom",
+   "ket_luan": false,
+   "unsound": false,
+   "dung_gold": true,
+   "tu_choi_thua": false,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-f54da56e37",
+   "id_goc": "ON-09M2",
+   "nhom": "M2",
+   "he": "ocr",
+   "gold": "TRUE",
+   "su_that": "TRUE",
+   "loai_gold": "quy_che",
+   "tra_loi": "UNKNOWN",
+   "luot": 2,
+   "cau_hoi_kem": null,
+   "ket_luan": false,
+   "unsound": false,
+   "dung_gold": false,
+   "tu_choi_thua": true,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-9a0ca1715e",
+   "id_goc": "ON-09M3",
+   "nhom": "M3",
+   "he": "ocr",
+   "gold": "UNKNOWN",
+   "su_that": "TRUE",
+   "loai_gold": "thiet_ke",
+   "tra_loi": "UNKNOWN",
+   "luot": 3,
+   "cau_hoi_kem": null,
+   "ket_luan": false,
+   "unsound": false,
+   "dung_gold": true,
+   "tu_choi_thua": false,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-a382fafe2b",
+   "id_goc": "ON-10M1",
+   "nhom": "M1",
+   "he": "ocr",
+   "gold": "TRUE",
+   "su_that": "TRUE",
+   "loai_gold": "quy_che",
+   "tra_loi": "TRUE",
+   "luot": 4,
+   "cau_hoi_kem": null,
+   "ket_luan": true,
+   "unsound": false,
+   "dung_gold": true,
+   "tu_choi_thua": false,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-21661440ad",
+   "id_goc": "ON-10M3",
+   "nhom": "M3",
+   "he": "ocr",
+   "gold": "UNKNOWN",
+   "su_that": "TRUE",
+   "loai_gold": "thiet_ke",
+   "tra_loi": "UNKNOWN",
+   "luot": 3,
+   "cau_hoi_kem": null,
+   "ket_luan": false,
+   "unsound": false,
+   "dung_gold": true,
+   "tu_choi_thua": false,
+   "hoi_dung": null
+  }
+ ],
+ "tra_loi_tho": [
+  {
+   "id": "B-dae3f5c9e9",
+   "tra_loi": "TRUE",
+   "nhan_thieu": false,
+   "tho": "\n---\n\n---\nCT182 yêu cầu tiên quyết CT176 và song hành CT180.\nHồ sơ cho thấy em đã đạt cả CT176 và CT180, đáp ứng Điều 7 khoản 4–5 QĐ3266.\nVì vậy, em đủ điều kiện học phần để đăng ký CT182.\nNHAN: TRUE",
+   "luot": 3,
+   "het_luot": false,
+   "usage": {
+    "in": 8032,
+    "out": 149
+   },
+   "phuc_vu": [
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    }
+   ]
+  },
+  {
+   "id": "B-1ec07153d1",
+   "tra_loi": "UNKNOWN",
+   "nhan_thieu": false,
+   "tho": "\n---\n\n---\n\n---\nCT182 yêu cầu tích lũy học phần tiên quyết CT176; CT180 là học phần song hành và em đã đạt.\nĐiểm CT176 chưa rõ: 3,0 là F, không đáp ứng tiên quyết; 8,0 là B+, đáp ứng tiên quyết.\nCần bổ sung điểm chính thức hoặc xác nhận đã tích lũy CT176 để kết luận.\nNHAN: UNKNOWN",
+   "luot": 4,
+   "het_luot": false,
+   "usage": {
+    "in": 11219,
+    "out": 225
+   },
+   "phuc_vu": [
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    }
+   ]
+  },
+  {
+   "id": "B-61677fc960",
+   "tra_loi": "UNKNOWN",
+   "nhan_thieu": true,
+   "tho": "\n---\n\n---\n\n---\n\n---\n\n---\n",
+   "luot": 6,
+   "het_luot": true,
+   "usage": {
+    "in": 16659,
+    "out": 427
+   },
+   "phuc_vu": [
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    }
+   ]
+  },
+  {
+   "id": "B-18ca6eb0a4",
+   "tra_loi": "TRUE",
+   "nhan_thieu": false,
+   "tho": "\n---\n\n---\n\n---\nXH025 không có học phần tiên quyết; học phần song hành là XH024.\nTheo QĐ3266 Điều 7 khoản 5, học phần song hành được học trước hoặc cùng lúc.\nEm đã đạt XH024 nên đáp ứng điều kiện học phần để đăng ký XH025.\nNHAN: TRUE",
+   "luot": 4,
+   "het_luot": false,
+   "usage": {
+    "in": 11618,
+    "out": 209
+   },
+   "phuc_vu": [
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    }
+   ]
+  },
+  {
+   "id": "B-2a0af9a274",
+   "tra_loi": "UNKNOWN",
+   "nhan_thieu": false,
+   "tho": "\n---\n\n---\n\n---\nXH025 có học phần song hành XH024; theo QĐ3266 Điều 7 khoản 5, phải học XH024 trước hoặc cùng lúc.\nHồ sơ chưa ghi nhận đã học XH024 và chưa có thông tin đăng ký học kỳ này.\nCần bổ sung thông tin em có đăng ký học XH024 cùng kỳ hay không.\nNHAN: UNKNOWN",
+   "luot": 4,
+   "het_luot": false,
+   "usage": {
+    "in": 11218,
+    "out": 213
+   },
+   "phuc_vu": [
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    }
+   ]
+  },
+  {
+   "id": "B-954a7ef490",
+   "tra_loi": "TRUE",
+   "nhan_thieu": false,
+   "tho": "\n---\n\n---\nCT271E yêu cầu tích lũy hai học phần tiên quyết CT174 và CT176 (QĐ3266, Điều 7 khoản 4).\nHồ sơ ghi nhận CT174 đạt D, trạng thái passed; CT176 đạt B+, trạng thái passed. Cả hai không thuộc danh sách không tính tích lũy.\nVì vậy, em đáp ứng điều kiện tiên quyết để đăng ký CT271E.\nNHAN: TRUE",
+   "luot": 3,
+   "het_luot": false,
+   "usage": {
+    "in": 8324,
+    "out": 162
+   },
+   "phuc_vu": [
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    }
+   ]
+  },
+  {
+   "id": "B-a1deb420f7",
+   "tra_loi": "FALSE",
+   "nhan_thieu": false,
+   "tho": "\n---\n\n---\n\n---\nCT466E yêu cầu tích lũy tối thiểu 80 tín chỉ, không có học phần tiên quyết hoặc song hành.\nTổng tín chỉ của tất cả học phần đã đạt trong hồ sơ là 79; ngay cả khi tính toàn bộ vẫn chưa đủ 80 tín chỉ.\nNHAN: FALSE",
+   "luot": 4,
+   "het_luot": false,
+   "usage": {
+    "in": 6648,
+    "out": 219
+   },
+   "phuc_vu": [
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    }
+   ]
+  },
+  {
+   "id": "B-5de4850ad1",
+   "tra_loi": "UNKNOWN",
+   "nhan_thieu": true,
+   "tho": "\n---\n\n---\n\n---\n\n---\n\n---\n",
+   "luot": 6,
+   "het_luot": true,
+   "usage": {
+    "in": 15810,
+    "out": 417
+   },
+   "phuc_vu": [
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    }
+   ]
+  },
+  {
+   "id": "B-28ec2d8926",
+   "tra_loi": "FALSE",
+   "nhan_thieu": false,
+   "tho": "\n---\nML019 yêu cầu học phần tiên quyết ML018. Hồ sơ chưa có kết quả đạt ML018 và không có miễn học phần này, nên chưa đủ điều kiện đăng ký ML019.\nNHAN: FALSE",
+   "luot": 2,
+   "het_luot": false,
+   "usage": {
+    "in": 4900,
+    "out": 68
+   },
+   "phuc_vu": [
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    }
+   ]
+  },
+  {
+   "id": "B-f5c82fa589",
+   "tra_loi": "FALSE",
+   "nhan_thieu": false,
+   "tho": "\n---\nML019 yêu cầu học phần tiên quyết ML018. Hồ sơ chưa ghi nhận em đã đạt hoặc được miễn ML018, nên chưa đủ điều kiện đăng ký.\nNHAN: FALSE",
+   "luot": 2,
+   "het_luot": false,
+   "usage": {
+    "in": 4900,
+    "out": 63
+   },
+   "phuc_vu": [
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    }
+   ]
+  },
+  {
+   "id": "B-e073b6ac23",
+   "tra_loi": "UNKNOWN",
+   "nhan_thieu": false,
+   "tho": "\n---\n\n---\nKhông tìm thấy học phần CT999 trong CTĐT CNTT K49 nên chưa đủ cơ sở xác định điều kiện đăng ký.\nCần bổ sung mã học phần chính xác; nếu đúng là CT999, cần thông tin học phần, điều kiện đăng ký và việc mở lớp kỳ này.\nNHAN: UNKNOWN",
+   "luot": 3,
+   "het_luot": false,
+   "usage": {
+    "in": 8857,
+    "out": 165
+   },
+   "phuc_vu": [
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    }
+   ]
+  },
+  {
+   "id": "B-1d90e3b4d8",
+   "tra_loi": "UNKNOWN",
+   "nhan_thieu": true,
+   "tho": "\n---\n\n---\n\n---\n\n---\n\n---\n",
+   "luot": 6,
+   "het_luot": true,
+   "usage": {
+    "in": 18522,
+    "out": 477
+   },
+   "phuc_vu": [
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    }
+   ]
+  },
+  {
+   "id": "B-c369f7d6a0",
+   "tra_loi": "TRUE",
+   "nhan_thieu": false,
+   "tho": "\n---\nTheo QĐ3266 Điều 31 khoản 3, sinh viên nhận điểm F luận văn tốt nghiệp phải đăng ký làm lại hoặc đăng ký các học phần thay thế để hoàn thành CTĐT.\nVì vậy, em được đăng ký làm lại luận văn.\nNHAN: TRUE",
+   "luot": 2,
+   "het_luot": false,
+   "usage": {
+    "in": 5550,
+    "out": 115
+   },
+   "phuc_vu": [
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    }
+   ]
+  },
+  {
+   "id": "B-bfd5f430a3",
+   "tra_loi": "UNKNOWN",
+   "nhan_thieu": true,
+   "tho": "\n---\n\n---\n\n---\n\n---\n\n---\n",
+   "luot": 6,
+   "het_luot": true,
+   "usage": {
+    "in": 19927,
+    "out": 565
+   },
+   "phuc_vu": [
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    }
+   ]
+  },
+  {
+   "id": "B-66975504e8",
+   "tra_loi": "UNKNOWN",
+   "nhan_thieu": true,
+   "tho": "\n---\n\n---\n\n---\n\n---\n\n---\n",
+   "luot": 6,
+   "het_luot": true,
+   "usage": {
+    "in": 23270,
+    "out": 515
+   },
+   "phuc_vu": [
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    }
+   ]
+  },
+  {
+   "id": "B-1c38630e1c",
+   "tra_loi": "UNKNOWN",
+   "nhan_thieu": false,
+   "tho": "\n---\n\n---\n\n---\nCT271E (Niên luận cơ sở - CNTT) yêu cầu tích lũy CT174 và CT176.\nTheo QĐ3266 Điều 7 khoản 4, phải tích lũy học phần tiên quyết mới được đăng ký.\nHồ sơ xác nhận CT174 đã đạt, nhưng điểm CT176 chưa rõ.\nCần bổ sung điểm chính thức và xác nhận tích lũy CT176 để kết luận.\nNHAN: UNKNOWN",
+   "luot": 4,
+   "het_luot": false,
+   "usage": {
+    "in": 12579,
+    "out": 245
+   },
+   "phuc_vu": [
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    }
+   ]
+  },
+  {
+   "id": "B-f0afa073f2",
+   "tra_loi": "TRUE",
+   "nhan_thieu": false,
+   "tho": "\n---\n\n---\n\n---\nNiên luận cơ sở – CNTT (CT271E) yêu cầu tích lũy hai học phần tiên quyết CT174 và CT176.\nHồ sơ ghi nhận cả hai đều đã đạt: CT174 điểm B, CT176 điểm D, trạng thái “passed”.\nTheo QĐ3266 Điều 7 khoản 4, em đã đáp ứng điều kiện học phần tiên quyết.\nNHAN: TRUE",
+   "luot": 4,
+   "het_luot": false,
+   "usage": {
+    "in": 11768,
+    "out": 216
+   },
+   "phuc_vu": [
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    }
+   ]
+  },
+  {
+   "id": "B-4505765b1f",
+   "tra_loi": "UNKNOWN",
+   "nhan_thieu": false,
+   "tho": "\n---\nTheo QĐ5339 Điều 3 khoản 9, sinh viên ngành không chuyên Lý luận chính trị có thể chuyển đổi ML010 sang ML016 và ML018 khi đã tích lũy học phần tại một cơ sở đào tạo khác.\nHồ sơ xác nhận em đã đạt ML010 (3 tín chỉ), nhưng chưa nêu cơ sở đào tạo nơi tích lũy học phần.\nCần bổ sung thông tin này để xác định có thuộc trường hợp được công nhận hay không.\nNHAN: UNKNOWN",
+   "luot": 2,
+   "het_luot": false,
+   "usage": {
+    "in": 6450,
+    "out": 200
+   },
+   "phuc_vu": [
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    }
+   ]
+  },
+  {
+   "id": "B-25cb26c62d",
+   "tra_loi": "TRUE",
+   "nhan_thieu": false,
+   "tho": "\n---\n\n---\n\n---\nTheo QĐ5339, Điều 3 khoản 9, học phần ML006 được chuyển đổi tương đương sang ML021 đối với sinh viên ngành không chuyên Lý luận chính trị thuộc khóa 45 trở về sau.\nEm thuộc CNTT K49 và đã tích lũy ML006 (2 tín chỉ, C+, trạng thái đạt), nên đủ điều kiện được xét công nhận ML021.\nNHAN: TRUE",
+   "luot": 4,
+   "het_luot": false,
+   "usage": {
+    "in": 13357,
+    "out": 275
+   },
+   "phuc_vu": [
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    }
+   ]
+  },
+  {
+   "id": "B-a2a7679c19",
+   "tra_loi": "FALSE",
+   "nhan_thieu": false,
+   "tho": "\n---\nCT174 được mở ở học kỳ I nhưng yêu cầu học phần tiên quyết CT177.\nHồ sơ chưa ghi nhận sinh viên đã đạt CT177, nên chưa đủ điều kiện đề xuất đăng ký CT174.\nNHAN: FALSE",
+   "luot": 2,
+   "het_luot": false,
+   "usage": {
+    "in": 3110,
+    "out": 138
+   },
+   "phuc_vu": [
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    }
+   ]
+  },
+  {
+   "id": "B-8a39ce0bd8",
+   "tra_loi": "TRUE",
+   "nhan_thieu": false,
+   "tho": "\n---\n\n---\nCT101 có 4 tín chỉ, được bố trí ở học kỳ I và II, không có điều kiện tiên quyết hay song hành.\nEm đã đạt CT101 với điểm B+, nhưng QĐ3266 Điều 17 khoản 2 cho phép đăng ký học cải thiện.\nVì vậy, hệ thống có thể đề xuất CT101 ở học kỳ 1 theo diện học cải thiện, không phải học phần còn thiếu.\nNHAN: TRUE",
+   "luot": 3,
+   "het_luot": false,
+   "usage": {
+    "in": 6482,
+    "out": 287
+   },
+   "phuc_vu": [
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    }
+   ]
+  },
+  {
+   "id": "B-052cc2bf38",
+   "tra_loi": "FALSE",
+   "nhan_thieu": false,
+   "tho": "\n---\nCT518E yêu cầu tích lũy tối thiểu 125 tín chỉ và chỉ mở ở học kỳ III (học kỳ hè), không phải học kỳ 1. Vì vậy, hệ thống không thể đề xuất đăng ký học phần này ở học kỳ 1.\nNHAN: FALSE",
+   "luot": 2,
+   "het_luot": false,
+   "usage": {
+    "in": 3662,
+    "out": 144
+   },
+   "phuc_vu": [
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    }
+   ]
+  },
+  {
+   "id": "B-adb5b498dd",
+   "tra_loi": "UNKNOWN",
+   "nhan_thieu": false,
+   "tho": "\n---\n\n---\n\n---\n\n---\nQP012 là học phần bắt buộc, 2 tín chỉ, không có tiên quyết hoặc song hành; hồ sơ chưa ghi nhận đã đạt.\nTuy nhiên, chưa có thông tin QP012 được mở trong học kỳ 1. Theo Điều 15 QĐ3266, đăng ký phải dựa vào kế hoạch và thời khóa biểu được công bố.\nCần bổ sung danh mục lớp QP012 và thời khóa biểu học kỳ 1 để xác định có thể đề xuất đăng ký.\nNHAN: UNKNOWN",
+   "luot": 5,
+   "het_luot": false,
+   "usage": {
+    "in": 19820,
+    "out": 356
+   },
+   "phuc_vu": [
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    }
+   ]
+  },
+  {
+   "id": "B-d83598c2f6",
+   "tra_loi": "UNKNOWN",
+   "nhan_thieu": false,
+   "tho": "\n---\n\n---\nCT182 mở ở học kỳ I, có tiên quyết CT176 và song hành CT180.\nEm đã đạt CT180 nên đáp ứng điều kiện song hành.\nTheo QĐ3266 Điều 7 khoản 4, phải tích lũy CT176 mới được đăng ký CT182.\nĐiểm CT176 chưa rõ (3,0 hoặc 8,0), nên chưa thể xác định đã tích lũy học phần này.\nCần bổ sung điểm chính thức hoặc xác nhận tích lũy CT176.\nNHAN: UNKNOWN",
+   "luot": 3,
+   "het_luot": false,
+   "usage": {
+    "in": 8812,
+    "out": 254
+   },
+   "phuc_vu": [
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    }
+   ]
+  },
+  {
+   "id": "B-e08f644c24",
+   "tra_loi": "FALSE",
+   "nhan_thieu": false,
+   "tho": "\n---\n\n---\nCT501E là Tiểu luận tốt nghiệp (6 tín chỉ), được mở ở học kỳ I và II.\nHồ sơ xác định hình thức cuối khóa là `lvtn` (luận văn tốt nghiệp), tương ứng CT550E, không phải CT501E.\nVì vậy, CT501E không phù hợp để đề xuất theo phương án cuối khóa hiện tại.\nNHAN: FALSE",
+   "luot": 3,
+   "het_luot": false,
+   "usage": {
+    "in": 9128,
+    "out": 260
+   },
+   "phuc_vu": [
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    }
+   ]
+  },
+  {
+   "id": "B-fdb2d8f6d5",
+   "tra_loi": "UNKNOWN",
+   "nhan_thieu": false,
+   "tho": "\n---\n\n---\nTheo Điều 32 khoản 1 QĐ3266, tốt nghiệp cần tích lũy đủ học phần, tín chỉ, đạt ĐTBCTL từ 2,00/4 và các chuẩn đầu ra, hoàn thành học phần điều kiện.\nHồ sơ chưa có xác nhận đạt chuẩn đầu ra ngoại ngữ, công nghệ thông tin và chưa đủ căn cứ đối chiếu toàn bộ yêu cầu CTĐT.\nCần bổ sung kết quả kiểm tra hoàn thành CTĐT, học phần điều kiện và xác nhận chuẩn đầu ra; không thể chỉ dựa vào trạng thái “passed” để kết luận.\nNHAN: UNKNOWN",
+   "luot": 3,
+   "het_luot": false,
+   "usage": {
+    "in": 11142,
+    "out": 309
+   },
+   "phuc_vu": [
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    }
+   ]
+  },
+  {
+   "id": "B-28d55591e7",
+   "tra_loi": "UNKNOWN",
+   "nhan_thieu": false,
+   "tho": "\n---\n\n---\n\n---\nTheo Điều 32 khoản 1 QĐ3266, sinh viên phải tích lũy đủ CTĐT, có ĐTBCTL từ 2,00/4 và đạt các chuẩn đầu ra, học phần điều kiện.\nHồ sơ chưa đủ để xác nhận đã hoàn thành toàn bộ yêu cầu CTĐT và chuẩn đầu ra ngoại ngữ, CNTT; việc đỗ XH023–XH025 chỉ chứng minh hoàn thành ngoại ngữ căn bản.\nCần bổ sung kết quả đối chiếu tín chỉ/học phần tốt nghiệp, ĐTBCTL chính thức và xác nhận đạt các chuẩn đầu ra.\nNHAN: UNKNOWN",
+   "luot": 4,
+   "het_luot": false,
+   "usage": {
+    "in": 15763,
+    "out": 396
+   },
+   "phuc_vu": [
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    }
+   ]
+  },
+  {
+   "id": "B-df1932add8",
+   "tra_loi": "UNKNOWN",
+   "nhan_thieu": false,
+   "tho": "Các học phần QP010E, QP011E, QP012, QP013 có điểm `thang10` lần lượt là 40, 50, 50, 50, ngoài phạm vi thang 10.\nCần bổ sung điểm thang 10 hợp lệ hoặc xác nhận quy ước mã hóa điểm; không thể tự ý chia các giá trị này cho 10.\nNHAN: UNKNOWN",
+   "luot": 1,
+   "het_luot": false,
+   "usage": {
+    "in": 2470,
+    "out": 162
+   },
+   "phuc_vu": [
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    }
+   ]
+  },
+  {
+   "id": "B-266d2568ee",
+   "tra_loi": "UNKNOWN",
+   "nhan_thieu": false,
+   "tho": "\n---\nTheo Điều 5 QĐ3266, thời gian học tối đa phụ thuộc thời gian thiết kế CTĐT và tín chỉ được công nhận, chuyển đổi.\nTrường `da_hoc_nam2: 18` chưa rõ ý nghĩa và đơn vị nên không thể coi là đã học 18 năm.\nCần bổ sung thời gian thiết kế CTĐT và tổng thời gian học được tính vào giới hạn tối đa, làm rõ trường dữ liệu trên.\nNHAN: UNKNOWN",
+   "luot": 2,
+   "het_luot": false,
+   "usage": {
+    "in": 6182,
+    "out": 233
+   },
+   "phuc_vu": [
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    }
+   ]
+  },
+  {
+   "id": "B-e6b45df792",
+   "tra_loi": "UNKNOWN",
+   "nhan_thieu": false,
+   "tho": "\n---\nTheo Điều 5 QĐ3266, thời gian học tối đa phụ thuộc thời gian thiết kế của CTĐT và số tín chỉ được công nhận, chuyển đổi.\nTrường `da_hoc_nam2: 19` chưa nêu rõ ý nghĩa, đơn vị nên không thể xác định thời gian đã học.\nCần bổ sung thời gian đào tạo chuẩn, thời điểm nhập học, thời điểm xét và các khoảng nghỉ học (nếu có).\nNHAN: UNKNOWN",
+   "luot": 2,
+   "het_luot": false,
+   "usage": {
+    "in": 6398,
+    "out": 238
+   },
+   "phuc_vu": [
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    }
+   ]
+  },
+  {
+   "id": "B-2e744ef45f",
+   "tra_loi": "UNKNOWN",
+   "nhan_thieu": false,
+   "tho": "\n---\nTheo Điều 5 QĐ3266, thời gian học tối đa phụ thuộc thời gian thiết kế của CTĐT.\nSinh viên K49 được công nhận 8 tín chỉ thì không bị giảm thời gian học tối đa.\nHồ sơ có `da_hoc_nam2: 18` nhưng chưa giải thích ý nghĩa và đơn vị, nên không thể xác định thời gian đã học.\nCần bổ sung thời gian thiết kế CTĐT và thời gian đã học được tính vào giới hạn tối đa.\nNHAN: UNKNOWN",
+   "luot": 2,
+   "het_luot": false,
+   "usage": {
+    "in": 6143,
+    "out": 220
+   },
+   "phuc_vu": [
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    }
+   ]
+  },
+  {
+   "id": "B-6bbdb60949",
+   "tra_loi": "FALSE",
+   "nhan_thieu": false,
+   "tho": "\n---\n\n---\nTổng số tín chỉ của các học phần có trạng thái “passed” trong hồ sơ là 159.\nNgay cả khi tính toàn bộ số tín chỉ này, vẫn thiếu 2 tín chỉ so với yêu cầu 161 tín chỉ.\nNHAN: FALSE",
+   "luot": 3,
+   "het_luot": false,
+   "usage": {
+    "in": 9159,
+    "out": 256
+   },
+   "phuc_vu": [
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    }
+   ]
+  },
+  {
+   "id": "B-17bbb16d0a",
+   "tra_loi": "UNKNOWN",
+   "nhan_thieu": false,
+   "tho": "\n---\n\n---\n\n---\nTheo QĐ3266 Điều 32 khoản 1, xét tốt nghiệp cần đủ học phần, tín chỉ, ĐTBCTL từ 2,00/4 và đạt các chuẩn đầu ra.\nHồ sơ chưa có xác nhận đạt chuẩn đầu ra ngoại ngữ và công nghệ thông tin; hoàn thành Anh văn căn bản chưa đủ để kết luận đạt chuẩn đầu ra.\nCần bổ sung minh chứng công nhận các chuẩn đầu ra và kết quả đối chiếu học phần, tín chỉ với toàn bộ yêu cầu CTĐT CNTT K49.\nNHAN: UNKNOWN",
+   "luot": 4,
+   "het_luot": false,
+   "usage": {
+    "in": 15107,
+    "out": 288
+   },
+   "phuc_vu": [
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    }
+   ]
+  },
+  {
+   "id": "B-52f6b8da9f",
+   "tra_loi": "FALSE",
+   "nhan_thieu": false,
+   "tho": "\n---\n\n---\n\n---\n\n---\nTheo Điều 32 khoản 1 QĐ3266, sinh viên phải tích lũy đủ học phần và tín chỉ theo CTĐT để được xét tốt nghiệp.\nNhóm tự chọn chuyên ngành CNTT K49 yêu cầu đạt ít nhất 6 tín chỉ trong cùng một nhánh.\nHồ sơ chỉ có CT449 đạt 3 tín chỉ thuộc nhánh CN2; CT484 nhận điểm W (rút học phần), chưa được tích lũy.\nKhông có học phần đạt thuộc nhánh CN1 hoặc CN3, cũng không có miễn trừ.\nVì vậy, em chưa hoàn thành yêu cầu nhóm tự chọn chuyên ngành, nên chưa đủ điều kiện xét tốt nghiệp.\nNHAN: FALSE",
+   "luot": 5,
+   "het_luot": false,
+   "usage": {
+    "in": 27501,
+    "out": 440
+   },
+   "phuc_vu": [
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    }
+   ]
+  },
+  {
+   "id": "B-16911db426",
+   "tra_loi": "UNKNOWN",
+   "nhan_thieu": false,
+   "tho": "\n---\n\n---\n\n---\nTheo QĐ3266 Điều 32 khoản 1, sinh viên phải hoàn thành các học phần điều kiện và đạt chuẩn đầu ra mới được xét tốt nghiệp.\nQP013 là học phần điều kiện bắt buộc nhưng chưa có điểm xác định, nên chưa thể xác nhận đã hoàn thành.\nCần bổ sung điểm chính thức và trạng thái đạt của QP013; xác nhận đáp ứng chuẩn đầu ra ngoại ngữ, CNTT.\nNHAN: UNKNOWN",
+   "luot": 4,
+   "het_luot": false,
+   "usage": {
+    "in": 15222,
+    "out": 422
+   },
+   "phuc_vu": [
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    }
+   ]
+  },
+  {
+   "id": "B-1c2dd7f0b3",
+   "tra_loi": "TRUE",
+   "nhan_thieu": false,
+   "tho": "\n---\n\n---\nTheo QĐ3266 Điều 24 khoản 4, ĐTBCTL không tính học phần điểm F và học phần điều kiện.\nVì vậy, CT484 (F) không kéo giảm ĐTBCTL.\nCác học phần còn lại đều đạt C trở lên, tương ứng từ 2,00/4 trở lên (Điều 22 khoản 2).\nDo đó, trung bình có trọng số của các học phần được tính không thấp hơn 2,00, đạt ngưỡng được hỏi.\nNHAN: TRUE",
+   "luot": 3,
+   "het_luot": false,
+   "usage": {
+    "in": 11097,
+    "out": 245
+   },
+   "phuc_vu": [
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    }
+   ]
+  },
+  {
+   "id": "B-bdb171e164",
+   "tra_loi": "UNKNOWN",
+   "nhan_thieu": false,
+   "tho": "Chưa có nội dung câu hỏi hoặc điều kiện cụ thể cần đánh giá trong mục “CÂU HỎI”.\nCần bổ sung câu hỏi để đối chiếu với hồ sơ sinh viên.\nNHAN: UNKNOWN",
+   "luot": 1,
+   "het_luot": false,
+   "usage": {
+    "in": 2449,
+    "out": 50
+   },
+   "phuc_vu": [
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    }
+   ]
+  },
+  {
+   "id": "B-400c2fc99f",
+   "tra_loi": "UNKNOWN",
+   "nhan_thieu": false,
+   "tho": "Chưa có nội dung câu hỏi hoặc điều kiện cần đánh giá trong mục “CÂU HỎI”.\nCần bổ sung yêu cầu cụ thể để đối chiếu với hồ sơ sinh viên.\nNHAN: UNKNOWN",
+   "luot": 1,
+   "het_luot": false,
+   "usage": {
+    "in": 2447,
+    "out": 50
+   },
+   "phuc_vu": [
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    }
+   ]
+  },
+  {
+   "id": "B-cffe2e16d6",
+   "tra_loi": "UNKNOWN",
+   "nhan_thieu": false,
+   "tho": "Chưa có nội dung câu hỏi hoặc điều kiện cần đánh giá sau mục “CÂU HỎI”.\nCần bổ sung câu hỏi cụ thể để đối chiếu với hồ sơ sinh viên.\nNHAN: UNKNOWN",
+   "luot": 1,
+   "het_luot": false,
+   "usage": {
+    "in": 2412,
+    "out": 69
+   },
+   "phuc_vu": [
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    }
+   ]
+  },
+  {
+   "id": "B-e7fe7d0408",
+   "tra_loi": "UNKNOWN",
+   "nhan_thieu": false,
+   "tho": "Chưa có câu hỏi hoặc điều kiện cụ thể cần đánh giá. Cần bổ sung nội dung câu hỏi để đối chiếu với hồ sơ sinh viên.\nNHAN: UNKNOWN",
+   "luot": 1,
+   "het_luot": false,
+   "usage": {
+    "in": 2560,
+    "out": 61
+   },
+   "phuc_vu": [
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    }
+   ]
+  },
+  {
+   "id": "B-428c8bb595",
+   "tra_loi": "UNKNOWN",
+   "nhan_thieu": false,
+   "tho": "Chưa có nội dung câu hỏi hoặc điều kiện cần đánh giá (phần “CÂU HỎI” đang để trống). Cần bổ sung câu hỏi cụ thể về hồ sơ sinh viên.\nNHAN: UNKNOWN",
+   "luot": 1,
+   "het_luot": false,
+   "usage": {
+    "in": 2465,
+    "out": 52
+   },
+   "phuc_vu": [
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    }
+   ]
+  },
+  {
+   "id": "B-63baea3dbe",
+   "tra_loi": "UNKNOWN",
+   "nhan_thieu": false,
+   "tho": "Chưa có nội dung câu hỏi hoặc điều kiện cần đánh giá trong mục “CÂU HỎI”.\nCần bổ sung câu hỏi cụ thể về hồ sơ sinh viên.\nNHAN: UNKNOWN",
+   "luot": 1,
+   "het_luot": false,
+   "usage": {
+    "in": 2465,
+    "out": 59
+   },
+   "phuc_vu": [
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    }
+   ]
+  },
+  {
+   "id": "B-784b63ac77",
+   "tra_loi": "UNKNOWN",
+   "nhan_thieu": false,
+   "tho": "Phần “CÂU HỎI” đang để trống, nên chưa xác định được điều kiện cần đánh giá từ hồ sơ.\nCần bổ sung câu hỏi hoặc tiêu chí cụ thể cần kiểm tra.\nNHAN: UNKNOWN",
+   "luot": 1,
+   "het_luot": false,
+   "usage": {
+    "in": 2412,
+    "out": 71
+   },
+   "phuc_vu": [
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    }
+   ]
+  },
+  {
+   "id": "B-3da69b9814",
+   "tra_loi": "UNKNOWN",
+   "nhan_thieu": false,
+   "tho": "Chưa có nội dung ở mục “CÂU HỎI”, nên chưa xác định được điều kiện cần đánh giá từ hồ sơ.\nCần bổ sung câu hỏi hoặc nhận định cụ thể cần kiểm tra.\nNHAN: UNKNOWN",
+   "luot": 1,
+   "het_luot": false,
+   "usage": {
+    "in": 2412,
+    "out": 73
+   },
+   "phuc_vu": [
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    }
+   ]
+  },
+  {
+   "id": "B-4a19200d64",
+   "tra_loi": "UNKNOWN",
+   "nhan_thieu": false,
+   "tho": "Hồ sơ đã được cung cấp nhưng phần CÂU HỎI để trống, chưa có nội dung hoặc điều kiện cần đánh giá. Cần bổ sung câu hỏi cụ thể.\nNHAN: UNKNOWN",
+   "luot": 1,
+   "het_luot": false,
+   "usage": {
+    "in": 2449,
+    "out": 66
+   },
+   "phuc_vu": [
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    }
+   ]
+  },
+  {
+   "id": "B-880f783866",
+   "tra_loi": "UNKNOWN",
+   "nhan_thieu": false,
+   "tho": "Chưa có nội dung câu hỏi hoặc điều kiện cần đánh giá (phần “CÂU HỎI” đang để trống). Cần bổ sung câu hỏi cụ thể để đối chiếu với hồ sơ sinh viên.\nNHAN: UNKNOWN",
+   "luot": 1,
+   "het_luot": false,
+   "usage": {
+    "in": 2449,
+    "out": 76
+   },
+   "phuc_vu": [
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    }
+   ]
+  },
+  {
+   "id": "B-9cf953af10",
+   "tra_loi": "UNKNOWN",
+   "nhan_thieu": false,
+   "tho": "\n---\nTheo QĐ3266 Điều 34 khoản 2, hạng giỏi cần ĐTBCTL từ 3,20–3,59 và không thuộc diện bị giảm hạng.\nHồ sơ xác nhận không bị kỷ luật nhưng chưa có lịch sử điểm F; các điểm hiện tại đã đạt không xác nhận trước đây chưa từng bị F.\nCần bổ sung tổng số tín chỉ từng bị F thuộc diện xét giảm hạng và tổng số tín chỉ quy định của CTĐT để đối chiếu ngưỡng 5%.\nNHAN: UNKNOWN",
+   "luot": 2,
+   "het_luot": false,
+   "usage": {
+    "in": 6066,
+    "out": 365
+   },
+   "phuc_vu": [
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    }
+   ]
+  },
+  {
+   "id": "B-b754a90d18",
+   "tra_loi": "TRUE",
+   "nhan_thieu": false,
+   "tho": "\n---\n\n---\n\n---\n\n---\n\n---\nTheo QĐ3266 Điều 24 và Điều 34, hạng giỏi yêu cầu ĐTBCTL từ 3,20 đến 3,59.\nKhông tính các học phần điều kiện GDQP&AN, GDTC và ngoại ngữ căn bản.\nCó 140 tín chỉ tính ĐTBCTL: 28 tín chỉ A và 112 tín chỉ B.\nĐTBCTL = (28 × 4 + 112 × 3)/140 = 3,20.\nHồ sơ không ghi nhận điểm F và xác nhận không bị kỷ luật, nên không có căn cứ hạ hạng.\nNHAN: TRUE",
+   "luot": 6,
+   "het_luot": false,
+   "usage": {
+    "in": 32799,
+    "out": 1272
+   },
+   "phuc_vu": [
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    }
+   ]
+  },
+  {
+   "id": "B-76b7b8b08b",
+   "tra_loi": "UNKNOWN",
+   "nhan_thieu": false,
+   "tho": "\n---\n\n---\nUNKNOWN — Cần xác nhận lại bảng điểm: các giá trị `thang10` như 65, 70, 80 vượt thang điểm 10 và chưa thống nhất với điểm chữ.\nTheo QĐ3266 Điều 34 khoản 2, hạng tốt nghiệp được xác định từ ĐTBCTL; Điều 24 khoản 4 loại các học phần điều kiện khỏi phép tính.\nCần bổ sung ĐTBCTL chính thức dùng xét tốt nghiệp hoặc xác nhận dữ liệu điểm đúng để tính và xác định hạng.\nNHAN: UNKNOWN",
+   "luot": 3,
+   "het_luot": false,
+   "usage": {
+    "in": 10191,
+    "out": 408
+   },
+   "phuc_vu": [
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    }
+   ]
+  },
+  {
+   "id": "B-6e4990da62",
+   "tra_loi": "UNKNOWN",
+   "nhan_thieu": false,
+   "tho": "\n---\n\n---\n\n---\n\n---\nTheo Điều 34 khoản 2 QĐ3266, loại giỏi yêu cầu ĐTBCTL từ 3,20 đến 3,59 và không thuộc diện bị hạ hạng.\nHồ sơ xác nhận không bị kỷ luật nhưng chưa cho biết tổng số tín chỉ từng bị điểm F (không tính F khi học cải thiện).\nCần bổ sung dữ kiện này để đối chiếu ngưỡng vượt 5% tổng số tín chỉ quy định của CTĐT, kể cả các môn sau đó đã học lại đạt.\nNHAN: UNKNOWN",
+   "luot": 5,
+   "het_luot": false,
+   "usage": {
+    "in": 25260,
+    "out": 661
+   },
+   "phuc_vu": [
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    }
+   ]
+  },
+  {
+   "id": "B-cd236af39f",
+   "tra_loi": "UNKNOWN",
+   "nhan_thieu": false,
+   "tho": "\n---\n\n---\nCT182 yêu cầu tiên quyết CT176 và song hành CT180.\nEm đã đạt CT176, đáp ứng điều kiện tiên quyết.\nHồ sơ chưa có CT180 và chưa cho biết em có đăng ký CT180 cùng kỳ này không; cần bổ sung thông tin này để kết luận.\nNHAN: UNKNOWN",
+   "luot": 3,
+   "het_luot": false,
+   "usage": {
+    "in": 8290,
+    "out": 146
+   },
+   "phuc_vu": [
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    }
+   ]
+  },
+  {
+   "id": "B-89dc386f83",
+   "tra_loi": "TRUE",
+   "nhan_thieu": false,
+   "tho": "\n---\n\n---\n\n---\n- CT550E (Luận văn tốt nghiệp – CNTT) yêu cầu tích lũy tối thiểu 120 tín chỉ, không có học phần tiên quyết hay song hành.\n- Hồ sơ các học phần đã đạt đáp ứng mức tích lũy này nên em đủ điều kiện đăng ký luận văn theo CTĐT.\n\nNHAN: TRUE",
+   "luot": 4,
+   "het_luot": false,
+   "usage": {
+    "in": 12467,
+    "out": 544
+   },
+   "phuc_vu": [
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    }
+   ]
+  },
+  {
+   "id": "B-c50f0223f1",
+   "tra_loi": "UNKNOWN",
+   "nhan_thieu": false,
+   "tho": "\n---\nTheo QĐ3266 Điều 9 khoản 1, điều kiện xét học bổng gồm: đăng ký tối thiểu 12 tín chỉ ở học kỳ trước (trừ trường hợp do Trường bố trí), học tập và rèn luyện từ khá, không có học phần dưới D và không bị kỷ luật từ khiển trách cấp Trường.\nHồ sơ xác nhận không bị kỷ luật nhưng chưa phân chia kết quả học tập theo học kỳ và chưa có điểm rèn luyện.\nCần bổ sung học kỳ xét học bổng, số tín chỉ đăng ký, kết quả học tập và điểm rèn luyện của học kỳ trước đó.\nNHAN: UNKNOWN",
+   "luot": 2,
+   "het_luot": false,
+   "usage": {
+    "in": 6490,
+    "out": 197
+   },
+   "phuc_vu": [
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    }
+   ]
+  },
+  {
+   "id": "B-f9a26a3238",
+   "tra_loi": "UNKNOWN",
+   "nhan_thieu": false,
+   "tho": "\n---\nTheo QĐ3266 Điều 18 khoản 2, cảnh báo học tập còn phụ thuộc kết quả và tình trạng đăng ký học từng học kỳ.\nHồ sơ chỉ có danh sách điểm đạt, chưa có dữ liệu phân theo học kỳ và xác nhận việc đăng ký học.\nCần bổ sung học kỳ xét cảnh báo, ĐTBCHK, số tín chỉ đăng ký/không đạt, tổng tín chỉ nợ đọng và tình trạng được phép nghỉ học nếu không đăng ký.\nNHAN: UNKNOWN",
+   "luot": 2,
+   "het_luot": false,
+   "usage": {
+    "in": 6052,
+    "out": 163
+   },
+   "phuc_vu": [
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    }
+   ]
+  },
+  {
+   "id": "B-4ec1896002",
+   "tra_loi": "UNKNOWN",
+   "nhan_thieu": true,
+   "tho": "\n---\n\n---\n\n---\n\n---\n\n---\n",
+   "luot": 6,
+   "het_luot": true,
+   "usage": {
+    "in": 29857,
+    "out": 728
+   },
+   "phuc_vu": [
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    }
+   ]
+  },
+  {
+   "id": "B-21c6df57a3",
+   "tra_loi": "UNKNOWN",
+   "nhan_thieu": false,
+   "tho": "\n---\n\n---\nTheo Điều 32 khoản 1 QĐ3266, tốt nghiệp đòi hỏi đủ học phần, tín chỉ, ĐTBCTL từ 2,00 và đạt chuẩn đầu ra.\nHồ sơ chưa có xác nhận đạt chuẩn đầu ra ngoại ngữ, công nghệ thông tin; danh sách chứng chỉ trống chưa đủ để kết luận không đạt.\nCần bổ sung kết quả đối chiếu hoàn thành CTĐT CNTT K49 và xác nhận đạt các chuẩn đầu ra.\nNHAN: UNKNOWN",
+   "luot": 3,
+   "het_luot": false,
+   "usage": {
+    "in": 11141,
+    "out": 257
+   },
+   "phuc_vu": [
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    }
+   ]
+  },
+  {
+   "id": "B-61f5775e62",
+   "tra_loi": "UNKNOWN",
+   "nhan_thieu": false,
+   "tho": "\n---\nTheo QĐ3266 Điều 32 khoản 1, xét tốt nghiệp cần hoàn thành CTĐT, các học phần điều kiện và đạt chuẩn đầu ra.\nĐTBCTL được ghi là 3,14, đạt ngưỡng tối thiểu 2,00; nhưng tổng 161 tín chỉ chưa tự chứng minh đã đủ mọi yêu cầu CTĐT.\nCần bổ sung xác nhận hoàn thành CTĐT và đạt chuẩn đầu ra, đặc biệt ngoại ngữ, CNTT; nếu thuộc chương trình chất lượng cao/tiên tiến, cần xác nhận tham gia nghiên cứu khoa học.\nNHAN: UNKNOWN",
+   "luot": 2,
+   "het_luot": false,
+   "usage": {
+    "in": 12347,
+    "out": 273
+   },
+   "phuc_vu": [
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    }
+   ]
+  },
+  {
+   "id": "B-3ff92b6db0",
+   "tra_loi": "UNKNOWN",
+   "nhan_thieu": false,
+   "tho": "\n---\n\n---\nTheo QĐ3266 Điều 32 khoản 1, tốt nghiệp đòi hỏi đủ học phần, tín chỉ, ĐTBCTL ≥ 2,00, hoàn thành học phần điều kiện và đạt chuẩn đầu ra.\nĐTBCTL cuối bảng là 3,14, nhưng chưa có xác nhận đạt chuẩn đầu ra ngoại ngữ và CNTT.\nHK5 có tổng tín chỉ từng dòng là 15, không khớp tổng ghi 18; cần bảng điểm chính thức để đối chiếu toàn bộ CTĐT.\nCần bổ sung minh chứng chuẩn đầu ra, xác nhận hoàn thành các học phần điều kiện và tình trạng không bị truy cứu trách nhiệm hình sự.\nNHAN: UNKNOWN",
+   "luot": 3,
+   "het_luot": false,
+   "usage": {
+    "in": 20107,
+    "out": 425
+   },
+   "phuc_vu": [
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    }
+   ]
+  },
+  {
+   "id": "B-0fb1446c12",
+   "tra_loi": "UNKNOWN",
+   "nhan_thieu": false,
+   "tho": "\n---\n\n---\n\n---\n\n---\nTheo Điều 3 QĐ3266, phải đối chiếu từng học phần bắt buộc với CTĐT, không chỉ dựa vào tổng tín chỉ.\nChưa có đầy đủ danh mục học phần bắt buộc CNTT K49 để đối chiếu; cần bổ sung danh mục này hoặc xác nhận hoàn thành từ Trường.\nNHAN: UNKNOWN",
+   "luot": 5,
+   "het_luot": false,
+   "usage": {
+    "in": 45914,
+    "out": 466
+   },
+   "phuc_vu": [
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    }
+   ]
+  },
+  {
+   "id": "B-68b345552d",
+   "tra_loi": "UNKNOWN",
+   "nhan_thieu": false,
+   "tho": "\n---\nTheo Điều 32 khoản 1 QĐ3266, tốt nghiệp yêu cầu đủ học phần, tín chỉ, ĐTBCTL ≥ 2,00, hoàn thành học phần điều kiện và đạt chuẩn đầu ra.\nĐTBCTL cuối là 3,14, nhưng tổng 161 tín chỉ chưa tự chứng minh đã hoàn thành đúng CTĐT.\nCần bổ sung xác nhận hoàn thành CTĐT, đạt chuẩn đầu ra ngoại ngữ–CNTT và không bị truy cứu trách nhiệm hình sự; xác nhận nghiên cứu khoa học nếu thuộc chương trình có yêu cầu.\nNHAN: UNKNOWN",
+   "luot": 2,
+   "het_luot": false,
+   "usage": {
+    "in": 12907,
+    "out": 296
+   },
+   "phuc_vu": [
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    }
+   ]
+  },
+  {
+   "id": "B-1725d3703c",
+   "tra_loi": "UNKNOWN",
+   "nhan_thieu": false,
+   "tho": "\n---\nTheo QĐ3266 Điều 32 khoản 1, xét tốt nghiệp còn yêu cầu hoàn thành CTĐT, học phần điều kiện và đạt chuẩn đầu ra.\nĐTBCTL được ghi là 3,14, đạt ngưỡng 2,00; tuy nhiên, 161 tín chỉ chưa tự chứng minh đã hoàn thành đúng cơ cấu CTĐT.\nCần bổ sung xác nhận hoàn thành CTĐT và các học phần điều kiện, đạt chuẩn đầu ra ngoại ngữ–CNTT, và không bị truy cứu trách nhiệm hình sự.\nNếu thuộc chương trình chất lượng cao/tiên tiến, cần thêm xác nhận tham gia nghiên cứu khoa học.\nNHAN: UNKNOWN",
+   "luot": 2,
+   "het_luot": false,
+   "usage": {
+    "in": 12893,
+    "out": 252
+   },
+   "phuc_vu": [
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    }
+   ]
+  },
+  {
+   "id": "B-a16cf48629",
+   "tra_loi": "UNKNOWN",
+   "nhan_thieu": false,
+   "tho": "\n---\nTheo QĐ3266 Điều 32 khoản 1, tốt nghiệp cần đủ học phần, tín chỉ, ĐTBCTL ≥ 2,00, học phần điều kiện và chuẩn đầu ra.\nĐTBCTL cuối bảng là 3,14, nhưng chưa có xác nhận hoàn thành đầy đủ CTĐT và chuẩn đầu ra ngoại ngữ, CNTT.\nDữ liệu chưa khớp: HK9 liệt kê 9 tín chỉ nhưng tổng đăng ký là 15; cần bảng điểm đầy đủ, chính thức để đối chiếu.\nCần bổ sung xác nhận các điều kiện còn thiếu, tình trạng không bị truy cứu trách nhiệm hình sự và xác nhận nghiên cứu khoa học nếu thuộc chương trình chất lượng cao/tiên tiến.\nNHAN: UNKNOWN",
+   "luot": 2,
+   "het_luot": false,
+   "usage": {
+    "in": 12714,
+    "out": 257
+   },
+   "phuc_vu": [
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    }
+   ]
+  },
+  {
+   "id": "B-eb82a443bb",
+   "tra_loi": "UNKNOWN",
+   "nhan_thieu": false,
+   "tho": "\n---\nTheo QĐ3266 Điều 32 khoản 1, xét tốt nghiệp cần hoàn thành CTĐT, các học phần điều kiện, đạt chuẩn đầu ra và đáp ứng điều kiện pháp lý, kỷ luật.\nĐTBCTL được ghi là 3,14, đạt ngưỡng 2,00; tuy nhiên, tổng 161 tín chỉ chưa đủ để xác nhận hoàn thành đúng cơ cấu CTĐT.\nCần bổ sung kết quả đối chiếu hoàn thành CTĐT, minh chứng đạt chuẩn đầu ra ngoại ngữ và CNTT, xác nhận hoàn thành các học phần điều kiện và không bị truy cứu trách nhiệm hình sự.\nNHAN: UNKNOWN",
+   "luot": 2,
+   "het_luot": false,
+   "usage": {
+    "in": 13079,
+    "out": 243
+   },
+   "phuc_vu": [
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    }
+   ]
+  },
+  {
+   "id": "B-f32163f8dd",
+   "tra_loi": "UNKNOWN",
+   "nhan_thieu": false,
+   "tho": "\n---\n\n---\n\n---\nTheo Điều 32 khoản 1 QĐ3266, cần đủ học phần, tín chỉ, ĐTBCTL ≥ 2,00, hoàn thành học phần điều kiện và đạt chuẩn đầu ra.\nCT478 có điểm tổng hợp 7,0 nhưng điểm chữ F; cần bảng điểm chính thức xác minh kết quả và số tín chỉ tích lũy.\nCT478 là học phần tự chọn, nên riêng điểm F này chưa đủ để kết luận không đủ điều kiện.\nCần bổ sung xác nhận hoàn thành các nhóm học phần theo CTĐT, học phần điều kiện và chuẩn đầu ra ngoại ngữ, CNTT.\nNHAN: UNKNOWN",
+   "luot": 4,
+   "het_luot": false,
+   "usage": {
+    "in": 27774,
+    "out": 337
+   },
+   "phuc_vu": [
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    }
+   ]
+  },
+  {
+   "id": "B-4e2b00073c",
+   "tra_loi": "UNKNOWN",
+   "nhan_thieu": false,
+   "tho": "\n---\n\n---\nTheo QĐ3266 Điều 32 khoản 1, tốt nghiệp đòi hỏi đủ học phần, tín chỉ, ĐTBCTL ≥ 2,00, học phần điều kiện và chuẩn đầu ra.\nĐTBCTL ghi nhận 3,14 đạt ngưỡng, nhưng chưa có xác nhận đạt đầy đủ chuẩn đầu ra, nhất là ngoại ngữ và CNTT.\nCần bổ sung kết quả đối chiếu hoàn thành CTĐT, minh chứng chuẩn đầu ra và xác nhận không bị truy cứu trách nhiệm hình sự.\nCần xác minh số tín chỉ HK8: các dòng cộng được 17 tín chỉ, trong khi tổng ghi 20.\nNHAN: UNKNOWN",
+   "luot": 3,
+   "het_luot": false,
+   "usage": {
+    "in": 21216,
+    "out": 350
+   },
+   "phuc_vu": [
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    }
+   ]
+  },
+  {
+   "id": "B-977dab57dc",
+   "tra_loi": "TRUE",
+   "nhan_thieu": false,
+   "tho": "HK2 ghi nhận học phần ML019 có điểm tổng hợp 8,0, điểm chữ B+; các ô đều có độ tin cậy OCR 0,99. Kết quả này cho thấy sinh viên đã đạt học phần ML019.\nNHAN: TRUE",
+   "luot": 1,
+   "het_luot": false,
+   "usage": {
+    "in": 5611,
+    "out": 59
+   },
+   "phuc_vu": [
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    }
+   ]
+  },
+  {
+   "id": "B-4abc4488da",
+   "tra_loi": "UNKNOWN",
+   "nhan_thieu": false,
+   "tho": "Dòng ML019 ở HK2 có điểm tổng hợp 8,0 nhưng điểm chữ F, hai dữ kiện mâu thuẫn dù cùng độ tin cậy OCR 0,99.\nCần đối chiếu bảng điểm gốc hoặc xác nhận kết quả chính thức của ML019 để kết luận đã đạt hay chưa.\nNHAN: UNKNOWN",
+   "luot": 1,
+   "het_luot": false,
+   "usage": {
+    "in": 5614,
+    "out": 97
+   },
+   "phuc_vu": [
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    }
+   ]
+  },
+  {
+   "id": "B-c99d288515",
+   "tra_loi": "TRUE",
+   "nhan_thieu": false,
+   "tho": "ML016 ở HK2 có điểm tổng hợp 7,5, điểm chữ B; các ô liên quan đều có độ tin cậy OCR 0,99, cho thấy học phần đã đạt.\nNHAN: TRUE",
+   "luot": 1,
+   "het_luot": false,
+   "usage": {
+    "in": 5611,
+    "out": 49
+   },
+   "phuc_vu": [
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    }
+   ]
+  },
+  {
+   "id": "B-8b5be7b498",
+   "tra_loi": "FALSE",
+   "nhan_thieu": false,
+   "tho": "Bảng điểm không có học phần ML016 và không có khai báo đã được miễn hoặc công nhận đạt học phần này.\nNHAN: FALSE",
+   "luot": 1,
+   "het_luot": false,
+   "usage": {
+    "in": 5523,
+    "out": 126
+   },
+   "phuc_vu": [
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    }
+   ]
+  },
+  {
+   "id": "B-a1a89ff558",
+   "tra_loi": "TRUE",
+   "nhan_thieu": false,
+   "tho": "\n---\n\n---\n\n---\nCT173 ở HK5 có điểm tổng hợp 7,0 và điểm chữ B, đều có độ tin cậy OCR 0,99.\nTheo QĐ3266 Điều 22 khoản 3, học phần đạt từ D trở lên được tính tích lũy; B đáp ứng điều kiện này.\nÔ điểm thi có độ tin cậy thấp không làm thay đổi kết luận từ điểm học phần đã ghi nhận.\nNHAN: TRUE",
+   "luot": 4,
+   "het_luot": false,
+   "usage": {
+    "in": 29281,
+    "out": 253
+   },
+   "phuc_vu": [
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    }
+   ]
+  },
+  {
+   "id": "B-63f23214e0",
+   "tra_loi": "UNKNOWN",
+   "nhan_thieu": false,
+   "tho": "Dòng CT173 ở HK5 có điểm tổng hợp 7,0 nhưng điểm chữ F, hai dữ kiện mâu thuẫn.\nCần đối chiếu bảng điểm gốc hoặc xác nhận kết quả chính thức của CT173 để kết luận đã đạt hay chưa.\nNHAN: UNKNOWN",
+   "luot": 1,
+   "het_luot": false,
+   "usage": {
+    "in": 5614,
+    "out": 88
+   },
+   "phuc_vu": [
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    }
+   ]
+  },
+  {
+   "id": "B-6125468456",
+   "tra_loi": "UNKNOWN",
+   "nhan_thieu": false,
+   "tho": "Không thấy dòng học phần CT173 trong bảng điểm OCR.\nHK5 ghi tổng đăng ký 18 tín chỉ nhưng các dòng chỉ cộng được 15 tín chỉ, nên chưa thể xem bảng OCR là đầy đủ.\nCần bổ sung bảng điểm gốc hoặc kết quả học phần CT173 để xác nhận đã đạt hay chưa.\nNHAN: UNKNOWN",
+   "luot": 1,
+   "het_luot": false,
+   "usage": {
+    "in": 5523,
+    "out": 129
+   },
+   "phuc_vu": [
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    }
+   ]
+  },
+  {
+   "id": "B-f54da56e37",
+   "tra_loi": "UNKNOWN",
+   "nhan_thieu": false,
+   "tho": "\n---\nTheo QĐ3266 Điều 32 khoản 1, tốt nghiệp cần đủ học phần, tín chỉ theo CTĐT, ĐTBCTL ≥ 2,00, hoàn thành học phần điều kiện và đạt chuẩn đầu ra.\nBảng điểm ghi 161 tín chỉ, ĐTBCTL 3,14 nhưng chưa đủ để xác nhận đã đáp ứng toàn bộ yêu cầu CTĐT CNTT K49.\nCần bổ sung kết quả đối chiếu học phần bắt buộc/tự chọn, xác nhận đạt chuẩn đầu ra ngoại ngữ, CNTT và hoàn thành các học phần điều kiện.\nCần xác nhận không bị truy cứu trách nhiệm hình sự; xác nhận tham gia nghiên cứu khoa học nếu thuộc chương trình chất lượng cao/tiên tiến.\nNHAN: UNKNOWN",
+   "luot": 2,
+   "het_luot": false,
+   "usage": {
+    "in": 12898,
+    "out": 268
+   },
+   "phuc_vu": [
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    }
+   ]
+  },
+  {
+   "id": "B-9a0ca1715e",
+   "tra_loi": "UNKNOWN",
+   "nhan_thieu": false,
+   "tho": "\n---\n\n---\nTheo QĐ3266 Điều 32 khoản 1, sinh viên phải tích lũy đủ học phần, tín chỉ, đạt chuẩn đầu ra và hoàn thành các học phần điều kiện.\nCT182 là học phần bắt buộc nhưng dữ liệu mâu thuẫn: điểm tổng hợp 7,0 trong khi điểm chữ F; cần bảng điểm chính thức xác nhận kết quả học phần này.\nCần bổ sung xác nhận hoàn thành chuẩn đầu ra ngoại ngữ, công nghệ thông tin và các học phần điều kiện.\nDo đó, chưa đủ căn cứ kết luận đủ hay không đủ điều kiện xét tốt nghiệp.\nNHAN: UNKNOWN",
+   "luot": 3,
+   "het_luot": false,
+   "usage": {
+    "in": 21353,
+    "out": 342
+   },
+   "phuc_vu": [
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    }
+   ]
+  },
+  {
+   "id": "B-a382fafe2b",
+   "tra_loi": "TRUE",
+   "nhan_thieu": false,
+   "tho": "\n---\n\n---\n\n---\n- GDQP&AN: Đã đạt QP010E, QP011E, QP012, QP013; điểm trung bình là 7,375/10, đáp ứng mức tối thiểu 5,0.\n- GDTC: Đã đạt TC100 (3 tín chỉ), đủ yêu cầu của nhóm.\n- Ngoại ngữ căn bản: Đã đạt XH023, XH024, XH025, đều có điểm chữ B.\n- Ô điểm thi XH024 có độ tin cậy thấp, nhưng điểm tổng hợp 7,5 và điểm chữ B đều có độ tin cậy 0,99, đủ xác định học phần đã đạt.\nNHAN: TRUE",
+   "luot": 4,
+   "het_luot": false,
+   "usage": {
+    "in": 28211,
+    "out": 406
+   },
+   "phuc_vu": [
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    }
+   ]
+  },
+  {
+   "id": "B-21661440ad",
+   "tra_loi": "UNKNOWN",
+   "nhan_thieu": false,
+   "tho": "\n---\n\n---\nXH024 (Anh văn căn bản 2) là học phần điều kiện ngoại ngữ.\nDữ liệu OCR ghi điểm tổng hợp 7,5 nhưng điểm chữ F, mâu thuẫn với quy đổi 7,0–7,9 = B tại Điều 22 khoản 2 QĐ3266.\nCần bổ sung bảng điểm gốc hoặc xác nhận kết quả chính thức của XH024 để kết luận đã hoàn thành các học phần điều kiện hay chưa.\nNHAN: UNKNOWN",
+   "luot": 3,
+   "het_luot": false,
+   "usage": {
+    "in": 21937,
+    "out": 256
+   },
+   "phuc_vu": [
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    },
+    {
+     "model": "openai/gpt-6.1-sol",
+     "provider": "OpenAI"
+    }
+   ]
+  }
+ ]
+}
