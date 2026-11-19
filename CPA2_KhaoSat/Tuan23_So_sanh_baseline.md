@@ -4,7 +4,7 @@
 **Sản phẩm:** `w23_so_sanh/so_sanh.py` (đã có, `9248cb1`) · `bang_so_sanh_{dev,test}.md/.json` · báo cáo này
 **Tiêu chí hoàn thành:** có bảng so sánh trên tập test + phân tích ca sai
 
-> **Trạng thái 19/11/2026: ĐANG LÀM.** Mục 1 (giao thức) commit **trước** lần chạy baseline đầu tiên (`eeff56d`), để không chỉnh cách so sau khi đã thấy số. **Dev: 4/6 cấu hình đã chạy** (mục 2; b3 chờ nạp credit). **Test: chưa chạy** (mục 3–4).
+> **Trạng thái 19/11/2026: ĐANG LÀM.** Mục 1 (giao thức) commit **trước** lần chạy baseline đầu tiên (`eeff56d`), để không chỉnh cách so sau khi đã thấy số. **Dev: 6/6 cấu hình đã chạy** (mục 2, 7,37 USD). **Test: chưa chạy** (mục 3–4; chờ A20/A21).
 
 ---
 
@@ -78,13 +78,13 @@ cd ../w23_so_sanh && python so_sanh.py --split test --cpa2-hau-to _sau_A17 --ra
 |---|---|
 | Mục | Giá trị (dev, 19/11/2026) |
 |---|---|
-| Commit lúc chạy | b1 Gemini: `256df16`; b1 OpenAI, b2 Gemini, b2 OpenAI: `cd5f68c`. Hai lần b2 ghi `chua_commit: true` vì file kết quả của lần chạy ngay trước chưa commit (không phải mã nguồn; hash đóng băng khớp) |
+| Commit lúc chạy | b1 Gemini: `256df16`; b1 OpenAI, b2 Gemini, b2 OpenAI: `cd5f68c`; b3 Gemini, b3 OpenAI: `fd805dc`. Ba lần (b2 ×2, b3 OpenAI) ghi `chua_commit: true` vì file kết quả của lần chạy ngay trước chưa commit (không phải mã nguồn; hash đóng băng khớp) |
 | `prompt_dong_bang.json` (sha256 / sha256_dau_vao) | `fad02fb25b67…` / `eff97ff7e5a5…` (đóng băng lại ở `256df16`, TRƯỚC lần gọi API thành công đầu tiên — xem ghi chú dưới) |
 | Model OpenAI-family (ID OpenRouter) · giá vào/ra USD/1M token | `openai/gpt-6.1-sol` (ra mắt 30/09/2026) · 2 / 10 |
 | Model Gemini-family (ID OpenRouter) · giá vào/ra | `google/gemini-4-argon` (ra mắt 13/10/2026) · 2 / 10 |
 | Nhiệt độ · max_out | không gửi `temperature` (mặc định nhà cung cấp) · 16384 token ra/lần gọi (gồm token nghĩ) |
-| Trần `BASELINE_MAX_USD` | 2 USD/lần chạy (dev) |
-| Nhà hạ tầng thực phục vụ (`phuc_vu`) | OpenAI: OpenAI 78/78 mỗi lần chạy. Gemini: Google 75 + Google AI Studio 3 (b1), Google 74 + Google AI Studio 4 (b2) |
+| Trần `BASELINE_MAX_USD` | 2 USD/lần chạy (dev b1, b2); 4 USD/lần chạy (dev b3, ước lượng ~3,2 USD). Trần không nằm trong bản đóng băng |
+| Nhà hạ tầng thực phục vụ (`phuc_vu`, theo lượt gọi) | OpenAI: OpenAI ở mọi lượt (78, 78, 230 lượt). Gemini: Google 75 + Google AI Studio 3 (b1), 74 + 4 (b2), 218 + 16 (b3) |
 
 Phí nạp credit của OpenRouter không nằm trong giá token, nên chi phí thực cao hơn cột USD một chút.
 
@@ -109,7 +109,7 @@ Phí nạp credit của OpenRouter không nằm trong giá token, nên chi phí 
 
 ## 2. Kết quả dev (kiểm đường ống, KHÔNG phải số so sánh chính)
 
-> **4/6 cấu hình đã chạy (19/11/2026); b3 OpenAI và b3 Gemini chưa chạy (chờ nạp credit).** Số lấy từ `w23_so_sanh/bang_so_sanh_dev.md` (`so_sanh.py --split dev --cpa2-hau-to _sau_A17 --ra`). Mọi baseline khớp bản đóng băng (chính thức), 78/78 ca, 0 LOI, 0 thiếu nhãn. **Dev chỉ để kiểm đường ống**: dòng CPA² chính thức là lần chạy 20/10 trên dev đã nhiễm.
+> **6/6 cấu hình đã chạy (19/11/2026).** Số lấy từ `w23_so_sanh/bang_so_sanh_dev.md` (`so_sanh.py --split dev --cpa2-hau-to _sau_A17 --ra`). Mọi baseline khớp bản đóng băng (chính thức), 78/78 ca, 0 LOI. Thiếu nhãn chỉ có ở b3 (Gemini 9, OpenAI 1): đều là ca hết 6 lượt gọi công cụ mà chưa kết luận → tính UNKNOWN. **Dev chỉ để kiểm đường ống**: dòng CPA² chính thức là lần chạy 20/10 trên dev đã nhiễm.
 
 ### 2.1 `tong` (78 ca)
 
@@ -121,7 +121,8 @@ Phí nạp credit của OpenRouter không nằm trong giá token, nên chi phí 
 | b1 Gemini (gemini-4-argon) | 78 | 79,5% | 16 | 55,1% | 62,8% | 38 | 24 | 0 | 0 | 0,66 |
 | b2 OpenAI | 78 | 98,7% | 1 | 10,3% | 87,5% | 21 | 56 | 0 | 0 | 0,75 |
 | b2 Gemini | 78 | 93,6% | 5 | 29,5% | 78,3% | 29 | 44 | 0 | 0 | 0,87 |
-| b3 OpenAI · b3 Gemini | | *chưa chạy* | | | | | | | | |
+| b3 OpenAI | 78 | 89,7% | 8 | 44,9% | 77,1% | 38 | 32 | 1 | 0 | 2,19 |
+| b3 Gemini | 78 | 85,9% | 11 | 53,8% | 73,8% | 38 | 29 | 9 | 0 | 2,35 |
 | *mốc: luôn UNKNOWN* | 78 | 100% | 0 | 0% | — | 14 | 64 | | | |
 
 ### 2.2 `[cau_hoi_ro]` (49 ca)
@@ -134,6 +135,8 @@ Phí nạp credit của OpenRouter không nằm trong giá token, nên chi phí 
 | b1 Gemini | 49 | 77,6% | 11 | 65,3% | 65,6% | 29 | 9 |
 | b2 OpenAI | 49 | 98,0% | 1 | 10,2% | 80,0% | 14 | 34 |
 | b2 Gemini | 49 | 95,9% | 2 | 30,6% | 86,7% | 22 | 25 |
+| b3 OpenAI | 49 | 95,9% | 2 | 46,9% | 91,3% | 30 | 17 |
+| b3 Gemini | 49 | 89,8% | 5 | 57,1% | 82,1% | 28 | 16 |
 
 ### 2.3 `[quy_che]` (65 ca) và `[thiet_ke]` (13 ca)
 
@@ -145,8 +148,10 @@ Phí nạp credit của OpenRouter không nằm trong giá token, nên chi phí 
 | b1 Gemini | 13 · 61,5% · 28 | 3 · 23,1% · 10 |
 | b2 OpenAI | 1 · 12,3% · 8 | 0 · 0% · 13 |
 | b2 Gemini | 2 · 30,8% · 19 | 3 · 23,1% · 10 |
+| b3 OpenAI | 5 · 49,2% · 28 | 3 · 23,1% · 10 |
+| b3 Gemini | 4 · 53,8% · 32 | 7 · 53,8% · 6 |
 
-`[theo errata]`: số baseline không đổi so với `tong`; CPA² chính thức 7 unsound / 66 đúng gold (gold đóng băng: 6 / 67).
+`[theo errata]`: số b1/b2 không đổi so với `tong`; CPA² chính thức 7 unsound / 66 đúng gold (gold đóng băng: 6 / 67); b3 OpenAI 9 / 37 (8 / 38); b3 Gemini 11 / 39 (11 / 38).
 
 ### 2.4 McNemar (CPA² chính thức vs baseline, 78 cặp)
 
@@ -156,6 +161,8 @@ Phí nạp credit của OpenRouter không nằm trong giá token, nên chi phí 
 | b1 Gemini | 7 / 36 / < 0,0001 | 6 / 16 / 0,053 |
 | b2 OpenAI | 3 / 49 / < 0,0001 | 6 / 1 / 0,125 |
 | b2 Gemini | 7 / 45 / < 0,0001 | 6 / 5 / 1,000 |
+| b3 OpenAI | 5 / 34 / < 0,0001 | 6 / 8 / 0,791 |
+| b3 Gemini | 8 / 37 / < 0,0001 | 5 / 10 / 0,302 |
 
 Ngưỡng Bonferroni 0,05/6 ≈ 0,0083 (mục 1.4). Ca bất đồng từng cặp: `bang_so_sanh_dev.md`.
 
@@ -166,7 +173,9 @@ Ngưỡng Bonferroni 0,05/6 ≈ 0,0083 (mục 1.4). Ca bất đồng từng cặ
 - **Đúng gold:** CPA² hơn cả 4 baseline ở 36–53 ca, kém ở 3–7 ca (p < 0,0001, qua ngưỡng Bonferroni).
 - **Không unsound: CPA² chính thức THUA b1 OpenAI** (6 vs 0, p = 0,031 — chưa qua ngưỡng Bonferroni). b1 OpenAI gần như không kết luận gì, nên không sai; 6 ca sai của CPA² trên dev 20/10 là lỗi đã sửa sau đó (bản `_sau_A17`: 0 unsound) — nhưng dev đã nhiễm nên không dùng bản sau sửa để kết luận. Đây là lý do mục 1.4 không cho đọc Soundness một mình.
 - **Ca CPA² chính thức sai mà baseline đúng:** NL-06, NL-10, NL-11 (parser, đã sửa sau 20/10) và HG-01 (chỉ so với b2 Gemini).
-- **Chi phí:** 2,83 USD cho 4 lần chạy dev; thấp hơn ước lượng thô 10–30%. Token ra rất ít (OpenAI ~100–130, Gemini ~200–220 token/ca): với cấu hình này, hai model gần như không sinh token nghĩ tính phí.
+- **Công cụ (b3) kéo hai họ model về gần nhau.** OpenAI kết luận nhiều hơn hẳn (Coverage 3,8% ở b1 → 44,9%) nhưng sai nhiều hơn (0 → 8 unsound); Gemini sai ít hơn b1 (16 → 11) với Coverage gần như giữ nguyên (55,1% → 53,8%). Trung bình 3 lượt gọi/ca. Trên `[cau_hoi_ro]`, b3 OpenAI là baseline mạnh nhất: 2 unsound, Coverage 46,9%, Selective Acc 91,3% — so với CPA² chính thức 3 unsound, 77,6%, 92,1%.
+- **Ca baseline sai lặp lại ở nhiều cấu hình:** đề xuất đăng ký (RC-02, RC-04, RC-05, RC-06) và OCR mức M4 (ON-05M4, ON-06M4, ON-10M4) — sẽ phân tích ở mục 4 trên test. Ở `[thiet_ke]`, b3 Gemini có 7/13 kết luận sai (những ca gold UNKNOWN theo nguyên tắc thiết kế).
+- **Chi phí:** 7,37 USD cho 6 lần chạy dev (b1/b2: 2,83; b3: 4,54); thấp hơn ước lượng thô (~10,2 USD). Token ra rất ít (b1/b2: OpenAI ~100–130, Gemini ~200–220 token/ca): với cấu hình này, hai model gần như không sinh token nghĩ tính phí.
 
 ---
 
@@ -226,8 +235,8 @@ Một ca có thể thuộc nhiều loại; ghi loại chính trước. CPA² dù
 ## 6. Việc còn lại
 
 - [x] **A19:** cấu hình `.env` (model, giá, trần), đóng băng (`256df16`), chạy dev b1/b2 × openai/gemini — 19/11/2026, 2,83 USD.
-- [ ] **A19 còn lại (cần Loi nạp credit):** chạy dev b3 OpenAI, b3 Gemini (ước lượng ~3,2 USD mỗi cấu hình).
+- [x] **A19 còn lại:** chạy dev b3 OpenAI, b3 Gemini — 19/11/2026, 4,54 USD.
 - [ ] **A20, A21 (cần Loi):** chốt trước khi chạy test (mục 1.6).
-- [x] Điền mục 1.5, chạy `so_sanh.py --split dev --ra`, điền mục 2 (4/6 cấu hình).
+- [x] Điền mục 1.5, chạy `so_sanh.py --split dev --ra`, điền mục 2 (6/6 cấu hình).
 - [ ] Chạy test một lần cho mỗi cấu hình, điền mục 3, phân tích mục 4.
 - [ ] Cập nhật checklist Excel: chỉ tích ô có bằng chứng.

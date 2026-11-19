@@ -512,13 +512,185 @@
   },
   {
    "ten": "b3_openai",
-   "trang_thai": "chua_chay",
-   "chinh_thuc": false
+   "chinh_thuc": true,
+   "meta": {
+    "bl": "b3",
+    "nha": "openai",
+    "qua": "openrouter",
+    "goc": "openrouter.ai",
+    "model": "openai/gpt-6.1-sol",
+    "split": "dev",
+    "prompt_sha256": "fad02fb25b67ca6f353f265dd6d2ccf1c2a427ea95fd369b0efa4ea655a36846",
+    "dau_vao_sha256": "eff97ff7e5a52d36a8c11689881c2cd4538ed1b0d834352d4b0449dc79646bb8",
+    "dong_bang_khop": true,
+    "hau_to": "",
+    "nhiet_do": null,
+    "max_out": 16384,
+    "ngay": "2026-11-19",
+    "tran_usd": 4.0,
+    "git": {
+     "commit": "fd805dc34ef593d14257935fafadbe5f628af871",
+     "chua_commit": true
+    },
+    "usd": 2.1922,
+    "token_vao": 987105,
+    "token_ra": 21799,
+    "uoc_thay": 0
+   },
+   "nhom": {
+    "tong": {
+     "n": 78,
+     "soundness": 0.8974358974358975,
+     "unsound": 8,
+     "coverage": 0.44871794871794873,
+     "selective_acc": 0.7714285714285715,
+     "dung_gold": 38,
+     "tu_choi_thua": 32,
+     "hoi_dung": null,
+     "loi": 0,
+     "nhan_thieu": 1
+    },
+    "[cau_hoi_ro]": {
+     "n": 49,
+     "soundness": 0.9591836734693877,
+     "unsound": 2,
+     "coverage": 0.46938775510204084,
+     "selective_acc": 0.9130434782608695,
+     "dung_gold": 30,
+     "tu_choi_thua": 17,
+     "hoi_dung": null,
+     "loi": 0,
+     "nhan_thieu": 0
+    },
+    "[quy_che]": {
+     "n": 65,
+     "soundness": 0.9230769230769231,
+     "unsound": 5,
+     "coverage": 0.49230769230769234,
+     "selective_acc": 0.84375,
+     "dung_gold": 28,
+     "tu_choi_thua": 32,
+     "hoi_dung": null,
+     "loi": 0,
+     "nhan_thieu": 1
+    },
+    "[thiet_ke]": {
+     "n": 13,
+     "soundness": 0.7692307692307692,
+     "unsound": 3,
+     "coverage": 0.23076923076923078,
+     "selective_acc": 0.0,
+     "dung_gold": 10,
+     "tu_choi_thua": 0,
+     "hoi_dung": null,
+     "loi": 0,
+     "nhan_thieu": 0
+    },
+    "[theo errata]": {
+     "n": 78,
+     "soundness": 0.8846153846153846,
+     "unsound": 9,
+     "coverage": 0.44871794871794873,
+     "selective_acc": 0.7428571428571429,
+     "dung_gold": 37,
+     "tu_choi_thua": 32,
+     "hoi_dung": null,
+     "loi": 0,
+     "nhan_thieu": 1
+    }
+   },
+   "trang_thai": "co_ket_qua"
   },
   {
    "ten": "b3_gemini",
-   "trang_thai": "chua_chay",
-   "chinh_thuc": false
+   "chinh_thuc": true,
+   "meta": {
+    "bl": "b3",
+    "nha": "gemini",
+    "qua": "openrouter",
+    "goc": "openrouter.ai",
+    "model": "google/gemini-4-argon",
+    "split": "dev",
+    "prompt_sha256": "fad02fb25b67ca6f353f265dd6d2ccf1c2a427ea95fd369b0efa4ea655a36846",
+    "dau_vao_sha256": "eff97ff7e5a52d36a8c11689881c2cd4538ed1b0d834352d4b0449dc79646bb8",
+    "dong_bang_khop": true,
+    "hau_to": "",
+    "nhiet_do": null,
+    "max_out": 16384,
+    "ngay": "2026-11-19",
+    "tran_usd": 4.0,
+    "git": {
+     "commit": "fd805dc34ef593d14257935fafadbe5f628af871",
+     "chua_commit": false
+    },
+    "usd": 2.3502,
+    "token_vao": 1045509,
+    "token_ra": 25917,
+    "uoc_thay": 0
+   },
+   "nhom": {
+    "tong": {
+     "n": 78,
+     "soundness": 0.858974358974359,
+     "unsound": 11,
+     "coverage": 0.5384615384615384,
+     "selective_acc": 0.7380952380952381,
+     "dung_gold": 38,
+     "tu_choi_thua": 29,
+     "hoi_dung": null,
+     "loi": 0,
+     "nhan_thieu": 9
+    },
+    "[cau_hoi_ro]": {
+     "n": 49,
+     "soundness": 0.8979591836734694,
+     "unsound": 5,
+     "coverage": 0.5714285714285714,
+     "selective_acc": 0.8214285714285714,
+     "dung_gold": 28,
+     "tu_choi_thua": 16,
+     "hoi_dung": null,
+     "loi": 0,
+     "nhan_thieu": 9
+    },
+    "[quy_che]": {
+     "n": 65,
+     "soundness": 0.9384615384615385,
+     "unsound": 4,
+     "coverage": 0.5384615384615384,
+     "selective_acc": 0.8857142857142857,
+     "dung_gold": 32,
+     "tu_choi_thua": 29,
+     "hoi_dung": null,
+     "loi": 0,
+     "nhan_thieu": 9
+    },
+    "[thiet_ke]": {
+     "n": 13,
+     "soundness": 0.46153846153846156,
+     "unsound": 7,
+     "coverage": 0.5384615384615384,
+     "selective_acc": 0.0,
+     "dung_gold": 6,
+     "tu_choi_thua": 0,
+     "hoi_dung": null,
+     "loi": 0,
+     "nhan_thieu": 0
+    },
+    "[theo errata]": {
+     "n": 78,
+     "soundness": 0.858974358974359,
+     "unsound": 11,
+     "coverage": 0.5384615384615384,
+     "selective_acc": 0.7380952380952381,
+     "dung_gold": 39,
+     "tu_choi_thua": 28,
+     "hoi_dung": null,
+     "loi": 0,
+     "nhan_thieu": 9
+    }
+   },
+   "trang_thai": "co_ket_qua"
   }
  ],
  "mcnemar": {
@@ -577,6 +749,34 @@
     "c": 5,
     "p": 1.0
    }
+  },
+  "b3_openai": {
+   "dung_gold": {
+    "n": 78,
+    "b": 5,
+    "c": 34,
+    "p": 2.4299079086631536e-06
+   },
+   "unsound": {
+    "n": 78,
+    "b": 6,
+    "c": 8,
+    "p": 0.79052734375
+   }
+  },
+  "b3_gemini": {
+   "dung_gold": {
+    "n": 78,
+    "b": 8,
+    "c": 37,
+    "p": 1.5374090196473844e-05
+   },
+   "unsound": {
+    "n": 78,
+    "b": 5,
+    "c": 10,
+    "p": 0.3017578125
+   }
   }
  },
  "bat_dong": {
@@ -632,6 +832,44 @@
     "HG-01",
     "NL-06",
     "NL-10",
+    "NL-11"
+   ]
+  },
+  "b3_openai": {
+   "cpa2_dung_bl_unsound": [
+    "DK-16",
+    "ON-05M4",
+    "ON-06M4",
+    "ON-10M4",
+    "RC-02",
+    "RC-04",
+    "RC-05",
+    "RC-06"
+   ],
+   "bl_dung_cpa2_unsound": [
+    "NL-06",
+    "NL-10",
+    "NL-11"
+   ]
+  },
+  "b3_gemini": {
+   "cpa2_dung_bl_unsound": [
+    "ON-02M3",
+    "ON-02M4",
+    "ON-05M4",
+    "ON-06M4",
+    "ON-09M4",
+    "ON-10M4",
+    "RC-02",
+    "RC-04",
+    "RC-05",
+    "RC-06"
+   ],
+   "bl_dung_cpa2_unsound": [
+    "HG-01",
+    "HG-05",
+    "HG-07",
+    "NL-06",
     "NL-11"
    ]
   }
