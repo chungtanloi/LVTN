@@ -1,0 +1,2908 @@
+{
+ "meta": {
+  "bl": "b1",
+  "nha": "gemini",
+  "qua": "openrouter",
+  "goc": "openrouter.ai",
+  "model": "google/gemini-4-argon",
+  "split": "test",
+  "prompt_sha256": "fad02fb25b67ca6f353f265dd6d2ccf1c2a427ea95fd369b0efa4ea655a36846",
+  "dau_vao_sha256": "eff97ff7e5a52d36a8c11689881c2cd4538ed1b0d834352d4b0449dc79646bb8",
+  "dong_bang_khop": true,
+  "hau_to": "",
+  "nhiet_do": null,
+  "max_out": 16384,
+  "ngay": "2026-11-19",
+  "tran_usd": 4.0,
+  "git": {
+   "commit": "c146b699821ad33a5ef47d7134f53fae2e29b771",
+   "chua_commit": false
+  },
+  "usd": 0.6651,
+  "token_vao": 253622,
+  "token_ra": 15790,
+  "uoc_thay": 0
+ },
+ "tong_hop": {
+  "tong": {
+   "n": 76,
+   "soundness": 0.8026315789473684,
+   "unsound": 15,
+   "coverage": 0.47368421052631576,
+   "selective_acc": 0.5833333333333334,
+   "dung_gold": 36,
+   "tu_choi_thua": 25,
+   "hoi_dung": "0/0",
+   "nhan_thieu": 0,
+   "loi": 0
+  },
+  "[cau_hoi_ro]": {
+   "n": 50,
+   "soundness": 0.78,
+   "unsound": 11,
+   "coverage": 0.56,
+   "selective_acc": 0.6071428571428571,
+   "dung_gold": 28,
+   "tu_choi_thua": 11,
+   "hoi_dung": "0/0",
+   "nhan_thieu": 0,
+   "loi": 0
+  },
+  "[quy_che]": {
+   "n": 62,
+   "soundness": 0.7903225806451613,
+   "unsound": 13,
+   "coverage": 0.532258064516129,
+   "selective_acc": 0.6060606060606061,
+   "dung_gold": 24,
+   "tu_choi_thua": 25,
+   "hoi_dung": "0/0",
+   "nhan_thieu": 0,
+   "loi": 0
+  },
+  "[thiet_ke]": {
+   "n": 14,
+   "soundness": 0.8571428571428572,
+   "unsound": 2,
+   "coverage": 0.21428571428571427,
+   "selective_acc": 0.3333333333333333,
+   "dung_gold": 12,
+   "tu_choi_thua": 0,
+   "hoi_dung": "0/0",
+   "nhan_thieu": 0,
+   "loi": 0
+  },
+  "[theo errata]": {
+   "n": 76,
+   "soundness": 0.7631578947368421,
+   "unsound": 18,
+   "coverage": 0.47368421052631576,
+   "selective_acc": 0.5,
+   "dung_gold": 35,
+   "tu_choi_thua": 23,
+   "hoi_dung": "0/0",
+   "nhan_thieu": 0,
+   "loi": 0
+  },
+  "[cau_hoi_ro theo errata]": {
+   "n": 50,
+   "soundness": 0.72,
+   "unsound": 14,
+   "coverage": 0.56,
+   "selective_acc": 0.5,
+   "dung_gold": 27,
+   "tu_choi_thua": 9,
+   "hoi_dung": "0/0",
+   "nhan_thieu": 0,
+   "loi": 0
+  },
+  "M1": {
+   "n": 5,
+   "soundness": 0.8,
+   "unsound": 1,
+   "coverage": 0.6,
+   "selective_acc": 0.6666666666666666,
+   "dung_gold": 2,
+   "tu_choi_thua": 2,
+   "hoi_dung": "0/0",
+   "nhan_thieu": 0,
+   "loi": 0
+  },
+  "M2": {
+   "n": 5,
+   "soundness": 1.0,
+   "unsound": 0,
+   "coverage": 0.4,
+   "selective_acc": 1.0,
+   "dung_gold": 2,
+   "tu_choi_thua": 3,
+   "hoi_dung": "0/0",
+   "nhan_thieu": 0,
+   "loi": 0
+  },
+  "M3": {
+   "n": 5,
+   "soundness": 1.0,
+   "unsound": 0,
+   "coverage": 0.0,
+   "selective_acc": null,
+   "dung_gold": 5,
+   "tu_choi_thua": 0,
+   "hoi_dung": "0/0",
+   "nhan_thieu": 0,
+   "loi": 0
+  },
+  "M4": {
+   "n": 5,
+   "soundness": 0.8,
+   "unsound": 1,
+   "coverage": 0.2,
+   "selective_acc": 0.0,
+   "dung_gold": 4,
+   "tu_choi_thua": 0,
+   "hoi_dung": "0/0",
+   "nhan_thieu": 0,
+   "loi": 0
+  },
+  "cau_tu_nhien": {
+   "n": 6,
+   "soundness": 1.0,
+   "unsound": 0,
+   "coverage": 0.6666666666666666,
+   "selective_acc": 1.0,
+   "dung_gold": 6,
+   "tu_choi_thua": 0,
+   "hoi_dung": "0/0",
+   "nhan_thieu": 0,
+   "loi": 0
+  },
+  "dang_ky": {
+   "n": 11,
+   "soundness": 0.5454545454545454,
+   "unsound": 5,
+   "coverage": 0.8181818181818182,
+   "selective_acc": 0.4444444444444444,
+   "dung_gold": 6,
+   "tu_choi_thua": 0,
+   "hoi_dung": "0/0",
+   "nhan_thieu": 0,
+   "loi": 0
+  },
+  "de_xuat": {
+   "n": 6,
+   "soundness": 0.5,
+   "unsound": 3,
+   "coverage": 0.6666666666666666,
+   "selective_acc": 0.25,
+   "dung_gold": 1,
+   "tu_choi_thua": 2,
+   "hoi_dung": "0/0",
+   "nhan_thieu": 0,
+   "loi": 0
+  },
+  "du_dieu_kien": {
+   "n": 8,
+   "soundness": 0.75,
+   "unsound": 2,
+   "coverage": 0.375,
+   "selective_acc": 0.3333333333333333,
+   "dung_gold": 2,
+   "tu_choi_thua": 4,
+   "hoi_dung": "0/0",
+   "nhan_thieu": 0,
+   "loi": 0
+  },
+  "hang": {
+   "n": 4,
+   "soundness": 0.75,
+   "unsound": 1,
+   "coverage": 0.5,
+   "selective_acc": 0.5,
+   "dung_gold": 1,
+   "tu_choi_thua": 2,
+   "hoi_dung": "0/0",
+   "nhan_thieu": 0,
+   "loi": 0
+  },
+  "mien_thay_the": {
+   "n": 6,
+   "soundness": 1.0,
+   "unsound": 0,
+   "coverage": 0.0,
+   "selective_acc": null,
+   "dung_gold": 0,
+   "tu_choi_thua": 6,
+   "hoi_dung": "0/0",
+   "nhan_thieu": 0,
+   "loi": 0
+  },
+  "nhom": {
+   "n": 4,
+   "soundness": 1.0,
+   "unsound": 0,
+   "coverage": 0.0,
+   "selective_acc": null,
+   "dung_gold": 0,
+   "tu_choi_thua": 4,
+   "hoi_dung": "0/0",
+   "nhan_thieu": 0,
+   "loi": 0
+  },
+  "tot_nghiep": {
+   "n": 11,
+   "soundness": 0.8181818181818181,
+   "unsound": 2,
+   "coverage": 0.7272727272727273,
+   "selective_acc": 0.75,
+   "dung_gold": 7,
+   "tu_choi_thua": 2,
+   "hoi_dung": "0/0",
+   "nhan_thieu": 0,
+   "loi": 0
+  }
+ },
+ "ca": [
+  {
+   "id": "B-dae3f5c9e9",
+   "id_goc": "DK-01",
+   "nhom": "dang_ky",
+   "he": "kb",
+   "gold": "TRUE",
+   "su_that": null,
+   "loai_gold": "quy_che",
+   "tra_loi": "TRUE",
+   "luot": 1,
+   "cau_hoi_kem": null,
+   "ket_luan": true,
+   "unsound": false,
+   "dung_gold": true,
+   "tu_choi_thua": false,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-1ec07153d1",
+   "id_goc": "DK-09",
+   "nhom": "dang_ky",
+   "he": "kb",
+   "gold": "UNKNOWN",
+   "su_that": null,
+   "loai_gold": "quy_che",
+   "tra_loi": "UNKNOWN",
+   "luot": 1,
+   "cau_hoi_kem": null,
+   "ket_luan": false,
+   "unsound": false,
+   "dung_gold": true,
+   "tu_choi_thua": false,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-61677fc960",
+   "id_goc": "DK-11",
+   "nhom": "dang_ky",
+   "he": "kb",
+   "gold": "TRUE",
+   "su_that": null,
+   "loai_gold": "quy_che",
+   "tra_loi": "FALSE",
+   "luot": 1,
+   "cau_hoi_kem": null,
+   "ket_luan": true,
+   "unsound": true,
+   "dung_gold": false,
+   "tu_choi_thua": false,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-18ca6eb0a4",
+   "id_goc": "DK-12",
+   "nhom": "dang_ky",
+   "he": "kb",
+   "gold": "TRUE",
+   "su_that": null,
+   "loai_gold": "quy_che",
+   "tra_loi": "TRUE",
+   "luot": 1,
+   "cau_hoi_kem": null,
+   "ket_luan": true,
+   "unsound": false,
+   "dung_gold": true,
+   "tu_choi_thua": false,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-2a0af9a274",
+   "id_goc": "DK-13",
+   "nhom": "dang_ky",
+   "he": "kb",
+   "gold": "TRUE",
+   "su_that": null,
+   "loai_gold": "quy_che",
+   "tra_loi": "FALSE",
+   "luot": 1,
+   "cau_hoi_kem": null,
+   "ket_luan": true,
+   "unsound": true,
+   "dung_gold": false,
+   "tu_choi_thua": false,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-954a7ef490",
+   "id_goc": "DK-15",
+   "nhom": "dang_ky",
+   "he": "kb",
+   "gold": "TRUE",
+   "su_that": null,
+   "loai_gold": "quy_che",
+   "tra_loi": "TRUE",
+   "luot": 1,
+   "cau_hoi_kem": null,
+   "ket_luan": true,
+   "unsound": false,
+   "dung_gold": true,
+   "tu_choi_thua": false,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-a1deb420f7",
+   "id_goc": "DK-17",
+   "nhom": "dang_ky",
+   "he": "kb",
+   "gold": "FALSE",
+   "su_that": null,
+   "loai_gold": "quy_che",
+   "tra_loi": "TRUE",
+   "luot": 1,
+   "cau_hoi_kem": null,
+   "ket_luan": true,
+   "unsound": true,
+   "dung_gold": false,
+   "tu_choi_thua": false,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-5de4850ad1",
+   "id_goc": "DK-18",
+   "nhom": "dang_ky",
+   "he": "kb",
+   "gold": "TRUE",
+   "su_that": null,
+   "loai_gold": "quy_che",
+   "tra_loi": "FALSE",
+   "luot": 1,
+   "cau_hoi_kem": null,
+   "ket_luan": true,
+   "unsound": true,
+   "dung_gold": false,
+   "tu_choi_thua": false,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-28ec2d8926",
+   "id_goc": "DK-20",
+   "nhom": "dang_ky",
+   "he": "kb",
+   "gold": "FALSE",
+   "su_that": null,
+   "loai_gold": "quy_che",
+   "tra_loi": "TRUE",
+   "luot": 1,
+   "cau_hoi_kem": null,
+   "ket_luan": true,
+   "unsound": true,
+   "dung_gold": false,
+   "tu_choi_thua": false,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-f5c82fa589",
+   "id_goc": "DK-21",
+   "nhom": "dang_ky",
+   "he": "kb",
+   "gold": "FALSE",
+   "su_that": null,
+   "loai_gold": "quy_che",
+   "tra_loi": "FALSE",
+   "luot": 1,
+   "cau_hoi_kem": null,
+   "ket_luan": true,
+   "unsound": false,
+   "dung_gold": true,
+   "tu_choi_thua": false,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-e073b6ac23",
+   "id_goc": "DK-22",
+   "nhom": "dang_ky",
+   "he": "kb",
+   "gold": "UNKNOWN",
+   "su_that": null,
+   "loai_gold": "thiet_ke",
+   "tra_loi": "UNKNOWN",
+   "luot": 1,
+   "cau_hoi_kem": null,
+   "ket_luan": false,
+   "unsound": false,
+   "dung_gold": true,
+   "tu_choi_thua": false,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-1d90e3b4d8",
+   "id_goc": "EL-05",
+   "nhom": "du_dieu_kien",
+   "he": "elig",
+   "gold": "TRUE",
+   "su_that": null,
+   "loai_gold": "quy_che",
+   "tra_loi": "FALSE",
+   "luot": 1,
+   "cau_hoi_kem": null,
+   "ket_luan": true,
+   "unsound": true,
+   "dung_gold": false,
+   "tu_choi_thua": false,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-c369f7d6a0",
+   "id_goc": "EL-06",
+   "nhom": "du_dieu_kien",
+   "he": "elig",
+   "gold": "TRUE",
+   "su_that": null,
+   "loai_gold": "quy_che",
+   "tra_loi": "UNKNOWN",
+   "luot": 1,
+   "cau_hoi_kem": null,
+   "ket_luan": false,
+   "unsound": false,
+   "dung_gold": false,
+   "tu_choi_thua": true,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-bfd5f430a3",
+   "id_goc": "EL-08",
+   "nhom": "du_dieu_kien",
+   "he": "elig",
+   "gold": "TRUE",
+   "su_that": null,
+   "loai_gold": "quy_che",
+   "tra_loi": "UNKNOWN",
+   "luot": 1,
+   "cau_hoi_kem": null,
+   "ket_luan": false,
+   "unsound": false,
+   "dung_gold": false,
+   "tu_choi_thua": true,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-66975504e8",
+   "id_goc": "EL-10",
+   "nhom": "du_dieu_kien",
+   "he": "elig",
+   "gold": "TRUE",
+   "su_that": null,
+   "loai_gold": "quy_che",
+   "tra_loi": "UNKNOWN",
+   "luot": 1,
+   "cau_hoi_kem": null,
+   "ket_luan": false,
+   "unsound": false,
+   "dung_gold": false,
+   "tu_choi_thua": true,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-1c38630e1c",
+   "id_goc": "EL-13",
+   "nhom": "du_dieu_kien",
+   "he": "elig",
+   "gold": "UNKNOWN",
+   "su_that": null,
+   "loai_gold": "quy_che",
+   "tra_loi": "UNKNOWN",
+   "luot": 1,
+   "cau_hoi_kem": null,
+   "ket_luan": false,
+   "unsound": false,
+   "dung_gold": true,
+   "tu_choi_thua": false,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-f0afa073f2",
+   "id_goc": "EL-14",
+   "nhom": "du_dieu_kien",
+   "he": "elig",
+   "gold": "TRUE",
+   "su_that": null,
+   "loai_gold": "quy_che",
+   "tra_loi": "TRUE",
+   "luot": 1,
+   "cau_hoi_kem": null,
+   "ket_luan": true,
+   "unsound": false,
+   "dung_gold": true,
+   "tu_choi_thua": false,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-4505765b1f",
+   "id_goc": "EL-15",
+   "nhom": "du_dieu_kien",
+   "he": "elig",
+   "gold": "TRUE",
+   "su_that": null,
+   "loai_gold": "quy_che",
+   "tra_loi": "UNKNOWN",
+   "luot": 1,
+   "cau_hoi_kem": "thay_the_cong_nhan",
+   "ket_luan": false,
+   "unsound": false,
+   "dung_gold": false,
+   "tu_choi_thua": true,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-25cb26c62d",
+   "id_goc": "EL-17",
+   "nhom": "du_dieu_kien",
+   "he": "elig",
+   "gold": "TRUE",
+   "su_that": null,
+   "loai_gold": "quy_che",
+   "tra_loi": "FALSE",
+   "luot": 1,
+   "cau_hoi_kem": "thay_the_cong_nhan",
+   "ket_luan": true,
+   "unsound": true,
+   "dung_gold": false,
+   "tu_choi_thua": false,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-a2a7679c19",
+   "id_goc": "RC-01",
+   "nhom": "de_xuat",
+   "he": "rec",
+   "gold": "TRUE",
+   "su_that": null,
+   "loai_gold": "quy_che",
+   "tra_loi": "FALSE",
+   "luot": 1,
+   "cau_hoi_kem": "rec_dao_chieu",
+   "ket_luan": true,
+   "unsound": true,
+   "dung_gold": false,
+   "tu_choi_thua": false,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-8a39ce0bd8",
+   "id_goc": "RC-03",
+   "nhom": "de_xuat",
+   "he": "rec",
+   "gold": "TRUE",
+   "su_that": null,
+   "loai_gold": "thiet_ke",
+   "tra_loi": "FALSE",
+   "luot": 1,
+   "cau_hoi_kem": "rec_dao_chieu",
+   "ket_luan": true,
+   "unsound": true,
+   "dung_gold": false,
+   "tu_choi_thua": false,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-052cc2bf38",
+   "id_goc": "RC-07",
+   "nhom": "de_xuat",
+   "he": "rec",
+   "gold": "TRUE",
+   "su_that": null,
+   "loai_gold": "quy_che",
+   "tra_loi": "UNKNOWN",
+   "luot": 1,
+   "cau_hoi_kem": "rec_dao_chieu",
+   "ket_luan": false,
+   "unsound": false,
+   "dung_gold": false,
+   "tu_choi_thua": true,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-adb5b498dd",
+   "id_goc": "RC-08",
+   "nhom": "de_xuat",
+   "he": "rec",
+   "gold": "TRUE",
+   "su_that": null,
+   "loai_gold": "thiet_ke",
+   "tra_loi": "TRUE",
+   "luot": 1,
+   "cau_hoi_kem": "rec_dao_chieu",
+   "ket_luan": true,
+   "unsound": false,
+   "dung_gold": true,
+   "tu_choi_thua": false,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-d83598c2f6",
+   "id_goc": "RC-11",
+   "nhom": "de_xuat",
+   "he": "rec",
+   "gold": "TRUE",
+   "su_that": null,
+   "loai_gold": "quy_che",
+   "tra_loi": "UNKNOWN",
+   "luot": 1,
+   "cau_hoi_kem": "rec_dao_chieu",
+   "ket_luan": false,
+   "unsound": false,
+   "dung_gold": false,
+   "tu_choi_thua": true,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-e08f644c24",
+   "id_goc": "RC-12",
+   "nhom": "de_xuat",
+   "he": "rec",
+   "gold": "TRUE",
+   "su_that": null,
+   "loai_gold": "quy_che",
+   "tra_loi": "FALSE",
+   "luot": 1,
+   "cau_hoi_kem": "rec_dao_chieu",
+   "ket_luan": true,
+   "unsound": true,
+   "dung_gold": false,
+   "tu_choi_thua": false,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-fdb2d8f6d5",
+   "id_goc": "TN-01",
+   "nhom": "tot_nghiep",
+   "he": "kb",
+   "gold": "TRUE",
+   "su_that": null,
+   "loai_gold": "quy_che",
+   "tra_loi": "TRUE",
+   "luot": 1,
+   "cau_hoi_kem": null,
+   "ket_luan": true,
+   "unsound": false,
+   "dung_gold": true,
+   "tu_choi_thua": false,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-28d55591e7",
+   "id_goc": "TN-03",
+   "nhom": "tot_nghiep",
+   "he": "kb",
+   "gold": "TRUE",
+   "su_that": null,
+   "loai_gold": "quy_che",
+   "tra_loi": "UNKNOWN",
+   "luot": 1,
+   "cau_hoi_kem": null,
+   "ket_luan": false,
+   "unsound": false,
+   "dung_gold": false,
+   "tu_choi_thua": true,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-df1932add8",
+   "id_goc": "TN-07",
+   "nhom": "tot_nghiep",
+   "he": "kb",
+   "gold": "FALSE",
+   "su_that": null,
+   "loai_gold": "quy_che",
+   "tra_loi": "FALSE",
+   "luot": 1,
+   "cau_hoi_kem": null,
+   "ket_luan": true,
+   "unsound": false,
+   "dung_gold": true,
+   "tu_choi_thua": false,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-266d2568ee",
+   "id_goc": "TN-08",
+   "nhom": "tot_nghiep",
+   "he": "kb",
+   "gold": "FALSE",
+   "su_that": null,
+   "loai_gold": "quy_che",
+   "tra_loi": "FALSE",
+   "luot": 1,
+   "cau_hoi_kem": null,
+   "ket_luan": true,
+   "unsound": false,
+   "dung_gold": true,
+   "tu_choi_thua": false,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-e6b45df792",
+   "id_goc": "TN-09",
+   "nhom": "tot_nghiep",
+   "he": "kb",
+   "gold": "TRUE",
+   "su_that": null,
+   "loai_gold": "quy_che",
+   "tra_loi": "TRUE",
+   "luot": 1,
+   "cau_hoi_kem": null,
+   "ket_luan": true,
+   "unsound": false,
+   "dung_gold": true,
+   "tu_choi_thua": false,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-2e744ef45f",
+   "id_goc": "TN-12",
+   "nhom": "tot_nghiep",
+   "he": "kb",
+   "gold": "FALSE",
+   "su_that": null,
+   "loai_gold": "quy_che",
+   "tra_loi": "TRUE",
+   "luot": 1,
+   "cau_hoi_kem": null,
+   "ket_luan": true,
+   "unsound": true,
+   "dung_gold": false,
+   "tu_choi_thua": false,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-6bbdb60949",
+   "id_goc": "TN-13",
+   "nhom": "tot_nghiep",
+   "he": "kb",
+   "gold": "FALSE",
+   "su_that": null,
+   "loai_gold": "quy_che",
+   "tra_loi": "TRUE",
+   "luot": 1,
+   "cau_hoi_kem": null,
+   "ket_luan": true,
+   "unsound": true,
+   "dung_gold": false,
+   "tu_choi_thua": false,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-17bbb16d0a",
+   "id_goc": "TN-15",
+   "nhom": "tot_nghiep",
+   "he": "kb",
+   "gold": "FALSE",
+   "su_that": null,
+   "loai_gold": "quy_che",
+   "tra_loi": "UNKNOWN",
+   "luot": 1,
+   "cau_hoi_kem": null,
+   "ket_luan": false,
+   "unsound": false,
+   "dung_gold": false,
+   "tu_choi_thua": true,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-52f6b8da9f",
+   "id_goc": "TN-17",
+   "nhom": "tot_nghiep",
+   "he": "kb",
+   "gold": "FALSE",
+   "su_that": null,
+   "loai_gold": "quy_che",
+   "tra_loi": "FALSE",
+   "luot": 1,
+   "cau_hoi_kem": null,
+   "ket_luan": true,
+   "unsound": false,
+   "dung_gold": true,
+   "tu_choi_thua": false,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-16911db426",
+   "id_goc": "TN-20",
+   "nhom": "tot_nghiep",
+   "he": "kb",
+   "gold": "UNKNOWN",
+   "su_that": null,
+   "loai_gold": "quy_che",
+   "tra_loi": "UNKNOWN",
+   "luot": 1,
+   "cau_hoi_kem": null,
+   "ket_luan": false,
+   "unsound": false,
+   "dung_gold": true,
+   "tu_choi_thua": false,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-1c2dd7f0b3",
+   "id_goc": "TN-24",
+   "nhom": "tot_nghiep",
+   "he": "kb",
+   "gold": "TRUE",
+   "su_that": null,
+   "loai_gold": "quy_che",
+   "tra_loi": "TRUE",
+   "luot": 1,
+   "cau_hoi_kem": null,
+   "ket_luan": true,
+   "unsound": false,
+   "dung_gold": true,
+   "tu_choi_thua": false,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-bdb171e164",
+   "id_goc": "NH-02",
+   "nhom": "nhom",
+   "he": "kb",
+   "gold": "TRUE",
+   "su_that": null,
+   "loai_gold": "quy_che",
+   "tra_loi": "UNKNOWN",
+   "luot": 1,
+   "cau_hoi_kem": "rong",
+   "ket_luan": false,
+   "unsound": false,
+   "dung_gold": false,
+   "tu_choi_thua": true,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-400c2fc99f",
+   "id_goc": "NH-04",
+   "nhom": "nhom",
+   "he": "kb",
+   "gold": "FALSE",
+   "su_that": null,
+   "loai_gold": "quy_che",
+   "tra_loi": "UNKNOWN",
+   "luot": 1,
+   "cau_hoi_kem": "rong",
+   "ket_luan": false,
+   "unsound": false,
+   "dung_gold": false,
+   "tu_choi_thua": true,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-cffe2e16d6",
+   "id_goc": "NH-05",
+   "nhom": "nhom",
+   "he": "kb",
+   "gold": "FALSE",
+   "su_that": null,
+   "loai_gold": "quy_che",
+   "tra_loi": "UNKNOWN",
+   "luot": 1,
+   "cau_hoi_kem": "rong",
+   "ket_luan": false,
+   "unsound": false,
+   "dung_gold": false,
+   "tu_choi_thua": true,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-e7fe7d0408",
+   "id_goc": "NH-07",
+   "nhom": "nhom",
+   "he": "kb",
+   "gold": "TRUE",
+   "su_that": null,
+   "loai_gold": "quy_che",
+   "tra_loi": "UNKNOWN",
+   "luot": 1,
+   "cau_hoi_kem": "rong",
+   "ket_luan": false,
+   "unsound": false,
+   "dung_gold": false,
+   "tu_choi_thua": true,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-428c8bb595",
+   "id_goc": "MT-06",
+   "nhom": "mien_thay_the",
+   "he": "kb",
+   "gold": "FALSE",
+   "su_that": null,
+   "loai_gold": "quy_che",
+   "tra_loi": "UNKNOWN",
+   "luot": 1,
+   "cau_hoi_kem": "rong",
+   "ket_luan": false,
+   "unsound": false,
+   "dung_gold": false,
+   "tu_choi_thua": true,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-63baea3dbe",
+   "id_goc": "MT-07",
+   "nhom": "mien_thay_the",
+   "he": "kb",
+   "gold": "FALSE",
+   "su_that": null,
+   "loai_gold": "quy_che",
+   "tra_loi": "UNKNOWN",
+   "luot": 1,
+   "cau_hoi_kem": "rong",
+   "ket_luan": false,
+   "unsound": false,
+   "dung_gold": false,
+   "tu_choi_thua": true,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-784b63ac77",
+   "id_goc": "MT-08",
+   "nhom": "mien_thay_the",
+   "he": "kb",
+   "gold": "FALSE",
+   "su_that": null,
+   "loai_gold": "quy_che",
+   "tra_loi": "UNKNOWN",
+   "luot": 1,
+   "cau_hoi_kem": "rong",
+   "ket_luan": false,
+   "unsound": false,
+   "dung_gold": false,
+   "tu_choi_thua": true,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-3da69b9814",
+   "id_goc": "MT-09",
+   "nhom": "mien_thay_the",
+   "he": "kb",
+   "gold": "FALSE",
+   "su_that": null,
+   "loai_gold": "quy_che",
+   "tra_loi": "UNKNOWN",
+   "luot": 1,
+   "cau_hoi_kem": "rong",
+   "ket_luan": false,
+   "unsound": false,
+   "dung_gold": false,
+   "tu_choi_thua": true,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-4a19200d64",
+   "id_goc": "MT-10",
+   "nhom": "mien_thay_the",
+   "he": "kb",
+   "gold": "FALSE",
+   "su_that": null,
+   "loai_gold": "quy_che",
+   "tra_loi": "UNKNOWN",
+   "luot": 1,
+   "cau_hoi_kem": "rong",
+   "ket_luan": false,
+   "unsound": false,
+   "dung_gold": false,
+   "tu_choi_thua": true,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-880f783866",
+   "id_goc": "MT-11",
+   "nhom": "mien_thay_the",
+   "he": "kb",
+   "gold": "FALSE",
+   "su_that": null,
+   "loai_gold": "quy_che",
+   "tra_loi": "UNKNOWN",
+   "luot": 1,
+   "cau_hoi_kem": "rong",
+   "ket_luan": false,
+   "unsound": false,
+   "dung_gold": false,
+   "tu_choi_thua": true,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-9cf953af10",
+   "id_goc": "HG-02",
+   "nhom": "hang",
+   "he": "kb",
+   "gold": "TRUE",
+   "su_that": null,
+   "loai_gold": "quy_che",
+   "tra_loi": "UNKNOWN",
+   "luot": 1,
+   "cau_hoi_kem": null,
+   "ket_luan": false,
+   "unsound": false,
+   "dung_gold": false,
+   "tu_choi_thua": true,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-b754a90d18",
+   "id_goc": "HG-04",
+   "nhom": "hang",
+   "he": "kb",
+   "gold": "TRUE",
+   "su_that": null,
+   "loai_gold": "quy_che",
+   "tra_loi": "FALSE",
+   "luot": 1,
+   "cau_hoi_kem": null,
+   "ket_luan": true,
+   "unsound": true,
+   "dung_gold": false,
+   "tu_choi_thua": false,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-76b7b8b08b",
+   "id_goc": "HG-06",
+   "nhom": "hang",
+   "he": "kb",
+   "gold": "TRUE",
+   "su_that": null,
+   "loai_gold": "quy_che",
+   "tra_loi": "UNKNOWN",
+   "luot": 1,
+   "cau_hoi_kem": "hang_khong_co_khong",
+   "ket_luan": false,
+   "unsound": false,
+   "dung_gold": false,
+   "tu_choi_thua": true,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-6e4990da62",
+   "id_goc": "HG-08",
+   "nhom": "hang",
+   "he": "kb",
+   "gold": "TRUE",
+   "su_that": null,
+   "loai_gold": "quy_che",
+   "tra_loi": "TRUE",
+   "luot": 1,
+   "cau_hoi_kem": null,
+   "ket_luan": true,
+   "unsound": false,
+   "dung_gold": true,
+   "tu_choi_thua": false,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-cd236af39f",
+   "id_goc": "NL-01",
+   "nhom": "cau_tu_nhien",
+   "he": "nl",
+   "gold": "TRUE",
+   "su_that": null,
+   "loai_gold": "quy_che",
+   "tra_loi": "TRUE",
+   "luot": 1,
+   "cau_hoi_kem": null,
+   "ket_luan": true,
+   "unsound": false,
+   "dung_gold": true,
+   "tu_choi_thua": false,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-89dc386f83",
+   "id_goc": "NL-03",
+   "nhom": "cau_tu_nhien",
+   "he": "nl",
+   "gold": "TRUE",
+   "su_that": null,
+   "loai_gold": "quy_che",
+   "tra_loi": "TRUE",
+   "luot": 1,
+   "cau_hoi_kem": null,
+   "ket_luan": true,
+   "unsound": false,
+   "dung_gold": true,
+   "tu_choi_thua": false,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-c50f0223f1",
+   "id_goc": "NL-07",
+   "nhom": "cau_tu_nhien",
+   "he": "nl",
+   "gold": "UNKNOWN",
+   "su_that": null,
+   "loai_gold": "thiet_ke",
+   "tra_loi": "UNKNOWN",
+   "luot": 1,
+   "cau_hoi_kem": null,
+   "ket_luan": false,
+   "unsound": false,
+   "dung_gold": true,
+   "tu_choi_thua": false,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-f9a26a3238",
+   "id_goc": "NL-08",
+   "nhom": "cau_tu_nhien",
+   "he": "nl",
+   "gold": "UNKNOWN",
+   "su_that": null,
+   "loai_gold": "quy_che",
+   "tra_loi": "UNKNOWN",
+   "luot": 1,
+   "cau_hoi_kem": null,
+   "ket_luan": false,
+   "unsound": false,
+   "dung_gold": true,
+   "tu_choi_thua": false,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-4ec1896002",
+   "id_goc": "NL-09",
+   "nhom": "cau_tu_nhien",
+   "he": "nl",
+   "gold": "FALSE",
+   "su_that": null,
+   "loai_gold": "quy_che",
+   "tra_loi": "FALSE",
+   "luot": 1,
+   "cau_hoi_kem": null,
+   "ket_luan": true,
+   "unsound": false,
+   "dung_gold": true,
+   "tu_choi_thua": false,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-21c6df57a3",
+   "id_goc": "NL-12",
+   "nhom": "cau_tu_nhien",
+   "he": "nl",
+   "gold": "FALSE",
+   "su_that": null,
+   "loai_gold": "quy_che",
+   "tra_loi": "FALSE",
+   "luot": 1,
+   "cau_hoi_kem": null,
+   "ket_luan": true,
+   "unsound": false,
+   "dung_gold": true,
+   "tu_choi_thua": false,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-61f5775e62",
+   "id_goc": "ON-01M2",
+   "nhom": "M2",
+   "he": "ocr",
+   "gold": "TRUE",
+   "su_that": "TRUE",
+   "loai_gold": "quy_che",
+   "tra_loi": "UNKNOWN",
+   "luot": 1,
+   "cau_hoi_kem": null,
+   "ket_luan": false,
+   "unsound": false,
+   "dung_gold": false,
+   "tu_choi_thua": true,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-3ff92b6db0",
+   "id_goc": "ON-01M4",
+   "nhom": "M4",
+   "he": "ocr",
+   "gold": "UNKNOWN",
+   "su_that": "TRUE",
+   "loai_gold": "thiet_ke",
+   "tra_loi": "UNKNOWN",
+   "luot": 1,
+   "cau_hoi_kem": null,
+   "ket_luan": false,
+   "unsound": false,
+   "dung_gold": true,
+   "tu_choi_thua": false,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-0fb1446c12",
+   "id_goc": "ON-02M1",
+   "nhom": "M1",
+   "he": "ocr",
+   "gold": "TRUE",
+   "su_that": "TRUE",
+   "loai_gold": "quy_che",
+   "tra_loi": "UNKNOWN",
+   "luot": 1,
+   "cau_hoi_kem": null,
+   "ket_luan": false,
+   "unsound": false,
+   "dung_gold": false,
+   "tu_choi_thua": true,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-68b345552d",
+   "id_goc": "ON-03M1",
+   "nhom": "M1",
+   "he": "ocr",
+   "gold": "TRUE",
+   "su_that": "TRUE",
+   "loai_gold": "quy_che",
+   "tra_loi": "UNKNOWN",
+   "luot": 1,
+   "cau_hoi_kem": null,
+   "ket_luan": false,
+   "unsound": false,
+   "dung_gold": false,
+   "tu_choi_thua": true,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-1725d3703c",
+   "id_goc": "ON-03M2",
+   "nhom": "M2",
+   "he": "ocr",
+   "gold": "TRUE",
+   "su_that": "TRUE",
+   "loai_gold": "quy_che",
+   "tra_loi": "UNKNOWN",
+   "luot": 1,
+   "cau_hoi_kem": null,
+   "ket_luan": false,
+   "unsound": false,
+   "dung_gold": false,
+   "tu_choi_thua": true,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-a16cf48629",
+   "id_goc": "ON-03M4",
+   "nhom": "M4",
+   "he": "ocr",
+   "gold": "UNKNOWN",
+   "su_that": "TRUE",
+   "loai_gold": "thiet_ke",
+   "tra_loi": "UNKNOWN",
+   "luot": 1,
+   "cau_hoi_kem": null,
+   "ket_luan": false,
+   "unsound": false,
+   "dung_gold": true,
+   "tu_choi_thua": false,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-eb82a443bb",
+   "id_goc": "ON-04M1",
+   "nhom": "M1",
+   "he": "ocr",
+   "gold": "TRUE",
+   "su_that": "TRUE",
+   "loai_gold": "quy_che",
+   "tra_loi": "FALSE",
+   "luot": 1,
+   "cau_hoi_kem": null,
+   "ket_luan": true,
+   "unsound": true,
+   "dung_gold": false,
+   "tu_choi_thua": false,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-f32163f8dd",
+   "id_goc": "ON-04M3",
+   "nhom": "M3",
+   "he": "ocr",
+   "gold": "UNKNOWN",
+   "su_that": "TRUE",
+   "loai_gold": "thiet_ke",
+   "tra_loi": "UNKNOWN",
+   "luot": 1,
+   "cau_hoi_kem": null,
+   "ket_luan": false,
+   "unsound": false,
+   "dung_gold": true,
+   "tu_choi_thua": false,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-4e2b00073c",
+   "id_goc": "ON-04M4",
+   "nhom": "M4",
+   "he": "ocr",
+   "gold": "UNKNOWN",
+   "su_that": "TRUE",
+   "loai_gold": "thiet_ke",
+   "tra_loi": "FALSE",
+   "luot": 1,
+   "cau_hoi_kem": null,
+   "ket_luan": true,
+   "unsound": true,
+   "dung_gold": false,
+   "tu_choi_thua": false,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-977dab57dc",
+   "id_goc": "ON-05M2",
+   "nhom": "M2",
+   "he": "ocr",
+   "gold": "TRUE",
+   "su_that": "TRUE",
+   "loai_gold": "quy_che",
+   "tra_loi": "TRUE",
+   "luot": 1,
+   "cau_hoi_kem": "atom",
+   "ket_luan": true,
+   "unsound": false,
+   "dung_gold": true,
+   "tu_choi_thua": false,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-4abc4488da",
+   "id_goc": "ON-05M3",
+   "nhom": "M3",
+   "he": "ocr",
+   "gold": "UNKNOWN",
+   "su_that": "TRUE",
+   "loai_gold": "thiet_ke",
+   "tra_loi": "UNKNOWN",
+   "luot": 1,
+   "cau_hoi_kem": "atom",
+   "ket_luan": false,
+   "unsound": false,
+   "dung_gold": true,
+   "tu_choi_thua": false,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-c99d288515",
+   "id_goc": "ON-07M2",
+   "nhom": "M2",
+   "he": "ocr",
+   "gold": "TRUE",
+   "su_that": "TRUE",
+   "loai_gold": "quy_che",
+   "tra_loi": "TRUE",
+   "luot": 1,
+   "cau_hoi_kem": "atom",
+   "ket_luan": true,
+   "unsound": false,
+   "dung_gold": true,
+   "tu_choi_thua": false,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-8b5be7b498",
+   "id_goc": "ON-07M4",
+   "nhom": "M4",
+   "he": "ocr",
+   "gold": "UNKNOWN",
+   "su_that": "TRUE",
+   "loai_gold": "thiet_ke",
+   "tra_loi": "UNKNOWN",
+   "luot": 1,
+   "cau_hoi_kem": "atom",
+   "ket_luan": false,
+   "unsound": false,
+   "dung_gold": true,
+   "tu_choi_thua": false,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-a1a89ff558",
+   "id_goc": "ON-08M1",
+   "nhom": "M1",
+   "he": "ocr",
+   "gold": "TRUE",
+   "su_that": "TRUE",
+   "loai_gold": "quy_che",
+   "tra_loi": "TRUE",
+   "luot": 1,
+   "cau_hoi_kem": "atom",
+   "ket_luan": true,
+   "unsound": false,
+   "dung_gold": true,
+   "tu_choi_thua": false,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-63f23214e0",
+   "id_goc": "ON-08M3",
+   "nhom": "M3",
+   "he": "ocr",
+   "gold": "UNKNOWN",
+   "su_that": "TRUE",
+   "loai_gold": "thiet_ke",
+   "tra_loi": "UNKNOWN",
+   "luot": 1,
+   "cau_hoi_kem": "atom",
+   "ket_luan": false,
+   "unsound": false,
+   "dung_gold": true,
+   "tu_choi_thua": false,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-6125468456",
+   "id_goc": "ON-08M4",
+   "nhom": "M4",
+   "he": "ocr",
+   "gold": "UNKNOWN",
+   "su_that": "TRUE",
+   "loai_gold": "thiet_ke",
+   "tra_loi": "UNKNOWN",
+   "luot": 1,
+   "cau_hoi_kem": "atom",
+   "ket_luan": false,
+   "unsound": false,
+   "dung_gold": true,
+   "tu_choi_thua": false,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-f54da56e37",
+   "id_goc": "ON-09M2",
+   "nhom": "M2",
+   "he": "ocr",
+   "gold": "TRUE",
+   "su_that": "TRUE",
+   "loai_gold": "quy_che",
+   "tra_loi": "UNKNOWN",
+   "luot": 1,
+   "cau_hoi_kem": null,
+   "ket_luan": false,
+   "unsound": false,
+   "dung_gold": false,
+   "tu_choi_thua": true,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-9a0ca1715e",
+   "id_goc": "ON-09M3",
+   "nhom": "M3",
+   "he": "ocr",
+   "gold": "UNKNOWN",
+   "su_that": "TRUE",
+   "loai_gold": "thiet_ke",
+   "tra_loi": "UNKNOWN",
+   "luot": 1,
+   "cau_hoi_kem": null,
+   "ket_luan": false,
+   "unsound": false,
+   "dung_gold": true,
+   "tu_choi_thua": false,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-a382fafe2b",
+   "id_goc": "ON-10M1",
+   "nhom": "M1",
+   "he": "ocr",
+   "gold": "TRUE",
+   "su_that": "TRUE",
+   "loai_gold": "quy_che",
+   "tra_loi": "TRUE",
+   "luot": 1,
+   "cau_hoi_kem": null,
+   "ket_luan": true,
+   "unsound": false,
+   "dung_gold": true,
+   "tu_choi_thua": false,
+   "hoi_dung": null
+  },
+  {
+   "id": "B-21661440ad",
+   "id_goc": "ON-10M3",
+   "nhom": "M3",
+   "he": "ocr",
+   "gold": "UNKNOWN",
+   "su_that": "TRUE",
+   "loai_gold": "thiet_ke",
+   "tra_loi": "UNKNOWN",
+   "luot": 1,
+   "cau_hoi_kem": null,
+   "ket_luan": false,
+   "unsound": false,
+   "dung_gold": true,
+   "tu_choi_thua": false,
+   "hoi_dung": null
+  }
+ ],
+ "tra_loi_tho": [
+  {
+   "id": "B-dae3f5c9e9",
+   "tra_loi": "TRUE",
+   "nhan_thieu": false,
+   "tho": "Theo Chương trình đào tạo ngành Công nghệ thông tin K49, học phần CT182 (Ngôn ngữ mô hình hóa) yêu cầu học phần tiên quyết là CT176 (Lập trình hướng đối tượng).\nDựa trên hồ sơ đính kèm, sinh viên đã hoàn thành và đạt học phần CT176 (điểm chữ B+, trạng thái \"passed\") và chưa học học phần CT182.\nDo đó, sinh viên đủ điều kiện để đăng ký học phần CT182 trong học kỳ này.\n\nNHAN: TRUE",
+   "luot": 1,
+   "het_luot": false,
+   "usage": {
+    "in": 2507,
+    "out": 123
+   },
+   "phuc_vu": [
+    {
+     "model": "google/gemini-4-argon",
+     "provider": "Google"
+    }
+   ]
+  },
+  {
+   "id": "B-1ec07153d1",
+   "tra_loi": "UNKNOWN",
+   "nhan_thieu": false,
+   "tho": "Để đăng ký học phần CT182 (Ngôn ngữ mô hình hóa), sinh viên cần tích lũy học phần tiên quyết là CT176 (Lập trình hướng đối tượng).\nTheo ghi chú, điểm học phần CT176 hiện chưa rõ và có thể là 3.0 (điểm F - chưa đạt) hoặc 8.0 (điểm B+ - đạt).\nDo chưa xác định được sinh viên đã qua môn tiên quyết CT176 hay chưa, hiện chưa đủ dữ kiện để kết luận.\nCần bổ sung: Điểm chính xác hoặc trạng thái đạt/không đạt của học phần CT176.\n\nNHAN: UNKNOWN",
+   "luot": 1,
+   "het_luot": false,
+   "usage": {
+    "in": 2493,
+    "out": 146
+   },
+   "phuc_vu": [
+    {
+     "model": "google/gemini-4-argon",
+     "provider": "Google"
+    }
+   ]
+  },
+  {
+   "id": "B-61677fc960",
+   "tra_loi": "FALSE",
+   "nhan_thieu": false,
+   "tho": "Để xét điều kiện đăng ký học phần Luận văn tốt nghiệp (CT550E - 15 tín chỉ) của CTĐT CNTT K49:\n1. Tổng số tín chỉ đã học đạt trong hồ sơ là 120 tín chỉ. Trừ các học phần Giáo dục quốc phòng (QP010E, QP011E, QP012, QP013: 8 tín chỉ) và Giáo dục thể chất (TC100: 3 tín chỉ) không tính vào tín chỉ tích lũy của CTĐT, số tín chỉ tích lũy hiện tại của sinh viên là: 120 - 11 = 109 tín chỉ.\n2. Điều kiện tiên quyết để đăng ký học phần Luận văn tốt nghiệp (15 tín chỉ) là sinh viên phải tích lũy tối thiểu 120 tín chỉ (không bao gồm GDTC và GDQP).\n3. Với 109 tín chỉ tích lũy hiện tại, sinh viên chưa đủ số tín chỉ tối thiểu theo quy định để đăng ký CT550E.\n\nNHAN: FALSE",
+   "luot": 1,
+   "het_luot": false,
+   "usage": {
+    "in": 2118,
+    "out": 244
+   },
+   "phuc_vu": [
+    {
+     "model": "google/gemini-4-argon",
+     "provider": "Google"
+    }
+   ]
+  },
+  {
+   "id": "B-18ca6eb0a4",
+   "tra_loi": "TRUE",
+   "nhan_thieu": false,
+   "tho": "Dựa trên Chương trình đào tạo ngành CNTT K49 và hồ sơ sinh viên:\n1. Học phần cần đăng ký: XH025 (Anh văn căn bản 3 - 3 tín chỉ).\n2. Điều kiện tiên quyết của học phần XH025 là phải hoàn thành học phần XH024 (Anh văn căn bản 2).\n3. Theo dữ kiện hồ sơ, sinh viên đã tích lũy học phần XH024 với điểm B (status: \"passed\") và chưa học XH025.\n4. Do đó, sinh viên hoàn toàn đủ điều kiện để đăng ký học phần XH025 trong học kỳ này.\n\nNHAN: TRUE",
+   "luot": 1,
+   "het_luot": false,
+   "usage": {
+    "in": 2508,
+    "out": 157
+   },
+   "phuc_vu": [
+    {
+     "model": "google/gemini-4-argon",
+     "provider": "Google"
+    }
+   ]
+  },
+  {
+   "id": "B-2a0af9a274",
+   "tra_loi": "FALSE",
+   "nhan_thieu": false,
+   "tho": "Để đăng ký học phần Anh văn căn bản 3 (XH025), sinh viên phải tích lũy đạt học phần điều kiện tiên quyết là Anh văn căn bản 2 (XH024) hoặc có quyết định miễn học phần tương ứng.\nDựa trên hồ sơ đính kèm, bạn chưa học/chưa đạt học phần XH024 (cũng như XH023) và không có thông tin miễn giảm hay chứng chỉ ngoại ngữ trong danh sách.\nVì vậy, bạn chưa đủ điều kiện tiên quyết để đăng ký học phần XH025 trong học kỳ này.\n\nNHAN: FALSE",
+   "luot": 1,
+   "het_luot": false,
+   "usage": {
+    "in": 2422,
+    "out": 138
+   },
+   "phuc_vu": [
+    {
+     "model": "google/gemini-4-argon",
+     "provider": "Google"
+    }
+   ]
+  },
+  {
+   "id": "B-954a7ef490",
+   "tra_loi": "TRUE",
+   "nhan_thieu": false,
+   "tho": "Dựa trên hồ sơ được cung cấp:\n1. Học phần CT271E (Niên luận cơ sở ngành Công nghệ thông tin) trong CTĐT CNTT K49 không yêu cầu học phần tiên quyết cụ thể, hoặc yêu cầu các học phần cơ sở ngành mà sinh viên đã hoàn thành (như CT101, CT177, CT180, CT296,...).\n2. Sinh viên đã tích lũy đầy đủ các học phần cơ sở ngành, chuyên ngành (thậm chí đã hoàn thành Niên luận ngành CT466E và Luận văn tốt nghiệp CT550E), và chưa học học phần CT271E.\n3. Do đó, sinh viên hoàn toàn đủ điều kiện để đăng ký học phần CT271E trong học kỳ này để hoàn tất chương trình đào tạo.\n\nNHAN: TRUE",
+   "luot": 1,
+   "het_luot": false,
+   "usage": {
+    "in": 2506,
+    "out": 191
+   },
+   "phuc_vu": [
+    {
+     "model": "google/gemini-4-argon",
+     "provider": "Google"
+    }
+   ]
+  },
+  {
+   "id": "B-a1deb420f7",
+   "tra_loi": "TRUE",
+   "nhan_thieu": false,
+   "tho": "Trong chương trình đào tạo CNTT K49, để đăng ký học phần CT466E (Luận văn tốt nghiệp - 10 tín chỉ hoặc Đồ án/Tiểu luận tương ứng theo mã học phần), học phần CT466E là Niên luận ngành Công nghệ thông tin (bằng tiếng Anh). Điều kiện tiên quyết của học phần CT466E (Niên luận ngành CNTT) là đã tích lũy/học xong học phần CT271E (Niên luận cơ sở CNTT). \nKiểm tra hồ sơ: Sinh viên đã học và đạt học phần CT271E (điểm B, trạng thái \"passed\"). \nDo đó, sinh viên đủ điều kiện tiên quyết để đăng ký học phần CT466E.\n\nNHAN: TRUE",
+   "luot": 1,
+   "het_luot": false,
+   "usage": {
+    "in": 1388,
+    "out": 177
+   },
+   "phuc_vu": [
+    {
+     "model": "google/gemini-4-argon",
+     "provider": "Google"
+    }
+   ]
+  },
+  {
+   "id": "B-5de4850ad1",
+   "tra_loi": "FALSE",
+   "nhan_thieu": false,
+   "tho": "Dựa trên Chương trình đào tạo ngành Công nghệ thông tin K49 và hồ sơ của bạn:\n- Học phần **CT518E** là học phần **Tiểu luận tốt nghiệp - CNTT** (4 tín chỉ).\n- Theo quy định trong khung chương trình đào tạo, sinh viên chọn học **Luận văn tốt nghiệp - CNTT (CT550E - 15 tín chỉ)** HOẶC chọn học **Tiểu luận tốt nghiệp - CNTT (CT518E - 4 tín chỉ)** kèm các học phần chuyên đề tự chọn thay thế.\n- Trong hồ sơ, bạn đã hoàn thành và đạt học phần **CT550E (Luận văn tốt nghiệp - 15 tín chỉ)** với điểm B. Do đã hoàn thành hình thức tốt nghiệp bằng Luận văn, bạn không đủ điều kiện (và không cần thiết) đăng ký thêm Tiểu luận tốt nghiệp CT518E.\n\nNHAN: FALSE",
+   "luot": 1,
+   "het_luot": false,
+   "usage": {
+    "in": 2033,
+    "out": 208
+   },
+   "phuc_vu": [
+    {
+     "model": "google/gemini-4-argon",
+     "provider": "Google"
+    }
+   ]
+  },
+  {
+   "id": "B-28ec2d8926",
+   "tra_loi": "TRUE",
+   "nhan_thieu": false,
+   "tho": "Dựa trên chương trình đào tạo CNTT K49 và hồ sơ của bạn:\n- Học phần ML019 (Lịch sử Đảng Cộng sản Việt Nam) có điều kiện tiên quyết là phải hoàn thành học phần ML021 (Tư tưởng Hồ Chí Minh).\n- Trong hồ sơ, bạn đã học và đạt học phần ML021 với điểm B (status: \"passed\").\n- Bạn chưa học học phần ML019.\nDo đó, bạn hoàn toàn đủ điều kiện để đăng ký học phần ML019 trong học kỳ này.\n\nNHAN: TRUE",
+   "luot": 1,
+   "het_luot": false,
+   "usage": {
+    "in": 2464,
+    "out": 130
+   },
+   "phuc_vu": [
+    {
+     "model": "google/gemini-4-argon",
+     "provider": "Google"
+    }
+   ]
+  },
+  {
+   "id": "B-f5c82fa589",
+   "tra_loi": "FALSE",
+   "nhan_thieu": false,
+   "tho": "Dựa trên hồ sơ học tập của bạn:\n- Học phần muốn đăng ký: ML019 (Lịch sử Đảng Cộng sản Việt Nam).\n- Trong chương trình đào tạo CNTT K49, học phần tiên quyết của ML019 là ML018 (Chủ nghĩa xã hội khoa học).\n- Hiện tại bạn đã tích lũy ML014 (Triết học Mác - Lênin) và ML021 (Tư tưởng Hồ Chí Minh), nhưng chưa học và đạt học phần ML016 (Kinh tế chính trị Mác - Lênin) cũng như học phần tiên quyết ML018.\n- Do đó, bạn chưa đủ điều kiện tiên quyết để đăng ký học phần ML019 trong học kỳ này.\n\nNHAN: FALSE",
+   "luot": 1,
+   "het_luot": false,
+   "usage": {
+    "in": 2464,
+    "out": 175
+   },
+   "phuc_vu": [
+    {
+     "model": "google/gemini-4-argon",
+     "provider": "Google"
+    }
+   ]
+  },
+  {
+   "id": "B-e073b6ac23",
+   "tra_loi": "UNKNOWN",
+   "nhan_thieu": false,
+   "tho": "Dựa trên dữ kiện được cung cấp:\n1. Hồ sơ chỉ chứa danh sách các học phần sinh viên đã tích lũy, không có thông tin về học phần CT999 (tên học phần, có thuộc chương trình đào tạo CNTT K49 hay không, điều kiện tiên quyết/song hành của học phần này là gì).\n2. Dữ kiện cần bổ sung: Thông tin quy định về học phần CT999 trong chương trình đào tạo CNTT K49 (bao gồm sự tồn tại của mã học phần và các điều kiện đăng ký kèm theo).\n\nNHAN: UNKNOWN",
+   "luot": 1,
+   "het_luot": false,
+   "usage": {
+    "in": 2550,
+    "out": 132
+   },
+   "phuc_vu": [
+    {
+     "model": "google/gemini-4-argon",
+     "provider": "Google"
+    }
+   ]
+  },
+  {
+   "id": "B-1d90e3b4d8",
+   "tra_loi": "FALSE",
+   "nhan_thieu": false,
+   "tho": "Theo Chương trình đào tạo ngành Công nghệ thông tin K49 và quy chế học vụ của Trường Đại học Cần Thơ:\n1. Điều kiện tiên quyết của học phần Tiểu luận tốt nghiệp (CT593) là tích lũy tối thiểu 120 tín chỉ (không tính các học phần Giáo dục thể chất và Giáo dục quốc phòng).\n2. Tổng số tín chỉ trong hồ sơ hiện tại là 119 tín chỉ; nếu trừ đi 8 tín chỉ Giáo dục quốc phòng (QP010E, QP011E, QP012, QP013) và 3 tín chỉ Giáo dục thể chất (TC100) thì số tín chỉ tích lũy tính xét điều kiện chỉ đạt 108 tín chỉ (< 120 tín chỉ).\n3. Do chưa đạt mốc 120 tín chỉ tích lũy theo quy định, sinh viên chưa đủ điều kiện đăng ký làm Tiểu luận tốt nghiệp.\n\nNHAN: FALSE",
+   "luot": 1,
+   "het_luot": false,
+   "usage": {
+    "in": 2115,
+    "out": 212
+   },
+   "phuc_vu": [
+    {
+     "model": "google/gemini-4-argon",
+     "provider": "Google"
+    }
+   ]
+  },
+  {
+   "id": "B-c369f7d6a0",
+   "tra_loi": "UNKNOWN",
+   "nhan_thieu": false,
+   "tho": "Trong hồ sơ của bạn, học phần Luận văn tốt nghiệp (CT550E - 15 tín chỉ) có kết quả điểm F (`failed`). \nTuy nhiên, dữ kiện được cung cấp chỉ bao gồm bảng điểm và thông tin cá nhân, hoàn toàn chưa có văn bản Quy chế học vụ của Trường Đại học Cần Thơ quy định về việc xử lý khi sinh viên bị điểm F luận văn tốt nghiệp (ví dụ: quy định có cho phép đăng ký làm lại luận văn hay bắt buộc phải chuyển sang học các học phần thay thế/tiểu luận tốt nghiệp, cũng như điều kiện về thời gian đào tạo tối đa).\nDo thiếu dữ kiện về quy chế đào tạo liên quan đến học lại luận văn nên chưa thể kết luận chắc chắn.\nDữ kiện cần bổ sung: Quy định của Trường Đại học Cần Thơ về việc học lại/làm lại học phần Luận văn tốt nghiệp (CT550E) khi bị điểm F.\n\nNHAN: UNKNOWN",
+   "luot": 1,
+   "het_luot": false,
+   "usage": {
+    "in": 2551,
+    "out": 210
+   },
+   "phuc_vu": [
+    {
+     "model": "google/gemini-4-argon",
+     "provider": "Google"
+    }
+   ]
+  },
+  {
+   "id": "B-bfd5f430a3",
+   "tra_loi": "UNKNOWN",
+   "nhan_thieu": false,
+   "tho": "Trong chương trình đào tạo CNTT K49 có 2 học phần niên luận với điều kiện tiên quyết khác nhau:\n- Niên luận cơ sở (CT271E): Sinh viên đã học và đạt điểm B (70) trong hồ sơ.\n- Niên luận ngành (CT263E): Yêu cầu tiên quyết là đạt CT271E (đã thỏa mãn) và tích lũy tối thiểu 90 tín chỉ. Hiện tại tổng số tín chỉ trong hồ sơ (trừ GDTC/GDQP) là 65 tín chỉ, chưa đủ 90 tín chỉ để làm CT263E.\nDo câu hỏi không nêu rõ em muốn hỏi về học phần niên luận nào (CT271E hay CT263E), nên chưa đủ dữ kiện để kết luận.\nCần bổ sung: Tên hoặc mã học phần niên luận cụ thể mà sinh viên muốn kiểm tra điều kiện.\n\nNHAN: UNKNOWN",
+   "luot": 1,
+   "het_luot": false,
+   "usage": {
+    "in": 1426,
+    "out": 208
+   },
+   "phuc_vu": [
+    {
+     "model": "google/gemini-4-argon",
+     "provider": "Google"
+    }
+   ]
+  },
+  {
+   "id": "B-66975504e8",
+   "tra_loi": "UNKNOWN",
+   "nhan_thieu": false,
+   "tho": "Để xét điều kiện đi thực tập doanh nghiệp (thường là học phần Thực tập thực tế CT474E trong chương trình CNTT K49):\n1. Tổng số tín chỉ đã học trong hồ sơ là 132 tín chỉ (trong đó có 8 tín chỉ Giáo dục quốc phòng và 3 tín chỉ Giáo dục thể chất không tính vào tín chỉ tích lũy chuyên môn).\n2. Số tín chỉ tích lũy chuyên môn hiện tại là 121 tín chỉ (vượt mức tối thiểu thường yêu cầu là >= 100 hoặc >= 110 tín chỉ).\n3. Sinh viên đã tích lũy đầy đủ các học phần cơ sở ngành, cốt lõi ngành và cả học phần Niên luận cơ sở (CT271E), Niên luận ngành (CT466E).\n4. Tuy nhiên, trong dữ kiện được cung cấp không có văn bản quy định cụ thể về điều kiện tiên quyết (số tín chỉ tối thiểu, các môn tiên quyết bắt buộc) của học phần Thực tập doanh nghiệp đối với khóa K49 để đối chiếu chính xác tuyệt đối.\nDo chỉ được phép dựa trên dữ kiện trong cuộc trò chuyện, cần bổ sung quy định điều kiện tiên quyết của học phần Thực tập thực tế / Thực tập doanh nghiệp thuộc CTĐT CNTT K49.\n\nNHAN: UNKNOWN",
+   "luot": 1,
+   "het_luot": false,
+   "usage": {
+    "in": 2116,
+    "out": 290
+   },
+   "phuc_vu": [
+    {
+     "model": "google/gemini-4-argon",
+     "provider": "Google"
+    }
+   ]
+  },
+  {
+   "id": "B-1c38630e1c",
+   "tra_loi": "UNKNOWN",
+   "nhan_thieu": false,
+   "tho": "Để đăng ký học phần Niên luận cơ sở (CT271) trong CTĐT CNTT K49, sinh viên cần đạt các học phần tiên quyết gồm: CT176 (Lập trình hướng đối tượng), CT180 (Cơ sở dữ liệu) và CT296 (Phân tích và thiết kế hệ thống).\nTheo hồ sơ, sinh viên đã tích lũy đạt CT180 (điểm B) và CT296 (điểm B+).\nTuy nhiên, điểm học phần tiên quyết CT176 chưa rõ (có thể là 3.5 - tương đương điểm F/chưa đạt, hoặc 8.5 - tương đương điểm B+/đạt).\nDo chưa xác định được sinh viên đã qua môn CT176 hay chưa, nên chưa đủ dữ kiện để kết luận.\nCần bổ sung: Điểm chính xác hoặc trạng thái đạt của học phần CT176.\n\nNHAN: UNKNOWN",
+   "luot": 1,
+   "het_luot": false,
+   "usage": {
+    "in": 2489,
+    "out": 209
+   },
+   "phuc_vu": [
+    {
+     "model": "google/gemini-4-argon",
+     "provider": "Google"
+    }
+   ]
+  },
+  {
+   "id": "B-f0afa073f2",
+   "tra_loi": "TRUE",
+   "nhan_thieu": false,
+   "tho": "Theo chương trình đào tạo CNTT K49, điều kiện tiên quyết để đăng ký học phần Niên luận cơ sở (CT271) là đã học các học phần: CT176 (Lập trình hướng đối tượng), CT180 (Cơ sở dữ liệu) và CT296 (Phân tích và thiết kế hệ thống).\n\nDựa trên hồ sơ đính kèm, sinh viên đã học và tích lũy (passed) cả 3 học phần tiên quyết này:\n- CT176: điểm D (passed)\n- CT180: điểm B (passed)\n- CT296: điểm B+ (passed)\n\nDo đó, sinh viên hoàn toàn đủ điều kiện để làm niên luận cơ sở.\n\nNHAN: TRUE",
+   "luot": 1,
+   "het_luot": false,
+   "usage": {
+    "in": 2503,
+    "out": 170
+   },
+   "phuc_vu": [
+    {
+     "model": "google/gemini-4-argon",
+     "provider": "Google"
+    }
+   ]
+  },
+  {
+   "id": "B-4505765b1f",
+   "tra_loi": "UNKNOWN",
+   "nhan_thieu": false,
+   "tho": "Trong hồ sơ, sinh viên đã học và đạt học phần ML010 (3 tín chỉ, điểm B+, trạng thái \"passed\"). \nTuy nhiên, để được công nhận tương đương cho nhóm học phần Lý luận chính trị mới (như ML018 - Chủ nghĩa xã hội khoa học, 2 tín chỉ) từ các học phần Lý luận chính trị cũ (ML009, ML010, ML011), theo quy định chuyển đổi của Trường Đại học Cần Thơ:\n- ML009 + ML010 chuyển đổi thành ML014 + ML016 + ML018.\n- Hiện tại hồ sơ chỉ có ML010 (chưa có ML009 hoặc ML011) nên chưa đủ điều kiện hoặc dữ kiện về quy định chuyển đổi đơn lẻ từ một môn ML010 sang ML018 là không đúng (hoặc thiếu dữ kiện văn bản quy định chuyển đổi học phần tương đương đính kèm).\nDo trong dữ kiện được cung cấp không có bảng quy định chuyển đổi học phần tương đương giữa ML010 và ML018, nên chưa đủ căn cứ kết luận chắc chắn.\nDữ kiện cần bổ sung: Quy định về việc chuyển đổi/công nhận tương đương các học phần Lý luận chính trị (giữa ML010 và ML018) của Trường Đại học Cần Thơ áp dụng cho K49.\n\nNHAN: UNKNOWN",
+   "luot": 1,
+   "het_luot": false,
+   "usage": {
+    "in": 2517,
+    "out": 313
+   },
+   "phuc_vu": [
+    {
+     "model": "google/gemini-4-argon",
+     "provider": "Google"
+    }
+   ]
+  },
+  {
+   "id": "B-25cb26c62d",
+   "tra_loi": "FALSE",
+   "nhan_thieu": false,
+   "tho": "Trong chương trình đào tạo CNTT K49 của Trường Đại học Cần Thơ:\n- Học phần bắt buộc trong khối kiến thức lý luận chính trị là **ML021** (Tư tưởng Hồ Chí Minh).\n- Học phần **ML006** (Phương pháp luận sáng tạo) là học phần tự chọn đại cương.\n- Theo danh mục học phần tương đương/thay thế, học phần tương đương với ML021 là **ML011**, hoàn toàn không phải ML006.\n\nDo đó, việc sinh viên đã học và tích lũy học phần ML006 không thể dùng để thay thế hay công nhận tương đương cho học phần ML021.\n\nNHAN: FALSE",
+   "luot": 1,
+   "het_luot": false,
+   "usage": {
+    "in": 2555,
+    "out": 157
+   },
+   "phuc_vu": [
+    {
+     "model": "google/gemini-4-argon",
+     "provider": "Google"
+    }
+   ]
+  },
+  {
+   "id": "B-a2a7679c19",
+   "tra_loi": "FALSE",
+   "nhan_thieu": false,
+   "tho": "Dựa trên chương trình đào tạo CNTT K49 và hồ sơ sinh viên:\n1. Học phần CT174 (Phân tích và thiết kế thuật toán, 3 tín chỉ) có học phần tiên quyết là CT177 (Cấu trúc dữ liệu).\n2. Trong bảng điểm (`grades`) hiện tại của sinh viên, chưa có học phần CT177 (chưa học hoặc chưa tích lũy đạt).\n3. CT174 cũng được quy định mở giảng dạy ở Học kỳ 1 và Học kỳ 2. Tuy nhiên, vì chưa thỏa mãn điều kiện tiên quyết là đạt CT177 nên sinh viên chưa đủ điều kiện đăng ký CT174 ở học kỳ 1 này.\n\nNHAN: FALSE",
+   "luot": 1,
+   "het_luot": false,
+   "usage": {
+    "in": 1322,
+    "out": 164
+   },
+   "phuc_vu": [
+    {
+     "model": "google/gemini-4-argon",
+     "provider": "Google"
+    }
+   ]
+  },
+  {
+   "id": "B-8a39ce0bd8",
+   "tra_loi": "FALSE",
+   "nhan_thieu": false,
+   "tho": "Dựa trên dữ kiện hồ sơ sinh viên được cung cấp:\n- Sinh viên đã học và hoàn thành học phần CT101 (4 tín chỉ) với kết quả đạt (`status: \"passed\"`), điểm chữ là B+ (`thang10: 80`).\n- Vì sinh viên đã tích lũy thành công học phần này với điểm số tốt (không thuộc diện cần học lại hay cải thiện điểm dưới C), hệ thống sẽ không đề xuất đăng ký lại học phần CT101 ở học kỳ 1.\n\nNHAN: FALSE",
+   "luot": 1,
+   "het_luot": false,
+   "usage": {
+    "in": 1322,
+    "out": 121
+   },
+   "phuc_vu": [
+    {
+     "model": "google/gemini-4-argon",
+     "provider": "Google"
+    }
+   ]
+  },
+  {
+   "id": "B-052cc2bf38",
+   "tra_loi": "UNKNOWN",
+   "nhan_thieu": false,
+   "tho": "Dựa trên dữ kiện được cung cấp trong cuộc trò chuyện, hiện chỉ có hồ sơ điểm các học phần sinh viên đã tích lũy, hoàn toàn chưa có thông tin về học phần **CT518E**. \n\nĐể kết luận chắc chắn hệ thống có thể đề xuất đăng ký CT518E ở học kỳ 1 hay không, cần bổ sung các dữ kiện sau từ Chương trình đào tạo CNTT K49 và kế hoạch mở lớp:\n1. Học phần CT518E có thuộc khung chương trình đào tạo CNTT K49 và có được mở vào học kỳ 1 hay không.\n2. Điều kiện tiên quyết hoặc học phần học trước của CT518E (để đối chiếu với các môn sinh viên đã đậu trong hồ sơ).\n3. Số tín chỉ tích lũy tối thiểu (nếu có yêu cầu, đặc biệt với các học phần đồ án/luận văn đầu 5).\n\nNHAN: UNKNOWN",
+   "luot": 1,
+   "het_luot": false,
+   "usage": {
+    "in": 1323,
+    "out": 207
+   },
+   "phuc_vu": [
+    {
+     "model": "google/gemini-4-argon",
+     "provider": "Google"
+    }
+   ]
+  },
+  {
+   "id": "B-adb5b498dd",
+   "tra_loi": "TRUE",
+   "nhan_thieu": false,
+   "tho": "Dựa vào hồ sơ sinh viên CTĐT CNTT K49 được cung cấp:\n1. Sinh viên đã tích lũy 3/4 học phần Giáo dục quốc phòng và An ninh: QP010E, QP011E và QP013 (đều đạt).\n2. Sinh viên còn thiếu học phần bắt buộc QP012 (Công tác quốc phòng và an ninh - 2 tín chỉ).\n3. Theo quy định của CTĐT CNTT K49, học phần QP012 không yêu cầu học phần tiên quyết và được tổ chức giảng dạy ở tất cả các học kỳ (Học kỳ 1, 2 và 3).\n4. Do đó, hệ thống hoàn toàn có thể đề xuất sinh viên đăng ký học phần QP012 trong học kỳ 1 để hoàn thành khối kiến thức Giáo dục quốc phòng.\n\nNHAN: TRUE",
+   "luot": 1,
+   "het_luot": false,
+   "usage": {
+    "in": 2449,
+    "out": 193
+   },
+   "phuc_vu": [
+    {
+     "model": "google/gemini-4-argon",
+     "provider": "Google"
+    }
+   ]
+  },
+  {
+   "id": "B-d83598c2f6",
+   "tra_loi": "UNKNOWN",
+   "nhan_thieu": false,
+   "tho": "Để đăng ký học phần CT182 (Ngôn ngữ mô hình hóa) ở học kỳ 1, sinh viên cần đạt học phần tiên quyết là CT176 (Lập trình hướng đối tượng).\nTheo ghi chú, điểm học phần CT176 của sinh viên chưa rõ, có thể là 3.0 (không đạt) hoặc 8.0 (đạt).\nDo đó, chưa đủ dữ kiện để kết luận chắc chắn sinh viên có đủ điều kiện đăng ký CT182 hay không.\nDữ kiện cần bổ sung: Điểm chính xác hoặc trạng thái đạt/không đạt của học phần CT176.\n\nNHAN: UNKNOWN",
+   "luot": 1,
+   "het_luot": false,
+   "usage": {
+    "in": 2521,
+    "out": 145
+   },
+   "phuc_vu": [
+    {
+     "model": "google/gemini-4-argon",
+     "provider": "Google"
+    }
+   ]
+  },
+  {
+   "id": "B-e08f644c24",
+   "tra_loi": "FALSE",
+   "nhan_thieu": false,
+   "tho": "Dựa trên chương trình đào tạo CNTT K49 và hồ sơ sinh viên:\n1. Học phần CT501E (Tiểu luận tốt nghiệp - CNTT, 6 tín chỉ) được tổ chức giảng dạy ở cả học kỳ 1 và học kỳ 2.\n2. Điều kiện tiên quyết để đăng ký Tiểu luận tốt nghiệp là tích lũy từ 120 tín chỉ trở lên. Tổng số tín chỉ tích lũy hiện tại của sinh viên (không tính GDQP và GDTC) là 131 tín chỉ, đã thỏa mãn điều kiện.\n3. Tuy nhiên, trong hồ sơ sinh viên có ghi nhận hình thức cuối khóa đã chọn là Luận văn tốt nghiệp (`\"hinh_thuc_cuoi_khoa\": \"lvtn\"`, ứng với mã học phần CT550E - 15 tín chỉ).\n4. Do sinh viên chọn làm Luận văn tốt nghiệp (không chọn phương án Tiểu luận tốt nghiệp + các học phần thay thế), hệ thống sẽ không đề xuất đăng ký CT501E.\n\nNHAN: FALSE",
+   "luot": 1,
+   "het_luot": false,
+   "usage": {
+    "in": 2550,
+    "out": 236
+   },
+   "phuc_vu": [
+    {
+     "model": "google/gemini-4-argon",
+     "provider": "Google"
+    }
+   ]
+  },
+  {
+   "id": "B-fdb2d8f6d5",
+   "tra_loi": "TRUE",
+   "nhan_thieu": false,
+   "tho": "Dựa trên hồ sơ được cung cấp:\n1. Sinh viên đã tích lũy đủ 156 tín chỉ của chương trình đào tạo CNTT K49, hoàn thành tất cả các khối kiến thức bắt buộc và tự chọn (bao gồm GDQP-AN, GDTC, Ngoại ngữ, Chính trị, đại cương, cơ sở ngành, chuyên ngành và Tiểu luận tốt nghiệp + các học phần thay thế).\n2. Không có học phần nào bị điểm F, điểm trung bình tích lũy toàn khóa đạt trên 3.0 (vượt mức tối thiểu 2.00).\n3. Sinh viên đã có xác nhận không bị kỷ luật và không nợ sách (`xac_nhan_ky_luat_sach: true`).\nDo đó, sinh viên đã đủ điều kiện xét tốt nghiệp.\n\nNHAN: TRUE",
+   "luot": 1,
+   "het_luot": false,
+   "usage": {
+    "in": 2651,
+    "out": 180
+   },
+   "phuc_vu": [
+    {
+     "model": "google/gemini-4-argon",
+     "provider": "Google"
+    }
+   ]
+  },
+  {
+   "id": "B-28d55591e7",
+   "tra_loi": "UNKNOWN",
+   "nhan_thieu": false,
+   "tho": "Dựa trên hồ sơ được cung cấp, sinh viên đã hoàn thành các học phần trong chương trình đào tạo Công nghệ thông tin K49 (tổng cộng 156 tín chỉ tính tích lũy, điểm trung bình tích lũy đạt trên 2.00), hoàn thành đủ học phần Giáo dục Quốc phòng (8 tín chỉ) và Giáo dục Thể chất (3 tín chỉ), đồng thời không bị kỷ luật (`xac_nhan_ky_luat_sach: true`).\n\nTuy nhiên, theo quy chế đào tạo, điều kiện xét tốt nghiệp bắt buộc phải có **Chứng chỉ Giáo dục Quốc phòng và An ninh** và đạt **Chuẩn đầu ra Ngoại ngữ** (hoặc có chứng chỉ ngoại ngữ hợp lệ). Trong hồ sơ hiện tại, danh sách chứng chỉ đang trống (`certificates: []`). Do đó, chưa đủ dữ kiện để kết luận chắc chắn sinh viên đã đủ điều kiện xét tốt nghiệp.\n\nDữ kiện cần bổ sung: Thông tin về Chứng chỉ Giáo dục Quốc phòng và An ninh, và Chứng chỉ/kết quả xét đạt Chuẩn đầu ra Ngoại ngữ của sinh viên.\n\nNHAN: UNKNOWN",
+   "luot": 1,
+   "het_luot": false,
+   "usage": {
+    "in": 2546,
+    "out": 243
+   },
+   "phuc_vu": [
+    {
+     "model": "google/gemini-4-argon",
+     "provider": "Google"
+    }
+   ]
+  },
+  {
+   "id": "B-df1932add8",
+   "tra_loi": "FALSE",
+   "nhan_thieu": false,
+   "tho": "Dựa trên dữ kiện hồ sơ, điểm các học phần Giáo dục quốc phòng và An ninh (thang điểm 10) của bạn như sau:\n- QP010E (2 tín chỉ): 4,0 điểm (trong JSON là 40)\n- QP011E (2 tín chỉ): 5,0 điểm (trong JSON là 50)\n- QP012 (2 tín chỉ): 5,0 điểm (trong JSON là 50)\n- QP013 (2 tín chỉ): 5,0 điểm (trong JSON là 50)\n\nĐiểm trung bình các học phần Giáo dục quốc phòng:\n(4,0×2 + 5,0×2 + 5,0×2 + 5,0×2) / 8 = 4,75 (nhỏ hơn 5,0).\n\nDo đó, điểm trung bình các học phần Giáo dục quốc phòng của bạn chưa đạt 5,0.\n\nNHAN: FALSE",
+   "luot": 1,
+   "het_luot": false,
+   "usage": {
+    "in": 2556,
+    "out": 222
+   },
+   "phuc_vu": [
+    {
+     "model": "google/gemini-4-argon",
+     "provider": "Google"
+    }
+   ]
+  },
+  {
+   "id": "B-266d2568ee",
+   "tra_loi": "FALSE",
+   "nhan_thieu": false,
+   "tho": "Theo quy chế đào tạo của Trường Đại học Cần Thơ đối với chương trình Công nghệ thông tin K49 (thời gian đào tạo thiết kế là 4.5 năm), thời gian tối đa để sinh viên hoàn thành khóa học là 9 năm (tương đương 18 học kỳ chính).\n\nDữ kiện trong hồ sơ cho thấy `da_hoc_nam2: 18` (đã học 18 học kỳ chính, tức đúng 9 năm). Như vậy, sinh viên vừa chạm mốc giới hạn tối đa là 9 năm chứ chưa vượt quá thời gian học tập tối đa cho phép.\n\nNHAN: FALSE",
+   "luot": 1,
+   "het_luot": false,
+   "usage": {
+    "in": 2549,
+    "out": 139
+   },
+   "phuc_vu": [
+    {
+     "model": "google/gemini-4-argon",
+     "provider": "Google"
+    }
+   ]
+  },
+  {
+   "id": "B-e6b45df792",
+   "tra_loi": "TRUE",
+   "nhan_thieu": false,
+   "tho": "Dựa trên dữ kiện hồ sơ được cung cấp:\n- Chương trình đào tạo Công nghệ thông tin K49 có thời gian thiết kế là 4.5 năm, do đó thời gian học tập tối đa cho phép là 9 năm (18 học kỳ chính).\n- Trong hồ sơ của sinh viên hiện có thông tin `\"da_hoc_nam2\": 19` (tức tương đương đã học 9.5 năm, hoặc 19 học kỳ chính).\n- Thời gian đã học của sinh viên (9.5 năm) đã vượt quá thời gian học tập tối đa theo quy định của chương trình đào tạo (9 năm).\n- Vì vậy, sinh viên đã bị quá thời gian học tập tối đa.\n\nNHAN: TRUE",
+   "luot": 1,
+   "het_luot": false,
+   "usage": {
+    "in": 2549,
+    "out": 164
+   },
+   "phuc_vu": [
+    {
+     "model": "google/gemini-4-argon",
+     "provider": "Google"
+    }
+   ]
+  },
+  {
+   "id": "B-2e744ef45f",
+   "tra_loi": "TRUE",
+   "nhan_thieu": false,
+   "tho": "- Theo quy định của Trường Đại học Cần Thơ đối với CTĐT CNTT K49 (hệ kỹ sư, thời gian thiết kế 4,5 năm), thời gian tối đa để hoàn thành khóa học là 9 năm (tức 18 học kỳ chính).\n- Trường hợp sinh viên được công nhận chuyển đổi tín chỉ (`tc_cong_nhan` = 8 TC), thời gian tối đa hoàn thành khóa học sẽ giảm tương ứng với khối lượng được miễn (15 TC tương đương giảm 1 học kỳ). Do 8 TC < 15 TC nên thời gian tối đa không bị trừ nguyên học kỳ hoặc nếu tính lẻ thì thời gian tối đa vẫn lớn hơn 17 học kỳ (8,5 năm).\n- Theo hồ sơ, số học kỳ chính sinh viên đã học là `da_hoc_nam2` = 18 học kỳ (tương đương 9 năm).\n- Dù tính theo mốc chuẩn (tối đa 18 học kỳ) hay có giảm trừ theo quy định chuyển đổi 8 tín chỉ (tối đa còn dưới 18 học kỳ), với 18 học kỳ đã học, sinh viên đã chạm hoặc vượt quá giới hạn thời gian học tập tối đa cho phép.\n\nNHAN: TRUE",
+   "luot": 1,
+   "het_luot": false,
+   "usage": {
+    "in": 2559,
+    "out": 270
+   },
+   "phuc_vu": [
+    {
+     "model": "google/gemini-4-argon",
+     "provider": "Google"
+    }
+   ]
+  },
+  {
+   "id": "B-6bbdb60949",
+   "tra_loi": "TRUE",
+   "nhan_thieu": false,
+   "tho": "Dựa trên dữ kiện hồ sơ JSON được cung cấp:\n- Tất cả các học phần của sinh viên đều có trạng thái hoàn thành (\"status\": \"passed\") và danh sách học phần không tính tích lũy trống (\"khong_tinh_tich_luy\": []).\n- Tổng số tín chỉ từ các học phần đã tích lũy gồm:\n  + Khối QP, TC, XH, ML, TN: 8 (QP) + 3 (TC) + 10 (XH) + 13 (ML) + 14 (TN) = 48 tín chỉ.\n  + Khối học phần chuyên ngành (mã CT): 93 (các môn 2-4 tín chỉ) + 15 (CT550E) + 5 (CT518E) = 113 tín chỉ.\n- Tổng số tín chỉ tích lũy hiện tại là: 48 + 113 = 161 tín chỉ.\nDo đó, sinh viên đã tích lũy đủ 161 tín chỉ.\n\nNHAN: TRUE",
+   "luot": 1,
+   "het_luot": false,
+   "usage": {
+    "in": 2508,
+    "out": 242
+   },
+   "phuc_vu": [
+    {
+     "model": "google/gemini-4-argon",
+     "provider": "Google"
+    }
+   ]
+  },
+  {
+   "id": "B-17bbb16d0a",
+   "tra_loi": "UNKNOWN",
+   "nhan_thieu": false,
+   "tho": "Dựa trên hồ sơ được cung cấp:\n1. Tất cả các học phần (bao gồm Giáo dục quốc phòng, Giáo dục thể chất, Đại cương, Cơ sở ngành, Chuyên ngành và Luận văn tốt nghiệp CT550E) đều đã hoàn thành và đạt điểm B hoặc B+ (GPA tích lũy > 3.0).\n2. Sinh viên đã tích lũy đủ số tín chỉ theo yêu cầu của chương trình đào tạo CNTT K49 (156 tín chỉ tính cả GDQP và GDTC), hoàn thành đủ tín chỉ học phần giảng dạy bằng tiếng Anh và học phần năm 2 (`da_hoc_nam2`: 9).\n3. Sinh viên không bị kỷ luật (`xac_nhan_ky_luat_sach`: true) và đã hoàn thành 10 TC Anh văn căn bản (XH023, XH024, XH025).\nTuy nhiên, để đủ điều kiện xét tốt nghiệp, sinh viên bắt buộc phải đạt chuẩn đầu ra Ngoại ngữ và Công nghệ thông tin theo quy định của Trường, nhưng trong hồ sơ mục chứng chỉ và miễn trừ đều đang trống (`certificates`: [], `exemptions`: []).\nDữ kiện cần bổ sung: Minh chứng đạt chuẩn đầu ra Ngoại ngữ và chuẩn kỹ năng CNTT (hoặc quyết định miễn/công nhận tương đương).\n\nNHAN: UNKNOWN",
+   "luot": 1,
+   "het_luot": false,
+   "usage": {
+    "in": 2503,
+    "out": 297
+   },
+   "phuc_vu": [
+    {
+     "model": "google/gemini-4-argon",
+     "provider": "Google"
+    }
+   ]
+  },
+  {
+   "id": "B-52f6b8da9f",
+   "tra_loi": "FALSE",
+   "nhan_thieu": false,
+   "tho": "Dựa trên hồ sơ của bạn trong chương trình đào tạo CNTT K49, kết quả đối chiếu điều kiện xét tốt nghiệp như sau:\n\n1. **Tổng số tín chỉ tích lũy**: Bạn đã tích lũy được 147 tín chỉ (không tính 8 tín chỉ Giáo dục quốc phòng QP010E, QP011E, QP012, QP013 và 3 tín chỉ Giáo dục thể chất TC100). Chương trình đào tạo CNTT K49 yêu cầu tối thiểu **156 tín chỉ** tích lũy.\n2. **Học phần chưa đạt/rút học phần**: Học phần CT484 (3 tín chỉ) đang có điểm chữ là **W** (rút học phần), chưa được tích lũy.\n3. **Kết luận**: Do tổng số tín chỉ tích lũy hiện tại (147 TC) chưa đạt mức tối thiểu (156 TC) theo quy định của chương trình đào tạo, bạn chưa đủ điều kiện xét tốt nghiệp.\n\nNHAN: FALSE",
+   "luot": 1,
+   "het_luot": false,
+   "usage": {
+    "in": 2550,
+    "out": 231
+   },
+   "phuc_vu": [
+    {
+     "model": "google/gemini-4-argon",
+     "provider": "Google"
+    }
+   ]
+  },
+  {
+   "id": "B-16911db426",
+   "tra_loi": "UNKNOWN",
+   "nhan_thieu": false,
+   "tho": "Dựa trên hồ sơ của sinh viên:\n1. Sinh viên đã tích lũy đủ các học phần chuyên ngành, đại cương, ngoại ngữ (XH023, XH024, XH025), Giáo dục thể chất (TC100 - 3 tín chỉ) và không bị kỷ luật.\n2. Về Giáo dục quốc phòng và an ninh, sinh viên đã hoàn thành QP010E, QP011E, QP012 nhưng còn học phần bắt buộc **QP013** chưa rõ điểm (3.0 hoặc 7.0).\n3. Nếu điểm QP013 là 3.0 (điểm F - không đạt), sinh viên sẽ chưa hoàn thành chương trình GDQP&AN và không đủ điều kiện tốt nghiệp. Nếu là 7.0 (đạt), sinh viên sẽ đủ điều kiện.\n4. Cần bổ sung dữ kiện: Điểm chính thức của học phần QP013 (và chứng chỉ GDQP&AN).\n\nNHAN: UNKNOWN",
+   "luot": 1,
+   "het_luot": false,
+   "usage": {
+    "in": 2532,
+    "out": 223
+   },
+   "phuc_vu": [
+    {
+     "model": "google/gemini-4-argon",
+     "provider": "Google"
+    }
+   ]
+  },
+  {
+   "id": "B-1c2dd7f0b3",
+   "tra_loi": "TRUE",
+   "nhan_thieu": false,
+   "tho": "Dựa vào hồ sơ điểm của bạn:\n- Điểm trung bình chung tích lũy (ĐTBCTL) chỉ tính trên các học phần đã tích lũy (có trạng thái \"passed\") và loại trừ các học phần Giáo dục quốc phòng (QP010E, QP011E, QP012, QP013) và Giáo dục thể chất (TC100) theo quy chế. Học phần CT484 (điểm F - \"failed\") chưa tích lũy nên không tính vào ĐTBCTL.\n- Trong số các học phần đã tích lũy được tính điểm:\n  + Có 3 học phần đạt điểm B (3,0): XH023 (4 TC), XH024 (3 TC), XH025 (3 TC).\n  + Có 1 học phần đạt điểm C+ (2,5): CT112 (3 TC).\n  + Tất cả các học phần còn lại đều đạt điểm C (2,0).\n- Vì toàn bộ các học phần tính ĐTBCTL đều có điểm từ 2,0 trở lên (và có một số môn đạt 2,5 và 3,0), nên ĐTBCTL của bạn chắc chắn lớn hơn 2,00 (cụ thể đạt khoảng 2,08).\n- Do đó, ĐTBCTL của bạn đã đạt mức tối thiểu 2,00 để xét tốt nghiệp.\n\nNHAN: TRUE",
+   "luot": 1,
+   "het_luot": false,
+   "usage": {
+    "in": 2557,
+    "out": 316
+   },
+   "phuc_vu": [
+    {
+     "model": "google/gemini-4-argon",
+     "provider": "Google"
+    }
+   ]
+  },
+  {
+   "id": "B-bdb171e164",
+   "tra_loi": "UNKNOWN",
+   "nhan_thieu": false,
+   "tho": "Người dùng chưa cung cấp nội dung câu hỏi trong phần `CÂU HỎI:`.\nDữ kiện cần bổ sung: Nội dung câu hỏi cụ thể cần đánh giá (ví dụ: xét điều kiện tốt nghiệp, xét học bổng, kiểm tra học phần tiên quyết, tính điểm trung bình tích lũy,...).\n\nNHAN: UNKNOWN",
+   "luot": 1,
+   "het_luot": false,
+   "usage": {
+    "in": 2537,
+    "out": 77
+   },
+   "phuc_vu": [
+    {
+     "model": "google/gemini-4-argon",
+     "provider": "Google"
+    }
+   ]
+  },
+  {
+   "id": "B-400c2fc99f",
+   "tra_loi": "UNKNOWN",
+   "nhan_thieu": false,
+   "tho": "Trong dữ liệu đầu vào, mục \"CÂU HỎI:\" đang bị bỏ trống. Do chưa biết nội dung câu hỏi cụ thể cần đánh giá (ví dụ: xét điều kiện tốt nghiệp, xét học vụ, hay kiểm tra điều kiện tiên quyết của một học phần nào đó), hệ thống chưa đủ dữ kiện để đưa ra kết luận. Cần bổ sung nội dung câu hỏi cụ thể.\n\nNHAN: UNKNOWN",
+   "luot": 1,
+   "het_luot": false,
+   "usage": {
+    "in": 2537,
+    "out": 91
+   },
+   "phuc_vu": [
+    {
+     "model": "google/gemini-4-argon",
+     "provider": "Google"
+    }
+   ]
+  },
+  {
+   "id": "B-cffe2e16d6",
+   "tra_loi": "UNKNOWN",
+   "nhan_thieu": false,
+   "tho": "Dữ kiện đầu vào chỉ có hồ sơ điểm của sinh viên nhưng phần \"CÂU HỎI:\" lại bị bỏ trống.\nDo không có nội dung câu hỏi cụ thể (ví dụ: xét điều kiện tốt nghiệp, xét học vụ, hay kiểm tra điều kiện tiên quyết của một học phần nào đó), hệ thống chưa đủ dữ kiện để đưa ra kết luận.\nDữ kiện cần bổ sung: Nội dung câu hỏi cụ thể cần tư vấn hoặc kiểm tra đối với hồ sơ sinh viên này.\n\nNHAN: UNKNOWN",
+   "luot": 1,
+   "het_luot": false,
+   "usage": {
+    "in": 2494,
+    "out": 115
+   },
+   "phuc_vu": [
+    {
+     "model": "google/gemini-4-argon",
+     "provider": "Google"
+    }
+   ]
+  },
+  {
+   "id": "B-e7fe7d0408",
+   "tra_loi": "UNKNOWN",
+   "nhan_thieu": false,
+   "tho": "Hiện tại phần \"CÂU HỎI:\" trong yêu cầu của bạn đang bị bỏ trống. \nDo không có nội dung câu hỏi cụ thể để đối chiếu với hồ sơ JSON (ví dụ: xét điều kiện tốt nghiệp, xét học bổng, kiểm tra học phần tiên quyết, v.v.), tôi chưa có cơ sở để đưa ra kết luận.\nDữ kiện cần bổ sung: Nội dung câu hỏi cụ thể cần tư vấn hoặc kiểm tra.\n\nNHAN: UNKNOWN",
+   "luot": 1,
+   "het_luot": false,
+   "usage": {
+    "in": 2665,
+    "out": 106
+   },
+   "phuc_vu": [
+    {
+     "model": "google/gemini-4-argon",
+     "provider": "Google"
+    }
+   ]
+  },
+  {
+   "id": "B-428c8bb595",
+   "tra_loi": "UNKNOWN",
+   "nhan_thieu": false,
+   "tho": "Phần CÂU HỎI đang bị bỏ trống, chưa có nội dung yêu cầu cụ thể cần kiểm tra (ví dụ: xét điều kiện tốt nghiệp, xét học bổng, hay kiểm tra điều kiện tiên quyết của học phần nào).\nDữ kiện cần bổ sung: Nội dung câu hỏi cụ thể về hồ sơ của sinh viên này.\n\nNHAN: UNKNOWN",
+   "luot": 1,
+   "het_luot": false,
+   "usage": {
+    "in": 2552,
+    "out": 81
+   },
+   "phuc_vu": [
+    {
+     "model": "google/gemini-4-argon",
+     "provider": "Google"
+    }
+   ]
+  },
+  {
+   "id": "B-63baea3dbe",
+   "tra_loi": "UNKNOWN",
+   "nhan_thieu": false,
+   "tho": "Phần CÂU HỎI hiện đang bị bỏ trống. Do chưa có nội dung câu hỏi cụ thể (ví dụ: xét điều kiện tốt nghiệp, xét học vụ, hay kiểm tra điều kiện tiên quyết của học phần nào đó) nên không có cơ sở để đối chiếu với hồ sơ sinh viên và đưa ra kết luận.\nDữ kiện cần bổ sung: Nội dung câu hỏi cụ thể cần tư vấn hoặc đánh giá đối với sinh viên này.\n\nNHAN: UNKNOWN",
+   "luot": 1,
+   "het_luot": false,
+   "usage": {
+    "in": 2552,
+    "out": 103
+   },
+   "phuc_vu": [
+    {
+     "model": "google/gemini-4-argon",
+     "provider": "Google"
+    }
+   ]
+  },
+  {
+   "id": "B-784b63ac77",
+   "tra_loi": "UNKNOWN",
+   "nhan_thieu": false,
+   "tho": "Trong yêu cầu hiện tại, phần \"CÂU HỎI:\" đang bị để trống. \nDo không có nội dung câu hỏi cụ thể (ví dụ: xét điều kiện tốt nghiệp, xét học tập, hay kiểm tra môn học cụ thể nào), tôi chưa có cơ sở để đối chiếu với hồ sơ dữ kiện JSON đính kèm.\nDữ kiện cần bổ sung: Nội dung câu hỏi cụ thể cần tư vấn/xét điều kiện cho sinh viên này.\n\nNHAN: UNKNOWN",
+   "luot": 1,
+   "het_luot": false,
+   "usage": {
+    "in": 2494,
+    "out": 108
+   },
+   "phuc_vu": [
+    {
+     "model": "google/gemini-4-argon",
+     "provider": "Google"
+    }
+   ]
+  },
+  {
+   "id": "B-3da69b9814",
+   "tra_loi": "UNKNOWN",
+   "nhan_thieu": false,
+   "tho": "Trong yêu cầu hiện tại, phần \"CÂU HỎI\" đang bị bỏ trống nên chưa xác định được tiêu chí hoặc điều kiện cụ thể cần kiểm tra đối với hồ sơ sinh viên này (ví dụ: xét điều kiện tốt nghiệp, xét học bổng, kiểm tra học phần tiên quyết, tính điểm trung bình tích lũy,...). \n\nDữ kiện cần bổ sung: Nội dung câu hỏi cụ thể cần tư vấn/đánh giá cho sinh viên.\n\nNHAN: UNKNOWN",
+   "luot": 1,
+   "het_luot": false,
+   "usage": {
+    "in": 2494,
+    "out": 107
+   },
+   "phuc_vu": [
+    {
+     "model": "google/gemini-4-argon",
+     "provider": "Google"
+    }
+   ]
+  },
+  {
+   "id": "B-4a19200d64",
+   "tra_loi": "UNKNOWN",
+   "nhan_thieu": false,
+   "tho": "Phần \"CÂU HỎI:\" trong yêu cầu của bạn đang bị bỏ trống. Do chưa biết nội dung câu hỏi cụ thể cần đánh giá (ví dụ: xét điều kiện tốt nghiệp, xét học vụ, hay kiểm tra điều kiện tiên quyết...), tôi chưa đủ dữ kiện để đưa ra kết luận.\nDữ kiện cần bổ sung: Nội dung câu hỏi cụ thể về hồ sơ sinh viên này.\n\nNHAN: UNKNOWN",
+   "luot": 1,
+   "het_luot": false,
+   "usage": {
+    "in": 2537,
+    "out": 94
+   },
+   "phuc_vu": [
+    {
+     "model": "google/gemini-4-argon",
+     "provider": "Google"
+    }
+   ]
+  },
+  {
+   "id": "B-880f783866",
+   "tra_loi": "UNKNOWN",
+   "nhan_thieu": false,
+   "tho": "Trường \"CÂU HỎI:\" trong dữ liệu đầu vào hiện đang bị bỏ trống, do đó không xác định được nội dung hoặc điều kiện cụ thể cần kiểm tra đối với hồ sơ sinh viên này (ví dụ: xét điều kiện tốt nghiệp, xét học bổng, hay kiểm tra học phần tiên quyết).\n\nDữ kiện cần bổ sung: Câu hỏi cụ thể cần tư vấn/đánh giá cho hồ sơ sinh viên.\n\nNHAN: UNKNOWN",
+   "luot": 1,
+   "het_luot": false,
+   "usage": {
+    "in": 2537,
+    "out": 101
+   },
+   "phuc_vu": [
+    {
+     "model": "google/gemini-4-argon",
+     "provider": "Google"
+    }
+   ]
+  },
+  {
+   "id": "B-9cf953af10",
+   "tra_loi": "UNKNOWN",
+   "nhan_thieu": false,
+   "tho": "Dựa trên hồ sơ điểm của bạn (trừ các học phần Giáo dục Quốc phòng và Giáo dục Thể chất không tính vào điểm trung bình tích lũy như QP010E, QP011E, QP012, QP013, TC100, và các học phần Anh văn căn bản XH023, XH024, XH025 nếu thuộc diện điều kiện):\n1. Tổng số tín chỉ tích lũy tính điểm CPA là 139 tín chỉ (hoặc 149 tín chỉ nếu tính cả XH023, XH024, XH025).\n2. Trong đó, các học phần đạt điểm A (4.0) chiếm 79 tín chỉ, và các học phần đạt điểm B (3.0) chiếm 60 tín chỉ (hoặc 70 tín chỉ nếu tính cả nhóm XH).\n3. Điểm trung bình tích lũy toàn khóa (CPA) của bạn đạt khoảng 3.57 (hoặc 3.53), nằm trong khoảng từ 3.20 đến 3.59 (xếp loại Giỏi).\n4. Tuy nhiên, hồ sơ chưa có dữ kiện về số tín chỉ học lại/thi lại (nếu vượt quá 5% tổng số tín chỉ toàn khóa sẽ bị hạ một mức xếp loại từ Giỏi xuống Khá) và thời gian học tập thực tế có vượt quá thời gian thiết kế hay không.\n5. Cần bổ sung thông tin về lịch sử học lại (nếu có) để kết luận chính xác.\n\nNHAN: UNKNOWN",
+   "luot": 1,
+   "het_luot": false,
+   "usage": {
+    "in": 2547,
+    "out": 351
+   },
+   "phuc_vu": [
+    {
+     "model": "google/gemini-4-argon",
+     "provider": "Google"
+    }
+   ]
+  },
+  {
+   "id": "B-b754a90d18",
+   "tra_loi": "FALSE",
+   "nhan_thieu": false,
+   "tho": "Dựa trên hồ sơ học tập của bạn:\n- Xét các học phần tích lũy (không tính các học phần Giáo dục Quốc phòng QP010E, QP011E, QP012, QP013 và Giáo dục Thể chất TC100).\n- Các học phần còn lại bạn chỉ đạt điểm A (4.0) và điểm B (3.0), không có điểm B+ (3.5) hay thấp hơn.\n- Tổng số tín chỉ đạt điểm A là 28 tín chỉ: CT100 (2), CT101 (4), CT177 (3), CT174 (3), CT172 (4), CT175 (3), CT173 (3), CT112 (3), CT176 (3).\n- Tổng số tín chỉ tích lũy tính điểm trung bình là 155 tín chỉ (trong đó có 127 tín chỉ đạt điểm B).\n- Điểm trung bình tích lũy (GPA) = (28 × 4.0 + 127 × 3.0) / 155 = 493 / 155 ≈ 3.18.\n- Theo quy chế học vụ của Trường Đại học Cần Thơ, mức GPA từ 3.20 đến 3.59 mới đạt xếp loại tốt nghiệp Giỏi (GPA 3.18 thuộc loại Khá). Do đó, bạn không đạt loại Giỏi.\n\nNHAN: FALSE",
+   "luot": 1,
+   "het_luot": false,
+   "usage": {
+    "in": 2547,
+    "out": 333
+   },
+   "phuc_vu": [
+    {
+     "model": "google/gemini-4-argon",
+     "provider": "Google"
+    }
+   ]
+  },
+  {
+   "id": "B-76b7b8b08b",
+   "tra_loi": "UNKNOWN",
+   "nhan_thieu": false,
+   "tho": "Để xác định xếp hạng tốt nghiệp của sinh viên:\n1. Loại trừ các học phần điều kiện không tính vào điểm trung bình tích lũy (GPA) gồm: Giáo dục quốc phòng (QP010E, QP011E, QP012, QP013 - 8 tín chỉ), Giáo dục thể chất (TC100 - 3 tín chỉ), và Ngoại ngữ căn bản (XH023, XH024, XH025 - 10 tín chỉ).\n2. Tất cả các học phần tính tích lũy còn lại (tổng cộng 145 tín chỉ) đều đạt điểm chữ C+ (tương đương 2.5 điểm hệ 4). Do đó, GPA tích lũy toàn khóa là 2.50.\n3. Theo quy chế học vụ, mức GPA 2.50 thuộc khung xếp loại **Khá** (từ 2.50 đến 3.19).\n4. Tuy nhiên, để kết luận chắc chắn hạng tốt nghiệp cuối cùng, hồ sơ hiện tại chưa đủ dữ kiện về việc sinh viên có bị hạ bậc xếp loại tốt nghiệp hay không (ví dụ: tổng số tín chỉ các học phần phải học lại có vượt quá 5% tổng số tín chỉ quy định của toàn chương trình hay không). Cần bổ sung lịch sử học lại của sinh viên.\n\nNHAN: UNKNOWN",
+   "luot": 1,
+   "het_luot": false,
+   "usage": {
+    "in": 2545,
+    "out": 302
+   },
+   "phuc_vu": [
+    {
+     "model": "google/gemini-4-argon",
+     "provider": "Google"
+    }
+   ]
+  },
+  {
+   "id": "B-6e4990da62",
+   "tra_loi": "TRUE",
+   "nhan_thieu": false,
+   "tho": "Để xét hạng tốt nghiệp loại Giỏi, điểm trung bình tích lũy (GPA) toàn khóa của sinh viên phải đạt từ 3.20 đến 3.59 (theo thang điểm 4).\nDựa trên bảng điểm trong hồ sơ:\n- Tất cả các học phần của sinh viên chỉ đạt điểm B (3.0) hoặc B+ (3.5).\n- Sau khi loại trừ các học phần điều kiện không tính vào điểm trung bình tích lũy (Giáo dục quốc phòng: QP010E, QP011E, QP012, QP013 và Giáo dục thể chất: TC100), tổng số tín chỉ tích lũy tính điểm là 151 tín chỉ.\n- Trong đó có 69 tín chỉ đạt B+ (3.5) và 82 tín chỉ đạt B (3.0).\n- Điểm trung bình tích lũy (GPA) = (69 * 3.5 + 82 * 3.0) / 151 = 487.5 / 151 ≈ 3.23 (hoặc nếu tính cả QP và TC thì GPA ≈ 3.22).\nTuy nhiên, hồ sơ chưa có thông tin về thời gian học tập toàn khóa (có vượt quá thời gian thiết kế hay không) và tổng số tín chỉ học lại (có vượt quá 5% tổng số tín chỉ quy định để bị hạ bậc tốt nghiệp hay không). Dù vậy, theo quy ước xét điểm trên hồ sơ hiện tại (không có môn học lại và giả định tốt nghiệp đúng hạn), mức GPA 3.23 đủ điều kiện đạt loại Giỏi.\n\nNHAN: TRUE",
+   "luot": 1,
+   "het_luot": false,
+   "usage": {
+    "in": 2547,
+    "out": 367
+   },
+   "phuc_vu": [
+    {
+     "model": "google/gemini-4-argon",
+     "provider": "Google"
+    }
+   ]
+  },
+  {
+   "id": "B-cd236af39f",
+   "tra_loi": "TRUE",
+   "nhan_thieu": false,
+   "tho": "Dựa trên chương trình đào tạo CNTT K49 và hồ sơ sinh viên:\n1. Học phần muốn đăng ký: CT182 (Ngôn ngữ mô hình hóa).\n2. Điều kiện tiên quyết của CT182 là đã học và đạt học phần CT176 (Lập trình hướng đối tượng).\n3. Trong bảng điểm đính kèm, sinh viên đã hoàn thành học phần CT176 với điểm chữ B+ (status: \"passed\").\n4. Sinh viên chưa học học phần CT182.\nDo đó, sinh viên hoàn toàn đủ điều kiện để đăng ký học phần CT182 trong học kỳ này.\n\nNHAN: TRUE",
+   "luot": 1,
+   "het_luot": false,
+   "usage": {
+    "in": 2463,
+    "out": 150
+   },
+   "phuc_vu": [
+    {
+     "model": "google/gemini-4-argon",
+     "provider": "Google"
+    }
+   ]
+  },
+  {
+   "id": "B-89dc386f83",
+   "tra_loi": "TRUE",
+   "nhan_thieu": false,
+   "tho": "Dựa trên dữ kiện hồ sơ:\n1. Tổng số tín chỉ tích lũy (không tính các học phần Giáo dục Quốc phòng QP010E, QP011E, QP012, QP013 và Giáo dục Thể chất TC100) là 137 tín chỉ (đạt yêu cầu tối thiểu $\\ge$ 120 tín chỉ tích lũy đối với học phần Luận văn tốt nghiệp CT550).\n2. Sinh viên đã tích lũy tất cả các học phần với điểm B và B+, điểm trung bình tích lũy (GPA) đạt > 3.0.\n3. Hồ sơ xác nhận sinh viên không bị kỷ luật (`xac_nhan_ky_luat_sach`: true) và đã hoàn thành các học phần nền tảng, chuyên ngành cần thiết (bao gồm Niên luận cơ sở CT271E và Niên luận ngành CT466E).\nDo đó, sinh viên đủ điều kiện đăng ký làm luận văn tốt nghiệp.\n\nNHAN: TRUE",
+   "luot": 1,
+   "het_luot": false,
+   "usage": {
+    "in": 2500,
+    "out": 227
+   },
+   "phuc_vu": [
+    {
+     "model": "google/gemini-4-argon",
+     "provider": "Google"
+    }
+   ]
+  },
+  {
+   "id": "B-c50f0223f1",
+   "tra_loi": "UNKNOWN",
+   "nhan_thieu": false,
+   "tho": "Để xét học bổng khuyến khích học tập tại Trường Đại học Cần Thơ, cần xét theo từng học kỳ cụ thể dựa trên các tiêu chí:\n1. Điểm trung bình chung học kỳ (ĐTBCHK) đạt từ loại Khá trở lên (≥ 2.50).\n2. Điểm rèn luyện trong học kỳ xét học bổng đạt từ loại Khá trở lên.\n3. Số tín chỉ đăng ký và tích lũy trong học kỳ đó đạt mức tối thiểu theo quy định (thường từ 15 tín chỉ trở lên, trừ học kỳ cuối).\n4. Không có học phần nào bị điểm dưới C (hoặc điểm F) trong học kỳ xét và không bị kỷ luật.\n\nHồ sơ hiện tại chỉ cung cấp bảng điểm tổng hợp toàn khóa (tất cả các môn đều đạt B hoặc B+) và xác nhận không bị kỷ luật, nhưng **thiếu dữ kiện phân bổ học phần theo từng học kỳ, thiếu điểm trung bình học kỳ đang xét và thiếu điểm rèn luyện**. Do đó chưa đủ cơ sở để kết luận.\n\nNHAN: UNKNOWN",
+   "luot": 1,
+   "het_luot": false,
+   "usage": {
+    "in": 2549,
+    "out": 233
+   },
+   "phuc_vu": [
+    {
+     "model": "google/gemini-4-argon",
+     "provider": "Google"
+    }
+   ]
+  },
+  {
+   "id": "B-f9a26a3238",
+   "tra_loi": "UNKNOWN",
+   "nhan_thieu": false,
+   "tho": "Để xét điều kiện cảnh báo học vụ, nhà trường căn cứ vào nhiều tiêu chí trong từng học kỳ như:\n1. Điểm trung bình học kỳ (ĐTBHK) đạt dưới 0,80 đối với học kỳ đầu của khóa học, dưới 1,00 đối với các học kỳ tiếp theo.\n2. Điểm trung bình tích lũy (ĐTBTCTL) dưới các ngưỡng quy định theo trình độ năm học (từ 1,20 đến 1,80).\n3. Tổng số tín chỉ không đạt trong học kỳ vượt quá 50% khối lượng đã đăng ký trong học kỳ, hoặc tổng số tín chỉ nợ đọng từ đầu khóa vượt quá 24 tín chỉ.\n\nMặc dù điểm các học phần trong hồ sơ hiện tại của bạn đều đạt từ B đến B+ (ĐTBTCTL > 3.0), nhưng dữ kiện JSON không cung cấp thông tin phân bổ học phần theo từng học kỳ cụ thể, số tín chỉ đăng ký trong kỳ gần nhất, hay việc bạn có bỏ học/nhận điểm F ở học kỳ hiện tại (chưa cập nhật vào danh sách đạt) hay không. Do thiếu dữ liệu chi tiết về kết quả học tập của học kỳ hiện tại (ĐTBHK, số tín chỉ đăng ký và không đạt trong học kỳ), chưa đủ cơ sở để kết luận chắc chắn.\n\nNHAN: UNKNOWN",
+   "luot": 1,
+   "het_luot": false,
+   "usage": {
+    "in": 2545,
+    "out": 294
+   },
+   "phuc_vu": [
+    {
+     "model": "google/gemini-4-argon",
+     "provider": "Google"
+    }
+   ]
+  },
+  {
+   "id": "B-4ec1896002",
+   "tra_loi": "FALSE",
+   "nhan_thieu": false,
+   "tho": "Dựa trên hồ sơ điểm đính kèm:\n- Tất cả các học phần của sinh viên chỉ đạt điểm chữ ở mức **B** (tương đương 3.0 hệ 4) hoặc **B+** (tương đương 3.5 hệ 4), trong đó phần lớn các học phần (bao gồm cả Luận văn tốt nghiệp CT550E 15 tín chỉ) chỉ đạt điểm B.\n- Theo quy chế học vụ của Trường Đại học Cần Thơ, để xếp loại tốt nghiệp **Giỏi**, Điểm trung bình chung tích lũy (ĐTBCTL) toàn khóa phải đạt từ **3.20 đến 3.59** (thang điểm 4).\n- Do số lượng tín chỉ đạt điểm B (3.0) chiếm đa số áp đảo so với điểm B+ (3.5), ĐTBCTL của sinh viên chắc chắn thấp hơn 3.20 (chỉ đạt khoảng ~3.14, mức Khá).\n- Vì vậy, ĐTBCTL của sinh viên không đủ điều kiện để xếp loại Giỏi khi tốt nghiệp.\n\nNHAN: FALSE",
+   "luot": 1,
+   "het_luot": false,
+   "usage": {
+    "in": 2551,
+    "out": 241
+   },
+   "phuc_vu": [
+    {
+     "model": "google/gemini-4-argon",
+     "provider": "Google"
+    }
+   ]
+  },
+  {
+   "id": "B-21c6df57a3",
+   "tra_loi": "FALSE",
+   "nhan_thieu": false,
+   "tho": "Dựa trên hồ sơ học tập của bạn:\n- Tổng số tín chỉ tích lũy: Đã hoàn thành đầy đủ chương trình đào tạo CNTT K49 (đủ 156 tín chỉ tính tích lũy và hoàn thành GDTC, GDQPAN).\n- Điểm trung bình tích lũy (CPA): Tất cả các học phần đều đạt điểm B (3.0) hoặc B+ (3.5), vượt xa mức yêu cầu tối thiểu 2.00 để xét tốt nghiệp.\n- Hoàn thành khối tốt nghiệp: Đã tích lũy Luận văn tốt nghiệp (CT550E - 15 tín chỉ) và Thực tập doanh nghiệp (CT518E - 5 tín chỉ).\n- Chế tài kỷ luật: Đã xác nhận không bị truy cứu trách nhiệm hình sự hoặc kỷ luật đình chỉ học tập (`xac_nhan_ky_luat_sach: true`).\n- Tuy nhiên, hồ sơ hiện tại đang trống danh sách chứng chỉ (`certificates: []`), trong khi để được xét tốt nghiệp bạn bắt buộc phải có Chứng chỉ Giáo dục Quốc phòng - An ninh và đạt chuẩn trình độ ngoại ngữ đầu ra theo quy định. Bạn cần bổ sung thông tin minh chứng cho các chứng chỉ này.\n\nNHAN: FALSE",
+   "luot": 1,
+   "het_luot": false,
+   "usage": {
+    "in": 2500,
+    "out": 275
+   },
+   "phuc_vu": [
+    {
+     "model": "google/gemini-4-argon",
+     "provider": "Google"
+    }
+   ]
+  },
+  {
+   "id": "B-61f5775e62",
+   "tra_loi": "UNKNOWN",
+   "nhan_thieu": false,
+   "tho": "Để đủ điều kiện xét tốt nghiệp chương trình CNTT K49, sinh viên cần đáp ứng đầy đủ các tiêu chuẩn sau:\n1. Không đang trong thời gian bị kỷ luật đình chỉ học tập (Đã xác nhận: `xac_nhan_ky_luat_sach = true`).\n2. Tích lũy đủ các học phần bắt buộc và đủ tổng số 156 tín chỉ của chương trình đào tạo: Sinh viên đã tích lũy đủ các học phần theo quy định (bao gồm cả GDQP&AN 8 TC, GDTC 3 TC, Ngoại ngữ 10 TC, Luận văn tốt nghiệp 15 TC...).\n3. Điểm trung bình chung tích lũy (CPA) đạt từ 2.00 trở lên (Đã đạt: `dtbctl = 3.14`).\n4. Đạt chuẩn năng lực ngoại ngữ đầu ra theo quy định của Trường Đại học Cần Thơ.\n\nTuy nhiên, trong hồ sơ hiện tại chưa có thông tin xác nhận về chứng chỉ/chuẩn năng lực ngoại ngữ đầu ra của sinh viên. Do đó, chưa đủ dữ kiện để kết luận chắc chắn.\nDữ kiện cần bổ sung: Xác nhận đã đạt chuẩn năng lực ngoại ngữ đầu ra theo quy định xét tốt nghiệp.\n\nNHAN: UNKNOWN",
+   "luot": 1,
+   "het_luot": false,
+   "usage": {
+    "in": 5830,
+    "out": 277
+   },
+   "phuc_vu": [
+    {
+     "model": "google/gemini-4-argon",
+     "provider": "Google"
+    }
+   ]
+  },
+  {
+   "id": "B-3ff92b6db0",
+   "tra_loi": "UNKNOWN",
+   "nhan_thieu": false,
+   "tho": "Dựa trên hồ sơ được cung cấp:\n1. Sinh viên đã tích lũy 161 tín chỉ (vượt mức tối thiểu 156 tín chỉ của chương trình CNTT K49), ĐTBCTL đạt 3.14 (≥ 2.00), hoàn thành Luận văn tốt nghiệp (CT550E), GDQP (8 tín chỉ), GDTC (3 tín chỉ) và không bị kỷ luật.\n2. Tuy nhiên, trong bảng điểm ở Học kỳ 5 bị thiếu dữ liệu của 1 học phần (tổng tín chỉ các môn liệt kê là 15 TC nhưng tổng đăng ký là 18 TC, nhiều khả năng thiếu học phần bắt buộc CT180 - Cơ sở dữ liệu).\n3. Hồ sơ chưa có thông tin xác nhận về việc hoàn thành chuẩn đầu ra Ngoại ngữ và chứng chỉ Giáo dục Quốc phòng - An ninh theo quy định xét tốt nghiệp.\n\nCần bổ sung: Học phần bị khuyết ở HK5 và xác nhận đạt chuẩn đầu ra Ngoại ngữ, chứng chỉ GDQP-AN.\n\nNHAN: UNKNOWN",
+   "luot": 1,
+   "het_luot": false,
+   "usage": {
+    "in": 5735,
+    "out": 238
+   },
+   "phuc_vu": [
+    {
+     "model": "google/gemini-4-argon",
+     "provider": "Google"
+    }
+   ]
+  },
+  {
+   "id": "B-0fb1446c12",
+   "tra_loi": "UNKNOWN",
+   "nhan_thieu": false,
+   "tho": "Dựa trên bảng điểm OCR được cung cấp, sinh viên đã hoàn thành các học phần thuộc chương trình đào tạo. Tuy nhiên, ở học kỳ 5, học phần bắt buộc **CT296 (Phân tích và thiết kế hệ thống - 3 tín chỉ)** có độ tin cậy nhận dạng điểm thi rất thấp (`conf.thi = 0.4`).\n\nVì kết quả của học phần bắt buộc CT296 chưa thể xác minh chắc chắn qua OCR (nếu điểm thi thực tế bị liệt/0 điểm thì học phần không đạt), dữ kiện hiện tại chưa đủ độ tin cậy để kết luận sinh viên đã tích lũy đủ toàn bộ các học phần bắt buộc.\n\n**Dữ kiện cần bổ sung:** Xác nhận lại điểm chính xác (hoặc trạng thái đạt) của học phần bắt buộc CT296 ở Học kỳ 5 từ bảng điểm gốc.\n\nNHAN: UNKNOWN",
+   "luot": 1,
+   "het_luot": false,
+   "usage": {
+    "in": 5836,
+    "out": 194
+   },
+   "phuc_vu": [
+    {
+     "model": "google/gemini-4-argon",
+     "provider": "Google"
+    }
+   ]
+  },
+  {
+   "id": "B-68b345552d",
+   "tra_loi": "UNKNOWN",
+   "nhan_thieu": false,
+   "tho": "Dựa trên bảng điểm và thông tin khai báo của sinh viên:\n1. Sinh viên đã tích lũy đủ các khối kiến thức của chương trình đào tạo CNTT (tổng số tín chỉ tích lũy trên bảng điểm là 161, đạt chuẩn ngoại ngữ, GDQP-AN, GDTC, các học phần bắt buộc và tự chọn).\n2. Điểm trung bình chung tích lũy đạt 3.14 (>= 2.00) và không đang trong thời gian bị kỷ luật (`xac_nhan_ky_luat_sach: true`).\n3. Điểm chữ (B) và điểm tổng hợp (7.5) của học phần Tiểu luận tốt nghiệp (CT501E) có độ tin cậy cao (0.99), đảm bảo học phần đã đạt.\n4. Tuy nhiên, hồ sơ hiện tại **chưa có thông tin xác nhận nộp đơn đăng ký xét tốt nghiệp** và kết quả rèn luyện các học kỳ để có thể kết luận chắc chắn đủ điều kiện xét tốt nghiệp theo quy chế.\nCần bổ sung: Xác nhận đã đăng ký xét tốt nghiệp và thông tin điểm rèn luyện.\n\nNHAN: UNKNOWN",
+   "luot": 1,
+   "het_luot": false,
+   "usage": {
+    "in": 6129,
+    "out": 255
+   },
+   "phuc_vu": [
+    {
+     "model": "google/gemini-4-argon",
+     "provider": "Google"
+    }
+   ]
+  },
+  {
+   "id": "B-1725d3703c",
+   "tra_loi": "UNKNOWN",
+   "nhan_thieu": false,
+   "tho": "Dựa trên bảng điểm và thông tin khai báo:\n1. Sinh viên đã tích lũy đủ các khối kiến thức của chương trình đào tạo CNTT K49 (Tổng số tín chỉ tích lũy trên bảng điểm là 161, đạt yêu cầu tối thiểu 156 tín chỉ bao gồm cả GDTC và GDQP), không có học phần nào bị điểm F.\n2. Điểm trung bình chung tích lũy đạt 3.14 (>= 2.00) và sinh viên không bị kỷ luật đình chỉ học tập.\n3. Tuy nhiên, để đủ điều kiện xét tốt nghiệp, sinh viên bắt buộc phải có **Chứng chỉ Giáo dục Quốc phòng và An ninh** và đạt **chuẩn đầu ra ngoại ngữ** theo quy định của Trường.\n4. Dữ kiện hiện tại chỉ mới thể hiện kết quả các học phần trong bảng điểm, chưa có thông tin xác nhận về việc đã được cấp chứng chỉ GDQP-AN cũng như chứng chỉ/chuẩn ngoại ngữ đầu ra.\nCần bổ sung: Thông tin/minh chứng về Chứng chỉ GDQP-AN và chuẩn đầu ra ngoại ngữ.\n\nNHAN: UNKNOWN",
+   "luot": 1,
+   "het_luot": false,
+   "usage": {
+    "in": 6127,
+    "out": 249
+   },
+   "phuc_vu": [
+    {
+     "model": "google/gemini-4-argon",
+     "provider": "Google"
+    }
+   ]
+  },
+  {
+   "id": "B-a16cf48629",
+   "tra_loi": "UNKNOWN",
+   "nhan_thieu": false,
+   "tho": "Để đủ điều kiện xét tốt nghiệp chương trình đào tạo ngành Công nghệ thông tin K49 (Tổng số 156 tín chỉ, bao gồm 145 tín chỉ tích lũy + 3 tín chỉ Giáo dục thể chất + 8 tín chỉ Giáo dục quốc phòng), sinh viên cần hoàn thành đầy đủ các khối kiến thức theo quy định.\n\nDựa trên hồ sơ đính kèm:\n- Sinh viên đã đạt ĐTBCTL 3.14 (≥ 2.00) và hoàn thành 8 tín chỉ Giáo dục quốc phòng, 10 tín chỉ Ngoại ngữ (XH023, XH024, XH025), cùng các học phần chuyên ngành (bao gồm cả 15 tín chỉ thay thế Luận văn tốt nghiệp).\n- Tuy nhiên, ở khối Giáo dục thể chất (bắt buộc 3 tín chỉ), bảng điểm mới chỉ ghi nhận hoàn thành 1 học phần là `TC100` (dù ghi 3 tín chỉ trên bảng điểm nhưng theo CTĐT quy định mỗi học phần TC chỉ tính 1 tín chỉ và phải học đủ 3 học phần).\n- Quan trọng hơn, ở học kỳ 9, tổng số tín chỉ đăng ký là 15 nhưng bảng điểm OCR chỉ hiển thị 3 học phần (`CT478`, `CT283`, `CT233` với tổng 9 tín chỉ), bị khuyết thông tin của 6 tín chỉ còn lại.\n- Do đó, chưa đủ dữ kiện để xác nhận sinh viên đã hoàn thành đủ 3 tín chỉ Giáo dục thể chất và đủ 145 tín chỉ tích lũy hợp lệ của chương trình đào tạo hay chưa (Cần bổ sung: danh sách các môn bị khuyết ở HK9 và xác nhận hoàn thành đủ chứng chỉ/học phần Giáo dục thể chất, chuẩn đầu ra Ngoại ngữ/Tin học nếu có).\n\nNHAN: UNKNOWN",
+   "luot": 1,
+   "het_luot": false,
+   "usage": {
+    "in": 6030,
+    "out": 411
+   },
+   "phuc_vu": [
+    {
+     "model": "google/gemini-4-argon",
+     "provider": "Google"
+    }
+   ]
+  },
+  {
+   "id": "B-eb82a443bb",
+   "tra_loi": "FALSE",
+   "nhan_thieu": false,
+   "tho": "Dựa trên dữ kiện hồ sơ được cung cấp:\n- Sinh viên đã tích lũy 161 tín chỉ với ĐTBCTL đạt 3.14 (đủ từ 2.00 trở lên).\n- Đã hoàn thành học phần Giáo dục Quốc phòng và An ninh (8 tín chỉ) và Giáo dục thể chất (3 tín chỉ).\n- Trong nhóm học phần tốt nghiệp, sinh viên không làm Luận văn tốt nghiệp (CT550 - 15 tín chỉ) mà chọn học Tiểu luận tốt nghiệp (CT518E - 5 tín chỉ).\n- Theo quy định của chương trình đào tạo CNTT K49, khi học Tiểu luận tốt nghiệp (5 tín chỉ), sinh viên bắt buộc phải học kèm Thực tập doanh nghiệp (CT477 - 5 tín chỉ) và tích lũy thêm ít nhất 5 tín chỉ từ nhóm học phần tự chọn thay thế luận văn.\n- Tuy nhiên, trong bảng điểm của sinh viên chưa có học phần bắt buộc kèm theo là Thực tập doanh nghiệp (CT477).\nDo chưa hoàn thành đủ các học phần bắt buộc theo quy định của chương trình đào tạo, sinh viên chưa đủ điều kiện xét tốt nghiệp.\n\nNHAN: FALSE",
+   "luot": 1,
+   "het_luot": false,
+   "usage": {
+    "in": 6227,
+    "out": 266
+   },
+   "phuc_vu": [
+    {
+     "model": "google/gemini-4-argon",
+     "provider": "Google"
+    }
+   ]
+  },
+  {
+   "id": "B-f32163f8dd",
+   "tra_loi": "UNKNOWN",
+   "nhan_thieu": false,
+   "tho": "Dựa trên dữ liệu hồ sơ được cung cấp:\n1. Sinh viên đã tích lũy đủ các khối kiến thức, chứng chỉ GDQP-AN, GDTC, ngoại ngữ và đảm bảo điểm trung bình chung tích lũy (> 2.00), không bị kỷ luật.\n2. Tuy nhiên, ở Học kỳ 8, học phần tự chọn **CT478** (3 tín chỉ) có dữ liệu bị mâu thuẫn: điểm thi là **7.0**, điểm tổng hợp là **7.0**, tổng số tín chỉ tích lũy và ĐTBCHK vẫn tính học phần này đạt điểm B (tăng đủ 20 tín chỉ từ 129 lên 149, ĐTBCHK = 3.0), nhưng cột điểm chữ lại ghi nhận là **\"F\"**.\n3. Nếu CT478 thực sự bị điểm F thì sinh viên chỉ mới tích lũy được 9/12 tín chỉ tự chọn chuyên ngành (chưa đủ 156 tín chỉ tích lũy thực tế theo yêu cầu của CTĐT).\n4. Do đó, cần bổ sung dữ kiện xác nhận lại điểm chữ chính xác của học phần **CT478** trên bảng điểm gốc để kết luận chắc chắn.\n\nNHAN: UNKNOWN",
+   "luot": 1,
+   "het_luot": false,
+   "usage": {
+    "in": 6228,
+    "out": 274
+   },
+   "phuc_vu": [
+    {
+     "model": "google/gemini-4-argon",
+     "provider": "Google"
+    }
+   ]
+  },
+  {
+   "id": "B-4e2b00073c",
+   "tra_loi": "FALSE",
+   "nhan_thieu": false,
+   "tho": "Dựa trên bảng điểm và khai báo, sinh viên chưa đủ điều kiện xét tốt nghiệp vì các lý do sau:\n1. Tổng số tín chỉ thuộc chương trình đào tạo mới chỉ đạt 150/156 tín chỉ theo quy định (161 tín chỉ hiển thị trên bảng điểm đã cộng gộp cả 8 TC Giáo dục Quốc phòng và 3 TC Giáo dục Thể chất không tính vào tổng tín chỉ tích lũy xét tốt nghiệp).\n2. Trong khối học phần tốt nghiệp (yêu cầu 15 tín chỉ), sinh viên mới chỉ hoàn thành Thực tập doanh nghiệp (CT518E - 5 TC) và 3 học phần tự chọn (CT466E, CT482, CT210 - 9 TC), hiện vẫn còn thiếu 6 tín chỉ (chưa học Luận văn tốt nghiệp 10 TC hoặc Đồ án 4 TC kèm các học phần tự chọn thay thế tương ứng).\n\nNHAN: FALSE",
+   "luot": 1,
+   "het_luot": false,
+   "usage": {
+    "in": 6129,
+    "out": 211
+   },
+   "phuc_vu": [
+    {
+     "model": "google/gemini-4-argon",
+     "provider": "Google"
+    }
+   ]
+  },
+  {
+   "id": "B-977dab57dc",
+   "tra_loi": "TRUE",
+   "nhan_thieu": false,
+   "tho": "Dựa trên dữ kiện bảng điểm OCR được cung cấp:\n- Tại học kỳ 2 (HK2), sinh viên có học phần mã \"ML019\" (2 tín chỉ).\n- Điểm thi: 8.0, điểm tổng hợp: 8.0, điểm chữ: \"B+\".\n- Độ tin cậy OCR (conf) của tất cả các trường thông tin này đều đạt 0.99 (rất cao và rõ ràng).\n- Điểm chữ B+ là điểm đạt (tích lũy học phần thành công).\n\nNHAN: TRUE",
+   "luot": 1,
+   "het_luot": false,
+   "usage": {
+    "in": 5836,
+    "out": 125
+   },
+   "phuc_vu": [
+    {
+     "model": "google/gemini-4-argon",
+     "provider": "Google"
+    }
+   ]
+  },
+  {
+   "id": "B-4abc4488da",
+   "tra_loi": "UNKNOWN",
+   "nhan_thieu": false,
+   "tho": "Dựa trên dữ liệu bảng điểm OCR ở Học kỳ 2 (HK2) đối với học phần **ML019** (2 tín chỉ):\n- Có sự mâu thuẫn trực tiếp trong dữ liệu OCR: Điểm thi là `8.0` và điểm tổng hợp là `8.0` (tương ứng điểm đạt `B+`), nhưng điểm chữ lại được ghi nhận là `\"F\"` (không đạt).\n- Mặc dù tổng số tín chỉ tích lũy ở HK2 tăng đủ 18 tín chỉ (từ 18 lên 36) và điểm trung bình học kỳ là 3.19 (khớp với việc ML019 đạt điểm B+), nhưng do lỗi mâu thuẫn nghiêm trọng giữa điểm số (`8.0`) và điểm chữ (`F`) trên dòng dữ liệu của môn học nên chưa thể kết luận chắc chắn.\n- **Dữ kiện cần bổ sung**: Bản gốc bảng điểm hoặc xác nhận chính thức về điểm chữ/điểm số thực tế của học phần ML019.\n\nNHAN: UNKNOWN",
+   "luot": 1,
+   "het_luot": false,
+   "usage": {
+    "in": 5840,
+    "out": 230
+   },
+   "phuc_vu": [
+    {
+     "model": "google/gemini-4-argon",
+     "provider": "Google"
+    }
+   ]
+  },
+  {
+   "id": "B-c99d288515",
+   "tra_loi": "TRUE",
+   "nhan_thieu": false,
+   "tho": "Dựa trên dữ liệu bảng điểm OCR đính kèm:\n- Tại học kỳ 2 (HK2), học phần có mã \"ML016\" (2 tín chỉ) có kết quả điểm thi là 7.5, điểm tổng hợp là 7.5 và điểm chữ là \"B\".\n- Độ tin cậy OCR (conf) của tất cả các trường thông tin (mã học phần, số tín chỉ, điểm thi, điểm tổng hợp, điểm chữ) đều đạt 0.99 (rất cao, hoàn toàn tin cậy).\n- Điểm B (7.5) là điểm đạt học phần theo quy chế học vụ.\n\nDo đó, sinh viên đã hoàn thành (passed) học phần ML016.\n\nNHAN: TRUE",
+   "luot": 1,
+   "het_luot": false,
+   "usage": {
+    "in": 5836,
+    "out": 165
+   },
+   "phuc_vu": [
+    {
+     "model": "google/gemini-4-argon",
+     "provider": "Google"
+    }
+   ]
+  },
+  {
+   "id": "B-8b5be7b498",
+   "tra_loi": "UNKNOWN",
+   "nhan_thieu": false,
+   "tho": "Dựa trên dữ kiện bảng điểm OCR được cung cấp:\n1. Kiểm tra danh sách các học phần trong tất cả các học kỳ (từ HK1 đến HK9), không tìm thấy học phần `ML016`.\n2. Đáng chú ý tại HK2, tổng số tín chỉ đăng ký (`tong_dk`) và số tín chỉ tích lũy tăng thêm là 18 tín chỉ, nhưng tổng số tín chỉ của 7 môn hiện có trong danh sách của HK2 (XH025: 3, ML014: 3, ML018: 2, ML019: 2, ML021: 2, KL001E: 2, ML007: 2) chỉ mới đạt 16 tín chỉ (bị khuyết mất 1 môn 2 tín chỉ trong dữ liệu trích xuất OCR).\n3. Do bảng điểm OCR bị thiếu dòng dữ liệu ở HK2 nên chưa đủ căn cứ để kết luận sinh viên đã học và đạt học phần `ML016` hay chưa.\n4. Dữ kiện cần bổ sung: Thông tin học phần bị thiếu (2 tín chỉ) ở HK2 trong bảng điểm gốc để xác nhận xem có phải là môn `ML016` hay không và kết quả điểm của môn đó.\n\nNHAN: UNKNOWN",
+   "luot": 1,
+   "het_luot": false,
+   "usage": {
+    "in": 5741,
+    "out": 290
+   },
+   "phuc_vu": [
+    {
+     "model": "google/gemini-4-argon",
+     "provider": "Google"
+    }
+   ]
+  },
+  {
+   "id": "B-a1a89ff558",
+   "tra_loi": "TRUE",
+   "nhan_thieu": false,
+   "tho": "Dựa vào bảng điểm OCR ở Học kỳ 5 (HK5):\n- Học phần CT173 (3 tín chỉ) có độ tin cậy nhận dạng mã học phần (`ma`), điểm tổng hợp (`thop` = 7.0) và điểm chữ (`chu` = \"B\") đều rất cao (0.99).\n- Mặc dù độ tin cậy của cột điểm thi (`thi`) thấp (0.4), nhưng việc xét đạt học phần (passed) dựa trên điểm tổng hợp và điểm chữ (đạt từ D trở lên), hơn nữa toàn bộ 18 tín chỉ đăng ký ở HK5 đều được cộng vào tín chỉ tích lũy (từ 75 lên 93).\n- Do đó, đủ cơ sở chắc chắn kết luận sinh viên đã đạt học phần CT173.\n\nNHAN: TRUE",
+   "luot": 1,
+   "het_luot": false,
+   "usage": {
+    "in": 5839,
+    "out": 183
+   },
+   "phuc_vu": [
+    {
+     "model": "google/gemini-4-argon",
+     "provider": "Google"
+    }
+   ]
+  },
+  {
+   "id": "B-63f23214e0",
+   "tra_loi": "UNKNOWN",
+   "nhan_thieu": false,
+   "tho": "Dựa trên dữ kiện bảng điểm OCR ở HK5, học phần CT173 có sự mâu thuẫn dữ liệu nghiêm trọng:\n- Điểm thi (`thi`) và điểm tổng hợp hệ 10 (`thop`) đều là 7.0 (tương ứng điểm đạt loại B).\n- Tuy nhiên, điểm chữ (`chu`) lại ghi nhận là \"F\" (không đạt).\n- Cộng thêm, số tín chỉ tích lũy ở HK5 tăng từ 75 lên 93 (tăng đủ 18 tín chỉ đăng ký, tính cả 3 tín chỉ của CT173) và ĐTBCHK là 3.08 (tính theo điểm B cho CT173).\n\nDo có sự mâu thuẫn trực tiếp giữa điểm số (7.0) và điểm chữ (\"F\") trên kết quả OCR, chưa thể kết luận chắc chắn sinh viên đã qua môn hay chưa. Cần bổ sung bảng điểm gốc hoặc xác nhận chính thức từ hệ thống quản lý đào tạo về điểm của học phần CT173.\n\nNHAN: UNKNOWN",
+   "luot": 1,
+   "het_luot": false,
+   "usage": {
+    "in": 5840,
+    "out": 233
+   },
+   "phuc_vu": [
+    {
+     "model": "google/gemini-4-argon",
+     "provider": "Google"
+    }
+   ]
+  },
+  {
+   "id": "B-6125468456",
+   "tra_loi": "UNKNOWN",
+   "nhan_thieu": false,
+   "tho": "Dựa trên dữ kiện bảng điểm OCR được cung cấp:\n- Tại học kỳ 5 (HK5), tổng số tín chỉ đăng ký (`tong_dk`) là 18 tín chỉ và số tín chỉ tích lũy tăng từ 75 (HK4) lên 93 (tăng 18 tín chỉ).\n- Tuy nhiên, danh sách các học phần được trích xuất trong HK5 chỉ có 5 môn (CT180, CT182, CT296, CT178, CT112) với tổng cộng 15 tín chỉ, tức là đã bị thiếu 1 học phần 3 tín chỉ trong quá trình đọc OCR.\n- Vì không thấy mã học phần CT173 trong danh sách hiện tại nhưng bảng điểm ở HK5 bị khuyết dữ liệu (3 tín chỉ), chưa đủ cơ sở để kết luận chắc chắn sinh viên đã học và qua môn CT173 hay chưa.\n- Dữ kiện cần bổ sung: Thông tin học phần 3 tín chỉ bị thiếu ở HK5 (hoặc bản gốc bảng điểm đầy đủ).\n\nNHAN: UNKNOWN",
+   "luot": 1,
+   "het_luot": false,
+   "usage": {
+    "in": 5741,
+    "out": 241
+   },
+   "phuc_vu": [
+    {
+     "model": "google/gemini-4-argon",
+     "provider": "Google"
+    }
+   ]
+  },
+  {
+   "id": "B-f54da56e37",
+   "tra_loi": "UNKNOWN",
+   "nhan_thieu": false,
+   "tho": "Dựa trên hồ sơ được cung cấp:\n1. Sinh viên đã tích lũy đủ số tín chỉ (161 tín chỉ, bao gồm đầy đủ các học phần bắt buộc, tự chọn của chương trình CNTT, GDTC, GDQP và Ngoại ngữ) với ĐTBCTL là 3.14 (≥ 2.00).\n2. Sinh viên đã xác nhận không bị kỷ luật (xac_nhan_ky_luat_sach: true).\n3. Tuy nhiên, theo quy định xét tốt nghiệp, sinh viên bắt buộc phải đạt chuẩn đầu ra về Ngoại ngữ và Công nghệ thông tin (hoặc có minh chứng được miễn/công nhận đạt chuẩn theo quy định của Trường).\n4. Hồ sơ hiện tại hoàn toàn thiếu dữ kiện khai báo về việc đã đạt chuẩn đầu ra Ngoại ngữ và chuẩn đầu ra CNTT hay chưa.\n\nCần bổ sung dữ kiện: Xác nhận trạng thái đạt chuẩn đầu ra Ngoại ngữ và chuẩn đầu ra CNTT của sinh viên.\n\nNHAN: UNKNOWN",
+   "luot": 1,
+   "het_luot": false,
+   "usage": {
+    "in": 6126,
+    "out": 221
+   },
+   "phuc_vu": [
+    {
+     "model": "google/gemini-4-argon",
+     "provider": "Google"
+    }
+   ]
+  },
+  {
+   "id": "B-9a0ca1715e",
+   "tra_loi": "UNKNOWN",
+   "nhan_thieu": false,
+   "tho": "Dựa trên dữ kiện hồ sơ được cung cấp, chưa thể kết luận chắc chắn sinh viên đã đủ điều kiện xét tốt nghiệp vì các lý do sau:\n1. Mâu thuẫn dữ liệu OCR ở HK5: Học phần bắt buộc CT182 (Ngôn ngữ mô hình hóa) có điểm thi 7.0, điểm tổng hợp 7.0 nhưng điểm chữ lại ghi nhận là \"F\" (không đạt), trong khi tổng tín chỉ tích lũy vẫn cộng thêm đủ 18 tín chỉ của học kỳ đó (từ 75 lên 93). Cần xác minh lại kết quả thực tế của học phần CT182.\n2. Thiếu thông tin về việc sinh viên đã nộp và đạt chuẩn đầu ra Ngoại ngữ theo quy định xét tốt nghiệp của Trường hay chưa.\n3. Thiếu thông tin về việc sinh viên đã được cấp chứng chỉ Giáo dục Quốc phòng và An ninh hay chưa.\n\nCần bổ sung: Xác nhận bảng điểm gốc của học phần CT182, thông tin chứng chỉ/chuẩn đầu ra ngoại ngữ và chứng chỉ GDQP-AN.\n\nNHAN: UNKNOWN",
+   "luot": 1,
+   "het_luot": false,
+   "usage": {
+    "in": 6130,
+    "out": 244
+   },
+   "phuc_vu": [
+    {
+     "model": "google/gemini-4-argon",
+     "provider": "Google"
+    }
+   ]
+  },
+  {
+   "id": "B-a382fafe2b",
+   "tra_loi": "TRUE",
+   "nhan_thieu": false,
+   "tho": "Dựa trên bảng điểm và thông tin khai báo, tiến độ hoàn thành các học phần điều kiện của sinh viên như sau:\n1. Giáo dục Quốc phòng và An ninh (8 TC): Đã hoàn thành đầy đủ 4 học phần bắt buộc (QP010E, QP011E, QP012, QP013) với kết quả đạt.\n2. Giáo dục thể chất (3 TC): Đã hoàn thành học phần TC100 (3 TC) với kết quả đạt.\n3. Ngoại ngữ (10 TC): Đã hoàn thành đủ 3 học phần Anh văn căn bản (XH023 - 4 TC, XH024 - 3 TC, XH025 - 3 TC). Tuy điểm thi của XH024 có độ tin cậy OCR thấp (0.4), nhưng điểm tổng hợp (7.5) và điểm chữ (B) có độ tin cậy cao (0.99) nên chắc chắn đã tích lũy.\n\nNhư vậy, sinh viên đã hoàn thành tất cả các học phần điều kiện theo quy định.\n\nNHAN: TRUE",
+   "luot": 1,
+   "het_luot": false,
+   "usage": {
+    "in": 6228,
+    "out": 246
+   },
+   "phuc_vu": [
+    {
+     "model": "google/gemini-4-argon",
+     "provider": "Google"
+    }
+   ]
+  },
+  {
+   "id": "B-21661440ad",
+   "tra_loi": "UNKNOWN",
+   "nhan_thieu": false,
+   "tho": "Dựa trên bảng điểm OCR và thông tin khai báo, việc xét hoàn thành các học phần điều kiện như sau:\n1. Giáo dục Quốc phòng và An ninh (8 TC): Đã hoàn thành 4 học phần QP010E (B+), QP011E (B), QP012 (B), QP013 (B).\n2. Giáo dục thể chất (3 TC): Đã hoàn thành học phần TC100 (3 TC, điểm B+).\n3. Ngoại ngữ (10 TC): Trong bảng điểm có các học phần Anh văn căn bản: XH023 (4 TC, điểm B), XH024 (3 TC, điểm chữ F dù điểm số 7.5), XH025 (3 TC, điểm B). Do học phần XH024 có mâu thuẫn giữa điểm tổng hợp (7.5) và điểm chữ (F) trên bảng điểm OCR và chưa có minh chứng chứng chỉ ngoại ngữ thay thế, chưa thể kết luận chắc chắn sinh viên đã tích lũy đủ 10 tín chỉ ngoại ngữ hay chưa.\n\nCần bổ sung: Xác nhận lại điểm chính xác của học phần XH024 trên hệ thống quản lý đào tạo (hoặc cung cấp chứng chỉ ngoại ngữ hợp lệ để xét miễn/hoàn thành khối học phần ngoại ngữ).\n\nNHAN: UNKNOWN",
+   "luot": 1,
+   "het_luot": false,
+   "usage": {
+    "in": 6229,
+    "out": 298
+   },
+   "phuc_vu": [
+    {
+     "model": "google/gemini-4-argon",
+     "provider": "Google"
+    }
+   ]
+  }
+ ]
+}
