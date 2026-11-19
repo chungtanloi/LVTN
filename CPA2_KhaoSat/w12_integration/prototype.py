@@ -157,6 +157,40 @@ def _xep_loai(ql):
     return None
 
 
+# Tuần 24 — MỤC TIÊU HẠNG TỐT NGHIỆP ("cần trung bình bao nhiêu để tốt nghiệp (ít nhất) loại X", w24_muc_tieu/). Theo bài học
+# C12: DANH SÁCH CHO PHÉP khớp TOÀN câu, có chủ ngữ ngôi thứ nhất, một hạng duy nhất; câu khác → ý định cũ / khong_ro.
+# Mẫu chạy trên chuan_hoa (từ khoá bỏ dấu, từ ngoài TU_KHOA giữ dấu → có cả hai dạng: cần/can, các/cac, tới/toi).
+_MT_H = r"(?:loai|hang|bang) (xuat sac|gioi|kha|trung binh)"
+_MT_CAN = (r"(?:cần|can|phải|phai) (?:(?:dat|duoc) )?(?:(?:diem )?(?:trung binh|tb)(?: (?:tich luy|tích lũy|tích luỹ))? |diem )?"
+           r"bao nhieu(?: diem)?")   # review L1: "tích lũy" ngoài TU_KHOA giữ dấu
+_MT_CON = r"(?: (?:o|cho|trong) (?:các |cac |những |nhung )?(?:mon|hoc phan|tin chi)(?: con lai)?)?"
+MAU_MUC_TIEU = [
+    rf"^{_TOI}{_MT_CAN}{_MT_CON} de {_TN} {_MT_H}$",
+    rf"^de {_TN} {_MT_H},? (?:thi )?{_TOI}{_MT_CAN}{_MT_CON}$",
+]
+MAU_MUC_TIEU_TC = (rf"^(?:hoc )?ky (?:tới|toi|sau|ke tiep|tiep theo) {_TOI}(?:dang ky |hoc )?(\d{{1,2}}) (?:tin chi|tc)"
+                   rf"(?: thi)? (?:{_TOI})?{_MT_CAN} de {_TN} {_MT_H}$")
+
+
+def _muc_tieu(ql):
+    """'muc_tieu_hang(H)' / 'muc_tieu_hang(H,X)' / None — chỉ khi CẢ câu khớp một mẫu cho phép (cắt lời gọi đầu câu và
+    trợ từ cuối câu như _xep_loai)."""
+    qb = bo_dau(ql)
+    if len(qb) != len(ql):
+        return None
+    a = _DAU.match(qb).end()
+    b = a + _CUOI.search(qb[a:]).start()
+    q = ql[a:b].strip()
+    m = re.match(MAU_MUC_TIEU_TC, q)
+    if m:
+        return f"muc_tieu_hang({HANG_TU[m.group(2)]},{int(m.group(1))})"
+    for mau in MAU_MUC_TIEU:
+        m = re.match(mau, q)
+        if m:
+            return f"muc_tieu_hang({HANG_TU[m.group(1)]})"
+    return None
+
+
 PARSER_STUB_CHUAN = {chuan_hoa(k): v for k, v in PARSER_STUB.items()}
 
 
@@ -165,6 +199,9 @@ def parse_question(q: str) -> str:
     xl = _xep_loai(ql)  # C12: trước chốt "nếu" — "nếu tốt nghiệp, em xếp hạng gì" không phải phản thực tế
     if xl:
         return xl
+    mt = _muc_tieu(ql)  # Tuần 24: mục tiêu hạng — danh sách cho phép, khớp toàn câu
+    if mt:
+        return mt
     # đề xuất chung — câu hỏi về MỘT học phần / luận văn / tiểu luận đi nhánh riêng
     if DE_XUAT.search(ql) and not HOI_MO.search(ql) and not re.search(r"[a-z]{2}\d{3}|luan van|tieu luan", ql):
         return "de_xuat"
@@ -544,8 +581,63 @@ def answer_xep_loai(claim, student_path):
             "missing_facts": cert["missing_facts"], "can_bo_sung": cert["can_bo_sung"], "mau_thuan": mt, "student_id": sid}
 
 
+def answer_muc_tieu(claim, student_path):
+    """Tuần 24: mục tiêu hạng tốt nghiệp (w24_muc_tieu). Phép tính chính xác (R-B10, R-F06, R-F07) trên MỌI thế giới:
+    cùng một kết quả → TRUE (đạt được) / FALSE (không thể); khác nhau (thường do chưa khai báo dữ kiện hạ bậc) → UNKNOWN,
+    nêu từng kịch bản và hỏi dữ kiện còn thiếu. Không dự đoán, không khuyên 'nên'."""
+    sys.path.insert(0, str(HERE.parent / "w24_muc_tieu"))
+    import muc_tieu as MT
+    h, x = MT.tach_claim(claim)
+
+    def tra(verdict, text, missing=()):
+        return {"verdict": verdict, "claim": claim, "explanation_vi": text, "missing_facts": list(missing),
+                "can_bo_sung": [{"bien": b} for b in missing], "certificate": {"claim": claim, "proof": {"steps": []}}}
+    if not student_path:
+        return tra("UNKNOWN", "Cần hồ sơ học tập để tính mức điểm cần đạt.", ["ho_so"])
+    if x is not None and not 1 <= x <= MT.TRAN_TC_HK:
+        return tra("UNKNOWN", f"Một học kỳ đăng ký tối đa {MT.TRAN_TC_HK} tín chỉ (QĐ3266 Điều 14 khoản 1) — bạn dự định "
+                              f"học bao nhiêu tín chỉ (1–{MT.TRAN_TC_HK})?", ["tc_du_kien"])
+    extra, sid, mt = load_student(student_path)
+    them = f"muc_tieu_hang({h}).\n" + (f"tc_du_kien({x}).\n" if x is not None else "") + MT.LP.read_text(encoding="utf-8")
+    _, models, cautious, brave = solve_verdict(f"mt_kha_thi({h})", extra + "\n" + them)
+    if not models:
+        return {**tra("UNSAT", "Hồ sơ mâu thuẫn với quy chế — không tính."), "mau_thuan": mt}
+    kbs = MT.kich_ban(models, h)
+    if any(k[0] is None or not k[2] for k in kbs):        # review M1: tl_mau luôn có (#sum) → kiểm D = 0
+        return tra("UNKNOWN", "Chưa có ĐTBCTL (chưa có học phần nào tính vào điểm trung bình tích lũy) — chưa tính được.",
+                   ["diem_hoc_phan"])
+    verdict, can_tc = MT.tong_hop(kbs, x is not None)
+    fs = [frozenset(m) for m in models]
+    can = []
+    if verdict == "UNKNOWN" and not can_tc:    # review H1: hỏi dữ kiện QUYẾT ĐỊNH tính khả thi (vd. Đ34 k2), không theo kịch bản
+        can = abstention.bang_chung_thieu(f"mt_kha_thi({h})", fs)
+    elif verdict == "TRUE" and len(kbs) > 1:   # đạt được ở mọi thế giới nhưng mức cần khác nhau → dữ kiện quyết định mức
+        can = abstention.bang_chung_thieu(kbs[0][0], fs)
+    if can_tc:
+        can = can + [{"bien": "tc_du_kien", "hoi": "Bạn dự định học thêm bao nhiêu tín chỉ (mỗi học kỳ tối đa "
+                                                    f"{MT.TRAN_TC_HK} tín chỉ)?"}]
+    text = MT.dien_giai(h, kbs, x is not None, verdict, can_tc, [b["hoi"] for b in can if b["bien"] != "tc_du_kien"])
+    kq = kbs[0][0]
+    cert = build_certificate(kq, "TRUE" if len(kbs) == 1 else "UNKNOWN", models, cautious, brave)
+    # chỉ giữ bước của phép tính mục tiêu: kết quả, ĐTBCTL (tl_tu/tl_mau), hạng gốc, hạ bậc — không kéo theo mọi luật của hồ sơ
+    lq = ("tl_tu(", "tl_mau(", "hang_goc(", "vuot_5", "ha_mot_muc", "ky_luat_canh")
+    cert["proof"]["steps"] = sorted((s_ for s_ in cert["proof"]["steps"] if s_["atom"] == kq or s_["atom"].startswith(lq)),
+                                    key=lambda s_: s_["atom"] != kq)
+    cert.update(verdict=verdict, can_bo_sung=can, missing_facts=[b["bien"] for b in can])
+    cert_text = " ".join([s_["atom"] for s_ in cert["proof"]["steps"]] + cert["missing_facts"])
+    lech = [c for c in re.findall(r"[A-Z]{1,3}\d{2,3}E?", text) if c not in cert_text]
+    if lech:                                               # hậu kiểm (bất biến prototype)
+        return {**tra("BLOCKED", f"HẬU KIỂM CHẶN: mã {lech[0]} trong lời giải thích nhưng không có trong chứng chỉ"),
+                "certificate": cert}
+    return {"verdict": verdict, "claim": kq if len(kbs) == 1 else claim, "certificate": cert, "explanation_vi": text,
+            "missing_facts": cert["missing_facts"], "can_bo_sung": can, "mau_thuan": mt, "student_id": sid,
+            "kich_ban": [k[0] for k in kbs]}
+
+
 def answer(question, student_path):
     claim=parse_question(question)
+    if claim.startswith("muc_tieu_hang("):
+        return answer_muc_tieu(claim, student_path)
     if claim == "xep_loai" or claim.startswith("hang_cuoi("):
         return answer_xep_loai(claim, student_path)
     if claim.startswith("duoc_dang_ky("):
