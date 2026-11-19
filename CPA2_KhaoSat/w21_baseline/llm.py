@@ -23,6 +23,8 @@ và giá token do người chạy khai trong môi trường (BASELINE_<NHA>_MODE
 số, cần với model từ chối nhiệt độ ≠ mặc định); BASELINE_MAX_OUT đặt trần token ra (model suy luận tính cả token nghĩ).
 BASELINE_<NHA>_BASE_URL (tuỳ chọn) đổi địa chỉ gốc API — dùng để kiểm thử với máy chủ giả cục bộ; khoá sẽ được gửi tới địa chỉ đó,
 nên chỉ đặt khi tự kiểm soát địa chỉ.
+BASELINE_<NHA>_VIA=openrouter (tuỳ chọn): gọi họ model <NHA> qua OpenRouter bằng một khoá OPENROUTER_API_KEY (OpenRouterClient);
+ID model theo OpenRouter (vd. openai/…, google/…), giá token theo bảng giá OpenRouter. Kết quả ghi meta.qua và từng ca ghi phuc_vu.
 """
 import http.client, json, math, os, re, time, urllib.error, urllib.parse, urllib.request
 from pathlib import Path
@@ -84,12 +86,20 @@ def doc_env(duong_dan=None, env=None):
 
 
 NHA = {"openai": ("OPENAI_API_KEY", "BASELINE_OPENAI_MODEL"), "gemini": ("GEMINI_API_KEY", "BASELINE_GEMINI_MODEL")}
+OPENROUTER_GOC = "https://openrouter.ai/api/v1"
 
 
 def tao_client(ten, env):
+    """BASELINE_<NHA>_VIA=openrouter: họ model <NHA> (tên file kết quả, rào test một lần) nhưng gọi qua OpenRouter — định dạng
+    chat/completions, khoá OPENROUTER_API_KEY, địa chỉ OPENROUTER_GOC (BASELINE_OPENROUTER_BASE_URL chỉ để kiểm thử). Bỏ trống = API gốc."""
     if ten not in NHA:
         raise ThieuKhoa(f"nhà cung cấp lạ: {ten} (openai | gemini)")
     bien_khoa, bien_model = NHA[ten]
+    via = (env.get(f"BASELINE_{ten.upper()}_VIA") or "").strip().lower()
+    if via not in ("", "openrouter"):
+        raise ThieuKhoa(f"BASELINE_{ten.upper()}_VIA = {via!r}: chỉ nhận 'openrouter' hoặc để trống (API gốc)")
+    if via:
+        bien_khoa = "OPENROUTER_API_KEY"
     if not env.get(bien_khoa):
         raise ThieuKhoa(f"thiếu {bien_khoa}: đặt trong biến môi trường của phiên cloud hoặc file .env (xem .env.example)")
     if not env.get(bien_model):
@@ -102,6 +112,13 @@ def tao_client(ten, env):
         mo = int(env["BASELINE_MAX_OUT"]) if env.get("BASELINE_MAX_OUT") else THAM_SO["max_out"]
     except ValueError:
         raise ThieuKhoa("BASELINE_TEMPERATURE phải là số hoặc 'none'; BASELINE_MAX_OUT phải là số nguyên") from None
+    if via:     # khoá OpenRouter chỉ đi tới OpenRouter (hoặc máy chủ kiểm thử đặt riêng), không theo BASELINE_<NHA>_BASE_URL
+        goc = (env.get("BASELINE_OPENROUTER_BASE_URL") or OPENROUTER_GOC).rstrip("/")
+        u = urllib.parse.urlsplit(goc)
+        if not (u.scheme == "https" and u.hostname) and not (u.scheme == "http" and u.hostname in ("127.0.0.1", "localhost", "::1")):
+            raise ThieuKhoa(f"BASELINE_OPENROUTER_BASE_URL = {goc!r}: chỉ nhận https:// hoặc http:// máy cục bộ (127.0.0.1/localhost) — "
+                            "khoá không gửi qua kênh không mã hoá; biến này chỉ để kiểm thử, chạy thật thì để trống")
+        return OpenRouterClient(env[bien_khoa], env[bien_model], goc=goc, provider=ten, nhiet_do=nhiet, max_out=mo)
     kw = {"goc": env[f"BASELINE_{ten.upper()}_BASE_URL"].rstrip("/")} if env.get(f"BASELINE_{ten.upper()}_BASE_URL") else {}
     return (OpenAIClient if ten == "openai" else GeminiClient)(env[bien_khoa], env[bien_model], nhiet_do=nhiet, max_out=mo, **kw)
 
@@ -153,7 +170,7 @@ def ngan_sach_tu_env(ten, env):
 class CoNganSach:
     def __init__(self, client, ngan_sach):
         self.client, self.ngan_sach = client, ngan_sach
-        self.provider, self.model = client.provider, client.model
+        self.provider, self.model, self.qua = client.provider, client.model, getattr(client, "qua", None)
 
     def chat(self, messages, tools=None):
         self.ngan_sach.kiem()
@@ -167,6 +184,15 @@ class CoNganSach:
         return r
 
 
+class _KhongChuyenHuong(urllib.request.HTTPRedirectHandler):
+    """Không theo 3xx: urllib giữ header Authorization khi chuyển hướng → khoá có thể tới host khác. 3xx thành HTTPError (vĩnh viễn)."""
+    def redirect_request(self, *a, **kw):
+        return None
+
+
+_MO = urllib.request.build_opener(_KhongChuyenHuong)
+
+
 def _post(url, headers, body, khoa=None):
     """POST JSON. Thử lại 408/425/429/5xx/lỗi mạng (Retry-After tôn trọng, tối đa 60 giây); 429 hết hạn mức (insufficient_quota) và
     mọi 4xx khác là LỖI VĨNH VIỄN. Phản hồi không phải JSON/UTF-8 không thử lại. Thông báo lỗi đã scrub khoá."""
@@ -175,7 +201,7 @@ def _post(url, headers, body, khoa=None):
     for lan in range(thu):
         req = urllib.request.Request(url, data=data, headers={"Content-Type": "application/json", **headers}, method="POST")
         try:
-            with urllib.request.urlopen(req, timeout=cho) as r:
+            with _MO.open(req, timeout=cho) as r:
                 return json.loads(r.read().decode("utf-8"))
         except urllib.error.HTTPError as e:
             noi = scrub(e.read().decode("utf-8", "replace"), khoa)[:300]
@@ -251,6 +277,29 @@ class OpenAIClient(_Chung):
         u = p.get("usage") or {}
         return {"text": m.get("content") or "", "tool_calls": tc,
                 "usage": {"in": u.get("prompt_tokens", 0), "out": u.get("completion_tokens", 0)}}
+
+
+class OpenRouterClient(OpenAIClient):
+    """OpenRouter: tương thích OpenAI chat/completions (đối chiếu openrouter.ai/docs 19/11/2026: nhận max_completion_tokens). provider =
+    họ model đã chọn (openai | gemini). Mỗi phản hồi trả thêm phuc_vu = {model, provider}: model là trường có trong tài liệu, provider
+    (hạ tầng thực phục vụ) KHÔNG có trong lược đồ công bố → None nếu vắng; ghi lại để báo cáo nêu được ca nào chạy ở đâu."""
+    qua = "openrouter"
+
+    def __init__(self, khoa, model, goc=OPENROUTER_GOC, provider="openai", **kw):
+        super().__init__(khoa, model, goc, **kw)
+        self.provider = provider
+
+    def phan_tich(self, p):
+        # OpenRouter có thể trả HTTP 200 khi nhà hạ tầng phía sau lỗi: thân {"error": …}, choices rỗng, hoặc finish_reason "error".
+        # Không chặn thì văn bản rỗng → UNKNOWN được CHẤM (đúng gold ở ca UNKNOWN) thay vì thành ca LOI để chạy lại.
+        ch = p.get("choices") or []
+        if p.get("error") or not ch or (ch[0] or {}).get("finish_reason") == "error":
+            e = p.get("error") or ((ch[0] or {}).get("error") if ch else None)
+            msg = (e.get("message") if isinstance(e, dict) else e) or "choices rỗng / finish_reason=error"
+            raise LoiNhaCungCap(None, "OpenRouter trả 200 kèm lỗi: " + scrub(msg, self.khoa)[:200])
+        r = super().phan_tich(p)
+        r["phuc_vu"] = {"model": p.get("model"), "provider": p.get("provider")}
+        return r
 
 
 class GeminiClient(_Chung):

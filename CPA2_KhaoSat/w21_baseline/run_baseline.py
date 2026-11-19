@@ -30,7 +30,7 @@ Chạy:  python run_baseline.py --bl b1 --split dev --uoc-luong
 Kết quả: ket_qua_baseline_<bl>_<nha>_<split><hau-to>.json (thư mục CPA2_BASELINE_OUT nếu đặt). Khoá API không bao giờ vào file.
 Dữ liệu gửi đi là hồ sơ GIẢ LẬP của benchmark — không gửi câu trả lời thật của biểu mẫu Q-Real.
 """
-import argparse, hashlib, json, os, re, subprocess, sys, time
+import argparse, hashlib, json, os, re, subprocess, sys, time, urllib.parse
 from collections import defaultdict
 from pathlib import Path
 
@@ -146,9 +146,11 @@ def chay_split(ten, split, client, ret, luu=None):
     return rows
 
 
-def ten_checkpoint(ten_file, h_mau, h_vao, model, nhiet_do, max_out):
-    """Tên checkpoint gồm mọi thứ làm câu trả lời khác đi → chạy lại với model/nhiệt độ/prompt khác không trộn kết quả."""
-    h = hashlib.sha256(json.dumps([h_mau, h_vao, model, nhiet_do, max_out]).encode("utf-8")).hexdigest()[:12]
+def ten_checkpoint(ten_file, h_mau, h_vao, model, nhiet_do, max_out, qua=None, goc=None):
+    """Tên checkpoint gồm mọi thứ làm câu trả lời khác đi → chạy lại với model/nhiệt độ/prompt khác không trộn kết quả.
+    qua/goc (đường gọi + host): cùng ID model nhưng đi đường khác cũng không trộn. API gốc (None, None) giữ tên cũ."""
+    k = [h_mau, h_vao, model, nhiet_do, max_out] + ([qua, goc] if (qua, goc) != (None, None) else [])
+    h = hashlib.sha256(json.dumps(k).encode("utf-8")).hexdigest()[:12]
     return f".{ten_file}.{h}.dang_chay.jsonl"
 
 
@@ -349,15 +351,18 @@ def main():
     ret = B.Retriever() if a.bl in ("b2", "b3") else None
     cl = llm.CoNganSach(client, ngan)
     git = _git()
-    meta = {"bl": a.bl, "nha": a.nha, "model": client.model, "split": a.split, "prompt_sha256": h_mau, "dau_vao_sha256": h_vao,
+    qua, goc = getattr(client, "qua", None), urllib.parse.urlsplit(client.goc).netloc     # host đã nhận khoá
+    meta = {"bl": a.bl, "nha": a.nha, "qua": qua, "goc": goc, "model": client.model, "split": a.split, "prompt_sha256": h_mau, "dau_vao_sha256": h_vao,
             "dong_bang_khop": khop, "hau_to": a.hau_to, "nhiet_do": client.nhiet_do, "max_out": client.max_out,
             "ngay": time.strftime("%Y-%m-%d"), "tran_usd": ngan.tran_usd, "git": git}
-    luu = ra / ten_checkpoint(ten_file, h_mau, h_vao, client.model, client.nhiet_do, client.max_out)
+    luu = ra / ten_checkpoint(ten_file, h_mau, h_vao, client.model, client.nhiet_do, client.max_out, qua, goc if qua else None)
     ra.mkdir(parents=True, exist_ok=True)
     truoc = doc_luu(luu, tai_ca(a.split))
     for r in truoc.values():                    # chi phí các ca đã trả tiền ở lần chạy trước cũng tính vào trần
         ngan.cong(r.get("usage") or {})
-    print(f"{MO_HINH[a.bl]} · {a.nha}/{client.model} · {a.split} (trần {ngan.tran_usd:.2f} USD"
+    la = qua and client.goc != llm.OPENROUTER_GOC
+    print(f"{MO_HINH[a.bl]} · {a.nha}/{client.model}" + (f" qua {qua}" if qua else "") + (f" @ {goc} (KHÁC địa chỉ mặc định)" if la else "")
+          + f" · {a.split} (trần {ngan.tran_usd:.2f} USD"
           + (f"; tiếp tục từ checkpoint {len(truoc)} ca, đã tính {ngan.da_dung:.4f} USD" if truoc else "") + ")\n")
     trang_thai = {"v": "gian_doan"}
 

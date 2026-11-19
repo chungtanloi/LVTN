@@ -12,6 +12,8 @@ validate_baseline.py — kiểm chứng đường ống baseline (CPA2, Tuần 2
   I. Sửa theo review lượt 1 (H1 câu hỏi rõ nghĩa, H2 lỗi API/checkpoint, M1 ngân sách, M2 hash, M3 errata, M5 lộ khoá, M6 chữ ký suy nghĩ…)
   J. Chạy thật ĐẦU-CUỐI qua CLI vào máy chủ giả cục bộ: kết quả, chi phí, checkpoint, trần, lỗi vĩnh viễn, không lộ khoá
   K. Sửa theo review lượt 2 (checkpoint cắt dở/ghi lỗi, ca LOI không vào số chính thức, trộn lần chạy, phân loại HTTP, 'công nhận', hash mã nguồn…)
+  L. Đi qua OpenRouter (BASELINE_<NHA>_VIA=openrouter): khoá OPENROUTER_API_KEY, định dạng chat/completions, tên file giữ họ model,
+     meta ghi 'qua', từng ca ghi model/nhà phục vụ OpenRouter trả về; VIA sai hoặc thiếu khoá → dừng, không lặng lẽ dùng API gốc
 
 Chạy: python validate_baseline.py
 """
@@ -30,6 +32,11 @@ import baselines as B
 import run_baseline as R
 
 ok_all = True
+
+
+def _bien_dinh_tuyen(k):
+    """Biến đổi đường gọi của phát triển viên (VIA / OPENROUTER_BASE_URL) không được lọt vào test."""
+    return k.startswith("BASELINE_") and (k.endswith("_VIA") or k == "BASELINE_OPENROUTER_BASE_URL")
 
 
 def check(cond, msg):
@@ -155,7 +162,7 @@ def phan_D():
     except llm.ThieuKhoa as ex:
         kq = str(ex)
     check("MODEL" in kq, f"có khoá mà chưa chọn model → ThieuKhoa nêu BASELINE_OPENAI_MODEL ({kq})")
-    env = {k: v for k, v in os.environ.items() if not k.endswith("_API_KEY")}
+    env = {k: v for k, v in os.environ.items() if not k.endswith("_API_KEY") and not _bien_dinh_tuyen(k)}
     env["CPA2_ENV_FILE"] = os.devnull
     with tempfile.TemporaryDirectory() as d:
         env["CPA2_BASELINE_OUT"] = d
@@ -263,7 +270,7 @@ def phan_F():
 
 def phan_G():
     print("G. BỘ CHẶN")
-    env = {k: v for k, v in os.environ.items() if not k.endswith("_API_KEY")}
+    env = {k: v for k, v in os.environ.items() if not k.endswith("_API_KEY") and not _bien_dinh_tuyen(k)}
     env["CPA2_ENV_FILE"] = os.devnull
     with tempfile.TemporaryDirectory() as d:
         env["CPA2_BASELINE_OUT"] = d
@@ -341,7 +348,7 @@ def _may_chu(kich_ban):
         def do_POST(self):
             n = int(self.headers.get("Content-Length") or 0)
             self.server.so_lan += 1
-            ma, hd, nd = kich_ban(self.server.so_lan, self.rfile.read(n).decode("utf-8"), dict(self.headers))
+            ma, hd, nd = kich_ban(self.server.so_lan, self.rfile.read(n).decode("utf-8"), {**dict(self.headers), "_duong_dan": self.path})
             self.send_response(ma)
             for k, v in hd.items():
                 self.send_header(k, v)
@@ -555,7 +562,7 @@ def _moi_truong(d, sv, them_env="", gia=(1, 2), env_phu=None):
     envf = Path(d) / ".env"
     envf.write_text(f"OPENAI_API_KEY={KHOA_GIA}\nBASELINE_OPENAI_MODEL=gia-1\nBASELINE_OPENAI_PRICE_IN={gia[0]}\nBASELINE_OPENAI_PRICE_OUT={gia[1]}\n"
                     f"BASELINE_OPENAI_BASE_URL=http://127.0.0.1:{sv.server_port}/v1\n{them_env}", encoding="utf-8")
-    env = {k: v for k, v in os.environ.items() if not k.endswith("_API_KEY")}
+    env = {k: v for k, v in os.environ.items() if not k.endswith("_API_KEY") and not _bien_dinh_tuyen(k)}
     env.update(CPA2_ENV_FILE=str(envf), CPA2_BASELINE_OUT=str(Path(d) / "ra"), CPA2_BANG_FILE=str(Path(d) / "bang.json"), PYTHONIOENCODING="utf-8")
     env.update(env_phu or {})
     return env
@@ -753,8 +760,119 @@ def phan_K():
         check(p.returncode == 9 and sv.so_lan == 0, f"L-6 split test đã có kết quả chính thức → từ chối chạy lại dù đổi --hau-to (exit {p.returncode})")
 
 
+KHOA_OR = "sk-or-v1-GIA0123456789abcdef"
+
+
+def _thu_tao(ten, env):
+    try:
+        return llm.tao_client(ten, env), None
+    except llm.ThieuKhoa as e:
+        return None, str(e)
+
+
+def phan_L():
+    print("L. ĐI QUA OPENROUTER (BASELINE_<NHA>_VIA=openrouter; máy chủ giả cục bộ, khoá giả)")
+    tl = {"id": "gen-1", "model": "google/gia-g", "provider": "Google AI Studio",
+          "choices": [{"message": {"content": "Lập luận.\nNHAN: FALSE"}}], "usage": {"prompt_tokens": 50, "completion_tokens": 5}}
+    nhan = []
+
+    def kb(lan, body, hd):
+        nhan.append((hd.get("_duong_dan"), hd.get("Authorization"), hd.get("x-goog-api-key"), json.loads(body)))
+        return 200, {"Content-Type": "application/json"}, json.dumps(tl)
+    sv = _may_chu(kb)
+    goc = f"http://127.0.0.1:{sv.server_port}/api/v1"
+    for ten in ("gemini", "openai"):
+        k = ten.upper()
+        env = {f"{k}_API_KEY": "KHOA-GOC", "OPENROUTER_API_KEY": KHOA_OR, f"BASELINE_{k}_MODEL": f"nha/{ten}-x",
+               f"BASELINE_{k}_VIA": "openrouter", "BASELINE_OPENROUTER_BASE_URL": goc}
+        c, loi = _thu_tao(ten, env)
+        nhan.clear()
+        di_cuc_bo = c is not None and getattr(c, "goc", "") == goc      # chỉ gọi khi chắc chắn trỏ vào máy chủ giả: test không ra mạng
+        r = c.chat([{"role": "system", "content": "S"}, {"role": "user", "content": "Hỏi"}]) if di_cuc_bo else {}
+        dd, auth, goog, body = nhan[0] if nhan else (None,) * 4
+        check(c is not None and dd == "/api/v1/chat/completions" and auth == f"Bearer {KHOA_OR}" and goog is None
+              and body["model"] == f"nha/{ten}-x" and body["messages"][0] == {"role": "system", "content": "S"},
+              f"{ten} + VIA=openrouter: chat/completions, khoá OPENROUTER_API_KEY (không phải {k}_API_KEY), model của họ {ten} ({loi or dd})")
+        check(c is not None and getattr(c, "qua", None) == "openrouter" and c.provider == ten
+              and r.get("phuc_vu") == {"model": "google/gia-g", "provider": "Google AI Studio"},
+              f"{ten}: client ghi qua=openrouter, provider giữ họ model, phản hồi trả model/nhà phục vụ ({r.get('phuc_vu')})")
+    c, loi = _thu_tao("gemini", {"GEMINI_API_KEY": "KHOA-GOC", "BASELINE_GEMINI_MODEL": "m", "BASELINE_GEMINI_VIA": "openrouter"})
+    check(c is None and loi and "OPENROUTER_API_KEY" in loi, f"VIA=openrouter mà thiếu OPENROUTER_API_KEY → dừng, nêu tên biến, không dùng khoá gốc ({loi})")
+    c, loi = _thu_tao("gemini", {"GEMINI_API_KEY": "k", "OPENROUTER_API_KEY": KHOA_OR, "BASELINE_GEMINI_MODEL": "m", "BASELINE_GEMINI_VIA": "openroutr"})
+    check(c is None and loi and "BASELINE_GEMINI_VIA" in loi, f"VIA gõ sai → dừng, không lặng lẽ quay về API gốc ({loi})")
+    c, loi = _thu_tao("gemini", {"OPENROUTER_API_KEY": KHOA_OR, "BASELINE_GEMINI_MODEL": "m", "BASELINE_GEMINI_VIA": "openrouter",
+                                 "BASELINE_GEMINI_BASE_URL": "http://127.0.0.1:1/khac"})
+    check(c is not None and c.goc == "https://openrouter.ai/api/v1",
+          f"VIA=openrouter: địa chỉ mặc định OpenRouter, KHÔNG dùng BASELINE_GEMINI_BASE_URL (khoá OpenRouter không gửi tới nơi khác) ({getattr(c, 'goc', loi)})")
+    c, loi = _thu_tao("gemini", {"GEMINI_API_KEY": "k", "BASELINE_GEMINI_MODEL": "m"})
+    check(isinstance(c, llm.GeminiClient) and getattr(c, "qua", None) is None, "hồi quy: không đặt VIA → Gemini API gốc như cũ")
+    o = llm.OpenAIClient("k", "m")
+    check("phuc_vu" not in o.phan_tich(tl), "hồi quy: API gốc (không qua OpenRouter) không thêm trường phuc_vu")
+    check(KHOA_OR not in llm.scrub(f"Invalid key {KHOA_OR}") and "sk-or" not in llm.scrub(f"key sk-or-v1-****abcd"), "scrub xoá khoá dạng sk-or-v1-…")
+    g = Gia([{"text": "NHAN: TRUE"}])
+    g.kb = lambda m, t: {"text": "NHAN: TRUE"}
+    g.chat = (lambda f: lambda m, t=None: {**f(m, t), "phuc_vu": {"model": "x/y", "provider": "P"}})(Gia.chat.__get__(g))
+    ca1 = next(iter(R.tai_ca("dev").values()))
+    r = B.chay("b1", ca1["vao"], g)
+    check(r.get("phuc_vu") == [{"model": "x/y", "provider": "P"}], f"mỗi ca ghi danh sách model/nhà phục vụ của từng lượt gọi ({r.get('phuc_vu')})")
+    check("phuc_vu" not in B.chay("b1", ca1["vao"], luon("TRUE")), "client không trả phuc_vu → dòng kết quả giữ định dạng cũ")
+    # --- review lượt 1 (OpenRouter)
+    for ten_ca, tra in (("thân lỗi", {"error": {"code": 502, "message": "upstream down"}}),
+                        ("finish_reason=error", {"choices": [{"finish_reason": "error", "message": {"content": ""}}], "usage": {}}),
+                        ("choices rỗng", {"choices": [], "usage": {}})):
+        s = _may_chu(lambda lan, body, hd, tra=tra: (200, {"Content-Type": "application/json"}, json.dumps(tra)))
+        c = llm.OpenRouterClient(KHOA_OR, "m", goc=f"http://127.0.0.1:{s.server_port}/api/v1")
+        try:
+            c.chat([{"role": "user", "content": "x"}])
+            kq = "không lỗi"
+        except llm.LoiNhaCungCap as e:
+            kq = ("vinh_vien" if e.vinh_vien else "tam", KHOA_OR in str(e))
+        check(kq == ("tam", False), f"R-H1 HTTP 200 nhưng {ten_ca} → LoiNhaCungCap tạm (thành ca LOI, không thành UNKNOWN được chấm) ({kq})")
+    for u, hop_le in (("http://openrouter.ai/api/v1", False), ("http://10.0.0.5/v1", False), ("ftp://openrouter.ai", False),
+                      ("http://127.0.0.1:9/v1", True), ("http://localhost:9/v1", True), ("https://openrouter.ai/api/v1/", True)):
+        c, loi = _thu_tao("gemini", {"OPENROUTER_API_KEY": KHOA_OR, "BASELINE_GEMINI_MODEL": "m", "BASELINE_GEMINI_VIA": "openrouter",
+                                     "BASELINE_OPENROUTER_BASE_URL": u})
+        check((c is not None) == hop_le, f"R-H2 BASELINE_OPENROUTER_BASE_URL={u}: {'nhận' if hop_le else 'từ chối (khoá không đi qua http/host lạ)'} ({loi})")
+    b = _may_chu(lambda lan, body, hd: (200, {}, json.dumps(tl)))
+    a = _may_chu(lambda lan, body, hd: (302, {"Location": f"http://127.0.0.1:{b.server_port}/api/v1/chat/completions"}, ""))
+    c = llm.OpenRouterClient(KHOA_OR, "m", goc=f"http://127.0.0.1:{a.server_port}/api/v1")
+    try:
+        c.chat([{"role": "user", "content": "x"}])
+        kq = "theo chuyển hướng"
+    except llm.LoiNhaCungCap as e:
+        kq = (e.code, e.vinh_vien)
+    check(kq == (302, True) and b.so_lan == 0, f"R-M3 3xx → lỗi vĩnh viễn, KHÔNG theo chuyển hướng (khoá không tới host khác) ({kq})")
+    k0 = R.ten_checkpoint("t", "m1", "v1", "gpt-a", 0, None)
+    check(k0 == R.ten_checkpoint("t", "m1", "v1", "gpt-a", 0, None, None, None)
+          and len({k0, R.ten_checkpoint("t", "m1", "v1", "gpt-a", 0, None, "openrouter", "openrouter.ai"),
+                   R.ten_checkpoint("t", "m1", "v1", "gpt-a", 0, None, "openrouter", "127.0.0.1:9")}) == 3,
+          "R-M4 checkpoint tách theo đường gọi (qua) + host; API gốc giữ tên cũ")
+    # --- đầu-cuối qua CLI: --nha gemini đi OpenRouter
+    nhan.clear()
+    with tempfile.TemporaryDirectory() as d:
+        envf = Path(d) / ".env"
+        envf.write_text(f"OPENROUTER_API_KEY={KHOA_OR}\nBASELINE_GEMINI_VIA=openrouter\nBASELINE_GEMINI_MODEL=google/gia-g\n"
+                        f"BASELINE_GEMINI_PRICE_IN=1\nBASELINE_GEMINI_PRICE_OUT=2\nBASELINE_OPENROUTER_BASE_URL={goc}\n", encoding="utf-8")
+        env = {k: v for k, v in os.environ.items() if not k.endswith("_API_KEY") and not k.startswith("BASELINE_")}
+        env.update(CPA2_ENV_FILE=str(envf), CPA2_BASELINE_OUT=str(Path(d) / "ra"), CPA2_BANG_FILE=str(Path(d) / "bang.json"), PYTHONIOENCODING="utf-8")
+        p = _cli(env, "--bl", "b1", "--nha", "gemini", "--split", "dev", "--chay-that")
+        f = Path(d) / "ra" / "ket_qua_baseline_b1_gemini_dev.json"
+        j = json.loads(f.read_text(encoding="utf-8")) if f.exists() else {}
+        txt = p.stdout + p.stderr + (f.read_text(encoding="utf-8") if f.exists() else "")
+        check(p.returncode == 0 and len(nhan) == 78 and all(a == f"Bearer {KHOA_OR}" for _, a, _, _ in nhan),
+              f"CLI --nha gemini qua OpenRouter: exit {p.returncode}, {len(nhan)} lần gọi chat/completions bằng khoá OpenRouter")
+        check(j.get("meta", {}).get("qua") == "openrouter" and j["meta"]["nha"] == "gemini" and j["meta"]["model"] == "google/gia-g"
+              and "openrouter" in p.stdout, "file kết quả giữ tên họ model (_gemini_), meta ghi qua=openrouter, dòng in đầu nêu OpenRouter")
+        host = f"127.0.0.1:{sv.server_port}"
+        check(j.get("meta", {}).get("goc") == host and host in p.stdout,
+              f"R-H2 meta ghi host đã nhận khoá + dòng in đầu nêu host khi khác mặc định ({j.get('meta', {}).get('goc')})")
+        check(bool(j) and all(r.get("phuc_vu") == [{"model": "google/gia-g", "provider": "Google AI Studio"}] for r in j["tra_loi_tho"]),
+              "từng ca trong tra_loi_tho ghi model/nhà phục vụ OpenRouter trả về")
+        check(bool(j) and KHOA_OR not in txt, "khoá OpenRouter không có trong output / file kết quả")
+
+
 def main():
-    for p in (phan_A, phan_B, phan_C, phan_D, phan_E, phan_F, phan_G, phan_H, phan_I, phan_J, phan_K):
+    for p in (phan_A, phan_B, phan_C, phan_D, phan_E, phan_F, phan_G, phan_H, phan_I, phan_J, phan_K, phan_L):
         p()
     print("\nKẾT LUẬN:", "ĐẠT — đường ống baseline đúng, không lộ gold, không chạy thật khi thiếu khoá/ngân sách" if ok_all else "CHƯA ĐẠT")
     return 0 if ok_all else 1

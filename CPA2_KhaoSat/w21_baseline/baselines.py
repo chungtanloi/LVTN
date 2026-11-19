@@ -175,9 +175,12 @@ def chay(ten, vao, client, ret=None):
     u = {"in": 0, "out": 0}
     luot = 0
     tho = []
+    pv = []                     # model/nhà phục vụ từng lượt (chỉ client đi qua OpenRouter trả) — để báo cáo ghi ca nào chạy ở đâu
     while luot < MAX_LUOT:
         r = client.chat(msgs, tools)
         luot += 1
+        if r.get("phuc_vu"):
+            pv.append(r["phuc_vu"])
         u["in"] += r["usage"]["in"]
         u["out"] += r["usage"]["out"]
         tho.append(r["text"])
@@ -188,6 +191,8 @@ def chay(ten, vao, client, ret=None):
                              "content": chay_cong_cu(t["name"], t["args"], ret)})
             continue
         nhan, thieu = doc_nhan(r["text"])
-        return {"tra_loi": nhan, "nhan_thieu": thieu, "tho": "\n---\n".join(tho), "luot": luot, "het_luot": False, "usage": u}
-    return {"tra_loi": "UNKNOWN", "nhan_thieu": True, "tho": "\n---\n".join(tho), "luot": luot, "het_luot": True, "usage": u}
+        return {"tra_loi": nhan, "nhan_thieu": thieu, "tho": "\n---\n".join(tho), "luot": luot, "het_luot": False, "usage": u,
+                **({"phuc_vu": pv} if pv else {})}
+    return {"tra_loi": "UNKNOWN", "nhan_thieu": True, "tho": "\n---\n".join(tho), "luot": luot, "het_luot": True, "usage": u,
+            **({"phuc_vu": pv} if pv else {})}
 
