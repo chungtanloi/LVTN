@@ -4,7 +4,7 @@
 **Sản phẩm:** `w23_so_sanh/so_sanh.py` (đã có, `9248cb1`) · `bang_so_sanh_{dev,test}.md/.json` · báo cáo này
 **Tiêu chí hoàn thành:** có bảng so sánh trên tập test + phân tích ca sai
 
-> **Trạng thái 19/11/2026: KHUNG.** Công cụ so sánh đã xong và có kiểm thử, nhưng **chưa có lần chạy baseline thật nào**. Mục 1 (giao thức) viết **trước** lần chạy baseline đầu tiên, để không chỉnh cách so sau khi đã thấy số. Mục 2–4 để trống, chỉ điền từ file kết quả.
+> **Trạng thái 19/11/2026: ĐANG LÀM.** Mục 1 (giao thức) commit **trước** lần chạy baseline đầu tiên (`eeff56d`), để không chỉnh cách so sau khi đã thấy số. **Dev: 4/6 cấu hình đã chạy** (mục 2; b3 chờ nạp credit). **Test: chưa chạy** (mục 3–4).
 
 ---
 
@@ -76,15 +76,23 @@ cd ../w23_so_sanh && python so_sanh.py --split test --cpa2-hau-to _sau_A17 --ra
 
 | Mục | Giá trị |
 |---|---|
-| Commit lúc chạy | `<<điền>>` |
-| `prompt_dong_bang.json` (sha256 / sha256_dau_vao) | `<<điền sau --ghi-bang>>` |
-| Model OpenAI-family (ID OpenRouter) · giá vào/ra USD/1M token | `<<điền>>` |
-| Model Gemini-family (ID OpenRouter) · giá vào/ra | `<<điền>>` |
-| Nhiệt độ · max_out | `<<điền>>` (mặc định `llm.THAM_SO`) |
-| Trần `BASELINE_MAX_USD` | `<<điền>>` |
-| Nhà hạ tầng thực phục vụ | lấy từ `phuc_vu` trong file kết quả |
+| Mục | Giá trị (dev, 19/11/2026) |
+|---|---|
+| Commit lúc chạy | b1 Gemini: `256df16`; b1 OpenAI, b2 Gemini, b2 OpenAI: `cd5f68c`. Hai lần b2 ghi `chua_commit: true` vì file kết quả của lần chạy ngay trước chưa commit (không phải mã nguồn; hash đóng băng khớp) |
+| `prompt_dong_bang.json` (sha256 / sha256_dau_vao) | `fad02fb25b67…` / `eff97ff7e5a5…` (đóng băng lại ở `256df16`, TRƯỚC lần gọi API thành công đầu tiên — xem ghi chú dưới) |
+| Model OpenAI-family (ID OpenRouter) · giá vào/ra USD/1M token | `openai/gpt-6.1-sol` (ra mắt 30/09/2026) · 2 / 10 |
+| Model Gemini-family (ID OpenRouter) · giá vào/ra | `google/gemini-4-argon` (ra mắt 13/10/2026) · 2 / 10 |
+| Nhiệt độ · max_out | không gửi `temperature` (mặc định nhà cung cấp) · 16384 token ra/lần gọi (gồm token nghĩ) |
+| Trần `BASELINE_MAX_USD` | 2 USD/lần chạy (dev) |
+| Nhà hạ tầng thực phục vụ (`phuc_vu`) | OpenAI: OpenAI 78/78 mỗi lần chạy. Gemini: Google 75 + Google AI Studio 3 (b1), Google 74 + Google AI Studio 4 (b2) |
 
 Phí nạp credit của OpenRouter không nằm trong giá token, nên chi phí thực cao hơn cột USD một chút.
+
+**Tiêu chí chọn model** (19/11/2026, giá lấy từ API công khai `openrouter.ai/api/v1/models`): đúng họ ghi trong CLAUDE.md (OpenAI "Sol" — logic nặng; Gemini cùng hạng và cùng giá); đã ra mắt ít nhất 2 tuần; có gọi công cụ (b3 cần); không dùng biến thể `:batch`.
+
+**Hai lần đổi tham số đóng băng TRƯỚC khi có kết quả thật** (không có ca nào được chấm trước các lần đổi này):
+1. `addb203`: `nhiet_do` 0 → không gửi. Bộ chặn đóng băng dừng lần chạy đầu vì `BASELINE_TEMPERATURE=none` khác bản đóng băng; model OpenAI đã chọn không nhận `temperature`. Để hai họ cùng cấu hình, cả hai đều không gửi.
+2. `256df16`: `max_out` không đặt → 16384. Lần thử thứ hai trả HTTP 402 ngay ca đầu (OpenRouter giữ chỗ 65536 token/lần gọi khi không có trần; credit thấp). 0 ca xong, 0 USD.
 
 ### 1.6 Quyết định phải chốt TRƯỚC khi chạy test
 
@@ -101,7 +109,7 @@ Phí nạp credit của OpenRouter không nằm trong giá token, nên chi phí 
 
 ## 2. Kết quả dev (kiểm đường ống, KHÔNG phải số so sánh chính)
 
-> Chưa chạy baseline. Hai dòng CPA² lấy từ `so_sanh.py --split dev --cpa2-hau-to _sau_A17` (19/11/2026). Phần còn lại dán từ `w23_so_sanh/bang_so_sanh_dev.md`.
+> **4/6 cấu hình đã chạy (19/11/2026); b3 OpenAI và b3 Gemini chưa chạy (chờ nạp credit).** Số lấy từ `w23_so_sanh/bang_so_sanh_dev.md` (`so_sanh.py --split dev --cpa2-hau-to _sau_A17 --ra`). Mọi baseline khớp bản đóng băng (chính thức), 78/78 ca, 0 LOI, 0 thiếu nhãn. **Dev chỉ để kiểm đường ống**: dòng CPA² chính thức là lần chạy 20/10 trên dev đã nhiễm.
 
 ### 2.1 `tong` (78 ca)
 
@@ -109,7 +117,12 @@ Phí nạp credit của OpenRouter không nằm trong giá token, nên chi phí 
 |---|---|---|---|---|---|---|---|---|---|---|
 | CPA² (chính thức, 20/10, đã nhiễm) | 78 | 92,3% | 6 | 78,2% | 90,2% | 67 | 5 | 0 | 0 | 0 |
 | CPA² `_sau_A17` (không chính thức) | 78 | 100,0% | 0 | 71,8% | 100,0% | 70 | 8 | 0 | 0 | 0 |
-| b1 · b2 · b3 × openai · gemini | | *chưa chạy* | | | | | | | | |
+| b1 OpenAI (gpt-6.1-sol) | 78 | 100,0% | 0 | 3,8% | 100,0% | 17 | 61 | 0 | 0 | 0,54 |
+| b1 Gemini (gemini-4-argon) | 78 | 79,5% | 16 | 55,1% | 62,8% | 38 | 24 | 0 | 0 | 0,66 |
+| b2 OpenAI | 78 | 98,7% | 1 | 10,3% | 87,5% | 21 | 56 | 0 | 0 | 0,75 |
+| b2 Gemini | 78 | 93,6% | 5 | 29,5% | 78,3% | 29 | 44 | 0 | 0 | 0,87 |
+| b3 OpenAI · b3 Gemini | | *chưa chạy* | | | | | | | | |
+| *mốc: luôn UNKNOWN* | 78 | 100% | 0 | 0% | — | 14 | 64 | | | |
 
 ### 2.2 `[cau_hoi_ro]` (49 ca)
 
@@ -117,7 +130,43 @@ Phí nạp credit của OpenRouter không nằm trong giá token, nên chi phí 
 |---|---|---|---|---|---|---|---|
 | CPA² (chính thức) | 49 | 93,9% | 3 | 77,6% | 92,1% | 43 | 3 |
 | CPA² `_sau_A17` | 49 | 100,0% | 0 | 63,3% | 100,0% | 41 | 8 |
-| baseline | | *chưa chạy* | | | | | |
+| b1 OpenAI | 49 | 100,0% | 0 | 2,0% | 100,0% | 11 | 38 |
+| b1 Gemini | 49 | 77,6% | 11 | 65,3% | 65,6% | 29 | 9 |
+| b2 OpenAI | 49 | 98,0% | 1 | 10,2% | 80,0% | 14 | 34 |
+| b2 Gemini | 49 | 95,9% | 2 | 30,6% | 86,7% | 22 | 25 |
+
+### 2.3 `[quy_che]` (65 ca) và `[thiet_ke]` (13 ca)
+
+| Hệ | `[quy_che]` unsound · Coverage · đúng gold | `[thiet_ke]` unsound · Coverage · đúng gold |
+|---|---|---|
+| CPA² (chính thức) | 4 · 90,8% · 56 | 2 · 15,4% · 11 |
+| CPA² `_sau_A17` | 0 · 86,2% · 57 | 0 · 0% · 13 |
+| b1 OpenAI | 0 · 4,6% · 4 | 0 · 0% · 13 |
+| b1 Gemini | 13 · 61,5% · 28 | 3 · 23,1% · 10 |
+| b2 OpenAI | 1 · 12,3% · 8 | 0 · 0% · 13 |
+| b2 Gemini | 2 · 30,8% · 19 | 3 · 23,1% · 10 |
+
+`[theo errata]`: số baseline không đổi so với `tong`; CPA² chính thức 7 unsound / 66 đúng gold (gold đóng băng: 6 / 67).
+
+### 2.4 McNemar (CPA² chính thức vs baseline, 78 cặp)
+
+| Baseline | đúng gold: CPA² kém / CPA² hơn / p | không unsound: CPA² kém / CPA² hơn / p |
+|---|---|---|
+| b1 OpenAI | 3 / 53 / < 0,0001 | **6 / 0 / 0,031** |
+| b1 Gemini | 7 / 36 / < 0,0001 | 6 / 16 / 0,053 |
+| b2 OpenAI | 3 / 49 / < 0,0001 | 6 / 1 / 0,125 |
+| b2 Gemini | 7 / 45 / < 0,0001 | 6 / 5 / 1,000 |
+
+Ngưỡng Bonferroni 0,05/6 ≈ 0,0083 (mục 1.4). Ca bất đồng từng cặp: `bang_so_sanh_dev.md`.
+
+### 2.5 Nhận xét trên dev (chưa phải kết luận — chờ test)
+
+- **Hai họ model cư xử ngược nhau.** GPT-6.1-sol gần như luôn từ chối: 75/78 ca ở b1 trả UNKNOWN và nêu rõ lý do — "chưa có quy định điều kiện đăng ký … cần bổ sung" (b1 không có văn bản quy chế). Soundness 100% nhưng Coverage 3,8%, sát mốc "luôn UNKNOWN". Gemini kết luận nhiều hơn nhưng sai nhiều (b1: 16 unsound).
+- **Truy hồi điều khoản (b2) giảm lỗi của Gemini** (unsound 16 → 5) nhưng cũng giảm Coverage (55,1% → 29,5%); với OpenAI, b2 kết luận nhiều hơn b1 một chút (3,8% → 10,3%) và thêm 1 ca sai (EL-09).
+- **Đúng gold:** CPA² hơn cả 4 baseline ở 36–53 ca, kém ở 3–7 ca (p < 0,0001, qua ngưỡng Bonferroni).
+- **Không unsound: CPA² chính thức THUA b1 OpenAI** (6 vs 0, p = 0,031 — chưa qua ngưỡng Bonferroni). b1 OpenAI gần như không kết luận gì, nên không sai; 6 ca sai của CPA² trên dev 20/10 là lỗi đã sửa sau đó (bản `_sau_A17`: 0 unsound) — nhưng dev đã nhiễm nên không dùng bản sau sửa để kết luận. Đây là lý do mục 1.4 không cho đọc Soundness một mình.
+- **Ca CPA² chính thức sai mà baseline đúng:** NL-06, NL-10, NL-11 (parser, đã sửa sau 20/10) và HG-01 (chỉ so với b2 Gemini).
+- **Chi phí:** 2,83 USD cho 4 lần chạy dev; thấp hơn ước lượng thô 10–30%. Token ra rất ít (OpenAI ~100–130, Gemini ~200–220 token/ca): với cấu hình này, hai model gần như không sinh token nghĩ tính phí.
 
 ---
 
@@ -176,8 +225,9 @@ Một ca có thể thuộc nhiều loại; ghi loại chính trước. CPA² dù
 
 ## 6. Việc còn lại
 
-- [ ] **A19 (cần Loi):** điền ID model, giá và trần vào `.env` → `--ghi-bang --ghi-de` → commit → ước lượng → chạy dev 6 cấu hình.
+- [x] **A19:** cấu hình `.env` (model, giá, trần), đóng băng (`256df16`), chạy dev b1/b2 × openai/gemini — 19/11/2026, 2,83 USD.
+- [ ] **A19 còn lại (cần Loi nạp credit):** chạy dev b3 OpenAI, b3 Gemini (ước lượng ~3,2 USD mỗi cấu hình).
 - [ ] **A20, A21 (cần Loi):** chốt trước khi chạy test (mục 1.6).
-- [ ] Điền mục 1.5, chạy `so_sanh.py --split dev --ra`, điền mục 2.
+- [x] Điền mục 1.5, chạy `so_sanh.py --split dev --ra`, điền mục 2 (4/6 cấu hình).
 - [ ] Chạy test một lần cho mỗi cấu hình, điền mục 3, phân tích mục 4.
 - [ ] Cập nhật checklist Excel: chỉ tích ô có bằng chứng.
