@@ -4,7 +4,7 @@
 **Sản phẩm:** `w23_so_sanh/so_sanh.py` (đã có, `9248cb1`) · `bang_so_sanh_{dev,test}.md/.json` · báo cáo này
 **Tiêu chí hoàn thành:** có bảng so sánh trên tập test + phân tích ca sai
 
-> **Trạng thái 19/11/2026: ĐANG LÀM.** Mục 1 (giao thức) commit **trước** lần chạy baseline đầu tiên (`eeff56d`), để không chỉnh cách so sau khi đã thấy số. **Dev: 6/6 cấu hình đã chạy** (mục 2, 7,37 USD). **Test: chưa chạy** (mục 3–4; chờ A20/A21).
+> **Trạng thái 19/11/2026: ĐANG LÀM.** Mục 1 (giao thức) commit **trước** lần chạy baseline đầu tiên (`eeff56d`), để không chỉnh cách so sau khi đã thấy số. **Dev: 6/6 cấu hình đã chạy** (mục 2, 7,37 USD). **Test: chưa chạy** (mục 3–4; A20/A21 đã chốt 19/11/2026).
 
 ---
 
@@ -96,8 +96,8 @@ Phí nạp credit của OpenRouter không nằm trong giá token, nên chi phí 
 
 ### 1.6 Quyết định phải chốt TRƯỚC khi chạy test
 
-- [ ] **A20:** viết câu hỏi tự nhiên cho 29 + 26 ca `cau_hoi_kem` (kèm soát độc lập + đóng băng như gold), **hay** chỉ báo hai dòng `tong` / `[cau_hoi_ro]`. Đề xuất: chỉ báo hai dòng (không đổi bộ ca sau đóng băng).
-- [ ] **A21:** gold TN-01/03/08 (giả định thiếu `tc_cong_nhan` = 0) lệch R21. Chọn (a) errata → UNKNOWN, (b) thêm `tc_cong_nhan: 0` vào hồ sơ (sửa đầu vào sau đóng băng = errata), hay (c) giữ. Ảnh hưởng **cả** CPA² lẫn baseline vì dùng chung gold.
+- [x] **A20:** viết câu hỏi tự nhiên cho 29 + 26 ca `cau_hoi_kem` (kèm soát độc lập + đóng băng như gold), **hay** chỉ báo hai dòng `tong` / `[cau_hoi_ro]`. **Loi chọn 19/11/2026: chỉ báo hai dòng.**
+- [x] **A21:** gold TN-01/03/08 (giả định thiếu `tc_cong_nhan` = 0) lệch R21. Chọn (a) errata → UNKNOWN, (b) thêm `tc_cong_nhan: 0` vào hồ sơ (sửa đầu vào sau đóng băng = errata), hay (c) giữ. Ảnh hưởng **cả** CPA² lẫn baseline vì dùng chung gold. **Loi chọn (a) 19/11/2026:** ba mục mới trong `gtruth_errata.json` (TN-01, TN-03 TRUE → UNKNOWN; TN-08 FALSE → UNKNOWN), ghi TRƯỚC lần chạy baseline test đầu tiên. Số chính thức vẫn theo gold đóng băng; dòng `[theo errata]` của CPA² test đổi theo (đúng gold 64, từ chối thừa 7).
 
 ### 1.7 Xử lý khi thấy lỗi
 
@@ -236,7 +236,7 @@ Một ca có thể thuộc nhiều loại; ghi loại chính trước. CPA² dù
 
 - [x] **A19:** cấu hình `.env` (model, giá, trần), đóng băng (`256df16`), chạy dev b1/b2 × openai/gemini — 19/11/2026, 2,83 USD.
 - [x] **A19 còn lại:** chạy dev b3 OpenAI, b3 Gemini — 19/11/2026, 4,54 USD.
-- [ ] **A20, A21 (cần Loi):** chốt trước khi chạy test (mục 1.6).
+- [x] **A20, A21:** chốt trước khi chạy test (mục 1.6) — 19/11/2026: hai dòng; errata (a).
 - [x] Điền mục 1.5, chạy `so_sanh.py --split dev --ra`, điền mục 2 (6/6 cấu hình).
 - [ ] Chạy test một lần cho mỗi cấu hình, điền mục 3, phân tích mục 4.
 - [ ] Cập nhật checklist Excel: chỉ tích ô có bằng chứng.

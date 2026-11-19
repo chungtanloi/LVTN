@@ -111,7 +111,7 @@ Toàn bộ 17 bộ validate (tuần 5–21): **17/17 `KẾT LUẬN: ĐẠT`**, k
 ## 8. Việc còn lại
 
 - [ ] **A19 (cần Loi):** đặt `OPENAI_API_KEY`, `GEMINI_API_KEY`, `BASELINE_*_MODEL`, `BASELINE_*_PRICE_IN/OUT` vào **biến môi trường của phiên cloud** (Edit environment → Network secrets / biến môi trường; không dán vào chat). Sau đó: cân nhắc `BASELINE_TEMPERATURE`, chạy `--ghi-bang --ghi-de`, commit, rồi chạy dev (b1 → b2 → b3, từng nhà).
-- [ ] **A20 (cần Loi):** có viết câu hỏi tự nhiên cho 29 + 26 ca ở mục 3 (kèm soát độc lập) hay chỉ báo cáo hai dòng `tong` / `[cau_hoi_ro]`.
+- [x] **A20 (cần Loi):** có viết câu hỏi tự nhiên cho 29 + 26 ca ở mục 3 (kèm soát độc lập) hay chỉ báo cáo hai dòng `tong` / `[cau_hoi_ro]` — **Loi chọn 19/11/2026: chỉ báo hai dòng.**
 - [ ] **C16:** kiểm adapter OpenAI/Gemini với API thật; xử lý phản hồi rỗng do `MAX_TOKENS`/`SAFETY` (hiện tính là thiếu nhãn → UNKNOWN).
 - [x] So sánh CPA² và baseline trên **cùng tập ca**: CPA² hiện báo riêng từng bộ (58 + 20 ca dev); cần hàm gộp — **xong 19/11/2026:** `w23_so_sanh/so_sanh.py` (`9248cb1`), gộp G-Truth + OCR-Noise, tập chung theo hệ chính thức; xem `Tuan23_So_sanh_baseline.md`.
 - [ ] Tuần 22: chạy test một lần cho CPA² và baseline, báo cả số gold và số theo errata.
