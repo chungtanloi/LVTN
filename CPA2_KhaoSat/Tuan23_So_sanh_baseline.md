@@ -4,7 +4,9 @@
 **Sản phẩm:** `w23_so_sanh/so_sanh.py` (đã có, `9248cb1`) · `bang_so_sanh_{dev,test}.md/.json` · báo cáo này
 **Tiêu chí hoàn thành:** có bảng so sánh trên tập test + phân tích ca sai
 
-> **Trạng thái 19/11/2026: ĐANG LÀM.** Mục 1 (giao thức) commit **trước** lần chạy baseline đầu tiên (`eeff56d`), để không chỉnh cách so sau khi đã thấy số. **Dev: 6/6 cấu hình đã chạy** (mục 2, 7,37 USD). **Test: chưa chạy** (mục 3–4; A20/A21 đã chốt 19/11/2026).
+> **Trạng thái 20/11/2026: CÓ SỐ TEST + PHÂN TÍCH CA SAI.** Mục 1 (giao thức) commit **trước** lần chạy baseline đầu tiên (`eeff56d`). Dev 6/6 (mục 2, 7,37 USD). **Test 6/6, chạy một lần** (mục 3, 7,28 USD), phân tích ca sai ở mục 4.
+>
+> **Kết luận chính (mục 3.5):** trên `[cau_hoi_ro]` của test, không baseline nào vừa sai ít hơn vừa kết luận nhiều hơn CPA². Nhưng CPA² chính thức (bản 02/11) **không** sai ít hơn baseline OpenAI (2 vs 0 kết luận sai) — các baseline đó gần như luôn từ chối (Coverage 2–28%). Về số ca đúng gold, CPA² hơn 5/6 baseline có ý nghĩa thống kê (Bonferroni); với b3 Gemini thì chưa (p = 0,0094).
 
 ---
 
@@ -181,25 +183,85 @@ Ngưỡng Bonferroni 0,05/6 ≈ 0,0083 (mục 1.4). Ca bất đồng từng cặ
 
 ## 3. Kết quả test (số so sánh chính — chạy MỘT lần)
 
-> Chưa chạy baseline. Chỉ chạy sau mục 1.6. Hai dòng CPA² có sẵn từ Tuần 22 (lấy qua `so_sanh.py --split test`).
+> **Chạy một lần, 19–20/11/2026**, sau khi chốt A20/A21 (`c146b69`). b1/b2 trên `c146b69`, b3 trên `04bc0b9`; mọi file khớp bản đóng băng `fad02fb2…/eff97ff7…`, 76/76 ca, 0 LOI trong kết quả cuối. b3 Gemini dừng hai lần và tiếp tục từ checkpoint: HTTP 402 hết credit ở 30/76, rồi 1 ca LOI tạm thời được thử lại bằng chính lệnh đó (không phải chạy test lần hai). Chi phí test 7,28 USD (tổng dev + test 14,65 USD). Số lấy từ `w23_so_sanh/bang_so_sanh_test.md`. Hai dòng CPA² là lần chạy Tuần 22 (02/11, `e880ee4`).
 
 ### 3.1 `tong` (76 ca)
 
 | Hệ | n | Soundness | unsound | Coverage | Selective Acc | đúng gold | từ chối thừa | thiếu nhãn | LOI | USD |
 |---|---|---|---|---|---|---|---|---|---|---|
-| CPA² (chính thức, Tuần 22) | 76 | 93,4% | 5 | 63,2% | 89,6% | 58 | 13 | 0 | 0 | 0 |
+| **CPA² (chính thức, Tuần 22)** | 76 | 93,4% | 5 | 63,2% | 89,6% | **58** | 13 | 0 | 0 | 0 |
 | CPA² `_sau_A17` (không chính thức, test đã nhiễm) | 76 | 100,0% | 0 | 61,8% | 100,0% | 63 | 13 | 0 | 0 | 0 |
-| b1 · b2 · b3 × openai · gemini | | *chưa chạy* | | | | | | | | |
+| b1 OpenAI (gpt-6.1-sol) | 76 | 100,0% | 0 | 3,9% | 100,0% | 19 | 57 | 0 | 0 | 0,54 |
+| b1 Gemini (gemini-4-argon) | 76 | 80,3% | 15 | 47,4% | 58,3% | 36 | 25 | 0 | 0 | 0,67 |
+| b2 OpenAI | 76 | 100,0% | 0 | 10,5% | 100,0% | 24 | 52 | 0 | 0 | 0,75 |
+| b2 Gemini | 76 | 94,7% | 4 | 22,4% | 76,5% | 28 | 44 | 0 | 0 | 0,90 |
+| b3 OpenAI | 76 | 94,7% | 4 | 30,3% | 82,6% | 34 | 38 | 6 | 0 | 1,99 |
+| b3 Gemini | 76 | 89,5% | 8 | 52,6% | 80,0% | 44 | 24 | 7 | 0 | 2,44 |
+| *mốc: luôn UNKNOWN* | 76 | 100% | 0 | 0% | — | 16 | 60 | | | |
 
-### 3.2 `[cau_hoi_ro]` (50 ca) · 3.3 `[theo errata]` · 3.4 McNemar
+Thiếu nhãn ở b3 đều là ca hết 6 lượt gọi công cụ mà chưa kết luận → UNKNOWN.
 
-> Chưa chạy.
+### 3.2 `[cau_hoi_ro]` (50 ca) — nhóm dùng để kết luận (A20)
+
+| Hệ | n | Soundness | unsound | Coverage | Selective Acc | đúng gold | từ chối thừa |
+|---|---|---|---|---|---|---|---|
+| **CPA² (chính thức)** | 50 | 96,0% | **2** | **54,0%** | 92,6% | **36** | 12 |
+| CPA² `_sau_A17` | 50 | 100,0% | 0 | 52,0% | 100,0% | 38 | 12 |
+| b1 OpenAI | 50 | 100,0% | 0 | 2,0% | 100,0% | 13 | 37 |
+| b1 Gemini | 50 | 78,0% | 11 | 56,0% | 60,7% | 28 | 11 |
+| b2 OpenAI | 50 | 100,0% | 0 | 10,0% | 100,0% | 17 | 33 |
+| b2 Gemini | 50 | 96,0% | 2 | 22,0% | 81,8% | 21 | 27 |
+| b3 OpenAI | 50 | 100,0% | 0 | 28,0% | 100,0% | 26 | 24 |
+| b3 Gemini | 50 | 92,0% | 4 | 62,0% | 87,1% | 35 | 11 |
+
+### 3.3 `[quy_che]` (62 ca) · `[thiet_ke]` (14 ca) · `[theo errata]` (76 ca)
+
+| Hệ | `[quy_che]` unsound · Coverage · đúng gold | `[thiet_ke]` unsound · Coverage · đúng gold | `[theo errata]` unsound · đúng gold · từ chối thừa |
+|---|---|---|---|
+| CPA² (chính thức) | 4 · 72,6% · 45 | 1 · 21,4% · 13 | 5 · 64 · 7 |
+| CPA² `_sau_A17` | 0 · 72,6% · 49 | 0 · 14,3% · 14 | 0 · 69 · 7 |
+| b1 OpenAI | 0 · 4,8% · 7 | 0 · 0% · 12 | 0 · 25 · 51 |
+| b1 Gemini | 13 · 53,2% · 24 | 2 · 21,4% · 12 | 18 · 35 · 23 |
+| b2 OpenAI | 0 · 12,9% · 12 | 0 · 0% · 12 | 0 · 30 · 46 |
+| b2 Gemini | 2 · 24,2% · 17 | 2 · 14,3% · 11 | 5 · 31 · 40 |
+| b3 OpenAI | 3 · 33,9% · 22 | 1 · 14,3% · 12 | 5 · 38 · 33 |
+| b3 Gemini | 3 · 54,8% · 35 | 5 · 42,9% · 9 | 11 · 44 · 21 |
+
+Errata (7 ca: HG-02/03/04/08, TN-01/03/08) đổi gold TRUE/FALSE → UNKNOWN, nên baseline nào kết luận ở các ca đó thì theo errata lại thành sai (b1 Gemini 15 → 18).
+
+### 3.4 McNemar (CPA² chính thức vs baseline, 76 cặp, `tong`)
+
+| Baseline | đúng gold: CPA² kém / CPA² hơn / p | không unsound: CPA² kém / CPA² hơn / p |
+|---|---|---|
+| b1 OpenAI | 1 / 40 / < 0,0001 | 5 / 0 / 0,063 |
+| b1 Gemini | 6 / 28 / 0,0002 | 5 / 15 / 0,041 |
+| b2 OpenAI | 1 / 35 / < 0,0001 | 5 / 0 / 0,063 |
+| b2 Gemini | 3 / 33 / < 0,0001 | 5 / 4 / 1,000 |
+| b3 OpenAI | 3 / 27 / < 0,0001 | 5 / 4 / 1,000 |
+| b3 Gemini | 6 / 20 / **0,0094** | 5 / 8 / 0,581 |
+
+Ngưỡng Bonferroni 0,05/6 ≈ 0,0083. **Đúng gold:** CPA² hơn 5/6 baseline qua ngưỡng; với b3 Gemini p = 0,0094 — **chưa qua**. **Không unsound:** không cặp nào qua ngưỡng (b1 Gemini p = 0,041 chỉ qua mức 0,05 thô).
+
+### 3.5 Trả lời câu hỏi so sánh chính (đặt trước ở mục 1.4)
+
+Trên test, `[cau_hoi_ro]`, CPA² chính thức so với baseline tốt nhất từng loại:
+
+| Loại | (1) unsound: CPA² 2 vs | (2) Selective Acc: CPA² 92,6% vs | (3) Coverage: CPA² 54,0% vs |
+|---|---|---|---|
+| b1 | OpenAI 0 · Gemini 11 | OpenAI 100% (1 kết luận) · Gemini 60,7% | OpenAI 2,0% · Gemini 56,0% |
+| b2 | OpenAI 0 · Gemini 2 | OpenAI 100% (5 kết luận) · Gemini 81,8% | OpenAI 10,0% · Gemini 22,0% |
+| b3 | OpenAI 0 · Gemini 4 | OpenAI 100% (14 kết luận) · Gemini 87,1% | OpenAI 28,0% · Gemini 62,0% |
+
+- **(1) Số kết luận sai: CPA² chính thức KHÔNG ít hơn baseline OpenAI.** Cả ba baseline OpenAI có 0 kết luận sai, đổi lại chúng kết luận rất ít (1–14/50 ca). 2 ca sai của CPA² trong nhóm này (DK-21, DK-22) là lỗi KB/thiết kế đã biết từ Tuần 22 và đã sửa sau (C20, C21), nhưng số chính thức giữ nguyên.
+- **(2) Selective Accuracy:** CPA² (92,6%) cao hơn mọi baseline Gemini, thấp hơn ba baseline OpenAI (100% trên rất ít kết luận).
+- **(3) Coverage:** CPA² (54,0%) cao hơn cả ba baseline OpenAI và b2 Gemini; **thấp hơn b1 Gemini (56,0%) và b3 Gemini (62,0%)** — hai hệ này đổi Coverage lấy nhiều kết luận sai hơn (11 và 4).
+- **Không baseline nào vừa sai ít hơn vừa kết luận nhiều hơn CPA².** Trên `tong`, CPA² có nhiều ca đúng gold nhất (58; baseline cao nhất 44), nhưng trên `[cau_hoi_ro]` b3 Gemini gần ngang (35 vs 36).
 
 ---
 
 ## 4. Phân tích ca sai
 
-> Chưa có dữ liệu. Danh sách ca lấy từ mục "Ca bất đồng" của `bang_so_sanh_test.md`.
+> Trên test (số chính thức). Danh sách ca lấy từ `bang_so_sanh_test.md` (mục "Ca bất đồng") và file kết quả baseline; mỗi ca baseline sai được xếp loại bằng cách đọc câu trả lời thô (`tra_loi_tho`).
 
 ### 4.1 Cách phân loại (định trước)
 
@@ -216,9 +278,43 @@ Ngưỡng Bonferroni 0,05/6 ≈ 0,0083 (mục 1.4). Ca bất đồng từng cặ
 
 Một ca có thể thuộc nhiều loại; ghi loại chính trước. CPA² dùng lại phân loại của Tuần 22 §3 (parser · KB · OCR · thiếu dữ kiện · gold).
 
-### 4.2 CPA² đúng, baseline sai · 4.3 Baseline đúng, CPA² sai · 4.4 Cả hai cùng sai
+### 4.2 Kết luận sai của baseline (31 lượt trên 21 ca)
 
-> Chưa có dữ liệu.
+b1 OpenAI và b2 OpenAI không có kết luận sai nào. 31 lượt sai: b1 Gemini 15, b2 Gemini 4, b3 OpenAI 4, b3 Gemini 8.
+
+| Loại | Lượt | Ca và cấu hình | Mô tả (từ câu trả lời thô) |
+|---|---|---|---|
+| **L7** câu hỏi benchmark gây lỗi | 14 | RC-01, RC-03, RC-07, RC-12 (b1G 3, b2G 1, b3O 3, b3G 4); EL-17 (b1G); ON-07M4 (b3O), ON-08M4 (b2G) | RC: câu hỏi "Hệ thống có thể đề xuất em đăng ký X ở HK1 không?" nhưng claim là `khong_de_xuat:X@1` (gold TRUE = *không* đề xuất) → trả lời "không" đúng nghĩa câu hỏi mà bị chấm sai. EL-17: hỏi "được công nhận" nhưng claim là "đủ điều kiện được xét" (QĐ5339 Đ2 k6). ON-07M4/08M4: hỏi bằng ký hiệu ASP `passed("…")?` (gold UNKNOWN, nên cũng là L4) |
+| **L2** bịa hoặc dùng sai quy định | 8 | đều b1 Gemini: DK-11, EL-05 · DK-13, DK-17, DK-20 · DK-18, ON-04M1 · TN-12 | DK-11, EL-05: tự trừ 11 TC GDQP/GDTC khỏi số TC tích lũy trước khi so ngưỡng 120 TC. DK-13: coi XH024 là tiên quyết của XH025 (thực tế song hành). DK-17: bỏ ngưỡng ≥ 80 TC của CT466E. DK-20: tiên quyết của ML019 ghi nhầm thành ML021 (đúng là ML018). DK-18, ON-04M1: bịa nội dung CTĐT (CT518E là "tiểu luận tốt nghiệp"; "phải học kèm CT477"). TN-12: dùng "15 TC giảm 1 HK" (QĐ3266 Đ5 là 9 TC) và đếm `da_hoc_nam2` = 18 nửa năm thành 18 HK |
+| **L4** kết luận khi gold UNKNOWN | 5 | ON-04M4 (b1G); ON-03M4, ON-04M3, ON-04M4, ON-10M3 (b3G) | OCR mức M3/M4: dòng học phần bị mất (tổng TC học kỳ lệch) hoặc điểm chữ F trái với điểm số. Model **có nhận ra** điểm lệch (vd. ON-10M3: "điểm chữ F không hợp lệ với điểm số 7.5") nhưng vẫn kết luận FALSE thay vì nêu dữ kiện không chắc |
+| **L1** tính sai số | 4 | TN-13 (b1G, b2G), HG-04 (b1G, b2G) | TN-13: cộng TC ra 161 và 171 (đúng 159 < 161). HG-04: ĐTBCTL tính ra 3,18 (đúng 3,20, biên dưới hạng giỏi) |
+| L3 · L6 · L8 | 0 | | Không có kết luận sai thuộc các loại này. L6 (thiếu nhãn: b3 OpenAI 6, b3 Gemini 7 — hết lượt gọi công cụ) và L8 (1 LOI tạm thời của b3 Gemini, đã thử lại) chỉ làm tăng từ chối, không thành kết luận sai |
+
+- **Gần một nửa (14/31) lượt sai là do câu hỏi của benchmark (L7)**, không phải do model. Đây là lý do A20 chọn kết luận trên `[cau_hoi_ro]`: trong nhóm đó còn 17 lượt sai (b1G 11, b2G 2, b3G 4), gồm L2 8, L4 5, L1 4.
+- **L2 chỉ xuất hiện ở b1 Gemini** (không có văn bản quy chế): thêm truy hồi điều khoản (b2) hay công cụ tra CTĐT (b3) đều loại được lỗi bịa quy định ở tập test.
+- **L1 còn ở b2 Gemini:** có văn bản quy chế mà không có máy tính thì vẫn cộng sai TC và ĐTBCTL. b3 (có `may_tinh`) không sai ca L1 nào.
+- **L4 tập trung ở b3 Gemini trên OCR nhiễu:** công cụ giúp kết luận nhiều hơn, nhưng model không có cơ chế "không chắc thì từ chối" như ba trị của CPA² (Tuần 16).
+- **L5 (từ chối thừa) là lỗi lớn nhất về số lượng** nhưng không làm sai: b1 OpenAI 57, b2 OpenAI 52, b2 Gemini 44, b3 OpenAI 38, b1 Gemini 25, b3 Gemini 24 (CPA² 13). GPT-6.1-sol ở b1 nêu đúng lý do — "chưa có quy định … cần bổ sung" — nên hành vi này hợp lý khi không có văn bản, nhưng vẫn từ chối nhiều ở b2/b3 dù đã có điều khoản và công cụ.
+
+### 4.3 Baseline đúng, CPA² chính thức sai
+
+| Ca | Gold → CPA² | Baseline đúng | Nguyên nhân (Tuần 22 §3.1) | Đã sửa |
+|---|---|---|---|---|
+| DK-21 | FALSE → TRUE | b1 Gemini, b3 OpenAI, b3 Gemini | KB: ML018 coi là đã tích lũy vì công nhận LLCT tự động | C20, R-Formal v1.12 (`5535fa4`) |
+| DK-22 | UNKNOWN → FALSE | cả 6 (đều trả UNKNOWN) | thiết kế: mã CT999 ngoài CTĐT, thế giới đóng cho FALSE | C21 (`a22e238`) |
+
+MT-08, MT-09, MT-11 (cùng nguyên nhân C20) CPA² cũng sai, nhưng **không baseline nào trả đúng** (đều từ chối); ba ca này có câu hỏi rỗng (`cau_hoi_kem = rong`), nên chỉ nằm trong `tong`.
+
+### 4.4 Cả hai cùng sai
+
+Không có ca nào cả CPA² chính thức lẫn một baseline cùng kết luận sai. Các lỗi của CPA² (KB: công nhận tự động; thiết kế: thế giới đóng với mã ngoài CTĐT) và của baseline (câu hỏi, bịa quy định, tính số, OCR nhiễu) **không chồng nhau**.
+
+### 4.5 CPA² đúng, baseline sai — những gì solver + chứng chỉ làm được mà baseline không
+
+- **Ngưỡng TC và quan hệ học phần** (DK-11, DK-13, DK-17, DK-20, EL-05): CPA² đọc tiên quyết / song hành / ngưỡng TC từ CTĐT đã hình thức hoá, không tự suy ra quy định.
+- **Số học** (TN-13): tổng TC tính bằng solver. Ở HG-04 (ĐTBCTL đúng biên 3,20) baseline Gemini tính sai, nhưng CPA² chính thức cũng không đúng gold — nó từ chối vì chưa khai báo dữ kiện hạ bậc (Đ34 k2; theo errata gold là UNKNOWN, nên theo errata CPA² đúng).
+- **OCR không chắc** (ON-03M4, ON-04M3, ON-04M4, ON-10M3): kiểm chéo tổng TC / điểm (Tuần 15, C14) → UNKNOWN kèm dữ kiện cần xác minh, thay vì kết luận theo dòng đọc sai.
+- Ở tập test này, CPA² **không** hơn baseline ở việc tránh kết luận sai so với baseline OpenAI (mục 3.5) — điểm mạnh của CPA² là kết luận **được nhiều hơn** mà vẫn ít sai, chứ không phải ít sai hơn một hệ gần như luôn từ chối.
 
 ---
 
@@ -238,5 +334,6 @@ Một ca có thể thuộc nhiều loại; ghi loại chính trước. CPA² dù
 - [x] **A19 còn lại:** chạy dev b3 OpenAI, b3 Gemini — 19/11/2026, 4,54 USD.
 - [x] **A20, A21:** chốt trước khi chạy test (mục 1.6) — 19/11/2026: hai dòng; errata (a).
 - [x] Điền mục 1.5, chạy `so_sanh.py --split dev --ra`, điền mục 2 (6/6 cấu hình).
-- [ ] Chạy test một lần cho mỗi cấu hình, điền mục 3, phân tích mục 4.
+- [x] Chạy test một lần cho mỗi cấu hình, điền mục 3, phân tích mục 4 — 19–20/11/2026, 7,28 USD.
+- [ ] Người thứ hai soát phân loại L1–L8 ở mục 4.2 (A7): phân loại do một người làm, đọc câu trả lời thô.
 - [ ] Cập nhật checklist Excel: chỉ tích ô có bằng chứng.
