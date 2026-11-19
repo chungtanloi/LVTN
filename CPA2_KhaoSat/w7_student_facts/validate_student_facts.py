@@ -111,6 +111,49 @@ def kiem_loader_chung():
     return ok and good
 
 
+def kiem_c25():
+    """C25 (R-M04 + R-M15, QĐ5339 Đ3 k3, k11): HP được công nhận (có quyết định) nhận điểm của HP đã học và vào ĐTBCTL.
+    Đi QUA loader (không viết tay g4_da_hoc/tc_da_hoc): trước v1.13 loader không sinh hai dữ kiện này → R-M04 không bao giờ
+    chạy, ML016/ML018 tích lũy TC nhưng lặng lẽ ra khỏi ĐTBCTL (cùng loại lỗi tc_diem_f, Bài học C15)."""
+    tc = {c["ma"]: c["tin_chi"] for c in json.loads((W6 / "curriculum_cntt_k49.json").read_text(encoding="utf-8"))["hoc_phan"]}
+    base = json.loads((STUDENTS / "sv_lvtn.json").read_text(encoding="utf-8"))
+    for c in ("ML016", "ML018", "ML019"):
+        base["grades"].pop(c, None)
+    def ho_so(thang10, letter, status, quyet_dinh):
+        j = json.loads(json.dumps(base))
+        j["grades"]["ML010"] = {"code": "ML010", "credits": 3, "thang10": thang10, "letter": letter, "status": status}
+        j["exemptions"] = [{"ma_hp": c, "quyet_dinh": quyet_dinh} for c in ("ML016", "ML018")]
+        return j
+    def mau(m):
+        return next(int(a[7:-1]) for a in m if a.startswith("tl_mau("))
+    ok = True
+    dat = ho_so(80, "B+", "passed", True)
+    asp = load_facts(dat)
+    m_dat, m_chua = solve(asp), solve(load_facts(ho_so(80, "B+", "passed", False)))
+    m_f = solve(load_facts(ho_so(30, "F", "failed", True)))
+    ca = [
+        ("C25a loader sinh tc_da_hoc từ credits của bản ghi (ML010 không có course/2)", 'tc_da_hoc("ML010",3).' in asp),
+        ("C25b có quyết định → ML016/ML018 nhận điểm ML010 (B+ → 3,5) và vào ĐTBCTL (R-M04 b, R-M15)",
+         all(a in m_dat for a in ('g4("ML016",35)', 'g4("ML018",35)', 'vao_dtbctl("ML016")', 'vao_dtbctl("ML018")'))),
+        ("C25c mẫu ĐTBCTL tăng đúng TC của ML016 + ML018", mau(m_dat) == mau(m_chua) + tc["ML016"] + tc["ML018"]),
+        ("C25d chưa có quyết định → không có điểm công nhận (giữ C20)",
+         not any(a.startswith(('g4("ML016"', 'g4("ML018"', 'vao_dtbctl("ML016"', 'vao_dtbctl("ML018"')) for a in m_chua)),
+        ("C25e ML010 bị F → không mien_tu, không điểm công nhận",
+         not any(a.startswith(('g4("ML016"', 'mien_tu("ML016"', 'vao_dtbctl("ML016"', 'vao_dtbctl("ML018"')) for a in m_f)),
+    ]
+    # C25f (review): HP được công nhận CÒN có điểm riêng trong hồ sơ → trước đây nhận HAI g4 (điểm riêng + điểm R-M04),
+    # tl_tu cộng cả hai còn tl_mau khử trùng → ĐTBCTL có thể > 4. Mỗi HP chỉ được một điểm thang 4.
+    rieng = ho_so(80, "B+", "passed", True)
+    rieng["grades"]["ML016"] = {"code": "ML016", "credits": tc["ML016"], "thang10": 50, "letter": "D", "status": "passed"}
+    m_r = solve(load_facts(rieng))
+    g16 = [a for a in m_r if a.startswith('g4("ML016",')]
+    ca.append(("C25f HP công nhận có điểm riêng → đúng MỘT g4 (không cộng đôi vào ĐTBCTL)", len(g16) == 1))
+    for ten, good in ca:
+        print(f"[{'OK' if good else 'FAIL'}] {ten}")
+        ok = ok and good
+    return ok
+
+
 def main():
     ok=True
     validator=jsonschema.Draft202012Validator(json.loads(SCHEMA.read_text(encoding="utf-8")))
@@ -151,6 +194,7 @@ def main():
     print(f"[{'OK' if good else 'FAIL'}] loader quy đổi điểm chứng chỉ ×10 (TOEIC 600→6000, IELTS 5.5→55, ctu_abc giữ bậc)")
     ok=ok and good
     ok = kiem_loader_chung() and ok
+    ok = kiem_c25() and ok
     print("\nKẾT LUẬN:", f"ĐẠT {len(EXPECT)}/{len(EXPECT)} hồ sơ + loader" if ok else "CÓ LỖI")
     return 0 if ok else 1
 

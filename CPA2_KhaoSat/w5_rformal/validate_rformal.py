@@ -478,6 +478,12 @@ test("C26 ML010 → ML016 + ML018: một học phần đã học sinh hai học 
      note="QĐ5339 Điều 3 k.9 — bảng thay thế Lý luận chính trị, ca MỘT → NHIỀU: cả hai học "
           "phần được miễn đều nhận nguyên điểm của học phần đã học")
 
+test("C26c g4_da_hoc SUY từ điểm của HP đã học (không cho sẵn) — C25, v1.13",
+     'khoa_tu_k45. g10("ML010",80). tc_da_hoc("ML010",3). course("ML016",2). duoc_mien("ML016").',
+     expect_true=['g4_da_hoc("ML010",35)', 'g4("ML016",35)', 'vao_dtbctl("ML016")'],
+     note="QĐ5339 Điều 3 k.3 (R-M04) + k.11 (R-M15) — trước v1.13 g4_da_hoc chỉ có khi viết tay, "
+          "loader không sinh → HP công nhận ra khỏi ĐTBCTL")
+
 test("C26b ML011 đạt D, CHƯA có quyết định công nhận → chỉ đủ điều kiện xét, không có mien_tu (C20)",
      'khoa_tu_k45. course("ML011",3). g10("ML011",40). course("ML019",2).',
      expect_true=['du_dk_cong_nhan_llct("ML019","ML011")'],

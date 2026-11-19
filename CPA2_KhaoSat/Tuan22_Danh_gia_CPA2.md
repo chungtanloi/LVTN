@@ -170,3 +170,19 @@ Loi duyệt 11/11/2026. Nguyên tắc thiết kế (gold DK-22 `loai_gold=thiet_
 | Q-Noise test | 110 | 100% | 68,2% | 100% | 90 | 0 | 20 |
 
 Coverage giảm (76,8% → 75,0%; 72,7% → 68,2%) vì DK-22 nay từ chối đúng gold thay vì kết luận sai. Tập test đã nhiễm (sửa sau khi thấy ca thất bại) — số chính thức vẫn là mục 2; cần bộ test mới để báo Soundness 100%.
+
+## 7. Sau sửa C25 — R-Formal v1.13 (KHÔNG phải số chính thức)
+
+19/11/2026. Lỗi im lặng cùng loại `tc_diem_f` (Bài học C15): R-M04 (QĐ5339 Đ3 k3) chỉ đọc `g4_da_hoc`/`tc_da_hoc` mà không nơi nào sinh (chỉ test viết tay) → HP được công nhận có quyết định (`recognized`, R-M15 Đ3 k11) tích lũy TC nhưng **không vào ĐTBCTL**. Ví dụ `sv_lvtn` + ML010 (B+) + quyết định ML016/ML018: `tl_mau` thiếu 4 TC.
+
+- **Sửa:** `qd5339_r_formal_v1.lp` thêm `g4_da_hoc(S,P) :- mien_tu(_,S), g4(S,P).` (điểm từ chính quy đổi R-B02); `loader.py` sinh `tc_da_hoc` từ số TC của bản ghi (HP chương trình cũ không có `course/2`).
+- **Review (ECC code-reviewer):** 0 nghiêm trọng/cao; 1 trung bình — HP công nhận CÒN có điểm riêng trong hồ sơ nhận HAI `g4` → `tl_tu` cộng đôi, ĐTBCTL có thể > 4. Đã sửa: R-M04 chỉ suy khi chưa có `g10` riêng (điểm in trên bảng điểm được giữ). Văn bản không nói ca này → **Loi xác nhận cách hiểu này 19/11/2026**. Thấp (chưa sửa, ghi `Viec_ton_dong.md` C25): trung bình có trọng số chia nguyên thang ×10 (cắt); nguồn thiếu số TC bị bỏ khỏi trung bình.
+- **TDD:** `validate_student_facts` C25a–f đi QUA loader (a/b/c/f FAIL với luật cũ; d/e âm tính: chưa có quyết định, ML010 bị F); `validate_rformal` C26c (FAIL với luật cũ).
+- **Verify:** 19/19 `validate_*.py` ĐẠT (w21 chạy trên worktree sạch HEAD + thay đổi C25, vì một phiên khác đang sửa dở `w21_baseline/`). Corpus RAG không đổi (chỉ chứa trích văn bản).
+
+| `--hau-to _sau_C25` | n | Soundness | Coverage | Sel. Acc | Đúng gold | Unsound | Từ chối thừa |
+|---|---|---|---|---|---|---|---|
+| G-Truth test | 56 | 100% | 75,0% | 100% | 48 | 0 | 8 |
+| Q-Noise test | 110 | 100% | 68,2% | 100% | 90 | 0 | 20 |
+
+Giống hệt `_sau_C21` từng ca (chỉ khác thời gian chạy): không hồ sơ gold nào có quyết định công nhận kèm điểm HP nguồn → không cần errata. Hash KB đổi → cần deploy lại Render.

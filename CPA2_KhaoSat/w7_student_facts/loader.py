@@ -109,6 +109,10 @@ def sang_asp(j):
             lines.append(f'g10("{code}",{th}).')
         if co_hoc(g):
             lines.append(f'da_hoc("{code}").')
+        cr = g.get("credits")
+        if isinstance(cr, int) and not isinstance(cr, bool) and cr > 0:
+            # C25 (R-M04, QĐ5339 Đ3 k3): trọng số khi gộp điểm xét miễn; HP chương trình cũ không có course/2
+            lines.append(f'tc_da_hoc("{code}",{cr}).')
     for c in j.get("khong_tinh_tich_luy", []):
         lines.append(f'khong_tinh_tich_luy("{c}").')
     if j.get("che_do_sv_chon_tich_luy"):

@@ -98,17 +98,25 @@ why(bat_doi_xung_qd09(C), r_m03b) :- bat_doi_xung_qd09(C).
 %% ---------------------------------------------------------------------------
 so_nguon(C,N) :- duoc_mien(C), N = #count{ S : mien_tu(C,S) }.
 
+%% v1.13 (C25, Tuần 22): điểm thang 4 của học phần ĐÃ HỌC lấy từ chính quy đổi R-B02 (g4), không viết bảng mới.
+%% Trước v1.13 g4_da_hoc chỉ có khi viết tay trong test; loader không sinh → R-M04 không bao giờ chạy, học phần
+%% được công nhận (recognized, R-M15) tích lũy TC nhưng lặng lẽ ra khỏi ĐTBCTL. tc_da_hoc(S,CR) do loader sinh từ
+%% số TC trên bảng điểm (HP chương trình cũ như ML010 không có course/2).
+g4_da_hoc(S,P) :- mien_tu(_,S), g4(S,P).
+why(g4_da_hoc(S,P), r_m04) :- g4_da_hoc(S,P).
+
 %% (a) nhiều → một
 mien_tu_tu(C,Num)  :- so_nguon(C,N), N > 1,
                       Num = #sum{ P*CR,S : mien_tu(C,S), g4_da_hoc(S,P), tc_da_hoc(S,CR) }.
 mien_tu_mau(C,Den) :- so_nguon(C,N), N > 1,
                       Den = #sum{ CR,S   : mien_tu(C,S), tc_da_hoc(S,CR) }.
-g4(C,P) :- mien_tu_tu(C,Num), mien_tu_mau(C,Den), Den > 0, P = Num/Den.
-why(g4(C,P), r_m04) :- mien_tu_tu(C,Num), mien_tu_mau(C,Den), Den > 0, P = Num/Den.
+g4(C,P) :- mien_tu_tu(C,Num), mien_tu_mau(C,Den), Den > 0, P = Num/Den, not g10(C,_).
+why(g4(C,P), r_m04) :- mien_tu_tu(C,Num), mien_tu_mau(C,Den), Den > 0, P = Num/Den, not g10(C,_).
+%% v1.13 (C25 review): HP được công nhận CÒN có điểm riêng trong hồ sơ (g10) → giữ điểm riêng, R-M04 chỉ suy khi chưa có; nếu không, C nhận HAI g4 và ĐTBCTL cộng đôi (có thể > 4). Văn bản không nói ca này — Loi xác nhận 19/11/2026.
 
 %% (b) một → nhiều  (một học phần đã học được dùng cho nhiều học phần được miễn)
-g4(C,P) :- so_nguon(C,1), mien_tu(C,S), g4_da_hoc(S,P).
-why(g4(C,P), r_m04) :- so_nguon(C,1), mien_tu(C,S), g4_da_hoc(S,P).
+g4(C,P) :- so_nguon(C,1), mien_tu(C,S), g4_da_hoc(S,P), not g10(C,_).
+why(g4(C,P), r_m04) :- so_nguon(C,1), mien_tu(C,S), g4_da_hoc(S,P), not g10(C,_).
 
 %% ---------------------------------------------------------------------------
 %% 5. BẢNG QUY ĐỔI CHỨNG CHỈ NGOẠI NGỮ — Phụ lục 1 (R-M07)

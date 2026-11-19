@@ -1244,7 +1244,7 @@
       "nhom": "mien_thay_the",
       "asp": "r_m04",
       "quyet_dinh": "QD-10 ĐÓNG: trả lời ca biên 'chênh lệch tín chỉ khi thay thế' của Tuần 2 (T6). Điểm đi theo công thức trung bình có trọng số; TC đi theo học phần ĐƯỢC MIỄN (học phần trong CTĐT sẽ học), không theo học phần đã học.",
-      "ghi_chu": "Quy tắc nhiều→một và một→nhiều đều hình thức hoá được trọn vẹn.",
+      "ghi_chu": "Quy tắc nhiều→một và một→nhiều đều hình thức hoá được trọn vẹn. [C25, Tuần 22] KB cũ chỉ đọc g4_da_hoc/tc_da_hoc mà không nơi nào sinh (chỉ test viết tay) → R-M04 không bao giờ chạy: học phần được công nhận (R-M15, có quyết định) tích lũy TC nhưng lặng lẽ ra khỏi ĐTBCTL. v1.13: g4_da_hoc suy từ g4 (R-B02) của học phần đã học khi có mien_tu; loader sinh tc_da_hoc từ số TC trên bảng điểm.",
       "diem": null,
       "ly_do_PN": null
     },
