@@ -300,8 +300,10 @@ def phan_H():
     url, hd, body = o.yeu_cau(msgs, B.TOOLS)
     check(url.endswith("/chat/completions") and hd["Authorization"] == "Bearer KHOA-O" and "KHOA-O" not in url,
           "OpenAI: URL /chat/completions, khoá ở header (không ở URL)")
-    check(body["model"] == "m-o" and body["temperature"] == 0 and body["tools"][0]["type"] == "function"
-          and body["tools"][0]["function"]["name"] == "may_tinh", "OpenAI: model, temperature 0, tools dạng function")
+    t0 = llm.THAM_SO["nhiet_do"]          # bản đóng băng: None (19/11/2026) = không gửi temperature
+    check(body["model"] == "m-o" and (("temperature" not in body) if t0 is None else body.get("temperature") == t0)
+          and body["tools"][0]["type"] == "function" and body["tools"][0]["function"]["name"] == "may_tinh",
+          f"OpenAI: model, temperature theo bản đóng băng ({t0!r}: None = không gửi), tools dạng function")
     a = body["messages"][2]
     check(a["role"] == "assistant" and a["tool_calls"][0]["function"]["name"] == "may_tinh"
           and json.loads(a["tool_calls"][0]["function"]["arguments"]) == {"bieu_thuc": "1+1"}
@@ -317,8 +319,10 @@ def phan_H():
     url, hd, body = g.yeu_cau(msgs, B.TOOLS)
     check(":generateContent" in url and "m-g" in url and hd["x-goog-api-key"] == "KHOA-G" and "KHOA-G" not in url,
           "Gemini: URL :generateContent, khoá ở header x-goog-api-key (không ở URL)")
-    check(body["systemInstruction"]["parts"][0]["text"] == "S" and body["generationConfig"]["temperature"] == 0
-          and body["tools"][0]["functionDeclarations"][0]["name"] == "may_tinh", "Gemini: systemInstruction, temperature 0, functionDeclarations")
+    gc = body.get("generationConfig") or {}
+    check(body["systemInstruction"]["parts"][0]["text"] == "S" and (("temperature" not in gc) if t0 is None else gc.get("temperature") == t0)
+          and body["tools"][0]["functionDeclarations"][0]["name"] == "may_tinh",
+          f"Gemini: systemInstruction, temperature theo bản đóng băng ({t0!r}), functionDeclarations")
     ct = body["contents"]
     check([c["role"] for c in ct] == ["user", "model", "user"] and ct[1]["parts"][0]["functionCall"] == {"name": "may_tinh", "args": {"bieu_thuc": "1+1"}}
           and ct[2]["parts"][0]["functionResponse"]["name"] == "may_tinh", "Gemini: vai user/model, functionCall, functionResponse")
