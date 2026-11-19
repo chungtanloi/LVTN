@@ -1,5 +1,5 @@
 {
- "sha256": "f0fcafef44f9aacc1583e3a24beefe3208985499871b3ba9fd024a3037c3e8c2",
- "sha256_dau_vao": "52d4b490b58adeb82b9aad5547aea0154c31cc8a3146e289e29be9cf47e05390",
+ "sha256": "fad02fb25b67ca6f353f265dd6d2ccf1c2a427ea95fd369b0efa4ea655a36846",
+ "sha256_dau_vao": "eff97ff7e5a52d36a8c11689881c2cd4538ed1b0d834352d4b0449dc79646bb8",
  "ghi_chu": "sha256 = mẫu prompt + công cụ + tham số (baselines.hash_prompt); sha256_dau_vao = prompt đã dựng cho mọi ca dev+test + nội dung corpus/CTĐT (run_baseline.hash_dau_vao). Đóng băng + commit TRƯỚC lần chạy thật đầu tiên; sửa sau đó thì chạy với --hau-to và giữ số chính thức."
 }

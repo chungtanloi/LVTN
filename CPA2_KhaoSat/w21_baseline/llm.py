@@ -32,7 +32,10 @@ from pathlib import Path
 TOKEN_MOI_KY_TU = 2.5            # ước lượng thô: 1 token ≈ 2,5 ký tự (JSON + tiếng Việt)
 # nhiet_do None = không gửi temperature (mặc định của nhà cung cấp): model OpenAI suy luận chọn cho baseline (openai/gpt-6.1-sol
 # qua OpenRouter, 19/11/2026) không nhận temperature; để hai họ model cùng cấu hình thì cả hai đều không gửi.
-THAM_SO = {"nhiet_do": None, "max_out": None, "thu_lai": 3, "cho_giay": 120}   # có trong hash đóng băng (baselines.hash_prompt)
+# max_out 16384 (Loi chọn, 19/11/2026, trước lần chạy thật đầu tiên): không đặt thì OpenRouter giữ chỗ 65536 token/lần gọi
+# (~0,65 USD ở 10 USD/1M) → HTTP 402 khi credit thấp; trần rõ cho mỗi ca. Model suy luận tính cả token nghĩ: nghĩ quá dài bị cắt,
+# không in được dòng NHAN → thiếu nhãn → UNKNOWN (đếm riêng ở cột 'thiếu nhãn').
+THAM_SO = {"nhiet_do": None, "max_out": 16384, "thu_lai": 3, "cho_giay": 120}  # có trong hash đóng băng (baselines.hash_prompt)
 _MAC_DINH = object()
 
 
