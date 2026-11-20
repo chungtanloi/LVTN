@@ -399,6 +399,20 @@ def verbalize(cert, cautious):
 ELIG_VERDICT = {"ELIGIBLE": "TRUE", "NOT_ELIGIBLE": "FALSE", "UNKNOWN": "UNKNOWN", "DA_HOAN_THANH": "DA_HOAN_THANH",
                 "MAU_THUAN": "UNSAT"}
 
+
+def _buoc_w18(chung_chi):
+    """Bước chứng chỉ của w18 → nguồn CHUẨN theo catalog (van_ban mã, dieu, khoan). Bản trước ghi source.van_ban là chuỗi
+    tự do ('QĐ3266 Điều 7 khoản 4') → lớp gắn nguồn của API (w14 ground_certificate) so không khớp passage → BLOCKED mọi câu
+    'đủ điều kiện làm luận văn/tiểu luận' có bước suy diễn (phát hiện 20/11/2026 khi chuẩn bị deploy)."""
+    cat = {r["asp"]: r for r in json.loads(CATALOG.read_text(encoding="utf-8"))["rules"] if r.get("asp")}
+    out = []
+    for s in chung_chi:
+        r = cat.get(s["rule_id"])
+        src = ({"van_ban": r["van_ban"], "dieu": r["dieu"], "khoan": r["khoan"], "trich": r["trich"][:150]} if r
+               else {"van_ban": s["nguon"]})
+        out.append({"atom": s["atom"], "rule_id": s["rule_id"], "source": src})
+    return out
+
 def answer_eligibility(question, student_path):
     """Tuần 18: "đủ điều kiện làm luận văn/tiểu luận" → Eligibility module (w18). Trước đây claim 'du_dk_tc' không
     đối số không bao giờ có trong answer set → prototype luôn trả FALSE."""
@@ -410,7 +424,7 @@ def answer_eligibility(question, student_path):
                 "missing_facts": ["ho_so"], "can_bo_sung": [], "mau_thuan": [], "claim": f"du_dk({dt})"}
     r = eligibility.xet(json.loads(Path(student_path).read_text(encoding="utf-8")), dt)
     v = ELIG_VERDICT[r["ket_qua"]]
-    steps = [{"atom": s["atom"], "rule_id": s["rule_id"], "source": {"van_ban": s["nguon"]}} for s in r["chung_chi"]]
+    steps = _buoc_w18(r["chung_chi"])
     missing = [b["bien"] for b in r["can_bo_sung"]]
     text = {"TRUE": f"Kết luận: đủ điều kiện nhận đề tài {dt}.",
             "FALSE": f"Kết luận: chưa đủ điều kiện {dt}: " + ", ".join(r["ly_do"]),
@@ -686,14 +700,15 @@ def answer_cuoi_khoa(student_path):
     pa, nhom = CK.phuong_an(pt, e_lv, e_tl)
     text = CK.dien_giai(pa, nhom, pt["tc_tich_luy"], [b["hoi"] for b in e_lv["can_bo_sung"]],
                         [b["hoi"] for b in e_tl["can_bo_sung"]])
-    # chứng chỉ: bước điều kiện của w18 + con trỏ nguồn CTĐT (trang, dòng) của từng học phần được nêu + bước đăng ký được
-    steps = [{"atom": s_["atom"], "rule_id": s_["rule_id"], "source": {"van_ban": s_["nguon"]}}
-             for s_ in e_lv["chung_chi"] + e_tl["chung_chi"]]
+    # chứng chỉ: bước LUẬT (w18 + đăng ký được) có nguồn chuẩn để lớp gắn nguồn của API khớp passage. Thành viên nhóm là DỮ
+    # KIỆN CTĐT, không phải áp dụng luật → du_kien_ctdt kèm passage CTĐT của từng học phần (ctdt_k49:<mã>) và trang/dòng.
+    steps = _buoc_w18(e_lv["chung_chi"] + e_tl["chung_chi"])
     src = {_m: a for a in models[0] if a.startswith("ctdt_src(") for _m in [CK._ma(a)]}
+    du_kien_ctdt = []
     for c in pt["thanh_vien"]:
-        tr = src.get(c, "")[:-1].split(",")[1:] if c in src else []
-        steps.append({"atom": f'thuoc_nhom({CK.NHOM},"{c}")', "rule_id": "ctdt",
-                      "source": {"van_ban": "CTĐT CNTT K49", "trang": tr[0] if tr else None, "dong": tr[1] if len(tr) > 1 else None}})
+        tr = [int(x) for x in src[c][:-1].split(",")[1:]] if c in src else []
+        du_kien_ctdt.append({"ma": c, "atom": f'thuoc_nhom({CK.NHOM},"{c}")', "passage_id": f"ctdt_k49:{c}",
+                             "trang": tr[0] if tr else None, "dong": tr[1] if len(tr) > 1 else None})
     cat = {r["asp"]: r for r in json.loads(CATALOG.read_text(encoding="utf-8"))["rules"] if r.get("asp")}
     for c in pa["tieu_luan"]["dang_ky_duoc"]:
         for w in sorted(a for a in cautious if a.startswith(f'why(duoc_dang_ky("{c}"),')):
@@ -705,8 +720,8 @@ def answer_cuoi_khoa(student_path):
     verdict = ("UNKNOWN" if "UNKNOWN" in (pa["luan_van"]["du_dk"], pa["tieu_luan"]["du_dk"]) or pa["tieu_luan"]["chua_chac"]
                else "TRUE")
     cert = {"claim": claim, "verdict": verdict, "proof": {"steps": steps}, "missing_facts": [b["bien"] for b in can],
-            "can_bo_sung": can}
-    cert_text = " ".join(s_["atom"] for s_ in steps)
+            "can_bo_sung": can, "du_kien_ctdt": du_kien_ctdt}
+    cert_text = " ".join([s_["atom"] for s_ in steps] + [x["atom"] for x in du_kien_ctdt])
     lech = [c for c in re.findall(r"[A-Z]{1,3}\d{2,3}E?", text) if c not in cert_text]
     if lech:                                               # hậu kiểm (bất biến prototype)
         return {"verdict": "BLOCKED", "claim": claim, "certificate": cert, "missing_facts": cert["missing_facts"],

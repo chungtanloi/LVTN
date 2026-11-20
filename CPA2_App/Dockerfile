@@ -27,6 +27,9 @@ COPY CPA2_KhaoSat/w15_ocr/ocr_transcript.py /app/CPA2_KhaoSat/w15_ocr/
 COPY CPA2_KhaoSat/w16_abstention/abstention.py /app/CPA2_KhaoSat/w16_abstention/
 COPY CPA2_KhaoSat/w18_eligibility/eligibility.py CPA2_KhaoSat/w18_eligibility/*.lp /app/CPA2_KhaoSat/w18_eligibility/
 COPY CPA2_KhaoSat/w19_recommendation/recommendation.py CPA2_KhaoSat/w19_recommendation/*.lp /app/CPA2_KhaoSat/w19_recommendation/
+# Tuần 24: prototype.answer_muc_tieu / answer_cuoi_khoa nạp các module này lúc chạy — thiếu thì ImportError trên Render.
+COPY CPA2_KhaoSat/w24_muc_tieu/muc_tieu.py CPA2_KhaoSat/w24_muc_tieu/muc_tieu_hang.lp /app/CPA2_KhaoSat/w24_muc_tieu/
+COPY CPA2_KhaoSat/w24_cuoi_khoa/cuoi_khoa.py /app/CPA2_KhaoSat/w24_cuoi_khoa/
 RUN cd /app/CPA2_App/api && python -c "from cpa2_api.profiles import kb_version; print('CPA2 packaged KB:', kb_version(), flush=True)"
 RUN useradd --create-home cpa2
 USER cpa2

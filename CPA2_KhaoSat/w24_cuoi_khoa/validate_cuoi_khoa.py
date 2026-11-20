@@ -171,13 +171,34 @@ def phan_D():
     check(all("nên chọn" not in x["explanation_vi"] and "lựa chọn là của bạn" in x["explanation_vi"].lower() for x in co),
           "D6 không khuyên 'nên chọn'; nêu rõ lựa chọn là của sinh viên")
     check(all(x["verdict"] != "BLOCKED" for x in kq)
-          and all(_ma_trong(x["explanation_vi"]) <= _ma_trong(" ".join(s_["atom"] for s_ in x["certificate"]["proof"]["steps"]))
-                  for x in co),
-          "D7 không bị hậu kiểm chặn; mọi mã HP trong lời giải thích có trong chứng chỉ")
+          and all(_ma_trong(x["explanation_vi"]) <= _ma_trong(" ".join(
+                  [s_["atom"] for s_ in x["certificate"]["proof"]["steps"]]
+                  + [k["atom"] for k in x["certificate"].get("du_kien_ctdt", [])])) for x in co),
+          "D7 không bị hậu kiểm chặn; mọi mã HP trong lời giải thích có trong chứng chỉ (bước luật hoặc dữ kiện CTĐT có passage)")
+
+
+def phan_E():
+    """Đường API thật: w14 grounded_answer.tra_loi gắn passage nguồn cho TỪNG bước chứng chỉ; bước sai định dạng nguồn → BLOCKED.
+    Lỗi phát hiện khi chuẩn bị deploy (20/11/2026): bước w18 ghi source.van_ban là chuỗi tự do ('QĐ3266 Điều …') và bước
+    thành viên nhóm có rule_id 'ctdt' không có passage → API chặn cả câu so sánh lẫn câu 'đủ điều kiện làm luận văn' sẵn có."""
+    print("E. ĐI QUA LỚP GẮN NGUỒN CỦA API (w14 grounded_answer.tra_loi)")
+    sys.path.insert(0, str(ROOT / "w14_rag"))
+    import grounded_answer as G
+    with tempfile.TemporaryDirectory() as d:
+        f2 = _ho_so(d, "chua_lv.json", bo=("CT550E",))
+        for q in (Q, "Em đủ điều kiện làm luận văn chưa?", "Em đủ điều kiện làm tiểu luận chưa?"):
+            r = G.tra_loi(q, f2)
+            check(r["verdict"] != "BLOCKED" and r.get("nguon"),
+                  f"E '{q}' qua API: không bị chặn, có trích nguồn ({r['verdict']}, {r.get('grounding_errors')})")
+        r = G.tra_loi(Q, f2)
+        ctdt = r.get("certificate", {}).get("du_kien_ctdt", [])
+        check(ctdt and all(x["passage_id"] == f"ctdt_k49:{x['ma']}" for x in ctdt)
+              and {x["ma"] for x in ctdt} == set(NHOM),
+              f"E dữ kiện CTĐT (thành viên nhóm) đi kèm passage CTĐT của từng học phần, không phải bước luật ({len(ctdt)})")
 
 
 def main():
-    for p in (phan_B, phan_C, phan_D):
+    for p in (phan_B, phan_C, phan_D, phan_E):
         p()
     print("\nKẾT LUẬN:", "ĐẠT" if ok_all else "CHƯA ĐẠT")
     return 0 if ok_all else 1

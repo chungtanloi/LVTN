@@ -117,6 +117,7 @@ def kb_version() -> str:
         'w15_ocr/ocr_transcript.py', 'w16_abstention/abstention.py',
         'w18_eligibility/eligibility.py', 'w18_eligibility/eligibility.lp',
         'w19_recommendation/recommendation.py', 'w19_recommendation/recommendation.lp',
+        'w24_muc_tieu/muc_tieu.py', 'w24_muc_tieu/muc_tieu_hang.lp', 'w24_cuoi_khoa/cuoi_khoa.py',
     )
     for relative in sorted(runtime):
         path = KB / relative
