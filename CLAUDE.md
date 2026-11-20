@@ -80,7 +80,8 @@ D:\LVTN\                          (git repo)
 │   ├── w20_benchmark\            G-Truth v1 + OCR-Noise v1 (gold đóng băng 312b7ff), Q-Noise (tổng hợp), Q-Real + Q-Elicit + biểu mẫu (qreal/, _tho/ gitignore), baseline.py, run_cpa2.py
 │   ├── w21_baseline\            baseline LLM/RAG/tool-calling (llm.py urllib, baselines.py, run_baseline.py), prompt_dong_bang.json; cần khoá trong .env (xem .env.example) — API gốc hoặc qua OpenRouter (`BASELINE_<NHA>_VIA=openrouter`)
 │   ├── w23_so_sanh\             bảng so sánh CPA² vs baseline (so_sanh.py: đọc kết quả có sẵn, chấm lại cùng hàm, tập chung theo hệ chính thức, McNemar, ca bất đồng)
-│   └── w24_muc_tieu\            mục tiêu hạng tốt nghiệp: "cần trung bình bao nhiêu (ở N TC) để tốt nghiệp từ loại X trở lên" — phép tính trên R-B10/R-F06/R-F07 (muc_tieu_hang.lp), ba trị theo khả thi, ngoài benchmark
+│   ├── w24_muc_tieu\            mục tiêu hạng tốt nghiệp: "cần trung bình bao nhiêu (ở N TC) để tốt nghiệp từ loại X trở lên" — phép tính trên R-B10/R-F06/R-F07 (muc_tieu_hang.lp), ba trị theo khả thi, ngoài benchmark
+│   └── w24_cuoi_khoa\           so sánh 3 phương án nhóm tốt nghiệp (luận văn / tiểu luận + HP thay thế / chỉ HP thay thế — Đ31 k3), không khuyên "nên"; ngoài benchmark
 ├── ctu\                          PDF quy chế gốc (gitignore)
 ├── NiênLuan\                     niên luận cũ, có dữ liệu SV (gitignore)
 └── LVTN\                         repo riêng, chưa dùng (gitignore)

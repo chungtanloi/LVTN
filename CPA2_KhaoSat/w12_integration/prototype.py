@@ -191,6 +191,34 @@ def _muc_tieu(ql):
     return None
 
 
+# Tuần 24 — SO SÁNH LUẬN VĂN / TIỂU LUẬN (w24_cuoi_khoa/): câu xin tư vấn chọn hình thức cuối khoá → trình bày HAI phương
+# án, không khuyên "nên". Danh sách cho phép, khớp toàn câu, chủ ngữ ngôi thứ nhất; hai hình thức phải KHÁC nhau.
+_CK = r"(luan van|tieu luan)(?: tot nghiep)?"
+MAU_CUOI_KHOA = [
+    rf"^{_TOI}(?:co )?nen (?:lam|chọn|chon) {_CK} hay {_CK}$",
+    rf"^(?:so sánh|so sanh) {_CK} (?:và|va|voi) {_CK}(?: cho (?:em|mình|minh|tôi|toi))?$",
+    rf"^(?:lam )?{_CK} (?:và|va|voi) {_CK} (?:khác|khac) (?:nhau )?(?:gi|the nao|thế nào|nhu the nao|như thế nào)$",
+]
+MAU_CUOI_KHOA_MOT = rf"^{_TOI}(?:co )?nen lam {_CK} khong$"   # "em có nên làm luận văn không" — một hình thức, có/không
+
+
+def _cuoi_khoa(ql):
+    """'so_sanh_cuoi_khoa' / None — chỉ khi CẢ câu khớp mẫu cho phép."""
+    qb = bo_dau(ql)
+    if len(qb) != len(ql):
+        return None
+    a = _DAU.match(qb).end()
+    b = a + _CUOI.search(qb[a:]).start()
+    q = ql[a:b].strip()
+    if re.match(MAU_CUOI_KHOA_MOT, q):
+        return "so_sanh_cuoi_khoa"
+    for mau in MAU_CUOI_KHOA:
+        m = re.match(mau, q)
+        if m and m.group(1) != m.group(2):
+            return "so_sanh_cuoi_khoa"
+    return None
+
+
 PARSER_STUB_CHUAN = {chuan_hoa(k): v for k, v in PARSER_STUB.items()}
 
 
@@ -202,6 +230,9 @@ def parse_question(q: str) -> str:
     mt = _muc_tieu(ql)  # Tuần 24: mục tiêu hạng — danh sách cho phép, khớp toàn câu
     if mt:
         return mt
+    ck = _cuoi_khoa(ql)  # Tuần 24: so sánh luận văn / tiểu luận
+    if ck:
+        return ck
     # đề xuất chung — câu hỏi về MỘT học phần / luận văn / tiểu luận đi nhánh riêng
     if DE_XUAT.search(ql) and not HOI_MO.search(ql) and not re.search(r"[a-z]{2}\d{3}|luan van|tieu luan", ql):
         return "de_xuat"
@@ -634,8 +665,60 @@ def answer_muc_tieu(claim, student_path):
             "kich_ban": [k[0] for k in kbs]}
 
 
+def answer_cuoi_khoa(student_path):
+    """Tuần 24: so sánh hai phương án hoàn thành nhóm tốt nghiệp (luận văn | tiểu luận + học phần thay thế) — w24_cuoi_khoa.
+    Điều kiện nhận đề tài từ w18 (QD-12), dữ kiện nhóm/học phần từ KB (ba trị theo mọi thế giới). Không khuyên 'nên'."""
+    sys.path.insert(0, str(HERE.parent / "w24_cuoi_khoa"))
+    import cuoi_khoa as CK
+    import eligibility
+    claim = "so_sanh_cuoi_khoa"
+    if not student_path:
+        return {"verdict": "UNKNOWN", "claim": claim, "explanation_vi": "Cần hồ sơ học tập để so sánh hai phương án.",
+                "missing_facts": ["ho_so"], "can_bo_sung": [], "certificate": {"claim": claim, "proof": {"steps": []}}}
+    j = json.loads(Path(student_path).read_text(encoding="utf-8"))
+    e_lv, e_tl = eligibility.xet(j, "lvtn"), eligibility.xet(j, "tltn")
+    extra, sid, mt = load_student(student_path)
+    _, models, cautious, brave = solve_verdict("tot_nghiep", extra)
+    if not models:
+        return {"verdict": "UNSAT", "claim": claim, "explanation_vi": "Hồ sơ mâu thuẫn với quy chế — không kết luận.",
+                "missing_facts": [], "mau_thuan": mt, "certificate": {"claim": claim, "proof": {"steps": []}}}
+    pt = CK.phan_tich(models)
+    pa, nhom = CK.phuong_an(pt, e_lv, e_tl)
+    text = CK.dien_giai(pa, nhom, pt["tc_tich_luy"], [b["hoi"] for b in e_lv["can_bo_sung"]],
+                        [b["hoi"] for b in e_tl["can_bo_sung"]])
+    # chứng chỉ: bước điều kiện của w18 + con trỏ nguồn CTĐT (trang, dòng) của từng học phần được nêu + bước đăng ký được
+    steps = [{"atom": s_["atom"], "rule_id": s_["rule_id"], "source": {"van_ban": s_["nguon"]}}
+             for s_ in e_lv["chung_chi"] + e_tl["chung_chi"]]
+    src = {_m: a for a in models[0] if a.startswith("ctdt_src(") for _m in [CK._ma(a)]}
+    for c in pt["thanh_vien"]:
+        tr = src.get(c, "")[:-1].split(",")[1:] if c in src else []
+        steps.append({"atom": f'thuoc_nhom({CK.NHOM},"{c}")', "rule_id": "ctdt",
+                      "source": {"van_ban": "CTĐT CNTT K49", "trang": tr[0] if tr else None, "dong": tr[1] if len(tr) > 1 else None}})
+    cat = {r["asp"]: r for r in json.loads(CATALOG.read_text(encoding="utf-8"))["rules"] if r.get("asp")}
+    for c in pa["tieu_luan"]["dang_ky_duoc"]:
+        for w in sorted(a for a in cautious if a.startswith(f'why(duoc_dang_ky("{c}"),')):
+            rid = w[:-1].rsplit(",", 1)[1]
+            if rid in cat:
+                steps.append({"atom": f'duoc_dang_ky("{c}")', "rule_id": rid, "source": {
+                    "van_ban": cat[rid]["van_ban"], "dieu": cat[rid]["dieu"], "khoan": cat[rid]["khoan"]}})
+    can = e_lv["can_bo_sung"] + e_tl["can_bo_sung"]
+    verdict = ("UNKNOWN" if "UNKNOWN" in (pa["luan_van"]["du_dk"], pa["tieu_luan"]["du_dk"]) or pa["tieu_luan"]["chua_chac"]
+               else "TRUE")
+    cert = {"claim": claim, "verdict": verdict, "proof": {"steps": steps}, "missing_facts": [b["bien"] for b in can],
+            "can_bo_sung": can}
+    cert_text = " ".join(s_["atom"] for s_ in steps)
+    lech = [c for c in re.findall(r"[A-Z]{1,3}\d{2,3}E?", text) if c not in cert_text]
+    if lech:                                               # hậu kiểm (bất biến prototype)
+        return {"verdict": "BLOCKED", "claim": claim, "certificate": cert, "missing_facts": cert["missing_facts"],
+                "explanation_vi": f"HẬU KIỂM CHẶN: mã {lech[0]} trong lời giải thích nhưng không có trong chứng chỉ"}
+    return {"verdict": verdict, "claim": claim, "certificate": cert, "explanation_vi": text, "phuong_an": pa, "nhom": nhom,
+            "missing_facts": cert["missing_facts"], "can_bo_sung": can, "mau_thuan": mt, "student_id": sid}
+
+
 def answer(question, student_path):
     claim=parse_question(question)
+    if claim == "so_sanh_cuoi_khoa":
+        return answer_cuoi_khoa(student_path)
     if claim.startswith("muc_tieu_hang("):
         return answer_muc_tieu(claim, student_path)
     if claim == "xep_loai" or claim.startswith("hang_cuoi("):
