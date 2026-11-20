@@ -1,3 +1,13 @@
+# Phát hành Tuần 24 — 20/11/2026
+
+Bản `34aa001` (gồm C25 R-Formal v1.13, A17 R-Formal v1.14, hai ý định Tuần 24 — mục tiêu hạng tốt nghiệp `w24_muc_tieu`, so sánh ba phương án nhóm tốt nghiệp `w24_cuoi_khoa` — và bản sửa gắn nguồn bước w18): Render deploy thủ công (Loi bấm Deploy latest commit); HTTP health `status=ok`, KB **`57ab3bec24c3a961`**, trùng runtime đóng gói cục bộ (bản cloud trước đó: `0a5a57d389bc7771`). Vercel và Convex không đổi.
+
+- Kiểm tra qua đường API thật (`w14 grounded_answer.tra_loi`) TRƯỚC phát hành tìm ra hai lỗi, đã sửa trong `34aa001`: (1) Dockerfile chỉ chép file liệt kê → thiếu `w24_*` (ImportError trên Render); (2) bước chứng chỉ của w18 ghi `source.van_ban` dạng chuỗi tự do → câu **có sẵn** "Em đủ điều kiện làm luận văn chưa?" bị `BLOCKED` (GROUNDING_SOURCE_INVALID) mỗi khi sinh viên đủ điều kiện, và câu so sánh mới cũng bị chặn. `validate_cuoi_khoa` mục E (đường API) fail trước khi sửa.
+- Trước phát hành: 22/22 `validate_*.py` đạt; API unittest 59 OK (1 bỏ qua như trước).
+- `cloud_smoke.py` trên bản mới: **9/9 PASS** — 8 ca cũ + ca Tuần 24 (hồ sơ giả lập `sv_lvtn` bỏ CT550E, khai báo không F/không kỷ luật): mục tiêu giỏi với 18 TC → TRUE, trung bình tối thiểu 3,54; so sánh luận văn/tiểu luận → TRUE; đủ điều kiện làm luận văn → TRUE; cả ba có trích nguồn, mọi bước có passage. Lượt đầu ca Tuần 24 lỗi `saveProfile` (Server Error) do giới hạn tần suất của ứng dụng (10 yêu cầu/phút/tài khoản) — script nay chờ 65 giây trước khối này; không tính lượt lỗi là đạt. Mỗi lượt đều `--cleanup`.
+- **Kiểm tra bảo mật chạy SAU khi deploy** (bỏ sót trước phát hành, ghi nhận theo quy tắc CLAUDE.md): `security_check.py` 34 gói, 0 cảnh báo OSV; `verify_runtime.py` 5/5 đạt; AgentShield B (80/100), mọi phát hiện ở `CLAUDE.md` (thiếu câu phòng thủ prompt; không đóng gói vào image) + 1 thông tin pnpm `minimumReleaseAge` chưa cấu hình — giống lần phát hành trước.
+- Web: nhãn ô "TC học phần từng bị F (kể cả GDQP, GDTC…)" của A17 **chưa** lên Vercel (cần deploy web riêng); hai ý định mới dùng được qua giao diện hiện tại vì chạy hoàn toàn ở API.
+
 # Phát hành C20 + C21 — 11/11/2026
 
 Bản `a22e238` (R-Formal v1.12 công nhận LLCT cần quyết định — C20; mã học phần ngoài CTĐT → UNKNOWN — C21): Render deploy thủ công (đẩy nhánh không tự build — hai lần push chờ 25 và 30 phút, KB không đổi); HTTP health trả `status=ok`, KB `0a5a57d389bc7771`, trùng runtime đóng gói cục bộ. Vercel và Convex không đổi (giao diện đã hiển thị `can_xac_minh`).

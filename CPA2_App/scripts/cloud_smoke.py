@@ -211,6 +211,24 @@ def main():
         if call('action', 'saveProfile', {'profile': bad, 'consent': True}, alice).get('status') == 'success':
             raise RuntimeError(f'Out-of-curriculum code {code} was accepted.')
     print('PASS: other out-of-curriculum codes (TC025, CT999) still rejected.')
+    # Tuần 24 (34aa001): mục tiêu hạng + so sánh hình thức cuối khoá + bản sửa gắn nguồn bước w18. Hồ sơ giả lập sv_lvtn bỏ
+    # CT550E, khai báo không F / không kỷ luật cấp Trường. Mục tiêu giỏi với 18 TC: N = 3940, D = 125 →
+    # S = ⌈(320·143 − 39400)/10⌉ = 636 → trung bình tối thiểu 3,54.
+    time.sleep(65)   # giới hạn tần suất của ứng dụng: 10 yêu cầu/phút/tài khoản (convex takeQuota) — các ca trên đã dùng hết
+    w24 = {**profile, 'tc_diem_f': 0, 'ky_luat_canh_cao_cap_truong': False,
+           'grades': {k: v for k, v in profile['grades'].items() if k != 'CT550E'}}
+    success('action', 'saveProfile', {'profile': w24, 'consent': True}, alice)
+    for question, verdict, text in (
+            ('Kỳ tới em học 18 tín chỉ thì cần trung bình bao nhiêu để tốt nghiệp loại giỏi?', 'TRUE', '3,54'),
+            ('Em nên làm luận văn hay tiểu luận?', 'TRUE', 'lựa chọn là của bạn'),
+            ('Em đủ điều kiện làm luận văn chưa?', 'TRUE', None)):
+        result = success('action', 'advise', {'question': question}, alice)['result']
+        steps = result.get('certificate', {}).get('proof', {}).get('steps', [])
+        if (result['verdict'] != verdict or (text and text not in result.get('explanation_vi', ''))
+                or not result.get('nguon') or any(not s.get('passage_id') for s in steps)):
+            raise RuntimeError(f'W24 {question!r}: {result.get("verdict")} {result.get("grounding_errors")} '
+                               f'{result.get("explanation_vi", "")[:120]!r}')
+    print('PASS: W24 target rank (3,54 over 18 TC), thesis/essay comparison and thesis eligibility are grounded on cloud.')
     print('QA state retained privately for browser checks. Run --cleanup afterwards.')
 
 
